@@ -1690,7 +1690,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final void connect() {
+   protected final void connect() throws TLSAlertException {
       boolean certificateRequest = false;
       this.clientHello();
       DataBuffer[] buffer = null;

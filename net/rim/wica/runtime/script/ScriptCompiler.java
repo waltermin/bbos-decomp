@@ -8,7 +8,7 @@ import net.rim.ecmascript.runtime.CompiledScript;
 public final class ScriptCompiler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final byte[] compile(byte[] source) {
+   public static final byte[] compile(byte[] source) throws CompilerException {
       byte[] compiled = null;
 
       try {

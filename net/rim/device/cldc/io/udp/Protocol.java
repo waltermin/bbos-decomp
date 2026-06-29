@@ -41,7 +41,7 @@ public final class Protocol extends NativeConnectionBase {
    private static String UDP_TUNNEL = "net.rim.udp";
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       boolean serverConnection = false;
       String localName = name;
       boolean prMode = UdpInternalAddress.isPromiscuousMode(name);

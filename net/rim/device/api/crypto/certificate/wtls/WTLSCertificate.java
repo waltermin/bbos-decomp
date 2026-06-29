@@ -9,6 +9,7 @@ import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateDisplayField;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
+import net.rim.device.api.crypto.certificate.CertificateParsingException;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.CertificateVerificationException;
@@ -46,7 +47,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
       this((InputStream)(new Object(input, offset, length)));
    }
 
-   public WTLSCertificate(InputStream param1) {
+   public WTLSCertificate(InputStream param1) throws CertificateParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -246,7 +247,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
    }
 
    @Override
-   public final void verify(PublicKey issuerPublicKey) {
+   public final void verify(PublicKey issuerPublicKey) throws CertificateVerificationException {
       SHA1Digest digest = (SHA1Digest)(new Object());
       digest.update(this._encoding, 0, this._encoding.length - this._signature.length);
       DecodedSignature decodedSignature = SignatureDecoder.decode(
@@ -259,7 +260,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
    }
 
    @Override
-   public final void verify(KeyStore keystore) {
+   public final void verify(KeyStore keystore) throws NoIssuerFoundException {
       if (keystore == null) {
          throw new Object();
       }
@@ -291,7 +292,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
    }
 
    @Override
-   public final void verify() {
+   public final void verify() throws NoIssuerFoundException {
       if (this.isRoot()) {
          this.verify(this._publicKey);
       } else {

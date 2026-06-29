@@ -10,6 +10,7 @@ import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.xml.parsers.DocumentBuilderFactory;
 import net.rim.ecmascript.runtime.RedirectedObject;
+import net.rim.ecmascript.runtime.ThrownValue;
 import net.rim.ecmascript.runtime.Value;
 import org.w3c.dom.Document;
 
@@ -46,7 +47,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       this._responseHeaders = null;
    }
 
-   final synchronized void send(String data) {
+   final synchronized void send(String data) throws ThrownValue {
       if (this._state != 1) {
          throw ESDOMException.createThrownValue(11);
       }
@@ -78,7 +79,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       }
    }
 
-   final synchronized String getAllResponseHeaders() {
+   final synchronized String getAllResponseHeaders() throws ThrownValue {
       if (this._state >= 3 && this._responseHeaders != null) {
          try {
             ByteArrayOutputStream bytesOut = (ByteArrayOutputStream)(new Object());
@@ -93,7 +94,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       }
    }
 
-   final synchronized void setRequestHeader(String header, String value) {
+   final synchronized void setRequestHeader(String header, String value) throws ThrownValue {
       if (this._state != 1) {
          throw ESDOMException.createThrownValue(11);
       }
@@ -352,7 +353,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
    }
 
    @Override
-   public final synchronized long requestFieldValue(String name) {
+   public final synchronized long requestFieldValue(String name) throws ThrownValue {
       if (name == Names.readyState) {
          return Value.makeIntegerValue(this._state);
       }

@@ -21,7 +21,7 @@ public final class Asserts {
       }
    }
 
-   public static final void productionUserAbortAssert(boolean value) {
+   public static final void productionUserAbortAssert(boolean value) throws UserAbortException {
       if (!value) {
          throw new UserAbortException();
       }

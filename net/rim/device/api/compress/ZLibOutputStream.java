@@ -38,7 +38,7 @@ public class ZLibOutputStream extends OutputStream {
    }
 
    @Override
-   public synchronized void write(int data) {
+   public synchronized void write(int data) throws IOException {
       if (this._outputStream == null) {
          throw new IOException("Stream closed");
       }
@@ -52,7 +52,7 @@ public class ZLibOutputStream extends OutputStream {
    }
 
    @Override
-   public synchronized void write(byte[] data, int dataOffset, int dataLength) {
+   public synchronized void write(byte[] data, int dataOffset, int dataLength) throws IOException {
       if (data == null || dataOffset < 0 || dataLength < 0 || dataOffset + dataLength > data.length) {
          throw new IllegalArgumentException();
       }
@@ -77,7 +77,7 @@ public class ZLibOutputStream extends OutputStream {
    }
 
    @Override
-   public synchronized void flush() {
+   public synchronized void flush() throws IOException {
       if (this._outputStream == null) {
          throw new IOException("Stream closed");
       }
@@ -88,7 +88,7 @@ public class ZLibOutputStream extends OutputStream {
    }
 
    @Override
-   public void close() {
+   public void close() throws IOException {
       if (this._outputStream == null) {
          throw new IOException();
       }

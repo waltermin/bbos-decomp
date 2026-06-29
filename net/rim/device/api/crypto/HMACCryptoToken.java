@@ -16,35 +16,35 @@ public class HMACCryptoToken implements SymmetricCryptoToken, Persistable {
       return false;
    }
 
-   public int extractKeyLength(CryptoTokenMACKeyData cryptoTokenData) {
+   public int extractKeyLength(CryptoTokenMACKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractKeyData(CryptoTokenMACKeyData cryptoTokenData) {
+   public byte[] extractKeyData(CryptoTokenMACKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenMACContext initialize(CryptoTokenMACKeyData keyData, Digest digest) {
+   public CryptoTokenMACContext initialize(CryptoTokenMACKeyData keyData, Digest digest) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 
-   public void reset(CryptoTokenMACContext context) {
+   public void reset(CryptoTokenMACContext context) throws CryptoTokenException {
       throw new CryptoTokenException();
    }
 
-   public int getMAC(CryptoTokenMACContext context, byte[] buffer, int offset, boolean reset) {
+   public int getMAC(CryptoTokenMACContext context, byte[] buffer, int offset, boolean reset) throws CryptoTokenException {
       throw new CryptoTokenException();
    }
 
-   public CryptoTokenMACKeyData createKey(int length) {
+   public CryptoTokenMACKeyData createKey(int length) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenMACKeyData injectKey(byte[] key, int offset, int length) {
+   public CryptoTokenMACKeyData injectKey(byte[] key, int offset, int length) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteKey(CryptoTokenMACKeyData data) {
+   public void deleteKey(CryptoTokenMACKeyData data) throws CryptoUnsupportedOperationException {
       throw new CryptoUnsupportedOperationException();
    }
 }

@@ -35,7 +35,7 @@ public class Orientation {
       return this._roll;
    }
 
-   public static Orientation getOrientation() {
+   public static Orientation getOrientation() throws LocationException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_orientation");
       if (!GPS.isSupportedOnCurrentNetwork() && !BluetoothSerialPort.isSupported()) {
          return null;

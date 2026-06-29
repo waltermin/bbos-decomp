@@ -15,7 +15,7 @@ public class HandshakeMessageFactory {
       this._maxSupportedVersion = maxSupportedVersion;
    }
 
-   public void handleMessage(byte[] m, HandshakeMessageHandler h) {
+   public void handleMessage(byte[] m, HandshakeMessageHandler h) throws HandshakeMessageException, VersionNotSupportedException {
       if (h != null) {
          HandshakeMessageBuffer hmb = new HandshakeMessageBuffer(m);
          int messageType = hmb.readByte();

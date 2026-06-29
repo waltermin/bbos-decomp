@@ -8,7 +8,7 @@ public class KeyBag extends SafeBag {
    }
 
    @Override
-   protected void parse() {
+   protected void parse() throws PKCS12ParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

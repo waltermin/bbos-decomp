@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.mms.service;
 
 import com.fourthpass.wapstack.wsp.WSPHeaderDecoder;
 import java.io.DataInput;
+import java.io.EOFException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -777,7 +778,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       }
    }
 
-   private final void readMultipartContent(DataInput param1) {
+   private final void readMultipartContent(DataInput param1) throws EOFException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

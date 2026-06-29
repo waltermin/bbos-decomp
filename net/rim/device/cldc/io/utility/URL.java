@@ -118,7 +118,7 @@ public class URL {
       return this._urlWithoutRIMParams;
    }
 
-   private void parseUrlString(String url) {
+   private void parseUrlString(String url) throws MalformedURLException {
       int positionOfColon = url.indexOf(58);
       if (positionOfColon == -1) {
          throw new MalformedURLException();
@@ -200,7 +200,7 @@ public class URL {
       }
    }
 
-   private void parseSchemeSpecificPart(String url) {
+   private void parseSchemeSpecificPart(String url) throws MalformedURLException {
       int position = url.indexOf(58) + 1;
       boolean isLDAPUrl = this._scheme.equalsIgnoreCase("ldap");
       int urlLength = url.length();

@@ -42,7 +42,7 @@ public final class SuplSession extends Thread implements LCSListener {
    static int sessionIdCounter = 0;
    static final byte[] SUPPORTED_POS_METHODS = new byte[]{0, 2, 1, 3, 4};
 
-   final void establishConnection() {
+   final void establishConnection() throws SuplException {
       this.timer = (Timer)(new Object());
       System.out.println("Starting Connection guard timer");
       this.timer.schedule(new SuplSession$UTimerTask(this, 0), 30000);
@@ -82,7 +82,7 @@ public final class SuplSession extends Thread implements LCSListener {
       }
    }
 
-   public final void handleReceivedSuplInit(byte[] init) {
+   public final void handleReceivedSuplInit(byte[] init) throws SuplException {
       Ulp ulpPdu = new Ulp();
       this.calcVer(init);
       ulpPdu.decode(init);
@@ -162,7 +162,7 @@ public final class SuplSession extends Thread implements LCSListener {
    public final void verificationTimerExpiry() {
    }
 
-   private final void handleReceivedSuplResponse(SuplResponse suplResponse) {
+   private final void handleReceivedSuplResponse(SuplResponse suplResponse) throws SuplException {
       System.out.println("Stopping UT1");
       this.timer.cancel();
       if (this.state != 3) {
@@ -185,7 +185,7 @@ public final class SuplSession extends Thread implements LCSListener {
       this.sendSuplPosInit(suplResponse.posMethod, null);
    }
 
-   private final void handleReceivedSuplPos(SuplPos suplPos) {
+   private final void handleReceivedSuplPos(SuplPos suplPos) throws SuplException {
       System.out.println("Stopping UT2 or UT3");
       this.timer.cancel();
       if (this.state != 4) {
@@ -461,7 +461,7 @@ public final class SuplSession extends Thread implements LCSListener {
       this.state = 0;
    }
 
-   private final void handleReceivedUlpMsg(Ulp ulp) {
+   private final void handleReceivedUlpMsg(Ulp ulp) throws SuplException {
       System.out.println("Received ULP: ");
       if (ulp == null) {
          throw new SuplException((byte)4);

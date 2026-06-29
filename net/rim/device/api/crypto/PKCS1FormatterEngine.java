@@ -38,7 +38,7 @@ public final class PKCS1FormatterEngine implements BlockFormatterEngine {
    }
 
    @Override
-   public final int formatAndEncrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset, boolean lastBlock) {
+   public final int formatAndEncrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset, boolean lastBlock) throws MessageTooLongException {
       if (input != null
          && inputOffset >= 0
          && inputLength >= 0

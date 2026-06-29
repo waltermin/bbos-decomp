@@ -49,7 +49,7 @@ public class RenderingSession {
       throw null;
    }
 
-   public BrowserContent getBrowserContent(InputConnection connection, String url, RenderingApplication renderingApplication, int flags) {
+   public BrowserContent getBrowserContent(InputConnection connection, String url, RenderingApplication renderingApplication, int flags) throws RenderingException {
       if (connection instanceof Object) {
          return this.getBrowserContent((HttpConnection)connection, renderingApplication, flags);
       } else {
@@ -57,7 +57,7 @@ public class RenderingSession {
       }
    }
 
-   public BrowserContent getBrowserContent(InputConnection connection, String url, RenderingApplication renderingApplication, Event event) {
+   public BrowserContent getBrowserContent(InputConnection connection, String url, RenderingApplication renderingApplication, Event event) throws RenderingException {
       if (connection instanceof Object) {
          return this.getBrowserContent((HttpConnection)connection, renderingApplication, event);
       } else {

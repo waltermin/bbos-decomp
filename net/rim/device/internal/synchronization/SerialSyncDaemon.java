@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.TimeZone;
 import javax.microedition.io.DatagramConnection;
 import net.rim.device.api.io.DatagramBase;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.lowmemory.LowMemoryFailedListener;
 import net.rim.device.api.lowmemory.LowMemoryManager;
@@ -1144,7 +1145,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
       this.sendReply(false);
    }
 
-   private final void backup(SerialSyncCollectionData param1, boolean param2) {
+   private final void backup(SerialSyncCollectionData param1, boolean param2) throws IOCancelledException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

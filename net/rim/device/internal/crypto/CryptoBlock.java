@@ -372,7 +372,7 @@ public final class CryptoBlock {
       }
    }
 
-   public static final int getKeyLength(byte keyAlgorithm) {
+   public static final int getKeyLength(byte keyAlgorithm) throws CryptoBlockException {
       switch (keyAlgorithm) {
          case 0:
             throw new CryptoBlockException();
@@ -423,7 +423,7 @@ public final class CryptoBlock {
       return true;
    }
 
-   private static final String readKeyID(DataInput input) {
+   private static final String readKeyID(DataInput input) throws CryptoBlockException {
       byte[] buffer = new byte[32];
 
       try {
@@ -441,7 +441,7 @@ public final class CryptoBlock {
       throw new CryptoBlockException();
    }
 
-   private static final byte encryptionSchemeToKeyAlgorithm(byte encryptionScheme) {
+   private static final byte encryptionSchemeToKeyAlgorithm(byte encryptionScheme) throws CryptoBlockException {
       switch (encryptionScheme) {
          case 0:
             return 1;
@@ -452,7 +452,7 @@ public final class CryptoBlock {
       }
    }
 
-   private static final byte keyAlgorithmToEncryptionScheme(byte keyAlgorithm) {
+   private static final byte keyAlgorithmToEncryptionScheme(byte keyAlgorithm) throws CryptoBlockException {
       switch (keyAlgorithm) {
          case -1:
             throw new CryptoBlockException("unsupported algorithm");
@@ -465,7 +465,7 @@ public final class CryptoBlock {
       }
    }
 
-   private static final int checkRedundancy(byte[] data, byte encryptionScheme) {
+   private static final int checkRedundancy(byte[] data, byte encryptionScheme) throws CryptoBlockException {
       if (encryptionScheme == 0) {
          return 0;
       } else {
@@ -498,7 +498,7 @@ public final class CryptoBlock {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final boolean encode(Vector uids, DataBuffer input, DataBuffer output, boolean doCompress, boolean doEncrypt) {
+   public static final boolean encode(Vector uids, DataBuffer input, DataBuffer output, boolean doCompress, boolean doEncrypt) throws CryptoBlockException {
       if (input != null && output != null) {
          RandomSource.add(input.getArray());
          output.writeByte(0);
@@ -588,7 +588,7 @@ public final class CryptoBlock {
       }
    }
 
-   public static final String decode(DataBuffer input, DataBuffer output) {
+   public static final String decode(DataBuffer input, DataBuffer output) throws CryptoBlockException {
       if (input != null && output != null) {
          byte encryptionScheme;
          try {

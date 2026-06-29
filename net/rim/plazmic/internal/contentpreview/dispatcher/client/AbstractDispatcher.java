@@ -26,7 +26,7 @@ public class AbstractDispatcher implements Dispatcher {
    }
 
    @Override
-   public int getControlPanelPort(String sessionName) {
+   public int getControlPanelPort(String sessionName) throws DispatcherServiceException, NoSuchSessionException {
       Model response = this.request(new GetControlPanelPort(sessionName));
       if (!(response instanceof SessionPort)) {
          if (!(response instanceof NoSuchSession)) {
@@ -41,7 +41,7 @@ public class AbstractDispatcher implements Dispatcher {
    }
 
    @Override
-   public int getPlaybackCommandPort(String sessionName) {
+   public int getPlaybackCommandPort(String sessionName) throws DispatcherServiceException, NoSuchSessionException {
       Model response = this.request(new GetPlaybackCommandPort(sessionName));
       if (!(response instanceof SessionPort)) {
          if (!(response instanceof NoSuchSession)) {
@@ -55,7 +55,7 @@ public class AbstractDispatcher implements Dispatcher {
       }
    }
 
-   public String sessionReady(int pin) {
+   public String sessionReady(int pin) throws DispatcherServiceException, NoSuchSessionException {
       Model response = this.request(new SessionReady(pin));
       if (!(response instanceof SessionOk)) {
          if (!(response instanceof NoSuchSession)) {
@@ -70,7 +70,7 @@ public class AbstractDispatcher implements Dispatcher {
    }
 
    @Override
-   public void log(String sessionName, int type, String message, String[] data) {
+   public void log(String sessionName, int type, String message, String[] data) throws DispatcherServiceException, NoSuchSessionException {
       Model response = this.request(new LogMessage(sessionName, type, message, data));
       if (!(response instanceof VoidMessage)) {
          if (!(response instanceof NoSuchSession)) {
@@ -82,7 +82,7 @@ public class AbstractDispatcher implements Dispatcher {
       }
    }
 
-   public String dequeueThemeRegistrationRequest(int pin) {
+   public String dequeueThemeRegistrationRequest(int pin) throws DispatcherServiceException {
       Model response = this.request(new DequeueThemeRegistrationRequest(pin));
       if (!(response instanceof ThemeRequest)) {
          throw createServiceException(response);
@@ -91,7 +91,7 @@ public class AbstractDispatcher implements Dispatcher {
       }
    }
 
-   public String dequeueThemeActivationRequest(int pin) {
+   public String dequeueThemeActivationRequest(int pin) throws DispatcherServiceException {
       Model response = this.request(new DequeueThemeActivationRequest(pin));
       if (!(response instanceof ThemeRequest)) {
          throw createServiceException(response);
@@ -101,7 +101,7 @@ public class AbstractDispatcher implements Dispatcher {
    }
 
    @Override
-   public String getSession(int pin) {
+   public String getSession(int pin) throws DispatcherServiceException, NoSuchSessionException {
       Model response = this.request(new GetSpecificSession(pin));
       if (!(response instanceof SessionOk)) {
          if (!(response instanceof NoSuchSession)) {

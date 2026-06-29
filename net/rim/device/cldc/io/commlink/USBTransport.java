@@ -24,7 +24,7 @@ final class USBTransport extends CommLinkTransport implements USBPortListener {
       app.addIOPortListener(this);
    }
 
-   private final void waitForSend() {
+   private final void waitForSend() throws DTRException {
       if (this._failure) {
          throw new DTRException();
       }

@@ -113,7 +113,7 @@ public final class ITPolicyInternal {
       return monitor;
    }
 
-   public static final byte[] authenticateITPolicy(byte[] policy) {
+   public static final byte[] authenticateITPolicy(byte[] policy) throws ITPolicyParseException {
       boolean policyBindingEnabled = isPolicyBindingEnabled();
       byte[] primaryKey = ITPolicy.getByteArray(252);
       byte[][] secondaryKeys = getSecondaryPublicKeys();
@@ -418,7 +418,7 @@ public final class ITPolicyInternal {
       return itAdminTimeStamp;
    }
 
-   private static final void scrubITPolicy(DataBuffer originalITPolicy, DataBuffer scrubbedITPolicy, DataBuffer wipeableITPoliy) {
+   private static final void scrubITPolicy(DataBuffer originalITPolicy, DataBuffer scrubbedITPolicy, DataBuffer wipeableITPoliy) throws ITPolicyParseException {
       originalITPolicy.rewind();
       byte[] dataArray = originalITPolicy.getArray();
 

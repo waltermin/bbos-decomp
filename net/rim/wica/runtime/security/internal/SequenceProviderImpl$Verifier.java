@@ -17,7 +17,7 @@ final class SequenceProviderImpl$Verifier {
       this.load();
    }
 
-   final synchronized boolean verify(int sequenceId, long key) {
+   final synchronized boolean verify(int sequenceId, long key) throws SequenceProviderException {
       SequenceProviderImpl$IncomingSequence sequence = (SequenceProviderImpl$IncomingSequence)this._mapping.get(key);
       if (sequence != null) {
          boolean verified = sequence.verify(sequenceId);

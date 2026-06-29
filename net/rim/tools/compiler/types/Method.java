@@ -61,7 +61,7 @@ public final class Method extends NameAndType {
       return ret;
    }
 
-   public final void addParameter(int index, String name, Type type) {
+   public final void addParameter(int index, String name, Type type) throws CompileException {
       NameAndType parmType = new NameAndType(name, type, super._classType, 1024, this._parmLocalCount);
       this._parameters[index] = parmType;
       this._parmLocalCount = this._parmLocalCount + type.getLocalCount();

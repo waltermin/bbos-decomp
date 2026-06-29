@@ -15,7 +15,7 @@ public class ServiceConfiguration {
    public ServiceConfiguration() {
    }
 
-   public ServiceConfiguration(String uid, String cid) {
+   public ServiceConfiguration(String uid, String cid) throws NoSuchServiceException {
       this._uid = uid;
       this._cid = cid;
       this._serviceRecord = ServiceBook.getSB().getRecordByUidAndCid(uid, cid);

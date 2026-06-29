@@ -34,7 +34,7 @@ public final class DispatcherClient extends AbstractDispatcher {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final synchronized Model request(Model req) {
+   protected final synchronized Model request(Model req) throws DispatcherServiceException {
       ModelBuilder builder = new ModelBuilder();
 
       MishandleException eme;

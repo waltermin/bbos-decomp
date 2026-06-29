@@ -98,7 +98,7 @@ class ESControl extends RedirectedObject {
    }
 
    @Override
-   public boolean notifyFieldChanged(String name, long value) {
+   public boolean notifyFieldChanged(String name, long value) throws ThrownValue {
       int ctrlType = this._model.getType();
       if (name == "visible") {
          this._model.setVisible(Convert.toBoolean(value));

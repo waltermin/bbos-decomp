@@ -117,7 +117,7 @@ public final class SmartCardFactory {
       return card.openSession(SmartCardReaderFactory.getReaderSession(card));
    }
 
-   public static final SmartCardSession getSmartCardSession(AnswerToReset atr) {
+   public static final SmartCardSession getSmartCardSession(AnswerToReset atr) throws SmartCardNoCardPresentException {
       SmartCard card = getSmartCard(atr);
       if (card == null) {
          throw new SmartCardNoCardPresentException();

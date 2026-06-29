@@ -155,7 +155,7 @@ public final class CSSTextParser implements CSSParser {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void parseRuleSet() {
+   private final void parseRuleSet() throws CSSParseException {
       int selectorSize = this.parseSelectorList();
       if (this._token != 40) {
          throw new CSSParseException("rule-set");
@@ -232,7 +232,7 @@ public final class CSSTextParser implements CSSParser {
       }
    }
 
-   private final int[] parseSimpleSelector() {
+   private final int[] parseSimpleSelector() throws CSSParseException {
       int[] simpleSelector = null;
       boolean validSelector;
       switch (this._token) {
@@ -318,7 +318,7 @@ public final class CSSTextParser implements CSSParser {
       return simpleSelector;
    }
 
-   private final int[] parseAttribute() {
+   private final int[] parseAttribute() throws CSSParseException {
       if (this.nextTokenIgnoreWhitespace() != 8) {
          throw new CSSParseException("attribute");
       }
@@ -363,7 +363,7 @@ public final class CSSTextParser implements CSSParser {
       }
    }
 
-   private final int[] parsePseudoClassOrElement() {
+   private final int[] parsePseudoClassOrElement() throws CSSParseException {
       int[] pseudo = null;
       switch (this.nextTokenIgnoreWhitespace()) {
          case 8:
@@ -478,7 +478,7 @@ public final class CSSTextParser implements CSSParser {
       }
    }
 
-   private final int[] parseExpression(boolean parameters, boolean ignore) {
+   private final int[] parseExpression(boolean parameters, boolean ignore) throws CSSParseException {
       int[] expression = this.parseTerm(ignore);
 
       while (true) {
@@ -528,7 +528,7 @@ public final class CSSTextParser implements CSSParser {
       }
    }
 
-   private final int[] parseTerm(boolean ignore) {
+   private final int[] parseTerm(boolean ignore) throws CSSParseException {
       boolean sign = false;
       boolean positive = true;
       switch (this._token) {
@@ -775,7 +775,7 @@ public final class CSSTextParser implements CSSParser {
       return result;
    }
 
-   private final int[] parseHexColor() {
+   private final int[] parseHexColor() throws CSSParseException {
       String source = this._tokenizer.getSource();
       int colorStartIndex = this._tokenizer.getStartIndex();
       int colorEndIndex = this._tokenizer.getEndIndex();
@@ -905,13 +905,13 @@ public final class CSSTextParser implements CSSParser {
       }
    }
 
-   private final void parseCharsetRule() {
+   private final void parseCharsetRule() throws CSSParseException {
       if (this.nextTokenIgnoreWhitespace() != 7 || this.nextTokenIgnoreWhitespace() != 39) {
          throw new CSSParseException("charset-rule");
       }
    }
 
-   private final void parseImportRule() {
+   private final void parseImportRule() throws CSSParseException {
       this.nextTokenIgnoreWhitespace();
       if (this._token == 7 || this._token == 36) {
          String uri = this._tokenizer.getStringValue();
@@ -935,7 +935,7 @@ public final class CSSTextParser implements CSSParser {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void parseMediaRule() {
+   private final void parseMediaRule() throws CSSParseException {
       String[] mediaList;
       label98: {
          label97: {
@@ -1025,7 +1025,7 @@ public final class CSSTextParser implements CSSParser {
       return this._stringCount++;
    }
 
-   private final String[] parseMediaList() {
+   private final String[] parseMediaList() throws CSSParseException {
       String[] mediaList = new Object[1];
       mediaList[0] = this._tokenizer.getStringValue();
 

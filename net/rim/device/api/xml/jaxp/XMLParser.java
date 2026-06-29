@@ -2184,7 +2184,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       this.fatalError(((StringBuffer)(new Object())).append(error.substring(0, index)).append(parm).append(error.substring(index + 2)).toString());
    }
 
-   void fatalError(String msg) {
+   void fatalError(String msg) throws SAXParseException {
       SAXParseException x = (SAXParseException)(new Object(msg, this));
       this._errorHandler.fatalError(x);
       throw x;

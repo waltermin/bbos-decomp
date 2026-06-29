@@ -6,7 +6,7 @@ class ESArrayPrototype$Constructor extends Constructor {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       int nParms = this.getNumParms();
       ESArray array;
       if (nParms == 1 && this.getVersion() == 120) {

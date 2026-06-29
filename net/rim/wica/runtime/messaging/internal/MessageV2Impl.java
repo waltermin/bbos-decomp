@@ -36,7 +36,7 @@ public class MessageV2Impl extends MessageImpl {
    }
 
    @Override
-   public MessageImpl[] debundle() {
+   public MessageImpl[] debundle() throws MessageException {
       int bundleSize = this.getCommonHeader().getMessageCount();
       if (bundleSize == 1) {
          return new MessageV2Impl[]{this};
@@ -59,7 +59,7 @@ public class MessageV2Impl extends MessageImpl {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public MessageImpl bundle(Vector messages) {
+   public MessageImpl bundle(Vector messages) throws MessageException {
       int bundleSize = messages.size();
       TransportMessageV2[] tma = new TransportMessageV2[bundleSize];
 

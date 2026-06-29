@@ -107,7 +107,7 @@ public final class TypeModule implements Constants {
       v.addElement(classType);
    }
 
-   public final void optimize() {
+   public final void optimize() throws CompileException {
       Vector v = this._classes;
       if (v == null) {
          throw new CompileException("No classes found");

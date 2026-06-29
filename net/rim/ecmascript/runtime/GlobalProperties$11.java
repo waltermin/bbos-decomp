@@ -8,7 +8,7 @@ class GlobalProperties$11 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       long parm = this.getParm(0);
 
       try {

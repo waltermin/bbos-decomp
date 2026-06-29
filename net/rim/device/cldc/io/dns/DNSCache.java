@@ -86,7 +86,7 @@ public final class DNSCache implements LowMemoryListener {
       return this.lookupInternal(domain, type, null);
    }
 
-   private final Vector lookupInternal(String domain, int type, Vector touchedLeafs) {
+   private final Vector lookupInternal(String domain, int type, Vector touchedLeafs) throws DNSException {
       DNSCacheNode domainNode = this.getNode(domain);
       if (domainNode == null || domainNode.getExpiryTime() < getCurrentTime()) {
          return null;

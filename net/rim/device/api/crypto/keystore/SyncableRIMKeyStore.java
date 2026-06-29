@@ -31,7 +31,7 @@ public class SyncableRIMKeyStore extends PersistableRIMKeyStore {
       long[] indices,
       long[] notUsed,
       KeyStoreTicket ticket
-   ) {
+   ) throws KeyStoreCancelException {
       if (!this.checkTicket(ticket)) {
          throw new KeyStoreCancelException();
       }
@@ -66,7 +66,7 @@ public class SyncableRIMKeyStore extends PersistableRIMKeyStore {
       long[] indices,
       long[] notUsed,
       KeyStoreTicket ticket
-   ) {
+   ) throws KeyStoreCancelException {
       if (!this.checkTicket(ticket)) {
          throw new KeyStoreCancelException();
       }

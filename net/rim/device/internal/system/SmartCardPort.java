@@ -23,7 +23,7 @@ public final class SmartCardPort extends IOPort {
       return InternalServices.isDeviceCapable(5);
    }
 
-   public final void reset() {
+   public final void reset() throws IOException {
       assertPermission();
       if (!this._opened) {
          throw new IOException("Device not open");
@@ -64,7 +64,7 @@ public final class SmartCardPort extends IOPort {
       this._opened = false;
    }
 
-   public final boolean open(int protocol) {
+   public final boolean open(int protocol) throws IOException {
       assertPermission();
       if (this._opened) {
          throw new IOException("Device Already Open");

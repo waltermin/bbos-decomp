@@ -13,7 +13,7 @@ public class Address {
    public static String FTP_ADDR = "ftp";
    private static EmailAddressTextFilter _filter = (EmailAddressTextFilter)(new Object());
 
-   public Address(String addr, String name) {
+   public Address(String addr, String name) throws AddressException {
       AbstractStringWrapper asw = AbstractStringWrapper.createInstance(addr);
       if (!_filter.validate(asw)) {
          throw new AddressException(((StringBuffer)(new Object())).append(addr).append(" is an invalid email address").toString());

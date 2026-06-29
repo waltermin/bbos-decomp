@@ -60,7 +60,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
    }
 
    @Override
-   public synchronized int getSecurityVersion(long id) {
+   public synchronized int getSecurityVersion(long id) throws VersionProviderException {
       if (id == this._defaultAgId && id != 0) {
          return this._securityVersion;
       } else {
@@ -69,7 +69,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
    }
 
    @Override
-   public synchronized int getTransportMessageVersion(long id) {
+   public synchronized int getTransportMessageVersion(long id) throws VersionProviderException {
       if (id == this._defaultAgId && id != 0) {
          return this._transportVersion;
       } else {

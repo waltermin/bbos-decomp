@@ -560,7 +560,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
       return this._faultDetail != null && this._faultDetailName != null && isRightElement(this._faultDetailName, URI, name);
    }
 
-   private final Object decodeFault(Object objectGraph) {
+   private final Object decodeFault(Object objectGraph) throws MarshalException, ServerException {
       Object[] fault = (Object[])objectGraph;
       String faultCode = (String)fault[0];
       if (faultCode == null) {

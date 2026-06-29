@@ -3,6 +3,7 @@ package net.rim.device.cldc.io.jcrmi;
 import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.Remote;
@@ -46,7 +47,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
    }
 
    @Override
-   public Connection openPrim(String param1, int param2, boolean param3) {
+   public Connection openPrim(String param1, int param2, boolean param3) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -536,7 +537,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       }
    }
 
-   private void throwException(short type, short reason) {
+   private void throwException(short type, short reason) throws CardException, UserException {
       String s = "User defined exception thrown by remote method";
       switch (type) {
          case 0:

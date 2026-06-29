@@ -21,7 +21,7 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
       this(key, (Digest)(new Object()), signature, signatureOffset);
    }
 
-   public PKCS1SignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) {
+   public PKCS1SignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) throws InvalidSignatureEncodingException {
       if (key != null && digest != null && signature != null && signatureOffset >= 0) {
          this._key = key;
          this._length = key.getRSACryptoSystem().getModulusLength();

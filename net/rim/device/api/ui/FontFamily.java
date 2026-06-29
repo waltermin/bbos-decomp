@@ -281,7 +281,7 @@ public class FontFamily {
       this._name = name;
    }
 
-   public static FontFamily forName(String name) {
+   public static FontFamily forName(String name) throws ClassNotFoundException {
       FontFamily f = FontRegistry.get(name);
       if (f == null) {
          throw new ClassNotFoundException();

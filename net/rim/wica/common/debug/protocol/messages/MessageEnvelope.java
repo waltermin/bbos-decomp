@@ -25,7 +25,7 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
       this.calculateCheck();
    }
 
-   public final void deserializeHeader(IInputByteStreamAdapter stream) {
+   public final void deserializeHeader(IInputByteStreamAdapter stream) throws ByteStreamBadOnDeserialize {
       int magic = stream.readInt();
       if (!this.isMagic(magic)) {
          throw new ByteStreamBadOnDeserialize(((StringBuffer)(new Object("Wrong magic number: "))).append(magic).toString());

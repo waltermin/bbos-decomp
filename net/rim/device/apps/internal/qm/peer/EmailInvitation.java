@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
+import java.io.EOFException;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.i18n.MessageFormat;
@@ -181,7 +182,7 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
       return db.toArray();
    }
 
-   final boolean unPickle(byte[] data) {
+   final boolean unPickle(byte[] data) throws EOFException {
       DataBuffer db = (DataBuffer)(new Object(data, 0, data.length, false));
       if (db.readByte() != 1) {
          return false;

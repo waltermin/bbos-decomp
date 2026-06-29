@@ -10,7 +10,7 @@ import net.rim.device.api.crypto.RSAPublicKey;
 
 final class WTLS_RIM_PublicKeyDecoder extends PublicKeyDecoder {
    @Override
-   public final PublicKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) {
+   public final PublicKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (keyAlgorithm == null) {
          throw new InvalidKeyEncodingException();
       }

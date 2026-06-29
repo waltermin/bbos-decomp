@@ -71,7 +71,7 @@ public class SmartCardReaderSession {
       throw null;
    }
 
-   final synchronized void openSmartCardSession() {
+   final synchronized void openSmartCardSession() throws SmartCardSessionAlreadyOpenException, SmartCardSessionClosedException {
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
       }
@@ -91,7 +91,7 @@ public class SmartCardReaderSession {
       return this._readerSessionOpen;
    }
 
-   public final synchronized void sendAPDU(CommandAPDU commandAPDU, ResponseAPDU responseAPDU) {
+   public final synchronized void sendAPDU(CommandAPDU commandAPDU, ResponseAPDU responseAPDU) throws SmartCardSessionClosedException {
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
       }
@@ -109,7 +109,7 @@ public class SmartCardReaderSession {
       throw null;
    }
 
-   public final synchronized void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDUGroup responseAPDUs) {
+   public final synchronized void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDUGroup responseAPDUs) throws SmartCardSessionClosedException {
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
       }
@@ -144,7 +144,7 @@ public class SmartCardReaderSession {
       this.sendAPDUs(commandAPDUs, new ResponseAPDUGroup(responseAPDUs, numAPDUs));
    }
 
-   public final void negotiateProtocol(SmartCardCapabilities cardCapabilities) {
+   public final void negotiateProtocol(SmartCardCapabilities cardCapabilities) throws SmartCardSessionClosedException {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
@@ -159,7 +159,7 @@ public class SmartCardReaderSession {
       throw null;
    }
 
-   public final void setProtocol(int protocol) {
+   public final void setProtocol(int protocol) throws SmartCardSessionClosedException {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
@@ -170,11 +170,11 @@ public class SmartCardReaderSession {
       function.checkException();
    }
 
-   protected void setProtocolImpl(int protocol) {
+   protected void setProtocolImpl(int protocol) throws SmartCardUnsupportedOperationException {
       throw new SmartCardUnsupportedOperationException();
    }
 
-   public final SmartCard getSmartCard() {
+   public final SmartCard getSmartCard() throws SmartCardSessionClosedException {
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
       } else {
@@ -194,7 +194,7 @@ public class SmartCardReaderSession {
       return this.getAnswerToReset(true);
    }
 
-   public final AnswerToReset getAnswerToReset(boolean allowUI) {
+   public final AnswerToReset getAnswerToReset(boolean allowUI) throws SmartCardSessionClosedException {
       if (!this._readerSessionOpen) {
          throw new SmartCardSessionClosedException();
       }

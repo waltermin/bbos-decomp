@@ -258,7 +258,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._contactList == null) {
          throw new PIMException("Contact does not belong to a ContactList.", 1);
       }

@@ -87,7 +87,7 @@ public final class CSSTokenizer implements CSSTokens {
       return this._token;
    }
 
-   public final int nextToken() {
+   public final int nextToken() throws CSSParseException {
       int c;
       c = this.getChar();
       label173:
@@ -340,7 +340,7 @@ public final class CSSTokenizer implements CSSTokens {
       return this.getChar();
    }
 
-   private final void readEscape() {
+   private final void readEscape() throws CSSParseException {
       int c = this.getChar();
       if (CSSUtilities.isHexadecimalCharacter((char)c)) {
          c = this.nextChar();
@@ -380,7 +380,7 @@ public final class CSSTokenizer implements CSSTokens {
       }
    }
 
-   private final int readString1() {
+   private final int readString1() throws CSSParseException {
       this._startIndex = this._index;
       int c = this.getChar();
 
@@ -418,7 +418,7 @@ public final class CSSTokenizer implements CSSTokens {
       }
    }
 
-   private final int readString2() {
+   private final int readString2() throws CSSParseException {
       this._startIndex = this._index;
       int c = this.getChar();
 
@@ -456,7 +456,7 @@ public final class CSSTokenizer implements CSSTokens {
       }
    }
 
-   private final int readAtRule() {
+   private final int readAtRule() throws CSSParseException {
       this._startIndex = this._index;
       int c = this.getChar();
       switch (c) {
@@ -524,7 +524,7 @@ public final class CSSTokenizer implements CSSTokens {
       }
    }
 
-   private final int readNumber() {
+   private final int readNumber() throws CSSParseException {
       this._startIndex = this._index;
 
       for (int c = this.getChar(); c != 46; c = this.nextChar()) {
@@ -550,7 +550,7 @@ public final class CSSTokenizer implements CSSTokens {
       return this.readUnits(false);
    }
 
-   private final int readUnits(boolean integer) {
+   private final int readUnits(boolean integer) throws CSSParseException {
       int c;
       this._endIndex = this._index;
       c = this.getChar();
@@ -771,7 +771,7 @@ public final class CSSTokenizer implements CSSTokens {
       }
    }
 
-   private final int readURI() {
+   private final int readURI() throws CSSParseException {
       int c = this.getChar();
 
       while (CSSUtilities.isWhitespaceCharacter((char)c)) {

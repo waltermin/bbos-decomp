@@ -38,7 +38,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
    }
 
    @Override
-   public void setFeature(String name, boolean value) {
+   public void setFeature(String name, boolean value) throws SAXNotRecognizedException {
       if (this.parent != null) {
          this.parent.setFeature(name, value);
       } else {
@@ -47,7 +47,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
    }
 
    @Override
-   public boolean getFeature(String name) {
+   public boolean getFeature(String name) throws SAXNotRecognizedException {
       if (this.parent != null) {
          return this.parent.getFeature(name);
       } else {
@@ -56,7 +56,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
    }
 
    @Override
-   public void setProperty(String name, Object value) {
+   public void setProperty(String name, Object value) throws SAXNotRecognizedException {
       if (this.parent != null) {
          this.parent.setProperty(name, value);
       } else {
@@ -65,7 +65,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
    }
 
    @Override
-   public Object getProperty(String name) {
+   public Object getProperty(String name) throws SAXNotRecognizedException {
       if (this.parent != null) {
          return this.parent.getProperty(name);
       } else {

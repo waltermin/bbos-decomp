@@ -56,7 +56,7 @@ public final class BluetoothSerialPort extends IOPort {
       ApplicationControl.assertBluetoothSerialProfileAllowed(true);
    }
 
-   private BluetoothSerialPort() {
+   private BluetoothSerialPort() throws IOException {
       if (ITPolicy.getBoolean(34, 5, false)) {
          throw new IOException("Disabled by IT Policy");
       }
@@ -70,7 +70,7 @@ public final class BluetoothSerialPort extends IOPort {
 
    public BluetoothSerialPort(
       BluetoothSerialPortInfo info, int baudRate, int dataFormat, int flowControl, int rxBufferSize, int txBufferSize, BluetoothSerialPortListener listener
-   ) {
+   ) throws IOException {
       this();
       this.addListener(listener);
       this._remoteAddress = info.getDeviceAddress();
@@ -101,7 +101,7 @@ public final class BluetoothSerialPort extends IOPort {
       this.addDefaultSDPRecord(uuid, serviceName);
    }
 
-   public BluetoothSerialPort(int baudRate, int dataFormat, int flowControl, int rxBufferSize, int txBufferSize, BluetoothSerialPortListener listener) {
+   public BluetoothSerialPort(int baudRate, int dataFormat, int flowControl, int rxBufferSize, int txBufferSize, BluetoothSerialPortListener listener) throws IOException {
       this();
       this._isServer = true;
       this.addListener(listener);
@@ -121,7 +121,7 @@ public final class BluetoothSerialPort extends IOPort {
       return this._sdpRecordHandle;
    }
 
-   public final void addSDPRecord(int[] attributeIDs, byte[][] attributeValues, int classOfDevice) {
+   public final void addSDPRecord(int[] attributeIDs, byte[][] attributeValues, int classOfDevice) throws IOException {
       if (this._sdpRecordHandle == -1) {
          int securityLevel = 11;
          this._sdpRecordHandle = BluetoothSDP.addRecord(

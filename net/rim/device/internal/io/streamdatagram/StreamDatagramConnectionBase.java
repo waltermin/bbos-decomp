@@ -232,7 +232,7 @@ public class StreamDatagramConnectionBase
    }
 
    @Override
-   public OutputStream openOutputStream() {
+   public OutputStream openOutputStream() throws ConnectionClosedException {
       if (this._outStream == null || this._closeRequested) {
          throw new ConnectionClosedException();
       }
@@ -255,7 +255,7 @@ public class StreamDatagramConnectionBase
    }
 
    @Override
-   public InputStream openInputStream() {
+   public InputStream openInputStream() throws ConnectionClosedException {
       if (this._inStream == null || this._closeRequested) {
          throw new ConnectionClosedException();
       }

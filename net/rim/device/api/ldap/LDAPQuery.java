@@ -118,7 +118,7 @@ public class LDAPQuery {
       this._serviceUID = serviceUID;
    }
 
-   public void setHost(String server, int port, String baseQuery) {
+   public void setHost(String server, int port, String baseQuery) throws LDAPBadSyntaxException, LDAPInvalidOperationException {
       if (!this.isRunning() && this._finalURL == null) {
          if (server == null) {
             server = "";
@@ -140,7 +140,7 @@ public class LDAPQuery {
       }
    }
 
-   public void setScope(int scope) {
+   public void setScope(int scope) throws LDAPInvalidOperationException {
       if (!this.isRunning() && this._finalURL == null) {
          switch (scope) {
             case -1:
@@ -160,7 +160,7 @@ public class LDAPQuery {
       }
    }
 
-   public void setAuthType(int authType) {
+   public void setAuthType(int authType) throws LDAPInvalidOperationException {
       if (authType != 1 && authType != 0) {
          throw new LDAPInvalidOperationException();
       }
@@ -168,7 +168,7 @@ public class LDAPQuery {
       this._authType = authType;
    }
 
-   public void setConnectionType(int connectionType) {
+   public void setConnectionType(int connectionType) throws LDAPInvalidOperationException {
       if (connectionType != 0 && connectionType != 1) {
          throw new LDAPInvalidOperationException();
       }
@@ -242,7 +242,7 @@ public class LDAPQuery {
       this._listeners = ListenerUtilities.removeListener(this._listeners, listener);
    }
 
-   public void addFilter(String oid, String value) {
+   public void addFilter(String oid, String value) throws LDAPBadSyntaxException, LDAPInvalidOperationException {
       if (this.isRunning() || this._finalURL != null) {
          throw new LDAPInvalidOperationException();
       }
@@ -285,7 +285,7 @@ public class LDAPQuery {
       }
    }
 
-   public void addFilter(String filter) {
+   public void addFilter(String filter) throws LDAPBadSyntaxException, LDAPInvalidOperationException {
       if (this.isRunning() || this._finalURL != null) {
          throw new LDAPInvalidOperationException();
       }
@@ -306,7 +306,7 @@ public class LDAPQuery {
       }
    }
 
-   public void addAttribute(String oid) {
+   public void addAttribute(String oid) throws LDAPBadSyntaxException, LDAPInvalidOperationException {
       if (this.isRunning() || this._finalURL != null) {
          throw new LDAPInvalidOperationException();
       }

@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.file;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.api.io.FileInfo;
 import net.rim.device.api.system.ApplicationProcess;
@@ -29,7 +30,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    private FileInfo _fileInfo;
    private WeakReference _process;
 
-   public PosixFileInputStream(int codeModuleCaller, int fs, String fileName, PosixFileConnection connection, boolean autoResolveEncrypted, boolean unwrapData) {
+   public PosixFileInputStream(int codeModuleCaller, int fs, String fileName, PosixFileConnection connection, boolean autoResolveEncrypted, boolean unwrapData) throws IOException {
       this._rootId = fs;
       this._offset = 0;
       this._available = 0;

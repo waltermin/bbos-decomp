@@ -4,7 +4,7 @@ public final class DHKeyAgreement {
    private DHKeyAgreement() {
    }
 
-   public static final byte[] generateSharedSecret(DHPrivateKey localPrivateKey, DHPublicKey remotePublicKey, boolean useCofactor) {
+   public static final byte[] generateSharedSecret(DHPrivateKey localPrivateKey, DHPublicKey remotePublicKey, boolean useCofactor) throws InvalidCryptoSystemException {
       if (localPrivateKey != null && remotePublicKey != null) {
          DHCryptoSystem cryptoSystem = localPrivateKey.getDHCryptoSystem();
          if (!cryptoSystem.equals(remotePublicKey.getDHCryptoSystem())) {

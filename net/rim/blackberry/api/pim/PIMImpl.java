@@ -46,7 +46,7 @@ class PIMImpl extends PIM {
    }
 
    @Override
-   public PIMList openPIMList(int pimListType, int mode, String name) {
+   public PIMList openPIMList(int pimListType, int mode, String name) throws PIMException {
       assertPermission();
       if (!isValidMode(mode)) {
          throw new Object();
@@ -101,7 +101,7 @@ class PIMImpl extends PIM {
    }
 
    @Override
-   public PIMItem[] fromSerialFormat(InputStream param1, String param2) {
+   public PIMItem[] fromSerialFormat(InputStream param1, String param2) throws PIMException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -181,7 +181,7 @@ class PIMImpl extends PIM {
       // 090: invokespecial net/rim/blackberry/api/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 093: athrow
       // 094: bipush 1
-      // 095: anewarray 430
+      // 095: anewarray 433
       // 098: dup
       // 099: bipush 0
       // 09a: aload 7
@@ -250,7 +250,7 @@ class PIMImpl extends PIM {
       // 121: invokespecial net/rim/blackberry/api/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 124: athrow
       // 125: bipush 1
-      // 126: anewarray 520
+      // 126: anewarray 523
       // 129: dup
       // 12a: bipush 0
       // 12b: aload 10
@@ -294,7 +294,7 @@ class PIMImpl extends PIM {
       // 178: invokespecial net/rim/blackberry/api/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 17b: athrow
       // 17c: bipush 1
-      // 17d: anewarray 574
+      // 17d: anewarray 577
       // 180: dup
       // 181: bipush 0
       // 182: aload 10
@@ -334,7 +334,7 @@ class PIMImpl extends PIM {
    }
 
    @Override
-   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) {
+   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) throws PIMException {
       assertPermission();
       if (item == null || os == null || enc == null || dataFormat == null) {
          throw new Object();

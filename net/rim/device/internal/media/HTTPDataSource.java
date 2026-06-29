@@ -52,7 +52,7 @@ public class HTTPDataSource extends DataSource implements SourceStream {
    }
 
    @Override
-   public long seek(long where) {
+   public long seek(long where) throws IOException {
       if (where < 0) {
          where = 0;
       }
@@ -106,7 +106,7 @@ public class HTTPDataSource extends DataSource implements SourceStream {
    }
 
    @Override
-   public void connect() {
+   public void connect() throws IOException {
       if (this._buffer == null) {
          if (Application.isEventDispatchThread()) {
             throw new IOException("Connect called on event dispatch thread");

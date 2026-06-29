@@ -52,7 +52,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
       collection.setObjectFieldValue(handle, id, this.getValue(collection.getDef(), id, this._type, value));
    }
 
-   private final Object getValue(ComponentDef cDef, int fieldID, int arrayType, long esObject) {
+   private final Object getValue(ComponentDef cDef, int fieldID, int arrayType, long esObject) throws ThrownValue {
       if (esObject == Value.NULL) {
          return null;
       }

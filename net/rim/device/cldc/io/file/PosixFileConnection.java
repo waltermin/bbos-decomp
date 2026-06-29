@@ -170,7 +170,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final long rawFileSize() {
+   public final long rawFileSize() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -742,7 +742,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean setControlledAccess(CodeSigningKey csk) {
+   public final boolean setControlledAccess(CodeSigningKey csk) throws ConnectionClosedException {
       this.assertWritePermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -761,7 +761,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final CodeSigningKey getControlledAccess() {
+   public final CodeSigningKey getControlledAccess() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -841,7 +841,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void enableDRMForwardLock() {
+   public final void enableDRMForwardLock() throws ConnectionClosedException {
       this.assertWritePermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -857,7 +857,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final boolean isContentDRMForwardLocked() {
+   public final boolean isContentDRMForwardLocked() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -953,7 +953,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isFileEncrypted() {
+   public final boolean isFileEncrypted() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -974,7 +974,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isContentBuiltIn() {
+   public final boolean isContentBuiltIn() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -989,7 +989,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setAutoEncryptionResolveMode(boolean mode) {
+   public final void setAutoEncryptionResolveMode(boolean mode) throws ConnectionClosedException {
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
       }
@@ -1188,7 +1188,7 @@ public final class PosixFileConnection implements BaseFileConnection {
       return totalSize;
    }
 
-   private final PosixFileInputStream openInputStreamInternal(int callerModule, boolean unwrapData, boolean setInputStream) {
+   private final PosixFileInputStream openInputStreamInternal(int callerModule, boolean unwrapData, boolean setInputStream) throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -1229,7 +1229,7 @@ public final class PosixFileConnection implements BaseFileConnection {
       return StringUtilities.endsWithIgnoreCase(this._path, ENCRYPTED_MEDIA_EXTENSION, 1701707776);
    }
 
-   private final OutputStream openOutputStreamInternal(long offset, int callerModule) {
+   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws ConnectionClosedException {
       this.assertWritePermission();
       if (offset < 0) {
          throw new Object("negative offset");
@@ -1253,7 +1253,7 @@ public final class PosixFileConnection implements BaseFileConnection {
       return this._outputStream;
    }
 
-   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) {
+   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws ConnectionClosedException {
       if (!this.isOpen()) {
          if (returnFileInfo) {
             throw new ConnectionClosedException();

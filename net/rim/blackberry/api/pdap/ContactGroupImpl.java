@@ -38,7 +38,7 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       throw new PIMException(READ_ONLY_MESSAGE);
    }
 

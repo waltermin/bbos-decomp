@@ -8,7 +8,7 @@ public class SecretBag extends SafeBag {
    }
 
    @Override
-   protected void parse() {
+   protected void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
             new Object(super._bagData);

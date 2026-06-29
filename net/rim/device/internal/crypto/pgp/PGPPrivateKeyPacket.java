@@ -84,7 +84,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final PrivateKey getPrivateKey(PGPPasswordTicket ticket) {
+   public final PrivateKey getPrivateKey(PGPPasswordTicket ticket) throws PGPEncodingException {
       if (ticket == null) {
          throw new Object();
       }
@@ -253,7 +253,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
       }
    }
 
-   private final boolean checkRedundancy(byte[] data) {
+   private final boolean checkRedundancy(byte[] data) throws PGPEncodingException {
       int version = this.getVersion();
       if (version != 3 && this._s2kUsage == -2) {
          int dataLength = data.length - 20;

@@ -160,7 +160,7 @@ public final class NativeSocket {
       return (int)(result >> 32);
    }
 
-   public final int available() {
+   public final int available() throws SocketIOException {
       int result = available0(this._socketId);
       if (result < 0) {
          throw new SocketIOException(-6);
@@ -245,7 +245,7 @@ public final class NativeSocket {
 
    private static final native int flush0(int var0);
 
-   public static final void checkError(long result) {
+   public static final void checkError(long result) throws SocketIOException {
       if (result != 1 && result != 0) {
          throw new SocketIOException((int)result);
       }

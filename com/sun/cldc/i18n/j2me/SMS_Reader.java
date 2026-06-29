@@ -524,7 +524,7 @@ public final class SMS_Reader extends StreamReader {
    };
 
    @Override
-   public final int read() {
+   public final int read() throws IOException {
       try {
          int table = 0;
          char ch = 0;

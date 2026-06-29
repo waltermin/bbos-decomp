@@ -73,7 +73,7 @@ public final class KeyStoreManager {
       }
    }
 
-   public final synchronized void register(String param1, long param2, CodeSigningKey param4, KeyStore param5) {
+   public final synchronized void register(String param1, long param2, CodeSigningKey param4, KeyStore param5) throws KeyStoreRegisterException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

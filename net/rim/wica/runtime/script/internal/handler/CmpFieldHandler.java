@@ -16,7 +16,7 @@ public final class CmpFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component component, String name) {
+   public final long getProperty(Component component, String name) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -35,7 +35,7 @@ public final class CmpFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection collection, long handle, String name) {
+   public final long getProperty(DataCollection collection, long handle, String name) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       int type = collection.getDef().getFieldReferenceType(id);
       DataCollection propertyCollection = this._context.getWiclet().getDataCollection(type);
@@ -56,7 +56,7 @@ public final class CmpFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component component, String name, long value) {
+   public final void putProperty(Component component, String name, long value) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -70,7 +70,7 @@ public final class CmpFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection collection, long handle, String name, long value) {
+   public final void putProperty(DataCollection collection, long handle, String name, long value) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -83,7 +83,7 @@ public final class CmpFieldHandler implements PropertyHandler {
       }
    }
 
-   public static final long getValue(int defID, long esObject) {
+   public static final long getValue(int defID, long esObject) throws ThrownValue {
       long value = -1;
       if (esObject != Value.NULL) {
          Object obj = Value.getObjectValue(esObject);
@@ -101,7 +101,7 @@ public final class CmpFieldHandler implements PropertyHandler {
       }
    }
 
-   static final void validateDataValue(int destDefID, int srcDefID) {
+   static final void validateDataValue(int destDefID, int srcDefID) throws ThrownValue {
       if (destDefID != srcDefID) {
          throw ThrownValue.typeError(RuntimeResources.getString(120));
       }

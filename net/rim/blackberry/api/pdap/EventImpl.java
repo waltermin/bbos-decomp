@@ -237,7 +237,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._eventList == null) {
          throw new PIMException("Event does not belong to an EventList.", 1);
       }
@@ -1598,7 +1598,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    }
 
    @Override
-   public final void addToCategory(String category) {
+   public final void addToCategory(String category) throws PIMException {
       if (category == null) {
          throw new Object();
       } else {

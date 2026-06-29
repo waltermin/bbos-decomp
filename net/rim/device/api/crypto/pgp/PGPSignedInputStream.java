@@ -3,6 +3,9 @@ package net.rim.device.api.crypto.pgp;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoTokenException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
@@ -50,7 +53,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       this._signatureException = new Object[numSignaturePackets];
    }
 
-   private final int getSignerIndex(byte[] signerKeyID) {
+   private final int getSignerIndex(byte[] signerKeyID) throws PGPVerificationException {
       int numSigners = this._signerKeyIDs.length;
 
       for (int i = 0; i < numSigners; i++) {
@@ -78,7 +81,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       return null;
    }
 
-   public final void verify(byte[] signerKeyID) {
+   public final void verify(byte[] signerKeyID) throws PGPNoKeyFoundException {
       int signerIndex = this.getSignerIndex(signerKeyID);
       if (!this._signatureVerified[signerIndex]) {
          Exception lastException = this._signatureException[signerIndex];
@@ -99,7 +102,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       }
    }
 
-   public final void verify(byte[] param1, Certificate param2) {
+   public final void verify(byte[] param1, Certificate param2) throws CryptoTokenException, CryptoUnsupportedOperationException, NoSuchAlgorithmException, PGPEncodingException, PGPVerificationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

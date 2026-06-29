@@ -54,7 +54,7 @@ public class BBRClientAuth {
       return this._eB;
    }
 
-   public boolean verify(byte[] yB) {
+   public boolean verify(byte[] yB) throws VerificationException {
       if (yB == null || yB.length != 66) {
          throw new IllegalArgumentException();
       }

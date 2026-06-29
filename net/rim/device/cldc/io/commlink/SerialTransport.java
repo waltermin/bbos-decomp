@@ -229,7 +229,7 @@ class SerialTransport extends CommLinkTransport {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   int readFrame(long timeout) {
+   int readFrame(long timeout) throws IOException, DTRException, TimeoutException {
       int retries = 0;
 
       while (true) {
@@ -463,7 +463,7 @@ class SerialTransport extends CommLinkTransport {
       this.connected();
    }
 
-   private boolean readHelper() {
+   private boolean readHelper() throws IOException {
       if (this._exception != null) {
          IOException e = this._exception;
          this._exception = null;
@@ -493,7 +493,7 @@ class SerialTransport extends CommLinkTransport {
       }
    }
 
-   private void waitForDataAvailable() {
+   private void waitForDataAvailable() throws TimeoutException {
       if (!this.readHelper()) {
          long time = System.currentTimeMillis();
          long timeoutTime = time + this._timeout;

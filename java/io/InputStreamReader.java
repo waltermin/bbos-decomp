@@ -13,7 +13,7 @@ public class InputStreamReader extends Reader {
       this.in = Helper.getStreamReader(is, enc);
    }
 
-   private void ensureOpen() {
+   private void ensureOpen() throws IOException {
       if (this.in == null) {
          throw new IOException("Stream closed");
       }

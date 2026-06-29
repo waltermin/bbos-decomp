@@ -54,7 +54,7 @@ public class NameAndType implements Constants {
       return member;
    }
 
-   public Member getMember(Compiler compiler, TypeModule typeModule) {
+   public Member getMember(Compiler compiler, TypeModule typeModule) throws CompileException {
       throw new CompileException(((StringBuffer)(new Object("no member associated with variable: "))).append(this._name).toString());
    }
 

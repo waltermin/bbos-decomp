@@ -7,7 +7,7 @@ public final class PGPLiteralInputStream extends PGPInputStream {
    private String _filename;
    private long _date;
 
-   PGPLiteralInputStream(InputStream input) {
+   PGPLiteralInputStream(InputStream input) throws PGPEncodingException {
       super(input, null);
       byte firstByte = (byte)super._input.read();
       if (firstByte == 116) {

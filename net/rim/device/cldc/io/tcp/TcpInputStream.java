@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcp;
 
+import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.cldc.io.utility.PacketLogger;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramConnectionBase;
@@ -35,7 +36,7 @@ final class TcpInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read(byte[] b, int off, int len) {
+   public final synchronized int read(byte[] b, int off, int len) throws IOException {
       if (this._isClosed) {
          throw new Object();
       }

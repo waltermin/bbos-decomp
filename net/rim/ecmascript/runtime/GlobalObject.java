@@ -197,7 +197,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
       this.opStackSize = 0;
    }
 
-   void growOpStack(int size) {
+   void growOpStack(int size) throws ThrownValue {
       if (size > 16384) {
          throw ThrownValue.internalError(Resources.getString(69));
       }
@@ -433,7 +433,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public long run(CompiledScript script) {
+   public long run(CompiledScript script) throws ThrownValue {
       if (!versionCheck(script)) {
          throw ThrownValue.syntaxError(
             Resources.getString(49),

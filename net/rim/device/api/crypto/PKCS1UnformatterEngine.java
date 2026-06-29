@@ -36,7 +36,7 @@ public final class PKCS1UnformatterEngine implements BlockUnformatterEngine {
    }
 
    @Override
-   public final int decryptAndUnformat(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBlock) {
+   public final int decryptAndUnformat(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBlock) throws DecodeException {
       if (input != null
          && inputOffset >= 0
          && input.length - this._inputBlockLength >= inputOffset

@@ -39,7 +39,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
       this._versionProvider = versionProvider;
    }
 
-   public SecureMessageV1_0(long receiverId, byte[] unsecureMsg, KeyProvider keyProvider, SecurityProvider securityProvider) {
+   public SecureMessageV1_0(long receiverId, byte[] unsecureMsg, KeyProvider keyProvider, SecurityProvider securityProvider) throws SecureMessageException {
       try {
          this._tm = new TransportMessageV1_0(unsecureMsg);
       } catch (TransportMessageException e) {
@@ -88,7 +88,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void sign() {
+   private void sign() throws SecureMessageException {
       int headerLength = this._header.getHeaderLength();
       int sigLength = this.getOutgoingSignatureLength();
       DataBuffer buffer = new DataBuffer(headerLength + this._tm.getPayloadLength() + sigLength);
@@ -108,7 +108,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void signAndEncrypt() {
+   private void signAndEncrypt() throws SecureMessageException {
       int sigLength = this.getOutgoingSignatureLength();
       DataBuffer buffer = new DataBuffer(this._tm.getPayloadLength() + sigLength);
       int payloadLength = this._tm.serializePayload(buffer);
@@ -166,7 +166,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
    }
 
    @Override
-   public void verifySecurity() {
+   public void verifySecurity() throws SecureMessageException {
       if (this._secureMsg != null) {
          DataBuffer buffer = new DataBuffer(this._secureMsg);
          this._header = new CommonHeaderV1_0();
@@ -196,7 +196,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
       }
    }
 
-   private void verifyVersion() {
+   private void verifyVersion() throws SecureMessageException {
       int expectedVersion = -1;
 
       try {
@@ -241,7 +241,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void verifySignature(byte[] text, int textOffset, int textLength, byte[] signature, int signatureOffset, int signatureLength) {
+   private void verifySignature(byte[] text, int textOffset, int textLength, byte[] signature, int signatureOffset, int signatureLength) throws SecureMessageException {
       if (signature.length < signatureOffset + signatureLength) {
          throw new SecureMessageException(0);
       }
@@ -259,7 +259,7 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private byte[] decrypt(byte[] ciphertext, int offset, int length) {
+   private byte[] decrypt(byte[] ciphertext, int offset, int length) throws SecureMessageException {
       int encodedKeyLength = this._securityProvider.isServer() ? 128 : 22;
       if (length < encodedKeyLength) {
          throw new SecureMessageException(0);

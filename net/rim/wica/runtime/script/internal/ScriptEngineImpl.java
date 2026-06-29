@@ -13,6 +13,7 @@ import net.rim.wica.runtime.metadata.component.Msg;
 import net.rim.wica.runtime.metadata.component.REError;
 import net.rim.wica.runtime.metadata.component.ScriptCollection;
 import net.rim.wica.runtime.metadata.component.ui.ScreenManager;
+import net.rim.wica.runtime.script.CompilerException;
 import net.rim.wica.runtime.script.ScriptException;
 import net.rim.wica.runtime.script.ScriptMonitor;
 import net.rim.wica.runtime.service.ServiceProvider;
@@ -196,7 +197,7 @@ public final class ScriptEngineImpl implements ScriptEngineInternal, Serviceable
    }
 
    @Override
-   public final synchronized void startEngine(ScriptMonitor param1) {
+   public final synchronized void startEngine(ScriptMonitor param1) throws CompilerException, ScriptException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

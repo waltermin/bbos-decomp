@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
+import net.rim.ecmascript.runtime.ThrownValue;
+
 class ESHTMLDocumentPrototype$13 extends JavaScriptHostFunction {
    private final ESHTMLDocumentPrototype this$0;
 
@@ -9,7 +11,7 @@ class ESHTMLDocumentPrototype$13 extends JavaScriptHostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       throw ESDOMException.createThrownValue(9);
    }
 }

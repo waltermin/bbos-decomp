@@ -170,7 +170,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
       return inputStringLength;
    }
 
-   private final byte[] hexStringToByteArray(String value) {
+   private final byte[] hexStringToByteArray(String value) throws ASN1EncodingException {
       if (value.charAt(0) != '#') {
          throw new ASN1EncodingException();
       }
@@ -184,7 +184,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
       return data;
    }
 
-   private final int toHex(int a, int b) {
+   private final int toHex(int a, int b) throws ASN1EncodingException {
       if (a >= 48 && a <= 57) {
          a -= 48;
       } else if (a >= 97 && a <= 102) {

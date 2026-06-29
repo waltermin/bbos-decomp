@@ -23,7 +23,7 @@ class JavaCallable extends HostFunction {
       return ((StringBuffer)(new Object())).append(this._javaClass.getName()).append(".").append(this.getName()).toString();
    }
 
-   static void convertOneArg(long arg, int want, IntVector javaParms, Vector v) {
+   static void convertOneArg(long arg, int want, IntVector javaParms, Vector v) throws ThrownValue {
       int argType = Value.getType(arg);
       switch (Reflect.classify(want)) {
          case 0:

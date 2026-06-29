@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.javascript;
 
+import net.rim.ecmascript.runtime.ThrownValue;
 import org.w3c.dom.ProcessingInstruction;
 
 final class ESProcessingInstruction extends ESNode {
@@ -10,7 +11,7 @@ final class ESProcessingInstruction extends ESNode {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final long requestFieldValue(String name) {
+   public final long requestFieldValue(String name) throws ThrownValue {
       if (name == Names.target) {
          return JavaScriptEngine.makeStringValue(((ProcessingInstruction)this.getNode()).getTarget());
       }

@@ -255,7 +255,7 @@ class ESRegExpPrototype$Constructor extends Constructor {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       long parmPattern = this.getParm(0);
       long parmFlags = this.getParm(1);
       ESRegExp regExp = null;

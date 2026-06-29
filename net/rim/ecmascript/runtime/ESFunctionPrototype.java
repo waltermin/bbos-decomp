@@ -15,7 +15,7 @@ class ESFunctionPrototype extends HostFunction {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private static long callFunction(GlobalObject global, HostFunction hf, long[] callParms) {
+   private static long callFunction(GlobalObject global, HostFunction hf, long[] callParms) throws ThrownValue {
       boolean var8 = false /* VF: Semaphore variable */;
 
       ESFunction func;

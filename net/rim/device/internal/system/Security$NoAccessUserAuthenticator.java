@@ -20,7 +20,7 @@ public final class Security$NoAccessUserAuthenticator extends UserAuthenticator 
    }
 
    @Override
-   public final boolean initialize(String password) {
+   public final boolean initialize(String password) throws UserAuthenticationException {
       throw new UserAuthenticationException();
    }
 

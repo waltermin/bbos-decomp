@@ -16,7 +16,7 @@ public final class DispatcherMessageReader extends AbstractMessageReader {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final void parse(InputStream is, DispatcherEventHandler handler, int minFormatVersion) {
+   public static final void parse(InputStream is, DispatcherEventHandler handler, int minFormatVersion) throws MessageFormatException, MessageNotFoundException {
       DataInput di = (DataInput)(new Object(is));
       int version = 1;
       boolean var7 = false /* VF: Semaphore variable */;

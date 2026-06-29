@@ -423,7 +423,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
       }
    }
 
-   private final void filterUnMappedFields(TLEFieldsList aTLEFieldsList, int aTableId) {
+   private final void filterUnMappedFields(TLEFieldsList aTLEFieldsList, int aTableId) throws OTASyncCollectionAdapter$InvalidTableIdException {
       DataSourceDatabaseTable xDataSourceDatabaseTable = this._dataSourceDatabase.getTable(aTableId);
       if (xDataSourceDatabaseTable == null) {
          throw new OTASyncCollectionAdapter$InvalidTableIdException(null);

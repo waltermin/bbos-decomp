@@ -12,7 +12,7 @@ class ESSystem$3 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ExitThrownValue {
       throw new ExitThrownValue(Value.NULL);
    }
 }

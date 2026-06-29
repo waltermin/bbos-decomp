@@ -89,7 +89,7 @@ final class PortAssigner$PromiscuousApnPortHolder implements RadioStatusListener
       }
    }
 
-   private final void registerPromiscuousPort(int port, Object connection) {
+   private final void registerPromiscuousPort(int port, Object connection) throws IOPortAlreadyBoundException {
       Vector v = (Vector)this.get(port);
       boolean firstClient = false;
       if (v == null) {

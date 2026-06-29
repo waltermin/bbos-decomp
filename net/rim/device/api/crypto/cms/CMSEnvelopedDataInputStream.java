@@ -72,7 +72,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       this(inputStream, keyStore, sessionKey, false, true);
    }
 
-   CMSEnvelopedDataInputStream(InputStream param1, KeyStore param2, SymmetricKey param3, boolean param4, boolean param5) {
+   CMSEnvelopedDataInputStream(InputStream param1, KeyStore param2, SymmetricKey param3, boolean param4, boolean param5) throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -345,7 +345,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       return this._recipientPublicKeyBitLength;
    }
 
-   final void continueInitialization(KeyStore keyStore, SymmetricKey sessionKey, boolean displayUI) {
+   final void continueInitialization(KeyStore keyStore, SymmetricKey sessionKey, boolean displayUI) throws CMSParsingException {
       this._keyStore = keyStore;
       if (this._sessionKey == null) {
          this._sessionKey = sessionKey;
@@ -396,7 +396,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
    }
 
    @Override
-   public final void setData(InputStream data) {
+   public final void setData(InputStream data) throws CMSDecryptionException {
       BlockDecryptor cryptoStream;
       if (this._encryptionType.equals(OIDs.getOID(-472306990))) {
          if (!(this._sessionKey instanceof Object)) {
@@ -474,7 +474,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       }
    }
 
-   private final void setData(InputStream param1, ASN1InputStream param2) {
+   private final void setData(InputStream param1, ASN1InputStream param2) throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -838,7 +838,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 39: ifnonnull 4b
       // 3c: aload 0
       // 3d: bipush 1
-      // 3e: anewarray 2615
+      // 3e: anewarray 2627
       // 41: dup
       // 42: bipush 0
       // 43: aload 1
@@ -886,7 +886,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       return this._recipient;
    }
 
-   public final CMSEntityIdentifier[] getRecipients() {
+   public final CMSEntityIdentifier[] getRecipients() throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -972,7 +972,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 97: ifle c4
       // 9a: aload 0
       // 9b: iload 4
-      // 9d: anewarray 2840
+      // 9d: anewarray 2852
       // a0: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipients [Lnet/rim/device/api/crypto/cms/CMSEntityIdentifier;
       // a3: iload 4
       // a5: bipush 1
@@ -1009,7 +1009,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // try (11 -> 98): 104 null
    }
 
-   private final void readKeyAgreementEntities(ASN1InputStream keyAgreement, Vector recipients) {
+   private final void readKeyAgreementEntities(ASN1InputStream keyAgreement, Vector recipients) throws CMSParsingException {
       int version = keyAgreement.readInteger();
       if (version != 3) {
          throw new CMSParsingException();
@@ -1050,7 +1050,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       }
    }
 
-   private final void readKeyTransportEntities(ASN1InputByteArray recipientInfos, Vector recipients) {
+   private final void readKeyTransportEntities(ASN1InputByteArray recipientInfos, Vector recipients) throws CMSParsingException {
       recipientInfos.readSequence();
       int version = recipientInfos.readInteger();
       if (recipientInfos.peekNextTag() == 0) {
@@ -1072,7 +1072,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       }
    }
 
-   private final void readRecipientInfos() {
+   private final void readRecipientInfos() throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -1556,7 +1556,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // try (277 -> 280): 284 null
    }
 
-   private final CMSEntityIdentifier readKeyAgreement(ASN1InputStream param1) {
+   private final CMSEntityIdentifier readKeyAgreement(ASN1InputStream param1) throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -3224,7 +3224,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // try (1077 -> 1086): 1093 null
    }
 
-   private final CMSEntityIdentifier readKeyTransport(ASN1InputByteArray recipientInfos) {
+   private final CMSEntityIdentifier readKeyTransport(ASN1InputByteArray recipientInfos) throws CMSParsingException {
       recipientInfos.readSequence();
       int version = recipientInfos.readInteger();
       RSAPrivateKey key = null;

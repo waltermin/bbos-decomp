@@ -10,7 +10,7 @@ public final class DSASignatureVerifier implements SignatureVerifier {
       this(key, (Digest)(new Object()), r, rOffset, s, sOffset);
    }
 
-   public DSASignatureVerifier(DSAPublicKey key, Digest digest, byte[] r, int rOffset, byte[] s, int sOffset) {
+   public DSASignatureVerifier(DSAPublicKey key, Digest digest, byte[] r, int rOffset, byte[] s, int sOffset) throws InvalidSignatureEncodingException {
       if (key != null && digest != null && r != null && s != null) {
          this._key = key;
          this._digest = digest;

@@ -82,7 +82,7 @@ public final class TLSUtilities {
       buffer.write(integer);
    }
 
-   public static final void sendAlertAndThrowException(AlertProtocolMethods alertProtocol, byte description) {
+   public static final void sendAlertAndThrowException(AlertProtocolMethods alertProtocol, byte description) throws TLSAlertException {
       alertProtocol.sendAlertMessage((byte)3, description);
       throw new TLSAlertException((byte)3, description);
    }

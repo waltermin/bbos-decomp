@@ -15,7 +15,7 @@ public class CardException extends Exception {
       throw new RuntimeException("cod2jar: stack: underflow");
    }
 
-   public static void throwIt(short reason) {
+   public static void throwIt(short reason) throws CardException {
       throw new CardException(reason);
    }
 }

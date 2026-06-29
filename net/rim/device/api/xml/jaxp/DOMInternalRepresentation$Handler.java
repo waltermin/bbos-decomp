@@ -287,7 +287,7 @@ class DOMInternalRepresentation$Handler extends DefaultHandler implements RIMExt
    }
 
    @Override
-   public void fatalError(SAXParseException exception) {
+   public void fatalError(SAXParseException exception) throws SAXParseException {
       if (this.this$0._errorHandler != null) {
          this.this$0._errorHandler.fatalError(exception);
       }

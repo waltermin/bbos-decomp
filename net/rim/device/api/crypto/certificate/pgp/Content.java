@@ -43,7 +43,7 @@ class Content implements Persistable {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public Content(byte[] encoding, PGPPacket[] packets) {
+   public Content(byte[] encoding, PGPPacket[] packets) throws PGPEncodingException {
       if (encoding != null && packets != null) {
          this._encoding = encoding;
          PGPSignaturePacket[] currentSignatureArray = null;
@@ -105,7 +105,7 @@ class Content implements Persistable {
       }
    }
 
-   private PGPSignaturePacket[] handlePublicKey(PGPPublicKeyPacket packet) {
+   private PGPSignaturePacket[] handlePublicKey(PGPPublicKeyPacket packet) throws PGPEncodingException {
       if (this._publicKey != null) {
          throw new PGPEncodingException("CMKs");
       }

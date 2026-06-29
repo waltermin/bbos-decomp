@@ -59,7 +59,7 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
    }
 
    @Override
-   public final void register(HandshakeInfo params) {
+   public final void register(HandshakeInfo params) throws HandshakeException {
       Logger.log("SHR");
       if (params.getSecurityVersion() == 0) {
          params.setSecurityVersion(this.getMaxSecurityVersion());
@@ -132,7 +132,7 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final HandshakeProtocol createHandshake(HandshakeInfo params) {
+   private final HandshakeProtocol createHandshake(HandshakeInfo params) throws HandshakeException {
       try {
          switch (params.getSecurityVersion()) {
             case 1:

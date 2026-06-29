@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcp;
 
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Datagram;
 import javax.microedition.io.SocketConnection;
@@ -67,7 +68,7 @@ public final class Protocol
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final void init(String name, int mode, boolean timeouts) {
+   final void init(String name, int mode, boolean timeouts) throws IOException {
       super._isListenConnection = false;
 
       try {
@@ -698,7 +699,7 @@ public final class Protocol
       }
    }
 
-   final void outputStreamClosed() {
+   final void outputStreamClosed() throws IOException {
       if (!super._outputStreamClosed && !super._abortWasCalled && !this._shutdownInProgress) {
          super._outputStreamClosed = true;
          if (this._tcpOptionManager._lingerTimeout > 0) {
@@ -1568,7 +1569,7 @@ public final class Protocol
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       if ((mode & 3) != mode) {
          throw new Object();
       }

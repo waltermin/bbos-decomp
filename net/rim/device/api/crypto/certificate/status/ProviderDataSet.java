@@ -36,7 +36,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
       return this._provider;
    }
 
-   public final void unSerialize(DataInputStream in) {
+   public final void unSerialize(DataInputStream in) throws ResponseParsingException {
       if (in == null) {
          throw new Object();
       }

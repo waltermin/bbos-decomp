@@ -50,7 +50,7 @@ public class BlockDecryptor extends DecryptorInputStream {
       return this._outputBlockLength;
    }
 
-   private boolean loadCurrentCiphertext() {
+   private boolean loadCurrentCiphertext() throws BadPaddingException {
       if (this._pendingCiphertext == null) {
          return false;
       }
@@ -73,7 +73,7 @@ public class BlockDecryptor extends DecryptorInputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public int read(byte[] buffer, int bufferOffset, int bufferLength) {
+   public int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOException {
       if (buffer == null || bufferOffset < 0 || bufferLength < 0 || buffer.length - bufferLength < bufferOffset) {
          throw new Object();
       }

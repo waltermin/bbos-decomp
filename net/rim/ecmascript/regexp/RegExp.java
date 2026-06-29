@@ -15,7 +15,7 @@ public class RegExp {
    private static Perl5Compiler _compiler = new Perl5Compiler();
    private static Perl5Matcher _matcher = new Perl5Matcher();
 
-   public RegExp(String str, boolean ignoreCase, boolean multiLine) {
+   public RegExp(String str, boolean ignoreCase, boolean multiLine) throws RegExp$SyntaxError {
       this._multiLine = multiLine;
       int options = 0;
       if (ignoreCase) {

@@ -22,7 +22,7 @@ class ESAttr extends ESNode {
       return name == Names.value ? JavaScriptEngine.makeStringValue(this.getAttr().getValue()) : super.requestFieldValue(name);
    }
 
-   static Attr getAttr(long value) {
+   static Attr getAttr(long value) throws ThrownValue {
       Object obj = Convert.toObject(value);
       if (!(obj instanceof ESAttr)) {
          throw ThrownValue.typeError("Object not Attr");

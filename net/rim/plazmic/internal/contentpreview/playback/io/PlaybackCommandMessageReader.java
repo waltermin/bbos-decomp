@@ -9,7 +9,7 @@ import net.rim.plazmic.internal.contentpreview.playback.PlaybackCommandHandler;
 public final class PlaybackCommandMessageReader extends AbstractMessageReader {
    public static final String rcsid = "$Id:$";
 
-   public static final void parse(InputStream is, PlaybackCommandHandler handler) {
+   public static final void parse(InputStream is, PlaybackCommandHandler handler) throws MessageFormatException {
       DataInput di = (DataInput)(new Object(is));
       byte type = di.readByte();
       if (type != 0) {

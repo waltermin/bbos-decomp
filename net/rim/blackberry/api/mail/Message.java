@@ -94,7 +94,7 @@ public class Message implements Part {
       return array;
    }
 
-   public boolean removeAllRecipients(int type) {
+   public boolean removeAllRecipients(int type) throws MessagingException {
       if (type != 2 && type != 1 && type != 0) {
          throw new MessagingException("Recipient type should be RecipientType.BCC or RecipientType.CC or RecipientType.TO");
       }
@@ -122,7 +122,7 @@ public class Message implements Part {
       return true;
    }
 
-   public boolean removeRecipients(int type, Address[] list) {
+   public boolean removeRecipients(int type, Address[] list) throws MessagingException {
       if (list == null) {
          throw new Object("Address array is null");
       }
@@ -186,7 +186,7 @@ public class Message implements Part {
       this.addRecipients(type, new Address[]{address});
    }
 
-   public void addRecipients(int type, Address[] addresses) {
+   public void addRecipients(int type, Address[] addresses) throws MessagingException {
       if (!ITPolicy.getBoolean(16, true) && type == 2) {
          throw new MessagingException("Do not have permissions to add BCC addresses to the Message");
       }
@@ -447,7 +447,7 @@ public class Message implements Part {
       return this.reply(replyToAll, false);
    }
 
-   public Message reply(boolean replyToAll, boolean replyWithOriginalText) {
+   public Message reply(boolean replyToAll, boolean replyWithOriginalText) throws MessagingException {
       EmailMessageModelImpl emmi = (EmailMessageModelImpl)this._msg;
       long fid = emmi.getFolderId();
       if (fid == 0) {
@@ -681,7 +681,7 @@ public class Message implements Part {
    }
 
    @Override
-   public void setContent(Object content) {
+   public void setContent(Object content) throws MessagingException {
       BodyModel body = createBodyModel("");
       boolean foundBodyModel = false;
       MailConverterManager mcm = MailConverterManager.getInstance();

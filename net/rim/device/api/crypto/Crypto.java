@@ -15,7 +15,7 @@ public final class Crypto {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final byte[] encrypt(byte[] plaintext, int offset, int length, Key key, String algorithm, InitializationVector iv) {
+   public static final byte[] encrypt(byte[] plaintext, int offset, int length, Key key, String algorithm, InitializationVector iv) throws CryptoException {
       if (plaintext != null && offset >= 0 && offset <= length && length > 0 && plaintext.length - length >= offset) {
          CryptoIOException e;
          try {
@@ -40,7 +40,7 @@ public final class Crypto {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final byte[] decrypt(byte[] ciphertext, int offset, int length, Key key, String algorithm, InitializationVector iv) {
+   public static final byte[] decrypt(byte[] ciphertext, int offset, int length, Key key, String algorithm, InitializationVector iv) throws CryptoException {
       if (ciphertext != null && ciphertext.length > 0 && offset >= 0 && offset <= length && length > 0 && ciphertext.length - length >= offset) {
          CryptoIOException e;
          try {

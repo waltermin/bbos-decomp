@@ -76,7 +76,7 @@ public final class Transport extends NativeTransport implements UDPPacketListene
    }
 
    @Override
-   public final void nativePreSend() {
+   public final void nativePreSend() throws IOException {
       UdpAddress addressBase = (UdpAddress)super._txAddressBase;
       UDPPacketHeader header = (UDPPacketHeader)super._txHeader;
       String apn = addressBase.getApn();
@@ -108,7 +108,7 @@ public final class Transport extends NativeTransport implements UDPPacketListene
    }
 
    @Override
-   public final void nativeSendSetupHeader(Datagram datagram, IOProperties properties) {
+   public final void nativeSendSetupHeader(Datagram datagram, IOProperties properties) throws IOException {
       UdpAddress addressBase = (UdpAddress)super._txAddressBase;
       UDPPacketHeader header = (UDPPacketHeader)super._txHeader;
       header.reset();
@@ -130,7 +130,7 @@ public final class Transport extends NativeTransport implements UDPPacketListene
    }
 
    @Override
-   public final void nativeSendSetupData(Datagram datagram) {
+   public final void nativeSendSetupData(Datagram datagram) throws IOFormatException {
       int type = ((UdpAddress)super._txAddressBase).getType();
       int gpakHostAddress = 0;
       switch (type) {
@@ -235,7 +235,7 @@ public final class Transport extends NativeTransport implements UDPPacketListene
    }
 
    @Override
-   public final void nativeSendVerify(DatagramAddressBase addressBase, Datagram datagram) {
+   public final void nativeSendVerify(DatagramAddressBase addressBase, Datagram datagram) throws IOFormatException {
       UdpAddress addr = null;
       if (addressBase instanceof UdpAddress) {
          addr = (UdpAddress)addressBase;

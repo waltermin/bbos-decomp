@@ -82,7 +82,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    private static Hashtable _actualListeners;
    private static final long APP_REGISTRY_KEY = -9144547334088878571L;
 
-   final void commitAddress(AddressCardModel address) {
+   final void commitAddress(AddressCardModel address) throws PIMException {
       long id = address.getUID();
 
       try {
@@ -118,7 +118,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final void removeContact(Contact element) {
+   public final void removeContact(Contact element) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -148,7 +148,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final Enumeration items(int searchType) {
+   public final Enumeration items(int searchType) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (super._mode == 2) {
@@ -288,7 +288,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       return this.items(1);
    }
 
-   private final Enumeration createItemsEnumeration(PIMItem matching, boolean searchNameOnly) {
+   private final Enumeration createItemsEnumeration(PIMItem matching, boolean searchNameOnly) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -381,7 +381,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       throw new Object();
    }
 
-   private final Enumeration createItemsEnumeration(String matching, boolean searchNameOnly, int searchType) {
+   private final Enumeration createItemsEnumeration(String matching, boolean searchNameOnly, int searchType) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -738,7 +738,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }

@@ -53,7 +53,7 @@ public class LineReader {
       return this._bufferLength - this._bufferOffset;
    }
 
-   public byte[] readLine() {
+   public byte[] readLine() throws EOFException {
       if (this._bufferOffset == this._bufferLength) {
          this._bufferOffset = 0;
          this._bufferLength = this._stream.read(this._buffer, 0, 1024);

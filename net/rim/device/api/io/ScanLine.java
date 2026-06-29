@@ -10,7 +10,7 @@ public final class ScanLine extends LineReader {
       super(stream);
    }
 
-   public final int searchForBoundary(byte[] boundary) {
+   public final int searchForBoundary(byte[] boundary) throws EOFException, IOException {
       if (boundary != null && boundary.length <= 70) {
          boolean needLF = false;
          int lineLength = 0;

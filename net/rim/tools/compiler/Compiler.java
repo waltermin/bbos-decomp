@@ -600,7 +600,7 @@ public class Compiler implements Optimization {
       }
    }
 
-   private void readFinalStatics(String param1, InputStream param2) {
+   private void readFinalStatics(String param1, InputStream param2) throws CompileException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 1
@@ -662,7 +662,7 @@ public class Compiler implements Optimization {
       // try (10 -> 32): 32 null
    }
 
-   public void prepopulateObjectVTableMethods() {
+   public void prepopulateObjectVTableMethods() throws CompileException {
       String HASHCODE = "hashCode";
       String EQUALS = "equals";
       String TOSTRING = "toString";
@@ -1173,7 +1173,7 @@ public class Compiler implements Optimization {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private Classfile parseClassfile(String jarName, String inName, InputStream in, int length, TypeModule typeModule, boolean parsingImport) {
+   private Classfile parseClassfile(String jarName, String inName, InputStream in, int length, TypeModule typeModule, boolean parsingImport) throws CompileException {
       String fileName = inName;
       if (jarName != null) {
          fileName = ((StringBuffer)(new Object())).append(jarName).append('(').append(inName).append(')').toString();
@@ -1546,7 +1546,7 @@ public class Compiler implements Optimization {
       }
    }
 
-   private void parseJar(String jarName, JarInputStream jarStream) {
+   private void parseJar(String jarName, JarInputStream jarStream) throws CompileException {
       boolean foundManifest = false;
       if (this._makingMIDlet) {
          Manifest manifest = (Manifest)jarStream.getManifest();
@@ -1701,7 +1701,7 @@ public class Compiler implements Optimization {
       this._moduleVersion = this._jad.getProperty("MIDlet-Version");
    }
 
-   private void compile() {
+   private void compile() throws CompileException {
       ExecutionTimer timer_parse = new ExecutionTimer("parse", this._timers);
       this.processProperties();
       boolean jadsParsed = false;

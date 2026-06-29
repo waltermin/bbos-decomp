@@ -15,7 +15,7 @@ public class PrintStream extends OutputStream {
       this.charOut = new OutputStreamWriter(out);
    }
 
-   private void ensureOpen() {
+   private void ensureOpen() throws IOException {
       if (this.charOut == null) {
          throw new IOException("Stream closed");
       }

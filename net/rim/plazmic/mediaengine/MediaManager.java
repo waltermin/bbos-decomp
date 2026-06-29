@@ -529,7 +529,7 @@ public class MediaManager implements ResourceProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public Object createResourceFromURI(String uri, String suggestedType, ResourceContext context, Object referrer) {
+   public Object createResourceFromURI(String uri, String suggestedType, ResourceContext context, Object referrer) throws MediaException {
       try {
          return this.createResourceFromURI(uri, suggestedType, context, referrer, false);
       } catch (Throwable var7) {
@@ -543,7 +543,7 @@ public class MediaManager implements ResourceProvider {
       return this.createResource(type, data, context, referrer, null);
    }
 
-   private Object readUnregisteredType(String type, Object data, Object context, LoadingStatus status) {
+   private Object readUnregisteredType(String type, Object data, Object context, LoadingStatus status) throws MediaException {
       if (data instanceof Object) {
          InputStream in = (InputStream)data;
          int numBytes = (int)status.getTotalBytes();
@@ -683,7 +683,7 @@ public class MediaManager implements ResourceProvider {
       this(c, true);
    }
 
-   private final void checkCancelDownload() {
+   private final void checkCancelDownload() throws MediaException {
       if (this._cancelDownload) {
          throw this._interruptedException;
       }

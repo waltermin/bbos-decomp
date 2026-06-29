@@ -21,7 +21,7 @@ public final class LoopingThreadService implements Service {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final synchronized void startService(boolean wait) {
+   public final synchronized void startService(boolean wait) throws ServiceException {
       if (!this._enabled && !this.isRunning()) {
          this._enabled = true;
          ((Thread)(new Object(new LoopingThreadService$Loop(this, null)))).start();
@@ -37,7 +37,7 @@ public final class LoopingThreadService implements Service {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final synchronized void stopService(boolean wait) {
+   public final synchronized void stopService(boolean wait) throws ServiceException {
       if (this._enabled) {
          this._enabled = false;
          if (this._loopWait) {

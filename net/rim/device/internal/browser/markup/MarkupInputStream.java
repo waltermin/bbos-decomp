@@ -206,7 +206,7 @@ public class MarkupInputStream extends InputStream {
       this._primaryInput.close();
    }
 
-   private boolean readNextChunk() {
+   private boolean readNextChunk() throws IOException, MarkupWrongMIMEType {
       while (true) {
          byte[] currentChunk = new byte[0];
          int numToRead = 1024;

@@ -19,7 +19,7 @@ public class LocalDevice {
    private LocalDevice() {
    }
 
-   public static LocalDevice getLocalDevice() {
+   public static LocalDevice getLocalDevice() throws BluetoothStateException {
       assertPermission();
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       LocalDevice localDevice = (LocalDevice)ar.getOrWaitFor(-8665271906926764260L);

@@ -78,7 +78,7 @@ public class PIMImpl extends BlackBerryPIM {
    }
 
    @Override
-   public PIMList openPIMList(int pimListType, int mode, String name) {
+   public PIMList openPIMList(int pimListType, int mode, String name) throws PIMException {
       assertPermission();
       if (!isValidMode(mode)) {
          throw new Object();
@@ -147,7 +147,7 @@ public class PIMImpl extends BlackBerryPIM {
    }
 
    @Override
-   public PIMItem[] fromSerialFormat(InputStream param1, String param2) {
+   public PIMItem[] fromSerialFormat(InputStream param1, String param2) throws PIMException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -224,7 +224,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 089: invokespecial javax/microedition/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 08c: athrow
       // 08d: bipush 1
-      // 08e: anewarray 490
+      // 08e: anewarray 493
       // 091: dup
       // 092: bipush 0
       // 093: aload 7
@@ -293,7 +293,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 11a: invokespecial javax/microedition/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 11d: athrow
       // 11e: bipush 1
-      // 11f: anewarray 580
+      // 11f: anewarray 583
       // 122: dup
       // 123: bipush 0
       // 124: aload 10
@@ -337,7 +337,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 171: invokespecial javax/microedition/pim/PIMException.<init> (Ljava/lang/String;I)V
       // 174: athrow
       // 175: bipush 1
-      // 176: anewarray 634
+      // 176: anewarray 637
       // 179: dup
       // 17a: bipush 0
       // 17b: aload 10
@@ -377,7 +377,7 @@ public class PIMImpl extends BlackBerryPIM {
    }
 
    @Override
-   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) {
+   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) throws PIMException {
       assertPermission();
       if (item != null && os != null && dataFormat != null) {
          String encoding = enc;

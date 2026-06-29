@@ -11,7 +11,7 @@ final class SoftwareDHCryptoToken$DHCryptoSystemData implements CryptoTokenCrypt
    private int _hashCode;
    private String _name;
 
-   SoftwareDHCryptoToken$DHCryptoSystemData(byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) {
+   SoftwareDHCryptoToken$DHCryptoSystemData(byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) throws InvalidCryptoSystemException {
       if (p != null && g != null && privateKeyMinRandomBits > 0) {
          if (privateKeyMinRandomBits > p.length << 3) {
             privateKeyMinRandomBits = p.length << 3;

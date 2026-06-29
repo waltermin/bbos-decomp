@@ -25,7 +25,7 @@ public class SymmetricKeyDecoder {
       }
    }
 
-   public static SymmetricKey decode(InputStream encodedKey, String encodingAlgorithm, String keyAlgorithm) {
+   public static SymmetricKey decode(InputStream encodedKey, String encodingAlgorithm, String keyAlgorithm) throws InvalidKeyEncodingException {
       try {
          if (encodedKey != null && encodingAlgorithm != null) {
             SymmetricKeyDecoder decoder = (SymmetricKeyDecoder)_decoderHashtable.get(encodingAlgorithm);

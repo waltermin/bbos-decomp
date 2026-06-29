@@ -37,7 +37,7 @@ public class MediaPlayer {
       return this._state;
    }
 
-   public synchronized void start() {
+   public synchronized void start() throws MediaException {
       this.assertPermission();
       if (this._media != null && this._services != null && this._state != 0) {
          this._state = 2;
@@ -58,7 +58,7 @@ public class MediaPlayer {
       }
    }
 
-   public synchronized void setMediaTime(long time) {
+   public synchronized void setMediaTime(long time) throws MediaException {
       if (this._state != 1) {
          throw new MediaException();
       }

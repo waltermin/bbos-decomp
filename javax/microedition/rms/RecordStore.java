@@ -15,7 +15,7 @@ public class RecordStore {
       this._eventGenerator = new RecordStore$RSRecordEventGenerator(this);
    }
 
-   private static void validateRecordStoreName(String recordStoreName) {
+   private static void validateRecordStoreName(String recordStoreName) throws RecordStoreException {
       if (recordStoreName == null) {
          throw new NullPointerException();
       }
@@ -104,7 +104,7 @@ public class RecordStore {
       return this._openCount > 0;
    }
 
-   private void mustBeOpen() {
+   private void mustBeOpen() throws RecordStoreNotOpenException {
       if (!this.isOpen()) {
          throw new RecordStoreNotOpenException(this._recordStoreData.getName());
       }

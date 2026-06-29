@@ -6,7 +6,7 @@ import net.rim.device.api.util.AbstractStringWrapper;
 public class PINAddress extends Address {
    private static HexadecimalTextFilter _filter = (HexadecimalTextFilter)(new Object());
 
-   public PINAddress(String addr, String name) {
+   public PINAddress(String addr, String name) throws AddressException {
       addr = addr.trim().toUpperCase();
       if (addr.length() > 8) {
          throw new AddressException(((StringBuffer)(new Object())).append(addr).append(" is an invalid PIN address").toString());

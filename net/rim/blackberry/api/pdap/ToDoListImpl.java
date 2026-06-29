@@ -131,7 +131,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (!super._closed) {
          super._closed = true;
       } else {
@@ -140,7 +140,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final Enumeration items() {
+   public final Enumeration items() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -160,7 +160,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final Enumeration items(PIMItem matching) {
+   public final Enumeration items(PIMItem matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -214,7 +214,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final Enumeration items(String matching) {
+   public final Enumeration items(String matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -242,7 +242,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final Enumeration items(int field, long startDate, long endDate) {
+   public final Enumeration items(int field, long startDate, long endDate) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -371,7 +371,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final void removeToDo(ToDo element) {
+   public final void removeToDo(ToDo element) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }

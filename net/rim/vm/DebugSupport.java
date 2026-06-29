@@ -24,7 +24,7 @@ public class DebugSupport {
 
    public static native void addProfileCount(long var0);
 
-   public static InputStream getInputStream(String filename) {
+   public static InputStream getInputStream(String filename) throws IOException {
       int fileno = openFile(filename.getBytes(), false);
       if (fileno == -1) {
          throw new IOException("File not found");
@@ -33,7 +33,7 @@ public class DebugSupport {
       }
    }
 
-   public static OutputStream getOutputStream(String filename) {
+   public static OutputStream getOutputStream(String filename) throws IOException {
       int fileno = openFile(filename.getBytes(), true);
       if (fileno == -1) {
          throw new IOException("File not found");

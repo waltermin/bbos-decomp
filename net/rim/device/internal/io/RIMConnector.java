@@ -42,7 +42,7 @@ public class RIMConnector {
       return open(moduleHandle, name, mode, timeouts, context);
    }
 
-   private static Connection open(int moduleHandle, String name, int mode, boolean timeouts, FirewallContext context) {
+   private static Connection open(int moduleHandle, String name, int mode, boolean timeouts, FirewallContext context) throws IOException, ConnectionNotFoundException {
       Class clazz = null;
       if (name == null) {
          throw new IllegalArgumentException("Null URL");
@@ -165,7 +165,7 @@ public class RIMConnector {
       }
    }
 
-   public static void doFirewallCheck(int moduleHandle, String name, int[] additionalModules, ApplicationDescriptor requestingDescriptor) {
+   public static void doFirewallCheck(int moduleHandle, String name, int[] additionalModules, ApplicationDescriptor requestingDescriptor) throws IOException, ConnectionNotFoundException {
       if (name == null) {
          throw new IllegalArgumentException("Null URL");
       }
@@ -263,7 +263,7 @@ public class RIMConnector {
       return var3;
    }
 
-   private static void checkConnectionSupported(String name) {
+   private static void checkConnectionSupported(String name) throws ConnectionNotFoundException {
       if (MIDPSupport.connectionNotSupported(name)) {
          throw new ConnectionNotFoundException();
       }

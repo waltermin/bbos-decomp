@@ -11,7 +11,7 @@ class ESDatePrototype$29 extends ESDatePrototype$ESDateFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          ESDate date = (ESDate)this.getThis();
          date.setValue(ESDatePrototype.timeClip(Convert.toDouble(this.getParm(0))));

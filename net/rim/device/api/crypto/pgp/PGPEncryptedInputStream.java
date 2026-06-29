@@ -18,7 +18,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
    private boolean _mdcPacket;
    private boolean _displayUI;
 
-   PGPEncryptedInputStream(InputStream param1, KeyStore param2, Vector param3, boolean param4, boolean param5) {
+   PGPEncryptedInputStream(InputStream param1, KeyStore param2, Vector param3, boolean param4, boolean param5) throws PGPEncodingException, PGPException, PGPNoKeyFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

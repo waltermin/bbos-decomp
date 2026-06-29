@@ -86,7 +86,7 @@ public final class Helper {
       }
    }
 
-   private static final StreamReader getStreamReaderPrim(String name) {
+   private static final StreamReader getStreamReaderPrim(String name) throws UnsupportedEncodingException {
       if (name == null) {
          throw new NullPointerException();
       }
@@ -128,7 +128,7 @@ public final class Helper {
       }
    }
 
-   private static final StreamWriter getStreamWriterPrim(String name) {
+   private static final StreamWriter getStreamWriterPrim(String name) throws UnsupportedEncodingException {
       if (name == null) {
          throw new NullPointerException();
       }

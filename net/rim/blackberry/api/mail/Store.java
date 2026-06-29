@@ -55,7 +55,7 @@ public class Store extends Service {
       }
    }
 
-   public Folder getFolder(long folderId) {
+   public Folder getFolder(long folderId) throws FolderNotFoundException {
       Folder f = this.checkCache(folderId);
       if (f == null) {
          EmailFolder ef = EmailHierarchy.getEmailFolder(folderId);
@@ -70,7 +70,7 @@ public class Store extends Service {
       return f;
    }
 
-   public Folder getFolder(String name) {
+   public Folder getFolder(String name) throws FolderNotFoundException {
       char sep = Folder.getSeparator();
       int length = name.length();
       name = name.substring(0, name.charAt(length - 1) == sep ? length - 1 : length);

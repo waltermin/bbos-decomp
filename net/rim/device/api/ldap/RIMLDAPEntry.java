@@ -20,7 +20,7 @@ class RIMLDAPEntry implements LDAPEntry {
    }
 
    @Override
-   public LDAPAttribute getAttribute(String name) {
+   public LDAPAttribute getAttribute(String name) throws LDAPNoSuchAttributeException {
       LDAPAttribute attribute = (LDAPAttribute)this._hashtable.get(StringUtilities.toLowerCase(name, 1701707776));
       if (attribute == null) {
          throw new LDAPNoSuchAttributeException();

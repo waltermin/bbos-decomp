@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
@@ -222,7 +223,7 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final synchronized XMLHashtable sendSOAPMessage(String request, SecureEmailServerOperationListener listener) {
+   private final synchronized XMLHashtable sendSOAPMessage(String request, SecureEmailServerOperationListener listener) throws IOException {
       if (Application.isEventDispatchThread()) {
          throw new Object();
       }

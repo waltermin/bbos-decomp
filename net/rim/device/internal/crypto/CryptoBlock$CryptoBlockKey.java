@@ -77,7 +77,7 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
       return this._uid;
    }
 
-   CryptoBlock$CryptoBlockKey(DataInput input, String name, long expireTime, boolean enterpriseClassKey) {
+   CryptoBlock$CryptoBlockKey(DataInput input, String name, long expireTime, boolean enterpriseClassKey) throws CryptoBlockException {
       try {
          PersistentContent.markAsPlaintext(input);
          this._algorithm = input.readByte();

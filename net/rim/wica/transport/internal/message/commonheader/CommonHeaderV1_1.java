@@ -13,7 +13,7 @@ public class CommonHeaderV1_1 extends CommonHeaderV1_Base implements CommonHeade
       super(clone);
    }
 
-   public int deserialize(CompressedBuffer buffer) {
+   public int deserialize(CompressedBuffer buffer) throws TransportMessageException {
       int offset = buffer.cursor();
 
       try {

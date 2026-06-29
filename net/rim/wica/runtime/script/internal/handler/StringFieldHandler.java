@@ -15,7 +15,7 @@ public final class StringFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component component, String name) {
+   public final long getProperty(Component component, String name) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -34,7 +34,7 @@ public final class StringFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection collection, long handle, String name) {
+   public final long getProperty(DataCollection collection, long handle, String name) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -53,7 +53,7 @@ public final class StringFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component component, String name, long value) {
+   public final void putProperty(Component component, String name, long value) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -67,7 +67,7 @@ public final class StringFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection collection, long handle, String name, long value) {
+   public final void putProperty(DataCollection collection, long handle, String name, long value) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -80,7 +80,7 @@ public final class StringFieldHandler implements PropertyHandler {
       }
    }
 
-   public static final String getValue(long esObject) {
+   public static final String getValue(long esObject) throws ThrownValue {
       int type = Value.getType(esObject);
       String fieldVal = null;
       switch (type) {

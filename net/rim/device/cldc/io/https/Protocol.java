@@ -145,7 +145,7 @@ public final class Protocol implements ConnectionBaseInterface {
       return new HttpServerSocketConnection(url, connection);
    }
 
-   private final HttpsConnection doConnection(URL url, int mode, boolean timeouts) {
+   private final HttpsConnection doConnection(URL url, int mode, boolean timeouts) throws TLSSecurityException {
       HttpsConnection connection = null;
       boolean followHttpsRedirections = false;
       boolean trustAll = false;

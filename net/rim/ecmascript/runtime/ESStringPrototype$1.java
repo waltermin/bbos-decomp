@@ -11,7 +11,7 @@ class ESStringPrototype$1 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          return Value.makeStringValue(((ESString)this.getThis()).getValue());
       } finally {

@@ -30,7 +30,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final int read(byte[] b, int off, int len) {
+   public final int read(byte[] b, int off, int len) throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -39,7 +39,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final int read() {
+   public final int read() throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -48,7 +48,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final long skip(long n) {
+   public final long skip(long n) throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -57,7 +57,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final int available() {
+   public final int available() throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -71,7 +71,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final void reset() {
+   public final void reset() throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       }
@@ -85,7 +85,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final int readByteArray(PipePtr ptr, int length) {
+   public final int readByteArray(PipePtr ptr, int length) throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -94,7 +94,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final int readCompressedInt() {
+   public final int readCompressedInt() throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       } else {
@@ -108,7 +108,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    }
 
    @Override
-   public final void skipInlineString() {
+   public final void skipInlineString() throws IOException {
       if (this._ioException != null) {
          throw this._ioException;
       }

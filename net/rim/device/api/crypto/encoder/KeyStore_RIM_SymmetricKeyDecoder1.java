@@ -13,7 +13,7 @@ final class KeyStore_RIM_SymmetricKeyDecoder1 extends KeyStore_SymmetricKeyDecod
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final SymmetricKey decodeKey(DataInputStream input, String algorithm) {
+   public final SymmetricKey decodeKey(DataInputStream input, String algorithm) throws InvalidKeyEncodingException {
       boolean var5 = false /* VF: Semaphore variable */;
 
       try {

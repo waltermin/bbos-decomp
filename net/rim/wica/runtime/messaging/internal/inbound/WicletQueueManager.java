@@ -119,7 +119,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
       }
    }
 
-   final void upgradeMessage(Message m) {
+   final void upgradeMessage(Message m) throws MessagingException {
       if (this._messageCodeMap != null && this._messageCodeMap.containsKey(m.getMessageCode())) {
          m.setMessageCode(this._messageCodeMap.get(m.getMessageCode()));
          m.setWicletID(this._wicletId);
@@ -345,7 +345,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
       }
    }
 
-   private final void preMessageHandling(MessageImpl m, MessageImpl[] ma) {
+   private final void preMessageHandling(MessageImpl m, MessageImpl[] ma) throws MessagingException {
       if (m.getWicletID() != this._wicletId) {
          if (!this.aliased(m.getWicletID())) {
             throw new MessagingException();

@@ -123,7 +123,7 @@ final class ESScreen extends RedirectedObject {
       }
    }
 
-   private final boolean setScreenVariable(String name, long value) {
+   private final boolean setScreenVariable(String name, long value) throws ThrownValue {
       boolean result = true;
       int index = this._model.getVarIndex(name);
       if (index != -1) {

@@ -3,6 +3,7 @@ package net.rim.device.cldc.io.http;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SocketConnection;
@@ -292,7 +293,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
       }
    }
 
-   private InputStream parseIncomingHeaders(DataInputStream dins) {
+   private InputStream parseIncomingHeaders(DataInputStream dins) throws IOException {
       try {
          this._requestLine = new RequestLine(dins);
          this._headers = new HttpHeaders(dins);

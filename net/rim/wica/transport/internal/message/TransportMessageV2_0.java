@@ -18,7 +18,7 @@ public class TransportMessageV2_0 implements TransportMessageV2 {
    private TransportMessageV2[] _toBundle;
    private int _bundlePayloadLength;
 
-   int loadPayload(CompressedBuffer payload, boolean copy) {
+   int loadPayload(CompressedBuffer payload, boolean copy) throws TransportMessageException {
       this._messageHeader = new MessageHeaderV1_1();
       this._messageHeader.deserialize(payload);
       int dataLength = this._messageHeader.getMessageLength();
@@ -152,7 +152,7 @@ public class TransportMessageV2_0 implements TransportMessageV2 {
    TransportMessageV2_0() {
    }
 
-   private void prepareBundle(TransportMessageV2[] bundle) {
+   private void prepareBundle(TransportMessageV2[] bundle) throws TransportMessageException {
       this._toBundle = bundle;
       TransportMessageV2 next = null;
       MessageHeaderV1_1 messageHeader = null;

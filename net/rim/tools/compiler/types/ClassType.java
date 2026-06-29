@@ -189,7 +189,7 @@ public final class ClassType extends ReferenceType {
       }
    }
 
-   public final Field addData(Compiler compiler, String memberName, Type type, int modifiers, Constant value) {
+   public final Field addData(Compiler compiler, String memberName, Type type, int modifiers, Constant value) throws CompileException, DuplicateException {
       if (!StringHelper.validateIdentifier(memberName)) {
          throw new CompileException(this.getFullName(), ((StringBuffer)(new Object("Invalid member name: "))).append(memberName).toString());
       }
@@ -515,7 +515,7 @@ public final class ClassType extends ReferenceType {
       }
    }
 
-   public final void resolve(Compiler compiler) {
+   public final void resolve(Compiler compiler) throws CompileException {
       boolean potentialMIDlet = false;
       boolean isObject = false;
       if (!this.is(536870912) && this.is(268435456)) {

@@ -14,7 +14,7 @@ public class PrivateKeyDecoder {
    protected PrivateKeyDecoder() {
    }
 
-   public static PrivateKey decode(InputStream encodedKey, String encodingAlgorithm, CryptoSystem cryptoSystem, String keyAlgorithm) {
+   public static PrivateKey decode(InputStream encodedKey, String encodingAlgorithm, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       try {
          if (encodedKey != null && encodingAlgorithm != null) {
             PrivateKeyDecoder decoder = (PrivateKeyDecoder)_decoderHashtable.get(encodingAlgorithm);

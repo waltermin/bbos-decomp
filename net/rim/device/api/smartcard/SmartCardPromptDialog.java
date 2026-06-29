@@ -44,7 +44,7 @@ public class SmartCardPromptDialog extends PopupDialog implements FieldChangeLis
 
    private static void promptUserToInsertSmartCardPrivate(
       String message, String[] messageParameters, SmartCardReader[] smartCardReaders, boolean forceShowDialog
-   ) {
+   ) throws SmartCardCancelException {
       if (!forceShowDialog && smartCardReaders != null) {
          for (int i = 0; i < smartCardReaders.length; i++) {
             if (smartCardReaders[i].isSmartCardPresent()) {

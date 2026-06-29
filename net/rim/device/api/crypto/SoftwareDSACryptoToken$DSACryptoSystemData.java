@@ -10,7 +10,7 @@ final class SoftwareDSACryptoToken$DSACryptoSystemData implements CryptoTokenCry
    private int _hashCode;
    private String _name;
 
-   public SoftwareDSACryptoToken$DSACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) {
+   public SoftwareDSACryptoToken$DSACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) throws InvalidCryptoSystemException {
       if (p != null && q != null && g != null) {
          if (p.length >= 64 && p.length <= 128 && (p.length & 7) == 0 && q.length == 20 && g.length >= 1 && g.length <= p.length) {
             this._p = Arrays.copy(p);

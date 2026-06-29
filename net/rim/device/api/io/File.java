@@ -201,7 +201,7 @@ public final class File {
       }
    }
 
-   static final boolean checkStatus(int status) {
+   static final boolean checkStatus(int status) throws FileIOException {
       switch (status) {
          case -1:
             throw new FileIOException(status);

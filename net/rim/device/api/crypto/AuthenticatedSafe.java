@@ -11,7 +11,7 @@ public class AuthenticatedSafe extends PKCS12ContentInfo {
    }
 
    @Override
-   public void parse() {
+   public void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
             ASN1InputByteArray infoByteArrays = (ASN1InputByteArray)(new Object(super._buffer));

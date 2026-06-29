@@ -910,7 +910,7 @@ final class ApplicationManagerImpl extends ApplicationManager implements Applica
    }
 
    @Override
-   public final void launch(String url) {
+   public final void launch(String url) throws ApplicationManagerException {
       String name = null;
       int dot = url.indexOf(46);
       int question = url.indexOf(63);

@@ -70,7 +70,7 @@ public final class CryptoUtilities {
       output.write(data[0]);
    }
 
-   public static final byte[] readByteArrayFromInputStream(InputStream input, int numBytes) {
+   public static final byte[] readByteArrayFromInputStream(InputStream input, int numBytes) throws InvalidKeyEncodingException {
       byte[] result = new byte[numBytes];
       if (numBytes != 0) {
          int len = input.read(result);
@@ -82,7 +82,7 @@ public final class CryptoUtilities {
       return result;
    }
 
-   public static final void verifyKeyBytes(InputStream input, int a, int b, int c, int d) {
+   public static final void verifyKeyBytes(InputStream input, int a, int b, int c, int d) throws InvalidKeyEncodingException {
       if (input.read() != a || input.read() != b || input.read() != c || input.read() != d) {
          throw new InvalidKeyEncodingException();
       }

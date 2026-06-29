@@ -42,7 +42,7 @@ public class Image {
       }
    }
 
-   public static Image createImage(String name) {
+   public static Image createImage(String name) throws IOException {
       if (name.length() > 0 && name.charAt(0) == '/') {
          name = name.substring(1);
       }
@@ -177,7 +177,7 @@ public class Image {
       return resultImage;
    }
 
-   public static Image createImage(InputStream stream) {
+   public static Image createImage(InputStream stream) throws IOException {
       int blocksize = 4096;
       if (stream == null) {
          throw new NullPointerException();

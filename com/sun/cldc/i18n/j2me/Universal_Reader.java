@@ -23,7 +23,7 @@ public final class Universal_Reader extends StreamReader {
    private static final int BUF_SIZE = 1024;
 
    @Override
-   public final Reader open(InputStream in, String enc) {
+   public final Reader open(InputStream in, String enc) throws UnsupportedEncodingException {
       if (enc == null) {
          return null;
       }
@@ -102,7 +102,7 @@ public final class Universal_Reader extends StreamReader {
    }
 
    @Override
-   public final void reset() {
+   public final void reset() throws IOException {
       if (super.in == null) {
          throw new IOException("Stream closed");
       }
@@ -124,7 +124,7 @@ public final class Universal_Reader extends StreamReader {
    }
 
    @Override
-   public final void mark(int readAheadLimit) {
+   public final void mark(int readAheadLimit) throws IOException {
       if (!this.markSupported()) {
          throw new IOException("mark() not supported");
       }
@@ -311,7 +311,7 @@ public final class Universal_Reader extends StreamReader {
       return count;
    }
 
-   public final Object byteToCharArray(int encId, byte[] buffer, int offset, int length, String enc) {
+   public final Object byteToCharArray(int encId, byte[] buffer, int offset, int length, String enc) throws UnsupportedEncodingException {
       if (encId != 0
          && encId != 1
          && (

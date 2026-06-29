@@ -15,7 +15,7 @@ public final class PGPCompressedInputStream extends PGPInputStream {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   PGPCompressedInputStream(InputStream input, KeyStore keyStore, boolean displayUI) {
+   PGPCompressedInputStream(InputStream input, KeyStore keyStore, boolean displayUI) throws PGPEncodingException {
       super(input, keyStore);
 
       try {

@@ -53,7 +53,7 @@ final class AudioPathControlImpl implements AudioPathControl {
    }
 
    @Override
-   public final synchronized void setAudioPath(int newPath) {
+   public final synchronized void setAudioPath(int newPath) throws MediaException {
       if (newPath >= 0 && newPath < 6) {
          if (this._audioRouter.getActiveSource() == this._source) {
             if (!this._audioRouter.setSink(newPath)) {

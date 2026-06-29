@@ -116,7 +116,7 @@ public class SmartCardSession {
       return this._open;
    }
 
-   protected final void sendAPDU(CommandAPDU commandAPDU, ResponseAPDU responseAPDU) {
+   protected final void sendAPDU(CommandAPDU commandAPDU, ResponseAPDU responseAPDU) throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -124,7 +124,7 @@ public class SmartCardSession {
       this._readerSession.sendAPDU(commandAPDU, responseAPDU);
    }
 
-   protected final void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDUGroup responseAPDUs) {
+   protected final void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDUGroup responseAPDUs) throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -132,7 +132,7 @@ public class SmartCardSession {
       this._readerSession.sendAPDUs(commandAPDUs, responseAPDUs);
    }
 
-   public final synchronized void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDU responseAPDU) {
+   public final synchronized void sendAPDUs(CommandAPDUGroup commandAPDUs, ResponseAPDU responseAPDU) throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -140,7 +140,7 @@ public class SmartCardSession {
       this._readerSession.sendAPDUs(commandAPDUs, responseAPDU);
    }
 
-   public final int getMaxLoginAttempts() {
+   public final int getMaxLoginAttempts() throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -159,7 +159,7 @@ public class SmartCardSession {
       throw null;
    }
 
-   public final int getRemainingLoginAttempts() {
+   public final int getRemainingLoginAttempts() throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -210,7 +210,7 @@ public class SmartCardSession {
       }
    }
 
-   public final boolean login(String password, int operation) {
+   public final boolean login(String password, int operation) throws SmartCardAccessDeniedException, SmartCardLockedException, SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -261,7 +261,7 @@ public class SmartCardSession {
       this.loginPrompt(accessReason, operation, false);
    }
 
-   public final void loginPrompt(String accessReason, int operation, boolean allowOnLockScreen) {
+   public final void loginPrompt(String accessReason, int operation, boolean allowOnLockScreen) throws SmartCardSessionClosedException {
       if (allowOnLockScreen) {
          ControlledAccess.assertRRISignatures(true);
       }
@@ -311,7 +311,7 @@ public class SmartCardSession {
       return false;
    }
 
-   private RichTextField getPromptField(String accessReason, String smartCardLabel) {
+   private RichTextField getPromptField(String accessReason, String smartCardLabel) throws SmartCardLockedException {
       StringBuffer promptMessage = (StringBuffer)(new Object(MessageFormat.format(_rb.getString(16), new Object[]{smartCardLabel})));
       if (accessReason != null) {
          promptMessage.append(accessReason);
@@ -351,7 +351,7 @@ public class SmartCardSession {
       return this._readerSession;
    }
 
-   public final SmartCardID getSmartCardID() {
+   public final SmartCardID getSmartCardID() throws SmartCardSessionClosedException, SmartCardUnsupportedOperationException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       }
@@ -378,7 +378,7 @@ public class SmartCardSession {
       throw null;
    }
 
-   public final boolean testCardSupported() {
+   public final boolean testCardSupported() throws SmartCardSessionClosedException {
       if (!this._open) {
          throw new SmartCardSessionClosedException();
       } else {

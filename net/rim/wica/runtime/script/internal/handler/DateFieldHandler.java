@@ -16,7 +16,7 @@ public final class DateFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component component, String name) {
+   public final long getProperty(Component component, String name) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -30,7 +30,7 @@ public final class DateFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection collection, long handle, String name) {
+   public final long getProperty(DataCollection collection, long handle, String name) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -44,7 +44,7 @@ public final class DateFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component component, String name, long value) {
+   public final void putProperty(Component component, String name, long value) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -58,7 +58,7 @@ public final class DateFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection collection, long handle, String name, long value) {
+   public final void putProperty(DataCollection collection, long handle, String name, long value) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -71,7 +71,7 @@ public final class DateFieldHandler implements PropertyHandler {
       }
    }
 
-   public static final long getValue(long esObject) {
+   public static final long getValue(long esObject) throws ThrownValue {
       long fieldVal = 0;
       Object obj = Convert.toObject(esObject);
       if (!(obj instanceof Object)) {

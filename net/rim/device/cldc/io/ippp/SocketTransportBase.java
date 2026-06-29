@@ -368,7 +368,7 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
       }
    }
 
-   private SocketTransportBase$SocketTransportBaseConnection getConnection(String uid) {
+   private SocketTransportBase$SocketTransportBaseConnection getConnection(String uid) throws ServiceBookNotFoundException {
       if (uid == null) {
          ServiceRecord[] elements = ServiceBook.getSB().findRecordsByCid("IPPP");
          if (elements.length > 0) {

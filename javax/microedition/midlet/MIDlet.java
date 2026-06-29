@@ -70,7 +70,7 @@ public class MIDlet {
       this._main.requestForeground();
    }
 
-   public final boolean platformRequest(String URL) {
+   public final boolean platformRequest(String URL) throws ConnectionNotFoundException {
       if (URL != null && !URL.equals("")) {
          try {
             String moduleName = ApplicationDescriptor.currentApplicationDescriptor().getName();

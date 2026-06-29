@@ -9,7 +9,7 @@ import net.rim.device.api.system.EventLogger;
 
 public class NativeConnectionBase extends DatagramConnectionBase {
    @Override
-   public Connection openPrim(String name, int mode, boolean timeouts) {
+   public Connection openPrim(String name, int mode, boolean timeouts) throws ConnectionNotFoundException {
       if (!this.checkNetwork()) {
          throw new ConnectionNotFoundException();
       }

@@ -12,7 +12,7 @@ public class PKCS12Data extends PKCS12ContentInfo {
    }
 
    @Override
-   public void parse() {
+   public void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
             ASN1InputByteArray dataStream = (ASN1InputByteArray)(new Object(super._buffer));

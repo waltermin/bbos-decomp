@@ -34,7 +34,7 @@ public class TransportMessageFactory {
       this.handleMessage(receiverId, -1, handler);
    }
 
-   public void handleMessage(long receiverId, int capacity, TransportMessageHandler handler) {
+   public void handleMessage(long receiverId, int capacity, TransportMessageHandler handler) throws UnsupportedVersionException {
       if (handler == null) {
          throw new Object();
       }
@@ -56,7 +56,7 @@ public class TransportMessageFactory {
       }
    }
 
-   public void handleMessage(byte[] buffer, TransportMessageHandler handler) {
+   public void handleMessage(byte[] buffer, TransportMessageHandler handler) throws UnsupportedVersionException {
       if (buffer != null && handler != null) {
          int version = buffer[0] & 255;
          if (!this.isSupported(version)) {

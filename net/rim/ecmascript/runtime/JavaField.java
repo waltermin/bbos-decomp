@@ -39,7 +39,7 @@ class JavaField extends ESObject {
       return ThrownValue.referenceError(Resources.getString(60), Reflect.getClassName(this._class), Reflect.getFieldName(this._class, this._field));
    }
 
-   long get(Object instance) {
+   long get(Object instance) throws ThrownValue {
       try {
          return this.getValue(instance);
       } finally {
@@ -47,7 +47,7 @@ class JavaField extends ESObject {
       }
    }
 
-   boolean put(Object instance, long value) {
+   boolean put(Object instance, long value) throws ThrownValue {
       try {
          this.putValue(instance, value);
          return true;

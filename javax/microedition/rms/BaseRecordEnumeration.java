@@ -89,7 +89,7 @@ class BaseRecordEnumeration extends RecordEventGenerator implements RecordEnumer
    }
 
    @Override
-   public int nextRecordId() {
+   public int nextRecordId() throws InvalidRecordIDException {
       if (this._inError) {
          throw new InvalidRecordIDException();
       }
@@ -121,7 +121,7 @@ class BaseRecordEnumeration extends RecordEventGenerator implements RecordEnumer
    }
 
    @Override
-   public int previousRecordId() {
+   public int previousRecordId() throws InvalidRecordIDException {
       if (this._inError) {
          throw new InvalidRecordIDException();
       }

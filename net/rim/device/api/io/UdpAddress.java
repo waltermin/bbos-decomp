@@ -568,7 +568,7 @@ public class UdpAddress extends DatagramAddressBase {
       return offset;
    }
 
-   private static byte[] resolveAddress(String address, String apn, boolean randomize) {
+   private static byte[] resolveAddress(String address, String apn, boolean randomize) throws IOException {
       if (address != null && address.length() != 0) {
          if (apn == null) {
             apn = TunnelCredentialsProvider.getInstance().getApn();

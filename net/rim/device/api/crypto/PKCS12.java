@@ -16,7 +16,7 @@ public class PKCS12 {
       this._isSigned = false;
    }
 
-   public void parse() {
+   public void parse() throws PKCS12ParsingException {
       if (this._buffer != null) {
          if (!this._parsed) {
             try {

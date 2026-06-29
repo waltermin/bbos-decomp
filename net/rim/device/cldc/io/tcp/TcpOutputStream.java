@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcp;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import net.rim.device.cldc.io.utility.EventThreadCheck;
 import net.rim.device.cldc.io.utility.PacketLogger;
@@ -26,7 +27,7 @@ final class TcpOutputStream extends OutputStream {
    }
 
    @Override
-   public final void write(byte[] b, int off, int len) {
+   public final void write(byte[] b, int off, int len) throws IOException {
       if (this._isClosed) {
          throw new Object();
       }

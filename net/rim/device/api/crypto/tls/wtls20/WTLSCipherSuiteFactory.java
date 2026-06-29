@@ -26,7 +26,7 @@ import net.rim.device.api.crypto.tls.TLSBlockFormatterEngine;
 import net.rim.device.api.crypto.tls.TLSBlockUnformatterEngine;
 
 final class WTLSCipherSuiteFactory {
-   public static final WTLSConnectionState getConnectionState(int cipherSuite) {
+   public static final WTLSConnectionState getConnectionState(int cipherSuite) throws TLSAlertException {
       WTLSConnectionState state = new WTLSConnectionState();
       switch (cipherSuite >> 8 & 0xFF) {
          case -1:

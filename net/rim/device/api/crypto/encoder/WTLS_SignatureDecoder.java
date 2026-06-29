@@ -5,7 +5,7 @@ import net.rim.device.api.crypto.InvalidSignatureEncodingException;
 
 public class WTLS_SignatureDecoder extends SignatureDecoder {
    @Override
-   protected DecodedSignature decodeSignature(InputStream encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
+   protected DecodedSignature decodeSignature(InputStream encodedSignature, String signatureAlgorithm, String digestAlgorithm) throws InvalidSignatureEncodingException {
       if (encodedSignature == null) {
          throw new Object();
       }

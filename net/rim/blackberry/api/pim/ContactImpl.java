@@ -128,7 +128,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._contactList._closed) {
          throw new PIMException("ContactList is closed.", 2);
       }

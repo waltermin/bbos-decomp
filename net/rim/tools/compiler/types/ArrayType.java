@@ -8,7 +8,7 @@ public final class ArrayType extends ReferenceType {
    private int _nesting;
    private Type _baseType;
 
-   public ArrayType(Type baseType, int nesting) {
+   public ArrayType(Type baseType, int nesting) throws CompileException {
       super(((StringBuffer)(new Object(baseType._typeName))).append("[]").toString());
       this._nesting = nesting;
       this._baseType = baseType;
@@ -67,7 +67,7 @@ public final class ArrayType extends ReferenceType {
    }
 
    @Override
-   public final ClassDef getClassDef(TypeModule typeModule) {
+   public final ClassDef getClassDef(TypeModule typeModule) throws CompileException {
       throw new CompileException("cannot get class def for array type");
    }
 

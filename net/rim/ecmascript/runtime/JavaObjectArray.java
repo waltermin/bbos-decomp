@@ -16,7 +16,7 @@ class JavaObjectArray extends JavaArray {
    }
 
    @Override
-   public boolean notifyElementChanged(long element, long value) {
+   public boolean notifyElementChanged(long element, long value) throws ThrownValue {
       int index = JavaArray.toIndex(element, super._length);
       switch (Value.getType(value)) {
          case 3:

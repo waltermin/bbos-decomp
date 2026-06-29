@@ -17,7 +17,7 @@ public final class MediaFactory {
    private MediaFactory() {
    }
 
-   public static final MediaServices createMediaServices(Object media) {
+   public static final MediaServices createMediaServices(Object media) throws MediaException {
       String mediaType = !(media instanceof MediaModel) ? media.getClass().getName() : ((MediaModel)media).getMediaClass().getName();
 
       try {
@@ -38,7 +38,7 @@ public final class MediaFactory {
       return null != getRegistry().getValue(new Object[]{"CONTENT", contentType});
    }
 
-   public static final void verifyContentType(String contentType) {
+   public static final void verifyContentType(String contentType) throws MediaException {
       String[] keys = new Object[]{"CONTENT", contentType};
       if (null == getRegistry().getValue(keys)) {
          throw new MediaException(8, RegistryImpl.getKey(keys));
@@ -49,7 +49,7 @@ public final class MediaFactory {
       return createObjectFromRegistry(new Object[]{"MEDIA", mediaType, serviceId});
    }
 
-   public static final ResourceProvider createResourceProvider(String contentType, String version) {
+   public static final ResourceProvider createResourceProvider(String contentType, String version) throws MediaException {
       try {
          return (ResourceProvider)createObjectFromRegistry(new Object[]{"CONTENT", contentType, version});
       } catch (MediaException ex) {
@@ -77,7 +77,7 @@ public final class MediaFactory {
       }
    }
 
-   public static final Object createObjectFromRegistry(String[] keys) {
+   public static final Object createObjectFromRegistry(String[] keys) throws MediaException {
       String className = getRegistry().getValue(keys);
       if (className != null) {
          try {

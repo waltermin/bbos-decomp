@@ -11,7 +11,7 @@ class ESBooleanPrototype$2 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          return Value.makeBooleanValue(((ESBoolean)this.getThis()).getValue());
       } finally {

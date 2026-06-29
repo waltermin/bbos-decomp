@@ -8,7 +8,7 @@ public class Convert extends Value {
    protected Convert() {
    }
 
-   public static ESObject toObject(long value) {
+   public static ESObject toObject(long value) throws ThrownValue {
       switch (Value.getType(value)) {
          case -1:
             return new ESNumber(Value.getDoubleValue(value));

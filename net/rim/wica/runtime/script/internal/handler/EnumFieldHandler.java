@@ -18,7 +18,7 @@ public final class EnumFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) {
+   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -32,7 +32,7 @@ public final class EnumFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection dc, long cmpHandler, String field) {
+   public final long getProperty(DataCollection dc, long cmpHandler, String field) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -48,7 +48,7 @@ public final class EnumFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component cmp, String field, long esObject) {
+   public final void putProperty(Component cmp, String field, long esObject) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -62,7 +62,7 @@ public final class EnumFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component cmp, String field) {
+   public final long getProperty(Component cmp, String field) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -77,7 +77,7 @@ public final class EnumFieldHandler implements PropertyHandler {
       }
    }
 
-   public static final int getValue(int type, long value) {
+   public static final int getValue(int type, long value) throws ThrownValue {
       int enumValue = -1;
       Object esObj = Convert.toObject(value);
       if (!(esObj instanceof ESEnum)) {
@@ -102,7 +102,7 @@ public final class EnumFieldHandler implements PropertyHandler {
       }
    }
 
-   static final void validateEnumValue(int type, int assignmentType) {
+   static final void validateEnumValue(int type, int assignmentType) throws ThrownValue {
       if (type != assignmentType) {
          throw ThrownValue.typeError(RuntimeResources.getString(124));
       }

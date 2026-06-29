@@ -76,7 +76,7 @@ public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandle
    }
 
    @Override
-   public void fatalError(SAXParseException e) {
+   public void fatalError(SAXParseException e) throws SAXParseException {
       throw e;
    }
 }

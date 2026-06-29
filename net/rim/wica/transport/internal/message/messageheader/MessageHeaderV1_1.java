@@ -13,7 +13,7 @@ public class MessageHeaderV1_1 extends MessageHeaderV1_Base implements MessageHe
       super(clone);
    }
 
-   public int deserialize(CompressedBuffer buffer) {
+   public int deserialize(CompressedBuffer buffer) throws TransportMessageException {
       int offset = buffer.cursor();
 
       try {

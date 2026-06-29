@@ -15,7 +15,7 @@ public class MACFactory {
       return getInstance(algorithm, key);
    }
 
-   public static MAC getInstance(String param0, SymmetricKey param1) {
+   public static MAC getInstance(String param0, SymmetricKey param1) throws NoSuchAlgorithmException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

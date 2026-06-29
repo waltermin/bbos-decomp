@@ -738,7 +738,7 @@ public final class Pipe implements Persistable {
       }
    }
 
-   public final synchronized int readCompressedInt(PipeContext position) {
+   public final synchronized int readCompressedInt(PipeContext position) throws EOFException, IOCancelledException {
       if (position._readClosed) {
          throw new IOCancelledException();
       }
@@ -758,7 +758,7 @@ public final class Pipe implements Persistable {
       return result;
    }
 
-   public final synchronized boolean skipInlineString(PipeContext position) {
+   public final synchronized boolean skipInlineString(PipeContext position) throws EOFException {
       boolean result = false;
       int i = 0;
 
@@ -777,7 +777,7 @@ public final class Pipe implements Persistable {
       }
    }
 
-   public final synchronized String readInlineString(PipeContext position, String encoding) {
+   public final synchronized String readInlineString(PipeContext position, String encoding) throws EOFException, IOCancelledException {
       if (position._readClosed) {
          throw new IOCancelledException();
       }

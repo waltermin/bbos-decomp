@@ -7,7 +7,7 @@ public final class MemoListFactory {
    private MemoListFactory() {
    }
 
-   public static final BlackBerryMemoList createMemoList(int mode) {
+   public static final BlackBerryMemoList createMemoList(int mode) throws PIMException {
       if (CodeModuleManager.getModuleHandle("net_rim_bb_memo_app") != 0) {
          return new MemoListImpl(mode);
       } else {

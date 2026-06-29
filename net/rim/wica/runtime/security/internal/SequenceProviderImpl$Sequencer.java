@@ -15,7 +15,7 @@ final class SequenceProviderImpl$Sequencer {
       this.load();
    }
 
-   final synchronized int next(long key) {
+   final synchronized int next(long key) throws SequenceProviderException {
       SequenceProviderImpl$OutgoingSequence sequence = (SequenceProviderImpl$OutgoingSequence)this._mapping.get(key);
       if (sequence != null) {
          int next = sequence.next();

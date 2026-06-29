@@ -27,7 +27,7 @@ public class StreamReader extends Reader {
    }
 
    @Override
-   public void mark(int readAheadLimit) {
+   public void mark(int readAheadLimit) throws IOException {
       if (this.in.markSupported()) {
          this.in.mark(readAheadLimit);
       } else {

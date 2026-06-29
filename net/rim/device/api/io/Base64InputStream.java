@@ -39,7 +39,7 @@ public class Base64InputStream extends InputStream {
    }
 
    @Override
-   public int read() {
+   public int read() throws IOException {
       label33: {
          if (this._outputBufferLength != 0) {
             this._outputBufferLength--;
@@ -75,7 +75,7 @@ public class Base64InputStream extends InputStream {
    }
 
    @Override
-   public int read(byte[] buffer, int bufferOffset, int bufferLength) {
+   public int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOException {
       if (buffer == null || bufferOffset < 0 || bufferLength < 0 || buffer.length - bufferLength < bufferOffset) {
          throw new IllegalArgumentException();
       }
@@ -140,7 +140,7 @@ public class Base64InputStream extends InputStream {
    }
 
    @Override
-   public int available() {
+   public int available() throws IOException {
       if (this._outputBufferLength == 0) {
          if (this._lastException != null) {
             throw this._lastException;
@@ -156,7 +156,7 @@ public class Base64InputStream extends InputStream {
    }
 
    @Override
-   public void close() {
+   public void close() throws IOException {
       if (this._lastException != null) {
          throw this._lastException;
       }
@@ -177,7 +177,7 @@ public class Base64InputStream extends InputStream {
       }
    }
 
-   private int decode(byte[] buffer, int bufferOffset) {
+   private int decode(byte[] buffer, int bufferOffset) throws IOException {
       if (this._inputBuffer == null) {
          return 0;
       }
@@ -241,7 +241,7 @@ public class Base64InputStream extends InputStream {
       return decode(input.getBytes(), inputOffset, inputLength);
    }
 
-   public static byte[] decode(byte[] input, int inputOffset, int inputLength) {
+   public static byte[] decode(byte[] input, int inputOffset, int inputLength) throws IOException {
       if (input != null && inputOffset >= 0 && inputLength >= 0 && input.length - inputLength >= inputOffset) {
          byte[] output = new byte[inputLength];
          if (inputOffset > 0) {

@@ -22,7 +22,7 @@ class JavaObjectField extends JavaField {
    }
 
    @Override
-   protected void putValue(Object instance, long value) {
+   protected void putValue(Object instance, long value) throws ThrownValue {
       Object javaObj;
       if (value == Value.NULL) {
          javaObj = null;

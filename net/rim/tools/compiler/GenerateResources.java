@@ -79,7 +79,7 @@ public class GenerateResources implements Constants {
       return classType.is(131072) ? 1 : 0;
    }
 
-   private ClassType findClassType(String className) {
+   private ClassType findClassType(String className) throws CompileException {
       ClassType classType = this._compiler.findClassType(className);
       if (classType == null) {
          throw new CompileException(this._className, ((StringBuffer)(new Object("Unable to find type: "))).append(className).toString());
@@ -90,7 +90,7 @@ public class GenerateResources implements Constants {
       return classType;
    }
 
-   private Method findMethod(ClassType classType, String methodName, Type type, Vector types) {
+   private Method findMethod(ClassType classType, String methodName, Type type, Vector types) throws CompileException {
       Method method = classType.findMethod(this._compiler, methodName, type, types, false, false);
       if (method == null) {
          throw new CompileException(
@@ -216,7 +216,7 @@ public class GenerateResources implements Constants {
       this._block = null;
    }
 
-   private ClassType createPopulateClass(int ordinal) {
+   private ClassType createPopulateClass(int ordinal) throws DuplicateException {
       String className = ((StringBuffer)(new Object())).append(this._className).append("Populator").append(ordinal).toString();
       ClassType popClass = this._compiler.findClassType(className);
       if (popClass.isDefined()) {
@@ -339,7 +339,7 @@ public class GenerateResources implements Constants {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void createAppIconField() {
+   private void createAppIconField() throws CompileException {
       try {
          int num = this._jad.getNumApplets();
          Applet applet = null;
@@ -656,7 +656,7 @@ public class GenerateResources implements Constants {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public ClassType generateResourceClass(String extensions, String languages) {
+   public ClassType generateResourceClass(String extensions, String languages) throws CompileException, DuplicateException {
       this._parmVector = (Vector)(new Object());
       this._intType = this._compiler.getIntType();
       this._byteType = this._compiler.getByteType();

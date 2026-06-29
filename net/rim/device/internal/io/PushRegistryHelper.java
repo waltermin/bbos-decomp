@@ -145,7 +145,7 @@ public class PushRegistryHelper {
       return false;
    }
 
-   public static Connection checkConnection(String connection) {
+   public static Connection checkConnection(String connection) throws IOException {
       PushRegistryHelper prh = getInstance();
       String[] array = (String[])prh._connectionMap.get(connection);
       if (array != null && array.length > 0) {

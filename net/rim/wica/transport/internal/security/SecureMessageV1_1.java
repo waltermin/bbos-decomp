@@ -53,7 +53,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
    }
 
    @Override
-   public void secure(int mode) {
+   public void secure(int mode) throws SecureMessageException {
       if (this._payload != null) {
          int sequenceId;
          try {
@@ -83,7 +83,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private void sign(CompressedBuffer buffer) {
+   private void sign(CompressedBuffer buffer) throws SecureMessageException {
       buffer.writeInt(this._payload.length);
       buffer.copy(this._payload, 0, this._payload.length, true);
       int payloadEnd = buffer.cursor();
@@ -103,7 +103,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private void signAndEncrypt(CompressedBuffer buffer) {
+   private void signAndEncrypt(CompressedBuffer buffer) throws SecureMessageException {
       int headerLength = buffer.cursor();
       this.sign(buffer);
 
@@ -130,7 +130,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
    }
 
    @Override
-   public void verifySecurity() {
+   public void verifySecurity() throws SecureMessageException {
       if (this._secureMsg != null) {
          CompressedBuffer buffer;
          int sequenceId;
@@ -153,7 +153,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private void verifyVersion() {
+   private void verifyVersion() throws SecureMessageException {
       int expectedVersion = -1;
 
       try {
@@ -169,13 +169,13 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private void verifySecurityMode(int mode) {
+   private void verifySecurityMode(int mode) throws SecureMessageException {
       if (mode != 0 && mode != 1) {
          throw new SecureMessageException(103);
       }
    }
 
-   private void verifySequence(int sequenceId) {
+   private void verifySequence(int sequenceId) throws SecureMessageException {
       boolean verified = false;
       Exception error = null;
 
@@ -190,7 +190,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private void verifySecurity(int mode, CompressedBuffer buffer) {
+   private void verifySecurity(int mode, CompressedBuffer buffer) throws SecureMessageException {
       boolean signedOnly = mode == 0;
 
       Key key;
@@ -232,7 +232,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
    }
 
-   private boolean verifySignature(CompressedBuffer buffer, Key key) {
+   private boolean verifySignature(CompressedBuffer buffer, Key key) throws SecureMessageException {
       int payloadLength;
       int payloadOffset;
       int payloadEnd;
@@ -258,7 +258,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       return verified;
    }
 
-   private boolean decryptAndVerifySignature(CompressedBuffer buffer, Key key) {
+   private boolean decryptAndVerifySignature(CompressedBuffer buffer, Key key) throws SecureMessageException {
       int headerLength = buffer.cursor();
 
       int ivLength;

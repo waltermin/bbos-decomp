@@ -6,7 +6,7 @@ import net.rim.device.api.xml.parsers.ParserConfigurationException;
 
 public class DocumentBuilderFactoryImpl extends DocumentBuilderFactory {
    @Override
-   public DocumentBuilder newDocumentBuilder() {
+   public DocumentBuilder newDocumentBuilder() throws ParserConfigurationException {
       if (this.isValidating()) {
          throw new ParserConfigurationException("not supported");
       }

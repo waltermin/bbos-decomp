@@ -1011,7 +1011,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       return returnMe;
    }
 
-   private final synchronized int processServiceBookData(DataBuffer dataBuffer, int source, String callerUID, String keyId, boolean autheticated) {
+   private final synchronized int processServiceBookData(DataBuffer dataBuffer, int source, String callerUID, String keyId, boolean autheticated) throws ServiceBook$DuplicateSecureServiceException, ServiceBook$SecurityViolationException {
       assertRRISignature();
       ServiceRecord[] serviceRecords = parse(dataBuffer, source);
       int size = serviceRecords != null ? serviceRecords.length : 0;

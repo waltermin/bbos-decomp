@@ -16,7 +16,7 @@ class ESScreenPrototype$1 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       int numParams = this.getNumParms();
       ESScreen thiz = (ESScreen)this.getThis();
       if (numParams <= 0) {

@@ -5,7 +5,7 @@ public class HandshakeMessageBuffer {
    private byte[] _buffer;
    private static final int FIELD_SIZE_LIMIT = 131072;
 
-   public HandshakeMessageBuffer(int length) {
+   public HandshakeMessageBuffer(int length) throws HandshakeMessageException {
       if (length < 0) {
          throw new HandshakeMessageException();
       }
@@ -14,7 +14,7 @@ public class HandshakeMessageBuffer {
       this._buffer = new byte[length];
    }
 
-   public HandshakeMessageBuffer(byte[] buffer) {
+   public HandshakeMessageBuffer(byte[] buffer) throws HandshakeMessageException {
       if (buffer == null) {
          throw new HandshakeMessageException();
       }
@@ -23,7 +23,7 @@ public class HandshakeMessageBuffer {
       this._buffer = buffer;
    }
 
-   public byte[] readBytes() {
+   public byte[] readBytes() throws HandshakeMessageException {
       int length = this.readInt();
       if (length > 131072) {
          throw new HandshakeMessageException();
@@ -38,7 +38,7 @@ public class HandshakeMessageBuffer {
       return bytes;
    }
 
-   public void writeBytes(byte[] bytes) {
+   public void writeBytes(byte[] bytes) throws HandshakeMessageException {
       int length = bytes == null ? -1 : bytes.length;
       if (length > 131072) {
          throw new HandshakeMessageException();
@@ -51,7 +51,7 @@ public class HandshakeMessageBuffer {
       }
    }
 
-   public byte readByte() {
+   public byte readByte() throws HandshakeMessageException {
       if (this._cursor == this._buffer.length) {
          throw new HandshakeMessageException();
       }
@@ -61,7 +61,7 @@ public class HandshakeMessageBuffer {
       return b;
    }
 
-   public void writeByte(byte b) {
+   public void writeByte(byte b) throws HandshakeMessageException {
       if (this._cursor == this._buffer.length) {
          throw new HandshakeMessageException();
       }

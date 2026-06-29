@@ -109,7 +109,7 @@ public final class CertificateUtilities {
       return certificateChains;
    }
 
-   public static final boolean verifyCertificateChain(Certificate[] chain, KeyStore trustedKeyStore, long date) {
+   public static final boolean verifyCertificateChain(Certificate[] chain, KeyStore trustedKeyStore, long date) throws CertificateInvalidException, CertificateRevokedException, CertificateVerificationException {
       if (chain != null && chain.length != 0) {
          CertificateStatusManager csm = CertificateStatusManager.getInstance();
          int chainLength = chain.length;

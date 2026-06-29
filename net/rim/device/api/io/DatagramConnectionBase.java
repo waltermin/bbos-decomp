@@ -67,7 +67,7 @@ public class DatagramConnectionBase implements DatagramConnection, IOProperties,
    }
 
    @Override
-   public Connection openPrim(String name, int mode, boolean timeouts) {
+   public Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       if ((mode & 3) != mode) {
          throw new IllegalArgumentException();
       }
@@ -108,7 +108,7 @@ public class DatagramConnectionBase implements DatagramConnection, IOProperties,
       throw null;
    }
 
-   protected void checkForClosed() {
+   protected void checkForClosed() throws IOException {
       if (!this._isActive) {
          throw new IOException("Connection closed");
       }
@@ -118,7 +118,7 @@ public class DatagramConnectionBase implements DatagramConnection, IOProperties,
       this._tLogger = logger;
    }
 
-   public void cancel(Datagram datagram) {
+   public void cancel(Datagram datagram) throws IOException {
       if (!this._isActive) {
          throw new IOException("Connection closed");
       }
@@ -294,7 +294,7 @@ public class DatagramConnectionBase implements DatagramConnection, IOProperties,
    }
 
    @Override
-   public void receive(Datagram datagram) {
+   public void receive(Datagram datagram) throws IOException {
       if (!this._isActive) {
          throw new IOException();
       }

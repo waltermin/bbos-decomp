@@ -26,7 +26,7 @@ public final class YKMixedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       }
@@ -43,7 +43,7 @@ public final class YKMixedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) {
+   public final synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOCancelledException {
       if (buffer == null) {
          throw new NullPointerException();
       }
@@ -82,7 +82,7 @@ public final class YKMixedInputStream extends InputStream {
       }
    }
 
-   public final synchronized byte[] saveContextMap() {
+   public final synchronized byte[] saveContextMap() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       } else {
@@ -90,7 +90,7 @@ public final class YKMixedInputStream extends InputStream {
       }
    }
 
-   public final synchronized void loadContextMap(byte[] contextMap) {
+   public final synchronized void loadContextMap(byte[] contextMap) throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       }
@@ -109,7 +109,7 @@ public final class YKMixedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int available() {
+   public final synchronized int available() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       } else {
@@ -138,7 +138,7 @@ public final class YKMixedInputStream extends InputStream {
       this._isClosed = true;
    }
 
-   private final boolean readNextChunk() {
+   private final boolean readNextChunk() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       }

@@ -147,7 +147,7 @@ final class ASN1Field {
       return this._isExplicit;
    }
 
-   private final int readDefiniteLength(boolean setEnd) {
+   private final int readDefiniteLength(boolean setEnd) throws ASN1EncodingException {
       int length = this._input.read();
       if (length == -1) {
          throw new Object();
@@ -183,7 +183,7 @@ final class ASN1Field {
       return length;
    }
 
-   private final int readIndefiniteLength(boolean setEnd, int depth) {
+   private final int readIndefiniteLength(boolean setEnd, int depth) throws ASN1EncodingException {
       if (depth == 32) {
          throw new ASN1EncodingException();
       }
@@ -226,7 +226,7 @@ final class ASN1Field {
       return fieldEndPosition - fieldStartPosition;
    }
 
-   private final void setEndPosition(int endPosition) {
+   private final void setEndPosition(int endPosition) throws ASN1EncodingException {
       this._endPosition = endPosition;
       if (this._maxPosition > 0 && this._endPosition > this._maxPosition) {
          throw new ASN1EncodingException();

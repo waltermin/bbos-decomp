@@ -7,7 +7,7 @@ final class RIMDigestFactoryCrypto10 extends DigestFactory {
    }
 
    @Override
-   protected final Digest create(String algorithm) {
+   protected final Digest create(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("SHA1")) {
          return new SHA1Digest();
       } else if (algorithm.equals("SHA256")) {

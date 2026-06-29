@@ -10,7 +10,7 @@ class GlobalProperties$2 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       if (!this.getContext().evalAllowed()) {
          throw ThrownValue.evalError(Resources.getString(44));
       }

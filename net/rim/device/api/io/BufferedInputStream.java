@@ -28,7 +28,7 @@ public final class BufferedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized void reset() {
+   public final synchronized void reset() throws IOException {
       if (!this._closed && this._currentMarkPos >= 0) {
          this._bufferPos = this._currentMarkPos;
       } else {
@@ -61,7 +61,7 @@ public final class BufferedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int available() {
+   public final synchronized int available() throws IOException {
       if (this._closed) {
          throw new IOException();
       } else {
@@ -76,7 +76,7 @@ public final class BufferedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws IOException {
       if (this._closed) {
          throw new IOException();
       } else {
@@ -110,7 +110,7 @@ public final class BufferedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) {
+   public final synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOException {
       if (this._closed) {
          throw new IOException();
       }

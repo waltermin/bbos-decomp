@@ -40,7 +40,7 @@ public final class Transport extends NativeTransport implements SMSPacketListene
    }
 
    @Override
-   public final void nativeSendVerify(DatagramAddressBase addressBase, Datagram datagram) {
+   public final void nativeSendVerify(DatagramAddressBase addressBase, Datagram datagram) throws IOFormatException {
       SmsAddress addr = null;
       if (addressBase instanceof SmsAddress) {
          addr = (SmsAddress)addressBase;
@@ -65,7 +65,7 @@ public final class Transport extends NativeTransport implements SMSPacketListene
    }
 
    @Override
-   public final void nativeSendSetupData(Datagram datagram) {
+   public final void nativeSendSetupData(Datagram datagram) throws IOFormatException {
       int[] ports = ((SmsAddress)super._txAddressBase).getPorts();
       if (ports != null && ports[0] == 65536) {
          int length = SmsUtil.encode(65536, this._txEncode, datagram.getData(), datagram.getOffset(), datagram.getLength());

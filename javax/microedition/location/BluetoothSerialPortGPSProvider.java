@@ -23,7 +23,7 @@ class BluetoothSerialPortGPSProvider extends LocationProvider implements GlobalE
    }
 
    @Override
-   public Location getLocation(int timeout) {
+   public Location getLocation(int timeout) throws LocationException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_location");
       if (timeout != 0 && timeout >= -1) {
          if (timeout == -1) {

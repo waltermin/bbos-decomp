@@ -93,7 +93,7 @@ public final class ConverterUtilities {
       return readString(buffer, false);
    }
 
-   public static final String readString(DataBuffer buffer, boolean markConsumed) {
+   public static final String readString(DataBuffer buffer, boolean markConsumed) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -552,7 +552,7 @@ public final class ConverterUtilities {
       return getType(buffer, false);
    }
 
-   public static final int getType(DataBuffer buffer, boolean convertTag) {
+   public static final int getType(DataBuffer buffer, boolean convertTag) throws EOFException {
       if (buffer.available() < 3) {
          throw new EOFException();
       }
@@ -567,7 +567,7 @@ public final class ConverterUtilities {
       return type;
    }
 
-   public static final void skipField(DataBuffer buffer) {
+   public static final void skipField(DataBuffer buffer) throws EOFException {
       int len = buffer.readUnsignedShort();
       if (buffer.available() < len + 1) {
          throw new EOFException();
@@ -597,7 +597,7 @@ public final class ConverterUtilities {
       return getBinaryString(buffer, false);
    }
 
-   public static final String getBinaryString(DataBuffer buffer, boolean markConsumed) {
+   public static final String getBinaryString(DataBuffer buffer, boolean markConsumed) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -630,7 +630,7 @@ public final class ConverterUtilities {
       return readByteArray(buffer, false);
    }
 
-   public static final byte[] readByteArray(DataBuffer buffer, boolean markConsumed) {
+   public static final byte[] readByteArray(DataBuffer buffer, boolean markConsumed) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -656,7 +656,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final void readByteStream(DataBuffer buffer, boolean markConsumed, OutputStream out) {
+   public static final void readByteStream(DataBuffer buffer, boolean markConsumed, OutputStream out) throws EOFException {
       long length = readLong(buffer, markConsumed);
       if (out instanceof ReservableSize) {
          ReservableSize reservable = (ReservableSize)out;
@@ -695,7 +695,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final short[] readShortArray(DataBuffer buffer) {
+   public static final short[] readShortArray(DataBuffer buffer) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -723,7 +723,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final int[] readIntArray(DataBuffer buffer) {
+   public static final int[] readIntArray(DataBuffer buffer) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -751,7 +751,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final int[][] readIntArrayArray(DataBuffer buffer, boolean allowNulls) {
+   public static final int[][] readIntArrayArray(DataBuffer buffer, boolean allowNulls) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -794,7 +794,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final long[] readLongArray(DataBuffer buffer) {
+   public static final long[] readLongArray(DataBuffer buffer) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -822,7 +822,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final char[][] readCharArrayArray(DataBuffer buffer, boolean allowNulls) {
+   public static final char[][] readCharArrayArray(DataBuffer buffer, boolean allowNulls) throws EOFException {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -926,7 +926,7 @@ public final class ConverterUtilities {
       return readLong(buffer, false);
    }
 
-   public static final long readLong(DataBuffer buffer, boolean markConsumed) {
+   public static final long readLong(DataBuffer buffer, boolean markConsumed) throws EOFException {
       int pos = buffer.getPosition();
       int buflen = buffer.available();
       if (buflen < 4) {
@@ -981,7 +981,7 @@ public final class ConverterUtilities {
       return getDateTime(buffer, markConsumed, false, false);
    }
 
-   private static final long getDateTime(DataBuffer buffer, boolean markConsumed, boolean convertToGMT, boolean dateOnly) {
+   private static final long getDateTime(DataBuffer buffer, boolean markConsumed, boolean convertToGMT, boolean dateOnly) throws EOFException {
       int pos = buffer.getPosition();
       int buflen = buffer.available();
       if (buflen < 13) {

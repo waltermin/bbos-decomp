@@ -9,7 +9,7 @@ public class UserException extends CardException {
       super(reason);
    }
 
-   public static void throwIt(short reason) {
+   public static void throwIt(short reason) throws UserException {
       throw new UserException(reason);
    }
 }

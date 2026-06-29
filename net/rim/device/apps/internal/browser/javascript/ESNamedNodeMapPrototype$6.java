@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.javascript;
 
+import net.rim.ecmascript.runtime.ThrownValue;
 import org.w3c.dom.Node;
 
 class ESNamedNodeMapPrototype$6 extends JavaScriptHostFunction {
@@ -13,7 +14,7 @@ class ESNamedNodeMapPrototype$6 extends JavaScriptHostFunction {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       Node node = ESNode.getNode(this.getParm(0));
 
       try {

@@ -27,7 +27,7 @@ public class MACOutputStream extends CryptoOutputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void write(byte[] buffer, int offset, int length) {
+   public void write(byte[] buffer, int offset, int length) throws CryptoIOException {
       if (buffer != null && offset >= 0 && length >= 0 && buffer.length - length >= offset) {
          try {
             if (this._on) {

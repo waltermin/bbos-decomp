@@ -126,7 +126,7 @@ final class TcpAddress extends DatagramAddressBase {
       return this.getApnName();
    }
 
-   protected final void parseAddress(String address) {
+   protected final void parseAddress(String address) throws IOException {
       int scan = 0;
       int delim = 0;
       int length = address.length();
@@ -371,7 +371,7 @@ final class TcpAddress extends DatagramAddressBase {
       }
    }
 
-   public final String getLocalAddress() {
+   public final String getLocalAddress() throws IOException {
       if (this._apnName == null) {
          throw new IOException();
       }

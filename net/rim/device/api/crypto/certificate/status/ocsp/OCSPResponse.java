@@ -28,7 +28,7 @@ final class OCSPResponse {
    private static final int TAG_NEXT_UPDATE = 0;
    private static final int TAG_CRL_REASON = 0;
 
-   public OCSPResponse(byte[] tbsResponseBytes) {
+   public OCSPResponse(byte[] tbsResponseBytes) throws ResponseParsingException {
       this._responseBytes = tbsResponseBytes;
       this._certInfo = (Vector)(new Object());
       ASN1InputStream tbsResponse = (ASN1InputStream)(new Object((InputStream)(new Object(tbsResponseBytes))));
@@ -69,7 +69,7 @@ final class OCSPResponse {
       }
    }
 
-   private final void parseSingleResponse(ASN1InputStream response) {
+   private final void parseSingleResponse(ASN1InputStream response) throws ResponseParsingException {
       ASN1InputStream singleResponse = response.readSequence();
       ASN1InputStream certID = singleResponse.readSequence();
       if (!certID.readSequence().readOID().equals(OIDs.getOID(774767465))) {

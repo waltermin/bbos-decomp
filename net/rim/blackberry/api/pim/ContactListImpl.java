@@ -26,7 +26,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    private static AddressBook _addressBook = AddressBookServices.getAddressBook();
    private static ResourceBundle _resources = ResourceBundle.getBundle(6683049446475877841L, "net.rim.blackberry.api.pim.resource.PIMRes");
 
-   final void commitAddress(AddressCardModel address) {
+   final void commitAddress(AddressCardModel address) throws PIMException {
       long id = address.getUID();
 
       try {
@@ -62,7 +62,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final void removeContact(Contact element) {
+   public final void removeContact(Contact element) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -147,7 +147,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -234,7 +234,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final Enumeration items() {
+   public final Enumeration items() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (super._mode == 2) {
@@ -245,7 +245,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final Enumeration items(PIMItem matching) {
+   public final Enumeration items(PIMItem matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -280,7 +280,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    }
 
    @Override
-   public final Enumeration items(String matching) {
+   public final Enumeration items(String matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }

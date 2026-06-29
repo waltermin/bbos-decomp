@@ -124,7 +124,7 @@ public final class KeyStorePasswordManager {
       }
    }
 
-   public final synchronized void changePassword() {
+   public final synchronized void changePassword() throws KeyStoreCancelException {
       String fullPrompt = ((StringBuffer)(new Object())).append(KeyStoreResources.getString(2008)).append(KeyStoreResources.getString(7016)).toString();
       byte[] oldPasswordBytes = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, true, true);
       String newPasswordPrompt = KeyStoreResources.getString(1003);
@@ -260,7 +260,7 @@ public final class KeyStorePasswordManager {
       return var10;
    }
 
-   private final byte[] getHistoricalPassword(int passwordVersion) {
+   private final byte[] getHistoricalPassword(int passwordVersion) throws KeyStoreCancelException {
       byte[] password = (byte[])this._passwordHashtable.get(passwordVersion);
       if (password == null) {
          if (passwordVersion == 0) {
@@ -363,7 +363,7 @@ public final class KeyStorePasswordManager {
       return null;
    }
 
-   final synchronized byte[] setPasswordInternal() {
+   final synchronized byte[] setPasswordInternal() throws KeyStoreCancelException {
       if (this._helper.isPassphraseSet()) {
          return null;
       }
@@ -687,7 +687,7 @@ public final class KeyStorePasswordManager {
       // try (0 -> 100): 108 null
    }
 
-   private final byte[] cipher_decrypt(byte[] param1, byte[] param2, int param3, int param4) {
+   private final byte[] cipher_decrypt(byte[] param1, byte[] param2, int param3, int param4) throws KeyStoreDecodeException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

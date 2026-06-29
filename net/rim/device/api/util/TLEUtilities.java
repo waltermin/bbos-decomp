@@ -92,7 +92,7 @@ public final class TLEUtilities {
       return result;
    }
 
-   public static final String readStringFieldEncoded(DataBuffer buf) {
+   public static final String readStringFieldEncoded(DataBuffer buf) throws EOFException, UnsupportedEncodingException {
       int oldPosition = buf.getPosition();
       int type = buf.readUnsignedByte();
       int length = buf.readCompressedInt();
@@ -306,7 +306,7 @@ public final class TLEUtilities {
       return getType(buffer, false);
    }
 
-   public static final int getType(DataBuffer buffer, boolean convertTag) {
+   public static final int getType(DataBuffer buffer, boolean convertTag) throws EOFException {
       if (buffer.available() < 1) {
          throw new EOFException();
       }

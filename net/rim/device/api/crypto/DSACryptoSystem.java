@@ -192,7 +192,7 @@ public final class DSACryptoSystem implements CryptoSystem {
       }
    }
 
-   private final void initialize(DSACryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, String name) {
+   private final void initialize(DSACryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, String name) throws InvalidCryptoSystemException {
       if (cryptoToken != null && p != null && q != null && g != null) {
          p = CryptoByteArrayArithmetic.trim(p);
          q = CryptoByteArrayArithmetic.trim(q);

@@ -7,6 +7,8 @@ import net.rim.device.api.crypto.BlockDecryptor;
 import net.rim.device.api.crypto.BlockDecryptorEngine;
 import net.rim.device.api.crypto.CAST128Key;
 import net.rim.device.api.crypto.CBCDecryptorEngine;
+import net.rim.device.api.crypto.CryptoTokenException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.DecryptorFactory;
 import net.rim.device.api.crypto.InitializationVector;
 import net.rim.device.api.crypto.RC2Key;
@@ -73,7 +75,7 @@ final class CMSKeyUnWrap {
       }
    }
 
-   static final byte[] RC2KeyUnWrap(RC2Key param0, byte[] param1) {
+   static final byte[] RC2KeyUnWrap(RC2Key param0, byte[] param1) throws CryptoTokenException, CryptoUnsupportedOperationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -103,7 +105,7 @@ final class CMSKeyUnWrap {
       // try (0 -> 3): 10 null
    }
 
-   static final byte[] CASTKeyUnWrap(CAST128Key param0, byte[] param1) {
+   static final byte[] CASTKeyUnWrap(CAST128Key param0, byte[] param1) throws CryptoTokenException, CryptoUnsupportedOperationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

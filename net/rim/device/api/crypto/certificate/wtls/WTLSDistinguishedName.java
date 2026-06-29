@@ -114,7 +114,7 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
       this._attributes.put(attributeType, attributeValue);
    }
 
-   private final void readNextSection() {
+   private final void readNextSection() throws CertificateParsingException {
       int state = 0;
       boolean complete = false;
       int bufferOffset = 0;
@@ -159,7 +159,7 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
       this._sectionLength = bufferOffset;
    }
 
-   public WTLSDistinguishedName(InputStream in) {
+   public WTLSDistinguishedName(InputStream in) throws CertificateParsingException {
       if (in == null) {
          throw new Object();
       }

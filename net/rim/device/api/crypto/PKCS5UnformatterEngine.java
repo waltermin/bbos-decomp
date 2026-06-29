@@ -32,7 +32,7 @@ public final class PKCS5UnformatterEngine implements BlockUnformatterEngine {
    }
 
    @Override
-   public final int decryptAndUnformat(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBlock) {
+   public final int decryptAndUnformat(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBlock) throws BadPaddingException {
       if (input != null
          && inputOffset >= 0
          && input.length - this._blockLength >= inputOffset

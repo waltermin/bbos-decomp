@@ -71,7 +71,7 @@ final class TcpSocket implements SocketConnection, BoundNativeSocketListener {
       }
    }
 
-   public final void connect(int ipv4Addr, int destPort) {
+   public final void connect(int ipv4Addr, int destPort) throws IOException {
       if (this._nativeSocket == null) {
          throw new IOException();
       }
@@ -227,7 +227,7 @@ final class TcpSocket implements SocketConnection, BoundNativeSocketListener {
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOException {
       if (this._outStream != null && this._nativeSocket != null) {
          switch (this._outputStreamState) {
             case 0:
@@ -251,7 +251,7 @@ final class TcpSocket implements SocketConnection, BoundNativeSocketListener {
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException {
       if (this._inStream != null && this._nativeSocket != null) {
          switch (this._inputStreamState) {
             case 0:

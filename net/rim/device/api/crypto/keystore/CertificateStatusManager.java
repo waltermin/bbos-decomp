@@ -118,7 +118,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final synchronized void revoke(CertificateRevocationList crl) {
+   public final synchronized void revoke(CertificateRevocationList crl) throws CertificateStatusException {
       if (crl == null) {
          throw new Object();
       }
@@ -235,7 +235,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       }
    }
 
-   private final int determineAction(CertificateContainer certificateContainer, CertificateStatus newStatus) {
+   private final int determineAction(CertificateContainer certificateContainer, CertificateStatus newStatus) throws BackwardStatusException, InvalidTimeException {
       KeyStoreManagerHelper keyStoreManagerHelper = KeyStoreManagerHelper.getInstance();
       CertificateStatus currentStatus = null;
       Hashtable statusHashtable = keyStoreManagerHelper.getStatusHashtable();

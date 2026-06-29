@@ -28,7 +28,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final void readFully(byte[] b, int off, int len) {
+   public final void readFully(byte[] b, int off, int len) throws EOFException {
       if (len < 0) {
          throw new IndexOutOfBoundsException();
       }
@@ -58,7 +58,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final boolean readBoolean() {
+   public final boolean readBoolean() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
          throw new EOFException();
@@ -68,7 +68,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final byte readByte() {
+   public final byte readByte() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
          throw new EOFException();
@@ -78,7 +78,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final int readUnsignedByte() {
+   public final int readUnsignedByte() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
          throw new EOFException();
@@ -93,7 +93,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final int readUnsignedShort() {
+   public final int readUnsignedShort() throws EOFException {
       int ch1 = this.read();
       int ch2 = this.read();
       if ((ch1 | ch2) < 0) {
@@ -109,7 +109,7 @@ public class DataInputStream extends InputStream implements DataInput {
    }
 
    @Override
-   public final int readInt() {
+   public final int readInt() throws EOFException {
       int ch1 = this.read();
       int ch2 = this.read();
       int ch3 = this.read();
@@ -141,7 +141,7 @@ public class DataInputStream extends InputStream implements DataInput {
       return readUTF(this);
    }
 
-   public static final String readUTF(DataInput in) {
+   public static final String readUTF(DataInput in) throws UTFDataFormatException {
       int ch1 = in.readUnsignedByte();
       int ch2 = in.readUnsignedByte();
       int utflen = (ch1 << 8) + (ch2 << 0);

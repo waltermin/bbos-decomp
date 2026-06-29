@@ -441,7 +441,7 @@ public class MIMEInputStream extends InputStream {
       }
    }
 
-   private byte[] parseComments(byte[] line) {
+   private byte[] parseComments(byte[] line) throws MIMEParsingException {
       byte[] buffer = new byte[line.length];
       int i = 0;
       int dataLength = 0;
@@ -496,7 +496,7 @@ public class MIMEInputStream extends InputStream {
       return buffer;
    }
 
-   private void readParameters(byte[] line, ScanLine scanLine) {
+   private void readParameters(byte[] line, ScanLine scanLine) throws MIMEParsingException {
       boolean parametersLeft = false;
       byte[] parseLine = null;
       byte[] completeline = new byte[line.length];

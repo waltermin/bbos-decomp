@@ -140,7 +140,7 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
       }
    }
 
-   public final void updateRecord() {
+   public final void updateRecord() throws ServiceRegistrationException {
       this.validate();
       int recordHandle = this._conn.getServiceRecordHandle();
       if (recordHandle != -1) {

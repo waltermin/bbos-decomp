@@ -12,7 +12,7 @@ public final class DecimalFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) {
+   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -26,7 +26,7 @@ public final class DecimalFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection dc, long cmpHandler, String field) {
+   public final long getProperty(DataCollection dc, long cmpHandler, String field) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -40,7 +40,7 @@ public final class DecimalFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component cmp, String field, long esObject) {
+   public final void putProperty(Component cmp, String field, long esObject) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -54,7 +54,7 @@ public final class DecimalFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component cmp, String field) {
+   public final long getProperty(Component cmp, String field) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -69,7 +69,7 @@ public final class DecimalFieldHandler implements PropertyHandler {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   static final double string2Double(String b) {
+   static final double string2Double(String b) throws ThrownValue {
       double value = (double)0L;
       boolean var5 = false /* VF: Semaphore variable */;
 

@@ -8,7 +8,7 @@ class ESDatePrototype$ESDateToString extends ESDatePrototype$ESDateFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          super._date = (ESDate)this.getThis();
          double value = super._date.getValue();

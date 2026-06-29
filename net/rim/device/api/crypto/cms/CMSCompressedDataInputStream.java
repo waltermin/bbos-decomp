@@ -17,7 +17,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
       this(inputStream, keyStore, false, true);
    }
 
-   CMSCompressedDataInputStream(InputStream param1, KeyStore param2, boolean param3, boolean param4) {
+   CMSCompressedDataInputStream(InputStream param1, KeyStore param2, boolean param3, boolean param4) throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -151,7 +151,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
       this.setData(data, false);
    }
 
-   private final void setData(InputStream data, boolean twoStage) {
+   private final void setData(InputStream data, boolean twoStage) throws CMSNoSuchAlgorithmException {
       this._dataBuffer = null;
       if (!this._compressionType.equals(OIDs.getOID(-1721348808))) {
          throw new CMSNoSuchAlgorithmException();

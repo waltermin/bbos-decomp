@@ -593,7 +593,7 @@ public class LocationDocumentConverter extends DefaultHandler {
    }
 
    @Override
-   public void fatalError(SAXParseException e) {
+   public void fatalError(SAXParseException e) throws SAXParseException {
       throw e;
    }
 

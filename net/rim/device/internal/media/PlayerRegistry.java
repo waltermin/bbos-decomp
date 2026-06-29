@@ -17,7 +17,7 @@ public class PlayerRegistry {
    private PlayerRegistry() {
    }
 
-   public static Player createPlayer(String contentType) {
+   public static Player createPlayer(String contentType) throws MediaException {
       String classname = (String)_classnames.get(contentType);
       if (classname != null) {
          try {

@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.socketmanager;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 import javax.microedition.io.Connection;
@@ -232,7 +233,7 @@ public final class Protocol implements ConnectionBaseInterface {
       }
    }
 
-   private final Tunnel activateTunnel(Protocol$ConnectionParams parms) {
+   private final Tunnel activateTunnel(Protocol$ConnectionParams parms) throws IOException {
       String apn;
       String username;
       String password;

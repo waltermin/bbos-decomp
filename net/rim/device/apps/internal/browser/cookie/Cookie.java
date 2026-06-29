@@ -221,7 +221,7 @@ public final class Cookie implements Persistable, EncryptableProvider {
       this._requestURI = PersistentContent.encode(requestURI, false, true);
    }
 
-   private static final void cookieAssert(boolean value, int code) {
+   private static final void cookieAssert(boolean value, int code) throws CookieException {
       if (!value) {
          throw new CookieException(code);
       }

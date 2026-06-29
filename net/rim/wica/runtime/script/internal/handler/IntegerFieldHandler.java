@@ -13,7 +13,7 @@ public final class IntegerFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) {
+   public final void putProperty(DataCollection dc, long cmpHandler, String field, long esObject) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -27,7 +27,7 @@ public final class IntegerFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection dc, long cmpHandler, String field) {
+   public final long getProperty(DataCollection dc, long cmpHandler, String field) throws ThrownValue {
       int fieldID = dc.getDef().getFieldHandle(field);
       switch (dc.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -41,7 +41,7 @@ public final class IntegerFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component cmp, String field, long esObject) {
+   public final void putProperty(Component cmp, String field, long esObject) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -55,7 +55,7 @@ public final class IntegerFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component cmp, String field) {
+   public final long getProperty(Component cmp, String field) throws ThrownValue {
       int fieldID = cmp.getDef().getFieldHandle(field);
       switch (cmp.getDef().getAccessType(fieldID)) {
          case 268435456:
@@ -68,7 +68,7 @@ public final class IntegerFieldHandler implements PropertyHandler {
       }
    }
 
-   static final int string2Int(String b) {
+   static final int string2Int(String b) throws ThrownValue {
       try {
          return Util.convertStringToInt(b);
       } finally {

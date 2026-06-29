@@ -76,7 +76,7 @@ final class DefaultService extends Store {
       this(null);
    }
 
-   private DefaultService(ServiceRecord sr) {
+   private DefaultService(ServiceRecord sr) throws NoSuchServiceException {
       if (sr == null) {
          RIMMessagingService rms = (RIMMessagingService)TransmissionServiceManager.get(8399767144006445082L);
          if (null == rms) {

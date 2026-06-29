@@ -43,7 +43,7 @@ class ESHTMLElement extends ESElement {
       return (HTMLElement)this.getNode();
    }
 
-   static HTMLElement getHTMLElement(long paramValue) {
+   static HTMLElement getHTMLElement(long paramValue) throws ThrownValue {
       Object obj = Convert.toObject(paramValue);
       if (obj instanceof ESElement) {
          return (HTMLElement)((ESHTMLElement)obj).getHTMLElement();

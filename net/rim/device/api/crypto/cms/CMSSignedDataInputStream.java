@@ -3,6 +3,8 @@ package net.rim.device.api.crypto.cms;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoTokenException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.SignatureVerifier;
@@ -49,7 +51,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       this(inputStream, keyStore, false, true);
    }
 
-   CMSSignedDataInputStream(InputStream param1, KeyStore param2, boolean param3, boolean param4) {
+   CMSSignedDataInputStream(InputStream param1, KeyStore param2, boolean param3, boolean param4) throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -359,7 +361,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
    }
 
-   public final boolean isSignerCertificatePresent(CMSEntityIdentifier signer) {
+   public final boolean isSignerCertificatePresent(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
          throw new Object();
       } else if (signer.getCreator() != this) {
@@ -705,7 +707,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       this._contentComplete = true;
    }
 
-   public final Certificate getSignerCertificate(CMSEntityIdentifier signer) {
+   public final Certificate getSignerCertificate(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
          throw new Object();
       }
@@ -777,7 +779,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       return chains != null ? chains[0] : null;
    }
 
-   public final Certificate[][] getSignerCertificateChains(CMSEntityIdentifier signer) {
+   public final Certificate[][] getSignerCertificateChains(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
          throw new Object();
       }
@@ -807,7 +809,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       return this._crl;
    }
 
-   public final CMSAttribute getSignerAttribute(OID oid, CMSEntityIdentifier signer) {
+   public final CMSAttribute getSignerAttribute(OID oid, CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
          throw new Object();
       }
@@ -829,7 +831,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       return null;
    }
 
-   public final Enumeration getSignerAttributes(CMSEntityIdentifier signer) {
+   public final Enumeration getSignerAttributes(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
          throw new Object();
       } else if (signer.getCreator() != this) {
@@ -891,7 +893,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 036: ifnonnull 048
       // 039: aload 0
       // 03a: bipush 1
-      // 03b: anewarray 3173
+      // 03b: anewarray 3191
       // 03e: dup
       // 03f: bipush 0
       // 040: aload 3
@@ -1028,7 +1030,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 164: ifnonnull 177
       // 167: aload 0
       // 168: bipush 1
-      // 169: anewarray 3363
+      // 169: anewarray 3381
       // 16c: dup
       // 16d: bipush 0
       // 16e: aload 13
@@ -1065,7 +1067,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       return this._pool != null;
    }
 
-   public final void verify(CMSEntityIdentifier signer) {
+   public final void verify(CMSEntityIdentifier signer) throws CMSNoCertificateFoundException, CMSNoSuchEntityException, CMSParsingException {
       if (signer == null) {
          throw new Object();
       }
@@ -1099,7 +1101,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
    }
 
-   public final void verify(CMSEntityIdentifier param1, Certificate param2) {
+   public final void verify(CMSEntityIdentifier param1, Certificate param2) throws CryptoTokenException, CryptoUnsupportedOperationException, CMSNoSuchAlgorithmException, CMSParsingException, CMSVerificationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -1290,7 +1292,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       return CMSUtilities.getSignatureDigestName(signer);
    }
 
-   public final CMSEntityIdentifier[] getSigners() {
+   public final CMSEntityIdentifier[] getSigners() throws CMSParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -1559,7 +1561,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 212: ifle 239
       // 215: aload 0
       // 216: iload 2
-      // 217: anewarray 4273
+      // 217: anewarray 4309
       // 21a: putfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._signers [Lnet/rim/device/api/crypto/cms/CMSEntityIdentifier;
       // 21d: iload 2
       // 21e: bipush 1
@@ -1613,7 +1615,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       PublicKey publicKey,
       Digest digest,
       boolean entrustBug
-   ) {
+   ) throws CMSNoReceiptDataFoundException {
       boolean hashMatch = false;
       DecodedSignature decoded = SignatureDecoder.decode(
          (InputStream)(new Object(encoding)), "CMS", ((StringBuffer)(new Object("/"))).append(digest.getAlgorithm()).toString()

@@ -46,7 +46,7 @@ public class DiscoveryAgent {
       return remoteDevices;
    }
 
-   public synchronized boolean startInquiry(int accessCode, DiscoveryListener listener) {
+   public synchronized boolean startInquiry(int accessCode, DiscoveryListener listener) throws BluetoothStateException {
       if (listener == null) {
          throw new Object();
       }
@@ -98,7 +98,7 @@ public class DiscoveryAgent {
       return true;
    }
 
-   public int searchServices(int[] attrSet, UUID[] uuidSet, RemoteDevice btDev, DiscoveryListener listener) {
+   public int searchServices(int[] attrSet, UUID[] uuidSet, RemoteDevice btDev, DiscoveryListener listener) throws BluetoothStateException {
       if (uuidSet != null && btDev != null && listener != null) {
          int[] attributes = null;
          if (attrSet == null) {

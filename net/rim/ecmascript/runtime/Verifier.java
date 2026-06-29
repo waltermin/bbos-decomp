@@ -21,7 +21,7 @@ class Verifier {
       this._globalSize = globalSize;
    }
 
-   private void verifyAssert(boolean truth) {
+   private void verifyAssert(boolean truth) throws VerifyError {
       if (!truth) {
          throw new VerifyError();
       }
@@ -41,7 +41,7 @@ class Verifier {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void verify(CompiledScript script) {
+   public void verify(CompiledScript script) throws VerifyError {
       boolean var26 = false /* VF: Semaphore variable */;
 
       try {

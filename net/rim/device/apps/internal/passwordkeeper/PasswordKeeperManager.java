@@ -101,7 +101,7 @@ public final class PasswordKeeperManager {
       return hash;
    }
 
-   private final void setPassword() {
+   private final void setPassword() throws CancelException {
       PasswordDialog dialog = (PasswordDialog)(new Object(PasswordKeeper.getString(3000), PasswordKeeper.getString(3001)));
       dialog.show();
       if (dialog.getCloseReason() == -1) {
@@ -112,7 +112,7 @@ public final class PasswordKeeperManager {
       PasswordKeeperOptions.getOptions().setHash(this.getPasswordHash(this._password));
    }
 
-   private final byte[] askPassword() {
+   private final byte[] askPassword() throws CancelException {
       PasswordKeeperOptions options = PasswordKeeperOptions.getOptions();
       int counter = 0;
       int threshold = options.getPasswordThreshold();
@@ -220,7 +220,7 @@ public final class PasswordKeeperManager {
       return this.decrypt(element, this._password, salt);
    }
 
-   public final String decrypt(byte[] param1, byte[] param2, byte[] param3) {
+   public final String decrypt(byte[] param1, byte[] param2, byte[] param3) throws DecryptionException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -301,7 +301,7 @@ public final class PasswordKeeperManager {
       // try (7 -> 59): 62 null
    }
 
-   private final String decryptOperation(BlockUnformatterEngine engine, byte[] ciphertext) {
+   private final String decryptOperation(BlockUnformatterEngine engine, byte[] ciphertext) throws DecryptionException {
       BlockDecryptor decryptor = (BlockDecryptor)(new Object(engine, (InputStream)(new Object(ciphertext))));
       byte[] decrypted = new byte[0];
       byte[] temp = new byte[10];

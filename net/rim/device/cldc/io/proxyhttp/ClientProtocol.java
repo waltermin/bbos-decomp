@@ -171,7 +171,7 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
    }
 
    @Override
-   protected final void readResponse() {
+   protected final void readResponse() throws SocketBaseIOException {
       synchronized (this._syncObject) {
          this._inputStream = this._streamConnection.openInputStream();
       }

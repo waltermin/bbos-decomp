@@ -88,7 +88,7 @@ public final class ASN1InputByteArray {
       return this._startPosition < this._buffer.length ? this._buffer[this._startPosition] : -1;
    }
 
-   private final int checkStreamTag(int taggingType, int classFlag, int tag, int baseTag, boolean useDefault) {
+   private final int checkStreamTag(int taggingType, int classFlag, int tag, int baseTag, boolean useDefault) throws ASN1EncodingException {
       if (taggingType == 1) {
          int streamTag = this._buffer[this._startPosition];
          if ((byte)(streamTag | 32) != (byte)(tag | classFlag | 32)) {
@@ -129,7 +129,7 @@ public final class ASN1InputByteArray {
       this.readSequence(tagType, tag, 128);
    }
 
-   public final void readSequence(int tagType, int tag, int clsFlags) {
+   public final void readSequence(int tagType, int tag, int clsFlags) throws ASN1EncodingException {
       try {
          this.checkStreamTag(tagType, clsFlags, tag, 16, false);
          this.readLength(tagType != 1);
@@ -146,7 +146,7 @@ public final class ASN1InputByteArray {
       this.readSet(tagType, tag, 128);
    }
 
-   public final void readSet(int tagType, int tag, int clsFlags) {
+   public final void readSet(int tagType, int tag, int clsFlags) throws ASN1EncodingException {
       try {
          this.checkStreamTag(tagType, clsFlags, tag, 17, false);
          this.readLength(tagType != 1);
@@ -175,7 +175,7 @@ public final class ASN1InputByteArray {
       return this.readBoolean(tagType, tag, clsFlags, defaultValue, true);
    }
 
-   private final boolean readBoolean(int tagType, int tag, int clsFlags, boolean defaultValue, boolean useDefault) {
+   private final boolean readBoolean(int tagType, int tag, int clsFlags, boolean defaultValue, boolean useDefault) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, 1, useDefault) == -1) {
             return defaultValue;
@@ -214,7 +214,7 @@ public final class ASN1InputByteArray {
       return this.readNull(tagType, tag, clsFlags, defaultValue, true);
    }
 
-   private final boolean readNull(int tagType, int tag, int clsFlags, boolean defaultValue, boolean useDefault) {
+   private final boolean readNull(int tagType, int tag, int clsFlags, boolean defaultValue, boolean useDefault) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, 5, useDefault) == -1) {
             return defaultValue;
@@ -264,7 +264,7 @@ public final class ASN1InputByteArray {
       return this.readInteger(tagType, tag, clsFlags, defaultValue, true, 10);
    }
 
-   private final int readInteger(int tagType, int tag, int clsFlags, int defaultValue, boolean useDefault, int baseTag) {
+   private final int readInteger(int tagType, int tag, int clsFlags, int defaultValue, boolean useDefault, int baseTag) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, baseTag, useDefault) == -1) {
             return defaultValue;
@@ -312,7 +312,7 @@ public final class ASN1InputByteArray {
       return this.readIntegerAsByteArray(tagType, tag, clsFlags, defaultValue, true);
    }
 
-   private final byte[] readIntegerAsByteArray(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault) {
+   private final byte[] readIntegerAsByteArray(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, 2, useDefault) == -1) {
             return defaultValue;
@@ -338,7 +338,7 @@ public final class ASN1InputByteArray {
 
    private final ASN1SignedByteArray readIntegerAsSignedByteArray(
       int tagType, int tag, int clsFlags, byte[] defaultValue, boolean defaultIsPositive, boolean useDefault
-   ) {
+   ) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, 2, useDefault) == -1) {
             return new ASN1SignedByteArray(defaultValue, defaultIsPositive);
@@ -481,7 +481,7 @@ public final class ASN1InputByteArray {
       return this.readString(tagType, tag, clsFlags, defaultValue, useDefault, 30, 0);
    }
 
-   private final String readString(int tagType, int tag, int clsFlags, String defaultValue, boolean useDefault, int baseTag, int recursionLevel) {
+   private final String readString(int tagType, int tag, int clsFlags, String defaultValue, boolean useDefault, int baseTag, int recursionLevel) throws ASN1EncodingException {
       try {
          int streamTag = this.checkStreamTag(tagType, clsFlags, tag, baseTag, useDefault);
          if (streamTag == -1) {
@@ -564,7 +564,7 @@ public final class ASN1InputByteArray {
       return this.readOID(tagType, tag, clsFlags, defaultValue, true);
    }
 
-   private final OID readOID(int tagType, int tag, int clsFlags, OID defaultValue, boolean useDefault) {
+   private final OID readOID(int tagType, int tag, int clsFlags, OID defaultValue, boolean useDefault) throws ASN1EncodingException {
       try {
          if (this.checkStreamTag(tagType, clsFlags, tag, 6, useDefault) == -1) {
             return defaultValue;
@@ -631,7 +631,7 @@ public final class ASN1InputByteArray {
       return this.readTime(tagType, tag, clsFlags, defaultValue, useDefault, 23);
    }
 
-   private final long readTime(int tagType, int tag, int clsFlags, long defaultValue, boolean useDefault, int baseTag) {
+   private final long readTime(int tagType, int tag, int clsFlags, long defaultValue, boolean useDefault, int baseTag) throws ASN1EncodingException {
       try {
          int streamTag = this.checkStreamTag(tagType, clsFlags, tag, baseTag, useDefault);
          if (streamTag == -1) {
@@ -676,7 +676,7 @@ public final class ASN1InputByteArray {
       return this.readBitString(tagType, tag, clsFlags, defaultValue, true, 0);
    }
 
-   private final ASN1BitSet readBitString(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault, int recursionLevel) {
+   private final ASN1BitSet readBitString(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault, int recursionLevel) throws ASN1EncodingException {
       try {
          int streamTag = this.checkStreamTag(tagType, clsFlags, tag, 3, useDefault);
          if (streamTag == -1) {
@@ -741,7 +741,7 @@ public final class ASN1InputByteArray {
       return this.readOctetString(tagType, tag, clsFlags, defaultValue, true, 0);
    }
 
-   private final byte[] readOctetString(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault, int recursionLevel) {
+   private final byte[] readOctetString(int tagType, int tag, int clsFlags, byte[] defaultValue, boolean useDefault, int recursionLevel) throws ASN1EncodingException {
       try {
          int streamTag = this.checkStreamTag(tagType, clsFlags, tag, 4, useDefault);
          if (streamTag == -1) {
@@ -800,7 +800,7 @@ public final class ASN1InputByteArray {
       this._startPosition = this._endPosition;
    }
 
-   public final void skipField(int tag) {
+   public final void skipField(int tag) throws ASN1EncodingException {
       try {
          if ((this._buffer[this._startPosition] & 31) != tag) {
             throw new ASN1EncodingException();
@@ -823,7 +823,7 @@ public final class ASN1InputByteArray {
       return startPosition + length;
    }
 
-   private final int readLength(boolean setEnd) {
+   private final int readLength(boolean setEnd) throws ASN1EncodingException {
       if (this._startPosition >= this._buffer.length) {
          throw new ASN1EncodingException();
       } else {
@@ -831,7 +831,7 @@ public final class ASN1InputByteArray {
       }
    }
 
-   private final int readDefiniteLength(boolean setEnd) {
+   private final int readDefiniteLength(boolean setEnd) throws ASN1EncodingException {
       try {
          int length = this._buffer[this._startPosition++];
          if ((length & 128) != 0) {
@@ -857,7 +857,7 @@ public final class ASN1InputByteArray {
       }
    }
 
-   private final int readIndefiniteLength(boolean setEnd, int depth) {
+   private final int readIndefiniteLength(boolean setEnd, int depth) throws ASN1EncodingException {
       if (depth == 32) {
          throw new ASN1EncodingException();
       }

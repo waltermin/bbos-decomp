@@ -654,7 +654,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean setControlledAccess(CodeSigningKey csk) {
+   public final boolean setControlledAccess(CodeSigningKey csk) throws ConnectionClosedException {
       this.assertWritePermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -674,7 +674,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final CodeSigningKey getControlledAccess() {
+   public final CodeSigningKey getControlledAccess() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -695,7 +695,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void enableDRMForwardLock() {
+   public final void enableDRMForwardLock() throws ConnectionClosedException {
       this.assertWritePermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -710,7 +710,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isContentDRMForwardLocked() {
+   public final boolean isContentDRMForwardLocked() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -741,7 +741,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isContentBuiltIn() {
+   public final boolean isContentBuiltIn() throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -758,7 +758,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setAutoEncryptionResolveMode(boolean mode) {
+   public final void setAutoEncryptionResolveMode(boolean mode) throws ConnectionClosedException {
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
       }
@@ -774,7 +774,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       );
    }
 
-   private final OutputStream openOutputStreamInternal(long offset, int callerModule) {
+   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws ConnectionClosedException {
       this.assertWritePermission();
       if (offset < 0) {
          throw new Object("offset is negative");
@@ -938,7 +938,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       return ContentStoreImpl.getInstance().getPicturesQuotaUsed();
    }
 
-   private final long fileSizeInternal(boolean raw) {
+   private final long fileSizeInternal(boolean raw) throws ConnectionClosedException {
       if (!this.isOpen()) {
          if (raw) {
             throw new ConnectionClosedException();
@@ -961,7 +961,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       }
    }
 
-   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) {
+   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws ConnectionClosedException {
       if (!this.isOpen()) {
          if (returnFileInfo) {
             throw new ConnectionClosedException();
@@ -1001,7 +1001,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       return new ListEnumeration(fileList, filter, returnFileInfo);
    }
 
-   private final InputStream openInputStreamInternal(int codeModuleCaller, boolean raw) {
+   private final InputStream openInputStreamInternal(int codeModuleCaller, boolean raw) throws ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();

@@ -16,7 +16,7 @@ class JavaArray extends JavaObject {
       return toIndex(value, Integer.MAX_VALUE);
    }
 
-   static int toIndex(long value, int max) {
+   static int toIndex(long value, int max) throws ThrownValue {
       long index;
       if (Value.getType(value) == 5) {
          index = ESObject.toArrayIndex(Value.getStringValue(value));

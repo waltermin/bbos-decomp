@@ -10,7 +10,7 @@ public class BackgroundDialog {
       return getInput(label, 0, 1000000, type);
    }
 
-   public static String getInput(String label, int minLength, int maxLength, int type) {
+   public static String getInput(String label, int minLength, int maxLength, int type) throws BackgroundDialogCancelException {
       BackgroundDialog$GetInputDialogDisplayRunnable dialogDisplayRunnable = new BackgroundDialog$GetInputDialogDisplayRunnable(
          label, minLength, maxLength, type
       );

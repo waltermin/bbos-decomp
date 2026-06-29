@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.gme;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.hrt.HRUtils;
@@ -8,6 +9,7 @@ import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
 import net.rim.device.cldc.io.mdp.MdpAddress;
@@ -53,7 +55,7 @@ public final class MdpBridge extends GmeRouterConnection {
    }
 
    @Override
-   public final void send(DatagramBase param1, GMEDatagramInfo param2, Datagram param3) {
+   public final void send(DatagramBase param1, GMEDatagramInfo param2, Datagram param3) throws IOException, IOCancelledException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

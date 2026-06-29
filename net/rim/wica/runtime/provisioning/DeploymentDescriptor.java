@@ -142,7 +142,7 @@ public final class DeploymentDescriptor implements Persistable {
       this._multiDomain = multiDomain;
    }
 
-   public static final DeploymentDescriptor readFromStream(ReadableDataStream readStream) {
+   public static final DeploymentDescriptor readFromStream(ReadableDataStream readStream) throws MessageException {
       if (!readStream.startComponentRead()) {
          throw new MessageException("Format Error");
       }

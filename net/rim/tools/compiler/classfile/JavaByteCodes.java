@@ -2435,7 +2435,7 @@ public final class JavaByteCodes implements Constants {
       this._saved_ip = this._index;
    }
 
-   private final void backout() {
+   private final void backout() throws ByteCodeNotFoundException {
       this._index = this._saved_ip;
       throw this._bnfe;
    }
@@ -2800,7 +2800,7 @@ public final class JavaByteCodes implements Constants {
       }
    }
 
-   public final void walk(int optimization, byte[] byteCode, ConstantPool constantPool, InstructionResolver wlk) {
+   public final void walk(int optimization, byte[] byteCode, ConstantPool constantPool, InstructionResolver wlk) throws CompileException {
       int[] ops = this._op0;
       boolean opt_arrayinit = (optimization & 4) != 0;
       boolean opt_strarrayinit = (optimization & 8192) != 0;

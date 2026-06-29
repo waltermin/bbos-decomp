@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.ecmascript.runtime.Convert;
+import net.rim.ecmascript.runtime.ThrownValue;
 import net.rim.ecmascript.runtime.Value;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -16,7 +17,7 @@ class ESHTMLDocumentPrototype$6 extends JavaScriptHostFunction {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       String tagName = Convert.toString(this.getParm(0));
       ESHTMLDocument htmlDoc = (ESHTMLDocument)this.getThis();
 

@@ -63,7 +63,7 @@ public final class RIMSignature {
       return !verifyRSASignature(e, n, signature, digest, RSA_PKCS1_SHA1_DIGEST_PREFIX) ? 0 : signingTime * 1000;
    }
 
-   private static final int checkPGPPacketHeader(byte[] data, int offset, int expectedPacketType) {
+   private static final int checkPGPPacketHeader(byte[] data, int offset, int expectedPacketType) throws IOException {
       int headerByte = data[offset] & 255;
       int expectedHeaderByte = 128 | expectedPacketType << 2;
       int lengthType = headerByte ^ expectedHeaderByte;
@@ -76,7 +76,7 @@ public final class RIMSignature {
 
    private static final long verifyPGPSignature(
       byte[] dataBytes, int dataOffset, int dataLength, byte[] signatureBytes, int signatureOffset, byte[] publicKeyBytes
-   ) {
+   ) throws IOException {
       signatureOffset += checkPGPPacketHeader(signatureBytes, signatureOffset, 2);
       assertByte(signatureBytes, signatureOffset++, 3);
       assertByte(signatureBytes, signatureOffset++, 5);
@@ -176,7 +176,7 @@ public final class RIMSignature {
       return NativeDL.verifyDSA(p, q, g, y, digest, r, s);
    }
 
-   private static final void assertByte(byte[] bytes, int offset, int value) {
+   private static final void assertByte(byte[] bytes, int offset, int value) throws IOException {
       if (value != (bytes[offset++] & 255)) {
          throw new IOException();
       }

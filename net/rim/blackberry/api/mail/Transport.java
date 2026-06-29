@@ -14,7 +14,7 @@ public class Transport extends Service {
    Transport() {
    }
 
-   public static void send(Message msg) {
+   public static void send(Message msg) throws MessagingException, SendFailedException {
       if (Message.EMAIL_MESSAGE == msg.getMessageType()) {
          if (ITPolicy.getBoolean(24, 5, false)) {
             throw new MessagingException("Email message not sent. Do not have the permissions to send the message.");
@@ -36,7 +36,7 @@ public class Transport extends Service {
       EmailSendUtility.sendMessage(msg.getEmailMessageModel(), sr, new Object());
    }
 
-   public static void more(BodyPart bp, boolean reqAll) {
+   public static void more(BodyPart bp, boolean reqAll) throws MessagingException {
       Message msg = (Message)bp.getParent().getParent();
       if (msg == null) {
          throw new MessagingException("Transport.more(): the provided bodypart does not belong to any message");

@@ -317,7 +317,7 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
    }
 
    @Override
-   public void send(Datagram datagram) {
+   public void send(Datagram datagram) throws ConnectionClosedException {
       if (!super._isActive) {
          throw new ConnectionClosedException();
       }
@@ -358,7 +358,7 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
    }
 
    @Override
-   public void receive(Datagram datagram) {
+   public void receive(Datagram datagram) throws ConnectionClosedException, SocketBaseIOException {
       if (super._isActive && this._receiveActive) {
          DatagramBase receivedDatagram = null;
          synchronized (this._queue) {

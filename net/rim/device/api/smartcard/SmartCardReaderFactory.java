@@ -97,7 +97,7 @@ public final class SmartCardReaderFactory {
       return chooseReader(true);
    }
 
-   static final SmartCardReader chooseReader(boolean promptIfNoReaders) {
+   static final SmartCardReader chooseReader(boolean promptIfNoReaders) throws SmartCardCancelException, SmartCardNoReaderPresentException {
       if (getNumSmartCardReaders() <= 0) {
          throw new SmartCardNoReaderPresentException();
       }
@@ -138,7 +138,7 @@ public final class SmartCardReaderFactory {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   static final SmartCardReaderSession getReaderSession(SmartCard smartCard, String smartCardIDLabel, boolean forced) {
+   static final SmartCardReaderSession getReaderSession(SmartCard smartCard, String smartCardIDLabel, boolean forced) throws SmartCardCancelException, SmartCardNoReaderPresentException {
       SmartCardReader[] registeredReaders = getReaders();
       int numRegisteredReaders = registeredReaders.length;
       if (numRegisteredReaders <= 0) {

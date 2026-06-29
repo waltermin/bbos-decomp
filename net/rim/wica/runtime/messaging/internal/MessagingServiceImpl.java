@@ -122,7 +122,7 @@ public final class MessagingServiceImpl implements Serviceable, Startable, Event
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Message sendMessage(Message requestMessage) {
+   public final Message sendMessage(Message requestMessage) throws MessagingException {
       MessagingException e;
       try {
          try {

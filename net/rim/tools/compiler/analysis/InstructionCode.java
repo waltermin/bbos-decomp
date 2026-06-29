@@ -172,7 +172,7 @@ public final class InstructionCode implements Constants {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final void resolve(Compiler compiler) {
+   public final void resolve(Compiler compiler) throws CompileException {
       if (this._synthetic) {
          this._blocks.mergeArray();
       } else {
@@ -268,7 +268,7 @@ public final class InstructionCode implements Constants {
       classType.addCodeWeight(this._codeWeight);
    }
 
-   public final void populate(Compiler compiler, TypeModule typeModule) {
+   public final void populate(Compiler compiler, TypeModule typeModule) throws CompileException {
       RoutineLocal routine = (RoutineLocal)this._method.getMember(compiler, typeModule);
       routine.setByteCodeWeight(this._byteCodeWeight);
       Code code = routine.getCode();

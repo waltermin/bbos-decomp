@@ -23,7 +23,7 @@ public class PKCS12ContentInfo {
       return getInstance((ASN1InputByteArray)(new Object(encoding)), parent);
    }
 
-   public static PKCS12ContentInfo getInstance(ASN1InputByteArray stream, PKCS12ContentInfo parent) {
+   public static PKCS12ContentInfo getInstance(ASN1InputByteArray stream, PKCS12ContentInfo parent) throws PKCS12ParsingException {
       try {
          stream.readSequence();
          OID childOID = stream.readOID();

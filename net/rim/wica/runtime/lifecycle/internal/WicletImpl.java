@@ -294,7 +294,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final void load() {
+   final void load() throws LifecycleException {
       EventService eventService = (EventService)this._lifecycleService
          .getService(
             class$net$rim$wica$runtime$event$EventService == null
@@ -728,7 +728,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
       }
    }
 
-   private final void launchImpl() {
+   private final void launchImpl() throws LifecycleException {
       if (!this._store.getDataStatus() && Dialog.ask(3, RuntimeResources.getString(119)) == 4) {
          this._store.wipeData();
       }

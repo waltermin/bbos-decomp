@@ -24,7 +24,7 @@ public final class KeyStoreUtilitiesInternal {
    public static final int PASSWORD_VERSION = 4;
    public static final int SECURITY_LEVEL = 5;
 
-   public static final byte[] getCurrentKeyStorePassword(String reasonDescription, boolean alwaysDisplayDialog, boolean alwaysRefreshCachedPassword) {
+   public static final byte[] getCurrentKeyStorePassword(String reasonDescription, boolean alwaysDisplayDialog, boolean alwaysRefreshCachedPassword) throws KeyStoreCancelException {
       _manager.setPasswordInternal();
 
       byte[] password;
@@ -178,7 +178,7 @@ public final class KeyStoreUtilitiesInternal {
       return getIntegerField(encoding, offset, length, 4);
    }
 
-   public static final void setPasswordVersion(byte[] encoding, int passwordVersion) {
+   public static final void setPasswordVersion(byte[] encoding, int passwordVersion) throws KeyStoreDecodeException {
       if (encoding == null) {
          throw new KeyStoreDecodeException();
       }
@@ -203,7 +203,7 @@ public final class KeyStoreUtilitiesInternal {
       return getDataField(encoding, offset, length, 3);
    }
 
-   private static final byte[] getDataField(byte[] param0, int param1, int param2, int param3) {
+   private static final byte[] getDataField(byte[] param0, int param1, int param2, int param3) throws KeyStoreDecodeException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -254,7 +254,7 @@ public final class KeyStoreUtilitiesInternal {
       // try (16 -> 31): 34 null
    }
 
-   private static final int getIntegerField(byte[] param0, int param1, int param2, int param3) {
+   private static final int getIntegerField(byte[] param0, int param1, int param2, int param3) throws KeyStoreDecodeException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

@@ -234,7 +234,7 @@ class ArznObject {
       return this._parent != null ? this._parent.isPartOfTOC() : false;
    }
 
-   void parse(ArznParsingInfo parsingData) {
+   void parse(ArznParsingInfo parsingData) throws ArznStopParsingException {
       if (!this._ucsParser.isContainer(this._commandCode)) {
          int parsedBytes = this.parseData(parsingData);
          this._ucsParser.jumpCursor(this._commandSize - parsedBytes);

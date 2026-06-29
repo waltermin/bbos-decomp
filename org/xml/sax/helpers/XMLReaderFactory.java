@@ -7,7 +7,7 @@ public final class XMLReaderFactory {
    private XMLReaderFactory() {
    }
 
-   public static final XMLReader createXMLReader() {
+   public static final XMLReader createXMLReader() throws SAXException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -48,7 +48,7 @@ public final class XMLReaderFactory {
       // try (0 -> 6): 21 null
    }
 
-   public static final XMLReader createXMLReader(String className) {
+   public static final XMLReader createXMLReader(String className) throws SAXException {
       throw new SAXException("Not supported");
    }
 }

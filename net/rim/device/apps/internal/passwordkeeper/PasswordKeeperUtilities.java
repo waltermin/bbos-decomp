@@ -75,7 +75,7 @@ public final class PasswordKeeperUtilities {
       return null;
    }
 
-   public static final byte[] getOldPassword(PasswordKeeperElement element) {
+   public static final byte[] getOldPassword(PasswordKeeperElement element) throws CancelException, DeletionException {
       boolean firstAttempt = true;
 
       while (true) {

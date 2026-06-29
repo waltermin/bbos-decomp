@@ -237,7 +237,7 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
    }
 
    @Override
-   public final Message handleMessage(Message message) {
+   public final Message handleMessage(Message message) throws MessagingException {
       long wicletID = message.getWicletID();
       if (wicletID != 0) {
          OutboundQueueConnectionImpl qConn = (OutboundQueueConnectionImpl)this._queueConnTable.get(wicletID);

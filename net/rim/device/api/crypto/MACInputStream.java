@@ -27,7 +27,7 @@ public class MACInputStream extends CryptoInputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public int read(byte[] data, int offset, int length) {
+   public int read(byte[] data, int offset, int length) throws CryptoIOException {
       if (data != null && offset >= 0 && length >= 0 && data.length - length >= offset) {
          try {
             int bytesRead = super._inputStream.read(data, offset, length);

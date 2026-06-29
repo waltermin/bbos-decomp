@@ -36,7 +36,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final Connection doConnection(URL url, String name, int mode, boolean timeouts) {
+   private final Connection doConnection(URL url, String name, int mode, boolean timeouts) throws IOException {
       URLParameters params = url.getRIMParameters();
       String hostName = url.getHost();
       int destPort = url.getPort();
@@ -134,7 +134,7 @@ public final class Protocol implements ConnectionBaseInterface {
       return var18;
    }
 
-   private final Connection doConnectionNotify(URL url, int mode, boolean timeouts) {
+   private final Connection doConnectionNotify(URL url, int mode, boolean timeouts) throws IOException {
       throw new IOException("no server sockets yet");
    }
 }

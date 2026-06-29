@@ -44,7 +44,7 @@ public class DataSourceImpl extends DataSource implements SourceStream {
    }
 
    @Override
-   public void connect() {
+   public void connect() throws IOException {
       if (!this._connected) {
          if (this._is != null) {
             this._connected = true;
@@ -65,7 +65,7 @@ public class DataSourceImpl extends DataSource implements SourceStream {
    }
 
    @Override
-   public void start() {
+   public void start() throws IOException {
       if (this._connected) {
          if (!this._started) {
             if (this._is != null) {

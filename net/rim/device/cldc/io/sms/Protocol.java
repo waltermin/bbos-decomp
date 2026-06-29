@@ -117,7 +117,7 @@ public final class Protocol extends NativeConnectionBase implements MessageConne
       return this._port;
    }
 
-   public final Message receiveInternal() {
+   public final Message receiveInternal() throws IOException {
       if (!this._isServerMode) {
          throw new IOException("operation not permitted on a client connection");
       }
@@ -184,7 +184,7 @@ public final class Protocol extends NativeConnectionBase implements MessageConne
    }
 
    @Override
-   public final void send(Message msg) {
+   public final void send(Message msg) throws IOException {
       if (!ControlledAccess.verifyRRISignatures(true) && !Firewall.getInstance().allowConnection("sms_send", null, this.getProperties(null))) {
          throw new SecurityException("Permission denied");
       }
@@ -249,7 +249,7 @@ public final class Protocol extends NativeConnectionBase implements MessageConne
    }
 
    @Override
-   public final void setMessageListener(MessageListener l) {
+   public final void setMessageListener(MessageListener l) throws IOException {
       if (!ControlledAccess.verifyRRISignatures(true) && !Firewall.getInstance().allowConnection("sms_receive", null, false)) {
          throw new SecurityException("Permission denied");
       }

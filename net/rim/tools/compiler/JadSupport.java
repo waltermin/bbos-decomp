@@ -133,7 +133,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       }
    }
 
-   private void parseAttributes(CompilerProperties properties, String[] tags, boolean required, boolean override) {
+   private void parseAttributes(CompilerProperties properties, String[] tags, boolean required, boolean override) throws CompileException {
       for (String tag : tags) {
          String value = properties.getProperty(tag);
          if (value == null) {
@@ -251,7 +251,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       }
    }
 
-   private void securityProblemDoNotInstall(int resultCode, String msg, String parm) {
+   private void securityProblemDoNotInstall(int resultCode, String msg, String parm) throws CompileException {
       if (parm != null) {
          msg = ((StringBuffer)(new Object())).append(msg).append(parm).toString();
       }
@@ -466,7 +466,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       this.parseJad(properties);
    }
 
-   private void parseJad(CompilerProperties properties) {
+   private void parseJad(CompilerProperties properties) throws CompileException {
       this.checkSecurity(properties);
       this.parseAttributes(properties, ResourceIds.manifestRequired, false, true);
       this.checkAttributes(ResourceIds.manifestRequired, ResourceIds.manifestRequiredAllowed);
@@ -504,7 +504,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       }
    }
 
-   private void rationalizeApplets(Compiler compiler, boolean makingMIDlet, boolean convertPNG, Vector potentialMIDlets) {
+   private void rationalizeApplets(Compiler compiler, boolean makingMIDlet, boolean convertPNG, Vector potentialMIDlets) throws CompileException {
       int count = this.getNumApplets();
 
       for (int i = count - 1; i >= 0; i--) {
@@ -604,7 +604,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       }
    }
 
-   private void checkAttributes(String[] tags, String[][] allowed) {
+   private void checkAttributes(String[] tags, String[][] allowed) throws CompileException {
       int num = tags.length;
 
       for (int i = 0; i < num; i++) {

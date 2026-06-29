@@ -36,7 +36,7 @@ public class DataBuffer extends CompressedBuffer {
       return this.readUTF();
    }
 
-   protected String readUTF() {
+   protected String readUTF() throws DataException {
       int utflen = this.readCompressedInt() - 1;
       if (utflen < 0) {
          return null;

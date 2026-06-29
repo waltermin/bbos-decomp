@@ -87,7 +87,7 @@ public class RecordStoreData implements Persistable {
       return this._availableId;
    }
 
-   public synchronized int addRecord(byte[] data, int offset, int numBytes) {
+   public synchronized int addRecord(byte[] data, int offset, int numBytes) throws RecordStoreFullException {
       if (8 + numBytes > this.getSizeAvailable()) {
          throw new RecordStoreFullException();
       }
@@ -155,7 +155,7 @@ public class RecordStoreData implements Persistable {
       return (byte[])this._records.get(recordId);
    }
 
-   public synchronized void setRecord(int recordId, byte[] newData, int offset, int numBytes) {
+   public synchronized void setRecord(int recordId, byte[] newData, int offset, int numBytes) throws RecordStoreFullException {
       if (!this._records.containsKey(recordId)) {
          this.throwInvalidRecordIDException(recordId);
       }
@@ -176,7 +176,7 @@ public class RecordStoreData implements Persistable {
       this._records.keysToArray(recordIds);
    }
 
-   void throwInvalidRecordIDException(int recordID) {
+   void throwInvalidRecordIDException(int recordID) throws InvalidRecordIDException {
       throw new InvalidRecordIDException(this._name + " #" + recordID);
    }
 }

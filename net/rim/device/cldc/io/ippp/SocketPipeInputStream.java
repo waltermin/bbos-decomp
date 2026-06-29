@@ -101,7 +101,7 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    }
 
    @Override
-   public int read(byte[] b, int off, int len) {
+   public int read(byte[] b, int off, int len) throws IOException {
       if (this._isClosed) {
          throw new Object();
       } else {
@@ -124,7 +124,7 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    }
 
    @Override
-   public int read() {
+   public int read() throws IOException {
       if (this._isClosed) {
          throw new Object();
       } else {

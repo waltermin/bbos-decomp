@@ -46,7 +46,7 @@ public final class PlaybackCommandServer implements Service {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final synchronized void stopService() {
+   public final synchronized void stopService() throws ServiceException {
       this._closed = true;
       this._threadService.stopService(false);
 

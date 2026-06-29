@@ -34,7 +34,7 @@ public class InstructionWalker implements Constants {
    public void walkInstruction(InstructionType ins) {
    }
 
-   public void unexpectedInstruction(Instruction ins) {
+   public void unexpectedInstruction(Instruction ins) throws CompileException {
       throw new CompileException(((StringBuffer)(new Object("Unexpected instruction: "))).append(ins.getOpcode()).toString());
    }
 }

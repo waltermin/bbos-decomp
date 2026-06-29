@@ -33,7 +33,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
    }
 
    @Override
-   public Location getLocation(int timeout) {
+   public Location getLocation(int timeout) throws LocationException {
       if (Application.isEventDispatchThread()) {
          throw new LocationException("getLocation() method cannot be called from event thread");
       }

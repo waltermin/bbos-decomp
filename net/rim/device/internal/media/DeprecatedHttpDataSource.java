@@ -15,7 +15,7 @@ public class DeprecatedHttpDataSource extends DataSourceImpl {
    }
 
    @Override
-   public void connect() {
+   public void connect() throws IOException {
       if (!super._connected) {
          if (super._locator == null) {
             throw new IOException("Locator is null");
@@ -80,7 +80,7 @@ public class DeprecatedHttpDataSource extends DataSourceImpl {
    }
 
    @Override
-   public void start() {
+   public void start() throws IOException {
       if (super._connected) {
          if (!super._started) {
             if (this._connection != null) {
@@ -96,7 +96,7 @@ public class DeprecatedHttpDataSource extends DataSourceImpl {
    }
 
    @Override
-   public long seek(long where) {
+   public long seek(long where) throws IOException {
       if (where < 0) {
          where = 0;
       }

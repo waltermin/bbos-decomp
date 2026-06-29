@@ -60,7 +60,7 @@ public class CommonHeaderV1_0 extends CommonHeaderV1_Base implements CommonHeade
       return this._securityMode == 1;
    }
 
-   public int deserialize(CompressedBuffer buffer) {
+   public int deserialize(CompressedBuffer buffer) throws TransportMessageException {
       int offset = buffer.cursor();
 
       try {

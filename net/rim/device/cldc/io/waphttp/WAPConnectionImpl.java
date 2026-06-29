@@ -15,6 +15,7 @@ import com.fourthpass.wapstack.wsp.WSPHeaders;
 import com.fourthpass.wapstack.wsp.WSPMethod;
 import com.fourthpass.wapstack.wtp.WTPLayer;
 import com.fourthpass.wapstack.wtp.pdu.WTP_PDU;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.io.SecurityInfo;
 import net.rim.device.api.io.http.HttpHeaders;
@@ -83,7 +84,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       "WWW-Authenticate"
    };
 
-   public final void sendRequest(WAPRequestImpl param1) {
+   public final void sendRequest(WAPRequestImpl param1) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

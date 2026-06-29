@@ -170,7 +170,7 @@ public final class ProxySecureConnection implements SecureConnection {
       tempOut.writeByte(trustAll ? 3 : 2);
    }
 
-   public static final void handleException(SocketBaseIOException e, String name) {
+   public static final void handleException(SocketBaseIOException e, String name) throws SocketBaseIOException, TLSIOException {
       switch (e.getExceptionCode()) {
          case 123:
          case 127:

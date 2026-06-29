@@ -27,7 +27,7 @@ public class GZIPInputStream extends InputStream {
    }
 
    @Override
-   public synchronized int read() {
+   public synchronized int read() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       }
@@ -44,7 +44,7 @@ public class GZIPInputStream extends InputStream {
    }
 
    @Override
-   public synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) {
+   public synchronized int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOCancelledException {
       if (buffer == null) {
          throw new NullPointerException();
       }
@@ -84,7 +84,7 @@ public class GZIPInputStream extends InputStream {
    }
 
    @Override
-   public synchronized int available() {
+   public synchronized int available() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       } else {
@@ -98,7 +98,7 @@ public class GZIPInputStream extends InputStream {
       this._isClosed = true;
    }
 
-   private boolean readNextChunk() {
+   private boolean readNextChunk() throws IOCancelledException {
       if (this._isClosed) {
          throw new IOCancelledException();
       }

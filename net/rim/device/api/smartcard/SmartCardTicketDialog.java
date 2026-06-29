@@ -15,7 +15,7 @@ public class SmartCardTicketDialog extends TicketDialog implements GlobalEventLi
       return getPassword(labelField, false);
    }
 
-   static String getPassword(RichTextField labelField, boolean allowOnLockScreen) {
+   static String getPassword(RichTextField labelField, boolean allowOnLockScreen) throws SmartCardCancelException {
       SmartCardTicketDialog dialog = new SmartCardTicketDialog(labelField, true, null, false, 134217728);
       if (!allowOnLockScreen) {
          ApplicationManager appMan = ApplicationManager.getApplicationManager();

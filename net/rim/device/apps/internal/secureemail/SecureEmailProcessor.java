@@ -71,7 +71,7 @@ public class SecureEmailProcessor extends Thread {
       }
    }
 
-   public void runWithExceptions() {
+   public void runWithExceptions() throws Throwable {
       this.run(true);
       if (this._processingThrowable != null) {
          throw this._processingThrowable;
@@ -264,7 +264,7 @@ public class SecureEmailProcessor extends Thread {
       // 10f: iload 1
       // 110: iflt 133
       // 113: bipush 1
-      // 114: anewarray 813
+      // 114: anewarray 816
       // 117: dup
       // 118: bipush 0
       // 119: aload 0

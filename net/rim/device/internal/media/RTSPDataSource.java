@@ -129,7 +129,7 @@ public final class RTSPDataSource extends DataSource implements SourceStream, Tu
       }
    }
 
-   public final int getAccessPointNumber() {
+   public final int getAccessPointNumber() throws MediaException {
       if (this._tunnel == null) {
          throw new MediaException("no tunnel");
       }

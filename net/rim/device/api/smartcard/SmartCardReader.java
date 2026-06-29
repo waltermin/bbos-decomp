@@ -35,7 +35,7 @@ public class SmartCardReader {
       return this.openSession();
    }
 
-   public final synchronized SmartCardReaderSession openSession() {
+   public final synchronized SmartCardReaderSession openSession() throws SmartCardCancelException, SmartCardException {
       if (this._currentSession != null) {
          synchronized (this._currentSession) {
             while (this._currentSession.isOpen()) {

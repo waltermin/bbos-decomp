@@ -113,7 +113,7 @@ final class OCSPQuery {
       return true;
    }
 
-   private final Certificate[] getCompleteChain(Certificate[] certChain, boolean checkEntireChain, KeyStore keyStore) {
+   private final Certificate[] getCompleteChain(Certificate[] certChain, boolean checkEntireChain, KeyStore keyStore) throws StatusProviderException {
       if (!this.isChainComplete(certChain, checkEntireChain)) {
          certChain = CertificateUtilities.buildCertificateChain(certChain[0], keyStore);
          if (!this.isChainComplete(certChain, checkEntireChain)) {
@@ -455,7 +455,7 @@ final class OCSPQuery {
       // 007: astore 4
       // 009: aload 1
       // 00a: bipush 1
-      // 00b: anewarray 1461
+      // 00b: anewarray 1464
       // 00e: dup
       // 00f: bipush 0
       // 010: aload 2
@@ -823,7 +823,7 @@ final class OCSPQuery {
       }
    }
 
-   private final void validateResponse(OCSPResponse param1, X509Certificate param2, X509Certificate param3) {
+   private final void validateResponse(OCSPResponse param1, X509Certificate param2, X509Certificate param3) throws StatusProviderException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -999,7 +999,7 @@ final class OCSPQuery {
       // try (0 -> 156): 159 null
    }
 
-   private final void decodeSingleResponse(X509Certificate param1, X509Certificate param2) {
+   private final void decodeSingleResponse(X509Certificate param1, X509Certificate param2) throws StatusProviderException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

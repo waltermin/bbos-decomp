@@ -1,8 +1,13 @@
 package net.rim.device.api.crypto.keystore;
 
+import net.rim.device.api.crypto.CryptoTokenException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.HashCodeCalculator;
 import net.rim.device.api.crypto.InvalidCryptoSystemException;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
+import net.rim.device.api.crypto.InvalidKeyException;
 import net.rim.device.api.crypto.Key;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.RandomSource;
@@ -761,7 +766,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       }
    }
 
-   private final String promptForLabel(String existingLabel) {
+   private final String promptForLabel(String existingLabel) throws KeyStoreCancelException {
       Certificate certificate = this.getCertificate();
       if (existingLabel == null && certificate != null) {
          existingLabel = certificate.getSubjectFriendlyName();
@@ -784,7 +789,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       }
    }
 
-   private final Key getKey(boolean param1, KeyStoreDataTicket param2) {
+   private final Key getKey(boolean param1, KeyStoreDataTicket param2) throws KeyStoreDecodeException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -1116,7 +1121,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       Certificate param9,
       CertificateStatus param10,
       KeyStoreTicket param11
-   ) {
+   ) throws CryptoTokenException, CryptoUnsupportedOperationException, InvalidKeyEncodingException, InvalidKeyException, NoSuchAlgorithmException, KeyStoreCancelException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

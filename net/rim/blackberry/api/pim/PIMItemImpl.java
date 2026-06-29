@@ -68,7 +68,7 @@ class PIMItemImpl implements PIMItem {
    }
 
    @Override
-   public void addToCategory(String category) {
+   public void addToCategory(String category) throws PIMException {
       throw new PIMException("Categories not supported.", 0);
    }
 

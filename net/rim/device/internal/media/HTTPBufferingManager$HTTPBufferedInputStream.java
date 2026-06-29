@@ -26,7 +26,7 @@ class HTTPBufferingManager$HTTPBufferedInputStream extends InputStream {
    }
 
    @Override
-   public void reset() {
+   public void reset() throws IOException {
       if (!this.markSupported()) {
          throw new IOException("Mark not supported on this stream");
       }

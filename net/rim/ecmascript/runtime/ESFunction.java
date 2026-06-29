@@ -40,7 +40,7 @@ public class ESFunction extends RedirectedObject {
    }
 
    @Override
-   public long requestFieldValue(String name) {
+   public long requestFieldValue(String name) throws BuildArgumentsException, GetFunctionLengthException {
       if (name == "prototype") {
          if (this._protoValue == null) {
             ESObject protoObject = new ESObject();
@@ -89,7 +89,7 @@ public class ESFunction extends RedirectedObject {
       }
    }
 
-   CompiledScript getCode() {
+   CompiledScript getCode() throws ThrownValue {
       if (this._code == null) {
          if (this._compiler != null) {
             try {
@@ -114,7 +114,7 @@ public class ESFunction extends RedirectedObject {
       return this._scope;
    }
 
-   boolean hasInstance(long objValue) {
+   boolean hasInstance(long objValue) throws ThrownValue {
       ESObject v = Value.checkIfObjectValue(objValue);
       if (v == null) {
          return false;

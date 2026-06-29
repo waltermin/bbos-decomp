@@ -45,7 +45,7 @@ public class SecureMessageFactory {
       this._maxVersion = maxVersion;
    }
 
-   public void handleSecureMessage(byte[] buffer, SecureMessageHandler handler) {
+   public void handleSecureMessage(byte[] buffer, SecureMessageHandler handler) throws UnsupportedVersionException, SecureMessageException {
       if (buffer != null && handler != null) {
          int securityVersion = buffer[0] & 255;
          if (!this.isSupported(securityVersion)) {
@@ -67,7 +67,7 @@ public class SecureMessageFactory {
       }
    }
 
-   public void handleUnsecureMessage(byte[] buffer, long senderId, long receiverId, SecureMessageHandler handler) {
+   public void handleUnsecureMessage(byte[] buffer, long senderId, long receiverId, SecureMessageHandler handler) throws UnsupportedVersionException, SecureMessageException {
       if (buffer != null && handler != null) {
          int securityVersion = this._versionProvider.getSecurityVersion(receiverId);
          if (!this.isSupported(securityVersion)) {

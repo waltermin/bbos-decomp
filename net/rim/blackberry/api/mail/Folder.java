@@ -151,7 +151,7 @@ public class Folder {
       this._folderType = type;
    }
 
-   public Folder getFolder(String name) {
+   public Folder getFolder(String name) throws FolderNotFoundException {
       if (name.indexOf(58) != -1) {
          throw new Object("Absolute folder names are not supported for Folder.getFolder()");
       }

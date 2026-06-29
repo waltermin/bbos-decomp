@@ -10,7 +10,7 @@ public class SafeContentsBag extends SafeBag {
    }
 
    @Override
-   protected void parse() {
+   protected void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
             PKCS12SafeContents safeContents = new PKCS12SafeContents(super._bagData, super._parent);

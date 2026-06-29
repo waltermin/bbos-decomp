@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.PrivateKey;
 
 public class KeyStore_PrivateKeyDecoder extends PrivateKeyDecoder {
    @Override
-   protected PrivateKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) {
+   protected PrivateKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (encodedKey == null) {
          throw new Object();
       }

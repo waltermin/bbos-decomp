@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.file;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 final class USBInputStream extends InputStream {
@@ -13,7 +14,7 @@ final class USBInputStream extends InputStream {
       this._data = new byte[conn._readBufferSize];
    }
 
-   private final void fill() {
+   private final void fill() throws IOException, ConnectionShutdown {
       while (this._conn._exception == null) {
          if (this._data == null) {
             throw new ConnectionShutdown();

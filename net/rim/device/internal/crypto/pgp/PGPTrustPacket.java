@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 public class PGPTrustPacket extends PGPPacket implements Persistable {
    private byte _trust;
 
-   public PGPTrustPacket(int tag, byte[] encoding) {
+   public PGPTrustPacket(int tag, byte[] encoding) throws PGPEncodingException {
       super(tag, encoding);
       if (encoding.length < 1) {
          throw new PGPEncodingException("TrLM");

@@ -8,7 +8,7 @@ class GlobalProperties$17 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       ESObject obj = Value.checkIfObjectValue(this.getParm(0));
       if (obj != null && obj instanceof JavaClass) {
          return Value.makeObjectValue(new JavaObjectArray((JavaClass)obj, JavaArray.toIndex(this.getParm(1))));

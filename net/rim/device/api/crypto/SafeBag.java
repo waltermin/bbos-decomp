@@ -23,7 +23,7 @@ public class SafeBag extends PKCS12ContentInfo {
       return getSafeBag((ASN1InputByteArray)(new Object(encoding)), parent);
    }
 
-   public static SafeBag getSafeBag(ASN1InputByteArray stream, PKCS12ContentInfo parent) {
+   public static SafeBag getSafeBag(ASN1InputByteArray stream, PKCS12ContentInfo parent) throws PKCS12ParsingException {
       SafeBag bag = null;
 
       try {
@@ -86,7 +86,7 @@ public class SafeBag extends PKCS12ContentInfo {
       return null;
    }
 
-   public String getFriendlyName() {
+   public String getFriendlyName() throws PKCS12ParsingException {
       this.parse();
       String id = null;
 
@@ -108,7 +108,7 @@ public class SafeBag extends PKCS12ContentInfo {
       }
    }
 
-   public byte[] getLocalKeyId() {
+   public byte[] getLocalKeyId() throws PKCS12ParsingException {
       this.parse();
       byte[] id = null;
 

@@ -20,7 +20,7 @@ public final class Universal_Writer extends StreamWriter {
    private static final int BUF_SIZE = 1024;
 
    @Override
-   public final Writer open(OutputStream out, String enc) {
+   public final Writer open(OutputStream out, String enc) throws UnsupportedEncodingException {
       if (enc == null) {
          return null;
       }

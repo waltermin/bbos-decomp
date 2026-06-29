@@ -175,7 +175,7 @@ public class LandmarkStore {
       return landmarks.size() == 0 ? null : landmarks.elements();
    }
 
-   public void deleteLandmark(Landmark lm) {
+   public void deleteLandmark(Landmark lm) throws LandmarkException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_write");
       if (lm == null) {
          throw new Object("Landmark is null");
@@ -288,7 +288,7 @@ public class LandmarkStore {
       }
    }
 
-   public void updateLandmark(Landmark lm) {
+   public void updateLandmark(Landmark lm) throws LandmarkException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_write");
       if (lm == null) {
          throw new Object("Null parameter passed");

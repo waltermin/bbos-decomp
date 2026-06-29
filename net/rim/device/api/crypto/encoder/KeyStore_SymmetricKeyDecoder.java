@@ -7,7 +7,7 @@ import net.rim.device.api.crypto.SymmetricKey;
 
 public class KeyStore_SymmetricKeyDecoder extends SymmetricKeyDecoder {
    @Override
-   protected SymmetricKey decodeKey(InputStream encodedKey, String keyAlgorithm) {
+   protected SymmetricKey decodeKey(InputStream encodedKey, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (encodedKey == null) {
          throw new Object();
       }

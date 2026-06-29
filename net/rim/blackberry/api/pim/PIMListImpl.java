@@ -38,12 +38,12 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public void addCategory(String category) {
+   public void addCategory(String category) throws PIMException {
       throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
    }
 
    @Override
-   public void deleteCategory(String category, boolean deleteUnassignedItems) {
+   public void deleteCategory(String category, boolean deleteUnassignedItems) throws PIMException {
       throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
    }
 
@@ -53,12 +53,12 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public void renameCategory(String currentCategory, String newCategory) {
+   public void renameCategory(String currentCategory, String newCategory) throws PIMException {
       throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
    }
 
    @Override
-   public Enumeration itemsByCategory(String category) {
+   public Enumeration itemsByCategory(String category) throws PIMException {
       if (category == PIMList.UNCATEGORIZED) {
          return this.items();
       } else if (this._closed) {

@@ -15,7 +15,7 @@ public class RIMSAXParserFactory extends SAXParserFactory {
    private static final String ERROR_NOT_SUPPORTED = "not supported";
 
    @Override
-   public SAXParser newSAXParser() {
+   public SAXParser newSAXParser() throws ParserConfigurationException {
       if (this.isValidating()) {
          throw new ParserConfigurationException("not supported");
       }

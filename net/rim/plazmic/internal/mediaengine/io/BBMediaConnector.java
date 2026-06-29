@@ -96,7 +96,7 @@ public class BBMediaConnector implements Connector {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   protected InputStream getHttpInputStream(String uri, ConnectionInfo info) {
+   protected InputStream getHttpInputStream(String uri, ConnectionInfo info) throws MediaException {
       InputStream is = null;
       this._previousConnection = null;
       if (this.connectionTimeout != null) {

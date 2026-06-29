@@ -27,7 +27,7 @@ public class ESRegExp extends HostFunction {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void compile(String pattern, boolean global, boolean ignoreCase, boolean multiLine) {
+   public void compile(String pattern, boolean global, boolean ignoreCase, boolean multiLine) throws ThrownValue {
       this.replaceField("source", 7, Value.makeStringValue(pattern));
       this.replaceField("global", 7, Value.makeBooleanValue(global));
       this.replaceField("ignoreCase", 7, Value.makeBooleanValue(ignoreCase));

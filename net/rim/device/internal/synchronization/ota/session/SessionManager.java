@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization.ota.session;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.itpolicy.ITPolicy;
@@ -139,7 +140,7 @@ public final class SessionManager extends Thread implements SyncConnectionListen
       this._sessionManagerState.setLogMessage(null);
    }
 
-   public final int send(SyncDatagram aSyncDatagram, boolean checkInDatagram) {
+   public final int send(SyncDatagram aSyncDatagram, boolean checkInDatagram) throws IOException {
       if (!this._done && this._syncConnection != null) {
          try {
             return this._syncConnection.send(aSyncDatagram, checkInDatagram);

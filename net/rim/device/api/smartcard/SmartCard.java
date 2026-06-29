@@ -9,7 +9,7 @@ public class SmartCard implements Persistable {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final synchronized SmartCardSession openSession(SmartCardReaderSession readerSession) {
+   public final synchronized SmartCardSession openSession(SmartCardReaderSession readerSession) throws SmartCardException {
       if (readerSession == null) {
          throw new Object();
       }

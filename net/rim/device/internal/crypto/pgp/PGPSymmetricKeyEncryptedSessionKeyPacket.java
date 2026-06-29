@@ -3,6 +3,7 @@ package net.rim.device.internal.crypto.pgp;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
 import net.rim.device.api.crypto.SymmetricKey;
+import net.rim.device.api.crypto.pgp.PGPEncodingException;
 
 public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
    private byte _encryptionAlgorithm;
@@ -58,7 +59,7 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
       }
    }
 
-   public final SymmetricKey getSessionKey(boolean param1, boolean param2) {
+   public final SymmetricKey getSessionKey(boolean param1, boolean param2) throws PGPEncodingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

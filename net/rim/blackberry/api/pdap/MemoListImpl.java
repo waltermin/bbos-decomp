@@ -94,7 +94,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    }
 
    @Override
-   public final void removeMemo(BlackBerryMemo element) {
+   public final void removeMemo(BlackBerryMemo element) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -215,7 +215,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -271,7 +271,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    }
 
    @Override
-   public final Enumeration items() {
+   public final Enumeration items() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -291,7 +291,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    }
 
    @Override
-   public final Enumeration items(PIMItem matching) {
+   public final Enumeration items(PIMItem matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -343,7 +343,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    }
 
    @Override
-   public final Enumeration items(String matching) {
+   public final Enumeration items(String matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }

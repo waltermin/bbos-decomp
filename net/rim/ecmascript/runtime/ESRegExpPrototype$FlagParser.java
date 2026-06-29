@@ -13,7 +13,7 @@ class ESRegExpPrototype$FlagParser {
       this.ignoreCase = i;
    }
 
-   void parse(String flags) {
+   void parse(String flags) throws ThrownValue {
       for (int i = flags.length() - 1; i >= 0; i--) {
          switch (flags.charAt(i)) {
             case 'g':

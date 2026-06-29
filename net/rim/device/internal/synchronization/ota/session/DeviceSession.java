@@ -194,7 +194,7 @@ final class DeviceSession extends Session {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void sendInitializationRequest() {
+   private final void sendInitializationRequest() throws Throwable {
       SyncDatagram xSyncDatagram = (SyncDatagram)this.checkOutSyncDatagram();
       xSyncDatagram.setSessionId(this.getSessionId());
       xSyncDatagram.setCurrentChangeListId(this.getChangeListId());

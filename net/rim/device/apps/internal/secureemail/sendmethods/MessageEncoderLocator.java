@@ -204,7 +204,7 @@ public class MessageEncoderLocator {
       MessageEncoderProvider unencryptedMessageEncoderProvider,
       boolean noviceMode,
       Object context
-   ) {
+   ) throws ReprocessRecipientsException {
       if (!noviceMode) {
          TransitoryMessagePropertiesModel messagePropertiesModel = (TransitoryMessagePropertiesModel)ContextObject.get(context, 32241034113959076L);
          ChoiceField messageEncodingField = messagePropertiesModel.getMessageEncodingField();
@@ -569,7 +569,7 @@ public class MessageEncoderLocator {
       SecureEmailPolicyServer[] secureEmailPolicyServers,
       RecipientData[] messageRecipientData,
       int requiredAction
-   ) {
+   ) throws SecureEmailPolicyConflictException {
       long preferredEncodingUID = -1;
 
       for (SecureEmailPolicyServer currentPolicyServer : secureEmailPolicyServers) {

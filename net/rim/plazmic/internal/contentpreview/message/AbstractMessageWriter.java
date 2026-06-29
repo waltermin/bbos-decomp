@@ -67,7 +67,7 @@ public class AbstractMessageWriter {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   protected final void writeMessage(byte message, Object param1, Object param2, Object param3, Object param4, Object param5, Object param6, Object param7) {
+   protected final void writeMessage(byte message, Object param1, Object param2, Object param3, Object param4, Object param5, Object param6, Object param7) throws MishandleException {
       try {
          DataOutputStream dout = this.getDataOutputStream();
          this.writeHeader();

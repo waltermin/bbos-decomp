@@ -453,7 +453,7 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final KeyPair getKeyPair() {
+   private final KeyPair getKeyPair() throws KeyProviderException {
       if (this._keyPair == null) {
          try {
             this._keyPair = this._securityProvider.generateKeyPair(KeyType.ECDSA);

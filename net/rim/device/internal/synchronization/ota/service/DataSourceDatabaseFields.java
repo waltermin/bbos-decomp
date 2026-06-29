@@ -52,7 +52,7 @@ public final class DataSourceDatabaseFields implements Persistable, TLESerializa
       this._flags = Helper.setFlagValue(this._flags, include, 1);
    }
 
-   public final int getMappedTagFor(int aTag, byte[] aMappingCounters) {
+   public final int getMappedTagFor(int aTag, byte[] aMappingCounters) throws DataSourceDatabaseFields$UnmappedTagException {
       if (this.contains(aTag) && this._fields != null && aTag >= 0 && aTag < this._fields.length) {
          byte[] xTagReplacmentValues = (byte[])this._fields[aTag];
          if (xTagReplacmentValues != null) {

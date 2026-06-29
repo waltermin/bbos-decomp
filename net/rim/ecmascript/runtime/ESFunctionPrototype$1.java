@@ -11,7 +11,7 @@ class ESFunctionPrototype$1 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          return Value.makeStringValue(((ESFunction)this.getThis()).getSource());
       } finally {

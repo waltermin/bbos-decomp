@@ -171,7 +171,7 @@ public final class WicletMessageProcessor implements MessageHandler {
    }
 
    @Override
-   public final Message handleMessage(Message message) {
+   public final Message handleMessage(Message message) throws MessagingException {
       long wicletId = message.getWicletID();
       WicletQueueManager wm = (WicletQueueManager)this._wicletTable.get(wicletId);
       if (wm != null) {

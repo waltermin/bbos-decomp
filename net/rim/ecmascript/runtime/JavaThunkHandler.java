@@ -15,7 +15,7 @@ class JavaThunkHandler {
       this._className = name;
    }
 
-   public long runDWord(ESObject thiz, String name, int[] parmTypes, int[] parms, int returnType) {
+   public long runDWord(ESObject thiz, String name, int[] parmTypes, int[] parms, int returnType) throws ThrownValue {
       long funcValue = this._overrides.getField(name);
       ESFunction func = Value.checkIfFunctionValue(funcValue);
       if (func == null) {

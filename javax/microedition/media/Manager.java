@@ -248,7 +248,7 @@ public final class Manager {
       }
    }
 
-   public static final Player createPlayer(String locator) {
+   public static final Player createPlayer(String locator) throws MediaException {
       assertPermission();
       if (locator == null) {
          throw new IllegalArgumentException("locator: null");
@@ -337,7 +337,7 @@ public final class Manager {
       return createPlayerImpl(source);
    }
 
-   public static final Player createPlayer(InputStream stream, String type) {
+   public static final Player createPlayer(InputStream stream, String type) throws MediaException {
       assertPermission();
       if (stream == null) {
          throw new IllegalArgumentException("stream: null");
@@ -353,7 +353,7 @@ public final class Manager {
       return createPlayerImpl(ds);
    }
 
-   private static final Player createPlayerImpl(DataSource source) {
+   private static final Player createPlayerImpl(DataSource source) throws MediaException {
       if (source == null) {
          throw new IllegalArgumentException();
       }
@@ -385,7 +385,7 @@ public final class Manager {
       }
    }
 
-   public static final void playTone(int note, int duration, int volume) {
+   public static final void playTone(int note, int duration, int volume) throws MediaException {
       assertPermission();
       if (note >= 0 && note <= 127 && duration > 0) {
          if (_playTonePlayer.getState() == 400) {

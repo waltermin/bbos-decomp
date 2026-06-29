@@ -553,7 +553,7 @@ public final class StringUtilities {
 
    private static final native int strConversionRequired(byte[] var0, int var1, int var2, char var3, char var4);
 
-   public static final int writeUTF(String str, DataOutput out) {
+   public static final int writeUTF(String str, DataOutput out) throws UTFDataFormatException {
       int strlen = str.length();
       int utflen = 0;
       char[] charr = new char[strlen];

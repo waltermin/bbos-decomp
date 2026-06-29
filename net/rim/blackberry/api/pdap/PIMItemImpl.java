@@ -57,7 +57,7 @@ class PIMItemImpl implements PIMItem {
       return false;
    }
 
-   protected boolean addCategoryToModel(WritableSet internalModel, String category) {
+   protected boolean addCategoryToModel(WritableSet internalModel, String category) throws PIMException {
       if (category == null) {
          throw new Object();
       }

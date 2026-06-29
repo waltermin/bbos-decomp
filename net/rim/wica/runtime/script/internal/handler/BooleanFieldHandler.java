@@ -12,7 +12,7 @@ public final class BooleanFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(Component component, String name) {
+   public final long getProperty(Component component, String name) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -26,7 +26,7 @@ public final class BooleanFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final long getProperty(DataCollection collection, long handle, String name) {
+   public final long getProperty(DataCollection collection, long handle, String name) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
@@ -40,7 +40,7 @@ public final class BooleanFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(Component component, String name, long value) {
+   public final void putProperty(Component component, String name, long value) throws ThrownValue {
       int id = component.getDef().getFieldHandle(name);
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
@@ -54,7 +54,7 @@ public final class BooleanFieldHandler implements PropertyHandler {
    }
 
    @Override
-   public final void putProperty(DataCollection collection, long handle, String name, long value) {
+   public final void putProperty(DataCollection collection, long handle, String name, long value) throws ThrownValue {
       int id = collection.getDef().getFieldHandle(name);
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:

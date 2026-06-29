@@ -13,7 +13,7 @@ public class DigestFactory {
    protected DigestFactory() {
    }
 
-   public static Digest getInstance(String algorithm) {
+   public static Digest getInstance(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm == null) {
          throw new IllegalArgumentException();
       }

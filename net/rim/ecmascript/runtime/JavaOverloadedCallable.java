@@ -42,7 +42,7 @@ class JavaOverloadedCallable extends HostFunction {
       return this._javaClass;
    }
 
-   JavaCallable findOverload() {
+   JavaCallable findOverload() throws ThrownValue {
       if (this._nOverloads == 1) {
          return this._overloads[0];
       }

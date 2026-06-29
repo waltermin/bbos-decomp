@@ -29,7 +29,7 @@ public final class Class {
       return prefix.append(' ').append(this.getName()).toString();
    }
 
-   public static final Class forName(String className) {
+   public static final Class forName(String className) throws ClassNotFoundException {
       if (className.charAt(0) != '[') {
          return forName0(className);
       }
@@ -69,7 +69,7 @@ public final class Class {
 
    private final native Object newInstance0();
 
-   public final Object newInstance() {
+   public final Object newInstance() throws IllegalAccessException, InstantiationException {
       try {
          return this.newInstance0();
       } catch (IllegalAccessException iae) {

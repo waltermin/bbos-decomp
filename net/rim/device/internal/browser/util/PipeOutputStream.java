@@ -12,7 +12,7 @@ public class PipeOutputStream extends OutputStream {
    }
 
    @Override
-   public void write(int x) {
+   public void write(int x) throws IOException {
       throw new IOException("Pipe only supports writing entire packets");
    }
 

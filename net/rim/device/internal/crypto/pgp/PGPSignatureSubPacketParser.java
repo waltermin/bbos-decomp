@@ -42,7 +42,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
       this.parse();
    }
 
-   private void parse() {
+   private void parse() throws PGPEncodingException {
       byte[] data = null;
       Enumeration enumeration = this._subPackets.elements();
 

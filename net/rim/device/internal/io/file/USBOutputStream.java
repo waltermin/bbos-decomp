@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.file;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -91,7 +92,7 @@ final class USBOutputStream extends OutputStream {
       }
    }
 
-   private final void writeInternal(byte[] buffer, int offset, int length) {
+   private final void writeInternal(byte[] buffer, int offset, int length) throws IOException, ConnectionShutdown {
       while (this._conn._exception == null) {
          if (this._buffer == null) {
             throw new ConnectionShutdown();

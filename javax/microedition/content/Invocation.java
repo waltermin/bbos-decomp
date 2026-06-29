@@ -184,7 +184,7 @@ public final class Invocation {
       return this._status != 2 && this._status != 4 ? null : this._invokingAppName;
    }
 
-   public final String findType() {
+   public final String findType() throws IOException, ContentHandlerException {
       String type = this.getType();
       if (type != null) {
          return type;
@@ -232,7 +232,7 @@ public final class Invocation {
       }
    }
 
-   public final Connection open(boolean timeouts) {
+   public final Connection open(boolean timeouts) throws ConnectionNotFoundException {
       if (this._url == null) {
          throw new NullPointerException("URL is null");
       }

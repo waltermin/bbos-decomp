@@ -1,6 +1,7 @@
 package net.rim.wica.runtime.security.internal;
 
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.oid.OIDs;
 import net.rim.device.api.util.Arrays;
@@ -71,7 +72,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void unregister() {
+   public final void unregister() throws HandshakeException {
       this._register = false;
 
       try {
@@ -145,7 +146,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void handleMessage(ServerHelloV1 m) {
+   public final void handleMessage(ServerHelloV1 m) throws HandshakeMessageHandlerException {
       this._state = 0;
       int version = m.getServerVersion();
       if (version < this._handshakeHandler.getMinSecurityVersion()) {
@@ -201,7 +202,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void handleMessage(OkV1 m) {
+   public final void handleMessage(OkV1 m) throws HandshakeMessageHandlerException {
       try {
          this.verifyResponse(m);
          this._state = 3;
@@ -222,7 +223,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void handleMessage(FailureV1 m) {
+   public final void handleMessage(FailureV1 m) throws HandshakeMessageHandlerException {
       try {
          this.verifyResponse(m);
          this._state = 0;
@@ -261,7 +262,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void register() {
+   public final void register() throws HandshakeException {
       this._register = true;
 
       try {
@@ -300,7 +301,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       }
    }
 
-   private final Key verifyCertificate(EncodedCertificate[] param1) {
+   private final Key verifyCertificate(EncodedCertificate[] param1) throws CertificateVerificationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -331,7 +332,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 26: iload 3
       // 27: bipush 1
       // 28: isub
-      // 29: anewarray 1642
+      // 29: anewarray 1657
       // 2c: astore 4
       // 2e: bipush 1
       // 2f: istore 5
@@ -473,7 +474,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       return nonce;
    }
 
-   private final void verifyResponse(Object message) {
+   private final void verifyResponse(Object message) throws HandshakeMessageException {
       if (message instanceof SignedHandshakeMessage) {
          ((SignedHandshakeMessage)message).verifySignature(this._registrationKey);
       }

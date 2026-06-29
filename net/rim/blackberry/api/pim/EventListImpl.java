@@ -133,7 +133,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final Enumeration items(int searchType, long startDate, long endDate, boolean initialEventOnly) {
+   public final Enumeration items(int searchType, long startDate, long endDate, boolean initialEventOnly) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -234,7 +234,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final void removeEvent(Event element) {
+   public final void removeEvent(Event element) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -262,7 +262,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final Enumeration items() {
+   public final Enumeration items() throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -284,7 +284,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final Enumeration items(PIMItem matching) {
+   public final Enumeration items(PIMItem matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -312,7 +312,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final Enumeration items(String matching) {
+   public final Enumeration items(String matching) throws PIMException {
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
@@ -350,7 +350,7 @@ public final class EventListImpl extends PIMListImpl implements EventList, PIMRe
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (!super._closed) {
          super._closed = true;
       } else {

@@ -87,7 +87,7 @@ class GlobalProperties {
       b.append("0123456789ABCDEF".charAt(h & 15));
    }
 
-   static String uriEncode(String s, boolean component) {
+   static String uriEncode(String s, boolean component) throws ThrownValue {
       int len = s.length();
       StringBuffer b = (StringBuffer)(new Object());
 
@@ -239,7 +239,7 @@ class GlobalProperties {
       return b.toString();
    }
 
-   static int getEscape(String s, int k, boolean mask) {
+   static int getEscape(String s, int k, boolean mask) throws ThrownValue {
       try {
          int dig1 = Tokenizer.hexValue(s.charAt(k + 1));
          int dig2 = Tokenizer.hexValue(s.charAt(k + 2));
@@ -260,7 +260,7 @@ class GlobalProperties {
       throw ThrownValue.uriError(Resources.getString(36));
    }
 
-   static String uriDecode(String s, boolean component) {
+   static String uriDecode(String s, boolean component) throws ThrownValue {
       int len = s.length();
       StringBuffer b = (StringBuffer)(new Object());
       int k = 0;

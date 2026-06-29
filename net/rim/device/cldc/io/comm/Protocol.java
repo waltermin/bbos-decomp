@@ -40,7 +40,7 @@ public final class Protocol implements StreamConnection, USBPortListener, Connec
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws ConnectionNotFoundException {
       ApplicationControl.assertLocalConnectionAllowed(true);
       if ((mode & 3) != mode) {
          throw new IllegalArgumentException();

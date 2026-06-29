@@ -29,7 +29,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public PGPSignaturePacket(int tag, byte[] encoding) {
+   public PGPSignaturePacket(int tag, byte[] encoding) throws PGPEncodingException {
       super(tag, encoding);
       int offset = 0;
       this._signatureSubPackets = (Vector)(new Object());
@@ -129,7 +129,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
       this.checkForX509Certificate();
    }
 
-   private final int readSignatureSubPacket(byte[] encoding, int offset, int length) {
+   private final int readSignatureSubPacket(byte[] encoding, int offset, int length) throws PGPEncodingException {
       int subPacketLength = 0;
       int startOffset = offset;
       int temp = encoding[offset++] & 255;
@@ -215,7 +215,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
       return this._version;
    }
 
-   private final SignatureVerifier getSignatureVerifier(PublicKey param1) {
+   private final SignatureVerifier getSignatureVerifier(PublicKey param1) throws PGPVerificationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -309,7 +309,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void verify(PGPPublicKeyPacket parentKey, PGPPublicKeyPacket keyToHash, PublicKey verificationKey, PGPUserIDPacket userID) {
+   private final void verify(PGPPublicKeyPacket parentKey, PGPPublicKeyPacket keyToHash, PublicKey verificationKey, PGPUserIDPacket userID) throws PGPVerificationException {
       if (parentKey == null) {
          throw new Object();
       }

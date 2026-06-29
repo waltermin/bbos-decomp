@@ -15,7 +15,7 @@ public final class TunnelWorker implements TunnelListener {
    private int _tunnelCode;
    private static final int TUNNEL_OPEN_TIMEOUT = 30000;
 
-   public final Tunnel open(TunnelConfig config) {
+   public final Tunnel open(TunnelConfig config) throws IOException {
       this._tunnelState = 0;
       this._tunnelCode = 0;
       TunnelApnList tunnelApnList = TunnelApnListFactory.getTunnelApnListFactory().createTunnelApnList();
@@ -80,7 +80,7 @@ public final class TunnelWorker implements TunnelListener {
       throw new IOException(this.getTunnelCode() == 1 ? "Open tunnel - max attempts" : "Open tunnel - failure");
    }
 
-   private final void timeout(long quitTime) {
+   private final void timeout(long quitTime) throws IOException {
       if (System.currentTimeMillis() > quitTime) {
          throw new IOException("Open tunnel - max timeout");
       }

@@ -295,7 +295,7 @@ public final class Perl5Compiler implements PatternCompiler {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final int __parseAtom(int[] retFlags) {
+   private final int __parseAtom(int[] retFlags) throws MalformedPatternException {
       int[] flags = new int[]{0, -804650956, 0, 0};
       retFlags[0] = 0;
       boolean doDefault = false;
@@ -720,7 +720,7 @@ public final class Perl5Compiler implements PatternCompiler {
       return offset;
    }
 
-   private final int __parseUnicodeClass() {
+   private final int __parseUnicodeClass() throws MalformedPatternException {
       boolean range = false;
       char lastclss = '\uffff';
       int[] numLength = new int[]{0, -804650956, 0, 0};
@@ -941,7 +941,7 @@ public final class Perl5Compiler implements PatternCompiler {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final int __parseBranch(int[] retFlags) {
+   private final int __parseBranch(int[] retFlags) throws MalformedPatternException {
       boolean nestCheck = false;
       boolean handleRepetition = false;
       int[] flags = new int[]{0, -804650956, 0, 0};
@@ -1112,7 +1112,7 @@ public final class Perl5Compiler implements PatternCompiler {
       }
    }
 
-   private final int __parseExpression(boolean isParenthesized, int[] hintFlags) {
+   private final int __parseExpression(boolean isParenthesized, int[] hintFlags) throws MalformedPatternException {
       char[] posFlags = new char[]{'\u0000', '\u0000'};
       char[] negFlags = new char[]{'\u0000', '\u0000'};
       int nodeOffset = -1;
@@ -1249,7 +1249,7 @@ public final class Perl5Compiler implements PatternCompiler {
    }
 
    @Override
-   public final Pattern compile(char[] pattern, int options) {
+   public final Pattern compile(char[] pattern, int options) throws MalformedPatternException {
       int[] flags = new int[]{0, -804650956, 0, 0};
       boolean sawOpen = false;
       boolean sawPlus = false;

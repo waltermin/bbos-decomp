@@ -34,7 +34,7 @@ public class FileDataSource extends DataSourceImpl implements SourceInformationP
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void connect() {
+   public void connect() throws IOException {
       if (!super._connected) {
          if (super._locator == null) {
             throw new IOException("Locator is null");
@@ -133,7 +133,7 @@ public class FileDataSource extends DataSourceImpl implements SourceInformationP
    }
 
    @Override
-   public void start() {
+   public void start() throws IOException {
       if (super._connected) {
          if (!super._started) {
             if (this._connection != null) {

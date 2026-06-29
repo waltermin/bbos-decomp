@@ -47,7 +47,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       this(input, null, true);
    }
 
-   public PGPInternalArmorDecoder(SharedInputStream param1, KeyStore param2, boolean param3) {
+   public PGPInternalArmorDecoder(SharedInputStream param1, KeyStore param2, boolean param3) throws PGPIncompleteKeyException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -591,7 +591,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       return line;
    }
 
-   private final void verifyWhitespaceAfterOffset(byte[] data, int offset) {
+   private final void verifyWhitespaceAfterOffset(byte[] data, int offset) throws PGPEncodingException {
       for (int i = offset; i < data.length; i++) {
          if (!CharacterUtilities.isSpaceChar((char)(data[i] & 0xFF))) {
             throw new PGPEncodingException("ANWT");
@@ -807,7 +807,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       }
    }
 
-   private final void readHeaders(LineReader scanLine) {
+   private final void readHeaders(LineReader scanLine) throws PGPEncodingException {
       while (true) {
          byte[] line = scanLine.readLine();
          if (line.length == 0) {

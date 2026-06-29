@@ -31,7 +31,7 @@ class ESNode extends RedirectedObject {
       return this._node;
    }
 
-   static Node getNode(long paramValue) {
+   static Node getNode(long paramValue) throws ThrownValue {
       Object obj = Convert.toObject(paramValue);
       if (!(obj instanceof ESNode)) {
          throw ThrownValue.referenceError("Parm not a node");
@@ -43,7 +43,7 @@ class ESNode extends RedirectedObject {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public long requestFieldValue(String name) {
+   public long requestFieldValue(String name) throws ThrownValue {
       if (name == Names.nodeName) {
          return JavaScriptEngine.makeStringValue(this._node.getNodeName());
       }

@@ -86,7 +86,7 @@ public class CompressedBuffer {
       return this.readCompressedLong();
    }
 
-   protected int readCompressedInt() {
+   protected int readCompressedInt() throws DataException {
       int i = 0;
       int used = 0;
 
@@ -116,7 +116,7 @@ public class CompressedBuffer {
       return b1 << 24 | b2 << 16 | b3 << 8 | b4;
    }
 
-   protected long readCompressedLong() {
+   protected long readCompressedLong() throws DataException {
       long i = 0;
       int used = 0;
 
@@ -153,7 +153,7 @@ public class CompressedBuffer {
       this._buffer[this._cursor++] = b;
    }
 
-   protected void ensureAvailable(int length) {
+   protected void ensureAvailable(int length) throws DataException {
       if (length > this._end) {
          throw new DataException(2);
       }

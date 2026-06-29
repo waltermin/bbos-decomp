@@ -15,7 +15,7 @@ class ESRegExpPrototype extends ESRegExp {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private static RegExp$MatchResult doMatch(String name, ESObject regExp, String s) {
+   private static RegExp$MatchResult doMatch(String name, ESObject regExp, String s) throws ThrownValue {
       boolean var8 = false /* VF: Semaphore variable */;
 
       ESRegExp thiz;

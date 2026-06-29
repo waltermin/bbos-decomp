@@ -357,7 +357,7 @@ public class PME_Reader implements ResourceProvider {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   protected void readMetaInformation(boolean newModel) {
+   protected void readMetaInformation(boolean newModel) throws MediaException {
       try {
          this._encoding = this._in.readUTF();
       } catch (Throwable var5) {

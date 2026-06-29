@@ -187,7 +187,7 @@ public final class PortAssigner {
       this.registerConnection(port, connection, apn, false);
    }
 
-   private final boolean registerConnection(int port, Object connection, String apn, boolean promiscuousMode) {
+   private final boolean registerConnection(int port, Object connection, String apn, boolean promiscuousMode) throws IOPortAlreadyBoundException {
       if (port != -1 && connection != null) {
          String apnArg = apn;
          if (apn == null) {

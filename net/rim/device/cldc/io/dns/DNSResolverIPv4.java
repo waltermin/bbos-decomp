@@ -71,7 +71,7 @@ public class DNSResolverIPv4 implements UDPPacketListener {
       return req.getPacketId();
    }
 
-   public Vector getAddressByHostname(String hostname, int apnId) {
+   public Vector getAddressByHostname(String hostname, int apnId) throws DNSException {
       DNSRequest req = new DNSRequest(hostname, null, apnId);
       this.prepRequest(req, true);
       Vector result = this.executeQuery(req);
@@ -119,7 +119,7 @@ public class DNSResolverIPv4 implements UDPPacketListener {
       return req.getPacketId();
    }
 
-   public Vector getHostnameByAddress(byte[] ipAddr, int apnId) {
+   public Vector getHostnameByAddress(byte[] ipAddr, int apnId) throws DNSException {
       DNSRequest req = new DNSRequest(ipAddr, null, apnId);
       this.prepRequest(req, true);
       Vector results = this.executeQuery(req);
@@ -130,7 +130,7 @@ public class DNSResolverIPv4 implements UDPPacketListener {
       }
    }
 
-   public Vector doBlockingQuery(DNSRequest req) {
+   public Vector doBlockingQuery(DNSRequest req) throws DNSException {
       this.prepRequest(req, false);
       Vector results = this.executeQuery(req);
       int status = req.getQueryType() == 1 ? 1 : 11;
@@ -428,7 +428,7 @@ public class DNSResolverIPv4 implements UDPPacketListener {
       return req;
    }
 
-   private void doSimulatorWorkaround(DNSRequest req) {
+   private void doSimulatorWorkaround(DNSRequest req) throws DNSException {
       String str = req.getQueryString();
       Vector v = null;
       Object[] results;
@@ -569,7 +569,7 @@ public class DNSResolverIPv4 implements UDPPacketListener {
       return false;
    }
 
-   private void failRequest(DNSRequest req, int status) {
+   private void failRequest(DNSRequest req, int status) throws DNSException {
       if (!req.isFlagSet(2)) {
          req.setFlag(2);
       } else {

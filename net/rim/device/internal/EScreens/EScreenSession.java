@@ -225,7 +225,7 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
       }
    }
 
-   protected RadioPacketHeader makeHeader(int type) {
+   protected RadioPacketHeader makeHeader(int type) throws EScreenSession$InvalidInputException {
       if (type == 0) {
          UDPPacketHeader udpHeader = (UDPPacketHeader)(new Object());
          udpHeader.setDestinationAddress(this._ipAddress);

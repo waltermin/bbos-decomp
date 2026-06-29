@@ -35,7 +35,7 @@ public class Base64OutputStream extends OutputStream {
    }
 
    @Override
-   public void write(int data) {
+   public void write(int data) throws IOException {
       if (this._lastException != null) {
          throw this._lastException;
       }
@@ -62,7 +62,7 @@ public class Base64OutputStream extends OutputStream {
    }
 
    @Override
-   public void write(byte[] data, int dataOffset, int dataLength) {
+   public void write(byte[] data, int dataOffset, int dataLength) throws IOException {
       if (data == null || dataOffset < 0 || dataLength < 0 || data.length - dataLength < dataOffset) {
          throw new IllegalArgumentException();
       }
@@ -102,7 +102,7 @@ public class Base64OutputStream extends OutputStream {
    }
 
    @Override
-   public void flush() {
+   public void flush() throws IOException {
       if (this._lastException != null) {
          throw this._lastException;
       }
@@ -132,7 +132,7 @@ public class Base64OutputStream extends OutputStream {
    }
 
    @Override
-   public void close() {
+   public void close() throws IOException {
       if (this._lastException != null) {
          throw this._lastException;
       }

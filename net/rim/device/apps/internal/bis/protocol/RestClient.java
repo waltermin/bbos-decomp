@@ -61,7 +61,7 @@ public final class RestClient {
       return this._httpClient;
    }
 
-   public final RestClient$GetBrandingInfoCallResult getBrandingInfo(String siteName) {
+   public final RestClient$GetBrandingInfoCallResult getBrandingInfo(String siteName) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName};
       String url = MessageFormat.format("{0}://{1}/brand/{2}", urlArgs);
       HttpResponse response = this._httpClient.doXmlExchange(url, "GET", null, null, REQUIRED_REST_RESPONSE_PROPERTIES, true);
@@ -149,7 +149,7 @@ public final class RestClient {
 
    public final RestClient$SignupUserCallResult signupUser(
       String siteName, String pin, String imei, String userName, String password, String language, String tcVersion, String[] suggestions
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName};
       String url = MessageFormat.format("{0}://{1}/{2}/user", urlArgs);
       HttpResponse response = this.doStateAddingCall(url, new SignupUserCall(pin, imei, language, userName, password, tcVersion));
@@ -195,7 +195,7 @@ public final class RestClient {
       return new RestClient$LoginCallResult(restResponseCode, currentPin);
    }
 
-   public final RestClient$GetUserInfoCallResult getUserInfo(String siteName, String userName) {
+   public final RestClient$GetUserInfoCallResult getUserInfo(String siteName, String userName) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}", urlArgs);
       HttpResponse response = this._httpClient.doXmlExchange(url, "GET", null, null, REQUIRED_REST_RESPONSE_PROPERTIES, true);
@@ -215,7 +215,7 @@ public final class RestClient {
 
    public final RestClient$AddMailboxCallResult addSimpleAccount(
       String siteName, String userName, String emailAddress, String password, Boolean aolIntegrationPermitted
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount", urlArgs);
       long restResponseCode = 0;
@@ -238,7 +238,7 @@ public final class RestClient {
 
    public final RestClient$AddMailboxCallResult addOWAAccount(
       String siteName, String userName, String email, String server, String description, String owaUserName, String owaPassword
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount", urlArgs);
       long restResponseCode = 0;
@@ -267,7 +267,7 @@ public final class RestClient {
       Integer secretQuestionId,
       String secretAnswer,
       String[] suggestions
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount", urlArgs);
       long restResponseCode = 0;
@@ -301,7 +301,7 @@ public final class RestClient {
 
    public final RestClient$AddMailboxCallResult addISPAccount(
       String siteName, String userName, String email, String server, String ispUserName, String ispPassword
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount", urlArgs);
       long restResponseCode = 0;
@@ -351,7 +351,7 @@ public final class RestClient {
       Boolean headersOnly,
       String filterOperator,
       String filterValue
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName, srcMboxId};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount/{4}/filter", urlArgs);
       HttpResponse response = this.doStateAddingCall(url, new AddFilterCall(filterName, sendAlert, levelOne, headersOnly, filterOperator, filterValue));
@@ -398,7 +398,7 @@ public final class RestClient {
       return new RestClient$RESTCallResult(restResponseCode);
    }
 
-   public final RestClient$GetFiltersCallResult getFilters(String siteName, String userName, String srcMboxId) {
+   public final RestClient$GetFiltersCallResult getFilters(String siteName, String userName, String srcMboxId) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName, srcMboxId};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/emailAccount/{4}/filters", urlArgs);
       HttpResponse response = this._httpClient.doXmlExchange(url, "GET", null, null, REQUIRED_REST_RESPONSE_PROPERTIES, true);
@@ -416,7 +416,7 @@ public final class RestClient {
       }
    }
 
-   public final RestClient$PreAuthenticationCallResult preAuthenticate(String siteName, String pin, String imei) {
+   public final RestClient$PreAuthenticationCallResult preAuthenticate(String siteName, String pin, String imei) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName};
       String url = MessageFormat.format("{0}://{1}/{2}/preAuth", urlArgs);
       DeviceIDs ids = DeviceIDs.getInstance();
@@ -440,7 +440,7 @@ public final class RestClient {
       }
    }
 
-   public final RestClient$ValidatePasswordsCallResult validatePasswords(String siteName, String userName, Hashtable mboxPasswords) {
+   public final RestClient$ValidatePasswordsCallResult validatePasswords(String siteName, String userName, Hashtable mboxPasswords) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, userName};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/validatePasswords", urlArgs);
       DeviceIDs ids = DeviceIDs.getInstance();
@@ -464,7 +464,7 @@ public final class RestClient {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final RestClient$ChangeToUsernameCallResult changeToUsername(
       String siteName, String oldUsername, String userName, String password, String failedIntegrationType, String failedIntegrationEmail
-   ) {
+   ) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, oldUsername};
       String url = MessageFormat.format("{0}://{1}/{2}/user/{3}/changeToUsername", urlArgs);
       HttpResponse response = this.doStateUpdatingCall(url, new ChangeToUsernameCall(userName, password, failedIntegrationType, failedIntegrationEmail));
@@ -495,7 +495,7 @@ public final class RestClient {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final RestClient$GetSecretQuestionsCallResult getSecretQuestions(String siteName, String userName, String locale) {
+   public final RestClient$GetSecretQuestionsCallResult getSecretQuestions(String siteName, String userName, String locale) throws RESTException {
       Object[] urlArgs = new Object[]{"https", this._serverURL, siteName, locale};
       String url = MessageFormat.format("{0}://{1}/{2}/secretQuestions/{3}", urlArgs);
       HttpResponse response = this._httpClient.doXmlExchange(url, "GET", null, null, REQUIRED_REST_RESPONSE_PROPERTIES, true);
@@ -522,7 +522,7 @@ public final class RestClient {
       return new RestClient$GetSecretQuestionsCallResult(restResponseCode, questions);
    }
 
-   private final void checkResponseCode(int responseCode) {
+   private final void checkResponseCode(int responseCode) throws HttpCommException, UserUnauthorizedException {
       if (HttpStatusUtils.isAuthenticationErrorStatus(responseCode)) {
          throw new UserUnauthorizedException(responseCode);
       }
@@ -557,7 +557,7 @@ public final class RestClient {
       return this._httpClient.doXmlExchange(url, "POST", requestProperties, requestPayload, REQUIRED_REST_RESPONSE_PROPERTIES, true);
    }
 
-   private final long getAndCheckRESTResponseCode(HttpResponse response) {
+   private final long getAndCheckRESTResponseCode(HttpResponse response) throws RESTException {
       String restResponseCodeString = response.getResponseProperty("RESTResponseCode");
       if (restResponseCodeString == null) {
          throw new RESTException("HTTP response missing REST response code");

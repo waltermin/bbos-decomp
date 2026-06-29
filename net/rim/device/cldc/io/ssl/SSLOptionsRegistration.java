@@ -21,7 +21,7 @@ public final class SSLOptionsRegistration {
       return retval;
    }
 
-   public static final boolean isDeviceTLSTheOnlySecureConnection(URLParameters urlParameters) {
+   public static final boolean isDeviceTLSTheOnlySecureConnection(URLParameters urlParameters) throws TLSSecurityException {
       boolean defaultToDeviceTLS = false;
       String uid = SocketTransportBase.findAcceptableConnectionUid(urlParameters);
       ServiceRecord rec;

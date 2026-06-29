@@ -47,7 +47,7 @@ import net.rim.wica.transport.security.SecurityProviderException;
 final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final Key decodeKey(KeyType keyType, byte[] encodedKey, boolean asymIsPublic) {
+   public final Key decodeKey(KeyType keyType, byte[] encodedKey, boolean asymIsPublic) throws SecurityProviderException {
       try {
          if (keyType.equals(KeyType.AES)) {
             return new Key(new Object(encodedKey), keyType);
@@ -72,7 +72,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final int sign(byte[] text, int textOffset, int textLength, byte[] output, int outputOffset, SecurityAlgorithm algorithm, Key key) {
+   public final int sign(byte[] text, int textOffset, int textLength, byte[] output, int outputOffset, SecurityAlgorithm algorithm, Key key) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
             HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
@@ -113,7 +113,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    @Override
    public final boolean verifySignature(
       byte[] text, int textOffset, int textLength, byte[] signature, int signatureOffset, int signatureLength, SecurityAlgorithm algorithm, Key key
-   ) {
+   ) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
             HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
@@ -156,7 +156,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    @Override
    public final byte[] encrypt(
       byte[] plaintext, int plaintextOffset, int plaintextLength, byte[] IV, int ivOffset, int ivLength, SecurityAlgorithm algorithm, Key key
-   ) {
+   ) throws SecurityProviderException {
       byte[] cipherTxt = null;
       NoCopyByteArrayOutputStream out = (NoCopyByteArrayOutputStream)(new Object());
       EncryptorOutputStream cryptoStream = null;
@@ -215,7 +215,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    @Override
    public final byte[] decrypt(
       byte[] ciphertext, int ciphertextOffset, int ciphertextLength, byte[] IV, int ivOffset, int ivLength, SecurityAlgorithm algorithm, Key key
-   ) {
+   ) throws SecurityProviderException {
       byte[] plainTxt = null;
       ByteArrayInputStream in = (ByteArrayInputStream)(new Object(ciphertext, ciphertextOffset, ciphertextLength));
       DecryptorInputStream decryptoStream = null;
@@ -277,7 +277,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final KeyPair generateKeyPair(KeyType keyType) {
+   public final KeyPair generateKeyPair(KeyType keyType) throws SecurityProviderException {
       try {
          if (keyType.equals(KeyType.ECDSA)) {
             ECKeyPair keyPair = (ECKeyPair)(new Object((ECCryptoSystem)(new Object())));
@@ -293,7 +293,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final byte[] encodeKey(Key key) {
+   public final byte[] encodeKey(Key key) throws SecurityProviderException {
       try {
          KeyType keyType = key.getKeyType();
          if (keyType.equals(KeyType.AES)) {
@@ -332,7 +332,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final byte[] sign(byte[] text, SecurityAlgorithm algorithm, Key key) {
+   public final byte[] sign(byte[] text, SecurityAlgorithm algorithm, Key key) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
             HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
@@ -367,7 +367,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final byte[] deriveSecret(SecurityAlgorithm algorithm, Key privateKey, Key remotePublicKey) {
+   public final byte[] deriveSecret(SecurityAlgorithm algorithm, Key privateKey, Key remotePublicKey) throws SecurityProviderException {
       byte[] encodedRemotePublicKey = this.encodeKey(remotePublicKey);
       ECPrivateKey deviceKey = (ECPrivateKey)privateKey.getNativeKey();
 

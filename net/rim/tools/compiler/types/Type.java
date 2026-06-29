@@ -197,7 +197,7 @@ public class Type implements Constants {
       }
    }
 
-   public static final Type translateType(Compiler compiler, TypeDescriptor descriptor) {
+   public static final Type translateType(Compiler compiler, TypeDescriptor descriptor) throws CompileException {
       Type type = null;
       int arrayDepth = 0;
 
@@ -259,7 +259,7 @@ public class Type implements Constants {
       }
    }
 
-   public final String encodeType() {
+   public final String encodeType() throws CompileException {
       Type type = this;
       StringBuffer buf = (StringBuffer)(new Object());
 
@@ -313,7 +313,7 @@ public class Type implements Constants {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private static final Type translateStackMapType(Compiler compiler, ClassType classType, AttributeStackMapType smt, byte[] bytes) {
+   private static final Type translateStackMapType(Compiler compiler, ClassType classType, AttributeStackMapType smt, byte[] bytes) throws CompileException {
       Type type = null;
       String typeName = null;
       switch (smt.getType()) {

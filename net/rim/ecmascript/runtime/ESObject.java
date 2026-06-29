@@ -331,7 +331,7 @@ public class ESObject {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   long[] getArray() {
+   long[] getArray() throws ThrownValue {
       long length;
       if (this._arrayLengthIndex != -1) {
          length = this._arrayLength;
@@ -458,7 +458,7 @@ public class ESObject {
       return this.putArrayFieldNoAssert(name, value);
    }
 
-   private boolean putArrayFieldNoAssert(String name, long value) {
+   private boolean putArrayFieldNoAssert(String name, long value) throws ThrownValue {
       if (name == "__proto__") {
          return this.putPrototype(value);
       }
@@ -865,7 +865,7 @@ public class ESObject {
       return this.getDefaultNumber();
    }
 
-   public long defaultStringValue() {
+   public long defaultStringValue() throws ThrownValue {
       long value = Context.callProperty(this, "toString", Names.NoParms);
       if (Value.isPrimitive(value)) {
          return value;
@@ -883,7 +883,7 @@ public class ESObject {
       return this.getDefaultNumber();
    }
 
-   public long getDefaultNumber() {
+   public long getDefaultNumber() throws ThrownValue {
       long value = Context.callProperty(this, "valueOf", Names.NoParms);
       if (Value.isPrimitive(value)) {
          return value;

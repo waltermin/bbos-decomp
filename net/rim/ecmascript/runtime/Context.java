@@ -302,7 +302,7 @@ class Context implements OpcodeConstants, DebugContext {
       return Value.typeOf(Value.UNDEFINED);
    }
 
-   private long getName(ScopeChain scope, String name) {
+   private long getName(ScopeChain scope, String name) throws ThrownValue {
       while (scope != null) {
          ESObject o = scope.object;
          long v = o.getRedirectedField(name);
@@ -425,7 +425,7 @@ class Context implements OpcodeConstants, DebugContext {
 
    static native Context runNative(Context var0);
 
-   static long run(Context c) {
+   static long run(Context c) throws ThrownValue {
       GlobalObject global = GlobalObject.getInstance();
       StepInfo stepInfo = global.stepInfo;
       if (!global.initVM()) {
@@ -1585,7 +1585,7 @@ class Context implements OpcodeConstants, DebugContext {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public long eval(String script) {
+   public long eval(String script) throws ThrownValue {
       GlobalObject global = GlobalObject.getInstance();
 
       CompiledScript code;

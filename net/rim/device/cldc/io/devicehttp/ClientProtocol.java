@@ -206,7 +206,7 @@ public class ClientProtocol
       this._socketConnection = socketConnection;
    }
 
-   private void handleIOExceptionBeforeResponse(IOException e) {
+   private void handleIOExceptionBeforeResponse(IOException e) throws IOException {
       if (this._usePersistentConnections && !this._closeCalled && !this._newPersistentConnectionOpened && this._originalHost != null) {
          this.reopenLowerConnection();
          this._newPersistentConnectionOpened = true;

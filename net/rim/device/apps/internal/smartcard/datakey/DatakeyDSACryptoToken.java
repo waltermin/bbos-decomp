@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.smartcard.datakey;
 
 import net.rim.device.api.crypto.CryptoSystem;
 import net.rim.device.api.crypto.CryptoTokenCryptoSystemData;
+import net.rim.device.api.crypto.CryptoTokenException;
 import net.rim.device.api.crypto.CryptoTokenPrivateKeyData;
 import net.rim.device.api.crypto.DSACryptoToken;
 import net.rim.device.api.i18n.ResourceBundle;
@@ -52,7 +53,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       byte[] param8,
       int param9,
       Object param10
-   ) {
+   ) throws CryptoTokenException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

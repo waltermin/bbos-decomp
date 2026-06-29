@@ -934,7 +934,7 @@ public final class InstructionResolver implements Constants {
       return this._block.plantTarget(offset, true);
    }
 
-   private final Type findType(String typeName) {
+   private final Type findType(String typeName) throws CompileException {
       TypeDescriptor descriptor = new TypeDescriptor(typeName);
       Type type = Type.translateType(this._compiler, descriptor);
       if (descriptor.getCharsRemaining() != 0) {
@@ -1002,7 +1002,7 @@ public final class InstructionResolver implements Constants {
       return type;
    }
 
-   private final Field resolveField(ConstantPoolFieldRef cpf, boolean isStatic) {
+   private final Field resolveField(ConstantPoolFieldRef cpf, boolean isStatic) throws CompileException {
       ClassType classType = cpf.getClassType();
       if (classType == null) {
          classType = (ClassType)this.resolveClass(cpf.getConstantPoolClass(), true);
@@ -1316,7 +1316,7 @@ public final class InstructionResolver implements Constants {
       }
    }
 
-   public final void walkByteCode(int ip, int opcode, ConstantPoolFieldRef cpf) {
+   public final void walkByteCode(int ip, int opcode, ConstantPoolFieldRef cpf) throws CompileException {
       this._boundaries[ip] = true;
       boolean isStatic = opcode == 178 || opcode == 179;
       Field field = cpf.getField();
@@ -1364,7 +1364,7 @@ public final class InstructionResolver implements Constants {
       }
    }
 
-   public final void walkByteCode(int ip, int opcode, ConstantPoolMethodRef cpm) {
+   public final void walkByteCode(int ip, int opcode, ConstantPoolMethodRef cpm) throws CompileException {
       this._boundaries[ip] = true;
       Method method = cpm.getMethod();
       if (method == null) {
@@ -1387,7 +1387,7 @@ public final class InstructionResolver implements Constants {
       }
    }
 
-   public final void walkByteCode(int ip, int opcode, ConstantPoolInterfaceMethodRef cpm, int nargs) {
+   public final void walkByteCode(int ip, int opcode, ConstantPoolInterfaceMethodRef cpm, int nargs) throws CompileException {
       this._boundaries[ip] = true;
       Method method = cpm.getMethod();
       if (method == null) {
@@ -1412,7 +1412,7 @@ public final class InstructionResolver implements Constants {
       }
    }
 
-   public final void walkByteCode(int ip, int opcode, int[] operands) {
+   public final void walkByteCode(int ip, int opcode, int[] operands) throws CompileException {
       this._boundaries[ip] = true;
       int op = 0;
       int newOp = -1;
@@ -1738,7 +1738,7 @@ public final class InstructionResolver implements Constants {
       this._classType.addDataWeight(data.length + 4);
    }
 
-   public final void resolveBadLabel() {
+   public final void resolveBadLabel() throws CompileException {
       int num = this._block.getNumTargets();
 
       for (int i = 0; i < num; i++) {

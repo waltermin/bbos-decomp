@@ -83,7 +83,7 @@ public class PushRegistry {
       return out;
    }
 
-   public static long registerAlarm(String midlet, long time) {
+   public static long registerAlarm(String midlet, long time) throws ClassNotFoundException {
       if (midlet != null && midlet.length() != 0) {
          PushRegistryHelper prh = PushRegistryHelper.getInstance();
          Class.forName(midlet);
@@ -182,7 +182,7 @@ public class PushRegistry {
       return isMidletInSuite(midletname) ? Process.currentProcess().getModuleHandle() : -1;
    }
 
-   public static void registerConnection(String connection, String midlet, String filter) {
+   public static void registerConnection(String connection, String midlet, String filter) throws IOException, ClassNotFoundException, ConnectionNotFoundException {
       PushRegistryHelper prh = PushRegistryHelper.getInstance();
       if (midlet != null && midlet.length() != 0) {
          Class.forName(midlet);

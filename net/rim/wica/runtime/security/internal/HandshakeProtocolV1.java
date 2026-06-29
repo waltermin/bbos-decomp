@@ -42,7 +42,7 @@ final class HandshakeProtocolV1 implements HandshakeProtocol, ResponseListener {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void register() {
+   public final void register() throws HandshakeException {
       try {
          OutgoingRequest outReq = this._commService.createOutgoingRequestInstance(this._handshakeInfo.getAGURL());
          outReq.setRequestMethod("POST");
@@ -61,7 +61,7 @@ final class HandshakeProtocolV1 implements HandshakeProtocol, ResponseListener {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void unregister() {
+   public final void unregister() throws HandshakeException {
       try {
          OutgoingRequest request = this._commService.createOutgoingRequestInstance(this._handshakeInfo.getAGURL());
          request.setRequestMethod("POST");

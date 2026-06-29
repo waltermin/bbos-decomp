@@ -1100,7 +1100,7 @@ public final class PGPCertificate implements Certificate {
       Memory.createGroup(this._content);
    }
 
-   public PGPCertificate(InputStream input) {
+   public PGPCertificate(InputStream input) throws PGPEncodingException {
       PGPPacketParser parser = new PGPPacketParser(input);
       PGPPacket[][] packetArray = parser.getPackets();
       if (packetArray.length != 1) {

@@ -64,11 +64,11 @@ public class Reader {
       return false;
    }
 
-   public void mark(int readAheadLimit) {
+   public void mark(int readAheadLimit) throws IOException {
       throw new IOException("mark() not supported");
    }
 
-   public void reset() {
+   public void reset() throws IOException {
       throw new IOException("reset() not supported");
    }
 

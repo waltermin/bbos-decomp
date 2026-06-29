@@ -8,7 +8,7 @@ final class FileEventDispatcher extends EventDispatcher {
    private int _operationInProgress;
    private int _operationResult;
 
-   final int waitForCompletion(int operation) {
+   final int waitForCompletion(int operation) throws IOException {
       this._operationInProgress = operation;
       this._operationResult = -1;
 

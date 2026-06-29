@@ -88,7 +88,7 @@ class RegistryImpl extends Registry {
       return ri;
    }
 
-   public static ContentHandlerServer getServer(String classname) {
+   public static ContentHandlerServer getServer(String classname) throws ContentHandlerException {
       assertPermission();
 
       try {
@@ -405,7 +405,7 @@ class RegistryImpl extends Registry {
    }
 
    @Override
-   public ContentHandler[] findHandler(Invocation invocation) {
+   public ContentHandler[] findHandler(Invocation invocation) throws ContentHandlerException {
       String action = invocation.getAction();
       String ID = invocation.getID();
       if (ID != null) {
@@ -463,7 +463,7 @@ class RegistryImpl extends Registry {
       }
    }
 
-   private ContentHandler[] filterByAction(ContentHandler[] candidateHandlers, String action) {
+   private ContentHandler[] filterByAction(ContentHandler[] candidateHandlers, String action) throws ContentHandlerException {
       ContentHandler[] handlers = new ContentHandler[0];
 
       for (int i = 0; i < candidateHandlers.length; i++) {
@@ -873,7 +873,7 @@ class RegistryImpl extends Registry {
       return handle;
    }
 
-   static void verifyID(String ID, String classname, boolean upgrade) {
+   static void verifyID(String ID, String classname, boolean upgrade) throws ContentHandlerException {
       Enumeration e = _registry.keys();
 
       while (e.hasMoreElements()) {

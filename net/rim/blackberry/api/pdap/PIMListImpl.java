@@ -57,7 +57,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public void deleteCategory(String category, boolean deleteUnassignedItems) {
+   public void deleteCategory(String category, boolean deleteUnassignedItems) throws PIMException {
       if (category == null) {
          throw new Object();
       }
@@ -91,7 +91,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public void renameCategory(String currentCategory, String newCategory) {
+   public void renameCategory(String currentCategory, String newCategory) throws PIMException {
       if (currentCategory != null && newCategory != null) {
          if (newCategory.length() <= 0 || CategoryList.getInstance().getCategoryId(currentCategory) == -1 || this._closed) {
             throw new PIMException();
@@ -120,7 +120,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public Enumeration itemsByCategory(String category) {
+   public Enumeration itemsByCategory(String category) throws PIMException {
       if (this._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (this._mode == 2) {
@@ -140,7 +140,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public void addCategory(String category) {
+   public void addCategory(String category) throws PIMException {
       if (category == null) {
          throw new Object();
       }
@@ -181,7 +181,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public boolean isCategory(String category) {
+   public boolean isCategory(String category) throws PIMException {
       if (category == null) {
          throw new Object();
       } else if (this._closed) {
@@ -210,7 +210,7 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    @Override
-   public String[] getCategories() {
+   public String[] getCategories() throws PIMException {
       if (this._closed) {
          throw new PIMException();
       }

@@ -44,7 +44,7 @@ public final class ProtocolStateMachine {
       }
    }
 
-   public final synchronized void eventConnected() {
+   public final synchronized void eventConnected() throws ProtocolStateMachine$InvalidStateException {
       if (this._curState == 0) {
          this.setState(1);
       } else {
@@ -54,7 +54,7 @@ public final class ProtocolStateMachine {
       }
    }
 
-   public final synchronized void eventHandshakeSucceeded() {
+   public final synchronized void eventHandshakeSucceeded() throws ProtocolStateMachine$InvalidStateException {
       if (this._curState == 1) {
          this.setState(2);
       } else {
@@ -64,7 +64,7 @@ public final class ProtocolStateMachine {
       }
    }
 
-   public final synchronized void eventSessionReset() {
+   public final synchronized void eventSessionReset() throws ProtocolStateMachine$InvalidStateException {
       switch (this._curState) {
          case 2:
             this.setState(3);
@@ -76,7 +76,7 @@ public final class ProtocolStateMachine {
       }
    }
 
-   public final synchronized void eventDetached() {
+   public final synchronized void eventDetached() throws ProtocolStateMachine$InvalidStateException {
       switch (this._curState) {
          case 0:
             throw new ProtocolStateMachine$InvalidStateException(

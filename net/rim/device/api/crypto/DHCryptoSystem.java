@@ -1128,7 +1128,7 @@ public final class DHCryptoSystem implements CryptoSystem {
       }
    }
 
-   private final void initialize(DHCryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) {
+   private final void initialize(DHCryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) throws InvalidCryptoSystemException {
       if (cryptoToken != null && p != null && g != null) {
          p = CryptoByteArrayArithmetic.trim(p);
          g = CryptoByteArrayArithmetic.trim(g);

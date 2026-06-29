@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.file;
 
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
@@ -437,7 +438,7 @@ public final class FileSystemEncryption {
       return var52;
    }
 
-   static final byte[] getMasterKey(boolean param0) {
+   static final byte[] getMasterKey(boolean param0) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

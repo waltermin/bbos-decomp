@@ -399,7 +399,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._todoList == null) {
          throw new PIMException();
       }

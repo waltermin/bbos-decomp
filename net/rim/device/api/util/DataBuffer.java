@@ -259,7 +259,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
       }
    }
 
-   public byte[] readByteArray() {
+   public byte[] readByteArray() throws EOFException {
       int size = this.readCompressedInt();
       if (this._position + size > this._length) {
          throw new EOFException();
@@ -271,7 +271,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
       return data;
    }
 
-   public void write(DataInput input, int length) {
+   public void write(DataInput input, int length) throws EOFException {
       int count = 0;
       int oldLength = this._length;
       this.ensureCapacity(length);
@@ -357,7 +357,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public short readShort() {
+   public short readShort() throws EOFException {
       if (this._position + 2 > this._length) {
          throw new EOFException();
       }
@@ -402,7 +402,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public long readLong() {
+   public long readLong() throws EOFException {
       if (this._position + 8 > this._length) {
          throw new EOFException();
       }
@@ -439,7 +439,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public int readInt() {
+   public int readInt() throws EOFException {
       if (this._position + 4 > this._length) {
          throw new EOFException();
       }
@@ -518,7 +518,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public void readFully(byte[] outputBuffer, int outputBufferOffset, int outputBufferLength) {
+   public void readFully(byte[] outputBuffer, int outputBufferOffset, int outputBufferLength) throws EOFException {
       if (outputBufferLength > this._length - this._position) {
          throw new EOFException();
       }
@@ -536,7 +536,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public char readChar() {
+   public char readChar() throws EOFException {
       if (this._position + 2 > this._length) {
          throw new EOFException();
       }
@@ -627,7 +627,7 @@ public class DataBuffer implements DataInput, DataOutput, Persistable {
    }
 
    @Override
-   public byte readByte() {
+   public byte readByte() throws EOFException {
       if (this._position >= this._length) {
          throw new EOFException();
       } else {

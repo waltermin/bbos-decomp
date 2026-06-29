@@ -13,7 +13,7 @@ public class OutputStreamWriter extends Writer {
       this.out = Helper.getStreamWriter(os, enc);
    }
 
-   private void ensureOpen() {
+   private void ensureOpen() throws IOException {
       if (this.out == null) {
          throw new IOException("Stream closed");
       }

@@ -94,7 +94,7 @@ public final class TLSBlockUnformatterEngine implements BlockUnformatterEngine {
       this._paddingVerification = paddingVerification;
    }
 
-   private final int decryptAndUnformatBigBlock(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBigBlock, int numBlock) {
+   private final int decryptAndUnformatBigBlock(byte[] input, int inputOffset, byte[] output, int outputOffset, boolean lastBigBlock, int numBlock) throws DecodeException {
       if (input == null
          || inputOffset < 0
          || input.length - this._inputBlockLength < inputOffset

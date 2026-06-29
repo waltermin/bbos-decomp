@@ -8,7 +8,7 @@ public class ToDoListFactory {
    private ToDoListFactory() {
    }
 
-   public static ToDoList createToDoList(int mode) {
+   public static ToDoList createToDoList(int mode) throws PIMException {
       if (CodeModuleManager.getModuleHandle("net_rim_bb_task_app") != 0) {
          return new ToDoListImpl(mode);
       } else {

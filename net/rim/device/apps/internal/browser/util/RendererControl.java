@@ -193,7 +193,7 @@ public final class RendererControl {
       Event event,
       Object context,
       Frame target
-   ) {
+   ) throws ResourcedRenderingException {
       if (connection == null) {
          return null;
       }

@@ -16,7 +16,7 @@ final class ESDOMImplementation extends ESObject {
       this.addHostFunction(new ESDOMImplementation$3(this, Names.DOMImplementation, "createDocument", 3));
    }
 
-   static final DocumentType getDocType(long paramValue) {
+   static final DocumentType getDocType(long paramValue) throws ThrownValue {
       Object obj = Convert.toObject(paramValue);
       if (!(obj instanceof ESDocumentType)) {
          throw ThrownValue.referenceError("Parm not a doctype");

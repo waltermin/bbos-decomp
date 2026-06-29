@@ -51,7 +51,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public final Connection openPrim(String param1, int param2, boolean param3) {
+   public final Connection openPrim(String param1, int param2, boolean param3) throws TLSSecurityException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!

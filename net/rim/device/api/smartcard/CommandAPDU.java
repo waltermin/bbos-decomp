@@ -43,7 +43,7 @@ public class CommandAPDU {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public CommandAPDU(DataBuffer apduBuffer) {
+   public CommandAPDU(DataBuffer apduBuffer) throws SmartCardInvalidAPDUException {
       try {
          int bytesAvailable = apduBuffer.available();
          if (bytesAvailable == 0) {

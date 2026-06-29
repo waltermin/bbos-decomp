@@ -107,7 +107,7 @@ public class Process {
       return this.start(moduleHandle, moduleName, args, 0);
    }
 
-   public synchronized Thread start(int moduleHandle, String moduleName, String[] args, int index) {
+   public synchronized Thread start(int moduleHandle, String moduleName, String[] args, int index) throws ModuleNotFoundException {
       if (this._state != 0) {
          throw new IllegalArgumentException("Process.start() already called");
       } else {

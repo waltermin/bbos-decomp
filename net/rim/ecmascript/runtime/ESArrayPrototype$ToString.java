@@ -10,7 +10,7 @@ class ESArrayPrototype$ToString extends ESArrayPrototype$Join {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       if (!(this.getThis() instanceof ESArray)) {
          throw ThrownValue.typeError(Resources.getString(50), "toString");
       }

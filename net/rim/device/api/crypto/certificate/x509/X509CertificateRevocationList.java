@@ -185,7 +185,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       return null;
    }
 
-   private void parseRevokedCertificates(ASN1InputStream revokedCertificates) {
+   private void parseRevokedCertificates(ASN1InputStream revokedCertificates) throws ASN1EncodingException {
       if (revokedCertificates.peekNextTag() == 16) {
          ASN1InputStream revokedCertificate = revokedCertificates.readSequence();
 
@@ -225,7 +225,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       }
    }
 
-   private void parseCertificateList(byte[] tbsCertList) {
+   private void parseCertificateList(byte[] tbsCertList) throws ASN1EncodingException {
       ASN1InputStream certificateList = new ASN1InputStream((InputStream)(new Object(tbsCertList))).readSequence();
       if (certificateList.peekNextTag() == 2) {
          int version = certificateList.readInteger();

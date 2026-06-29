@@ -125,7 +125,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._memoList == null) {
          throw new PIMException();
       }

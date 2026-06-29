@@ -28,7 +28,7 @@ public final class EncryptedFile {
    private EncryptedFile() {
    }
 
-   public static final EncryptedFile readHeader(int handle, DataInputStream in, byte[] masterKey) {
+   public static final EncryptedFile readHeader(int handle, DataInputStream in, byte[] masterKey) throws IOException, DRMIOException {
       if (in.readUnsignedByte() == 82 && in.readUnsignedByte() == 69 && in.readUnsignedByte() == 77 && in.readUnsignedByte() == 70) {
          int version = in.readUnsignedByte();
          if (version != 1) {
@@ -217,7 +217,7 @@ public final class EncryptedFile {
       return ef;
    }
 
-   public final long getFileSize() {
+   public final long getFileSize() throws FileIOException {
       FileInfo info = new FileInfo();
       int status = FileSystem.getFileInfo(this._handle, info);
       if (status != 0) {

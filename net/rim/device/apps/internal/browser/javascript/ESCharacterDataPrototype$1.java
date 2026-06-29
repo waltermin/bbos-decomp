@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.ecmascript.runtime.Convert;
+import net.rim.ecmascript.runtime.ThrownValue;
 
 class ESCharacterDataPrototype$1 extends JavaScriptHostFunction {
    private final ESCharacterDataPrototype this$0;
@@ -13,7 +14,7 @@ class ESCharacterDataPrototype$1 extends JavaScriptHostFunction {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          int offset = Convert.toInt32(this.getParm(0));
          int count = Convert.toInt32(this.getParm(1));

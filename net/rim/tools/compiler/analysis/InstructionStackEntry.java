@@ -48,7 +48,7 @@ public final class InstructionStackEntry implements Constants {
       }
    }
 
-   public final void verifyUninitializedOffsets() {
+   public final void verifyUninitializedOffsets() throws CompileException {
       int num = this._numTypes;
 
       for (int i = 0; i < num; i++) {

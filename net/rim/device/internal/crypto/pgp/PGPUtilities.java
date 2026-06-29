@@ -143,7 +143,7 @@ public final class PGPUtilities {
       }
    }
 
-   public static final int peekTag(SharedInputStream stream) {
+   public static final int peekTag(SharedInputStream stream) throws PGPEncodingException {
       int tag = stream.peek();
       if ((tag & 128) == 0) {
          throw new PGPEncodingException();
@@ -152,7 +152,7 @@ public final class PGPUtilities {
       }
    }
 
-   public static final byte[] readTagAndLength(InputStream input, int[] info) {
+   public static final byte[] readTagAndLength(InputStream input, int[] info) throws PGPEncodingException {
       info[0] = 0;
       info[1] = 0;
       int tag = nextInt(input);

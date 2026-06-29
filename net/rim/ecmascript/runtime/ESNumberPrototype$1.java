@@ -11,7 +11,7 @@ class ESNumberPrototype$1 extends HostFunction {
    }
 
    @Override
-   public long run() {
+   public long run() throws ThrownValue {
       try {
          return Value.makeStringValue(Convert.toString(Value.makeDoubleValue(((ESNumber)this.getThis()).getValue())));
       } finally {

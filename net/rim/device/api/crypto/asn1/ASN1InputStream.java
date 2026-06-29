@@ -81,7 +81,7 @@ public class ASN1InputStream {
       return this.checkStreamTag(taggingType, classFlag, tag, baseTag, useDefault, -1);
    }
 
-   private ASN1Field checkStreamTag(int taggingType, int classFlag, int tag, int baseTag, boolean useDefault, int lengthLimit) {
+   private ASN1Field checkStreamTag(int taggingType, int classFlag, int tag, int baseTag, boolean useDefault, int lengthLimit) throws ASN1EncodingException {
       tag &= 31;
       classFlag &= 192;
       int explicitTag;
@@ -139,7 +139,7 @@ public class ASN1InputStream {
       return this.readBoolean(tagging, tag, clsFlags, true, defaultValue);
    }
 
-   private boolean readBoolean(int tagging, int tag, int clsFlags, boolean useDefault, boolean defaultValue) {
+   private boolean readBoolean(int tagging, int tag, int clsFlags, boolean useDefault, boolean defaultValue) throws ASN1EncodingException {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, 1, useDefault);
       if (field == null) {
          return defaultValue;
@@ -174,7 +174,7 @@ public class ASN1InputStream {
       return this.readNull(tagging, tag, clsFlags, true, defaultValue);
    }
 
-   private boolean readNull(int tagging, int tag, int clsFlags, boolean useDefault, boolean defaultValue) {
+   private boolean readNull(int tagging, int tag, int clsFlags, boolean useDefault, boolean defaultValue) throws ASN1EncodingException {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, 5, useDefault);
       if (field == null) {
          return defaultValue;
@@ -204,7 +204,7 @@ public class ASN1InputStream {
       return this.readInteger(tagging, tag, clsFlags, true, defaultValue, 2);
    }
 
-   private int readInteger(int tagging, int tag, int clsFlags, boolean useDefault, int defaultValue, int baseTag) {
+   private int readInteger(int tagging, int tag, int clsFlags, boolean useDefault, int defaultValue, int baseTag) throws ASN1EncodingException {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, baseTag, useDefault);
       if (field == null) {
          return defaultValue;
@@ -448,7 +448,7 @@ public class ASN1InputStream {
       return this.readString(tagging, tag, clsFlags, useDefault, defaultValue, 30, 0);
    }
 
-   private String readString(int tagging, int tag, int clsFlags, boolean useDefault, String defaultValue, int baseTag, int recursionLevel) {
+   private String readString(int tagging, int tag, int clsFlags, boolean useDefault, String defaultValue, int baseTag, int recursionLevel) throws ASN1EncodingException {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, baseTag, useDefault);
       if (field == null) {
          return defaultValue;
@@ -598,7 +598,7 @@ public class ASN1InputStream {
       return (field.getTag() & 32) != 0 ? this.recurseReadBitString((SharedInputStream)field.getInputStream(), 0) : this.readPrimitiveBitString(field);
    }
 
-   private ASN1BitSet recurseReadBitString(SharedInputStream stream, int recursionLevel) {
+   private ASN1BitSet recurseReadBitString(SharedInputStream stream, int recursionLevel) throws ASN1EncodingException {
       if (recursionLevel >= 32) {
          throw new ASN1EncodingException();
       }
@@ -708,7 +708,7 @@ public class ASN1InputStream {
       return this.readTime(tagging, tag, clsFlags, useDefault, defaultValue, 23);
    }
 
-   private long readTime(int tagging, int tag, int clsFlags, boolean useDefault, long defaultValue, int baseTag) {
+   private long readTime(int tagging, int tag, int clsFlags, boolean useDefault, long defaultValue, int baseTag) throws ASN1EncodingException {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, baseTag, useDefault);
       if (field == null) {
          return defaultValue;
@@ -727,7 +727,7 @@ public class ASN1InputStream {
       }
    }
 
-   static long parseTime(byte[] time, boolean utcTime) {
+   static long parseTime(byte[] time, boolean utcTime) throws ASN1EncodingException {
       if (time.length < 11) {
          throw new ASN1EncodingException();
       }
@@ -920,7 +920,7 @@ public class ASN1InputStream {
       this._lastFieldRead = field;
    }
 
-   public void skipField(int tag) {
+   public void skipField(int tag) throws ASN1EncodingException {
       tag &= 31;
       ASN1Field field = new ASN1Field(this._lastFieldRead, this._sharedStream.readInputStream());
       if (tag != (field.getTag() & 31)) {
@@ -930,7 +930,7 @@ public class ASN1InputStream {
       this._lastFieldRead = field;
    }
 
-   public InputStream readStreamWithTag(int tag) {
+   public InputStream readStreamWithTag(int tag) throws ASN1EncodingException {
       tag &= 31;
       ASN1Field field = new ASN1Field(this._lastFieldRead, this._sharedStream.readInputStream());
       if (tag != (field.getTag() & 31)) {

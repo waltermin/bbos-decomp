@@ -11,7 +11,7 @@ public class PKCS12SafeContents extends PKCS12ContentInfo {
    }
 
    @Override
-   protected void parse() {
+   protected void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
             ASN1InputByteArray bagsArray = (ASN1InputByteArray)(new Object(super._buffer));

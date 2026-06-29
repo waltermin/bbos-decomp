@@ -13,7 +13,7 @@ public class MessageHeaderV1_0 extends MessageHeaderV1_Base implements MessageHe
       super(clone);
    }
 
-   public int deserialize(CompressedBuffer buffer) {
+   public int deserialize(CompressedBuffer buffer) throws TransportMessageException {
       try {
          super._messageLength = buffer.readUncompressedInt();
          if (super._messageLength < 0) {
