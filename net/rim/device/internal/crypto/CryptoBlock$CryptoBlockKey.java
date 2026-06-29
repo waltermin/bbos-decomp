@@ -46,7 +46,7 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
    static final int CBK_MASK_ALL = 255;
    private static final long ID = -6938461211042858691L;
    private static PersistentObject _persistentDeviceKey = RIMPersistentStore.getPersistentObject(-6938461211042858691L);
-   private static byte[][][] _deviceKey;
+   private static byte[][] _deviceKey;
 
    final String getHashKey(boolean useID) {
       return useID ? this._id : this._name;
@@ -142,7 +142,7 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
                   key[0] = ConverterUtilities.readByteArray(buff);
                   break;
                case 8:
-                  char[][][] encodedDeviceKey = ConverterUtilities.readCharArrayArray(buff, false);
+                  char[][] encodedDeviceKey = ConverterUtilities.readCharArrayArray(buff, false);
                   key[0] = encodedDeviceKey[0];
                   tag = 7;
             }
@@ -215,9 +215,9 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
             ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();
             boolean injectKey = false;
             if (_deviceKey == null) {
-               _deviceKey = (byte[][][])((byte[][])appRegistry.get(-6938461211042858691L));
+               _deviceKey = (byte[][])appRegistry.get(-6938461211042858691L);
                if (_deviceKey == null) {
-                  _deviceKey = new byte[1][][];
+                  _deviceKey = new byte[1][];
                   injectKey = true;
                }
             }
@@ -225,12 +225,12 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
             if (_deviceKey[0] == null) {
                Object encoding = _persistentDeviceKey.getContents();
                if (encoding == null) {
-                  _deviceKey[0] = (byte[][])Memory.allocRAMOnlyBytes(32);
-                  RandomSource.getBytes((byte[])_deviceKey[0]);
-                  encoding = PersistentContent.encode(Arrays.copy((byte[])_deviceKey[0]), false, getEncryptFlag());
+                  _deviceKey[0] = Memory.allocRAMOnlyBytes(32);
+                  RandomSource.getBytes(_deviceKey[0]);
+                  encoding = PersistentContent.encode(Arrays.copy(_deviceKey[0]), false, getEncryptFlag());
                   setDeviceKey(encoding, false);
                } else {
-                  _deviceKey[0] = (byte[][])PersistentContentInternal.decodeByteArray(encoding, false, true);
+                  _deviceKey[0] = PersistentContentInternal.decodeByteArray(encoding, false, true);
                   if (PersistentContent.isEncrypted(encoding)) {
                      LED.setState(0);
                      RadioInternal.reactivateRadios();
@@ -244,7 +244,7 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
          }
       }
 
-      return (byte[])_deviceKey[0];
+      return _deviceKey[0];
    }
 
    public static final boolean areMasterKeysEncrypted() {
@@ -280,7 +280,7 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
          }
 
          char[] key = (char[])encoding;
-         char[][][] encodedKey = new char[][][]{(char[][])key};
+         char[][] encodedKey = new char[][]{key};
          ConverterUtilities.writeCharArrayArray(buff, 8, encodedKey);
       } else {
          byte[] key = (byte[])encoding;

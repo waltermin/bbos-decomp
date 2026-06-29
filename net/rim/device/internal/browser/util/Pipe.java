@@ -16,13 +16,13 @@ public final class Pipe implements Persistable {
    private int _timeout = 120000;
    private boolean _readKicked;
    private boolean _notifyOnWrite;
-   private byte[][][] _window;
+   private byte[][] _window;
    private static final int WAIT_START = 1114666867;
    private static final int WAIT_FINISH = 1114666854;
 
    public Pipe() {
-      this._window = new byte[1][][];
-      this._window[0] = (byte[][])(new byte[0]);
+      this._window = new byte[1][];
+      this._window[0] = new byte[0];
    }
 
    public Pipe(byte[] data, int length) {
@@ -33,12 +33,12 @@ public final class Pipe implements Persistable {
       int maxGroupSize = Memory.getMaxGroupSize();
       int windowSize = groupData ? (length + maxGroupSize - 1) / maxGroupSize : 1;
       windowSize = windowSize == 0 ? 1 : windowSize;
-      this._window = new byte[windowSize][][];
+      this._window = new byte[windowSize][];
       if (windowSize == 1) {
          if (data.length != length) {
-            this._window[0] = (byte[][])Arrays.copy(data, 0, length);
+            this._window[0] = Arrays.copy(data, 0, length);
          } else {
-            this._window[0] = (byte[][])data;
+            this._window[0] = data;
          }
 
          if (groupData) {
@@ -46,7 +46,7 @@ public final class Pipe implements Persistable {
          }
       } else {
          for (int i = 0; i < windowSize; i++) {
-            this._window[i] = (byte[][])Arrays.copy(data, i * maxGroupSize, MathUtilities.clamp(0, length - i * maxGroupSize, maxGroupSize));
+            this._window[i] = Arrays.copy(data, i * maxGroupSize, MathUtilities.clamp(0, length - i * maxGroupSize, maxGroupSize));
             Memory.createGroup(this._window[i]);
          }
       }
@@ -59,11 +59,11 @@ public final class Pipe implements Persistable {
       this._writeClosed = true;
    }
 
-   public Pipe(byte[][][] data) {
+   public Pipe(byte[][] data) {
       this(data, true);
    }
 
-   public Pipe(byte[][][] data, boolean groupData) {
+   public Pipe(byte[][] data, boolean groupData) {
       int maxGroupSize = Memory.getMaxGroupSize();
       int dataLength = data.length;
       int tooLargeCount = 0;
@@ -77,8 +77,8 @@ public final class Pipe implements Persistable {
 
       if (tooLargeCount == 0) {
          if (dataLength == 0) {
-            this._window = new byte[1][][];
-            this._window[0] = (byte[][])(new byte[0]);
+            this._window = new byte[1][];
+            this._window[0] = new byte[0];
          } else {
             this._window = data;
 
@@ -87,7 +87,7 @@ public final class Pipe implements Persistable {
             }
          }
       } else {
-         this._window = new byte[tooLargeCount + dataLength][][];
+         this._window = new byte[tooLargeCount + dataLength][];
          int currentPos = 0;
 
          for (int i = 0; i < dataLength; i++) {
@@ -97,9 +97,7 @@ public final class Pipe implements Persistable {
                int num = (data[i].length + maxGroupSize - 1) / maxGroupSize;
 
                for (int j = 0; j < num; j++) {
-                  this._window[currentPos++] = (byte[][])Arrays.copy(
-                     (byte[])data[i], j * maxGroupSize, MathUtilities.clamp(0, data[i].length - j * maxGroupSize, maxGroupSize)
-                  );
+                  this._window[currentPos++] = Arrays.copy(data[i], j * maxGroupSize, MathUtilities.clamp(0, data[i].length - j * maxGroupSize, maxGroupSize));
                }
             }
 
@@ -132,7 +130,7 @@ public final class Pipe implements Persistable {
             Array.resize(this._window, packetNo + 1);
          }
 
-         this._window[packetNo] = (byte[][])bytes;
+         this._window[packetNo] = bytes;
          this._totalLength += bytes.length;
          if (!this._notifyOnWrite) {
             this._notifyOnWrite = true;
@@ -154,7 +152,7 @@ public final class Pipe implements Persistable {
    public final synchronized int read(PipeContext position) {
       if (!position._readClosed && position._availableBytes > 0) {
          try {
-            byte[] curPacket = (byte[])this._window[position._currentPacket];
+            byte[] curPacket = this._window[position._currentPacket];
             if (position._currentReadPos < curPacket.length) {
                position._numRead++;
                if (position._availableBytes != Integer.MAX_VALUE) {
@@ -284,10 +282,10 @@ public final class Pipe implements Persistable {
             }
 
             if (Memory.isObjectInGroup(this._window)) {
-               this._window = (byte[][][])((byte[][])Memory.expandGroup(this._window));
+               this._window = (byte[][])Memory.expandGroup(this._window);
             }
 
-            this._window = new byte[][][]{(byte[][])newData};
+            this._window = new byte[][]{newData};
          }
 
          return removeTotalSize;
@@ -299,11 +297,11 @@ public final class Pipe implements Persistable {
    public final synchronized void removeSection(int offset, int length) {
       if (length > 0) {
          if (Memory.isObjectInGroup(this._window)) {
-            this._window = (byte[][][])((byte[][])Memory.expandGroup(this._window));
+            this._window = (byte[][])Memory.expandGroup(this._window);
 
             for (int i = 0; i < this._window.length; i++) {
                if (Memory.isObjectInGroup(this._window[i])) {
-                  this._window[i] = (byte[][])((byte[])Memory.expandGroup(this._window[i]));
+                  this._window[i] = (byte[])Memory.expandGroup(this._window[i]);
                }
             }
          }
@@ -715,7 +713,7 @@ public final class Pipe implements Persistable {
          try {
             int result;
             try {
-               result = (int)this._window[position._currentPacket][position._currentReadPos++];
+               result = this._window[position._currentPacket][position._currentReadPos++];
             } catch (ArrayIndexOutOfBoundsException aiob) {
                if (position._currentPacket >= this._window.length) {
                   return -1;
@@ -723,7 +721,7 @@ public final class Pipe implements Persistable {
 
                position._currentReadPos = 1;
                position._currentPacket++;
-               result = (int)this._window[position._currentPacket][0];
+               result = this._window[position._currentPacket][0];
             }
 
             position._numRead++;
@@ -788,7 +786,7 @@ public final class Pipe implements Persistable {
       int pos = position._currentReadPos;
       boolean crlfEncountered = this.skipInlineString(position);
       if (!crlfEncountered && position._currentPacket == packet) {
-         return new String((byte[])this._window[packet], pos, position._currentReadPos - pos - 1, encoding);
+         return new String(this._window[packet], pos, position._currentReadPos - pos - 1, encoding);
       }
 
       int size = 0;
@@ -833,7 +831,7 @@ public final class Pipe implements Persistable {
       if (packetNo < 0) {
          return null;
       } else {
-         return (byte[])(packetNo >= this._window.length ? null : this._window[packetNo]);
+         return packetNo >= this._window.length ? null : this._window[packetNo];
       }
    }
 
@@ -929,11 +927,11 @@ public final class Pipe implements Persistable {
 
          return data;
       } else {
-         return (byte[])this._window[0];
+         return this._window[0];
       }
    }
 
-   public final synchronized byte[][][] toSegmentedArray() {
+   public final synchronized byte[][] toSegmentedArray() {
       return this._window;
    }
 
@@ -983,7 +981,7 @@ public final class Pipe implements Persistable {
          length = position._availableBytes;
       }
 
-      byte[] curPacket = (byte[])this._window[position._currentPacket];
+      byte[] curPacket = this._window[position._currentPacket];
       if (position._currentReadPos + length < curPacket.length) {
          ptr.setData(curPacket, position._currentReadPos, length, true);
          position._currentReadPos += length;

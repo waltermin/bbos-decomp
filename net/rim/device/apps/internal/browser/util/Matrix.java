@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.browser.util;
 import net.rim.vm.Array;
 
 public final class Matrix {
-   private Object[][][] matrix;
+   private Object[][] matrix;
    private int sizeX;
    private int sizeY;
 
@@ -20,7 +20,7 @@ public final class Matrix {
 
    public final void setElementAt(Object o, int x, int y) {
       this.grow(x, y);
-      this.matrix[x][y] = (Object[])o;
+      this.matrix[x][y] = o;
    }
 
    public final int sizeX() {
@@ -36,7 +36,7 @@ public final class Matrix {
          int newSizeX = Math.max(this.sizeX, x + 1);
          int newSizeY = Math.max(this.sizeY, y + 1);
          if (this.matrix == null) {
-            this.matrix = new Object[newSizeX][newSizeY][];
+            this.matrix = new Object[newSizeX][newSizeY];
          } else {
             Array.resize(this.matrix, newSizeX);
 

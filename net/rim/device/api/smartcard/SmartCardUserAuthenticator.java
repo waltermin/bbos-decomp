@@ -1213,7 +1213,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
    }
 
    private long getCertificateProperties(Certificate certificate) {
-      Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this.getKeyStore());
+      Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this.getKeyStore());
       long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, TrustedKeyStore.getInstance(), System.currentTimeMillis()
       );

@@ -43,8 +43,8 @@ class SymbolScreen$SymbolField extends Field {
    private final int HORIZONTAL_SPACE;
    private Font _keyFont;
    private Font _symbolFont;
-   private char[][][] _keyCodes;
-   private String[][][] _layout;
+   private char[][] _keyCodes;
+   private String[][] _layout;
    protected IntIntHashtable _map;
    private String _description;
    private byte _focusRow;
@@ -119,10 +119,10 @@ class SymbolScreen$SymbolField extends Field {
    }
 
    private void $initLayoutKeyCodes() {
-      this._keyCodes = new char[3][][];
-      this._keyCodes[0] = (char[][])this.getLayoutCodes(0);
-      this._keyCodes[1] = (char[][])this.getLayoutCodes(1);
-      this._keyCodes[2] = (char[][])this.getLayoutCodes(2);
+      this._keyCodes = new char[3][];
+      this._keyCodes[0] = this.getLayoutCodes(0);
+      this._keyCodes[1] = this.getLayoutCodes(1);
+      this._keyCodes[2] = this.getLayoutCodes(2);
       this.this$0._keysTotal = this._keyCodes[0].length + this._keyCodes[1].length + this._keyCodes[2].length;
       if (this.this$0._keysTotal > 1) {
          SymbolScreen.access$310(this.this$0);
@@ -165,13 +165,13 @@ class SymbolScreen$SymbolField extends Field {
 
    private void $initDisplayKeys() {
       SLKeyLayout layout = UILocaleKeyLayout.getUIKeyLayout();
-      this._layout = new String[this._keyCodes.length][][];
+      this._layout = new String[this._keyCodes.length][];
 
       for (int i = 0; i < this._keyCodes.length; i++) {
          this._layout[i] = new String[this._keyCodes[i].length];
 
          for (int j = 0; j < this._keyCodes[i].length; j++) {
-            this._layout[i][j] = this.getDisplayKey(layout, (char)this._keyCodes[i][j]);
+            this._layout[i][j] = this.getDisplayKey(layout, this._keyCodes[i][j]);
          }
       }
    }
@@ -214,12 +214,12 @@ class SymbolScreen$SymbolField extends Field {
 
          try {
             index -= this._keyCodes[i].length;
-            childAtIndex = (char)this._keyCodes[i + 1][index];
+            childAtIndex = this._keyCodes[i + 1][index];
          } catch (Exception e) {
             System.out.println("Array Index Out Of Bound Exception");
          }
       } else {
-         childAtIndex = (char)this._keyCodes[i][index];
+         childAtIndex = this._keyCodes[i][index];
       }
 
       char symbol = (char)this._map.get(Character.toUpperCase(childAtIndex));
@@ -271,50 +271,11 @@ class SymbolScreen$SymbolField extends Field {
    }
 
    public char getFocusChar() {
-      // $VF: Couldn't be decompiled
-      // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-      // java.lang.IllegalStateException: No common supertype for ternary expression
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.FunctionExprent.getExprType(FunctionExprent.java:224)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.FunctionExprent.checkExprTypeBounds(FunctionExprent.java:372)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor.checkTypeExpr(VarTypeProcessor.java:156)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor.checkTypeExprent(VarTypeProcessor.java:132)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor.lambda$processVarTypes$2(VarTypeProcessor.java:125)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.flow.DirectGraph.iterateExprents(DirectGraph.java:114)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor.processVarTypes(VarTypeProcessor.java:125)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor.calculateVarTypes(VarTypeProcessor.java:44)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarVersionsProcessor.setVarVersions(VarVersionsProcessor.java:68)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.vars.VarProcessor.setVarVersions(VarProcessor.java:47)
-      //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:241)
-      //
-      // Bytecode:
-      // 00: bipush 0
-      // 01: aload 0
-      // 02: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._focusColumn B
-      // 05: if_icmpgt 28
-      // 08: aload 0
-      // 09: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._focusColumn B
-      // 0c: aload 0
-      // 0d: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._keyCodes [[[C
-      // 10: aload 0
-      // 11: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._focusRow B
-      // 14: aaload
-      // 15: arraylength
-      // 16: if_icmpge 28
-      // 19: aload 0
-      // 1a: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._keyCodes [[[C
-      // 1d: aload 0
-      // 1e: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._focusRow B
-      // 21: aaload
-      // 22: aload 0
-      // 23: getfield net/rim/device/api/ui/component/SymbolScreen$SymbolField._focusColumn B
-      // 26: caload
-      // 27: ireturn
-      // 28: bipush 0
-      // 29: ireturn
+      return 0 <= this._focusColumn && this._focusColumn < this._keyCodes[this._focusRow].length ? this._keyCodes[this._focusRow][this._focusColumn] : '\u0000';
    }
 
    private void setFocusChar(char key) {
-      char[][][] keyCodes = this._keyCodes;
+      char[][] keyCodes = this._keyCodes;
       key = Character.toUpperCase(key);
 
       for (int i = 0; i < keyCodes.length; i++) {
@@ -380,7 +341,7 @@ class SymbolScreen$SymbolField extends Field {
 
       for (int i = 0; i < this._keyCodes.length; i++) {
          for (int j = 0; j < this._keyCodes[i].length; j++) {
-            StringBuffer symbol = layout.getKeyChars((int)this._keyCodes[i][j], 9, false);
+            StringBuffer symbol = layout.getKeyChars(this._keyCodes[i][j], 9, false);
             width = Math.max(width, this._symbolFont.getBounds(symbol));
          }
       }
@@ -442,9 +403,9 @@ class SymbolScreen$SymbolField extends Field {
             }
 
             for (int j = 0; j < len; j++) {
-               char ch = this.getSymbol((char)this._keyCodes[i][j], page);
+               char ch = this.getSymbol(this._keyCodes[i][j], page);
                if (ch != 0) {
-                  this._map.put((int)this._keyCodes[i][j], ch);
+                  this._map.put(this._keyCodes[i][j], ch);
                }
             }
          }
@@ -498,7 +459,7 @@ class SymbolScreen$SymbolField extends Field {
    protected boolean isPageEmpty(TextField edit, int page) {
       for (int i = this._layout.length - 1; i >= 0; i--) {
          for (int j = this._layout[i].length - 1; j >= 0; j--) {
-            char replacement = this.getSymbol((char)this._keyCodes[i][j], page);
+            char replacement = this.getSymbol(this._keyCodes[i][j], page);
             if (replacement != 0 && (edit == null || edit.validate(replacement))) {
                return false;
             }
@@ -794,9 +755,9 @@ class SymbolScreen$SymbolField extends Field {
             int x = this.getWidth() - ((this._keyWidth + this.HORIZONTAL_SPACE) * len - this.HORIZONTAL_SPACE) >> 1;
 
             for (int j = 0; j < len; j++) {
-               char original = (char)this._keyCodes[i][j];
+               char original = this._keyCodes[i][j];
                int keyWidth = this._keyWidth;
-               if (original != false) {
+               if (original != 0) {
                   String key = this._layout[i][j];
                   if (key != null && key.length() >= 2) {
                      keyWidth = Math.max(keyWidth, this._keyFont.getBounds(key) + 4);

@@ -33,7 +33,7 @@ public final class TLSUtilities {
       return false;
    }
 
-   public static final int[] concatenate(int[][][] arrays) {
+   public static final int[] concatenate(int[][] arrays) {
       int[] finalResult = new int[0];
       int length = arrays.length;
 

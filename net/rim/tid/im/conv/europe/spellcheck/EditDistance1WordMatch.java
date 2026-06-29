@@ -13,7 +13,7 @@ import net.rim.tid.im.conv.europe.repository.RegularExpressionState;
 
 public class EditDistance1WordMatch implements RegularExpression {
    protected byte[] wordMap;
-   char[][][] lower;
+   char[][] lower;
    boolean supportsSharedCharacters;
    int len;
    int maxEditDistance;
@@ -27,7 +27,7 @@ public class EditDistance1WordMatch implements RegularExpression {
          this.wordMap = new byte[256 * this.len];
 
          for (int i = 0; i < this.lower.length; i++) {
-            this.lower[i] = (char[][])(new char[this.len]);
+            this.lower[i] = new char[this.len];
          }
       }
 
@@ -38,7 +38,7 @@ public class EditDistance1WordMatch implements RegularExpression {
       for (int i = 0; i < this.len; i++) {
          char lc = wlower.charAt(i);
          char unaccentLc = AccentGrouping.lowerCaseToAccentless(lc, locale);
-         this.lower[0][mapIndex] = (char[])unaccentLc;
+         this.lower[0][mapIndex] = unaccentLc;
          if (this.setAcceptableChars(mapIndex, unaccentLc, locale, accentGrp)) {
             if (this.supportsSharedCharacters) {
                unaccentLc = KeypadLayout.getSharedCharacter(unaccentLc);
@@ -46,7 +46,7 @@ public class EditDistance1WordMatch implements RegularExpression {
                   this.setAcceptableChars(mapIndex, unaccentLc, locale, accentGrp);
                }
 
-               this.lower[1][mapIndex] = (char[])unaccentLc;
+               this.lower[1][mapIndex] = unaccentLc;
             }
 
             mapIndex++;
@@ -330,9 +330,9 @@ public class EditDistance1WordMatch implements RegularExpression {
       this.maxEditDistance = maxEditDistance;
       this.supportsSharedCharacters = KeypadLayout.supportsSharedCharacters();
       if (this.supportsSharedCharacters) {
-         this.lower = new char[2][30][];
+         this.lower = new char[2][30];
       } else {
-         this.lower = new char[1][30][];
+         this.lower = new char[1][30];
       }
 
       this.wordMap = new byte[7680];

@@ -1050,14 +1050,14 @@ final class VADEngineManager
                }
                break;
             case 7971:
-               this._app.uiUpdate((String)(new Object((byte[])object0, this._encoding)), (byte[][][])((byte[][])object1));
+               this._app.uiUpdate((String)(new Object((byte[])object0, this._encoding)), (byte[][])object1);
                VADNatives.operationComplete(0);
                break;
             case 7984:
                VADNatives.operationComplete(LABEL_TYPES.length + 4);
                break;
             case 7985:
-               byte[][][] labels = new byte[0][][];
+               byte[][] labels = new byte[0][];
 
                for (int i = 0; i < LABEL_TYPES.length; i++) {
                   String label = this.getTypeString(LABEL_TYPES[i]);
@@ -1073,7 +1073,7 @@ final class VADEngineManager
                   }
                }
 
-               VADNatives.writeNameData(subMessage, (byte[][])labels);
+               VADNatives.writeNameData(subMessage, labels);
                VADNatives.operationComplete(labels.length);
                break;
             case 7986:
@@ -1097,12 +1097,12 @@ final class VADEngineManager
                      this._progressBase = this._progressBase + this._addressBookCards.length;
                   }
 
-                  byte[][][] names = new byte[length][][];
+                  byte[][] names = new byte[length][];
 
                   for (int i = 0; i < length; i++) {
                      Object obj = this._addressBookCards[i + offset];
                      if (obj instanceof byte[]) {
-                        names[i] = (byte[][])((byte[])obj);
+                        names[i] = (byte[])obj;
                      } else {
                         if (!(obj instanceof Object)) {
                            throw new Object();
@@ -1110,11 +1110,11 @@ final class VADEngineManager
 
                         byte[] namex = obj.toString().getBytes(this._encoding);
                         this._addressBookCards[i + offset] = namex;
-                        names[i] = (byte[][])namex;
+                        names[i] = namex;
                      }
                   }
 
-                  VADNatives.writeNameData(subMessage, (byte[][])names);
+                  VADNatives.writeNameData(subMessage, names);
                   VADNatives.operationComplete(length);
                }
                break;
@@ -1141,13 +1141,13 @@ final class VADEngineManager
                      length = this._persistentData._incrementalNameEncodings.length - offset;
                   }
 
-                  byte[][][] names = new byte[length][][];
+                  byte[][] names = new byte[length][];
 
                   for (int i = 0; i < length; i++) {
-                     names[i] = (byte[][])PersistentContent.decodeByteArray(this._persistentData._incrementalNameEncodings[i + offset]);
+                     names[i] = PersistentContent.decodeByteArray(this._persistentData._incrementalNameEncodings[i + offset]);
                   }
 
-                  VADNatives.writeNameData(subMessage, (byte[][])names);
+                  VADNatives.writeNameData(subMessage, names);
                   VADNatives.operationComplete(length);
                }
                break;
@@ -1162,7 +1162,7 @@ final class VADEngineManager
                      VADNatives.operationComplete(0);
                   } else {
                      byte[] types = new byte[0];
-                     byte[][][] numbers = new byte[0][][];
+                     byte[][] numbers = new byte[0][];
                      boolean checkForCompanyName = lookup.length > 1;
                      String companyName = null;
 
@@ -1256,7 +1256,7 @@ final class VADEngineManager
                         }
                      }
 
-                     VADNatives.writePhonebookData(subMessage, types, (byte[][])numbers);
+                     VADNatives.writePhonebookData(subMessage, types, numbers);
                      VADNatives.operationComplete(types.length);
                   }
                } else {
@@ -1708,8 +1708,8 @@ final class VADEngineManager
       this.initEngine();
    }
 
-   private final byte[][][] getResource(Resource resource, String name) {
-      byte[][][] array = new byte[0][][];
+   private final byte[][] getResource(Resource resource, String name) {
+      byte[][] array = new byte[0][];
       int offset = 0;
 
       while (true) {

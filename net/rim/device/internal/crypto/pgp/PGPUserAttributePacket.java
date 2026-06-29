@@ -7,7 +7,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Persistable;
 
 public final class PGPUserAttributePacket extends PGPPacket implements Persistable {
-   byte[][][] _userImageEncodings = new byte[0][][];
+   byte[][] _userImageEncodings = new byte[0][];
    private static final byte SUBPACKET_TYPE_IMAGE = 1;
    private static final byte[] VERSION_1_JPEG_HEADER = new byte[]{16, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -54,7 +54,7 @@ public final class PGPUserAttributePacket extends PGPPacket implements Persistab
       int numUserImageEncodings = this._userImageEncodings.length;
 
       for (int i = 0; i < numUserImageEncodings; i++) {
-         byte[] currentUserImageEncoding = (byte[])this._userImageEncodings[i];
+         byte[] currentUserImageEncoding = this._userImageEncodings[i];
          EncodedImage encodedImage = EncodedImage.createEncodedImage(currentUserImageEncoding, 0, currentUserImageEncoding.length, "image/jpeg");
          if (encodedImage != null) {
             Bitmap encodedImageBitmap = encodedImage.getBitmap();

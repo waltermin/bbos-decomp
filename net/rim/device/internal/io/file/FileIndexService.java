@@ -27,7 +27,7 @@ public class FileIndexService {
    private static final int TOTAL_FS_MAP_INDICIES = 2;
    private static final int MAX_MEDIA_TYPE = 7;
    private static final int[] _MediaTypeMap = new int[8];
-   private static final String[][][] _DefaultMediaFolders = new Object[2][][];
+   private static final String[][] _DefaultMediaFolders = new Object[2][];
    private static final int RINGTONE;
    private static String SDCARD_HOME_STR = "/SDCard/";
    private static String FLASH_HOME_STR = "/store/home/user/";

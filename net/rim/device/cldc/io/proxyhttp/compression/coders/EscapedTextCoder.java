@@ -15,7 +15,7 @@ public class EscapedTextCoder implements Coder {
    private String[] _table;
    private int[] _cacheHash;
    private String[] _cacheKey;
-   private byte[][][] _cacheValue;
+   private byte[][] _cacheValue;
    private MemoryCleanerListener _memoryCleanerListener;
    private static final int CACHE_SIZE = 4;
 
@@ -69,7 +69,7 @@ public class EscapedTextCoder implements Coder {
 
          for (int i = 0; i < 4; i++) {
             if (this._cacheHash[i] == hashCode && StringUtilities.strEqual(this._cacheKey[i], decoded)) {
-               outs.write((byte[])this._cacheValue[i]);
+               outs.write(this._cacheValue[i]);
                this.moveToFront(i);
                return;
             }
@@ -97,7 +97,7 @@ public class EscapedTextCoder implements Coder {
          byte[] compressedData = tempOut.toByteArray();
          outs.write(compressedData);
          this._cacheHash[3] = hashCode;
-         this._cacheValue[3] = (byte[][])compressedData;
+         this._cacheValue[3] = compressedData;
          this._cacheKey[3] = decoded;
          this.moveToFront(3);
       }
@@ -107,7 +107,7 @@ public class EscapedTextCoder implements Coder {
       if (index != 0) {
          int hash = this._cacheHash[index];
          String key = this._cacheKey[index];
-         byte[] value = (byte[])this._cacheValue[index];
+         byte[] value = this._cacheValue[index];
 
          for (int i = index; i > 0; i--) {
             this._cacheHash[i] = this._cacheHash[i - 1];
@@ -117,7 +117,7 @@ public class EscapedTextCoder implements Coder {
 
          this._cacheHash[0] = hash;
          this._cacheKey[0] = key;
-         this._cacheValue[0] = (byte[][])value;
+         this._cacheValue[0] = value;
       }
    }
 
@@ -125,7 +125,7 @@ public class EscapedTextCoder implements Coder {
       this._table = table;
       this._kmpMatcher = (StringMatch)(new Object(table, isCaseSensitive, false));
       this._cacheHash = new int[4];
-      this._cacheValue = new byte[4][][];
+      this._cacheValue = new byte[4][];
       this._cacheKey = new Object[4];
       this._memoryCleanerListener = new EscapedTextCoder$MyMemoryCleanerListener(this, null);
       MemoryCleanerDaemon.addWeakListener(this._memoryCleanerListener, false);

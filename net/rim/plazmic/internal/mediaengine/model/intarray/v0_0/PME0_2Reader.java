@@ -674,7 +674,7 @@ public class PME0_2Reader implements ResourceProvider {
       int keyValuesSize = this.readData(1);
       this.model.keyValues = new int[keyValuesSize];
       int numCoordArrays = this.readData(this.coordIndexMask);
-      this.model.coords = new int[numCoordArrays][][];
+      this.model.coords = new int[numCoordArrays][];
       int numObjects = this.readData(this.objIndexMask);
       if (this.model.objects == null || this.model.objects.length < numObjects) {
          this.model.objects = new Object[numObjects];
@@ -726,8 +726,8 @@ public class PME0_2Reader implements ResourceProvider {
 
       for (int i = 0; i < numCoordArrays; i++) {
          int numCoords = this.readData(this.varDataMask);
-         this.model.coords[i] = (int[][])(new int[numCoords]);
-         this.readDataArray((int[])this.model.coords[i], 0, numCoords, this.coordValMask);
+         this.model.coords[i] = new int[numCoords];
+         this.readDataArray(this.model.coords[i], 0, numCoords, this.coordValMask);
       }
 
       this.validateChecksum();

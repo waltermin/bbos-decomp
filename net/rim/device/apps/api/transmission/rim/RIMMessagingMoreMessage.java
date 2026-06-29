@@ -16,7 +16,7 @@ public final class RIMMessagingMoreMessage extends RIMMessagingTransmission {
    }
 
    public final int getLength() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 3);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 3);
    }
 
    public final int getBodyLength() {
@@ -24,15 +24,15 @@ public final class RIMMessagingMoreMessage extends RIMMessagingTransmission {
    }
 
    public final int getOffset() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 2);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 2);
    }
 
    public final int getPartIdentifier() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 1);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 1);
    }
 
    public final int getReferenceIdentifier() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 0);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 0);
    }
 
    public final Object getText() {

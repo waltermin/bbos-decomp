@@ -14,7 +14,7 @@ public class PGPKeyIDKeyStoreIndex implements KeyStoreIndex {
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {
       Certificate certificate = data.getCertificate();
       if (!(certificate instanceof PGPCertificate)) {
-         byte[][][] associatedData = (byte[][][])data.getAssociatedData(3622586747345475248L);
+         byte[][] associatedData = data.getAssociatedData(3622586747345475248L);
          if (associatedData != null) {
             int numAssociatedData = associatedData.length;
 
@@ -29,7 +29,7 @@ public class PGPKeyIDKeyStoreIndex implements KeyStoreIndex {
             dataMap.add(this.getHash(keyID), data);
          }
 
-         byte[][][] subKeyIDs = pgpCertificate.getSubKeyIDs();
+         byte[][] subKeyIDs = pgpCertificate.getSubKeyIDs();
          if (subKeyIDs != null) {
             int numSubKeyIDs = subKeyIDs.length;
 
@@ -55,12 +55,12 @@ public class PGPKeyIDKeyStoreIndex implements KeyStoreIndex {
          byte[] targetBytes = (byte[])target;
          Certificate certificate = data.getCertificate();
          if (!(certificate instanceof PGPCertificate)) {
-            byte[][][] associatedData = (byte[][][])data.getAssociatedData(3622586747345475248L);
+            byte[][] associatedData = data.getAssociatedData(3622586747345475248L);
             if (associatedData != null) {
                int numAssociatedData = associatedData.length;
 
                for (int i = 0; i < numAssociatedData; i++) {
-                  if (Arrays.equals((byte[])associatedData[i], targetBytes)) {
+                  if (Arrays.equals(associatedData[i], targetBytes)) {
                      return true;
                   }
                }
@@ -72,12 +72,12 @@ public class PGPKeyIDKeyStoreIndex implements KeyStoreIndex {
                return true;
             }
 
-            byte[][][] subKeyIDs = pgpCertificate.getSubKeyIDs();
+            byte[][] subKeyIDs = pgpCertificate.getSubKeyIDs();
             if (subKeyIDs != null) {
                int numSubKeyIDs = subKeyIDs.length;
 
                for (int i = 0; i < numSubKeyIDs; i++) {
-                  if (Arrays.equals((byte[])subKeyIDs[i], targetBytes)) {
+                  if (Arrays.equals(subKeyIDs[i], targetBytes)) {
                      return true;
                   }
                }

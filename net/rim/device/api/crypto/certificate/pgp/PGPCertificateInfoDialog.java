@@ -147,11 +147,11 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
       }
 
       this.addScrollingLabelAndValue(CertificateResources.getString(18), this.getKeyUsageString());
-      byte[][][] subKeyIDs = pgpCertificate.getSubKeyIDs();
+      byte[][] subKeyIDs = pgpCertificate.getSubKeyIDs();
       int subKeyIDsLength = subKeyIDs == null ? 0 : subKeyIDs.length;
 
       for (int i = 0; i < subKeyIDsLength; i++) {
-         this.addScrollingLabelAndValue(this._rb.getString(8028), CertificateUtilities.getHexAsciiString((byte[])subKeyIDs[i]));
+         this.addScrollingLabelAndValue(this._rb.getString(8028), CertificateUtilities.getHexAsciiString(subKeyIDs[i]));
          ButtonField viewButton = (ButtonField)(new Object(this._rb.getString(8029), 12884967424L));
          viewButton.setCookie(subKeyIDs[i]);
          viewButton.setChangeListener(this);

@@ -54,7 +54,7 @@ final class CalculatorUI extends Manager {
    private int _keyPadSizeY;
    private int _keyGridX;
    private int _keyGridY;
-   private char[][][] _keyMap;
+   private char[][] _keyMap;
    private boolean _focusedKeyDisplayed = false;
    private boolean _secondClearPress;
    private int _memoryWidth = 150;
@@ -135,18 +135,18 @@ final class CalculatorUI extends Manager {
       }
 
       if (this._isReducedKeyboard) {
-         this._keyMap = new char[][][]{
-            (char[][])({'Q', 'E', 'T', 'U', 'O', '\u0000', '\n', '퀆', 'Q', 'W'}),
-            (char[][])({'A', 'D', 'G', 'J', 'L', '\u0000', '\n', '퀆', 'A', 'S'}),
-            (char[][])({'Z', 'C', 'B', 'M', '\b', '\u0000', '\u0006', '퀊', 'Ɛ', '\u0000'}),
-            (char[][])({'ā', '\u0014', ' ', 'ą', '\n', '\u0000', '\t', '퀊', 'ĭ', '\u0000'})
+         this._keyMap = new char[][]{
+            {'Q', 'E', 'T', 'U', 'O', '\u0000', '\n', '퀆', 'Q', 'W'},
+            {'A', 'D', 'G', 'J', 'L', '\u0000', '\n', '퀆', 'A', 'S'},
+            {'Z', 'C', 'B', 'M', '\b', '\u0000', '\u0006', '퀊', 'Ɛ', '\u0000'},
+            {'ā', '\u0014', ' ', 'ą', '\n', '\u0000', '\t', '퀊', 'ĭ', '\u0000'}
          };
       } else {
-         this._keyMap = new char[][][]{
-            (char[][])({'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '\u0005', '퀆', 'Z', 'C', 'B', 'M', '\b', '\u0000', '\u0006', '퀊'}),
-            (char[][])({'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '\b', '\u0005', '퀆', 'Q', 'E', 'T', 'U', 'O', '\u0000', '\n', '퀆'}),
-            (char[][])({'\u0000', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\u0000', '\n', '\u000b', '퀄', 'ऀ', '⸴', '⸳', '⸰', '㈱', '4', '\f', '퀄'}),
-            (char[][])({
+         this._keyMap = new char[][]{
+            {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '\u0005', '퀆', 'Z', 'C', 'B', 'M', '\b', '\u0000', '\u0006', '퀊'},
+            {'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '\b', '\u0005', '퀆', 'Q', 'E', 'T', 'U', 'O', '\u0000', '\n', '퀆'},
+            {'\u0000', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\u0000', '\n', '\u000b', '퀄', 'ऀ', '⸴', '⸳', '⸰', '㈱', '4', '\f', '퀄'},
+            {
                   '\u0000',
                   '\u0000',
                   '0',
@@ -167,7 +167,7 @@ final class CalculatorUI extends Manager {
                   'B',
                   'N',
                   'M'
-            })
+            }
          };
       }
 
@@ -389,7 +389,7 @@ final class CalculatorUI extends Manager {
       if (!this._hasTrackBall) {
          return false;
       } else {
-         char key = (char)this._keyMap[this._keyGridY][this._keyGridX];
+         char key = this._keyMap[this._keyGridY][this._keyGridX];
          if (key == 257) {
             this.toggleAltKeyState(!this._altPressed);
             return true;
@@ -406,7 +406,7 @@ final class CalculatorUI extends Manager {
          return false;
       }
 
-      char key = (char)this._keyMap[this._keyGridY][this._keyGridX];
+      char key = this._keyMap[this._keyGridY][this._keyGridX];
       if (key != 257) {
          this.drawKeyPress(false);
          this.toggleAltKeyState(false);
@@ -432,7 +432,7 @@ final class CalculatorUI extends Manager {
          _lastGoodY = -1;
       }
 
-      while (this._keyMap[newY][newX] == false) {
+      while (this._keyMap[newY][newX] == 0) {
          _lastGoodX = this._keyGridX;
          _lastGoodY = this._keyGridY;
          if (x == 0) {

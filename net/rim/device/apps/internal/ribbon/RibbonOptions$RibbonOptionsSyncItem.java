@@ -54,11 +54,11 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
                      image._name = imageName;
                      break;
                   case 3:
-                     char[][][] properties = (char[][][])ConverterUtilities.readCharArrayArray(buffer, false);
+                     char[][] properties = ConverterUtilities.readCharArrayArray(buffer, false);
                      imageProperties = new Object[properties.length];
 
                      for (int i = 0; i < properties.length; i++) {
-                        imageProperties[i] = (String)(new Object((char[])properties[i]));
+                        imageProperties[i] = (String)(new Object(properties[i]));
                      }
 
                      image._properties = imageProperties;
@@ -93,14 +93,14 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
                ConverterUtilities.writeStringSmart(buffer, 2, image._name);
                String[] prop = image._properties;
                if (prop != null) {
-                  char[][][] propChar = new char[prop.length][][];
+                  char[][] propChar = new char[prop.length][];
 
                   for (int i = 0; i < prop.length; i++) {
-                     propChar[i] = (char[][])prop[i].toCharArray();
+                     propChar[i] = prop[i].toCharArray();
                   }
 
                   buffer.writeByte(3);
-                  ConverterUtilities.writeCharArrayArray(buffer, 3, (char[][])propChar);
+                  ConverterUtilities.writeCharArrayArray(buffer, 3, propChar);
                }
 
                ConverterUtilities.writeEmptyField(buffer, 4);
@@ -378,14 +378,14 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
       ConverterUtilities.writeStringSmart(tmpBuffer, 5, themeName);
       String[] prop = image != null ? image._properties : null;
       if (prop != null) {
-         char[][][] propChar = new char[prop.length][][];
+         char[][] propChar = new char[prop.length][];
 
          for (int i = 0; i < prop.length; i++) {
-            propChar[i] = (char[][])prop[i].toCharArray();
+            propChar[i] = prop[i].toCharArray();
          }
 
          tmpBuffer.writeByte(6);
-         ConverterUtilities.writeCharArrayArray(tmpBuffer, 6, (char[][])propChar);
+         ConverterUtilities.writeCharArrayArray(tmpBuffer, 6, propChar);
       }
 
       tmpBuffer.writeByte(7);

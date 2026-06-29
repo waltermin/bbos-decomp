@@ -8,7 +8,7 @@ public final class RIMMessagingMessageError extends RIMMessagingTransmission {
    private Parameters _parameters = new Parameters(5, 8);
 
    public final int getErrorCode() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 1);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 1);
    }
 
    public final Object getText() {
@@ -21,7 +21,7 @@ public final class RIMMessagingMessageError extends RIMMessagingTransmission {
    }
 
    public final int getReferenceIdentifier() {
-      return CMIMEUtilities.getGMEInteger((byte[][][])this._parameters.get((byte)48), 0);
+      return CMIMEUtilities.getGMEInteger(this._parameters.get((byte)48), 0);
    }
 
    @Override

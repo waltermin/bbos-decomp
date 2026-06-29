@@ -17,7 +17,7 @@ public final class Bitmap {
    private byte[] _data;
    private int _numBands;
    private int _axesPerBand;
-   private byte[][][] _bands;
+   private byte[][] _bands;
    private Bitmap _alpha;
    private int _cacheId;
    private int _transColour;
@@ -213,23 +213,23 @@ public final class Bitmap {
 
          if (this._numBands != 1) {
             int offset = 0;
-            this._bands = new byte[this._numBands][][];
+            this._bands = new byte[this._numBands][];
 
             for (int i = 0; i < this._numBands; i++) {
                int bandSize = Math.min(numBytes, bytesPerBand);
-               this._bands[i] = (byte[][])Array.allocContiguousByteArray(bandSize + 4);
+               this._bands[i] = Array.allocContiguousByteArray(bandSize + 4);
                numBytes -= bandSize;
                if (data != null) {
                   if (cwMono2RwMono) {
-                     transposeColumnwiseBitmapData(data, srcStride, (byte[])this._bands[i], stride, i * this._axesPerBand, width, bandSize / stride);
+                     transposeColumnwiseBitmapData(data, srcStride, this._bands[i], stride, i * this._axesPerBand, width, bandSize / stride);
                   } else {
                      System.arraycopy(data, offset, this._bands[i], 0, bandSize);
                      offset += bandSize;
                   }
                } else if (alpha) {
-                  Arrays.fill((byte[])this._bands[i], (byte)-1);
+                  Arrays.fill(this._bands[i], (byte)-1);
                } else if (externalCall && defValue != 0) {
-                  Arrays.fill((byte[])this._bands[i], defValue);
+                  Arrays.fill(this._bands[i], defValue);
                }
             }
          } else {
@@ -534,7 +534,7 @@ public final class Bitmap {
          int bands = this._numBands;
 
          for (int i = 0; i < bands; i++) {
-            byte[] src = (byte[])this._bands[i];
+            byte[] src = this._bands[i];
             System.arraycopy(src, 0, clone._bands[i], 0, src.length);
          }
 

@@ -123,7 +123,7 @@ class EventBase implements BareEvent, PersistableRIMModel {
    }
 
    @Override
-   public int getIconsForField(long _1, IconCollection[] _3, int[][][] _4) {
+   public int getIconsForField(long _1, IconCollection[] _3, int[][] _4) {
       throw null;
    }
 

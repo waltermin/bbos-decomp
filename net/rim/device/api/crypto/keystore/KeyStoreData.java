@@ -27,7 +27,7 @@ public interface KeyStoreData extends Persistable {
 
    int queryKeyUsage(long var1);
 
-   byte[][][] getAssociatedData(long var1);
+   byte[][] getAssociatedData(long var1);
 
    AssociatedData[] getAssociatedData();
 

@@ -424,7 +424,7 @@ class MeetingInfoModel
    }
 
    @Override
-   public int getIconsForField(long field, IconCollection[] icons, int[][][] indices) {
+   public int getIconsForField(long field, IconCollection[] icons, int[][] indices) {
       if (field != 7380487202915104824L) {
          return 0;
       }
@@ -437,7 +437,7 @@ class MeetingInfoModel
       Array.resize(icons, numIcons + 1);
       Array.resize(indices, numIcons + 1);
       icons[numIcons] = STATUS_ICONS;
-      indices[numIcons] = (int[][])(new int[]{0, -804651005, 0, 1});
+      indices[numIcons] = new int[]{0, -804651005, 0, 1};
       return 1;
    }
 

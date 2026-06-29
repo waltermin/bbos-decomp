@@ -24,7 +24,7 @@ import net.rim.vm.Array;
 
 public final class SrpUtils implements SrpConstants {
    private Proxy _proxy = Proxy.getInstance();
-   private boolean[][][] _routes = new boolean[2][2][];
+   private boolean[][] _routes = new boolean[2][2];
    private int[] _servicesCapabilities;
    private String[] _services;
    private Object[] _listeners;
@@ -46,10 +46,10 @@ public final class SrpUtils implements SrpConstants {
    }
 
    private SrpUtils() {
-      this._routes[0][0] = (boolean[])false;
-      this._routes[0][1] = (boolean[])false;
-      this._routes[1][0] = (boolean[])false;
-      this._routes[1][1] = (boolean[])false;
+      this._routes[0][0] = false;
+      this._routes[0][1] = false;
+      this._routes[1][0] = false;
+      this._routes[1][1] = false;
       this._uidScopingValue = UIDGenerator.getUniqueScopingValue();
    }
 
@@ -135,7 +135,7 @@ public final class SrpUtils implements SrpConstants {
             return false;
          }
 
-         this._routes[linkType][connectionType] = (boolean[])routeState;
+         this._routes[linkType][connectionType] = routeState;
          listeners = this._listeners;
       }
 
@@ -159,7 +159,7 @@ public final class SrpUtils implements SrpConstants {
 
    public final synchronized boolean getRouteState(int linkType, int connectionType) {
       try {
-         return (boolean)this._routes[linkType][connectionType];
+         return this._routes[linkType][connectionType];
       } finally {
          throw new Object();
       }

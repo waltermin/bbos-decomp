@@ -169,7 +169,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)4, addressString, friendlyString, this._isEncoded, this._encodingCode);
    }
 
-   public String[][][] getTo() {
+   public String[][] getTo() {
       return this.getFieldAddresses((byte)4);
    }
 
@@ -177,7 +177,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)5, addressString, friendlyString, this._isEncoded, this._encodingCode);
    }
 
-   public String[][][] getCc() {
+   public String[][] getCc() {
       return this.getFieldAddresses((byte)5);
    }
 
@@ -185,7 +185,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)6, addressString, friendlyString, this._isEncoded, this._encodingCode);
    }
 
-   public String[][][] getBcc() {
+   public String[][] getBcc() {
       return this.getFieldAddresses((byte)6);
    }
 
@@ -197,7 +197,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)1, addressString, friendlyString, encode, this._encodingCode);
    }
 
-   public String[][][] getFrom() {
+   public String[][] getFrom() {
       return this.getFieldAddresses((byte)1);
    }
 
@@ -205,7 +205,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)3, addressString, friendlyString, this._isEncoded, this._encodingCode);
    }
 
-   public String[][][] getReplyTo() {
+   public String[][] getReplyTo() {
       return this.getFieldAddresses((byte)3);
    }
 
@@ -231,7 +231,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEEmailAddress((byte)13, addressString, friendlyString, this._isEncoded, this._encodingCode);
    }
 
-   public String[][][] getOriginalRecipient() {
+   public String[][] getOriginalRecipient() {
       return this.getFieldAddresses((byte)13);
    }
 
@@ -424,21 +424,21 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       this._headerParameters.addCMIMEInteger((byte)-2, localeCode);
    }
 
-   private String[][][] getFieldAddresses(byte fieldID) {
-      byte[][][] rawData = (byte[][][])this._headerParameters.get(fieldID);
-      byte[][][] rawDataEnc = (byte[][][])this._headerParameters.get((byte)(-128 | fieldID));
+   private String[][] getFieldAddresses(byte fieldID) {
+      byte[][] rawData = this._headerParameters.get(fieldID);
+      byte[][] rawDataEnc = this._headerParameters.get((byte)(-128 | fieldID));
       boolean hasEncoded = rawDataEnc != null;
       if (hasEncoded) {
          if (rawDataEnc.length > 0 && rawDataEnc[0].length > 0) {
-            this.setEncoding((byte)rawDataEnc[0][0]);
+            this.setEncoding(rawDataEnc[0][0]);
          }
 
          if (rawData != null && fieldID != 1) {
-            String[][][] unencoded = CMIMEUtilities.decodeAddresses(rawData, false);
-            String[][][] encoded = CMIMEUtilities.decodeAddresses(rawDataEnc, true);
+            String[][] unencoded = CMIMEUtilities.decodeAddresses(rawData, false);
+            String[][] encoded = CMIMEUtilities.decodeAddresses(rawDataEnc, true);
             int unencodedLength = unencoded != null ? unencoded.length : 0;
             int encodedLength = encoded != null ? encoded.length : 0;
-            String[][][] all = new Object[unencodedLength + encodedLength][][];
+            String[][] all = new Object[unencodedLength + encodedLength][];
 
             int i;
             for (i = 0; i < unencodedLength; i++) {

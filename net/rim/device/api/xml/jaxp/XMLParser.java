@@ -48,7 +48,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    private XMLParser$InputReader _tokenStartInput;
    private XMLParser$InputReader _lastReadInput;
    private boolean _EOFFatal = true;
-   private char[][][] _nameBuffers;
+   private char[][] _nameBuffers;
    private int[] _nameLengths;
    private int[] _firstNonSpaces;
    private int[] _lastNonSpaces;
@@ -3062,11 +3062,11 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    }
 
    private void initNameBuffers() {
-      this._nameBuffers = new char[64][][];
+      this._nameBuffers = new char[64][];
       this._nameLengths = new int[64];
       this._firstNonSpaces = new int[64];
       this._lastNonSpaces = new int[64];
-      this._nameBuffers[0] = (char[][])(this._nameBuffer = new char[64]);
+      this._nameBuffers[0] = this._nameBuffer = new char[64];
    }
 
    private void pushName() {
@@ -3082,7 +3082,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       this._firstNonSpaces[this._nameStackIndex] = this._firstNonSpace;
       this._lastNonSpaces[this._nameStackIndex] = this._lastNonSpace;
       this._nameLengths[this._nameStackIndex] = this._nameLength;
-      this._nameBuffers[this._nameStackIndex] = (char[][])this._nameBuffer;
+      this._nameBuffers[this._nameStackIndex] = this._nameBuffer;
       this._nameStackIndex += by;
       if (this._nameStackIndex >= this._nameBuffers.length) {
          this._nameBuffers = ArrayResize.charArrayArrayResize(this._nameBuffers, this._nameStackIndex + 64);
@@ -3091,9 +3091,9 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          this._lastNonSpaces = ArrayResize.intArrayResize(this._lastNonSpaces, this._nameStackIndex + 64);
       }
 
-      this._nameBuffer = (char[])this._nameBuffers[this._nameStackIndex];
+      this._nameBuffer = this._nameBuffers[this._nameStackIndex];
       if (this._nameBuffer == null) {
-         this._nameBuffer = (char[])(this._nameBuffers[this._nameStackIndex] = (char[][])(new char[64]));
+         this._nameBuffer = this._nameBuffers[this._nameStackIndex] = new char[64];
       }
 
       this._nameLength = this._nameLengths[this._nameStackIndex];

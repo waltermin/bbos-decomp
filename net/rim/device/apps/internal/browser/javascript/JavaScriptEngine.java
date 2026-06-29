@@ -145,7 +145,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
    private static final int MAX_CACHE_SIZE = 50;
    private static int _cacheSize = 0;
    private static int[] _verifiedScriptsCache = new int[50];
-   private static byte[][][] _verifiedScriptsHash = new byte[50][][];
+   private static byte[][] _verifiedScriptsHash = new byte[50][];
    private static SHA1Digest _verifyHash = (SHA1Digest)(new Object());
 
    final ESWindow getCurrentWindow() {
@@ -1382,7 +1382,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       int key = (hash[0] & 255) << 24 | (hash[1] & 255) << 16 | (hash[2] & 255) << 8 | hash[3] & 255;
       synchronized (_verifiedScriptsCache) {
          for (int i = 0; i < _cacheSize; i++) {
-            if (_verifiedScriptsCache[i] == key && Arrays.equals((byte[])_verifiedScriptsHash[i], hash)) {
+            if (_verifiedScriptsCache[i] == key && Arrays.equals(_verifiedScriptsHash[i], hash)) {
                return i;
             }
          }
@@ -1400,7 +1400,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
 
          int index = _cacheSize - 1;
          _verifiedScriptsCache[index] = key;
-         _verifiedScriptsHash[index] = (byte[][])hash;
+         _verifiedScriptsHash[index] = hash;
          moveToFront(index);
       }
    }
@@ -1408,11 +1408,11 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
    private static final void moveToFront(int index) {
       if (index != 0) {
          int key = _verifiedScriptsCache[index];
-         byte[] hash = (byte[])_verifiedScriptsHash[index];
+         byte[] hash = _verifiedScriptsHash[index];
          System.arraycopy(_verifiedScriptsCache, 0, _verifiedScriptsCache, 1, index);
          System.arraycopy(_verifiedScriptsHash, 0, _verifiedScriptsHash, 1, index);
          _verifiedScriptsCache[0] = key;
-         _verifiedScriptsHash[0] = (byte[][])hash;
+         _verifiedScriptsHash[0] = hash;
       }
    }
 

@@ -22,7 +22,7 @@ public final class ApplicationDownloadField extends PopupScreen implements Appli
    private int _totalBytesRead;
    private boolean _rebootRequired;
    private String[] _codUrls;
-   private byte[][][] _digests;
+   private byte[][] _digests;
    private boolean _isDownloading;
    private Thread _downloadThread;
    private ApplicationDownloadManager _downloadManager;
@@ -33,7 +33,7 @@ public final class ApplicationDownloadField extends PopupScreen implements Appli
    public static final int DOWNLOAD_STATUS_NO_MEMORY = 3;
    private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR = 131072;
 
-   public ApplicationDownloadField(String[] codUrls, byte[][][] digests, int size) {
+   public ApplicationDownloadField(String[] codUrls, byte[][] digests, int size) {
       super((Manager)(new Object()), 0);
       if (codUrls != null && digests != null && codUrls.length == digests.length) {
          this._codUrls = codUrls;

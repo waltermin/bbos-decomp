@@ -690,8 +690,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       if (entry != null) {
          if (this._state == 1) {
             try {
-               byte[][][] certificateIDs = new byte[0][][];
-               this._context.getCertificateIDs(entry, (byte[][])certificateIDs);
+               byte[][] certificateIDs = new byte[0][];
+               this._context.getCertificateIDs(entry, certificateIDs);
 
                for (byte[] currentCertificateID : certificateIDs) {
                   LDAPBrowserContainer existingContainer = this.findContainer(currentCertificateID);
@@ -706,8 +706,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
 
          try {
             Certificate[] certificates = new Object[0];
-            byte[][][] certificateIDs = new byte[0][][];
-            this._context.getCertificates(entry, certificates, (byte[][])certificateIDs);
+            byte[][] certificateIDs = new byte[0][];
+            this._context.getCertificates(entry, certificates, certificateIDs);
             int numCertificates = certificates.length;
             if (numCertificates != certificateIDs.length) {
                return;
@@ -715,7 +715,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
 
             for (int i = 0; i < numCertificates; i++) {
                Certificate currentCertificate = certificates[i];
-               byte[] currentCertificateID = (byte[])certificateIDs[i];
+               byte[] currentCertificateID = certificateIDs[i];
                LDAPBrowserContainer existingContainer = this.findContainer(currentCertificateID);
                if (existingContainer != null) {
                   existingContainer.setCertificate(currentCertificate);

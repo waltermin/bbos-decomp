@@ -72,7 +72,7 @@ public class RIMResourceSpec extends ResourceSpec {
          return null;
       }
 
-      byte[][][] tmp = new byte[result.size()][][];
+      byte[][] tmp = new byte[result.size()][];
       result.copyInto(tmp);
       return new ContinuousInputStream(tmp);
    }

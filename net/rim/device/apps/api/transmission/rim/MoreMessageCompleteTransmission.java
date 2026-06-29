@@ -22,7 +22,7 @@ public class MoreMessageCompleteTransmission extends RIMMessagingTransmission {
    public void read(DataBuffer packetDataBuffer) {
       CMIMEParameters params = new CMIMEParameters(2, 2);
       params.read(packetDataBuffer, (byte)0);
-      this._contentId = CMIMEUtilities.getGMEInteger((byte[][][])params.get((byte)2), 0, Integer.MIN_VALUE);
-      this._refId = CMIMEUtilities.getGMEInteger((byte[][][])params.get((byte)1), 0, Integer.MIN_VALUE);
+      this._contentId = CMIMEUtilities.getGMEInteger(params.get((byte)2), 0, Integer.MIN_VALUE);
+      this._refId = CMIMEUtilities.getGMEInteger(params.get((byte)1), 0, Integer.MIN_VALUE);
    }
 }

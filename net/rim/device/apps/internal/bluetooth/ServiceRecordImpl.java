@@ -151,14 +151,14 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       return buf.toArray();
    }
 
-   public synchronized byte[][][] getAttributeValues() {
+   public synchronized byte[][] getAttributeValues() {
       DataBuffer buf = (DataBuffer)(new Object());
       int length = this._attributeIDs.length;
-      byte[][][] values = new byte[length][][];
+      byte[][] values = new byte[length][];
 
       for (int i = 0; i < length; i++) {
          DataElementUtilities.write(this._attributeValues[i], buf);
-         values[i] = (byte[][])buf.toArray();
+         values[i] = buf.toArray();
          buf.reset();
       }
 

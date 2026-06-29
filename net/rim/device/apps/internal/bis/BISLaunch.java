@@ -27,7 +27,7 @@ public final class BISLaunch extends UiApplication {
    protected boolean _updatesAvailable;
    protected boolean _updatesCheckSuccessful;
    protected String[] _urls;
-   byte[][][] _digests;
+   byte[][] _digests;
    int _size;
    public static final int RIBBON_UI_MODE = 0;
    public static final int WIZARD_UI_MODE = 1;

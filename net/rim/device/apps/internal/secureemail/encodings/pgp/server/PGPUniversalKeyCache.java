@@ -201,12 +201,12 @@ class PGPUniversalKeyCache extends RIMKeyStore {
    private boolean keyStoreDataContainsAddress(KeyStoreData keyStoreData, String emailAddress) {
       Object[] emailAddressObjects = keyStoreData.getAssociatedData(-1124699153917633064L);
       if (emailAddressObjects instanceof byte[][]) {
-         byte[][][] emailAddresses = (byte[][][])((byte[][])emailAddressObjects);
+         byte[][] emailAddresses = (byte[][])emailAddressObjects;
          int numEmailAddresses = emailAddresses.length;
          byte[] emailAddressForSearch = StringUtilities.toLowerCase(emailAddress, 1701707776).getBytes();
 
          for (int i = 0; i < numEmailAddresses; i++) {
-            if (Arrays.equals((byte[])emailAddresses[i], emailAddressForSearch)) {
+            if (Arrays.equals(emailAddresses[i], emailAddressForSearch)) {
                return true;
             }
          }

@@ -5,7 +5,7 @@ import net.rim.vm.Array;
 
 public class AssociatedData implements Persistable {
    private long _association;
-   private byte[][][] _data;
+   private byte[][] _data;
    public static final long EMAIL = -1124699153917633064L;
    public static final long NAME = -5599182711442550284L;
    public static final long DESKTOP_COOKIE = -3741488786487467288L;
@@ -22,17 +22,17 @@ public class AssociatedData implements Persistable {
          throw new Object();
       }
 
-      this._data = new byte[1][data.length][];
+      this._data = new byte[1][data.length];
       System.arraycopy(data, 0, this._data[0], 0, data.length);
    }
 
-   public AssociatedData(long association, byte[][][] data) {
+   public AssociatedData(long association, byte[][] data) {
       this._association = association;
       if (data == null) {
          throw new Object();
       }
 
-      this._data = new byte[data.length][0][];
+      this._data = new byte[data.length][0];
 
       for (int i = 0; i < data.length; i++) {
          Array.resize(this._data[i], data[i].length);
@@ -44,8 +44,8 @@ public class AssociatedData implements Persistable {
       return this._association;
    }
 
-   public byte[][][] getData() {
-      byte[][][] data = new byte[this._data.length][0][];
+   public byte[][] getData() {
+      byte[][] data = new byte[this._data.length][0];
 
       for (int i = 0; i < this._data.length; i++) {
          Array.resize(data[i], this._data[i].length);

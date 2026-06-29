@@ -16,7 +16,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    boolean _hasbkgColor;
    int _bkgColor;
    int _minAnimatedNodeIdx;
-   char[][][] _convertedTextStrings;
+   char[][] _convertedTextStrings;
    String[] _platformFontFamilyStrings;
    String[] _fontFamilyStrings;
    String[] _metaInfo;
@@ -41,9 +41,9 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    int[] _focusableList;
    int _itemInFocus;
    int _defaultItemInFocus;
-   int[][][] _keyTimes;
-   int[][][] _keyValues;
-   int[][][] _omValues;
+   int[][] _keyTimes;
+   int[][] _keyValues;
+   int[][] _omValues;
    private long[] _behaviorsHaveStarted;
    private long[] _behaviorsHaveEnded;
    int _behaviorsRoot;
@@ -51,10 +51,10 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    int[] _triggers;
    int[] _handlesWithId;
    String[] _ids;
-   int[][][] _coords;
-   int[][][] _finalCoords;
-   byte[][][] _pointTypes;
-   byte[][][] _finalPointTypes;
+   int[][] _coords;
+   int[][] _finalCoords;
+   byte[][] _pointTypes;
+   byte[][] _finalPointTypes;
    boolean _wrapFocus;
    byte[] _rawData;
    String _contentType;
@@ -63,8 +63,8 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    boolean _isZoomAndPannable;
    int _version;
    Platform _platform;
-   int[][][] _freeNodes = new int[16][][];
-   int[][][] _freelists = new int[8][][];
+   int[][] _freeNodes = new int[16][];
+   int[][] _freelists = new int[8][];
    static final boolean FOCUS_ON_INVISIBLE = true;
    public static final int INCREMENT_NODE_CAPACITY = 500;
    private static final int MIN_ARRAY_RESIZE = 50;
@@ -107,11 +107,54 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    protected int addNode(int type, int size) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int nodeIdx = this._nextNodeIdx;
+      int fnconst = this.getFreeNodesConstant(type);
+      boolean usedFree = false;
+      if (fnconst >= 0 && this._freeNodes[fnconst] != null && this._freeNodes[fnconst].length > 0) {
+         int length = this._freeNodes[fnconst].length;
+         nodeIdx = this._freeNodes[fnconst][--length];
+         this._platform.arrayResize(this._freeNodes[fnconst], length);
+         usedFree = true;
+      } else if (nodeIdx + size > this._nodes.length) {
+         int[] nodes = new int[nodeIdx + size + 500];
+         System.arraycopy(this._nodes, 0, nodes, 0, this._nodes.length);
+         this._nodes = nodes;
+      }
+
+      this._nodes[nodeIdx + 1] = type;
+      this._nodes[nodeIdx + 0] = size;
+      if (isVisual(type)) {
+         int vnUID = this.addVisualNodeUID();
+         this._nodes[nodeIdx + 9] = vnUID;
+      }
+
+      if (!usedFree) {
+         this._nextNodeIdx = nodeIdx + size;
+      }
+
+      return nodeIdx;
    }
 
    protected void deleteNode(int nodeIdx) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      int size = this._nodes[nodeIdx + 0];
+      int type = this._nodes[nodeIdx + 1];
+      int fnconst = this.getFreeNodesConstant(type);
+      int lastIdx;
+      if (this._freeNodes[fnconst] == null) {
+         lastIdx = 0;
+         this._freeNodes[fnconst] = new int[1];
+      } else {
+         lastIdx = this._freeNodes[fnconst].length;
+         this._platform.arrayResize(this._freeNodes[fnconst], lastIdx + 1);
+      }
+
+      this._freeNodes[fnconst][lastIdx] = nodeIdx;
+      if (isVisual(type)) {
+         int vnUID = this._nodes[nodeIdx + 9];
+         this.removeVisualNodeUID(vnUID);
+      }
+
+      this._platform.fillArray(this._nodes, 0, nodeIdx, size);
    }
 
    public void setBackgroundColor(int color) {
@@ -150,11 +193,11 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    byte[] getPointTypes(int index) {
-      return (byte[])this._pointTypes[index];
+      return this._pointTypes[index];
    }
 
    void setPointTypes(int index, byte[] pointTypes) {
-      this._pointTypes[index] = (byte[][])pointTypes;
+      this._pointTypes[index] = pointTypes;
    }
 
    protected final void setBits(int node, int bits) {
@@ -170,11 +213,33 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    void removePointTypes(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._pointTypes[index] = null;
+      if (this._freelists[6] == null) {
+         this._freelists[6] = new int[1];
+         this._freelists[6][0] = index;
+      } else {
+         int length = this._freelists[6].length;
+         this._platform.arrayResize(this._freelists[6], length + 1);
+         this._freelists[6][length] = index;
+      }
    }
 
    int addPointTypes(byte[] pointTypes) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._pointTypes == null) {
+         this._pointTypes = new byte[1][];
+         index = 0;
+      } else if (this._freelists[6] != null && this._freelists[6].length > 0) {
+         int length = this._freelists[6].length;
+         index = this._freelists[6][--length];
+         this._platform.arrayResize(this._freelists[6], length);
+      } else {
+         index = this._pointTypes.length;
+         this._platform.arrayResize(this._pointTypes, index + 1);
+      }
+
+      this._pointTypes[index] = pointTypes;
+      return index;
    }
 
    public ForeignObject getNodeForeignObject(int node) {
@@ -190,11 +255,11 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int[] getFinalCoordinates(int index) {
-      return (int[])this._finalCoords[index];
+      return this._finalCoords[index];
    }
 
    int[] getCoordinates(int index) {
-      return (int[])this._coords[index];
+      return this._coords[index];
    }
 
    public void reset() {
@@ -214,14 +279,23 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    void setCoordinates(int index, int[] coords) {
-      this._coords[index] = (int[][])coords;
+      this._coords[index] = coords;
       int[] finalCoords = new int[coords.length];
       System.arraycopy(coords, 0, finalCoords, 0, coords.length);
-      this._finalCoords[index] = (int[][])finalCoords;
+      this._finalCoords[index] = finalCoords;
    }
 
    void removeCoordinates(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._coords[index] = null;
+      this._finalCoords[index] = null;
+      if (this._freelists[5] == null) {
+         this._freelists[5] = new int[1];
+         this._freelists[5][0] = index;
+      } else {
+         int length = this._freelists[5].length;
+         this._platform.arrayResize(this._freelists[5], length + 1);
+         this._freelists[5][length] = index;
+      }
    }
 
    int getIdIndex(String nodeID) {
@@ -301,27 +375,68 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int addCoordinates(int[] coords) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._coords == null) {
+         this._coords = new int[1][];
+         this._finalCoords = new int[1][];
+         index = 0;
+      } else if (this._freelists[5] != null && this._freelists[5].length > 0) {
+         int length = this._freelists[5].length;
+         index = this._freelists[5][--length];
+         this._platform.arrayResize(this._freelists[5], length);
+      } else {
+         index = this._coords.length;
+         this._platform.arrayResize(this._coords, index + 1);
+         this._platform.arrayResize(this._finalCoords, index + 1);
+      }
+
+      this._coords[index] = coords;
+      int[] finalCoords = new int[coords.length];
+      System.arraycopy(coords, 0, finalCoords, 0, coords.length);
+      this._finalCoords[index] = finalCoords;
+      return index;
    }
 
    char[] getConvertedTextString(int index) {
-      return (char[])this._convertedTextStrings[index];
+      return this._convertedTextStrings[index];
    }
 
    void setConvertedTextString(int index, char[] string) {
       if (this._convertedTextStrings != null) {
          synchronized (this._convertedTextStrings) {
-            this._convertedTextStrings[index] = (char[][])string;
+            this._convertedTextStrings[index] = string;
          }
       }
    }
 
    void removeConvertedTextString(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this.setConvertedTextString(index, null);
+      if (this._freelists[4] == null) {
+         this._freelists[4] = new int[1];
+         this._freelists[4][0] = index;
+      } else {
+         int length = this._freelists[4].length;
+         this._platform.arrayResize(this._freelists[4], length + 1);
+         this._freelists[4][length] = index;
+      }
    }
 
    int addConvertedTextString(char[] string) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._convertedTextStrings == null) {
+         this._convertedTextStrings = new char[1][];
+         index = 0;
+      } else if (this._freelists[4] != null && this._freelists[4].length > 0) {
+         int length = this._freelists[4].length;
+         index = this._freelists[4][--length];
+         this._platform.arrayResize(this._freelists[4], length);
+      } else {
+         index = this._convertedTextStrings.length;
+         this._platform.arrayResize(this._convertedTextStrings, index + 1);
+      }
+
+      this.setConvertedTextString(index, string);
+      return index;
    }
 
    public void setBehaviorHasStarted(int bhIdx, long startTime) {
@@ -531,11 +646,33 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int addForeignObject(ForeignObject object) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._foreignObjects == null) {
+         this._foreignObjects = new Object[1];
+         index = 0;
+      } else if (this._freelists[0] != null && this._freelists[0].length > 0) {
+         int length = this._freelists[0].length;
+         index = this._freelists[0][--length];
+         this._platform.arrayResize(this._freelists[0], length);
+      } else {
+         index = this._foreignObjects.length;
+         this._platform.arrayResize(this._foreignObjects, index + 1);
+      }
+
+      this._foreignObjects[index] = object;
+      return index;
    }
 
    void removeForeignObject(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._foreignObjects[index] = null;
+      if (this._freelists[0] == null) {
+         this._freelists[0] = new int[1];
+         this._freelists[0][0] = index;
+      } else {
+         int length = this._freelists[0].length;
+         this._platform.arrayResize(this._freelists[0], length + 1);
+         this._freelists[0][length] = index;
+      }
    }
 
    void setForeignObject(int index, ForeignObject object) {
@@ -547,11 +684,33 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int addCustomMessage(String message) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._customMessages == null) {
+         this._customMessages = new Object[1];
+         index = 0;
+      } else if (this._freelists[1] != null && this._freelists[1].length > 0) {
+         int length = this._freelists[1].length;
+         index = this._freelists[1][--length];
+         this._platform.arrayResize(this._freelists[1], length);
+      } else {
+         index = this._customMessages.length;
+         this._platform.arrayResize(this._customMessages, index + 1);
+      }
+
+      this._customMessages[index] = message;
+      return index;
    }
 
    void removeCustomMessage(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._customMessages[index] = null;
+      if (this._freelists[1] == null) {
+         this._freelists[1] = new int[1];
+         this._freelists[1][0] = index;
+      } else {
+         int length = this._freelists[1].length;
+         this._platform.arrayResize(this._freelists[1], length + 1);
+         this._freelists[1][length] = index;
+      }
    }
 
    void setCustomMessage(int index, String message) {
@@ -563,11 +722,33 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int addImage(Object image) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._images == null) {
+         this._images = new Object[1];
+         index = 0;
+      } else if (this._freelists[2] != null && this._freelists[2].length > 0) {
+         int length = this._freelists[2].length;
+         index = this._freelists[2][--length];
+         this._platform.arrayResize(this._freelists[2], length);
+      } else {
+         index = this._images.length;
+         this._platform.arrayResize(this._images, index + 1);
+      }
+
+      this._images[index] = image;
+      return index;
    }
 
    void removeImage(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._images[index] = null;
+      if (this._freelists[2] == null) {
+         this._freelists[2] = new int[1];
+         this._freelists[2][0] = index;
+      } else {
+         int length = this._freelists[2].length;
+         this._platform.arrayResize(this._freelists[2], length + 1);
+         this._freelists[2][length] = index;
+      }
    }
 
    void setImage(int index, Object image) {
@@ -579,11 +760,33 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    int addMedia(Object media) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int index;
+      if (this._media == null) {
+         this._media = new Object[1];
+         index = 0;
+      } else if (this._freelists[3] != null && this._freelists[3].length > 0) {
+         int length = this._freelists[3].length;
+         index = this._freelists[3][--length];
+         this._platform.arrayResize(this._freelists[3], length);
+      } else {
+         index = this._media.length;
+         this._platform.arrayResize(this._media, index + 1);
+      }
+
+      this._media[index] = media;
+      return index;
    }
 
    void removeMedia(int index) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._media[index] = null;
+      if (this._freelists[3] == null) {
+         this._freelists[3] = new int[1];
+         this._freelists[3][0] = index;
+      } else {
+         int length = this._freelists[3].length;
+         this._platform.arrayResize(this._freelists[3], length + 1);
+         this._freelists[3][length] = index;
+      }
    }
 
    void setMedia(int index, Object media) {
@@ -823,11 +1026,27 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    }
 
    private void removeVisualNodeUID(int vnUID) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      int lastIdx;
+      if (this._freelists[7] == null) {
+         lastIdx = 0;
+         this._freelists[7] = new int[1];
+      } else {
+         lastIdx = this._freelists[7].length;
+         this._platform.arrayResize(this._freelists[7], lastIdx + 1);
+      }
+
+      this._freelists[7][lastIdx] = vnUID;
    }
 
    private int addVisualNodeUID() {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int length;
+      if (this._freelists[7] != null && (length = this._freelists[7].length) != 0) {
+         int vnUID = this._freelists[7][--length];
+         this._platform.arrayResize(this._freelists[7], length);
+         return vnUID;
+      } else {
+         return this._maxUID++;
+      }
    }
 
    private int getFreeNodesConstant(int type) {

@@ -16,7 +16,7 @@ class ArrayResize {
       return Array.getSectionSize(array);
    }
 
-   static char[][][] charArrayArrayResize(char[][][] oldArray, int newSize) {
+   static char[][] charArrayArrayResize(char[][] oldArray, int newSize) {
       Array.resize(oldArray, newSize);
       return oldArray;
    }
@@ -31,7 +31,7 @@ class ArrayResize {
       return oldArray;
    }
 
-   static byte[][][] byteArrayArrayResize(byte[][][] oldArray, int newSize) {
+   static byte[][] byteArrayArrayResize(byte[][] oldArray, int newSize) {
       Array.resize(oldArray, newSize);
       return oldArray;
    }

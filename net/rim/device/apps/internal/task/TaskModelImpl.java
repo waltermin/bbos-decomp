@@ -650,20 +650,20 @@ final class TaskModelImpl
    }
 
    @Override
-   public final int getIconsForField(long field, IconCollection[] icons, int[][][] indices) {
+   public final int getIconsForField(long field, IconCollection[] icons, int[][] indices) {
       int numIconsAdded = 0;
       if (this.getPriority() != 1) {
          int[] priorityIndicies = new int[]{Math.abs(this.getPriority() - 2)};
          Array.resize(icons, icons.length + 1);
          Array.resize(indices, indices.length + 1);
          icons[icons.length - 1] = PRIORITY_ICONS;
-         indices[indices.length - 1] = (int[][])priorityIndicies;
+         indices[indices.length - 1] = priorityIndicies;
          numIconsAdded++;
       }
 
       ReminderModel reminder = this.getReminderData();
       if (reminder instanceof Object) {
-         numIconsAdded += ((DescriptionProvider)reminder).getIconsForField(field, icons, (int[][])indices);
+         numIconsAdded += ((DescriptionProvider)reminder).getIconsForField(field, icons, indices);
       }
 
       int[] taskDetailIndicies = new int[0];
@@ -683,7 +683,7 @@ final class TaskModelImpl
          Array.resize(icons, icons.length + 1);
          Array.resize(indices, indices.length + 1);
          icons[icons.length - 1] = TASK_DETAIL_ICONS;
-         indices[indices.length - 1] = (int[][])taskDetailIndicies;
+         indices[indices.length - 1] = taskDetailIndicies;
          numIconsAdded++;
       }
 
@@ -691,7 +691,7 @@ final class TaskModelImpl
       Array.resize(icons, icons.length + 1);
       Array.resize(indices, indices.length + 1);
       icons[icons.length - 1] = STATUS_ICONS;
-      indices[indices.length - 1] = (int[][])statusIndicies;
+      indices[indices.length - 1] = statusIndicies;
       return numIconsAdded + 1;
    }
 

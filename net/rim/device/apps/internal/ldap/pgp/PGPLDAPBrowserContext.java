@@ -180,7 +180,7 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    }
 
    @Override
-   public final void getCertificates(LDAPEntry param1, Certificate[] param2, byte[][][] param3) {
+   public final void getCertificates(LDAPEntry param1, Certificate[] param2, byte[][] param3) {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -274,7 +274,7 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    }
 
    @Override
-   public final void getCertificateIDs(LDAPEntry entry, byte[][][] certificateIDs) {
+   public final void getCertificateIDs(LDAPEntry entry, byte[][] certificateIDs) {
       try {
          LDAPAttribute attribute = entry.getAttribute(PGPCertificate.PGP_CERT_ID);
          int numAttributeValues = attribute.getSize();

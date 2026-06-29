@@ -15,7 +15,7 @@ final class TextOverlayFieldManager extends VerticalFieldManager {
    private int _backgroundColor;
    private int _width = 240;
    private int _height = 180;
-   private Field[][][] _fieldsForView = new Object[3][][];
+   private Field[][] _fieldsForView = new Object[3][];
    private int _currentView;
    public static final int VIEW_AUDIO = 0;
    public static final int VIEW_PLAYLIST = 1;

@@ -10,7 +10,7 @@ public class ContinuousInputStream extends InputStream {
    private int iOffset;
    private int iStart;
    private int iLength;
-   private byte[][][] iBuffer;
+   private byte[][] iBuffer;
 
    public ContinuousInputStream(byte[] aBlock) {
       this.init(aBlock);
@@ -27,7 +27,7 @@ public class ContinuousInputStream extends InputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public void init(ContinuousByteArray aData, int beginIndex, int endIndex) {
-      byte[][][] aBuffer = aData.iBuffer;
+      byte[][] aBuffer = aData.iBuffer;
       int aLength = endIndex - beginIndex;
       int aStart = beginIndex + aData.iStart;
       int first_block = 0;
@@ -35,7 +35,7 @@ public class ContinuousInputStream extends InputStream {
       this.iStart = aStart;
       this.iLength = aLength;
       if (aLength == 0) {
-         this.iBuffer = new byte[0][0][];
+         this.iBuffer = new byte[0][0];
          this.iStart = 0;
       }
 
@@ -59,7 +59,7 @@ public class ContinuousInputStream extends InputStream {
       if (aBuffer.length == len) {
          this.iBuffer = aBuffer;
       } else {
-         this.iBuffer = new byte[len][][];
+         this.iBuffer = new byte[len][];
 
          for (int i = 0; i < len; i++) {
             this.iBuffer[i] = aBuffer[first_block + i];
@@ -72,8 +72,8 @@ public class ContinuousInputStream extends InputStream {
    }
 
    public void init(byte[] aBlock) {
-      this.iBuffer = new byte[1][][];
-      this.iBuffer[0] = (byte[][])aBlock;
+      this.iBuffer = new byte[1][];
+      this.iBuffer[0] = aBlock;
       this.iLength = aBlock.length;
       this.iStart = 0;
       this.seek(0);
@@ -86,7 +86,7 @@ public class ContinuousInputStream extends InputStream {
       this.seek(0);
    }
 
-   public ContinuousInputStream(byte[][][] aBuffer) {
+   public ContinuousInputStream(byte[][] aBuffer) {
       this.iBuffer = aBuffer;
       this.iStart = 0;
       this.iLength = 0;
@@ -98,7 +98,7 @@ public class ContinuousInputStream extends InputStream {
       this.seek(0);
    }
 
-   public byte[][][] getBuffer() {
+   public byte[][] getBuffer() {
       return this.iBuffer;
    }
 
@@ -151,14 +151,14 @@ public class ContinuousInputStream extends InputStream {
       int result = 0;
       this.iOffset += length;
       length += this.iPtr;
-      byte[] block = (byte[])this.iBuffer[this.iDataBlock];
+      byte[] block = this.iBuffer[this.iDataBlock];
 
       while (this.iPtr < length) {
          if (this.iPtr == block.length) {
             this.iDataBlock++;
             length -= this.iPtr;
             this.iPtr = 0;
-            block = (byte[])this.iBuffer[this.iDataBlock];
+            block = this.iBuffer[this.iDataBlock];
          }
 
          result <<= 8;

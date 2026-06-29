@@ -83,7 +83,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
    private Verb _masterRadioResetVerb;
    private Verb _runSecurityTestsVerb;
    private Verb _wipeHandheldVerb;
-   private String[][][] _regenerationUIDs;
+   private String[][] _regenerationUIDs;
    private static long MASTER_RADIO_RESET_VERB = 6773290853044830796L;
    private static final int ONE_MINUTE = 60;
    private static final int INDENT_PIXELS = 12;

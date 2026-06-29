@@ -1188,7 +1188,7 @@ final class ActivationServiceImpl
    }
 
    @Override
-   public final String[][][] getRegenerationUIDs() {
+   public final String[][] getRegenerationUIDs() {
       ServiceBook sb = ServiceBook.getSB();
       ServiceRecord[] activeServiceRecords = sb.findRecordsByType(0);
       if (activeServiceRecords.length <= 0) {
@@ -1207,7 +1207,7 @@ final class ActivationServiceImpl
          }
       }
 
-      String[][][] s = new Object[2][ht.size()][];
+      String[][] s = new Object[2][ht.size()];
       Enumeration enumeration = ht.elements();
 
       for (int var8 = 0; enumeration.hasMoreElements(); var8++) {

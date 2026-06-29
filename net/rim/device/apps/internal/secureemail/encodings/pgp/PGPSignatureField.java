@@ -130,7 +130,7 @@ public final class PGPSignatureField extends SecureEmailSignatureField {
       if (this._pgpSignedInputStream == null) {
          super._signatureStatus.setStatus(4);
       } else {
-         byte[][][] signerKeyIDs = (byte[][][])this._pgpSignedInputStream.getSignerKeyIDs();
+         byte[][] signerKeyIDs = this._pgpSignedInputStream.getSignerKeyIDs();
          if (signerKeyIDs != null && signerKeyIDs.length != 0) {
             Exception lastThrown = null;
 
@@ -215,6 +215,6 @@ public final class PGPSignatureField extends SecureEmailSignatureField {
 
    @Override
    protected final MatchProvider createSignerCertificateMatchProvider() {
-      return new PGPCertificateMatchProvider((byte[][][])this._pgpSignedInputStream.getSignerKeyIDs());
+      return new PGPCertificateMatchProvider(this._pgpSignedInputStream.getSignerKeyIDs());
    }
 }

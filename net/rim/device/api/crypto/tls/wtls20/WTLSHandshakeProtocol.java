@@ -44,7 +44,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    protected MD5Digest _serverMD5Hash = (MD5Digest)(new Object());
    private boolean _resumption;
    private byte[] _sessionID;
-   private byte[][][] _clientKeyIds;
+   private byte[][] _clientKeyIds;
    private boolean _useClientIdInfo;
    private boolean _deleteSessionInfo = true;
    private int _cipherSuite;
@@ -332,8 +332,8 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 19c: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._sessionID [B
       // 19f: invokevirtual net/rim/device/api/util/DataBuffer.write ([B)V
       // 1a2: aload 0
-      // 1a3: invokestatic net/rim/device/api/crypto/tls/wtls20/WTLSCipherSuites.getKeyExchangePriority ()[[[B
-      // 1a6: putfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 1a3: invokestatic net/rim/device/api/crypto/tls/wtls20/WTLSCipherSuites.getKeyExchangePriority ()[[B
+      // 1a6: putfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 1a9: aload 0
       // 1aa: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol.getClientIds ()[[B
       // 1ad: astore 5
@@ -361,7 +361,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 1d5: imul
       // 1d6: iadd
       // 1d7: aload 0
-      // 1d8: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 1d8: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 1db: arraylength
       // 1dc: imul
       // 1dd: istore 7
@@ -372,7 +372,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 1e6: istore 8
       // 1e8: iload 8
       // 1ea: aload 0
-      // 1eb: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 1eb: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 1ee: arraylength
       // 1ef: if_icmpge 21d
       // 1f2: bipush 0
@@ -383,7 +383,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 1fa: if_icmpge 217
       // 1fd: aload 1
       // 1fe: aload 0
-      // 1ff: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 1ff: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 202: iload 8
       // 204: aaload
       // 205: invokevirtual net/rim/device/api/util/DataBuffer.write ([B)V
@@ -522,7 +522,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 073: ifeq 080
       // 076: iload 6
       // 078: aload 0
-      // 079: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 079: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 07c: arraylength
       // 07d: if_icmple 089
       // 080: aload 0
@@ -612,7 +612,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 13a: istore 10
       // 13c: aload 9
       // 13e: aload 0
-      // 13f: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 13f: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 142: iload 10
       // 144: aaload
       // 145: bipush 0
@@ -620,7 +620,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 147: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSConnectionState.setKeyExchangeAlgorithm (B)V
       // 14a: aload 9
       // 14c: aload 0
-      // 14d: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[[B
+      // 14d: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._clientKeyIds [[B
       // 150: iload 10
       // 152: aaload
       // 153: bipush 1
@@ -1891,9 +1891,9 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final byte[][][] getClientIds() {
+   public final byte[][] getClientIds() {
       if (!this._useClientIdInfo) {
-         return new byte[1][1][];
+         return new byte[1][1];
       }
 
       if (this._clientIdType < 0 || this._clientIdType > 7) {
@@ -1923,23 +1923,23 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
             case 1:
             default:
                if (var8 != null && var8.length() != 0) {
-                  byte[][][] resultx = new byte[][][]{(byte[][])(new byte[13])};
-                  resultx[0][0] = (byte[])2;
-                  resultx[0][1] = (byte[])11;
-                  resultx[0][6] = (byte[])4;
+                  byte[][] resultx = new byte[][]{new byte[13]};
+                  resultx[0][0] = 2;
+                  resultx[0][1] = 11;
+                  resultx[0][6] = 4;
                   int ipV4 = this.getIPV4Address(var8);
-                  resultx[0][7] = (byte[])((byte)(ipV4 >> 24));
-                  resultx[0][8] = (byte[])((byte)(ipV4 >> 16));
-                  resultx[0][9] = (byte[])((byte)(ipV4 >> 8));
-                  resultx[0][10] = (byte[])((byte)ipV4);
+                  resultx[0][7] = (byte)(ipV4 >> 24);
+                  resultx[0][8] = (byte)(ipV4 >> 16);
+                  resultx[0][9] = (byte)(ipV4 >> 8);
+                  resultx[0][10] = (byte)ipV4;
                   this._ipv4Address = ipV4;
                   return resultx;
                }
             case 0:
-               byte[][][] result = new byte[][][]{(byte[][])(new byte[13])};
-               result[0][0] = (byte[])2;
-               result[0][1] = (byte[])11;
-               result[0][6] = (byte[])4;
+               byte[][] result = new byte[][]{new byte[13]};
+               result[0][0] = 2;
+               result[0][1] = 11;
+               result[0][6] = 4;
                int apnId = RadioInfo.getAccessPointNumber(this._apn);
                byte[] ip = RadioInfo.getIPAddress(apnId);
                System.arraycopy(ip, 0, result[0], 7, 4);
@@ -1953,15 +1953,15 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
                      imsi = Arrays.copy(imsi, imsi.length - 10, 10);
                   }
 
-                  byte[][][] resultx = new byte[1][][];
+                  byte[][] resultx = new byte[1][];
                   int len = Math.min(imsi.length, 15);
-                  resultx[0] = (byte[][])(new byte[len + 12]);
-                  resultx[0][0] = (byte[])2;
-                  resultx[0][1] = (byte[])((byte)(len + 10));
-                  resultx[0][6] = (byte[])5;
-                  resultx[0][7] = (byte[])2;
-                  resultx[0][8] = (byte[])false;
-                  resultx[0][9] = (byte[])false;
+                  resultx[0] = new byte[len + 12];
+                  resultx[0][0] = 2;
+                  resultx[0][1] = (byte)(len + 10);
+                  resultx[0][6] = 5;
+                  resultx[0][7] = 2;
+                  resultx[0][8] = 0;
+                  resultx[0][9] = 0;
                   System.arraycopy(imsi, 0, resultx[0], 10, len);
                   return resultx;
                }
@@ -1969,18 +1969,18 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
                var8 = Phone.getInstance().getNumber(0);
             case 6:
                if (var8 != null && var8.length() != 0) {
-                  byte[][][] resultx = new byte[1][][];
+                  byte[][] resultx = new byte[1][];
                   int len = Math.min(var8.length(), 15);
-                  resultx[0] = (byte[][])(new byte[len + 12]);
-                  resultx[0][0] = (byte[])2;
-                  resultx[0][1] = (byte[])((byte)(len + 10));
-                  resultx[0][6] = (byte[])5;
-                  resultx[0][7] = (byte[])2;
-                  resultx[0][8] = (byte[])false;
-                  resultx[0][9] = (byte[])false;
+                  resultx[0] = new byte[len + 12];
+                  resultx[0][0] = 2;
+                  resultx[0][1] = (byte)(len + 10);
+                  resultx[0][6] = 5;
+                  resultx[0][7] = 2;
+                  resultx[0][8] = 0;
+                  resultx[0][9] = 0;
 
                   for (int i = 0; i < len; i++) {
-                     resultx[0][i + 10] = (byte[])((byte)Integer.parseInt(var8.substring(i, i + 1)));
+                     resultx[0][i + 10] = (byte)Integer.parseInt(var8.substring(i, i + 1));
                   }
 
                   return resultx;
@@ -1992,18 +1992,18 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
                   var6 = false;
                } else {
                   if (var8.length() != 0) {
-                     byte[][][] resultx = new byte[1][][];
+                     byte[][] resultx = new byte[1][];
                      int len = Math.min(var8.length(), 18);
-                     resultx[0] = (byte[][])(new byte[len + 12]);
-                     resultx[0][0] = (byte[])2;
-                     resultx[0][1] = (byte[])((byte)(len + 10));
-                     resultx[0][6] = (byte[])2;
-                     resultx[0][7] = (byte[])false;
-                     resultx[0][8] = (byte[])true;
-                     resultx[0][9] = (byte[])true;
+                     resultx[0] = new byte[len + 12];
+                     resultx[0][0] = 2;
+                     resultx[0][1] = (byte)(len + 10);
+                     resultx[0][6] = 2;
+                     resultx[0][7] = 0;
+                     resultx[0][8] = 1;
+                     resultx[0][9] = 1;
 
                      for (int i = 0; i < len; i++) {
-                        resultx[0][i + 10] = (byte[])((byte)Integer.parseInt(var8.substring(i, i + 1)));
+                        resultx[0][i + 10] = (byte)Integer.parseInt(var8.substring(i, i + 1));
                      }
 
                      return resultx;
@@ -2015,12 +2015,12 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       } finally {
          if (var6) {
             EventLogger.logEvent(-7509200465648525729L, "WTLS: error reading client id key".getBytes());
-            return new byte[1][1][];
+            return new byte[1][1];
          }
       }
 
       EventLogger.logEvent(-7509200465648525729L, "WTLS: no valid key found".getBytes());
-      return new byte[1][1][];
+      return new byte[1][1];
    }
 
    public final byte[] getTrustedKeyIds() {

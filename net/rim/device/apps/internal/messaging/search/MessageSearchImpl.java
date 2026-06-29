@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.messaging.search;
 
+import java.util.Hashtable;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.collection.util.KeywordFilterList;
 import net.rim.device.api.collection.util.KeywordIndexerHelper;
@@ -291,7 +292,43 @@ public final class MessageSearchImpl extends MessageSearch {
    }
 
    final void repairPrecannedSearches() {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      boolean isReducedFormFactor = InternalServices.isReducedFormFactor();
+      Hashtable resourceTable = (Hashtable)(new Object());
+      int[][] resources = new int[][]{
+         {33, 34, -804651006, 35, 36, -804650998, 46, 47},
+         {51, 52, -804651006, 53, 54, -804519934, -1466262987, 980431202},
+         {64, 10, -805044223, 102, -805044223, 131, 0, -804519930},
+         {60, 61, -804651006, 64, 10, -805044223, 102, -805044223},
+         {35, 36, -804650998, 46, 47, 48, 49, 57},
+         {53, 54, -804519934, -1466262987, 980431202, -1205878232, 1883249540, -804651006}
+      };
+
+      for (int i = 0; i < resources.length; i++) {
+         resourceTable.put(SearchResources.getString(resources[i][0]), resources[i]);
+      }
+
+      synchronized (this._searchCollection) {
+         for (int i = this._searchCollection.size() - 1; i >= 0; i--) {
+            FilterModel fm = (FilterModel)this._searchCollection.getAt(i);
+            String title = fm._titleModel.getTitle();
+            char hotKey = fm.getShortCutKey();
+            int[] resourceIDs = (int[])resourceTable.get(title);
+            if (resourceIDs != null) {
+               int titleID = resourceIDs[0];
+               int hotKeyID = resourceIDs[1];
+               if (hotKey == 0 || hotKey == getHotKeyFromResource(hotKeyID, !isReducedFormFactor)) {
+                  if (isReducedFormFactor && titleID == 53) {
+                     FilterModel outgoing = this._searchCollection.find(SearchResources.getString(35));
+                     if (outgoing != null && outgoing.getShortCutKey() == 'o') {
+                        this.updateHotKeyInCollection(outgoing, '\u0000');
+                     }
+                  }
+
+                  this.updateHotKeyInCollection(fm, getHotKeyFromResource(hotKeyID, isReducedFormFactor));
+               }
+            }
+         }
+      }
    }
 
    private static final char getHotKeyFromResource(int key, boolean isReducedFormFactor) {

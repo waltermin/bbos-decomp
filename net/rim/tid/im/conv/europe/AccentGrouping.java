@@ -20,10 +20,10 @@ public class AccentGrouping implements AlphabetChangeListener {
    private final int[] ACCENTED_ALPHABET_CODES = new int[]{
       1701707776, 1684340736, 1718747136, 1702035456, 1769209856, 1886650368, Locale.get("sv", "").getCode()
    };
-   private final int[][][] LOCALE_ACCENTED_ALPHABET = new int[][][]{
-      (int[][])(new int[0]),
-      (int[][])({223, 228, 246, 252, -804650994, 224, 225, 226, 227, 231, 232, 233, 234, 237, 243, 244}),
-      (int[][])({
+   private final int[][] LOCALE_ACCENTED_ALPHABET = new int[][]{
+      new int[0],
+      {223, 228, 246, 252, -804650994, 224, 225, 226, 227, 231, 232, 233, 234, 237, 243, 244},
+      {
             224,
             226,
             231,
@@ -68,8 +68,8 @@ public class AccentGrouping implements AlphabetChangeListener {
             15098272,
             209023745,
             61675587
-      }),
-      (int[][])({
+      },
+      {
             225,
             233,
             237,
@@ -98,8 +98,8 @@ public class AccentGrouping implements AlphabetChangeListener {
             1178627189,
             1079384929,
             1936990569
-      }),
-      (int[][])({
+      },
+      {
             224,
             225,
             232,
@@ -144,8 +144,8 @@ public class AccentGrouping implements AlphabetChangeListener {
             16806977,
             1631988339,
             1929445403
-      }),
-      (int[][])({
+      },
+      {
             224,
             225,
             226,
@@ -202,8 +202,8 @@ public class AccentGrouping implements AlphabetChangeListener {
             712179968,
             712179968,
             -1975817147
-      }),
-      (int[][])({
+      },
+      {
             228,
             229,
             232,
@@ -228,7 +228,7 @@ public class AccentGrouping implements AlphabetChangeListener {
             15098272,
             209023745,
             61675587
-      })
+      }
    };
    private StringBuffer _tempCompleteAccBuffer = (StringBuffer)(new Object());
    private StringBuffer _tempExtendedAccBuffer = (StringBuffer)(new Object());
@@ -549,7 +549,7 @@ public class AccentGrouping implements AlphabetChangeListener {
    private boolean checkAlphabet(char ch, boolean genericAlphabet) {
       if (genericAlphabet && this._cachedLocaleAlphabetIndex != -1) {
          return this.LOCALE_ACCENTED_ALPHABET[this._cachedLocaleAlphabetIndex] != null
-            ? Arrays.binarySearch((int[])this.LOCALE_ACCENTED_ALPHABET[this._cachedLocaleAlphabetIndex], ch) > -1
+            ? Arrays.binarySearch(this.LOCALE_ACCENTED_ALPHABET[this._cachedLocaleAlphabetIndex], ch) > -1
             : false;
       } else if (this._repository != null) {
          return genericAlphabet ? this._repository.isInBasicAlphabet(ch) : this._repository.isInExtendedAlphabet(ch);

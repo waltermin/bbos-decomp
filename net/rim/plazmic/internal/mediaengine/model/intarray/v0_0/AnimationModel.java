@@ -34,7 +34,7 @@ public class AnimationModel implements MediaModel, MediaListener {
    int[] keyTimes;
    int[] keyValues;
    int sequenceRoot;
-   int[][][] coords;
+   int[][] coords;
    int width;
    int height;
    int polygonCounter;
@@ -72,7 +72,7 @@ public class AnimationModel implements MediaModel, MediaListener {
       this.nodes = null;
       this.keyTimes = null;
       this.keyValues = null;
-      this.coords = (int[][][])((int[][])null);
+      this.coords = (int[][])null;
       this.hotspotList = null;
       this.firstInterp = -1;
       this.hotspotFocus = -1;
@@ -448,7 +448,7 @@ public class AnimationModel implements MediaModel, MediaListener {
       return this.objects;
    }
 
-   public int[][][] getPolygonCoords() {
+   public int[][] getPolygonCoords() {
       return this.coords;
    }
 

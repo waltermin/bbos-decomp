@@ -23,7 +23,7 @@ public final class CameraOptions extends OptionsBase {
    private static final int IMAGE_MEDIUM = 1;
    private static final int IMAGE_SMALL = 2;
    public static final int IMAGE_SIZE_DEFAULT_INDEX = 0;
-   private static int[][][] _imageSizeTable = new int[3][][];
+   private static int[][] _imageSizeTable = new int[3][];
    private static final int[] IMAGE_SIZE_1600x1200 = new int[]{1600, 1200, -805042284, 100692579, 11408, 1935999488, 1811939328, 2141993162};
    private static final int[] IMAGE_SIZE_1280x1024 = new int[]{1280, 1024, 51, -804651006, 320, 240, -804651006, 1600};
    private static final int[] IMAGE_SIZE_1024x768 = new int[]{1024, 768, -804651006, 1280, 1024, 51, -804651006, 320};
@@ -92,13 +92,13 @@ public final class CameraOptions extends OptionsBase {
 
    private CameraOptions() {
       if (Arrays.equals(Camera.getMaxPictureDimensions(), IMAGE_SIZE_1280x1024)) {
-         _imageSizeTable[0] = (int[][])IMAGE_SIZE_1280x1024;
-         _imageSizeTable[1] = (int[][])IMAGE_SIZE_640x480;
-         _imageSizeTable[2] = (int[][])IMAGE_SIZE_320x240;
+         _imageSizeTable[0] = IMAGE_SIZE_1280x1024;
+         _imageSizeTable[1] = IMAGE_SIZE_640x480;
+         _imageSizeTable[2] = IMAGE_SIZE_320x240;
       } else {
-         _imageSizeTable[0] = (int[][])IMAGE_SIZE_1600x1200;
-         _imageSizeTable[1] = (int[][])IMAGE_SIZE_1024x768;
-         _imageSizeTable[2] = (int[][])IMAGE_SIZE_640x480;
+         _imageSizeTable[0] = IMAGE_SIZE_1600x1200;
+         _imageSizeTable[1] = IMAGE_SIZE_1024x768;
+         _imageSizeTable[2] = IMAGE_SIZE_640x480;
       }
    }
 
@@ -184,7 +184,7 @@ public final class CameraOptions extends OptionsBase {
    }
 
    public final int[] getImageSize(int sizeIndex) {
-      return (int[])_imageSizeTable[sizeIndex];
+      return _imageSizeTable[sizeIndex];
    }
 
    public final void setImageSizeIndex(int sizeIndex) {

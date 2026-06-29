@@ -17,7 +17,7 @@ public class UrlEntryField$UrlEntryController extends ComboFieldController {
          String[] variants = new Object[]{newText};
          if (this.this$0.getInputContext().isSureType()) {
             SLControlObject controlObject = (SLControlObject)this.this$0.getInputContext().getInputMethodControlObject();
-            String[][][] vars = new Object[1][][];
+            String[][] vars = new Object[1][];
             controlObject.actionPerformed(107, vars);
             if (vars[0] != null && vars[0].length > 0) {
                String base = newText.substring(0, newText.length() - vars[0][0].length());

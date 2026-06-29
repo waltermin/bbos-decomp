@@ -5,7 +5,7 @@ final class BreakingDataRegistryHelper {
    private int _supportedLocalesNum;
    private static final int BREAKING_INCREMENT_NUMBER = 2;
 
-   final synchronized boolean loadBreakingData(int locale, int dataType, byte[][][] data) {
+   final synchronized boolean loadBreakingData(int locale, int dataType, byte[][] data) {
       int i = 0;
 
       int length;
@@ -33,9 +33,9 @@ final class BreakingDataRegistryHelper {
       }
    }
 
-   final byte[][][] getBreakingData(int locale, int dataType) {
+   final byte[][] getBreakingData(int locale, int dataType) {
       BreakingDataRegistryHelper$BreakingData entry = this.runOverTheData(locale, dataType);
-      return (byte[][][])(entry != null ? entry._binaryData : (byte[][])null);
+      return entry != null ? entry._binaryData : (byte[][])null;
    }
 
    final int getTextProcessingDataID(int locale, int dataType) {

@@ -62,7 +62,7 @@ public class ActivationService {
       throw null;
    }
 
-   public String[][][] getRegenerationUIDs() {
+   public String[][] getRegenerationUIDs() {
       throw null;
    }
 

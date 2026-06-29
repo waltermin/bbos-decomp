@@ -287,7 +287,7 @@ final class EmailTransmissionServiceListener
       EmailBuilder.createHeaderForStringPairs(incomingTransmission.getReplyTo(), 5, factory, initialData, message, null);
       String[] sender = incomingTransmission.getSender();
       if (sender != null) {
-         String[][][] arrayOfStringPairs = new Object[][][]{sender};
+         String[][] arrayOfStringPairs = new Object[][]{sender};
          EmailBuilder.createHeaderForStringPairs(arrayOfStringPairs, 4, factory, initialData, message, null);
       } else {
          EventLogger.logEvent(-1237457833540244999L, 542264915, 5);
@@ -437,7 +437,7 @@ final class EmailTransmissionServiceListener
             }
 
             if ((dsnRequest & 4) != 0) {
-               String[][][] originalRecipient = incomingTransmission.getOriginalRecipient();
+               String[][] originalRecipient = incomingTransmission.getOriginalRecipient();
                if (originalRecipient != null) {
                   boolean foundMatchingHeader = false;
 
@@ -646,7 +646,7 @@ final class EmailTransmissionServiceListener
       int numDelivered = 0;
       ContextObject changeContext = (ContextObject)(new Object());
       EmailPayloadModel oldPayload = EmailModifier.beginChanges(messageModel, changeContext);
-      String[][][] addresses = deliveryToAddressTransmission.getAddresses();
+      String[][] addresses = deliveryToAddressTransmission.getAddresses();
       if (addresses == null) {
          return false;
       }

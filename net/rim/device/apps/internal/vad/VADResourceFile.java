@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.vad;
 
 class VADResourceFile extends VADDataFile {
-   VADResourceFile(byte[][][] data) {
+   VADResourceFile(byte[][] data) {
       super(data);
    }
 

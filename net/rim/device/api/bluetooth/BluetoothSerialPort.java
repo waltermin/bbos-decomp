@@ -121,7 +121,7 @@ public final class BluetoothSerialPort extends IOPort {
       return this._sdpRecordHandle;
    }
 
-   public final void addSDPRecord(int[] attributeIDs, byte[][][] attributeValues, int classOfDevice) {
+   public final void addSDPRecord(int[] attributeIDs, byte[][] attributeValues, int classOfDevice) {
       if (this._sdpRecordHandle == -1) {
          int securityLevel = 11;
          this._sdpRecordHandle = BluetoothSDP.addRecord(
@@ -160,7 +160,7 @@ public final class BluetoothSerialPort extends IOPort {
 
       int numAttributes = 6;
       int[] attributeIDs = new int[numAttributes];
-      byte[][][] attributeValues = new byte[numAttributes][][];
+      byte[][] attributeValues = new byte[numAttributes][];
       DataBuffer buf = new DataBuffer();
       int i = 0;
       attributeIDs[i] = 1;
@@ -184,7 +184,7 @@ public final class BluetoothSerialPort extends IOPort {
       buf.write(uuid, 0, uuidLength);
       buf.writeByte(25);
       buf.writeShort(4353);
-      attributeValues[i++] = (byte[][])buf.toArray();
+      attributeValues[i++] = buf.toArray();
       attributeIDs[i] = 4;
       buf.reset();
       buf.writeByte(53);
@@ -199,14 +199,14 @@ public final class BluetoothSerialPort extends IOPort {
       buf.writeShort(3);
       buf.writeByte(8);
       buf.writeByte(getRFCOMMChannel(this._portHandle));
-      attributeValues[i++] = (byte[][])buf.toArray();
+      attributeValues[i++] = buf.toArray();
       attributeIDs[i] = 5;
       buf.reset();
       buf.writeByte(53);
       buf.writeByte(3);
       buf.writeByte(25);
       buf.writeShort(4098);
-      attributeValues[i++] = (byte[][])buf.toArray();
+      attributeValues[i++] = buf.toArray();
       attributeIDs[i] = 6;
       buf.reset();
       buf.writeByte(53);
@@ -217,20 +217,20 @@ public final class BluetoothSerialPort extends IOPort {
       buf.writeShort(106);
       buf.writeByte(9);
       buf.writeShort(256);
-      attributeValues[i++] = (byte[][])buf.toArray();
+      attributeValues[i++] = buf.toArray();
       attributeIDs[i] = 8;
       buf.reset();
       buf.writeByte(8);
       buf.writeByte(255);
-      attributeValues[i++] = (byte[][])buf.toArray();
+      attributeValues[i++] = buf.toArray();
       attributeIDs[i] = 256;
       buf.reset();
       buf.writeByte(37);
       buf.writeByte(nameBytesLength + 1);
       buf.write(nameBytes, 0, nameBytesLength);
       buf.writeByte(0);
-      attributeValues[i++] = (byte[][])buf.toArray();
-      this.addSDPRecord(attributeIDs, (byte[][])attributeValues, 0);
+      attributeValues[i++] = buf.toArray();
+      this.addSDPRecord(attributeIDs, attributeValues, 0);
    }
 
    public static final boolean isSupported() {

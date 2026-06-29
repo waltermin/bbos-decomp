@@ -1,6 +1,7 @@
 package net.rim.wica.runtime.ui.internal.component;
 
 import java.util.Vector;
+import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Clipboard;
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Field;
@@ -35,11 +36,11 @@ public class BaseDurationField extends Field {
    public static final int SECONDS = 0;
    private static MenuItem _changeOptionsItem = new BaseDurationField$2(CommonResource.getBundle(), 1, 30270, Integer.MAX_VALUE);
    private static Tag TAG = Tag.create("date");
-   private static final int[][][] DISPLAY_NAMES = new int[][][]{
-      (int[][])({107, 108, -804651004, 1000, 60000, 3600000, 86400000, 207814912}),
-      (int[][])({105, 106, -804651006, 107, 108, -804651004, 1000, 60000}),
-      (int[][])({103, 104, -804651006, 105, 106, -804651006, 107, 108}),
-      (int[][])({101, 102, -804651006, 103, 104, -804651006, 105, 106})
+   private static final int[][] DISPLAY_NAMES = new int[][]{
+      {107, 108, -804651004, 1000, 60000, 3600000, 86400000, 207814912},
+      {105, 106, -804651006, 107, 108, -804651004, 1000, 60000},
+      {103, 104, -804651006, 105, 106, -804651006, 107, 108},
+      {101, 102, -804651006, 103, 104, -804651006, 105, 106}
    };
    private static final int MILLIS_PER_SECOND = 1000;
    private static final int MILLIS_PER_MINUTE = 60000;
@@ -335,7 +336,43 @@ public class BaseDurationField extends Field {
    }
 
    private void calcLayoutData(int width) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      long unitValue = 0;
+      long milliSeconds = this._duration;
+      String unitText = "";
+      ResourceBundle rb = ResourceBundle.getBundle(2545338480386147321L, "net.rim.device.apps.internal.resource.Ui");
+      StringBuffer textRow = (StringBuffer)(new Object());
+      Font font = this.getFont();
+      this._cursorHeight = font.getHeight();
+      this._durationWidth = 0;
+      this._rowsOfText.removeAllElements();
+      this._durationText.setLength(0);
+
+      for (int i = this._largestUnitsDisplayed; i >= this._smallestUnitsDisplayed; i--) {
+         unitValue = milliSeconds / UNITS[i];
+         unitText = rb.getString(DISPLAY_NAMES[i][unitValue == 1 ? 0 : 1]);
+         milliSeconds -= unitValue * UNITS[i];
+         if (textRow.length() > 0) {
+            this.appendSpaceOrStartNewRow(textRow, ((StringBuffer)(new Object(""))).append(unitValue).toString(), width, font);
+         }
+
+         if (this._currentUnit == i) {
+            this._cursorXOffset = font.getBounds(textRow);
+            this._cursorYOffset = this._rowsOfText.size() * this._cursorHeight;
+            this._cursorWidth = font.getBounds(((StringBuffer)(new Object(""))).append(unitValue).toString());
+         }
+
+         textRow.append(unitValue);
+         this.appendSpaceOrStartNewRow(textRow, unitText, width, font);
+         textRow.append(unitText);
+         this._durationText.append(((StringBuffer)(new Object())).append(unitValue).append(" ").append(unitText).toString());
+         if (i > this._smallestUnitsDisplayed) {
+            this._durationText.append(" ");
+         }
+      }
+
+      this._durationWidth = Math.max(font.getBounds(textRow), this._durationWidth);
+      this._rowsOfText.addElement(textRow.toString());
+      this._durationHeight = this._cursorHeight * this._rowsOfText.size();
    }
 
    private void appendSpaceOrStartNewRow(StringBuffer textRow, String textToBeAdded, int maxWidth, Font font) {

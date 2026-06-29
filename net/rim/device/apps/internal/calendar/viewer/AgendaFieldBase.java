@@ -180,7 +180,7 @@ class AgendaFieldBase extends DayList {
          Array.resize(super._icons, numIcons + 1);
          Array.resize(super._indices, numIcons + 1);
          super._icons[numIcons] = STATUS_ICONS;
-         super._indices[numIcons] = (int[][])(new int[]{0, -805044220, 0, -804651006});
+         super._indices[numIcons] = new int[]{0, -805044220, 0, -804651006};
       }
    }
 

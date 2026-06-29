@@ -30,15 +30,15 @@ class Content implements Persistable {
    protected PGPUserIDPacket _primaryUserID;
    protected PGPUserAttributePacket[] _userAttributes = new PGPUserAttributePacket[0];
    protected PGPPublicKeyPacket[] _subKeys = new PGPPublicKeyPacket[0];
-   protected byte[][][] _subKeyIDs = new byte[0][][];
+   protected byte[][] _subKeyIDs = new byte[0][];
    protected long[] _subKeyNotBefore = new long[0];
    protected long[] _subKeyNotAfter = new long[0];
    protected PGPUnsupportedPacket[] _unsupportedPackets = new PGPUnsupportedPacket[0];
    protected PGPSignaturePacket[] _parentKeySignatures = new PGPSignaturePacket[0];
-   protected PGPSignaturePacket[][][] _userIDSignatures = new PGPSignaturePacket[0][][];
-   protected PGPSignaturePacket[][][] _userAttributeSignatures = new PGPSignaturePacket[0][][];
-   protected PGPSignaturePacket[][][] _subKeySignatures = new PGPSignaturePacket[0][][];
-   protected PGPSignaturePacket[][][] _unsupportedSignatures = new PGPSignaturePacket[0][][];
+   protected PGPSignaturePacket[][] _userIDSignatures = new PGPSignaturePacket[0][];
+   protected PGPSignaturePacket[][] _userAttributeSignatures = new PGPSignaturePacket[0][];
+   protected PGPSignaturePacket[][] _subKeySignatures = new PGPSignaturePacket[0][];
+   protected PGPSignaturePacket[][] _unsupportedSignatures = new PGPSignaturePacket[0][];
    protected PGPEmbeddedCertificate[] _x509EmbeddedCertificates = new PGPEmbeddedCertificate[0];
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

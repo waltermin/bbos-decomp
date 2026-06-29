@@ -13,7 +13,7 @@ import net.rim.device.internal.crypto.pgp.PGPSignaturePacket;
 import net.rim.device.internal.crypto.pgp.PGPUtilities;
 
 public final class PGPSignedInputStream extends PGPInputStream {
-   private byte[][][] _signerKeyIDs;
+   private byte[][] _signerKeyIDs;
    private boolean[] _signatureVerified;
    private Exception[] _signatureException;
    private byte[] _dataBuffer;
@@ -39,11 +39,11 @@ public final class PGPSignedInputStream extends PGPInputStream {
       }
 
       int numSignaturePackets = signaturePackets != null ? signaturePackets.size() : 0;
-      this._signerKeyIDs = new byte[numSignaturePackets][][];
+      this._signerKeyIDs = new byte[numSignaturePackets][];
 
       for (int i = 0; i < numSignaturePackets; i++) {
          PGPSignaturePacket packet = (PGPSignaturePacket)signaturePackets.elementAt(i);
-         this._signerKeyIDs[i] = (byte[][])packet.getSignerKeyID();
+         this._signerKeyIDs[i] = packet.getSignerKeyID();
       }
 
       this._signatureVerified = new boolean[numSignaturePackets];
@@ -54,7 +54,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       int numSigners = this._signerKeyIDs.length;
 
       for (int i = 0; i < numSigners; i++) {
-         if (Arrays.equals((byte[])this._signerKeyIDs[i], signerKeyID)) {
+         if (Arrays.equals(this._signerKeyIDs[i], signerKeyID)) {
             return i;
          }
       }
@@ -414,7 +414,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       }
    }
 
-   public final byte[][][] getSignerKeyIDs() {
+   public final byte[][] getSignerKeyIDs() {
       return this._signerKeyIDs;
    }
 

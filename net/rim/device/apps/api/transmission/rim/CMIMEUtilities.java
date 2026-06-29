@@ -317,18 +317,18 @@ public final class CMIMEUtilities implements CMIMEConstants {
       return address;
    }
 
-   public static final String[][][] decodeAddresses(byte[][][] byteArrays) {
+   public static final String[][] decodeAddresses(byte[][] byteArrays) {
       return decodeAddresses(byteArrays, false);
    }
 
-   public static final String[][][] decodeAddresses(byte[][][] byteArrays, boolean isUnicodeEnabled) {
-      String[][][] addresses = (Object[][])null;
+   public static final String[][] decodeAddresses(byte[][] byteArrays, boolean isUnicodeEnabled) {
+      String[][] addresses = (Object[][])null;
       if (byteArrays != null) {
          int length = byteArrays.length;
-         addresses = new Object[length][][];
+         addresses = new Object[length][];
 
          for (int count = 0; count < length; count++) {
-            addresses[count] = decodeAddress((byte[])byteArrays[count], isUnicodeEnabled);
+            addresses[count] = decodeAddress(byteArrays[count], isUnicodeEnabled);
          }
       }
 
@@ -367,19 +367,19 @@ public final class CMIMEUtilities implements CMIMEConstants {
       return value;
    }
 
-   public static final int getGMEInteger(byte[][][] byteArrays, int indexInt) {
+   public static final int getGMEInteger(byte[][] byteArrays, int indexInt) {
       int integer = 0;
       if (byteArrays != null && byteArrays.length > indexInt) {
-         integer = decodeInteger((byte[])byteArrays[indexInt]);
+         integer = decodeInteger(byteArrays[indexInt]);
       }
 
       return integer;
    }
 
-   public static final int getGMEInteger(byte[][][] byteArrays, int indexInt, int defualtValue) {
+   public static final int getGMEInteger(byte[][] byteArrays, int indexInt, int defualtValue) {
       int integer = defualtValue;
       if (byteArrays != null && byteArrays.length > indexInt) {
-         integer = decodeInteger((byte[])byteArrays[indexInt]);
+         integer = decodeInteger(byteArrays[indexInt]);
       }
 
       return integer;

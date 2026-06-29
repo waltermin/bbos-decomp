@@ -5,7 +5,7 @@ import net.rim.device.api.util.StringUtilities;
 
 public final class CMIMEContentType implements CMIMEConstants {
    private String _fullContentType;
-   private static String[][][] TYPE_WORDS = new Object[][][]{
+   private static String[][] TYPE_WORDS = new Object[][]{
       {"unknown/", "unknown"},
       {"multipart/", "mixed", "report"},
       {"text/", "plain", "html"},
@@ -166,11 +166,11 @@ public final class CMIMEContentType implements CMIMEConstants {
          boolean done = false;
 
          for (int typeIndex = 1; typeIndex < numberOfTypes; typeIndex++) {
-            String[] var15 = TYPE_WORDS[typeIndex];
-            int numberOfSubtypes = var15.length;
-            if (StringUtilities.compareToIgnoreCase(type, var15[0], 1701707776) == 0) {
+            words = TYPE_WORDS[typeIndex];
+            int numberOfSubtypes = words.length;
+            if (StringUtilities.compareToIgnoreCase(type, words[0], 1701707776) == 0) {
                for (int subtypeIndex = 1; subtypeIndex < numberOfSubtypes; subtypeIndex++) {
-                  if (StringUtilities.compareToIgnoreCase(subtype, var15[subtypeIndex], 1701707776) == 0) {
+                  if (StringUtilities.compareToIgnoreCase(subtype, words[subtypeIndex], 1701707776) == 0) {
                      if (isUnicodeEnabled && typeIndex == 2) {
                         typeIndex = 8;
                         optionalInfoIndex = typeString.length();

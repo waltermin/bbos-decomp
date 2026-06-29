@@ -166,7 +166,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
       }
    }
 
-   private final void checkITPolicy(byte[] encoding, byte[][][] thumbprints) {
+   private final void checkITPolicy(byte[] encoding, byte[][] thumbprints) {
       if (encoding != null && thumbprints != null) {
          if (thumbprints.length == 0) {
             throw new Object();
@@ -181,7 +181,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
          int thumbsLength = thumbprints.length;
 
          for (int i = 0; i < thumbsLength; i++) {
-            if (Arrays.equals((byte[])thumbprints[i], shaThumb) || Arrays.equals((byte[])thumbprints[i], md5Thumb)) {
+            if (Arrays.equals(thumbprints[i], shaThumb) || Arrays.equals(thumbprints[i], md5Thumb)) {
                return;
             }
          }
@@ -190,15 +190,15 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
       }
    }
 
-   private final byte[][][] getThumbprints(String thumbprints) {
+   private final byte[][] getThumbprints(String thumbprints) {
       StringTokenizer tokenizer = (StringTokenizer)(new Object(thumbprints, ';'));
       int numTokens = tokenizer.countTokens();
-      byte[][][] validThumbprints = new byte[numTokens][][];
+      byte[][] validThumbprints = new byte[numTokens][];
       int numValidThumbprints = 0;
 
       for (int i = 0; i < numTokens; i++) {
          try {
-            validThumbprints[numValidThumbprints] = (byte[][])this.convertToByteArray(this.stripSpaces(tokenizer.nextToken().getBytes()));
+            validThumbprints[numValidThumbprints] = this.convertToByteArray(this.stripSpaces(tokenizer.nextToken().getBytes()));
             numValidThumbprints++;
          } finally {
             continue;
@@ -214,7 +214,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
    public final void performITPolicyCheck() {
       String thumbprints = ITPolicy.getString(24, 24);
       if (thumbprints != null) {
-         byte[][][] thumbs = this.getThumbprints(thumbprints);
+         byte[][] thumbs = this.getThumbprints(thumbprints);
          Vector toBeRemoved = (Vector)(new Object());
          Enumeration enumeration = this.elements();
 

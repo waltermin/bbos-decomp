@@ -169,7 +169,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    private LoadingStatusEvent _loadingStatusEvent;
    private boolean _framesetDocument;
    private Frame _frame;
-   private int[][][] _cssTempArray = new int[3][11][];
+   private int[][] _cssTempArray = new int[3][11];
    private HMAC _subDataMac;
    private boolean _useColor;
    DeviceDataConversionEvent _convEvent;
@@ -331,13 +331,114 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    }
 
    @Override
-   public final void startSelector(int[][][] selectors, int length) {
+   public final void startSelector(int[][] selectors, int length) {
       this._currentStyleIndex = -1;
    }
 
    @Override
-   public final void endSelector(int[][][] selectors, int selectorsLength) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+   public final void endSelector(int[][] selectors, int selectorsLength) {
+      if (this._currentStyleIndex != -1) {
+         for (int i = 0; i < selectorsLength; i++) {
+            switch (selectors[i][0]) {
+               case 0:
+                  switch (selectors[i][1]) {
+                     case 4:
+                        if ((selectors[i][2] & 15) == 1) {
+                           int element = selectors[i][3];
+                           switch (selectors[i][4]) {
+                              case 5:
+                                 CSSString id = this._cssParser.getString(selectors[i][5]);
+                                 this.addIdStyle(element, id, this._currentStyleIndex);
+                                 continue;
+                              case 9:
+                                 CSSString classString = this._cssParser.getString(selectors[i][5]);
+                                 this.addClassStyle(element, classString, this._currentStyleIndex);
+                                 continue;
+                              case 10:
+                                 CSSString pseudoClass = this._cssParser.getString(selectors[i][5]);
+                                 if (pseudoClass.equalsIgnoreCase("link")) {
+                                    this.addClassStyle(5, PSEUDO_CLASS_LINK_CSSSTRING, this._currentStyleIndex);
+                                 }
+                           }
+                        }
+                     default:
+                        continue;
+                  }
+               case 4:
+                  if ((selectors[i][1] & 15) == 1) {
+                     int element = selectors[i][2];
+                     this.addElementStyle(element, this._currentStyleIndex);
+                  }
+                  break;
+               case 10:
+                  Vector descendants = (Vector)(new Object());
+                  CSSSelectorNode node = null;
+                  int index = 1;
+                  int length = selectors[i][selectors[i].length - 1];
+                  boolean validSelector = true;
+
+                  while (index < length && validSelector) {
+                     switch (selectors[i][index++]) {
+                        case 0:
+                           switch (selectors[i][index++]) {
+                              case 4:
+                                 if ((selectors[i][index++] & 15) != 1) {
+                                    validSelector = false;
+                                 } else {
+                                    int element = selectors[i][index++];
+                                    switch (selectors[i][index++]) {
+                                       case 5:
+                                          CSSString id = this._cssParser.getString(selectors[i][index++]);
+                                          node = new CSSSelectorNode(element);
+                                          node._idString = id;
+                                          descendants.addElement(node);
+                                          continue;
+                                       case 9:
+                                          CSSString classString = this._cssParser.getString(selectors[i][index++]);
+                                          node = new CSSSelectorNode(element);
+                                          node._classString = classString;
+                                          descendants.addElement(node);
+                                          continue;
+                                       case 10:
+                                          CSSString pseudoClass = this._cssParser.getString(selectors[i][index++]);
+                                          if (pseudoClass.equalsIgnoreCase("link")) {
+                                             node = new CSSSelectorNode(5);
+                                             node._classString = PSEUDO_CLASS_LINK_CSSSTRING;
+                                             descendants.addElement(node);
+                                          } else {
+                                             validSelector = false;
+                                          }
+                                          continue;
+                                       default:
+                                          validSelector = false;
+                                    }
+                                 }
+                                 continue;
+                              default:
+                                 validSelector = false;
+                                 continue;
+                           }
+                        case 4:
+                           if ((selectors[i][index++] & 15) == 1) {
+                              int element = selectors[i][index++];
+                              node = new CSSSelectorNode(element);
+                              descendants.addElement(node);
+                           } else {
+                              validSelector = false;
+                           }
+                        case 10:
+                           break;
+                        default:
+                           validSelector = false;
+                     }
+                  }
+
+                  if (validSelector) {
+                     this.addDescendantStyle(descendants, this._currentStyleIndex);
+                  }
+            }
+         }
+      }
    }
 
    @Override
@@ -8580,11 +8681,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       int index = 0;
       callDepth++;
       Asserts.productionStateAssert(callDepth <= 2);
-      int[] tempValue = (int[])this._cssTempArray[callDepth];
+      int[] tempValue = this._cssTempArray[callDepth];
       label720:
       switch (name) {
          case 2:
-            tempValue[0] = true;
+            tempValue[0] = 1;
             tempValue[1] = 161;
             this.property(callDepth, 4, tempValue, 2, important);
             tempValue[1] = 97;
@@ -8904,7 +9005,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                   borderColorProperty = 26;
             }
 
-            tempValue[0] = true;
+            tempValue[0] = 1;
             tempValue[1] = 85;
             this.property(callDepth, borderWidthProperty, tempValue, 2, important);
             tempValue[1] = 97;
@@ -9180,7 +9281,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             }
             break;
          case 47:
-            tempValue[0] = true;
+            tempValue[0] = 1;
             tempValue[1] = 98;
             this.property(callDepth, 50, tempValue, 2, important);
             this.property(callDepth, 51, tempValue, 2, important);
@@ -9511,7 +9612,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             }
             break;
          case 57:
-            tempValue[0] = true;
+            tempValue[0] = 1;
             tempValue[1] = 34;
             this.property(callDepth, 60, tempValue, 2, important);
             tempValue[1] = 97;

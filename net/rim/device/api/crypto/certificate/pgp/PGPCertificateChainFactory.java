@@ -21,7 +21,7 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
    }
 
    @Override
-   protected final Certificate[][][] createCertificateChainsInternal(
+   protected final Certificate[][] createCertificateChainsInternal(
       Certificate certificate, Certificate[] certificatePool, KeyStore keyStore, String emailAddress
    ) {
       if (certificate == null) {
@@ -50,12 +50,12 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
             label201:
             try {
                try {
-                  byte[][][] signerKeyIDs = currentCert.getSignerKeyIDs(emailAddress);
+                  byte[][] signerKeyIDs = currentCert.getSignerKeyIDs(emailAddress);
                   if (signerKeyIDs != null) {
                      int numSigners = signerKeyIDs.length;
 
                      for (int i = 0; i < numSigners; i++) {
-                        byte[] currentSignerKeyID = (byte[])signerKeyIDs[i];
+                        byte[] currentSignerKeyID = signerKeyIDs[i];
 
                         for (int j = 0; j < poolSize; j++) {
                            PGPCertificate currentCertificate = (PGPCertificate)certificatePool[j];
@@ -117,7 +117,7 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
          return (Object[][])null;
       }
 
-      PGPCertificate[][][] result = new PGPCertificate[numThreads][][];
+      PGPCertificate[][] result = new PGPCertificate[numThreads][];
 
       for (int i = 0; i < numThreads; i++) {
          result[i] = (PGPCertificate[])completeThreads.elementAt(i);

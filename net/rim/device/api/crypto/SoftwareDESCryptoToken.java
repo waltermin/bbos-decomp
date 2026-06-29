@@ -7,7 +7,7 @@ import net.rim.device.api.util.Persistable;
 final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable {
    private static SoftwareDESCryptoToken _instance = new SoftwareDESCryptoToken();
    private static final long ID_TEST_DES = -64388735954851049L;
-   private static final byte[][][] WEAK_KEYS;
+   private static final byte[][] WEAK_KEYS;
 
    static final SoftwareDESCryptoToken getInstance() {
       return _instance;
@@ -131,7 +131,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
             weak = false;
 
             for (int i = 0; i < WEAK_KEYS.length; i++) {
-               if (Arrays.equals(data, offset, (byte[])WEAK_KEYS[i], 0, 8)) {
+               if (Arrays.equals(data, offset, WEAK_KEYS[i], 0, 8)) {
                   weak = true;
                   break;
                }
@@ -167,23 +167,23 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
          appRegistry.put(-64388735954851049L, appRegistry);
       }
 
-      WEAK_KEYS = new byte[][][]{
-         (byte[][])({1, 1, 1, 1, 1, 1, 1, 1}),
-         (byte[][])({31, 31, 31, 31, 14, 14, 14, 14}),
-         (byte[][])({-32, -32, -32, -32, -15, -15, -15, -15}),
-         (byte[][])({-2, -2, -2, -2, -2, -2, -2, -2}),
-         (byte[][])({1, -2, 1, -2, 1, -2, 1, -2}),
-         (byte[][])({-2, 1, -2, 1, -2, 1, -2, 1}),
-         (byte[][])({31, -32, 31, -32, 14, -15, 14, -15}),
-         (byte[][])({-32, 31, -32, 31, -15, 14, -15, 14}),
-         (byte[][])({1, -32, 1, -32, 1, -15, 1, -15}),
-         (byte[][])({-32, 1, -32, 1, -15, 1, -15, 1}),
-         (byte[][])({31, -2, 31, -2, 14, -2, 14, -2}),
-         (byte[][])({-2, 31, -2, 31, -2, 14, -2, 14}),
-         (byte[][])({1, 31, 1, 31, 1, 14, 1, 14}),
-         (byte[][])({31, 1, 31, 1, 14, 1, 14, 1}),
-         (byte[][])({-32, -2, -32, -2, -15, -2, -15, -2}),
-         (byte[][])({-2, -32, -2, -32, -2, -15, -2, -15})
+      WEAK_KEYS = new byte[][]{
+         {1, 1, 1, 1, 1, 1, 1, 1},
+         {31, 31, 31, 31, 14, 14, 14, 14},
+         {-32, -32, -32, -32, -15, -15, -15, -15},
+         {-2, -2, -2, -2, -2, -2, -2, -2},
+         {1, -2, 1, -2, 1, -2, 1, -2},
+         {-2, 1, -2, 1, -2, 1, -2, 1},
+         {31, -32, 31, -32, 14, -15, 14, -15},
+         {-32, 31, -32, 31, -15, 14, -15, 14},
+         {1, -32, 1, -32, 1, -15, 1, -15},
+         {-32, 1, -32, 1, -15, 1, -15, 1},
+         {31, -2, 31, -2, 14, -2, 14, -2},
+         {-2, 31, -2, 31, -2, 14, -2, 14},
+         {1, 31, 1, 31, 1, 14, 1, 14},
+         {31, 1, 31, 1, 14, 1, 14, 1},
+         {-32, -2, -32, -2, -15, -2, -15, -2},
+         {-2, -32, -2, -32, -2, -15, -2, -15}
       };
    }
 }

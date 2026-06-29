@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.browser.util;
 import net.rim.vm.Array;
 
 public final class Table {
-   private TableItem[][][] _cellObjects = new TableItem[0][0][];
+   private TableItem[][] _cellObjects = new TableItem[0][0];
    private int _columnCount;
    private int _currentRow = 0;
    private int _currentColumn = 0;

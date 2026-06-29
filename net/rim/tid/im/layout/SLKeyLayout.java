@@ -9,7 +9,7 @@ import net.rim.tid.util.Utils;
 import net.rim.vm.Array;
 
 public class SLKeyLayout {
-   private short[][][] _ranges;
+   private short[][] _ranges;
    private short[] _special;
    private int _headerLength;
    private int _indexesLength;
@@ -245,7 +245,7 @@ public class SLKeyLayout {
       byte nRanges = (byte)(data[ptr++] & 0xFF);
       byte nSpecial = (byte)(data[ptr++] & 0xFF);
       this._headerLength = nRanges * 4 + nSpecial * 2;
-      this._ranges = new short[nRanges][][];
+      this._ranges = new short[nRanges][];
       this._special = new short[nSpecial];
 
       for (int i = 0; i < nRanges; i++) {
@@ -255,7 +255,7 @@ public class SLKeyLayout {
          this._indexesLength += (finish - start) * 2;
          range[0] = (short)start;
          range[1] = (short)finish;
-         this._ranges[i] = (short[][])range;
+         this._ranges[i] = range;
       }
 
       this._indexesLength += nSpecial * 2;
@@ -281,9 +281,9 @@ public class SLKeyLayout {
       int index = 0;
 
       for (int i = 0; i < this._ranges.length; i++) {
-         int rLen = (int)this._ranges[i][1];
+         int rLen = this._ranges[i][1];
 
-         for (int j = (int)this._ranges[i][0]; j < rLen; j++) {
+         for (int j = this._ranges[i][0]; j < rLen; j++) {
             this._iAltedKeys[index++] = CharacterUtilities.toUpperCase(this.getKeyChars(j, 0, false).charAt(0), this._locale.getCode());
          }
       }
@@ -337,9 +337,9 @@ public class SLKeyLayout {
       ch = CharacterUtilities.toUpperCase(ch, this._locale.getCode());
 
       for (int i = 0; i < this._ranges.length; i++) {
-         int rLen = (int)this._ranges[i][1];
+         int rLen = this._ranges[i][1];
 
-         for (int j = (int)this._ranges[i][0]; j < rLen; j++) {
+         for (int j = this._ranges[i][0]; j < rLen; j++) {
             char normal = this.getKeyChars(j, 8, false).charAt(0);
             if (CharacterUtilities.toUpperCase(normal, this._locale.getCode()) == ch) {
                return this.getKeyChars(j, 0, false).charAt(0);
@@ -361,9 +361,9 @@ public class SLKeyLayout {
 
    public int getOriginalKeyCode(char ch, int modifier) {
       for (int i = 0; i < this._ranges.length; i++) {
-         int rLen = (int)this._ranges[i][1];
+         int rLen = this._ranges[i][1];
 
-         for (int j = (int)this._ranges[i][0]; j < rLen; j++) {
+         for (int j = this._ranges[i][0]; j < rLen; j++) {
             StringBuffer chars = this.getKeyChars(j, modifier, false);
             if (this.indexOf(chars, ch) != -1) {
                return j;
@@ -402,9 +402,9 @@ public class SLKeyLayout {
       ch = CharacterUtilities.toUpperCase(ch, this._locale.getCode());
 
       for (int i = 0; i < this._ranges.length; i++) {
-         int rLen = (int)this._ranges[i][1];
+         int rLen = this._ranges[i][1];
 
-         for (int j = (int)this._ranges[i][0]; j < rLen; j++) {
+         for (int j = this._ranges[i][0]; j < rLen; j++) {
             for (int g = 0; g < 7; g++) {
                if (g != 4 && g != 5) {
                   char normal = this.getKeyChars(j, _modifiers[g], false).charAt(0);
@@ -503,9 +503,9 @@ public class SLKeyLayout {
 
    public synchronized StringBuffer getComplementaryChars(char ch, int modifier) {
       for (int i = 0; i < this._ranges.length; i++) {
-         int rLen = (int)this._ranges[i][1];
+         int rLen = this._ranges[i][1];
 
-         for (int j = (int)this._ranges[i][0]; j < rLen; j++) {
+         for (int j = this._ranges[i][0]; j < rLen; j++) {
             StringBuffer temp = this.getKeyChars(j, modifier, false);
             if (this.indexOf(temp, ch) != -1) {
                return temp;

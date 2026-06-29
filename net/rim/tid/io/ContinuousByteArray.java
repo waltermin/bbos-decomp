@@ -7,15 +7,15 @@ public class ContinuousByteArray {
    private ContinuousByteArray$BlockIndexes lastBlockIndex = new ContinuousByteArray$BlockIndexes();
    int iStart;
    int iLength;
-   byte[][][] iBuffer;
+   byte[][] iBuffer;
 
    public ContinuousByteArray() {
       this(new byte[0]);
    }
 
    public ContinuousByteArray(byte[] aBlock, int aStart, int aLength) {
-      this.iBuffer = new byte[1][][];
-      this.iBuffer[0] = (byte[][])aBlock;
+      this.iBuffer = new byte[1][];
+      this.iBuffer[0] = aBlock;
       this.iStart = aStart;
       this.iLength = aLength;
    }
@@ -24,13 +24,13 @@ public class ContinuousByteArray {
       this(aBlock, 0, aBlock.length);
    }
 
-   public ContinuousByteArray(byte[][][] aBuffer, int aStart, int aLength) {
+   public ContinuousByteArray(byte[][] aBuffer, int aStart, int aLength) {
       int first_block = 0;
       int last_block = 0;
       this.iStart = aStart;
       this.iLength = aLength;
       if (aLength == 0) {
-         this.iBuffer = new byte[0][0][];
+         this.iBuffer = new byte[0][0];
          this.iStart = 0;
       }
 
@@ -48,7 +48,7 @@ public class ContinuousByteArray {
       if (aBuffer.length == len) {
          this.iBuffer = aBuffer;
       } else {
-         this.iBuffer = new byte[len][][];
+         this.iBuffer = new byte[len][];
 
          for (int i = 0; i < len; i++) {
             this.iBuffer[i] = aBuffer[first_block + i];
@@ -56,7 +56,7 @@ public class ContinuousByteArray {
       }
    }
 
-   public ContinuousByteArray(byte[][][] aBuffer) {
+   public ContinuousByteArray(byte[][] aBuffer) {
       this.iBuffer = aBuffer;
       this.iStart = 0;
       this.iLength = 0;
@@ -70,7 +70,7 @@ public class ContinuousByteArray {
       if (this.iBuffer.length != 1) {
          throw new Object("Array consists of multiple blocks");
       } else {
-         return (byte[])this.iBuffer[0];
+         return this.iBuffer[0];
       }
    }
 
@@ -87,7 +87,7 @@ public class ContinuousByteArray {
          start = 0;
       }
 
-      return (byte)this.iBuffer[i][start + index];
+      return this.iBuffer[i][start + index];
    }
 
    public ContinuousByteArray$BlockIndexes getLastBlockRequested() {
@@ -199,7 +199,7 @@ public class ContinuousByteArray {
             }
 
             for (int k = index; k < till; k++) {
-               buf.append(((StringBuffer)(new Object(","))).append((int)this.iBuffer[i][k]).toString());
+               buf.append(((StringBuffer)(new Object(","))).append(this.iBuffer[i][k]).toString());
             }
 
             if (till < l) {
@@ -229,7 +229,7 @@ public class ContinuousByteArray {
 
          for (int i = block; length != 0; i++) {
             int toWrite = this.iBuffer[i].length - start - length < 0 ? this.iBuffer[i].length - start : length;
-            os.write((byte[])this.iBuffer[i], start, toWrite);
+            os.write(this.iBuffer[i], start, toWrite);
             start = 0;
             length -= toWrite;
          }
@@ -244,7 +244,7 @@ public class ContinuousByteArray {
       this.writeInto(os, start, this.length() - start);
    }
 
-   public byte[][][] getData() {
+   public byte[][] getData() {
       return this.iBuffer;
    }
 
@@ -264,7 +264,7 @@ public class ContinuousByteArray {
       }
 
       if (found) {
-         this.iPosition.iBlock = (byte[])this.iBuffer[i];
+         this.iPosition.iBlock = this.iBuffer[i];
          this.iPosition.iOffset = start + aOffset;
       } else {
          this.iPosition.iBlock = null;

@@ -10,11 +10,11 @@ public final class PMEGraphics {
    private boolean _enabled;
    private int _iNodeRoot = -1;
    private int[] _nodes;
-   private int[][][] _coords;
-   private byte[][][] _pointTypes;
+   private int[][] _coords;
+   private byte[][] _pointTypes;
    private Object[] _images;
    private Object[] _foreignObjects;
-   private char[][][] _strings;
+   private char[][] _strings;
    private String[] _fontFamilies;
    private String _defaultFontFamily;
    private XYRect _viewport = new XYRect();
@@ -185,7 +185,7 @@ public final class PMEGraphics {
       this._iNodeRoot = rootIndex;
    }
 
-   public final boolean setCoords(int[][][] coords) {
+   public final boolean setCoords(int[][] coords) {
       if (this._coords != coords) {
          this._coords = coords;
          return true;
@@ -194,7 +194,7 @@ public final class PMEGraphics {
       }
    }
 
-   public final boolean setPointTypes(byte[][][] pointTypes) {
+   public final boolean setPointTypes(byte[][] pointTypes) {
       if (this._pointTypes != pointTypes) {
          this._pointTypes = pointTypes;
          return true;
@@ -221,7 +221,7 @@ public final class PMEGraphics {
       }
    }
 
-   public final boolean setStrings(char[][][] strings) {
+   public final boolean setStrings(char[][] strings) {
       if (this._strings != strings) {
          this._strings = strings;
          return true;

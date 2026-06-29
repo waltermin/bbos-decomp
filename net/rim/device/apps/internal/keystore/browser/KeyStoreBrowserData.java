@@ -64,7 +64,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
          return null;
       }
 
-      byte[][][] emailAddresses = (byte[][][])this._keyStoreData.getAssociatedData(-1124699153917633064L);
+      byte[][] emailAddresses = this._keyStoreData.getAssociatedData(-1124699153917633064L);
       if (emailAddresses == null) {
          return null;
       }
@@ -73,7 +73,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
       String[] addresses = new Object[numAddresses];
 
       for (int i = 0; i < numAddresses; i++) {
-         addresses[i] = (String)(new Object((byte[])emailAddresses[i]));
+         addresses[i] = (String)(new Object(emailAddresses[i]));
       }
 
       return addresses;
@@ -92,7 +92,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
 
    public final synchronized void verifyCertificateChainsBuilt() {
       if (this._bestCertificateChain == null) {
-         Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(this._certificate, (Certificate[])null, this._keyStore);
+         Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(this._certificate, null, this._keyStore);
          long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
             certificateChains, this._keyStore, this._trustedKeyStore, System.currentTimeMillis(), this._cryptoSystemProperties
          );

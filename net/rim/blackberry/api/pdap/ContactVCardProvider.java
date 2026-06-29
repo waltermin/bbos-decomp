@@ -7,7 +7,7 @@ class ContactVCardProvider implements VCardProvider {
    private int _version;
    ContactImpl _contact;
    private String[] _nameArray = new Object[5];
-   private String[][][] _addressArray = new Object[2][7][];
+   private String[][] _addressArray = new Object[2][7];
    private boolean _hasAddress;
    private int _nextAddress = 0;
    private int _currentPhoneIndex;

@@ -17,8 +17,8 @@ import net.rim.vm.TraceBack;
 public final class ServiceRouting {
    private ServiceRoutingProperties[] _ifaces = new ServiceRoutingProperties[0];
    private String[] _services = new Object[0];
-   private int[][][] _servicesCapabilities = new int[0][][];
-   private int[][][] _routes = new int[0][][];
+   private int[][] _servicesCapabilities = new int[0][];
+   private int[][] _routes = new int[0][];
    private byte[] _routesState = new byte[0];
    private Object[] _listeners;
    private Proxy _proxy = Proxy.getInstance();
@@ -83,17 +83,64 @@ public final class ServiceRouting {
    }
 
    public final synchronized boolean isServiceCapable(int capability, String service, int route) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      boolean capable = false;
+      if (service != null) {
+         int index = this.getServiceIndex(service);
+         if (index >= 0 && this._servicesCapabilities[index] != null) {
+            if (route >= 0) {
+               int routeIndex = Arrays.getIndex(this._routes[index], route);
+               if (routeIndex >= 0 && routeIndex < this._servicesCapabilities[index].length) {
+                  capable = (this._servicesCapabilities[index][routeIndex] & capability) == capability;
+               }
+            } else {
+               for (int i = this._servicesCapabilities[index].length - 1; i >= 0; i--) {
+                  if ((this._servicesCapabilities[index][i] & capability) == capability) {
+                     capable = true;
+                     break;
+                  }
+               }
+            }
+         }
+      } else if (route >= 0) {
+         for (int i = this._routes.length - 1; i >= 0; i--) {
+            int routeIndex = Arrays.getIndex(this._routes[i], route);
+            if (routeIndex >= 0 && routeIndex < this._servicesCapabilities[i].length && (this._servicesCapabilities[i][routeIndex] & capability) == capability) {
+               capable = true;
+               break;
+            }
+         }
+      } else {
+         for (int i = this._servicesCapabilities.length - 1; i >= 0; i--) {
+            for (int j = this._servicesCapabilities[i].length - 1; j >= 0; j--) {
+               if ((this._servicesCapabilities[i][j] & capability) == capability) {
+                  capable = true;
+                  break;
+               }
+            }
+         }
+      }
+
+      if (capable) {
+         capable = this.isServiceRoutable(service, route);
+      }
+
+      if (!capable && route == -1) {
+         capable = this.isServiceRoutable(service, this.getRouteHandle(ServiceRoutingProperties.MDP))
+            || this.isServiceRoutable(service, this.getRouteHandle(ServiceRoutingProperties.RCP_WI_FI))
+            || this.isServiceRoutable(service, this.getRouteHandle(ServiceRoutingProperties.RCP_RF));
+      }
+
+      return capable;
    }
 
    public final synchronized boolean isServiceRoutable(String service, int route) {
       boolean result = false;
       if (service != null) {
          int index = this.getServiceIndex(service);
-         result = index >= 0 && (route == -1 || Arrays.getIndex((int[])this._routes[index], route) >= 0);
+         result = index >= 0 && (route == -1 || Arrays.getIndex(this._routes[index], route) >= 0);
       } else if (route != -1) {
          for (int i = this._routes.length - 1; i >= 0; i--) {
-            if (Arrays.getIndex((int[])this._routes[i], route) >= 0) {
+            if (Arrays.getIndex(this._routes[i], route) >= 0) {
                result = true;
                break;
             }
@@ -176,7 +223,115 @@ public final class ServiceRouting {
    }
 
    public final void setServiceState(String service, int serviceCapabilities, int route, boolean serviceState, boolean redirect) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      ControlledAccess.assertRRISignatures(false);
+      Object[] listeners = null;
+      boolean serviceStateChanged = true;
+      boolean capabilitiesChanged = false;
+      synchronized (this) {
+         int serviceIndex = this.getServiceIndex(service);
+         if (serviceState) {
+            boolean routeState = true;
+            if (serviceIndex >= 0) {
+               int index = Arrays.getIndex(this._routes[serviceIndex], route);
+               if (index >= 0) {
+                  int currentCapabilities = this._servicesCapabilities[serviceIndex][index];
+                  if ((currentCapabilities | serviceCapabilities) == currentCapabilities) {
+                     return;
+                  }
+
+                  capabilitiesChanged = true;
+               } else {
+                  routeState = this.isServiceRoutable(null, route);
+                  Arrays.add(this._routes[serviceIndex], route);
+                  int capabilitiesIndex = Arrays.getIndex(this._servicesCapabilities[serviceIndex], serviceCapabilities);
+                  int currentCapabilities = capabilitiesIndex < 0 ? 0 : this._servicesCapabilities[serviceIndex][capabilitiesIndex];
+                  if ((currentCapabilities | serviceCapabilities) != currentCapabilities) {
+                     capabilitiesChanged = true;
+                  }
+
+                  Arrays.add(this._servicesCapabilities[serviceIndex], serviceCapabilities);
+               }
+            } else {
+               routeState = this.isServiceRoutable(null, route);
+               Arrays.add(this._services, service);
+               int[] routes = new int[]{route};
+               Arrays.add(this._routes, routes);
+               int[] capabilities = new int[]{serviceCapabilities};
+               Arrays.add(this._servicesCapabilities, capabilities);
+               capabilitiesChanged = true;
+            }
+
+            if (!routeState) {
+               this.setRouteState(false, route, true, true);
+            }
+         } else {
+            if (serviceIndex < 0) {
+               return;
+            }
+
+            int routeIndex = Arrays.getIndex(this._routes[serviceIndex], route);
+            if (routeIndex < 0) {
+               return;
+            }
+
+            if (this._routes[serviceIndex].length > 1) {
+               Arrays.removeAt(this._routes[serviceIndex], routeIndex);
+               serviceCapabilities = this._servicesCapabilities[serviceIndex][routeIndex];
+               Arrays.removeAt(this._servicesCapabilities[serviceIndex], routeIndex);
+               serviceStateChanged = false;
+               int i = this._servicesCapabilities[serviceIndex].length - 1;
+
+               while (i >= 0 && (this._servicesCapabilities[serviceIndex][i] & serviceCapabilities) != serviceCapabilities) {
+                  i--;
+               }
+
+               if (i < 0) {
+                  capabilitiesChanged = true;
+               }
+            } else {
+               Arrays.removeAt(this._services, serviceIndex);
+               Arrays.removeAt(this._routes, serviceIndex);
+               Arrays.removeAt(this._servicesCapabilities, serviceIndex);
+               capabilitiesChanged = true;
+            }
+
+            if (!this.isServiceRoutable(null, route)) {
+               this.setRouteState(false, route, false, true);
+            }
+
+            if (!serviceStateChanged && !capabilitiesChanged) {
+               return;
+            }
+         }
+
+         listeners = this._listeners;
+      }
+
+      if (listeners != null) {
+         if (redirect) {
+            if (serviceStateChanged || capabilitiesChanged) {
+               this._proxy.invokeRunnable(new ServiceRoutingRunnable(listeners, service, serviceState, capabilitiesChanged));
+               return;
+            }
+         } else {
+            for (int i = listeners.length - 1; i >= 0; i--) {
+               try {
+                  if (serviceStateChanged) {
+                     ((ServiceRoutingListener)listeners[i]).serviceRoutingStateChanged(service, serviceState);
+                  }
+
+                  if (capabilitiesChanged) {
+                     Object var10000 = listeners[i];
+                     if (listeners[i] instanceof ServiceRoutingListener2) {
+                        ((ServiceRoutingListener2)var10000).serviceRoutingCapabilitiesChanged(service);
+                     }
+                  }
+               } finally {
+                  continue;
+               }
+            }
+         }
+      }
    }
 
    public final void setRouteState(int route, boolean routeState, boolean redirect) {
@@ -190,7 +345,7 @@ public final class ServiceRouting {
          synchronized (this) {
             if (checkServices && !routeState) {
                for (int i = this._routes.length - 1; i >= 0; i--) {
-                  int routeIndex = Arrays.getIndex((int[])this._routes[i], route);
+                  int routeIndex = Arrays.getIndex(this._routes[i], route);
                   if (routeIndex >= 0 && this._routes[i].length >= 1) {
                      this.setServiceState(this._services[i], 0, route, false, true);
                   }

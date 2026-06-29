@@ -22,7 +22,7 @@ public final class VideoRecorderOptions extends OptionsBase {
    public static final int VIDEO_FORMAT_STANDARD = 0;
    public static final int VIDEO_FORMAT_MMS_MODE = 1;
    public static final int VIDEO_FORMAT_DEFAULT_INDEX = 0;
-   private static int[][][] _videoFormatTable = new int[2][][];
+   private static int[][] _videoFormatTable = new int[2][];
    private static final int[] VIDEO_FORMAT_240x180 = new int[]{
       240, 180, 2, 527827200, 16810638, 1701539702, 1870004480, 1849779563, 56711012, 1870004480, 290219371, 262155
    };
@@ -49,11 +49,11 @@ public final class VideoRecorderOptions extends OptionsBase {
    private VideoRecorderOptions() {
       String device = DeviceInfo.getDeviceName();
       if (!device.equals("8130") && !device.equals("8330")) {
-         _videoFormatTable[0] = (int[][])VIDEO_FORMAT_240x180;
-         _videoFormatTable[1] = (int[][])VIDEO_FORMAT_176x144;
+         _videoFormatTable[0] = VIDEO_FORMAT_240x180;
+         _videoFormatTable[1] = VIDEO_FORMAT_176x144;
       } else {
-         _videoFormatTable[0] = (int[][])VIDEO_FORMAT_240x176;
-         _videoFormatTable[1] = (int[][])VIDEO_FORMAT_176x144;
+         _videoFormatTable[0] = VIDEO_FORMAT_240x176;
+         _videoFormatTable[1] = VIDEO_FORMAT_176x144;
       }
    }
 
@@ -127,7 +127,7 @@ public final class VideoRecorderOptions extends OptionsBase {
    }
 
    public final int[] getVideoFormat(int index) {
-      return (int[])_videoFormatTable[index];
+      return _videoFormatTable[index];
    }
 
    public final void setVideoFormatIndex(int index) {

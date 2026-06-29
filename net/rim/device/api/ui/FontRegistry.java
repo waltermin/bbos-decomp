@@ -15,7 +15,7 @@ import net.rim.device.resources.Resource;
 import net.rim.device.resources.Resource$Internal;
 
 public final class FontRegistry {
-   private byte[][][] _fontData = new byte[125][][];
+   private byte[][] _fontData = new byte[125][];
    private int _index;
    private String[] _typefaceNameTable = new String[64];
    private int _typefaceCount;
@@ -104,7 +104,7 @@ public final class FontRegistry {
          byte[] first_block = resource_class.getResource(aFileName + ".001");
 
          for (int var16 = 0; var16 < 125; var16++) {
-            if (probablyIdentical((byte[])this._fontData[var16], first_block)) {
+            if (probablyIdentical(this._fontData[var16], first_block)) {
                Enumeration e = this._fontInfo.elements();
                IntEnumeration ien = this._fontInfo.keys();
                FontRegistry$FontInfo fi = null;
@@ -135,7 +135,7 @@ public final class FontRegistry {
                file_name = file_name + "." + index;
             }
 
-            this._fontData[start_index + var17] = (byte[][])resource_class.getResource(file_name);
+            this._fontData[start_index + var17] = resource_class.getResource(file_name);
             if (this._fontData[start_index + var17] == null) {
                for (int j = 0; j < var17; j++) {
                   this._fontData[start_index + j] = null;
@@ -222,7 +222,7 @@ public final class FontRegistry {
          int i = 0;
          boolean emptySpotFound = false;
 
-         while (i < 125 && !probablyIdentical((byte[])this._fontData[i], data)) {
+         while (i < 125 && !probablyIdentical(this._fontData[i], data)) {
             if (this.isShufle && this._fontData[i] == null) {
                this._index = i;
                emptySpotFound = true;
@@ -257,7 +257,7 @@ public final class FontRegistry {
                }
             }
          } else {
-            this._fontData[this._index] = (byte[][])data;
+            this._fontData[this._index] = data;
             int hd;
             if ((hd = loadFontResource(data, typefaceName, isPublic, this._index)) == 0) {
                this._fontData[this._index] = null;
@@ -423,7 +423,7 @@ public final class FontRegistry {
             return FontFamily.UNKNOWN_FONT;
          }
 
-         byte[] data = (byte[])this._fontData[fi._index];
+         byte[] data = this._fontData[fi._index];
          if (data.length < 4) {
             return FontFamily.UNKNOWN_FONT;
          }
@@ -462,7 +462,7 @@ public final class FontRegistry {
             return rc;
          }
 
-         byte[] data = (byte[])this._fontData[id];
+         byte[] data = this._fontData[id];
 
          try {
             DataInputStream stream = new DataInputStream(new ByteArrayInputStream(data));
@@ -628,7 +628,7 @@ public final class FontRegistry {
 
    private static final native int loadFontResource(byte[] var0, String var1, boolean var2, int var3);
 
-   private static final native int loadSplitFontResource(byte[][][] var0, String var1, boolean var2, int var3, int var4);
+   private static final native int loadSplitFontResource(byte[][] var0, String var1, boolean var2, int var3, int var4);
 
    private static final native int unloadFontResource(int var0);
 

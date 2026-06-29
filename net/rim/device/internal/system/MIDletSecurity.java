@@ -530,7 +530,7 @@ public final class MIDletSecurity {
    }
 
    public static final boolean prepareForRootDomainInstallation() {
-      byte[][][] items = new byte[31][][];
+      byte[][] items = new byte[31][];
 
       for (int field = 26; field <= 30; field++) {
          byte[] probe = NvStore.readData(field);
@@ -540,16 +540,16 @@ public final class MIDletSecurity {
                   return false;
                }
             } else {
-               items[field] = (byte[][])probe;
+               items[field] = probe;
             }
          }
       }
 
       for (int field = 26; field <= 30; field++) {
-         byte[] probe1 = (byte[])items[field];
+         byte[] probe1 = items[field];
          if (probe1 != null) {
             for (int check = field + 1; check <= 30; check++) {
-               byte[] probe2 = (byte[])items[check];
+               byte[] probe2 = items[check];
                if (probe2 != null && Arrays.equals(probe1, probe2)) {
                   if (!NvStore.deleteData(check)) {
                      return false;
@@ -562,16 +562,16 @@ public final class MIDletSecurity {
       }
 
       for (int field = 26; field <= 30; field++) {
-         byte[] probe = (byte[])items[field];
+         byte[] probe = items[field];
          if (probe == null) {
             for (int check = field + 1; check <= 30; check++) {
-               byte[] probe2 = (byte[])items[check];
+               byte[] probe2 = items[check];
                if (probe2 != null) {
                   if (!NvStore.writeData(field, probe2)) {
                      return false;
                   }
 
-                  items[field] = (byte[][])probe2;
+                  items[field] = probe2;
                   if (!NvStore.deleteData(check)) {
                      return false;
                   }

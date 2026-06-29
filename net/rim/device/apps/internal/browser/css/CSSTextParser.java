@@ -20,7 +20,7 @@ public final class CSSTextParser implements CSSParser {
    private String[] _urls;
    private int _urlCount;
    private Vector _freeList = (Vector)(new Object());
-   private int[][][] _currentSelector = new int[5][][];
+   private int[][] _currentSelector = new int[5][];
    private static final String[] DEFAULT_MEDIA_LIST = new Object[0];
 
    protected final void parseAtRule() {
@@ -165,31 +165,31 @@ public final class CSSTextParser implements CSSParser {
 
       try {
          var6 = true;
-         this._handler.startSelector((int[][])this._currentSelector, selectorSize);
+         this._handler.startSelector(this._currentSelector, selectorSize);
          this.nextTokenIgnoreWhitespace();
          this.parseStyleDeclaration();
          var6 = false;
       } finally {
          if (var6) {
-            this._handler.endSelector((int[][])this._currentSelector, selectorSize);
+            this._handler.endSelector(this._currentSelector, selectorSize);
 
             for (int i = 0; i < selectorSize; i++) {
-               this.deallocateArray((int[])this._currentSelector[i]);
+               this.deallocateArray(this._currentSelector[i]);
             }
          }
       }
 
-      this._handler.endSelector((int[][])this._currentSelector, selectorSize);
+      this._handler.endSelector(this._currentSelector, selectorSize);
 
       for (int i = 0; i < selectorSize; i++) {
-         this.deallocateArray((int[])this._currentSelector[i]);
+         this.deallocateArray(this._currentSelector[i]);
       }
    }
 
    private final int parseSelectorList() {
       int offset = 0;
 
-      for (this._currentSelector[offset++] = (int[][])this.parseSelector(); this._token == 46; this._currentSelector[offset++] = (int[][])this.parseSelector()) {
+      for (this._currentSelector[offset++] = this.parseSelector(); this._token == 46; this._currentSelector[offset++] = this.parseSelector()) {
          this.nextTokenIgnoreWhitespace();
          int length = this._currentSelector.length;
          if (offset >= length) {

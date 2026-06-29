@@ -135,12 +135,12 @@ public class KeywordSearcher implements IDataSearchRepository {
    }
 
    protected synchronized void search(String[] words, FilterStatusListener listener) {
-      this.search(new String[][][]{words}, listener);
+      this.search(new String[][]{words}, listener);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   protected synchronized void search(String[][][] words, FilterStatusListener listener) {
+   protected synchronized void search(String[][] words, FilterStatusListener listener) {
       AbstractKeywordFilterList list = this.getList();
       boolean var12 = false /* VF: Semaphore variable */;
 

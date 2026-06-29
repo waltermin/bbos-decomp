@@ -14,7 +14,7 @@ import net.rim.vm.UnGroupable;
 
 public class PGPPrivateKey implements PrivateKey, UnGroupable {
    private byte[] _parentKeyID;
-   private byte[][][] _subKeyIDs;
+   private byte[][] _subKeyIDs;
    private PGPPrivateKeyPacket[] _packets;
    private PGPPasswordTicket _ticket;
    private String[] _ticketPromptParameters;
@@ -182,7 +182,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       return this._parentKeyID;
    }
 
-   public byte[][][] getSubKeyIDs() {
+   public byte[][] getSubKeyIDs() {
       return this._subKeyIDs;
    }
 
@@ -204,7 +204,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
          int numSubKeys = this._subKeyIDs.length;
 
          for (int i = 0; i < numSubKeys; i++) {
-            if (Arrays.equals(keyID, (byte[])this._subKeyIDs[i])) {
+            if (Arrays.equals(keyID, this._subKeyIDs[i])) {
                return this.getSubKey(i);
             }
          }
@@ -306,10 +306,10 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
          this._packets = packets;
          this._parentKeyID = this._packets[0].getKeyID();
          int length = this._packets.length;
-         this._subKeyIDs = new byte[length - 1][][];
+         this._subKeyIDs = new byte[length - 1][];
 
          for (int i = 1; i < length; i++) {
-            this._subKeyIDs[i - 1] = (byte[][])this._packets[i].getKeyID();
+            this._subKeyIDs[i - 1] = this._packets[i].getKeyID();
          }
 
          if (pgpKeyDisplayName != null) {

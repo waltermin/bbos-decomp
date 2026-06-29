@@ -4,6 +4,7 @@ import net.rim.device.api.collection.IntRangedActionTarget;
 import net.rim.device.api.collection.NotificationSuspension;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.system.RIMPersistentStore;
+import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -23,9 +24,9 @@ public final class DeleteMultipleItemsVerb extends Verb {
    private static final int ALL = 0;
    private static final int ALL_SAVED = 1;
    private static final int ALL_SAVED_TOO = 2;
-   private static final int[][][] PROMPT_TABLE = new int[][][]{
-      (int[][])({3001, 3006, 3009, -804651005, 3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338}),
-      (int[][])({3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338, 1929445514, 996951338, 7618954, -1910540799})
+   private static final int[][] PROMPT_TABLE = new int[][]{
+      {3001, 3006, 3009, -804651005, 3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338},
+      {3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338, 1929445514, 996951338, 7618954, -1910540799}
    };
    private static final int SELECTED_ITEM_DELETE_OPTIMIZATION_THRESHOLD = 64;
 
@@ -62,7 +63,11 @@ public final class DeleteMultipleItemsVerb extends Verb {
    }
 
    private final boolean doPrompt(boolean yesNo, int promptType) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int defaultChoice = yesNo ? -1 : -1;
+      int proceedChoice = yesNo ? 4 : 3;
+      int type = yesNo ? 3 : 2;
+      int resId = PROMPT_TABLE[this._type][promptType];
+      return Dialog.ask(type, CommonResources.getString(resId), defaultChoice) == proceedChoice;
    }
 
    private final boolean proceedWithDeleteOfMainMessages(ContextObject context) {

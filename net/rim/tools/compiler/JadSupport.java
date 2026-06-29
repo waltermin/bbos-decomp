@@ -604,7 +604,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       }
    }
 
-   private void checkAttributes(String[] tags, String[][][] allowed) {
+   private void checkAttributes(String[] tags, String[][] allowed) {
       int num = tags.length;
 
       for (int i = 0; i < num; i++) {

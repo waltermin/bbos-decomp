@@ -4,8 +4,8 @@ import com.sun.cldc.i18n.StreamReader;
 import java.io.IOException;
 
 public final class SMS_Reader extends StreamReader {
-   private static char[][][] TABLES = new char[][][]{
-      (char[][])({
+   private static char[][] TABLES = new char[][]{
+      {
             '@',
             '£',
             '$',
@@ -262,8 +262,8 @@ public final class SMS_Reader extends StreamReader {
             '\u0000',
             '\u0000',
             '\u0000'
-      }),
-      (char[][])({
+      },
+      {
             '\u0000',
             '\u0000',
             '\u0000',
@@ -520,7 +520,7 @@ public final class SMS_Reader extends StreamReader {
             '蛲',
             '#',
             '\u0000'
-      })
+      }
    };
 
    @Override
@@ -549,9 +549,9 @@ public final class SMS_Reader extends StreamReader {
                   table--;
                }
 
-               ch = (char)TABLES[table][index];
-               if (ch == false) {
-                  ch = (char)TABLES[0][index];
+               ch = TABLES[table][index];
+               if (ch == 0) {
+                  ch = TABLES[0][index];
                }
 
                int var5 = false;

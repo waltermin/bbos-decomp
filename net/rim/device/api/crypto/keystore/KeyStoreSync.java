@@ -572,10 +572,10 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
          while (enumeration.hasMoreElements()) {
             Registration registration = (Registration)enumeration.nextElement();
             if (registration.getUp()) {
-               byte[][][] associations = data.getAssociatedData(registration.getAssociatedDataConstant());
+               byte[][] associations = data.getAssociatedData(registration.getAssociatedDataConstant());
                if (associations != null) {
                   for (int m = 0; m < associations.length; m++) {
-                     ConverterUtilities.writeByteArray(buffer, registration.getSyncConstant(), (byte[])associations[m]);
+                     ConverterUtilities.writeByteArray(buffer, registration.getSyncConstant(), associations[m]);
                   }
                }
             }

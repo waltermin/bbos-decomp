@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.file;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -35,10 +36,10 @@ public final class FileSystem {
    private int _currentTail;
    private boolean _commitOnDelete;
    private Object _journalLock;
-   private InputStream[][][] _openedInputStreams;
-   private InputStream[][][] _openedRIMInputStreams;
-   private OutputStream[][][] _openedOutputStreams;
-   private OutputStream[][][] _openedRIMOutputStreams;
+   private InputStream[][] _openedInputStreams;
+   private InputStream[][] _openedRIMInputStreams;
+   private OutputStream[][] _openedOutputStreams;
+   private OutputStream[][] _openedRIMOutputStreams;
    private int[] _maxWriteSize;
    private int[] _maxReadSize;
    public static final int FILESYSTEM_SDCARD = 1;
@@ -54,13 +55,13 @@ public final class FileSystem {
       this._entryUSN = new long[100];
       this._entryCache = new FileSystemJournalEntry[100];
       this._currentTail = -1;
-      this._openedInputStreams = new InputStream[4][][];
+      this._openedInputStreams = new InputStream[4][];
       this._openedInputStreams[1] = new InputStream[0];
-      this._openedRIMInputStreams = new InputStream[4][][];
+      this._openedRIMInputStreams = new InputStream[4][];
       this._openedRIMInputStreams[1] = new InputStream[0];
-      this._openedOutputStreams = new OutputStream[4][][];
+      this._openedOutputStreams = new OutputStream[4][];
       this._openedOutputStreams[1] = new OutputStream[0];
-      this._openedRIMOutputStreams = new OutputStream[4][][];
+      this._openedRIMOutputStreams = new OutputStream[4][];
       this._openedRIMOutputStreams[1] = new OutputStream[0];
       this._maxWriteSize = new int[4];
       this._maxReadSize = new int[4];
@@ -143,11 +144,53 @@ public final class FileSystem {
    }
 
    public static final void flushAllStreams(int rootId) {
-      throw new RuntimeException("cod2jar: invokevirtual: receiver not in world");
+      synchronized (_fileSystem) {
+         for (int i = 0; i < _fileSystem._openedRIMOutputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedRIMOutputStreams[rootId][i].flush();
+            } catch (IOException var6) {
+            }
+         }
+
+         for (int i = 0; i < _fileSystem._openedOutputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedOutputStreams[rootId][i].flush();
+            } catch (IOException var5) {
+            }
+         }
+      }
    }
 
    public static final void closeAllStreams(int rootId) {
-      throw new RuntimeException("cod2jar: invokevirtual: receiver not in world");
+      synchronized (_fileSystem) {
+         for (int i = 0; i < _fileSystem._openedRIMOutputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedRIMOutputStreams[rootId][i].close();
+            } catch (IOException var8) {
+            }
+         }
+
+         for (int i = 0; i < _fileSystem._openedRIMInputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedRIMInputStreams[rootId][i].close();
+            } catch (IOException var7) {
+            }
+         }
+
+         for (int i = 0; i < _fileSystem._openedOutputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedOutputStreams[rootId][i].close();
+            } catch (IOException var6) {
+            }
+         }
+
+         for (int i = 0; i < _fileSystem._openedInputStreams[rootId].length; i++) {
+            try {
+               _fileSystem._openedInputStreams[rootId][i].close();
+            } catch (IOException var5) {
+            }
+         }
+      }
    }
 
    public static final String getRootName(int root) {

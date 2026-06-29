@@ -11,10 +11,10 @@ import net.rim.device.apps.internal.bis.launch.resource.ApplicationResources;
 public final class UpdateScreen extends BaseScreen {
    boolean mandatory;
    String[] downloadUrls;
-   byte[][][] digests;
+   byte[][] digests;
    int size;
 
-   public UpdateScreen(boolean mandatory, String[] downloadUrls, byte[][][] digests, int size) {
+   public UpdateScreen(boolean mandatory, String[] downloadUrls, byte[][] digests, int size) {
       super(ApplicationResources.getString(2));
       this.mandatory = mandatory;
       this.downloadUrls = downloadUrls;

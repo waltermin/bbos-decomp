@@ -51,8 +51,8 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    private int _userId = -1;
    private String[] _bbrHosts;
    private int[] _bbrPorts;
-   private String[][][] _bbrParameterKeys;
-   private String[][][] _bbrParameterValues;
+   private String[][] _bbrParameterKeys;
+   private String[][] _bbrParameterValues;
    private long _lastUpdated;
    private int _serviceIdentifier;
    public static final int MOBITEX_WIRELESS_NET_TYPE = 2;
@@ -654,8 +654,8 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       this._dirty = true;
       if (urlParameters != null && urlParameters.length != 0) {
-         this._bbrParameterKeys = new Object[urlParameters.length][0][];
-         this._bbrParameterValues = new Object[urlParameters.length][0][];
+         this._bbrParameterKeys = new Object[urlParameters.length][0];
+         this._bbrParameterValues = new Object[urlParameters.length][0];
 
          for (int i = 0; i < urlParameters.length; i++) {
             Vector keys = urlParameters[i].getKeys();
@@ -664,7 +664,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
                Array.resize(this._bbrParameterValues[i], keys.size());
 
                for (int j = 0; j < keys.size(); j++) {
-                  this._bbrParameterKeys[i][j] = (String[])keys.elementAt(j);
+                  this._bbrParameterKeys[i][j] = (String)keys.elementAt(j);
                   this._bbrParameterValues[i][j] = urlParameters[i].getValue(this._bbrParameterKeys[i][j]);
                }
             }

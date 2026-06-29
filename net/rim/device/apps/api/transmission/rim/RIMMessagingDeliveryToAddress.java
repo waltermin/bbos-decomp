@@ -6,8 +6,8 @@ import net.rim.device.apps.api.transmission.Parameters;
 public final class RIMMessagingDeliveryToAddress extends RIMMessagingTransmission {
    private Parameters _parameters = new Parameters(5, 8);
 
-   public final String[][][] getAddresses() {
-      return CMIMEUtilities.decodeAddresses((byte[][][])this._parameters.get((byte)64));
+   public final String[][] getAddresses() {
+      return CMIMEUtilities.decodeAddresses(this._parameters.get((byte)64));
    }
 
    public final int getReferenceIdentifier() {

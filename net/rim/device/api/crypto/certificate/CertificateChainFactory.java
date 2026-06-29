@@ -32,7 +32,7 @@ public class CertificateChainFactory extends CertificateProperties {
       return true;
    }
 
-   public static Certificate[][][] createCertificateChains(Certificate certificate, Certificate[] certificatePool, KeyStore keyStore, String emailAddress) {
+   public static Certificate[][] createCertificateChains(Certificate certificate, Certificate[] certificatePool, KeyStore keyStore, String emailAddress) {
       if (certificate == null) {
          throw new Object();
       }
@@ -66,7 +66,7 @@ public class CertificateChainFactory extends CertificateProperties {
       }
    }
 
-   protected Certificate[][][] createCertificateChainsInternal(Certificate _1, Certificate[] _2, KeyStore _3, String _4) {
+   protected Certificate[][] createCertificateChainsInternal(Certificate _1, Certificate[] _2, KeyStore _3, String _4) {
       throw null;
    }
 

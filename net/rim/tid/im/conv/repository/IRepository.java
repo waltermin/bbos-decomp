@@ -57,7 +57,7 @@ public class IRepository implements IDataSearchRepository {
       return false;
    }
 
-   public boolean loadWordlist(byte[][][] aWordlistData, Locale l, int learningSize) {
+   public boolean loadWordlist(byte[][] aWordlistData, Locale l, int learningSize) {
       return false;
    }
 

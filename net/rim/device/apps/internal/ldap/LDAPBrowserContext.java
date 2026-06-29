@@ -26,9 +26,9 @@ public interface LDAPBrowserContext {
 
    boolean isCrossCertificateAvailable(LDAPEntry var1);
 
-   void getCertificates(LDAPEntry var1, Certificate[] var2, byte[][][] var3);
+   void getCertificates(LDAPEntry var1, Certificate[] var2, byte[][] var3);
 
-   void getCertificateIDs(LDAPEntry var1, byte[][][] var2);
+   void getCertificateIDs(LDAPEntry var1, byte[][] var2);
 
    void addFirstStageFilter(String[] var1, String[] var2, String[] var3, LDAPQuery var4);
 

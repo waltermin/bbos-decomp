@@ -34,7 +34,7 @@ public class CodeStore {
          v.addElement(trailer);
       }
 
-      byte[][][] trailers = new byte[v.size()][][];
+      byte[][] trailers = new byte[v.size()][];
       v.copyInto(trailers);
       return CodeModuleManager.appendTrailers(codfile, trailers);
    }

@@ -116,7 +116,7 @@ public final class ITPolicyInternal {
    public static final byte[] authenticateITPolicy(byte[] policy) {
       boolean policyBindingEnabled = isPolicyBindingEnabled();
       byte[] primaryKey = ITPolicy.getByteArray(252);
-      byte[][][] secondaryKeys = getSecondaryPublicKeys();
+      byte[][] secondaryKeys = getSecondaryPublicKeys();
       byte[] policyWithoutSignature = null;
       byte[] signedPolicyWithoutVersionAndSignature = null;
       DataBuffer policyBuffer = new DataBuffer(policy, 0, policy.length, true);
@@ -193,10 +193,10 @@ public final class ITPolicyInternal {
          return true;
       }
 
-      byte[][][] keys = getSecondaryPublicKeys();
+      byte[][] keys = getSecondaryPublicKeys();
       if (keys != null) {
          for (int i = 0; i < keys.length; i++) {
-            if (verifiedPrependSignature((byte[])keys[i], prependSignature, signedPolicyWithoutVersionAndSignature)) {
+            if (verifiedPrependSignature(keys[i], prependSignature, signedPolicyWithoutVersionAndSignature)) {
                return true;
             }
          }
@@ -214,12 +214,12 @@ public final class ITPolicyInternal {
       }
    }
 
-   private static final byte[][][] getSecondaryPublicKeys() {
-      byte[][][] result = (byte[][][])((byte[][])null);
+   private static final byte[][] getSecondaryPublicKeys() {
+      byte[][] result = (byte[][])null;
       byte[] keys = ITPolicy.getByteArray(250);
       if (keys != null) {
          DataBuffer buffer = new DataBuffer(keys, 0, keys.length, true);
-         result = new byte[0][][];
+         result = new byte[0][];
 
          try {
             while (!buffer.eof()) {

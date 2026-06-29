@@ -8,29 +8,29 @@ public class AnswerToReset implements Persistable {
    private int _historicalBytesOffset;
    private int _protocolBytesLength;
    private int _numHistBytes;
-   private int _ifs;
-   private int _bwt;
-   private int _protocol;
-   private int _supportedProtocols;
-   private int _edcType;
-   private byte _baudAndClockRate;
+   private int _ifs = 32;
+   private int _bwt = 0;
+   private int _protocol = 1;
+   private int _supportedProtocols = 0;
+   private int _edcType = 1;
+   private byte _baudAndClockRate = 1;
    private static int MAX_ATR_BYTE_LENGTH = 33;
-   private static final int[][][] CLOCK_RATE_CONVERSION_FACTOR = new int[][][]{
-      (int[][])({372, 4, -804651006, 372, 5, -805044223, 130, -804651006}),
-      (int[][])({372, 5, -805044223, 130, -804651006, 1488, 16, -804651006}),
-      (int[][])({558, 6, -804651005, 51, 51, 5526098, -804651006, 1116}),
-      (int[][])({744, 8, 1870004480, 290219371, -1258225653, 524485, 521873416, 1637884780}),
-      (int[][])({1116, 12, -804651006, 372, 4, -804651006, 372, 5}),
-      (int[][])({1488, 16, -804651006, 744, 8, 1870004480, 290219371, -1258225653}),
-      (int[][])({0, 0, -804650992, 0, 1, 2, 4, 8}),
-      (int[][])({0, 0, -804650992, 0, 1, 2, 4, 8}),
-      (int[][])({512, 5, -804651006, 768, 7, -804651006, 1024, 10}),
-      (int[][])({768, 7, -804651006, 1024, 10, -804651006, 1536, 15}),
-      (int[][])({1024, 10, -804651006, 1536, 15, -804651006, 2048, 20}),
-      (int[][])({1536, 15, -804651006, 2048, 20, -805044213, 775162112, 774909491}),
-      (int[][])({2048, 20, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656}),
-      (int[][])({0, 0, -804650992, 0, 1, 2, 4, 8}),
-      (int[][])({0, 0, -804650992, 0, 1, 2, 4, 8})
+   private static final int[][] CLOCK_RATE_CONVERSION_FACTOR = new int[][]{
+      {372, 4, -804651006, 372, 5, -805044223, 130, -804651006},
+      {372, 5, -805044223, 130, -804651006, 1488, 16, -804651006},
+      {558, 6, -804651005, 51, 51, 5526098, -804651006, 1116},
+      {744, 8, 1870004480, 290219371, -1258225653, 524485, 521873416, 1637884780},
+      {1116, 12, -804651006, 372, 4, -804651006, 372, 5},
+      {1488, 16, -804651006, 744, 8, 1870004480, 290219371, -1258225653},
+      {0, 0, -804650992, 0, 1, 2, 4, 8},
+      {0, 0, -804650992, 0, 1, 2, 4, 8},
+      {512, 5, -804651006, 768, 7, -804651006, 1024, 10},
+      {768, 7, -804651006, 1024, 10, -804651006, 1536, 15},
+      {1024, 10, -804651006, 1536, 15, -804651006, 2048, 20},
+      {1536, 15, -804651006, 2048, 20, -805044213, 775162112, 774909491},
+      {2048, 20, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656},
+      {0, 0, -804650992, 0, 1, 2, 4, 8},
+      {0, 0, -804650992, 0, 1, 2, 4, 8}
    };
    private static final int[] BAUD_RATE_CONVERSION_FACTOR = new int[]{
       0,
@@ -108,6 +108,137 @@ public class AnswerToReset implements Persistable {
    }
 
    public AnswerToReset(byte[] atr) {
+      if (atr == null || atr.length > MAX_ATR_BYTE_LENGTH || atr.length < 2) {
+         throw new Object(" The ATR is null or has an incorrect length ");
+      }
+
+      if (atr[0] != 59 && atr[0] != 63) {
+         throw new Object(" The TS byte of the ATR was not 0x3b or 0x3f ");
+      }
+
+      this._protocolBytesLength = 1;
+      int tdOffset = 1;
+      int nextTdOffset = 1;
+      int round = 1;
+      boolean gotIFS = false;
+      boolean t1Set = false;
+      boolean t0Set = false;
+      boolean gotBWI = false;
+      boolean gotEDC = false;
+      int fi = 372;
+      int f = 4;
+      int di = 1;
+      float etu = (float)false;
+      int bwi = 4;
+      boolean tdPresent = false;
+
+      do {
+         if ((atr[tdOffset] & 16) != 0) {
+            nextTdOffset++;
+            this._protocolBytesLength++;
+            if (round == 1) {
+               int indexF = atr[nextTdOffset] >>> 4 & 15;
+               int indexD = atr[nextTdOffset] & 15;
+               this._baudAndClockRate = atr[nextTdOffset];
+               fi = CLOCK_RATE_CONVERSION_FACTOR[indexF][0];
+               f = CLOCK_RATE_CONVERSION_FACTOR[indexF][1];
+               di = BAUD_RATE_CONVERSION_FACTOR[indexD];
+               if (di == 0) {
+                  throw new Object(" Error calculating the baud rate");
+               }
+
+               if (f == 0 || fi == 0) {
+                  throw new Object(" Error calculating the clock rate");
+               }
+
+               etu = fi / di * (1 / f);
+               int temp1 = (int)(1093664768 * etu);
+               int temp2 = (int)((long)(multBy2(bwi) * 960) * 372 / f);
+               this._bwt = temp1 + temp2;
+            }
+
+            if (round == 2) {
+               this._protocol = atr[nextTdOffset] & 15;
+            }
+
+            if (round > 2 && t1Set && !gotIFS) {
+               this._ifs = atr[nextTdOffset] & 255;
+               gotIFS = true;
+            }
+         }
+
+         if ((atr[tdOffset] & 32) != 0) {
+            nextTdOffset++;
+            this._protocolBytesLength++;
+            if (round > 2 && t1Set && !gotBWI) {
+               bwi = atr[nextTdOffset] >> 4 & 15;
+               int temp1 = (int)(1093664768 * etu);
+               int temp2 = (int)((long)(multBy2(bwi) * 960) * 372 / f);
+               this._bwt = temp1 + temp2;
+               gotBWI = true;
+            }
+         }
+
+         if ((atr[tdOffset] & 64) != 0) {
+            nextTdOffset++;
+            this._protocolBytesLength++;
+            if (round > 2 && t1Set && !gotEDC) {
+               this._edcType = (atr[nextTdOffset] & 1) == 1 ? 2 : 1;
+               gotEDC = true;
+            }
+         }
+
+         if ((atr[tdOffset] & 128) != 0) {
+            tdOffset = ++nextTdOffset;
+            tdPresent = true;
+            this._protocolBytesLength++;
+            if ((atr[tdOffset] & 15) == 1 && !t1Set && !t0Set) {
+               t1Set = true;
+               this._protocol = 2;
+            } else if ((atr[tdOffset] & 15) == 0 && !t1Set) {
+               t0Set = true;
+               this._protocol = 1;
+            }
+
+            if ((atr[tdOffset] & 15) == 1) {
+               this._supportedProtocols |= 2;
+            }
+
+            if ((atr[tdOffset] & 15) == 0) {
+               this._supportedProtocols |= 1;
+            }
+
+            round++;
+         } else {
+            tdPresent = false;
+         }
+      } while (tdPresent);
+
+      if (this._supportedProtocols == 0) {
+         this._supportedProtocols = 1;
+      }
+
+      this._historicalBytesOffset = this._protocolBytesLength + 1;
+      this._numHistBytes = atr[1] & 15;
+      if (this._protocol == 2) {
+         if (atr.length != 1 + this._protocolBytesLength + this._numHistBytes + 1) {
+            throw new Object("The ATR provided has an incorrect length");
+         }
+
+         byte tck = atr[1 + this._protocolBytesLength + this._numHistBytes];
+
+         for (int i = atr.length - 2; i > 0; i--) {
+            tck ^= atr[i];
+         }
+
+         if (tck != 0) {
+            throw new Object("TCK ATR check is invalid");
+         }
+      } else if (atr.length != 1 + this._protocolBytesLength + this._numHistBytes && atr.length != 1 + this._protocolBytesLength + this._numHistBytes + 1) {
+         throw new Object("The ATR provided has an incorrect length");
+      }
+
+      this._atr = atr;
    }
 
    public byte[] getProtocolBytes() {

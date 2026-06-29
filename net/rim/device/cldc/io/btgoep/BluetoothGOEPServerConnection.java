@@ -139,9 +139,7 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
                var12 = true;
                this._serviceRecord.validate();
                this._port
-                  .addSDPRecord(
-                     this._serviceRecord.getAttributeIDs(), (byte[][])this._serviceRecord.getAttributeValues(), this._serviceRecord.getDeviceServiceClasses()
-                  );
+                  .addSDPRecord(this._serviceRecord.getAttributeIDs(), this._serviceRecord.getAttributeValues(), this._serviceRecord.getDeviceServiceClasses());
                this._serviceRecordAdded = true;
                var12 = false;
             } finally {

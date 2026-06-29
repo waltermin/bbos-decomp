@@ -267,7 +267,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
 
       split = this.read();
-      byte[][][] opaqueData = (byte[][][])((byte[][])null);
+      byte[][] opaqueData = (byte[][])null;
 
       while (
          split == 0
@@ -300,12 +300,12 @@ public class WBXMLParser implements WBXMLConstants, Locator {
                this.unread(split);
                byte[] opaque = this.parseOpaque();
                if (opaqueData == null) {
-                  opaqueData = new byte[1][][];
+                  opaqueData = new byte[1][];
                } else {
                   ArrayResize.byteArrayArrayResize(opaqueData, opaqueData.length + 1);
                }
 
-               opaqueData[opaqueData.length - 1] = (byte[][])opaque;
+               opaqueData[opaqueData.length - 1] = opaque;
                break;
             default:
                if (split == 0) {
@@ -374,7 +374,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
 
       if (!isNamespace) {
-         ai.addAttribute(nsuri, localName, name, "CDATA", val, false, (byte[][])opaqueData);
+         ai.addAttribute(nsuri, localName, name, "CDATA", val, false, opaqueData);
       }
 
       this.unread(split);

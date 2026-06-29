@@ -239,8 +239,8 @@ public final class OIDs {
    private static OID[] _oidList = new OID[200];
    private static long[] _associationList = new long[200];
    private static Object[] _objectList = new Object[200];
-   private static long[][][] _multiAssociationList = new long[200][][];
-   private static Object[][][] _multiObjectList = new Object[200][][];
+   private static long[][] _multiAssociationList = new long[200][];
+   private static Object[][] _multiObjectList = new Object[200][];
    private static int[] _hashCodeList = new int[200];
    private static int _nextOID = 0;
    private static final int NUM_OIDS = 200;
@@ -269,7 +269,29 @@ public final class OIDs {
    }
 
    private static final void addAssociation(int oidIndex, long association, Object associatedObject) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      if (_associationList[oidIndex] == 0) {
+         _associationList[oidIndex] = association;
+         _objectList[oidIndex] = associatedObject;
+      } else {
+         if (_multiAssociationList[oidIndex] == null) {
+            _multiAssociationList[oidIndex] = new long[3];
+            _multiObjectList[oidIndex] = new Object[3];
+         }
+
+         int associationIndex = 0;
+
+         for (int i = 0; i < _multiAssociationList[oidIndex].length && _multiAssociationList[oidIndex][associationIndex] != 0; i++) {
+            associationIndex++;
+         }
+
+         if (associationIndex >= 3) {
+            Array.resize(_multiAssociationList[oidIndex], associationIndex + 1);
+            Array.resize(_multiObjectList[oidIndex], associationIndex + 1);
+         }
+
+         _multiAssociationList[oidIndex][associationIndex] = association;
+         _multiObjectList[oidIndex][associationIndex] = associatedObject;
+      }
    }
 
    private static final void commitOIDs() {
@@ -281,7 +303,22 @@ public final class OIDs {
    }
 
    private static final void commitOID(int index) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      _oids.put(_hashCodeList[index], _oidList[index]);
+      _idToOIDHashtable.put(_idList[index], _oidList[index]);
+      if (_objectList[index] != null) {
+         getOidHashtable(_associationList[index]).put(_oidList[index], _objectList[index]);
+         getObjectHashtable(_associationList[index]).put(_objectList[index], _oidList[index]);
+         if (_multiAssociationList[index] != null) {
+            for (int i = 0; i < _multiAssociationList[index].length; i++) {
+               if (_multiAssociationList[index][i] == 0) {
+                  return;
+               }
+
+               getOidHashtable(_multiAssociationList[index][i]).put(_oidList[index], _multiObjectList[index][i]);
+               getObjectHashtable(_multiAssociationList[index][i]).put(_multiObjectList[index][i], _oidList[index]);
+            }
+         }
+      }
    }
 
    public static final OID getOID(int id) {
@@ -755,7 +792,7 @@ public final class OIDs {
             _oidList = null;
             _associationList = null;
             _objectList = null;
-            _multiAssociationList = (long[][][])((long[][])null);
+            _multiAssociationList = (long[][])null;
             _multiObjectList = (Object[][])null;
             _hashCodeList = null;
          }

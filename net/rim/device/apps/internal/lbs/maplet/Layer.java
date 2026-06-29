@@ -8,8 +8,8 @@ public final class Layer implements Persistable {
    private int _layerAttribs;
    private int _attr1;
    private int _attr2;
-   private short[][][] _dentryHeaders;
-   private byte[][][] _dentries;
+   private short[][] _dentryHeaders;
+   private byte[][] _dentries;
    public static final byte ATTRIB_LAYER_ID = 1;
    public static final byte ATTRIB_SHAPE_TYPE = 2;
    public static final byte ATTRIB_ZOOM_INDEX = 3;
@@ -26,8 +26,8 @@ public final class Layer implements Persistable {
       this._layerHeader = header;
       this._layerAttribs = getReversedValue(this._layerHeader[16], this._layerHeader[17], this._layerHeader[18], this._layerHeader[19]);
       int count = this.getLayerAttribute((byte)7);
-      this._dentryHeaders = new short[count][][];
-      this._dentries = new byte[count][][];
+      this._dentryHeaders = new short[count][];
+      this._dentries = new byte[count][];
    }
 
    public final int getLayerAttribute(byte attrib) {
@@ -60,28 +60,28 @@ public final class Layer implements Persistable {
    }
 
    public final void addDEntryHeader(int ix, short[] header) {
-      this._dentryHeaders[ix] = (short[][])header;
+      this._dentryHeaders[ix] = header;
    }
 
    public final short[] getDEntryHeader(int ix) {
-      return (short[])this._dentryHeaders[ix];
+      return this._dentryHeaders[ix];
    }
 
    public final void addDEntryContents(int ix, byte[] data) {
-      this._dentries[ix] = (byte[][])data;
+      this._dentries[ix] = data;
    }
 
    public final int addDEntryContents(int ix, DataInputStream istream) {
       int count = 0;
       int numBytes = istream.readInt();
       count += 4 + numBytes;
-      this._dentries[ix] = (byte[][])(new byte[numBytes]);
-      istream.read((byte[])this._dentries[ix]);
+      this._dentries[ix] = new byte[numBytes];
+      istream.read(this._dentries[ix]);
       return count;
    }
 
    public final byte[] getDEntry(int ix) {
-      return (byte[])this._dentries[ix];
+      return this._dentries[ix];
    }
 
    protected static final int getReversedValue(int a, int b, int c, int d) {

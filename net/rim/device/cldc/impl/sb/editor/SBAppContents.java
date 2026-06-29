@@ -24,7 +24,7 @@ public final class SBAppContents extends MainScreen implements ListFieldCallback
    private ServiceBook _sb;
    private ListField _list;
    private int _viewMode;
-   private ServiceRecord[][][] _records;
+   private ServiceRecord[][] _records;
    private int _curViewingId = -1;
    private int _numRecords;
    private IconCollection _icons;
@@ -42,7 +42,7 @@ public final class SBAppContents extends MainScreen implements ListFieldCallback
       this._list.setCallback(this);
       this._list.setEmptyString(SBAppResources.getResourceBundle(), 50, 4);
       this._viewMode = viewMode;
-      this._records = new Object[DISPLAY_TYPES.length][][];
+      this._records = new Object[DISPLAY_TYPES.length][];
       this._icons = IconCollection.get("net_rim_ServiceBook", DISPLAY_TYPES.length);
       this.setTitle((Field)(new Object(SBAppResources.getString(1))));
       this.add(this._list);

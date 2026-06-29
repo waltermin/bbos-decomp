@@ -86,22 +86,22 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
          }
 
          int c = (length * 8 + this._u - 1) / this._u;
-         byte[][][] A = new byte[c][][];
+         byte[][] A = new byte[c][];
          int count = 0;
          byte[] B = new byte[vBytes];
          int k = (SByteLength * 8 + PByteLength * 8) / this._v;
 
          for (int i = 0; i < c; i++) {
             count = 1;
-            A[i] = (byte[][])Arrays.copy(diversifierBytes);
-            Arrays.append((byte[])A[i], IBytes);
+            A[i] = Arrays.copy(diversifierBytes);
+            Arrays.append(A[i], IBytes);
             this._digest.reset();
-            this._digest.update((byte[])A[i]);
-            A[i] = (byte[][])this._digest.getDigest();
+            this._digest.update(A[i]);
+            A[i] = this._digest.getDigest();
 
             while (count++ < this._iterationCount) {
-               this._digest.update((byte[])A[i]);
-               this._digest.getDigest((byte[])A[i], 0);
+               this._digest.update(A[i]);
+               this._digest.getDigest(A[i], 0);
             }
 
             int ALength = A[i].length;
@@ -126,7 +126,7 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
          byte[] finalA = new byte[0];
 
          for (int i = 0; i < c; i++) {
-            Arrays.append(finalA, (byte[])A[i]);
+            Arrays.append(finalA, A[i]);
          }
 
          for (int i = 0; i < length; i++) {

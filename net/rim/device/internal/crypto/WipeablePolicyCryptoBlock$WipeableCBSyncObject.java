@@ -43,11 +43,11 @@ public final class WipeablePolicyCryptoBlock$WipeableCBSyncObject implements Syn
    }
 
    public static final SyncObject convert(DataBuffer data, int UID) {
-      WipeablePolicyCryptoBlock.access$702(new byte[1][][]);
-      WipeablePolicyCryptoBlock._wlanKey[0] = (byte[][])Memory.allocRAMOnlyBytes(32);
+      WipeablePolicyCryptoBlock.access$702(new byte[1][]);
+      WipeablePolicyCryptoBlock._wlanKey[0] = Memory.allocRAMOnlyBytes(32);
       System.arraycopy(data.getArray(), 0, WipeablePolicyCryptoBlock._wlanKey[0], 0, 32);
-      WipeablePolicyCryptoBlock.setNvStoreWLANKey(Arrays.copy((byte[])WipeablePolicyCryptoBlock._wlanKey[0]));
-      WipeablePolicyCryptoBlock.handleInternalUpgradeCase((byte[])WipeablePolicyCryptoBlock._wlanKey[0]);
+      WipeablePolicyCryptoBlock.setNvStoreWLANKey(Arrays.copy(WipeablePolicyCryptoBlock._wlanKey[0]));
+      WipeablePolicyCryptoBlock.handleInternalUpgradeCase(WipeablePolicyCryptoBlock._wlanKey[0]);
       ApplicationRegistry.getApplicationRegistry()
          .replace(7837055873320154475L, new ControlledAccess(WipeablePolicyCryptoBlock._wlanKey, CodeSigningKey.getBuiltInKey(51)));
       return new WipeablePolicyCryptoBlock$WipeableCBSyncObject(UID, data.getArray());

@@ -40,10 +40,10 @@ public class RIMMessagingIncomingMoreRequest extends RIMMessagingMessage {
       CMIMEParameters moreReqParams = new CMIMEParameters((DataBuffer)(new Object()), 5, 1);
       moreReqParams.getDataBuffer().setData(data, 0, data.length);
       moreReqParams.read();
-      this.contentPartId = CMIMEUtilities.getGMEInteger((byte[][][])moreReqParams.get((byte)48), 1);
-      this.refId = CMIMEUtilities.getGMEInteger((byte[][][])moreReqParams.get((byte)48), 0);
+      this.contentPartId = CMIMEUtilities.getGMEInteger(moreReqParams.get((byte)48), 1);
+      this.refId = CMIMEUtilities.getGMEInteger(moreReqParams.get((byte)48), 0);
       this.serverComponentId = moreReqParams.getFirst((byte)-128);
-      this.offset = CMIMEUtilities.getGMEInteger((byte[][][])moreReqParams.get((byte)48), 2);
-      this.length = CMIMEUtilities.getGMEInteger((byte[][][])moreReqParams.get((byte)48), 3);
+      this.offset = CMIMEUtilities.getGMEInteger(moreReqParams.get((byte)48), 2);
+      this.length = CMIMEUtilities.getGMEInteger(moreReqParams.get((byte)48), 3);
    }
 }

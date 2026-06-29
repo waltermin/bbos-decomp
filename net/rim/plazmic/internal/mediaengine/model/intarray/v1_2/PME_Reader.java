@@ -52,22 +52,22 @@ public class PME_Reader implements ResourceProvider {
    private int _convertedTextStringsOffset;
    private int _fontFamilyStringsOffset;
    private int _fontHandlesOffset;
-   private char[][][] _tempTextStrings;
+   private char[][] _tempTextStrings;
    private int[] _textIndex;
    private int _fontFamilyIndex;
    private int _fontUrlIndex;
    private int _fontIndex;
    private int[] _tempImageNodeIdx;
-   private int[][][] _tempCoords;
-   private byte[][][] _tempPointTypes;
+   private int[][] _tempCoords;
+   private byte[][] _tempPointTypes;
    private int _numInterpolators;
    private int _numBehaviors;
    private int _focusOrderIndex;
    private int[] _focusOrderUnreferenced;
    private IntIntHashtable _focusOrderHashtable;
    private int _focusOrderTarget;
-   private int[][][] _tempKeyTimes;
-   private int[][][] _tempKeyValues;
+   private int[][] _tempKeyTimes;
+   private int[][] _tempKeyValues;
    private MediaQueue _durations;
    private MediaQueue _interpolators;
    private boolean _loadAborted;
@@ -279,10 +279,10 @@ public class PME_Reader implements ResourceProvider {
       this._behaviorsRootIdx = -1;
       this._loadAborted = false;
       this._nodeRefToUpdate = this._streamNodeIndices = this._runtimeNodeIndices = null;
-      this._tempCoords = (int[][][])((int[][])null);
-      this._tempPointTypes = (byte[][][])((byte[][])null);
-      this._tempKeyTimes = (int[][][])((int[][])null);
-      this._tempKeyValues = (int[][][])((int[][])null);
+      this._tempCoords = (int[][])null;
+      this._tempPointTypes = (byte[][])null;
+      this._tempKeyTimes = (int[][])null;
+      this._tempKeyValues = (int[][])null;
    }
 
    protected void readSection(int type, boolean full, boolean newModel) {
@@ -447,8 +447,8 @@ public class PME_Reader implements ResourceProvider {
 
          int keyTimesSize = this._in.readData(this._keyTimesDataSizeMask);
          int keyValuesSize = this._in.readData(this._keyValuesDataSizeMask);
-         this._tempKeyTimes = new int[keyTimesSize][][];
-         this._tempKeyValues = new int[keyValuesSize][][];
+         this._tempKeyTimes = new int[keyTimesSize][];
+         this._tempKeyValues = new int[keyValuesSize][];
       } else {
          for (int num = this._in.readData(0); num > 0; num--) {
             this._in.skipData(0);
@@ -468,12 +468,12 @@ public class PME_Reader implements ResourceProvider {
       int numDataIds = this._in.readData(this._numIdsMask);
       int numArrays = this._in.readData(this._coordIndexMask);
       if (numArrays > 0) {
-         this._tempCoords = new int[numArrays][][];
+         this._tempCoords = new int[numArrays][];
       }
 
       int numPt = this._in.readData(this._coordIndexMask);
       if (numPt > 0) {
-         this._tempPointTypes = new byte[numPt][][];
+         this._tempPointTypes = new byte[numPt][];
       }
 
       int numCoordsArrays = numArrays > 0 ? this._in.readData(this._coordIndexMask) : 0;
@@ -493,19 +493,19 @@ public class PME_Reader implements ResourceProvider {
       if (!initArrays) {
          this._platform.fillArray(this._model._nodes, 0);
       } else if (this._tempTextStrings == null || this._tempTextStrings.length < numText) {
-         this._tempTextStrings = (char[][][])(numText > 0 ? new char[numText][][] : (char[][])null);
+         this._tempTextStrings = numText > 0 ? new char[numText][] : (char[][])null;
          this._textIndex = numText > 0 ? new int[numText] : null;
       }
 
       if (initArrays && newModel) {
          if (this._model._coords == null || this._model._coords.length != numCoordsArrays) {
-            this._model._coords = (int[][][])(numCoordsArrays > 0 ? new int[numCoordsArrays][][] : (int[][])null);
-            this._model._finalCoords = (int[][][])(numCoordsArrays > 0 ? new int[numCoordsArrays][][] : (int[][])null);
+            this._model._coords = numCoordsArrays > 0 ? new int[numCoordsArrays][] : (int[][])null;
+            this._model._finalCoords = numCoordsArrays > 0 ? new int[numCoordsArrays][] : (int[][])null;
          }
 
          if (this._model._pointTypes == null || this._model._pointTypes.length != numPointTypes) {
-            this._model._pointTypes = (byte[][][])(numPointTypes > 0 ? new byte[numPointTypes][][] : (byte[][])null);
-            this._model._finalPointTypes = (byte[][][])(numPointTypes > 0 ? new byte[numPointTypes][][] : (byte[][])null);
+            this._model._pointTypes = numPointTypes > 0 ? new byte[numPointTypes][] : (byte[][])null;
+            this._model._finalPointTypes = numPointTypes > 0 ? new byte[numPointTypes][] : (byte[][])null;
          }
 
          if (this._model._nodes != null && this._model._nodes.length >= this._streamNodeArraySize) {
@@ -590,8 +590,8 @@ public class PME_Reader implements ResourceProvider {
 
          if (numCoordsArrays > 0) {
             if (this._model._coords == null) {
-               this._model._coords = new int[numCoordsArrays][][];
-               this._model._finalCoords = new int[numCoordsArrays][][];
+               this._model._coords = new int[numCoordsArrays][];
+               this._model._finalCoords = new int[numCoordsArrays][];
             } else {
                this._platform.arrayResize(this._model._coords, this._model._coords.length + numCoordsArrays);
                this._platform.arrayResize(this._model._finalCoords, this._model._finalCoords.length + numCoordsArrays);
@@ -600,8 +600,8 @@ public class PME_Reader implements ResourceProvider {
 
          if (numPointTypes > 0) {
             if (this._model._pointTypes == null) {
-               this._model._pointTypes = new byte[numPointTypes][][];
-               this._model._finalPointTypes = new byte[numPointTypes][][];
+               this._model._pointTypes = new byte[numPointTypes][];
+               this._model._finalPointTypes = new byte[numPointTypes][];
             } else {
                this._platform.arrayResize(this._model._pointTypes, this._model._pointTypes.length + numPointTypes);
                this._platform.arrayResize(this._model._finalPointTypes, this._model._finalPointTypes.length + numPointTypes);
@@ -765,7 +765,124 @@ public class PME_Reader implements ResourceProvider {
    }
 
    protected void readInterpolator(int nodeIdx) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._numInterpolators++;
+      this._model._nodes[nodeIdx + 16] = this._numBehaviors++;
+      this.readTimingBehaviorData(nodeIdx);
+      int targetAttribute = this._model._nodes[nodeIdx + 17] = this._in.readData(4);
+      int pmeTargetIndex = this._in.readData(this._visualNodeIndexMask);
+      int modelTargetIndex = this.setNodeReference(0, nodeIdx + 18, pmeTargetIndex);
+      int targetMask;
+      int targetShift;
+      switch (targetAttribute) {
+         case 1:
+            targetMask = 128;
+            targetShift = 7;
+            break;
+         case 31:
+            targetMask = 255;
+            targetShift = 0;
+            break;
+         case 32:
+            targetMask = 65280;
+            targetShift = 8;
+            break;
+         case 33:
+            targetMask = 16711680;
+            targetShift = 16;
+            break;
+         case 35:
+            targetMask = 240;
+            targetShift = 0;
+            break;
+         case 36:
+            targetMask = 15;
+            targetShift = 0;
+            break;
+         case 42:
+            targetMask = 16;
+            targetShift = 4;
+            break;
+         default:
+            targetMask = -1;
+            targetShift = 0;
+      }
+
+      this._model._nodes[nodeIdx + 29] = targetMask;
+      this._model._nodes[nodeIdx + 30] = targetShift;
+      if (!this.targetExists(modelTargetIndex, targetAttribute)) {
+         this.createDefaultAttributeNode(modelTargetIndex, targetAttribute);
+      }
+
+      this.enableTarget(modelTargetIndex, targetAttribute);
+      if (modelTargetIndex < this._model._minAnimatedNodeIdx) {
+         this._model._minAnimatedNodeIdx = modelTargetIndex;
+      }
+
+      int calcMode = this._in.readData(4);
+      this._model._nodes[nodeIdx + 19] = calcMode;
+      int bits = this._model._nodes[nodeIdx + 8];
+      int dur = -1;
+      if (this._model.bitsAreSet(nodeIdx, 1024)) {
+         dur = this._model._nodes[nodeIdx + 12];
+      }
+
+      this._interpolators.enqueue(nodeIdx);
+      this._durations.enqueue(dur);
+      if ((bits & 262144) != 0) {
+         this._model._nodes[nodeIdx + 21] = this._keyTimeIndex;
+         int numKeyTimes = this._in.readData(this._varDataMask);
+         this._tempKeyTimes[this._keyTimeIndex] = new int[numKeyTimes];
+         this._tempKeyTimes[this._keyTimeIndex][0] = 0;
+         if (numKeyTimes > 2) {
+            this._in.readDataArray(this._tempKeyTimes[this._keyTimeIndex], 1, numKeyTimes - 2, 1);
+         }
+
+         this._tempKeyTimes[this._keyTimeIndex++][numKeyTimes - 1] = 65536;
+      } else {
+         this._model._nodes[nodeIdx + 21] = this._in.readData(this._keyTimeIndexMask);
+      }
+
+      if ((bits & 524288) == 0) {
+         this._model._nodes[nodeIdx + 20] = this._in.readData(this._keyValIndexMask);
+         if (targetAttribute == 14) {
+            this._model._nodes[nodeIdx + 17] = 16;
+         }
+      } else {
+         this._model._nodes[nodeIdx + 20] = this._keyValueIndex;
+         int numKeyValues = this._in.readData(this._varDataMask);
+         this._tempKeyValues[this._keyValueIndex] = new int[numKeyValues];
+         this._in.readDataArray(this._tempKeyValues[this._keyValueIndex], 0, numKeyValues, this._keyValMask);
+         if (targetAttribute == 14) {
+            this._model._nodes[nodeIdx + 17] = 16;
+            int[] tempKeyValues = new int[2 * numKeyValues];
+            int i = 0;
+
+            for (int xIdx = 0; i < numKeyValues; xIdx += 2) {
+               tempKeyValues[xIdx] = this._tempKeyValues[this._keyValueIndex][i];
+               tempKeyValues[xIdx + 1] = 0;
+               i++;
+            }
+
+            this._tempKeyValues[this._keyValueIndex] = tempKeyValues;
+         }
+
+         int targetBits = this._model._nodes[modelTargetIndex + 8];
+         if (!this.isPercentKeyValue(targetAttribute, targetBits) && this.convertKeyValuesToFixed32(targetAttribute)) {
+            for (int i = 0; i < numKeyValues; i++) {
+               this._tempKeyValues[this._keyValueIndex][i] = Fixed32.toFP(this._tempKeyValues[this._keyValueIndex][i]);
+            }
+         }
+
+         if (targetAttribute == 13) {
+            for (int i = 0; i < numKeyValues; i++) {
+               if (this._tempKeyValues[this._keyValueIndex][i] == -1) {
+                  this._tempKeyValues[this._keyValueIndex][i] = -1;
+               }
+            }
+         }
+
+         this._keyValueIndex++;
+      }
    }
 
    protected void readCustomAction(int nodeIdx) {
@@ -1192,7 +1309,7 @@ public class PME_Reader implements ResourceProvider {
       }
 
       if ((bits & 134217728) != 0) {
-         this._tempTextStrings[this._tempTextStringsIdx] = (char[][])this._in.readString(this._encoding).toCharArray();
+         this._tempTextStrings[this._tempTextStringsIdx] = this._in.readString(this._encoding).toCharArray();
          this._textIndex[this._numTextElements] = this._tempTextStringsIdx++;
       } else {
          this._textIndex[this._numTextElements] = this._in.readData(this._objIndexMask);
@@ -1230,7 +1347,7 @@ public class PME_Reader implements ResourceProvider {
    private void handleTextElements() {
       if (this._numTextElements != 0) {
          if (this._model._convertedTextStrings == null) {
-            this._model._convertedTextStrings = new char[this._numTextElements][][];
+            this._model._convertedTextStrings = new char[this._numTextElements][];
          } else {
             this._platform.arrayResize(this._model._convertedTextStrings, this._convertedTextStringsOffset + this._numTextElements);
          }
@@ -1243,10 +1360,10 @@ public class PME_Reader implements ResourceProvider {
                this._model._convertedTextStrings[this._convertedTextStringsOffset + i] = this._tempTextStrings[textIndex];
                tempStringUsed[textIndex] = true;
             } else {
-               char[] strRef = (char[])this._tempTextStrings[textIndex];
+               char[] strRef = this._tempTextStrings[textIndex];
                char[] newTextStr = new char[strRef.length];
                System.arraycopy(strRef, 0, newTextStr, 0, strRef.length);
-               this._model._convertedTextStrings[this._convertedTextStringsOffset + i] = (char[][])newTextStr;
+               this._model._convertedTextStrings[this._convertedTextStringsOffset + i] = newTextStr;
             }
          }
       }
@@ -1983,17 +2100,17 @@ public class PME_Reader implements ResourceProvider {
    }
 
    private int cloneCoords(int tempIndex) {
-      this._model._coords[this._coordsIndex] = (int[][])(new int[this._tempCoords[tempIndex].length]);
+      this._model._coords[this._coordsIndex] = new int[this._tempCoords[tempIndex].length];
       System.arraycopy(this._tempCoords[tempIndex], 0, this._model._coords[this._coordsIndex], 0, this._tempCoords[tempIndex].length);
-      this._model._finalCoords[this._coordsIndex] = (int[][])(new int[this._tempCoords[tempIndex].length]);
+      this._model._finalCoords[this._coordsIndex] = new int[this._tempCoords[tempIndex].length];
       System.arraycopy(this._tempCoords[tempIndex], 0, this._model._finalCoords[this._coordsIndex], 0, this._tempCoords[tempIndex].length);
       return this._coordsIndex++;
    }
 
    private int clonePointTypes(int tempIndex) {
-      this._model._pointTypes[this._pointTypesIndex] = (byte[][])(new byte[this._tempPointTypes[tempIndex].length]);
+      this._model._pointTypes[this._pointTypesIndex] = new byte[this._tempPointTypes[tempIndex].length];
       System.arraycopy(this._tempPointTypes[tempIndex], 0, this._model._pointTypes[this._pointTypesIndex], 0, this._tempPointTypes[tempIndex].length);
-      this._model._finalPointTypes[this._pointTypesIndex] = (byte[][])(new byte[this._tempPointTypes[tempIndex].length]);
+      this._model._finalPointTypes[this._pointTypesIndex] = new byte[this._tempPointTypes[tempIndex].length];
       System.arraycopy(this._tempPointTypes[tempIndex], 0, this._model._finalPointTypes[this._pointTypesIndex], 0, this._tempPointTypes[tempIndex].length);
       return this._pointTypesIndex++;
    }
@@ -2001,19 +2118,87 @@ public class PME_Reader implements ResourceProvider {
    private int readCoords() {
       int numCoords = this._in.readData(this._varDataMask);
       if (this._tempCoords[this._tempCoordsIndex] == null || this._tempCoords[this._tempCoordsIndex].length != numCoords) {
-         this._tempCoords[this._tempCoordsIndex] = (int[][])(new int[numCoords]);
+         this._tempCoords[this._tempCoordsIndex] = new int[numCoords];
       }
 
-      this._in.readDataArray((int[])this._tempCoords[this._tempCoordsIndex], 0, numCoords, this._coordValMask);
+      this._in.readDataArray(this._tempCoords[this._tempCoordsIndex], 0, numCoords, this._coordValMask);
       return this.cloneCoords(this._tempCoordsIndex++);
    }
 
    private void fillOMValues(int interpIndex, int omValuesIndex) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      int targetAttrType = this._model._nodes[interpIndex + 17];
+      int vnIndex = this._model._nodes[interpIndex + 18];
+      int valuesOffset = this._model.resolveAttributeOffset(vnIndex, targetAttrType);
+      int size = this._model.resolveAttributeSize(targetAttrType);
+      this._model._omValues[omValuesIndex] = new int[size];
+
+      for (int i = 0; i < size; i++) {
+         this._model._omValues[omValuesIndex][i] = this._model._nodes[valuesOffset + i];
+      }
    }
 
    private void setupInterpolators() {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      this._model._keyTimes = new int[this._numInterpolators][];
+      this._model._keyValues = new int[this._numInterpolators][];
+      this._model._omValues = new int[this._numInterpolators][];
+
+      for (int i = 0; i < this._numInterpolators; i++) {
+         int interpIndex = this._interpolators.dequeue();
+         int dur = this._durations.dequeue();
+         int tempKeyTimesIndex = this._model._nodes[interpIndex + 21];
+         int tempKeyValuesIndex = this._model._nodes[interpIndex + 20];
+         this._model._nodes[interpIndex + 21] = this._model._nodes[interpIndex + 20] = 0;
+         this.fillOMValues(interpIndex, i);
+         this._model._keyTimes[i] = new int[this._tempKeyTimes[tempKeyTimesIndex].length];
+         this._model._keyValues[i] = new int[this._tempKeyValues[tempKeyValuesIndex].length];
+
+         for (int j = 0; j < this._model._keyTimes[i].length; j++) {
+            long temp = (long)this._tempKeyTimes[tempKeyTimesIndex][j] * dur >> 16;
+            this._model._keyTimes[i][j] = (int)temp;
+         }
+
+         for (int j = 0; j < this._model._keyValues[i].length; j++) {
+            this._model._keyValues[i][j] = this._tempKeyValues[tempKeyValuesIndex][j];
+         }
+
+         this._model._nodes[interpIndex + 20] = i;
+         if (this._model._nodes[interpIndex + 17] == 3 || this._model._nodes[interpIndex + 17] == 5) {
+            for (int j = 0; j < this._model._keyValues[i].length; j++) {
+               if (this._model._keyValues[i][j] == -1) {
+                  this._model._keyValues[i][j] = Integer.MIN_VALUE;
+               }
+            }
+         }
+
+         if (this._model._nodes[interpIndex + 17] == 38) {
+            for (int j = 0; j < this._model._keyValues[i].length; j++) {
+               int unit = (this._model._keyValues[i][j] & -1073741824) >>> 30;
+               switch (unit) {
+                  case -1:
+                     break;
+                  case 0:
+                  default:
+                     unit = 6;
+                     break;
+                  case 1:
+                     unit = 7;
+                     break;
+                  case 2:
+                     unit = 0;
+                     break;
+                  case 3:
+                     unit = 1;
+               }
+
+               int currentSize = this._model._keyValues[i][j] & 1073741823;
+               this._model._keyValues[i][j] = this._platform.convertToPixels(currentSize, unit);
+            }
+         }
+      }
+
+      this._model.initBehaviorArrays(this._numBehaviors);
+      this._tempKeyTimes = (int[][])null;
+      this._tempKeyValues = (int[][])null;
    }
 
    private int readPointTypes() {
@@ -2021,7 +2206,7 @@ public class PME_Reader implements ResourceProvider {
       int tempData = 0;
       int tempFlag = 0;
       int numPoints = this._in.readData(this._varDataMask);
-      this._tempPointTypes[this._tempPointTypesIndex] = (byte[][])(new byte[numPoints]);
+      this._tempPointTypes[this._tempPointTypesIndex] = new byte[numPoints];
 
       for (int j = 0; j < numPoints; j++) {
          switch (bitsOffset) {
@@ -2036,24 +2221,76 @@ public class PME_Reader implements ResourceProvider {
                break;
             case 0:
             default:
-               this._tempPointTypes[this._tempPointTypesIndex][j] = (byte[])false;
+               this._tempPointTypes[this._tempPointTypesIndex][j] = 0;
                break;
             case 1:
-               this._tempPointTypes[this._tempPointTypesIndex][j] = (byte[])true;
+               this._tempPointTypes[this._tempPointTypesIndex][j] = 1;
                break;
             case 2:
-               this._tempPointTypes[this._tempPointTypesIndex][j] = (byte[])2;
+               this._tempPointTypes[this._tempPointTypesIndex][j] = 2;
          }
 
          bitsOffset -= 2;
       }
 
-      this._platform.resolveBezierPointTypes((byte[])this._tempPointTypes[this._tempPointTypesIndex]);
+      this._platform.resolveBezierPointTypes(this._tempPointTypes[this._tempPointTypesIndex]);
       return this.clonePointTypes(this._tempPointTypesIndex++);
    }
 
    private void readPath(int nodeIdx) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      this.readShapeData(nodeIdx);
+      int xCoordsIdx = nodeIdx + 23;
+      int yCoordsIdx = nodeIdx + 24;
+      int pointTypesIdx = nodeIdx + 26;
+      int offsetsIdx = nodeIdx + 25;
+      int bits = this._in.readData(0);
+      if ((bits & 1) != 0) {
+         this._model._nodes[xCoordsIdx] = this.cloneCoords(this._in.readData(this._coordIndexMask));
+      } else {
+         this._model._nodes[xCoordsIdx] = this.readCoords();
+      }
+
+      if ((bits & 2) != 0) {
+         this._model._nodes[yCoordsIdx] = this.cloneCoords(this._in.readData(this._coordIndexMask));
+      } else {
+         this._model._nodes[yCoordsIdx] = this.readCoords();
+      }
+
+      if (!this._options) {
+         for (int i = 0; i < this._model._coords[this._model._nodes[xCoordsIdx]].length; i++) {
+            this._model._coords[this._model._nodes[xCoordsIdx]][i] = Fixed32.toFP(this._model._coords[this._model._nodes[xCoordsIdx]][i]);
+            this._model._coords[this._model._nodes[yCoordsIdx]][i] = Fixed32.toFP(this._model._coords[this._model._nodes[yCoordsIdx]][i]);
+         }
+      } else {
+         for (int i = 0; i < this._model._coords[this._model._nodes[xCoordsIdx]].length; i++) {
+            this._model._coords[this._model._nodes[xCoordsIdx]][i] = toFPn(
+               (this._model._coords[this._model._nodes[xCoordsIdx]][i] << this._scaleShift) + this._offsetX, this._numFractionalBits
+            );
+            this._model._coords[this._model._nodes[yCoordsIdx]][i] = toFPn(
+               (this._model._coords[this._model._nodes[yCoordsIdx]][i] << this._scaleShift) + this._offsetY, this._numFractionalBits
+            );
+         }
+      }
+
+      if ((bits & 8) != 0) {
+         if ((bits & 32) != 0) {
+            this._model._nodes[pointTypesIdx] = this.clonePointTypes(this._in.readData(this._coordIndexMask));
+         } else {
+            this._model._nodes[pointTypesIdx] = this.readPointTypes();
+         }
+      } else {
+         this._model._nodes[pointTypesIdx] = -1;
+      }
+
+      if ((bits & 4) != 0) {
+         if ((bits & 16) != 0) {
+            this._model._nodes[offsetsIdx] = this.cloneCoords(this._in.readData(this._coordIndexMask));
+         } else {
+            this._model._nodes[offsetsIdx] = this.readCoords();
+         }
+      } else {
+         this._model._nodes[offsetsIdx] = -1;
+      }
    }
 
    private void readTransformAttr(int attrIdx) {

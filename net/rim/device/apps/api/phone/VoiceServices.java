@@ -377,9 +377,9 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
    @Override
    public final void atSetUpCall(byte[] firstAlphaID, byte[] secondAlphaID, boolean askUser, int action) {
       if (askUser) {
-         postEvent(10200, action, new byte[][][]{(byte[][])firstAlphaID, (byte[][])secondAlphaID});
+         postEvent(10200, action, new byte[][]{firstAlphaID, secondAlphaID});
       } else {
-         postEvent(10201, action, new byte[][][]{(byte[][])firstAlphaID, (byte[][])secondAlphaID});
+         postEvent(10201, action, new byte[][]{firstAlphaID, secondAlphaID});
       }
    }
 

@@ -131,15 +131,13 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
    private static final byte[] LISTING_START = new byte[]{32, 32, 60, 99, 97, 114, 100, 32, 104, 97, 110, 100, 108, 101, 32, 61, 32, 34};
    private static final byte[] LISTING_MIDDLE = new byte[]{46, 118, 99, 102, 34, 32, 110, 97, 109, 101, 32, 61, 32, 34};
    private static final byte[] LISTING_END = new byte[]{34, 47, 62, 10};
-   private static final byte[][][] TELECOM_NAMES = new byte[][][]{
-      (byte[][])({112, 98}), (byte[][])({105, 99, 104}), (byte[][])({111, 99, 104}), (byte[][])({109, 99, 104}), (byte[][])({99, 99, 104})
-   };
-   private static final byte[][][] TELECOM_DESCRIPTIONS = new byte[][][]{
-      (byte[][])({80, 104, 111, 110, 101, 98, 111, 111, 107}),
-      (byte[][])({73, 110, 99, 111, 109, 105, 110, 103, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121}),
-      (byte[][])({79, 117, 116, 103, 111, 105, 110, 103, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121}),
-      (byte[][])({77, 105, 115, 115, 101, 100, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121}),
-      (byte[][])({67, 111, 109, 98, 105, 110, 101, 100, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121})
+   private static final byte[][] TELECOM_NAMES = new byte[][]{{112, 98}, {105, 99, 104}, {111, 99, 104}, {109, 99, 104}, {99, 99, 104}};
+   private static final byte[][] TELECOM_DESCRIPTIONS = new byte[][]{
+      {80, 104, 111, 110, 101, 98, 111, 111, 107},
+      {73, 110, 99, 111, 109, 105, 110, 103, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121},
+      {79, 117, 116, 103, 111, 105, 110, 103, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121},
+      {77, 105, 115, 115, 101, 100, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121},
+      {67, 111, 109, 98, 105, 110, 101, 100, 32, 67, 97, 108, 108, 32, 72, 105, 115, 116, 111, 114, 121}
    };
    private static final byte[] AUTH_USERNAME = new byte[]{117, 115, 101, 114, 110, 97, 109, 101};
    private static final byte[] AUTH_PASSWORD = new byte[]{48, 48, 48, 48};
@@ -853,9 +851,9 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
 
             for (int i = 0; i < TELECOM_NAMES.length; i++) {
                listingStream.write(LISTING_START);
-               listingStream.write((byte[])TELECOM_NAMES[i]);
+               listingStream.write(TELECOM_NAMES[i]);
                listingStream.write(LISTING_MIDDLE);
-               listingStream.write((byte[])TELECOM_DESCRIPTIONS[i]);
+               listingStream.write(TELECOM_DESCRIPTIONS[i]);
                listingStream.write(LISTING_END);
             }
 

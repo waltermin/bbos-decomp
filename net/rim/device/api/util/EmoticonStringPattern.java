@@ -26,7 +26,7 @@ public class EmoticonStringPattern extends StringPattern {
       throw null;
    }
 
-   public int[][][] emoticonScreenLayouts() {
+   public int[][] emoticonScreenLayouts() {
       throw null;
    }
 }

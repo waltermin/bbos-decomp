@@ -52,8 +52,8 @@ final class HintStringPattern extends EmoticonStringPattern {
    }
 
    @Override
-   public final int[][][] emoticonScreenLayouts() {
-      return (int[][][])((int[][])null);
+   public final int[][] emoticonScreenLayouts() {
+      return (int[][])null;
    }
 
    @Override

@@ -4,8 +4,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.resources.Resource;
 
 public final class CallTunes {
-   private short[][][] _tunes = new short[9][][];
-   private byte[][][] _polyTunes = new byte[9][][];
+   private short[][] _tunes = new short[9][];
+   private byte[][] _polyTunes = new byte[9][];
    static final long GUID = -7841402171854956200L;
    private static CallTunes _instance;
    public static final int TUNE_CALL_ENDED = 0;
@@ -113,18 +113,18 @@ public final class CallTunes {
    }
 
    private final void set(int type, short[] tone) {
-      this._tunes[type] = (short[][])tone;
+      this._tunes[type] = tone;
    }
 
    private final void setPoly(int type, byte[] tone) {
-      this._polyTunes[type] = (byte[][])tone;
+      this._polyTunes[type] = tone;
    }
 
    private final short[] get(int type) {
-      return (short[])this._tunes[type];
+      return this._tunes[type];
    }
 
    private final byte[] getPoly(int type) {
-      return (byte[])this._polyTunes[type];
+      return this._polyTunes[type];
    }
 }

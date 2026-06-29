@@ -47,7 +47,7 @@ public final class BluetoothDevice implements Runnable {
    private static final int SERVICE_INDEX_AVRCP_TARGET = 4;
    private static final int SERVICE_INDEX_AVRCP_CONTROLLER = 5;
    private static final int SERVICE_INDEX_A2DP_SINK = 6;
-   private static final UUID[][][] SERVICE_CLASS_UUIDS = new UUID[][][]{
+   private static final UUID[][] SERVICE_CLASS_UUIDS = new UUID[][]{
       {ServiceRecordImpl.HANDSFREE_UUID, ServiceRecordImpl.GENERIC_AUDIO_UUID},
       {ServiceRecordImpl.HEADSET_UUID, ServiceRecordImpl.GENERIC_AUDIO_UUID},
       {ServiceRecordImpl.SERIAL_PORT_UUID, null},

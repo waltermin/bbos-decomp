@@ -39,7 +39,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    private CertificateStatusManager _certificateStatusManager;
    private CertificateStatusManagerTicket _ticket;
    protected Certificate _certificate;
-   protected Certificate[][][] _certificateChains;
+   protected Certificate[][] _certificateChains;
    protected Certificate[] _bestCertificateChain;
    protected long _bestCertificateChainProperties;
    private boolean _allowFetchStatus;

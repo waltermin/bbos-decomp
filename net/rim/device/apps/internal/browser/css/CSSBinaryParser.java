@@ -12,7 +12,7 @@ public final class CSSBinaryParser implements CSSParser {
    private int _token;
    private String _stringTable;
    private Vector _freeList = (Vector)(new Object());
-   private int[][][] _currentSelector = new int[5][][];
+   private int[][] _currentSelector = new int[5][];
    public static final byte VERSION = 1;
    private static final byte IMPORT = 1;
    private static final byte SELECTOR = 2;
@@ -164,23 +164,23 @@ public final class CSSBinaryParser implements CSSParser {
 
       try {
          var6 = true;
-         this._handler.startSelector((int[][])this._currentSelector, selectorListSize);
+         this._handler.startSelector(this._currentSelector, selectorListSize);
          this.parseStyleDeclaration();
          var6 = false;
       } finally {
          if (var6) {
-            this._handler.endSelector((int[][])this._currentSelector, selectorListSize);
+            this._handler.endSelector(this._currentSelector, selectorListSize);
 
             for (int i = 0; i < selectorListSize; i++) {
-               this.deallocateArray((int[])this._currentSelector[i]);
+               this.deallocateArray(this._currentSelector[i]);
             }
          }
       }
 
-      this._handler.endSelector((int[][])this._currentSelector, selectorListSize);
+      this._handler.endSelector(this._currentSelector, selectorListSize);
 
       for (int i = 0; i < selectorListSize; i++) {
-         this.deallocateArray((int[])this._currentSelector[i]);
+         this.deallocateArray(this._currentSelector[i]);
       }
    }
 
@@ -198,7 +198,7 @@ public final class CSSBinaryParser implements CSSParser {
       }
 
       for (int i = 0; i < selectorListSize; i++) {
-         this._currentSelector[i] = (int[][])this.parseArray(false);
+         this._currentSelector[i] = this.parseArray(false);
       }
 
       return selectorListSize;

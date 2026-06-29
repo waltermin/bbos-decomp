@@ -31,7 +31,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
    private byte[] _signersUserID;
    private byte _revocationCode = -1;
    private byte[] _revocationReason;
-   private byte[][][] _adkFingerprints;
+   private byte[][] _adkFingerprints;
 
    public PGPSignatureSubPacketParser(Vector subPackets) {
       if (subPackets == null) {
@@ -120,12 +120,12 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
 
                int numADKs = this._adkFingerprints == null ? 0 : this._adkFingerprints.length;
                if (this._adkFingerprints == null) {
-                  this._adkFingerprints = new byte[1][][];
+                  this._adkFingerprints = new byte[1][];
                } else {
                   Array.resize(this._adkFingerprints, numADKs + 1);
                }
 
-               this._adkFingerprints[numADKs] = (byte[][])(new byte[20]);
+               this._adkFingerprints[numADKs] = new byte[20];
                System.arraycopy(data, 2, this._adkFingerprints[numADKs], 0, 20);
                break;
             case 11:
@@ -289,7 +289,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
       return this._revocationReason;
    }
 
-   public byte[][][] getADKFingerprints() {
+   public byte[][] getADKFingerprints() {
       return this._adkFingerprints;
    }
 }

@@ -53,14 +53,12 @@ public final class PersistentContent {
    private final int _publicKeyLength1 = EncryptionUtilities.getPublicKeyLength(3);
    private final int _publicKeyLength2 = EncryptionUtilities.getPublicKeyLength(4);
    private int[] _publicKeyLengths = new int[]{this._publicKeyLength0, this._publicKeyLength1, this._publicKeyLength2};
-   private byte[][][] _devicePublicKeys = new byte[][][]{
-      (byte[][])(new byte[this._publicKeyLength0]), (byte[][])(new byte[this._publicKeyLength1]), (byte[][])(new byte[this._publicKeyLength2])
-   };
+   private byte[][] _devicePublicKeys = new byte[][]{new byte[this._publicKeyLength0], new byte[this._publicKeyLength1], new byte[this._publicKeyLength2]};
    private final int _privateKeyLength0 = EncryptionUtilities.getPrivateKeyLength(0);
    private final int _privateKeyLength1 = EncryptionUtilities.getPrivateKeyLength(3);
    private final int _privateKeyLength2 = EncryptionUtilities.getPrivateKeyLength(4);
    private int[] _privateKeyLengths = new int[]{this._privateKeyLength0, this._privateKeyLength1, this._privateKeyLength2};
-   private byte[][][] _devicePrivateKeys;
+   private byte[][] _devicePrivateKeys;
    private byte[] _ephemeralPublicKey;
    private Object _ticket;
    private WeakReference _ticketWR = new WeakReference(null);
@@ -248,15 +246,15 @@ public final class PersistentContent {
             }
 
             this.encryptPassword(password, false);
-            this._devicePrivateKeys = new byte[3][][];
+            this._devicePrivateKeys = new byte[3][];
             int var15 = 0;
             this._deviceSymmetricKey = net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, 32);
             var15 += 32;
-            this._devicePrivateKeys[0] = (byte[][])net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength0);
+            this._devicePrivateKeys[0] = net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength0);
             var15 += this._privateKeyLength0;
-            this._devicePrivateKeys[1] = (byte[][])net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength1);
+            this._devicePrivateKeys[1] = net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength1);
             var15 += this._privateKeyLength1;
-            this._devicePrivateKeys[2] = (byte[][])net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength2);
+            this._devicePrivateKeys[2] = net.rim.vm.Memory.copyToRAMOnlyBytes(plaintext, var15, this._privateKeyLength2);
             net.rim.vm.Memory.setPlaintext(this._deviceSymmetricKey);
             net.rim.vm.Memory.setPlaintext(this._devicePrivateKeys[0]);
             net.rim.vm.Memory.setPlaintext(this._devicePrivateKeys[1]);
@@ -493,7 +491,7 @@ public final class PersistentContent {
                if (this._devicePrivateKeys != null) {
                   System.out.println("PC: locked, erasing key");
                   this._deviceSymmetricKey = null;
-                  this._devicePrivateKeys = (byte[][][])((byte[][])null);
+                  this._devicePrivateKeys = (byte[][])null;
                   this._symmetricKeyCache = new PersistentContent$SymmetricKeyCache();
                   memoryCleanerManager.cleanPersistentContent();
                   this._checkSecureDelay = 1000;
@@ -741,14 +739,14 @@ public final class PersistentContent {
 
          this._deviceSymmetricKey = net.rim.vm.Memory.allocRAMOnlyBytes(32);
          RandomSource.getBytes(this._deviceSymmetricKey);
-         this._devicePrivateKeys = new byte[][][]{
-            (byte[][])net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength0),
-            (byte[][])net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength1),
-            (byte[][])net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength2)
+         this._devicePrivateKeys = new byte[][]{
+            net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength0),
+            net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength1),
+            net.rim.vm.Memory.allocRAMOnlyBytes(this._privateKeyLength2)
          };
-         EncryptionUtilities.createKeyPair(0, (byte[])this._devicePublicKeys[0], (byte[])this._devicePrivateKeys[0]);
-         EncryptionUtilities.createKeyPair(3, (byte[])this._devicePublicKeys[1], (byte[])this._devicePrivateKeys[1]);
-         EncryptionUtilities.createKeyPair(4, (byte[])this._devicePublicKeys[2], (byte[])this._devicePrivateKeys[2]);
+         EncryptionUtilities.createKeyPair(0, this._devicePublicKeys[0], this._devicePrivateKeys[0]);
+         EncryptionUtilities.createKeyPair(3, this._devicePublicKeys[1], this._devicePrivateKeys[1]);
+         EncryptionUtilities.createKeyPair(4, this._devicePublicKeys[2], this._devicePrivateKeys[2]);
          net.rim.vm.Memory.setPlaintext(this._devicePrivateKeys[0]);
          net.rim.vm.Memory.setPlaintext(this._devicePrivateKeys[1]);
          net.rim.vm.Memory.setPlaintext(this._devicePrivateKeys[2]);
@@ -1253,7 +1251,7 @@ public final class PersistentContent {
             byte[] privateKey = new byte[this._privateKeyLengths[eccCurveId]];
             int eccCurve = this._eccCurves[eccCurveId];
             EncryptionUtilities.createKeyPair(eccCurve, publicKey, privateKey);
-            symmetricKey = EncryptionUtilities.calculateKey(eccCurve, (byte[])this._devicePublicKeys[eccCurveId], privateKey);
+            symmetricKey = EncryptionUtilities.calculateKey(eccCurve, this._devicePublicKeys[eccCurveId], privateKey);
             net.rim.vm.Memory.setPlaintext(privateKey);
             net.rim.vm.Memory.setPlaintext(symmetricKey);
          }
@@ -1449,7 +1447,7 @@ public final class PersistentContent {
                   byte[] publicKey = new byte[publicKeyLength];
                   copyBytes(input, inputByteOffset, publicKey, 0, publicKeyLength, false);
                   inputByteOffset += publicKeyLength;
-                  symmetricKey = EncryptionUtilities.calculateKey(this._eccCurves[eccCurveId], publicKey, (byte[])this._devicePrivateKeys[eccCurveId]);
+                  symmetricKey = EncryptionUtilities.calculateKey(this._eccCurves[eccCurveId], publicKey, this._devicePrivateKeys[eccCurveId]);
                   net.rim.vm.Memory.setPlaintext(symmetricKey);
                   this._symmetricKeyCache.put(input, hashOffset, symmetricKey);
                }

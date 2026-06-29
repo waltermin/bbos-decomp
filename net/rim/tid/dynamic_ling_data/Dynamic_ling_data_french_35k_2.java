@@ -10,7 +10,7 @@ public class Dynamic_ling_data_french_35k_2 extends ILingDataLoader {
 
    private Dynamic_ling_data_french_35k_2() {
       String[] names = new String[]{"french_35k_2.001.wrd", "french_35k_2.002.wrd", "french_35k_2.003.wrd", "french_35k_2.004.wrd"};
-      super._resNames = new Object[][][]{names};
+      super._resNames = new Object[][]{names};
       super._locales = new Object[]{Locale.get("fr", "")};
       super._types = new int[]{17, -804651007, 99346, -804651006};
       super._versions = new int[]{65537, -804651004, -823827711, 44};

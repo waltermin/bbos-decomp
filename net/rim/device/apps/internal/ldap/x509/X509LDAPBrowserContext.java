@@ -331,7 +331,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    }
 
    @Override
-   public final void getCertificates(LDAPEntry entry, Certificate[] certificates, byte[][][] certificateIDs) {
+   public final void getCertificates(LDAPEntry entry, Certificate[] certificates, byte[][] certificateIDs) {
       this.getCertificateValues(entry, "usercertificate", certificates, certificateIDs);
       this.getCertificateValues(entry, "usercertificate;binary", certificates, certificateIDs);
       this.getCertificateValues(entry, "cacertificate", certificates, certificateIDs);
@@ -339,7 +339,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    }
 
    @Override
-   public final void getCertificateIDs(LDAPEntry entry, byte[][][] certificateIDs) {
+   public final void getCertificateIDs(LDAPEntry entry, byte[][] certificateIDs) {
       this.getByteArrayValues(entry, "SHA1-usercertificate", certificateIDs);
       this.getByteArrayValues(entry, "SHA1-usercertificate;binary", certificateIDs);
       this.getByteArrayValues(entry, "SHA1-cacertificate", certificateIDs);
@@ -765,7 +765,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       return keyStore.set(associatedData, label, certificate, status, ticket);
    }
 
-   private final void getCertificateValues(LDAPEntry entry, String attributeName, Certificate[] certificates, byte[][][] certificateIDs) {
+   private final void getCertificateValues(LDAPEntry entry, String attributeName, Certificate[] certificates, byte[][] certificateIDs) {
       try {
          LDAPAttribute attribute = entry.getAttribute(attributeName);
          SHA1Digest sha1Digest = (SHA1Digest)(new Object());
@@ -857,7 +857,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // try (0 -> 51): 57 null
    }
 
-   private final void getByteArrayValues(LDAPEntry entry, String attributeName, byte[][][] values) {
+   private final void getByteArrayValues(LDAPEntry entry, String attributeName, byte[][] values) {
       try {
          LDAPAttribute attribute = entry.getAttribute(attributeName);
          int numAttributeValues = attribute.getSize();

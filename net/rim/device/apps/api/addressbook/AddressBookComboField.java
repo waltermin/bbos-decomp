@@ -74,7 +74,7 @@ public class AddressBookComboField extends ComboField implements FilterStatusLis
          }
 
          this._stVariants.update(searchText);
-         String[][][] variantSet = this._stVariants.getVariantSet();
+         String[][] variantSet = this._stVariants.getVariantSet();
          if (variantSet != null && variantSet.length != 0) {
             this._filteredList.setCriteria(variantSet, this);
          } else {

@@ -4,14 +4,14 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.internal.vad.VADNatives;
 
 final class VADContentProtectedFile extends VADPersistentFile {
-   private byte[][][] _plaintext;
+   private byte[][] _plaintext;
    private static final boolean DEBUG_TIMINGS = false;
 
    VADContentProtectedFile(VADEngineManager manager, int handle) {
       super(manager, handle);
       super._length = PersistentContent.getLength(super._data[0]);
       if (this._plaintext == null) {
-         this._plaintext = new byte[1][][];
+         this._plaintext = new byte[1][];
       }
    }
 
@@ -19,10 +19,10 @@ final class VADContentProtectedFile extends VADPersistentFile {
    final void reset() {
       super.reset();
       if (this._plaintext == null) {
-         this._plaintext = new byte[1][][];
+         this._plaintext = new byte[1][];
       }
 
-      this._plaintext[0] = (byte[][])(new byte[0]);
+      this._plaintext[0] = new byte[0];
    }
 
    @Override
@@ -36,7 +36,7 @@ final class VADContentProtectedFile extends VADPersistentFile {
          data = new byte[0];
       }
 
-      this._plaintext[0] = (byte[][])data;
+      this._plaintext[0] = data;
       return true;
    }
 
@@ -49,13 +49,13 @@ final class VADContentProtectedFile extends VADPersistentFile {
    @Override
    final void commit() {
       boolean encrypt = VADEngineManager.getEncryptFlag();
-      super._data[0] = PersistentContent.encode((byte[])this._plaintext[0], encrypt, encrypt);
+      super._data[0] = PersistentContent.encode(this._plaintext[0], encrypt, encrypt);
       super.commit();
    }
 
    @Override
    final void write(byte[] newData, int offset) {
-      super._length = VADDataFile.writeToBuffer(newData, offset, (byte[])this._plaintext[0]);
+      super._length = VADDataFile.writeToBuffer(newData, offset, this._plaintext[0]);
       super._dirty = true;
    }
 

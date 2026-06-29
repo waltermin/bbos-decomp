@@ -93,7 +93,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
                   this._connection.getPSMHandle(),
                   true,
                   this._serviceRecord.getAttributeIDs(),
-                  (byte[][])this._serviceRecord.getAttributeValues(),
+                  this._serviceRecord.getAttributeValues(),
                   this._serviceRecord.getDeviceServiceClasses(),
                   1,
                   this.getPSM(),

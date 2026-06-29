@@ -764,11 +764,11 @@ public final class CacheResult implements Persistable, EncryptableProvider {
          }
 
          if (this._cachedData != null && !(this._cachedData instanceof CacheResult$EncryptedPipe)) {
-            this._cachedData = new CacheResult$EncryptedPipe((byte[][][])((Pipe)this._cachedData).toSegmentedArray());
+            this._cachedData = new CacheResult$EncryptedPipe(((Pipe)this._cachedData).toSegmentedArray());
          }
 
          if (this._transcodedData != null && !(this._transcodedData instanceof CacheResult$EncryptedPipe)) {
-            this._transcodedData = new CacheResult$EncryptedPipe((byte[][][])((Pipe)this._transcodedData).toSegmentedArray());
+            this._transcodedData = new CacheResult$EncryptedPipe(((Pipe)this._transcodedData).toSegmentedArray());
          }
       }
 

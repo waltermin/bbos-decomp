@@ -19,12 +19,12 @@ class SpellCheckWordMatch$CharactersIterator implements RegularExpression$Simple
 
    @Override
    public boolean hasNext() {
-      return this.charsIndex < this.this$0.chars.length && this.this$0.chars[this.charsIndex][this.this$0.starts[this.charsIndex] + this.index] != false;
+      return this.charsIndex < this.this$0.chars.length && this.this$0.chars[this.charsIndex][this.this$0.starts[this.charsIndex] + this.index] != 0;
    }
 
    @Override
    public char next() {
-      char ch = (char)this.this$0.chars[this.charsIndex][this.this$0.starts[this.charsIndex] + this.index];
+      char ch = this.this$0.chars[this.charsIndex][this.this$0.starts[this.charsIndex] + this.index];
       this.charsIndex++;
       return ch;
    }

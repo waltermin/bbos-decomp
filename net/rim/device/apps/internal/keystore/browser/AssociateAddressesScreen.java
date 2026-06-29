@@ -55,13 +55,13 @@ public final class AssociateAddressesScreen extends AppsMainScreen {
       this.add(otherAddressLabelField);
       this._associatedAddressesListField = (ObjectListField)(new Object());
       KeyStoreData keyStoreData = this._keyStoreBrowserData.getKeyStoreData();
-      byte[][][] emailAddresses = (byte[][][])keyStoreData.getAssociatedData(-1124699153917633064L);
+      byte[][] emailAddresses = keyStoreData.getAssociatedData(-1124699153917633064L);
       if (emailAddresses != null) {
          int numEmailAddresses = emailAddresses.length;
          String[] emailAddressStrings = new Object[0];
 
          for (int i = 0; i < numEmailAddresses; i++) {
-            String email = (String)(new Object((byte[])emailAddresses[i]));
+            String email = (String)(new Object(emailAddresses[i]));
             if (!this.addressExists(email)) {
                Array.resize(emailAddressStrings, emailAddressStrings.length + 1);
                emailAddressStrings[emailAddressStrings.length - 1] = email;

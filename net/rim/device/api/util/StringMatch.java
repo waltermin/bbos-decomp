@@ -4,7 +4,7 @@ import net.rim.vm.Array;
 
 public final class StringMatch implements Persistable {
    private String[] _patterns;
-   private int[][][] _failLinks;
+   private int[][] _failLinks;
    private boolean _caseSensitivity;
    private boolean _allMatch;
    private int _lastMatchedIndex;
@@ -34,15 +34,15 @@ public final class StringMatch implements Persistable {
       }
 
       if (!spaceDelimitsNewPattern) {
-         this._failLinks = new int[1][][];
+         this._failLinks = new int[1][];
          this._patterns = new String[1];
          this._patterns[0] = pattern;
-         this._failLinks[0] = (int[][])(new int[pattern.length()]);
-         KMPInit(pattern, (int[])this._failLinks[0]);
+         this._failLinks[0] = new int[pattern.length()];
+         KMPInit(pattern, this._failLinks[0]);
       } else {
          int start = 0;
          int len = pattern.length();
-         this._failLinks = new int[0][][];
+         this._failLinks = new int[0][];
          this._patterns = new String[0];
          int numPatterns = 0;
 
@@ -62,8 +62,8 @@ public final class StringMatch implements Persistable {
                Array.resize(this._patterns, numPatterns);
                String subPattern = pattern.substring(start, end);
                this._patterns[numPatterns - 1] = subPattern;
-               this._failLinks[numPatterns - 1] = (int[][])(new int[subPattern.length()]);
-               KMPInit(subPattern, (int[])this._failLinks[numPatterns - 1]);
+               this._failLinks[numPatterns - 1] = new int[subPattern.length()];
+               KMPInit(subPattern, this._failLinks[numPatterns - 1]);
             }
 
             start = end;
@@ -79,7 +79,7 @@ public final class StringMatch implements Persistable {
       int patternCount = patterns.length;
       this._caseSensitivity = caseSensitivity;
       this._allMatch = allMatch;
-      this._failLinks = new int[patternCount][][];
+      this._failLinks = new int[patternCount][];
       this._patterns = new String[patternCount];
       if (caseSensitivity) {
          System.arraycopy(patterns, 0, this._patterns, 0, patternCount);
@@ -94,8 +94,8 @@ public final class StringMatch implements Persistable {
             this._patterns[i] = patterns[i].toUpperCase();
          }
 
-         this._failLinks[i] = (int[][])(new int[this._patterns[i].length()]);
-         KMPInit(this._patterns[i], (int[])this._failLinks[i]);
+         this._failLinks[i] = new int[this._patterns[i].length()];
+         KMPInit(this._patterns[i], this._failLinks[i]);
       }
    }
 

@@ -140,7 +140,7 @@ class ReminderModelImpl implements ReminderModel, LongProp, Copyable, Reconcilab
    }
 
    @Override
-   public int getIconsForField(long field, IconCollection[] icons, int[][][] indices) {
+   public int getIconsForField(long field, IconCollection[] icons, int[][] indices) {
       if (!this.hasReminder()) {
          return 0;
       }
@@ -149,7 +149,7 @@ class ReminderModelImpl implements ReminderModel, LongProp, Copyable, Reconcilab
       Array.resize(icons, numIcons + 1);
       Array.resize(indices, numIcons + 1);
       icons[numIcons] = STATUS_ICONS;
-      indices[numIcons] = (int[][])(new int[]{0, -804519911, 0, 0});
+      indices[numIcons] = new int[]{0, -804519911, 0, 0};
       return 1;
    }
 

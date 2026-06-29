@@ -18,7 +18,7 @@ final class PhoneNumberKeywordFinder extends KeywordFilteredListFinder {
    PhoneAppScreen _pas;
    KeywordFilterList _filterList = null;
    KeywordFilterCollectionListField _list = null;
-   String[][][] _variants = new Object[0][][];
+   String[][] _variants = new Object[0][];
 
    public PhoneNumberKeywordFinder(PhoneAppScreen pas) {
       super("", CommonResources.getString(700), false, 8192);

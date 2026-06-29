@@ -514,12 +514,12 @@ public class SecureEmailUtilities {
          KeyStoreData data = (KeyStoreData)enumeration.nextElement();
          Certificate certificate = data.getCertificate();
          if (certificate != null && certificate.queryKeyUsage(4) != 0) {
-            byte[][][] emailAddresses = (byte[][][])data.getAssociatedData(-1124699153917633064L);
+            byte[][] emailAddresses = data.getAssociatedData(-1124699153917633064L);
             if (emailAddresses != null) {
                int numEmailAddresses = emailAddresses.length;
 
                for (int i = 0; i < numEmailAddresses; i++) {
-                  String currentEmailAddress = (String)(new Object((byte[])emailAddresses[i]));
+                  String currentEmailAddress = (String)(new Object(emailAddresses[i]));
                   if (this.checkForMatch(addressFragments, new Object[]{currentEmailAddress})) {
                      this.addLocalKeyStoreData(currentEmailAddress, localKeyStoreData, data);
                      continue label48;

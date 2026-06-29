@@ -29,11 +29,11 @@ final class ConversionDataRegistryHelper {
       return this._availableEncodings;
    }
 
-   final synchronized boolean loadConversionData(String encodingName, int encodingID, int locale, String typeface, byte[][][] bData) {
+   final synchronized boolean loadConversionData(String encodingName, int encodingID, int locale, String typeface, byte[][] bData) {
       try {
          if (bData != null && bData.length != 0 && bData[0] != null) {
             byte success = 0;
-            byte[] data = (byte[])bData[0];
+            byte[] data = bData[0];
             DataInputStream stream = new DataInputStream(new ByteArrayInputStream(data));
             int headerSize;
             if ((headerSize = this.readHeader(stream)) == 0) {
@@ -183,7 +183,7 @@ final class ConversionDataRegistryHelper {
       return eData != null ? eData._encoding : "ISO-8859-1";
    }
 
-   final synchronized byte[][][] getConversionData(int id, int[] dataOffset) {
+   final synchronized byte[][] getConversionData(int id, int[] dataOffset) {
       id &= -268435457;
       int length = this._encodingMappingTable.length;
 
@@ -195,7 +195,7 @@ final class ConversionDataRegistryHelper {
          }
       }
 
-      return (byte[][][])((byte[][])null);
+      return (byte[][])null;
    }
 
    final int getEncodingIDLocal(String encoding) {

@@ -1290,11 +1290,11 @@ public final class VoiceApp
    }
 
    private final void handleCallSetupMessage(int action, boolean promptUser, Object context) {
-      byte[][][] messages = (byte[][][])((byte[][])context);
+      byte[][] messages = (byte[][])context;
       String[] callSetupMessages = new Object[2];
       if (messages instanceof byte[][]) {
          for (int i = 0; i < messages.length; i++) {
-            callSetupMessages[i] = SIMCard.decodeAlphaId((byte[])messages[i]);
+            callSetupMessages[i] = SIMCard.decodeAlphaId(messages[i]);
             Out.p(((StringBuffer)(new Object("PHONE-CS-msg="))).append(callSetupMessages[i]).toString());
          }
       }

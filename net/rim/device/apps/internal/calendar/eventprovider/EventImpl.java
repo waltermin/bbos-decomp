@@ -1607,7 +1607,7 @@ public final class EventImpl
    }
 
    @Override
-   public final int getIconsForField(long field, IconCollection[] icons, int[][][] indices) {
+   public final int getIconsForField(long field, IconCollection[] icons, int[][] indices) {
       if (field == 5975440733927886771L) {
          return 0;
       }
@@ -1622,7 +1622,7 @@ public final class EventImpl
                RIMModel rm = (RIMModel)exData;
                if (rm instanceof Object) {
                   DescriptionProvider dp = (DescriptionProvider)rm;
-                  numIconsAdded += dp.getIconsForField(field, icons, (int[][])indices);
+                  numIconsAdded += dp.getIconsForField(field, icons, indices);
                }
             }
          }
@@ -1656,7 +1656,7 @@ public final class EventImpl
                Array.resize(icons, numIcons + 1);
                Array.resize(indices, numIcons + 1);
                icons[numIcons] = CalendarIcons.CAL_STATUS_ICONS;
-               indices[numIcons] = (int[][])ourIndices;
+               indices[numIcons] = ourIndices;
                numIconsAdded += ourIndices.length;
             }
          }

@@ -72,7 +72,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    private int _maxSimultaneousBars;
    private long _preferredTimeSelection;
    protected IconCollection[] _icons = new Object[0];
-   protected int[][][] _indices = new int[0][0][];
+   protected int[][] _indices = new int[0][0];
    private ThemeAttributeSet _themeAttributesHeader;
    private ThemeAttributeSet _themeAttributesAppointments;
    private ThemeAttributeSet _themeAttributesFreeTimeSeperators;
@@ -225,7 +225,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
       location.y = this._focus.y;
    }
 
-   protected int getIconWidth(IconCollection[] icons, int[][][] indices) {
+   protected int getIconWidth(IconCollection[] icons, int[][] indices) {
       int totalIconWidth = 0;
       int iconWidth = 0;
 
@@ -240,7 +240,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    protected void getIconsForTransition(DayList$Transition curTransition) {
       if (curTransition._calElement instanceof Object) {
          DescriptionProvider dp = (DescriptionProvider)curTransition._calElement;
-         dp.getIconsForField(7380487202915104824L, this._icons, (int[][])this._indices);
+         dp.getIconsForField(7380487202915104824L, this._icons, this._indices);
       }
    }
 
@@ -766,7 +766,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
       String str = entry.getSummaryText(this.supportAdvancedThemeing());
       if (str != null && entry._calElement instanceof Object) {
          this.getIconsForTransition(entry);
-         int iconWidth = this.getIconWidth(this._icons, (int[][])this._indices);
+         int iconWidth = this.getIconWidth(this._icons, this._indices);
          Array.resize(this._icons, 0);
          Array.resize(this._indices, 0);
          int availableDescriptionWidth = this._widthOfDesc - iconWidth - (this._padding.right + this._padding.left);
@@ -858,7 +858,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
 
             if (summaryText != null) {
                this._sharedOffsets[1] = summaryText.length();
-               int availableDescriptionWidth = this._widthOfDesc - this.getIconWidth(this._icons, (int[][])this._indices) - (padding.right + padding.left);
+               int availableDescriptionWidth = this._widthOfDesc - this.getIconWidth(this._icons, this._indices) - (padding.right + padding.left);
                wrapInfo = RichText.calculateLengths(availableDescriptionWidth, summaryText, this._sharedOffsets, this._sharedBytes, this._sharedFonts);
                firstLineLength = wrapInfo._lengths[0];
                String vectorSubstring = null;
@@ -1116,7 +1116,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
 
             int iconWidth = 0;
             if (this._displayInformationIcons) {
-               iconWidth = this.getIconWidth(this._icons, (int[][])this._indices);
+               iconWidth = this.getIconWidth(this._icons, this._indices);
             }
 
             if (this._displayLines) {
@@ -1204,7 +1204,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
 
                   for (int i = 0; i < this._icons.length; i++) {
                      IconCollection iconCollection = this._icons[i];
-                     int[] indices = (int[])this._indices[i];
+                     int[] indices = this._indices[i];
                      numIcons = indices.length;
 
                      for (int j = 0; j < numIcons; j++) {

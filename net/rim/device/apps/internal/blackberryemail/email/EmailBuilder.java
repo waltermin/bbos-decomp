@@ -31,7 +31,7 @@ import net.rim.device.apps.internal.blackberryemail.header.HeaderTypes;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public final class EmailBuilder {
-   private static String[][][] _arrayOfStringPairs = new Object[1][][];
+   private static String[][] _arrayOfStringPairs = new Object[1][];
 
    static final void addSubjectLine(EmailMessageModel msg, Object context) {
       PersistableRIMModel subject = (PersistableRIMModel)FactoryUtil.createInstance(3928489455534245796L, context);
@@ -565,7 +565,7 @@ public final class EmailBuilder {
    }
 
    static final boolean createHeaderForStringPairs(
-      String[][][] arrayOfStringPairs, int headerType, Factory factory, ContextObject initialData, WritableSet message, String addressToMatch
+      String[][] arrayOfStringPairs, int headerType, Factory factory, ContextObject initialData, WritableSet message, String addressToMatch
    ) {
       boolean returnValue = false;
       if (arrayOfStringPairs != null) {

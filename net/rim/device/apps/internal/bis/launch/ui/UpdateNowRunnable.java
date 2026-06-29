@@ -12,7 +12,7 @@ import net.rim.device.internal.ui.Image;
 
 public final class UpdateNowRunnable implements FieldChangeRunnable {
    private String[] _downloadUrls;
-   private byte[][][] _digests;
+   private byte[][] _digests;
    private int _size;
    private boolean _mandatoryUpdate;
    private boolean _updateSuccess;
@@ -24,7 +24,7 @@ public final class UpdateNowRunnable implements FieldChangeRunnable {
    private static final int OK = 0;
    private static final int RUN = 1;
 
-   public UpdateNowRunnable(boolean mandatoryUpdate, String[] downloadUrls, byte[][][] digests, int size) {
+   public UpdateNowRunnable(boolean mandatoryUpdate, String[] downloadUrls, byte[][] digests, int size) {
       this._mandatoryUpdate = mandatoryUpdate;
       this._downloadUrls = downloadUrls;
       this._digests = digests;

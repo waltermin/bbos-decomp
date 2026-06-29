@@ -6,7 +6,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.tid.itie.LinguisticData;
 
 public class ChineseJNI_gate {
-   private byte[][][] _wordlist;
+   private byte[][] _wordlist;
    private int[] _indexes = new int[0];
    private boolean _isNativeSupportBuilt = true;
    private static final long CH_JNI_GATE_REGISTRY_NAME = 637717017681252726L;
@@ -21,16 +21,16 @@ public class ChineseJNI_gate {
    }
 
    public boolean setLocale(int aLocaleCode) {
-      this._wordlist = new byte[0][][];
+      this._wordlist = new byte[0][];
       this._indexes = new int[0];
       return setLocaleToNative(aLocaleCode);
    }
 
    public boolean initWordlist(LinguisticData aData) {
       boolean isGenericType = aData.getType() >> 4 == 1;
-      int res = initWordlistReader((byte[][][])aData.getData(), isGenericType);
+      int res = initWordlistReader(aData.getData(), isGenericType);
       if (res != 0) {
-         byte[][][] data = (byte[][][])aData.getData();
+         byte[][] data = aData.getData();
          if (!isGenericType && this._wordlist.length != 0) {
             Arrays.insertAt(this._indexes, data.length, 0);
 
@@ -51,7 +51,7 @@ public class ChineseJNI_gate {
 
    private void removeWordlist(int anIndex) {
       if (this._indexes.length == 1) {
-         this._wordlist = new byte[0][][];
+         this._wordlist = new byte[0][];
       } else {
          int startIndex = 0;
 
@@ -109,7 +109,7 @@ public class ChineseJNI_gate {
 
    public static native boolean isValidFuzzyPrefixFor(char var0, byte[] var1, int var2);
 
-   private static native int initWordlistReader(byte[][][] var0, boolean var1);
+   private static native int initWordlistReader(byte[][] var0, boolean var1);
 
    private static native boolean removeWordlistReader(int var0);
 

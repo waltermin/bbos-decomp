@@ -742,7 +742,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       SSLCryptoSystemProperties sslCryptoSystemProperties = new SSLCryptoSystemProperties(
          ((ConnectionState)this._recordProtocol.getPendingRead()).getKeyExchangeAlgorithm(), connectionOptions
       );
-      Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, certificatePool, DeviceKeyStore.getInstance());
+      Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, certificatePool, DeviceKeyStore.getInstance());
       long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, TrustedKeyStore.getInstance(), System.currentTimeMillis(), sslCryptoSystemProperties
       );

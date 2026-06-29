@@ -560,7 +560,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
       Certificate[] certificateChain = null;
       long certificateChainProperties = -1;
       if (certificate != null) {
-         Certificate[][][] allCertificateChains = CertificateUtilities.buildCertificateChains(certificate, this._preferredKeyStore, emailAddress);
+         Certificate[][] allCertificateChains = CertificateUtilities.buildCertificateChains(certificate, this._preferredKeyStore, emailAddress);
          long[] allCertificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
             allCertificateChains,
             this._preferredKeyStore,

@@ -9,7 +9,7 @@ public class BigLongVector implements Persistable {
    private int _arrayChunkSize;
    private int _numArrayChunks;
    private int _vectorSize;
-   private long[][][] _arrayChunks;
+   private long[][] _arrayChunks;
    private int[] _firstElementIndex;
    private int[] _chunkStartIndex;
    private long[] _currChunk;
@@ -61,7 +61,7 @@ public class BigLongVector implements Persistable {
             } else {
                if (this._firstElementIndex[mid + 1] > index) {
                   this._currChunkIndex = mid;
-                  this._currChunk = (long[])this._arrayChunks[this._currChunkIndex];
+                  this._currChunk = this._arrayChunks[this._currChunkIndex];
                   this._currChunkStartIndex = this._chunkStartIndex[this._currChunkIndex];
                   this._currChunkFirstElementIndex = this._firstElementIndex[this._currChunkIndex];
                   this._currChunkLastElementIndexPlusOne = this._firstElementIndex[this._currChunkIndex + 1];
@@ -88,7 +88,7 @@ public class BigLongVector implements Persistable {
       System.arraycopy(this._chunkStartIndex, newSlot, this._chunkStartIndex, newSlot + 1, tailSize);
       long[] newChunk = new long[this._arrayChunkSize];
       this._firstElementIndex[newSlot] = this._firstElementIndex[this._currChunkIndex] + splitPoint;
-      this._arrayChunks[newSlot] = (long[][])newChunk;
+      this._arrayChunks[newSlot] = newChunk;
       this._chunkStartIndex[newSlot] = 0;
       System.arraycopy(this._currChunk, splitPoint + this._currChunkStartIndex, newChunk, 0, this._arrayChunkSize - splitPoint);
       this._currChunkIndex = 0;
@@ -99,7 +99,7 @@ public class BigLongVector implements Persistable {
       Array.resize(this._arrayChunks, this._numArrayChunks + 1);
       Array.resize(this._chunkStartIndex, this._numArrayChunks + 1);
       this._firstElementIndex[this._numArrayChunks + 1] = this._firstElementIndex[this._numArrayChunks] + this._arrayChunkSize;
-      this._arrayChunks[this._numArrayChunks] = (long[][])(new long[this._arrayChunkSize]);
+      this._arrayChunks[this._numArrayChunks] = new long[this._arrayChunkSize];
       this._chunkStartIndex[this._numArrayChunks] = 0;
       this._numArrayChunks++;
       this._currChunkIndex = 0;
@@ -131,7 +131,7 @@ public class BigLongVector implements Persistable {
    }
 
    private void init(long[] elements) {
-      this._arrayChunks = new long[this._numArrayChunks][][];
+      this._arrayChunks = new long[this._numArrayChunks][];
       this._currChunkIndex = 0;
       this._chunkStartIndex = new int[this._numArrayChunks];
       this._firstElementIndex = new int[this._numArrayChunks + 1];
@@ -141,7 +141,7 @@ public class BigLongVector implements Persistable {
       for (int i = 0; i < this._numArrayChunks; i++) {
          this._chunkStartIndex[i] = index;
          this._firstElementIndex[i] = index;
-         this._arrayChunks[i] = (long[][])elements;
+         this._arrayChunks[i] = elements;
          index += this._arrayChunkSize;
       }
 
@@ -177,7 +177,7 @@ public class BigLongVector implements Persistable {
 
       for (this._currChunkIndex = 0; this._currChunkIndex < this._numArrayChunks; this._currChunkIndex++) {
          int elementIndex = this._firstElementIndex[this._currChunkIndex];
-         long[] chunk = (long[])this._arrayChunks[this._currChunkIndex];
+         long[] chunk = this._arrayChunks[this._currChunkIndex];
          int arrayIndex = this._chunkStartIndex[this._currChunkIndex];
          int endElementIndex = this._firstElementIndex[this._currChunkIndex + 1];
          if (endElementIndex > this._vectorSize) {
@@ -226,7 +226,7 @@ public class BigLongVector implements Persistable {
          int chunkSize = this._firstElementIndex[i + 1] - firstElement;
          int startChunk = this._chunkStartIndex[i];
          int endChunk = startChunk + chunkSize;
-         long[] chunk = (long[])this._arrayChunks[i];
+         long[] chunk = this._arrayChunks[i];
 
          for (int j = startChunk; j < endChunk; j++) {
             if (chunk[j] == value) {
@@ -415,7 +415,7 @@ public class BigLongVector implements Persistable {
 
       while (hi != low) {
          mid = hi + low >> 1;
-         chunk = (long[])this._arrayChunks[mid];
+         chunk = this._arrayChunks[mid];
          int lastElement = this._firstElementIndex[mid + 1];
          if (lastElement > this._vectorSize) {
             lastElement = this._vectorSize;

@@ -13,7 +13,7 @@ public final class WLANProfile {
    public String _domainSuffix;
    public int _authMode;
    public int _innerAuthMode;
-   public byte[][][] _wepKey;
+   public byte[][] _wepKey;
    public int _wepKeySize;
    public int _wepTxIndex;
    public byte[] _wpaPSKExpandedPMK;

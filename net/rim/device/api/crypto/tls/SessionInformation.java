@@ -16,7 +16,7 @@ class SessionInformation implements Persistable {
    private String _certificateType;
    private String[] _certificatePoolTypes;
    private byte[] _certificateEncoding;
-   private byte[][][] _certificatePoolEncodings;
+   private byte[][] _certificatePoolEncodings;
    private int _hashCode;
 
    public SessionInformation(byte[] sessionID, byte[] masterSecret, int cipherSuite, Certificate cert, Certificate[] certificatePool) {
@@ -31,11 +31,11 @@ class SessionInformation implements Persistable {
       if (certificatePool != null) {
          int certificatePoolLength = certificatePool.length;
          this._certificatePoolTypes = new Object[certificatePoolLength];
-         this._certificatePoolEncodings = new byte[certificatePoolLength][][];
+         this._certificatePoolEncodings = new byte[certificatePoolLength][];
 
          for (int i = 0; i < certificatePoolLength; i++) {
             this._certificatePoolTypes[i] = certificatePool[i].getType();
-            this._certificatePoolEncodings[i] = (byte[][])certificatePool[i].getEncoding();
+            this._certificatePoolEncodings[i] = certificatePool[i].getEncoding();
          }
       }
 
@@ -89,7 +89,7 @@ class SessionInformation implements Persistable {
                Certificate[] certificatePool = new Certificate[certificatePoolLength];
 
                for (int i = 0; i < certificatePoolLength; i++) {
-                  certificatePool[i] = CertificateFactory.getInstance(this._certificatePoolTypes[i], (byte[])this._certificatePoolEncodings[i]);
+                  certificatePool[i] = CertificateFactory.getInstance(this._certificatePoolTypes[i], this._certificatePoolEncodings[i]);
                }
 
                return certificatePool;

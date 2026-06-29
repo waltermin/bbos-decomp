@@ -19,8 +19,8 @@ public final class Route extends Location {
    XYPoint[] _points;
    Route$Path[] _paths;
    int _lastFocusNumber;
-   int[][][] _xFinal;
-   int[][][] _yFinal;
+   int[][] _xFinal;
+   int[][] _yFinal;
    int _oldYOffset;
    MapRect _oldMapView = new MapRect();
    int _oldRotation;
@@ -117,7 +117,7 @@ public final class Route extends Location {
                var48 = true;
                if (this._xFinal[i] != null) {
                   if (this._yFinal[i] != null) {
-                     graphics.drawPathOutline((int[])this._xFinal[i], (int[])this._yFinal[i], null, null, false);
+                     graphics.drawPathOutline(this._xFinal[i], this._yFinal[i], null, null, false);
                      var48 = false;
                   } else {
                      var48 = false;
@@ -139,8 +139,8 @@ public final class Route extends Location {
          this._oldMapView._right = transform._mapView._right;
          this._oldYOffset = transform.getYOffset();
          this._oldRotation = transform._rotation;
-         this._xFinal = new int[this._numPaths][][];
-         this._yFinal = new int[this._numPaths][][];
+         this._xFinal = new int[this._numPaths][];
+         this._yFinal = new int[this._numPaths][];
 
          for (int i = 0; i < this._numPaths; i++) {
             Route$Path path = this._paths[i];
@@ -233,8 +233,8 @@ public final class Route extends Location {
             if (++k != numPoints) {
                int[] xFinal = new int[k];
                int[] yFinal = new int[k];
-               this._xFinal[i] = (int[][])xFinal;
-               this._yFinal[i] = (int[][])yFinal;
+               this._xFinal[i] = xFinal;
+               this._yFinal[i] = yFinal;
                System.arraycopy(xScreen, 0, xFinal, 0, k);
                System.arraycopy(yScreen, 0, yFinal, 0, k);
                boolean var43 = false /* VF: Semaphore variable */;
@@ -258,8 +258,8 @@ public final class Route extends Location {
                   }
                }
             } else {
-               this._xFinal[i] = (int[][])xScreen;
-               this._yFinal[i] = (int[][])yScreen;
+               this._xFinal[i] = xScreen;
+               this._yFinal[i] = yScreen;
                boolean var38 = false /* VF: Semaphore variable */;
 
                try {

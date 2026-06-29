@@ -37,7 +37,7 @@ public class CertificateFactory {
          byte[] certEncoding;
          if (index >= 0) {
             cert = _container._certificates[index];
-            certEncoding = (byte[])_container._encodings[index];
+            certEncoding = _container._encodings[index];
          } else {
             cert = createCertificateFactory(type).createCertificate(encoding);
             certEncoding = encoding;
@@ -63,7 +63,7 @@ public class CertificateFactory {
       for (int i = 0; i < _container._numCerts; i++) {
          if (_container._crcs[i] == checkValue
             && _container._certificates[i] != null
-            && Arrays.equals((byte[])_container._encodings[i], encoding)
+            && Arrays.equals(_container._encodings[i], encoding)
             && _container._certificates[i].getType().equals(type)) {
             return i;
          }
@@ -89,7 +89,7 @@ public class CertificateFactory {
          System.arraycopy(_container._certificates, 0, _container._certificates, 1, index);
          _container._certificates[0] = cert;
          System.arraycopy(_container._encodings, 0, _container._encodings, 1, index);
-         _container._encodings[0] = (byte[][])encoding;
+         _container._encodings[0] = encoding;
          System.arraycopy(_container._crcs, 0, _container._crcs, 1, index);
          _container._crcs[0] = CRC32.update(-1, encoding);
       }
@@ -113,13 +113,13 @@ public class CertificateFactory {
 
    private static void swapPosition(int i, int j) {
       Certificate cert = _container._certificates[i];
-      byte[] encoding = (byte[])_container._encodings[i];
+      byte[] encoding = _container._encodings[i];
       int crc = _container._crcs[i];
       _container._certificates[i] = _container._certificates[j];
       _container._encodings[i] = _container._encodings[j];
       _container._crcs[i] = _container._crcs[j];
       _container._certificates[j] = cert;
-      _container._encodings[j] = (byte[][])encoding;
+      _container._encodings[j] = encoding;
       _container._crcs[j] = crc;
    }
 

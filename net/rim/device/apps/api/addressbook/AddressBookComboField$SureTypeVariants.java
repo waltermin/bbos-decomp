@@ -4,24 +4,24 @@ import net.rim.tid.im.SLControlObject;
 import net.rim.vm.Array;
 
 class AddressBookComboField$SureTypeVariants {
-   private String[][][] _variantSet;
+   private String[][] _variantSet;
    private String _text;
-   private String[][][][][][] _cache;
+   private String[][][] _cache;
    private boolean _ignoreVariants;
    private final AddressBookComboField this$0;
 
    public AddressBookComboField$SureTypeVariants(AddressBookComboField _1) {
       this.this$0 = _1;
-      this._variantSet = new Object[0][][];
+      this._variantSet = new Object[0][];
       this._text = "";
-      this._cache = new Object[1][][][];
+      this._cache = new Object[1][][];
       this._ignoreVariants = false;
-      this._cache[0] = new Object[0][][];
+      this._cache[0] = new Object[0][];
    }
 
    public void ignoreVariants() {
       this._ignoreVariants = true;
-      this._variantSet = new Object[1][1][];
+      this._variantSet = new Object[1][1];
       this._cache = (Object[][][])null;
    }
 
@@ -30,12 +30,12 @@ class AddressBookComboField$SureTypeVariants {
          this._variantSet[0][0] = text;
       } else {
          this._text = text;
-         String[][][] cachedVariants = this.getCachedVariants();
+         String[][] cachedVariants = this.getCachedVariants();
          if (cachedVariants != null) {
             this._variantSet = cachedVariants;
          } else {
             SLControlObject controlObject = (SLControlObject)this.this$0.getInputContext().getInputMethodControlObject();
-            String[][][] varsContainer = new Object[1][][];
+            String[][] varsContainer = new Object[1][];
             controlObject.actionPerformed(107, varsContainer);
             String[] variants = varsContainer[0];
             String[] components = this.makeComponents(text);
@@ -51,7 +51,7 @@ class AddressBookComboField$SureTypeVariants {
       }
    }
 
-   public String[][][] getVariantSet() {
+   public String[][] getVariantSet() {
       return this._variantSet;
    }
 
@@ -118,7 +118,7 @@ class AddressBookComboField$SureTypeVariants {
       }
    }
 
-   private String[][][] getCachedVariants() {
+   private String[][] getCachedVariants() {
       if (this._cache == null) {
          return (Object[][])null;
       }
@@ -132,13 +132,13 @@ class AddressBookComboField$SureTypeVariants {
       return this.copy(this._cache[index]);
    }
 
-   private String[][][] copy(String[][][] varSet) {
+   private String[][] copy(String[][] varSet) {
       if (varSet == null) {
          return (Object[][])null;
       }
 
       int vsLength = varSet.length;
-      String[][][] copy = new Object[vsLength][][];
+      String[][] copy = new Object[vsLength][];
 
       for (int i = 0; i < vsLength; i++) {
          if (varSet[i] == null) {
@@ -161,7 +161,7 @@ class AddressBookComboField$SureTypeVariants {
       System.out.println();
    }
 
-   private void dumpVariants(String[][][] vars) {
+   private void dumpVariants(String[][] vars) {
       if (vars == null) {
          System.out.print("null");
       } else {

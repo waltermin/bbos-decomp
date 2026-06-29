@@ -1,7 +1,7 @@
 package net.rim.tid.itie;
 
 public class LinguisticData {
-   private byte[][][] _data;
+   private byte[][] _data;
    private int _id;
    private int _type;
    private int _version;
@@ -31,15 +31,15 @@ public class LinguisticData {
    public static final int LINGDATA_UNLOAD_ERROR = 2;
    public static final int LINGDATA_UNLOAD_NOT_FOUND = 4;
 
-   public LinguisticData(String name, int type, int version, byte[][][] data) {
+   public LinguisticData(String name, int type, int version, byte[][] data) {
       this(name, type, version, data, null);
    }
 
-   public LinguisticData(String name, int type, int version, byte[][][] data, String diagnosticMessage) {
+   public LinguisticData(String name, int type, int version, byte[][] data, String diagnosticMessage) {
       this(name, type, version, data, null, null);
    }
 
-   public LinguisticData(String name, int type, int version, byte[][][] data, String diagnosticMessage, String codFileName) {
+   public LinguisticData(String name, int type, int version, byte[][] data, String diagnosticMessage, String codFileName) {
       if (name != null && data != null) {
          this._name = name;
          this._data = data;
@@ -52,7 +52,7 @@ public class LinguisticData {
       }
    }
 
-   public byte[][][] getData() {
+   public byte[][] getData() {
       return this._data;
    }
 

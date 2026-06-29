@@ -44,9 +44,9 @@ public final class Universal_Writer extends StreamWriter {
             this._conversionDataOffset = new int[1];
          }
 
-         byte[][][] bData = (byte[][][])txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
+         byte[][] bData = txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
          if (bData != null && bData.length > 0) {
-            this._conversionData = (byte[])bData[0];
+            this._conversionData = bData[0];
          }
       }
 

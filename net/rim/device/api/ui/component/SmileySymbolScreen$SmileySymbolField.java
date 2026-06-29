@@ -32,7 +32,7 @@ class SmileySymbolScreen$SmileySymbolField extends SymbolScreen$SymbolField {
    @Override
    protected int[] getPages() {
       int[] pages = super.getPages();
-      int[][][] smileyMaps = (int[][][])SmileySymbolScreen._smileyFacility.emoticonScreenLayouts();
+      int[][] smileyMaps = SmileySymbolScreen._smileyFacility.emoticonScreenLayouts();
       if (smileyMaps != null) {
          int nonEmptyPages = pages.length;
          Array.resize(pages, nonEmptyPages + smileyMaps.length);

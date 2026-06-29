@@ -1607,65 +1607,65 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
       3621829699428746240L,
       -1771229754835794944L
    };
-   private static final byte[][][] PRIVATE_KEYS = new byte[][][]{
-      (byte[][])EC160R1_PRIVATE_KEY,
-      (byte[][])EC163K1_PRIVATE_KEY,
-      (byte[][])EC163K2_PRIVATE_KEY,
-      (byte[][])EC163R2_PRIVATE_KEY,
-      (byte[][])EC192R1_PRIVATE_KEY,
-      (byte[][])EC224R1_PRIVATE_KEY,
-      (byte[][])EC233K1_PRIVATE_KEY,
-      (byte[][])EC233R1_PRIVATE_KEY,
-      (byte[][])EC239K1_PRIVATE_KEY,
-      (byte[][])EC256R1_PRIVATE_KEY,
-      (byte[][])EC283K1_PRIVATE_KEY,
-      (byte[][])EC283R1_PRIVATE_KEY,
-      (byte[][])EC384R1_PRIVATE_KEY,
-      (byte[][])EC409K1_PRIVATE_KEY,
-      (byte[][])EC409R1_PRIVATE_KEY,
-      (byte[][])EC521R1_PRIVATE_KEY,
-      (byte[][])EC571K1_PRIVATE_KEY,
-      (byte[][])EC571R1_PRIVATE_KEY
+   private static final byte[][] PRIVATE_KEYS = new byte[][]{
+      EC160R1_PRIVATE_KEY,
+      EC163K1_PRIVATE_KEY,
+      EC163K2_PRIVATE_KEY,
+      EC163R2_PRIVATE_KEY,
+      EC192R1_PRIVATE_KEY,
+      EC224R1_PRIVATE_KEY,
+      EC233K1_PRIVATE_KEY,
+      EC233R1_PRIVATE_KEY,
+      EC239K1_PRIVATE_KEY,
+      EC256R1_PRIVATE_KEY,
+      EC283K1_PRIVATE_KEY,
+      EC283R1_PRIVATE_KEY,
+      EC384R1_PRIVATE_KEY,
+      EC409K1_PRIVATE_KEY,
+      EC409R1_PRIVATE_KEY,
+      EC521R1_PRIVATE_KEY,
+      EC571K1_PRIVATE_KEY,
+      EC571R1_PRIVATE_KEY
    };
-   private static final byte[][][] PUBLIC_KEYS = new byte[][][]{
-      (byte[][])EC160R1_PUBLIC_KEY,
-      (byte[][])EC163K1_PUBLIC_KEY,
-      (byte[][])EC163K2_PUBLIC_KEY,
-      (byte[][])EC163R2_PUBLIC_KEY,
-      (byte[][])EC192R1_PUBLIC_KEY,
-      (byte[][])EC224R1_PUBLIC_KEY,
-      (byte[][])EC233K1_PUBLIC_KEY,
-      (byte[][])EC233R1_PUBLIC_KEY,
-      (byte[][])EC239K1_PUBLIC_KEY,
-      (byte[][])EC256R1_PUBLIC_KEY,
-      (byte[][])EC283K1_PUBLIC_KEY,
-      (byte[][])EC283R1_PUBLIC_KEY,
-      (byte[][])EC384R1_PUBLIC_KEY,
-      (byte[][])EC409K1_PUBLIC_KEY,
-      (byte[][])EC409R1_PUBLIC_KEY,
-      (byte[][])EC521R1_PUBLIC_KEY,
-      (byte[][])EC571K1_PUBLIC_KEY,
-      (byte[][])EC571R1_PUBLIC_KEY
+   private static final byte[][] PUBLIC_KEYS = new byte[][]{
+      EC160R1_PUBLIC_KEY,
+      EC163K1_PUBLIC_KEY,
+      EC163K2_PUBLIC_KEY,
+      EC163R2_PUBLIC_KEY,
+      EC192R1_PUBLIC_KEY,
+      EC224R1_PUBLIC_KEY,
+      EC233K1_PUBLIC_KEY,
+      EC233R1_PUBLIC_KEY,
+      EC239K1_PUBLIC_KEY,
+      EC256R1_PUBLIC_KEY,
+      EC283K1_PUBLIC_KEY,
+      EC283R1_PUBLIC_KEY,
+      EC384R1_PUBLIC_KEY,
+      EC409K1_PUBLIC_KEY,
+      EC409R1_PUBLIC_KEY,
+      EC521R1_PUBLIC_KEY,
+      EC571K1_PUBLIC_KEY,
+      EC571R1_PUBLIC_KEY
    };
-   private static final byte[][][] SHARED_SECRETS = new byte[][][]{
-      (byte[][])EC160R1_SHARED_SECRET,
-      (byte[][])EC163K1_SHARED_SECRET,
-      (byte[][])EC163K2_SHARED_SECRET,
-      (byte[][])EC163R2_SHARED_SECRET,
-      (byte[][])EC192R1_SHARED_SECRET,
-      (byte[][])EC224R1_SHARED_SECRET,
-      (byte[][])EC233K1_SHARED_SECRET,
-      (byte[][])EC233R1_SHARED_SECRET,
-      (byte[][])EC239K1_SHARED_SECRET,
-      (byte[][])EC256R1_SHARED_SECRET,
-      (byte[][])EC283K1_SHARED_SECRET,
-      (byte[][])EC283R1_SHARED_SECRET,
-      (byte[][])EC384R1_SHARED_SECRET,
-      (byte[][])EC409K1_SHARED_SECRET,
-      (byte[][])EC409R1_SHARED_SECRET,
-      (byte[][])EC521R1_SHARED_SECRET,
-      (byte[][])EC571K1_SHARED_SECRET,
-      (byte[][])EC571R1_SHARED_SECRET
+   private static final byte[][] SHARED_SECRETS = new byte[][]{
+      EC160R1_SHARED_SECRET,
+      EC163K1_SHARED_SECRET,
+      EC163K2_SHARED_SECRET,
+      EC163R2_SHARED_SECRET,
+      EC192R1_SHARED_SECRET,
+      EC224R1_SHARED_SECRET,
+      EC233K1_SHARED_SECRET,
+      EC233R1_SHARED_SECRET,
+      EC239K1_SHARED_SECRET,
+      EC256R1_SHARED_SECRET,
+      EC283K1_SHARED_SECRET,
+      EC283R1_SHARED_SECRET,
+      EC384R1_SHARED_SECRET,
+      EC409K1_SHARED_SECRET,
+      EC409R1_SHARED_SECRET,
+      EC521R1_SHARED_SECRET,
+      EC571K1_SHARED_SECRET,
+      EC571R1_SHARED_SECRET
    };
 
    public static final void selfTest(String name, boolean checkRegistry) {
@@ -1689,9 +1689,9 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
    }
 
    private static final void selfTest(String name, int index) {
-      byte[] privateKey = (byte[])PRIVATE_KEYS[index];
-      byte[] publicKey = (byte[])PUBLIC_KEYS[index];
-      byte[] sharedSecret = (byte[])SHARED_SECRETS[index];
+      byte[] privateKey = PRIVATE_KEYS[index];
+      byte[] publicKey = PUBLIC_KEYS[index];
+      byte[] sharedSecret = SHARED_SECRETS[index];
       byte[] testSecret = new byte[sharedSecret.length];
       Certicom.assertAccessAllowed();
       NativeEC.generateDHSharedSecretNoCofactor(name, privateKey, publicKey, testSecret, 0);

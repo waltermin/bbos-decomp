@@ -99,8 +99,8 @@ public final class PGPCertificate implements Certificate {
       return this._content._x509EmbeddedCertificates.length > 0;
    }
 
-   public final byte[][][] getADKFingerprints() {
-      byte[][][] fingerprints = new byte[0][][];
+   public final byte[][] getADKFingerprints() {
+      byte[][] fingerprints = new byte[0][];
       PGPSignaturePacket[] certificationSignatures = this.getCertificationSignatures();
       PGPSignaturePacket[] selfSignatures = this.getSelfSignatures(certificationSignatures);
       int numSelfSignatures = selfSignatures.length;
@@ -110,7 +110,7 @@ public final class PGPCertificate implements Certificate {
          if (subPackets != null) {
             try {
                PGPSignatureSubPacketParser parser = new PGPSignatureSubPacketParser(subPackets);
-               byte[][][] currentFingerprints = (byte[][][])parser.getADKFingerprints();
+               byte[][] currentFingerprints = parser.getADKFingerprints();
                int numCurrentFingerprints = currentFingerprints == null ? 0 : currentFingerprints.length;
 
                for (int j = 0; j < numCurrentFingerprints; j++) {
@@ -124,9 +124,9 @@ public final class PGPCertificate implements Certificate {
       return fingerprints;
    }
 
-   public final byte[][][] getSignerKeyIDs(String emailAddress) {
+   public final byte[][] getSignerKeyIDs(String emailAddress) {
       PGPSignaturePacket[] signatures = this.getCertificationSignatures(emailAddress);
-      byte[][][] signerKeyIDs = new byte[0][][];
+      byte[][] signerKeyIDs = new byte[0][];
       int numSignatures = signatures.length;
 
       for (int i = 0; i < numSignatures; i++) {
@@ -148,12 +148,12 @@ public final class PGPCertificate implements Certificate {
          return this.getPublicKey();
       }
 
-      byte[][][] subKeyIDs = this._content._subKeyIDs;
+      byte[][] subKeyIDs = this._content._subKeyIDs;
       if (subKeyIDs != null) {
          int numSubKeyIDs = subKeyIDs.length;
 
          for (int i = 0; i < numSubKeyIDs; i++) {
-            if (Arrays.equals((byte[])subKeyIDs[i], keyID)) {
+            if (Arrays.equals(subKeyIDs[i], keyID)) {
                return this.getSubKey(i);
             }
          }
@@ -186,7 +186,7 @@ public final class PGPCertificate implements Certificate {
       int numSubKeys = this._content._subKeys.length;
 
       for (int i = 0; i < numSubKeys; i++) {
-         if (Arrays.equals((byte[])this._content._subKeyIDs[i], keyID)) {
+         if (Arrays.equals(this._content._subKeyIDs[i], keyID)) {
             return this._content._subKeyNotAfter[i];
          }
       }
@@ -218,7 +218,7 @@ public final class PGPCertificate implements Certificate {
       int numSubKeys = this._content._subKeys.length;
 
       for (int i = 0; i < numSubKeys; i++) {
-         if (Arrays.equals((byte[])this._content._subKeyIDs[i], keyID)) {
+         if (Arrays.equals(this._content._subKeyIDs[i], keyID)) {
             return this._content._subKeyNotBefore[i];
          }
       }
@@ -262,7 +262,7 @@ public final class PGPCertificate implements Certificate {
       int length = this._content._subKeyIDs.length;
 
       for (int i = 0; i < length; i++) {
-         if (Arrays.equals(keyID, (byte[])this._content._subKeyIDs[i])) {
+         if (Arrays.equals(keyID, this._content._subKeyIDs[i])) {
             return this.getStatus(this._content._subKeySignatures[i], this._content._subKeys[i]);
          }
       }
@@ -272,13 +272,13 @@ public final class PGPCertificate implements Certificate {
 
    public final byte[] getSubKeyID(int index) {
       if (index >= 0 && index < this._content._subKeyIDs.length) {
-         return (byte[])this._content._subKeyIDs[index];
+         return this._content._subKeyIDs[index];
       } else {
          throw new Object();
       }
    }
 
-   public final byte[][][] getSubKeyIDs() {
+   public final byte[][] getSubKeyIDs() {
       return this._content._subKeyIDs;
    }
 
@@ -346,7 +346,7 @@ public final class PGPCertificate implements Certificate {
          int numSubKeys = this._content._subKeys.length;
 
          for (int i = 0; i < numSubKeys; i++) {
-            if (Arrays.equals(keyID, (byte[])this._content._subKeyIDs[i])) {
+            if (Arrays.equals(keyID, this._content._subKeyIDs[i])) {
                PGPSignaturePacket[] bindingSignatures = this.getBindingSignatures(this._content._subKeySignatures[i]);
                PGPSignaturePacket[] selfSignatures = this.getSelfSignatures(bindingSignatures);
                int numSelfSignatures = selfSignatures.length;
@@ -412,7 +412,7 @@ public final class PGPCertificate implements Certificate {
       int numSubKeys = this._content._subKeys.length;
 
       for (int i = 0; i < numSubKeys; i++) {
-         if (Arrays.equals((byte[])this._content._subKeyIDs[i], keyID)) {
+         if (Arrays.equals(this._content._subKeyIDs[i], keyID)) {
             if (date > this._content._subKeyNotBefore[i] && date < this._content._subKeyNotAfter[i]) {
                return true;
             }
@@ -443,7 +443,7 @@ public final class PGPCertificate implements Certificate {
                   int subKeyLength = certificate._content._subKeyIDs.length;
 
                   for (int k = 0; k < subKeyLength; k++) {
-                     if (Arrays.equals(signerKeyID, (byte[])certificate._content._subKeyIDs[k])) {
+                     if (Arrays.equals(signerKeyID, certificate._content._subKeyIDs[k])) {
                         currentSignature.verify(this._content._publicKey, certificate.getSubKey(k), this._content._userIDs[i]);
                         verified = true;
                      }
@@ -492,7 +492,7 @@ public final class PGPCertificate implements Certificate {
          int length = this._content._subKeyIDs.length;
 
          for (int i = 0; i < length; i++) {
-            if (Arrays.equals(keyID, (byte[])this._content._subKeyIDs[i])) {
+            if (Arrays.equals(keyID, this._content._subKeyIDs[i])) {
                return this.queryKeyUsage(this._content._subKeySignatures[i], purpose);
             }
          }
@@ -615,11 +615,11 @@ public final class PGPCertificate implements Certificate {
          unspecified = true;
       }
 
-      byte[][][] subKeyIDs = this.getSubKeyIDs();
+      byte[][] subKeyIDs = this.getSubKeyIDs();
       int numSubKeyIDs = subKeyIDs.length;
 
       for (int i = 0; i < numSubKeyIDs; i++) {
-         keyUsageResult = this.queryKeyUsage((byte[])subKeyIDs[i], purpose);
+         keyUsageResult = this.queryKeyUsage(subKeyIDs[i], purpose);
          if (keyUsageResult == 1) {
             return 1;
          }
@@ -1102,7 +1102,7 @@ public final class PGPCertificate implements Certificate {
 
    public PGPCertificate(InputStream input) {
       PGPPacketParser parser = new PGPPacketParser(input);
-      PGPPacket[][][] packetArray = parser.getPackets();
+      PGPPacket[][] packetArray = parser.getPackets();
       if (packetArray.length != 1) {
          throw new PGPEncodingException("CMKs");
       }

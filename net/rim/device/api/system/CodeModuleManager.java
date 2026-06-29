@@ -552,7 +552,7 @@ public final class CodeModuleManager {
       return trailer;
    }
 
-   public static final byte[] appendTrailers(byte[] codfile, byte[][][] trailers) {
+   public static final byte[] appendTrailers(byte[] codfile, byte[][] trailers) {
       int trailerNum = trailers.length;
       int trailerSize = 0;
 
@@ -564,7 +564,7 @@ public final class CodeModuleManager {
       Array.resize(codfile, codfileEnd + trailerSize);
 
       for (int i = trailerNum - 1; i >= 0; i--) {
-         byte[] t = (byte[])trailers[i];
+         byte[] t = trailers[i];
          int len = t.length;
          System.arraycopy(t, 0, codfile, codfileEnd, len);
          codfileEnd += len;

@@ -166,7 +166,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
    protected void showCertificateWarning(KeyStoreData keyStoreData, int encodingActions, SecureEmailOptions secureEmailOptions) {
       if (secureEmailOptions.getPromptProblemPersonalCerts()) {
          Certificate certificate = keyStoreData.getCertificate();
-         Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this._preferredKeyStore);
+         Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this._preferredKeyStore);
          long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
             certificateChains,
             this._preferredKeyStore,

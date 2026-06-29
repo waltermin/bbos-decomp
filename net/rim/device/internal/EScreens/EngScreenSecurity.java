@@ -39,7 +39,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
    private int _last4Keys;
    private int[] _accessInput;
    private int _accessInputIndex;
-   private byte[][][] _accessKeys;
+   private byte[][] _accessKeys;
    private RichTextField _help;
    private ListField _list;
    ResourceBundle _rb;
@@ -73,7 +73,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       this._app = app;
       this._rb = ResourceBundle.getBundle(3398356469225582779L, "net.rim.device.internal.resource.EScreen");
       this._accessInput = new int[8];
-      this._accessKeys = new byte[5][][];
+      this._accessKeys = new byte[5][];
       this.setupElements();
       this.setupHelpString();
       this.setupHeaders();
@@ -267,7 +267,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
                digest.update(accessKey[ii]);
             }
 
-            this._accessKeys[i] = (byte[][])digest.getDigest();
+            this._accessKeys[i] = digest.getDigest();
          }
       } finally {
          throw new Object();
@@ -444,7 +444,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       byte[] inputHash = digest.getDigest();
 
       for (int i = 4; i >= 0; i--) {
-         if (Arrays.equals((byte[])this._accessKeys[i], inputHash)) {
+         if (Arrays.equals(this._accessKeys[i], inputHash)) {
             EScreenSecurityData.get(0).allowAccess(this.getAccessLength(i));
             this.showEScreens(1);
             return true;

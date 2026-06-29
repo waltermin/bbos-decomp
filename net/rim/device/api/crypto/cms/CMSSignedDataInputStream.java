@@ -773,11 +773,11 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
    }
 
    public final Certificate[] getSignerCertificateChain(CMSEntityIdentifier signer) {
-      Certificate[][][] chains = this.getSignerCertificateChains(signer);
+      Certificate[][] chains = this.getSignerCertificateChains(signer);
       return chains != null ? chains[0] : null;
    }
 
-   public final Certificate[][][] getSignerCertificateChains(CMSEntityIdentifier signer) {
+   public final Certificate[][] getSignerCertificateChains(CMSEntityIdentifier signer) {
       if (signer == null) {
          throw new Object();
       }
@@ -787,12 +787,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
 
       Certificate cert = this.getSignerCertificate(signer);
-      if (cert == null) {
-         return (Object[][])null;
-      }
-
-      Certificate[][][] chains = CertificateUtilities.buildCertificateChains(cert, this._pool, this._keyStore);
-      return chains;
+      return cert == null ? (Object[][])null : CertificateUtilities.buildCertificateChains(cert, this._pool, this._keyStore);
    }
 
    public final X509CertificateRevocationList getCRL() {

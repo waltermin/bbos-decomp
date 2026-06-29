@@ -7,7 +7,7 @@ import net.rim.device.api.io.SharedInputStream;
 import net.rim.vm.Array;
 
 public class PGPPacketParser {
-   private byte[][][] _encodings;
+   private byte[][] _encodings;
    private boolean[] _privateKey;
    private Vector[] _packets;
 
@@ -26,9 +26,9 @@ public class PGPPacketParser {
       this.parse(sharedInput);
    }
 
-   public PGPPacket[][][] getPackets() {
+   public PGPPacket[][] getPackets() {
       int length = this._packets.length;
-      PGPPacket[][][] packets = new PGPPacket[length][][];
+      PGPPacket[][] packets = new PGPPacket[length][];
 
       for (int i = 0; i < length; i++) {
          int size = this._packets[i].size();
@@ -42,14 +42,14 @@ public class PGPPacketParser {
       return packets;
    }
 
-   public byte[][][] getEncodings() {
+   public byte[][] getEncodings() {
       return this._encodings;
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void parse(SharedInputStream input) {
-      this._encodings = new byte[1][][];
+      this._encodings = new byte[1][];
       this._privateKey = new boolean[1];
       this._packets = new Object[1];
       boolean keyPacketFound = false;
@@ -88,7 +88,7 @@ public class PGPPacketParser {
             }
          } finally {
             if (var16) {
-               this._encodings[currentKeyIndex] = (byte[][])this.readEncoding(input, currentKeyStartPosition, currentPacketStartPosition);
+               this._encodings[currentKeyIndex] = this.readEncoding(input, currentKeyStartPosition, currentPacketStartPosition);
                return;
             }
          }
@@ -104,7 +104,7 @@ public class PGPPacketParser {
             case 5:
             case 6:
                if (keyPacketFound) {
-                  this._encodings[currentKeyIndex] = (byte[][])this.readEncoding(input, currentKeyStartPosition, currentPacketStartPosition);
+                  this._encodings[currentKeyIndex] = this.readEncoding(input, currentKeyStartPosition, currentPacketStartPosition);
                   Array.resize(this._encodings, ++currentKeyIndex + 1);
                   Array.resize(this._privateKey, currentKeyIndex + 1);
                   Array.resize(this._packets, currentKeyIndex + 1);

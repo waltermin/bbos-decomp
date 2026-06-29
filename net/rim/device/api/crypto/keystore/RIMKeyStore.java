@@ -194,7 +194,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
          }
 
          this.deleteKey(data);
-         byte[][][] historicalId = (byte[][][])data.getAssociatedData(3198502480206239397L);
+         byte[][] historicalId = data.getAssociatedData(3198502480206239397L);
          if (historicalId != null) {
             AssociatedDataKeyStoreIndex index = new AssociatedDataKeyStoreIndex(3198502480206239397L);
             this.addIndex(index);

@@ -10,7 +10,7 @@ import net.rim.device.api.util.StringPattern$Match;
 public class StaticBitmapSmileys extends EmoticonStringPattern {
    private Bitmap _bitmap;
    private int _size;
-   private int[][][] _layouts = new int[0][][];
+   private int[][] _layouts = new int[0][];
    private String[] _text = new Object[0];
    private String[] _searchText = new Object[0];
    private int[] _searchIds = new int[0];
@@ -62,7 +62,7 @@ public class StaticBitmapSmileys extends EmoticonStringPattern {
    }
 
    @Override
-   public int[][][] emoticonScreenLayouts() {
+   public int[][] emoticonScreenLayouts() {
       return this._layouts;
    }
 

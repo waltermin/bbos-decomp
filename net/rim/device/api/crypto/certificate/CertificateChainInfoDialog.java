@@ -18,7 +18,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
    ButtonField _button;
    KeyStore _keyStore;
 
-   public CertificateChainInfoDialog(String title, Object[][][] certChains, KeyStore keyStore, long style) {
+   public CertificateChainInfoDialog(String title, Object[][] certChains, KeyStore keyStore, long style) {
       super((Manager)(new Object(299067162755072L)), style);
       this._keyStore = keyStore;
       this.add((Field)(new Object(title)));
@@ -33,13 +33,13 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
       this.add(this._button);
    }
 
-   private final boolean processChain(Object[][][] certChains, int index, int parent) {
+   private final boolean processChain(Object[][] certChains, int index, int parent) {
       int nextIndex = index + 1;
       Vector groups = this.groupChains(certChains, index);
       boolean somethingAdded = false;
 
       for (int j = 0; j < groups.size(); j++) {
-         Object[][][] groupCerts = (Object[][])groups.elementAt(j);
+         Object[][] groupCerts = (Object[][])groups.elementAt(j);
          Object currentCertificate = groupCerts[0][index];
          int newParent = this._treeField.addChildNode(parent, currentCertificate);
          somethingAdded = true;
@@ -54,7 +54,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
       return somethingAdded;
    }
 
-   private final Vector groupChains(Object[][][] certChains, int index) {
+   private final Vector groupChains(Object[][] certChains, int index) {
       int numChains = certChains.length;
       Vector groups = (Vector)(new Object(numChains));
 
@@ -65,7 +65,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
             boolean chainAddedToGroup = false;
 
             for (int j = 0; j < groups.size(); j++) {
-               Object[][][] groupCerts = (Object[][])groups.elementAt(j);
+               Object[][] groupCerts = (Object[][])groups.elementAt(j);
                Object[] firstChainInGroup = groupCerts[0];
                if (firstChainInGroup[index] == currentCert) {
                   Array.resize(groupCerts, groupCerts.length + 1);
@@ -76,7 +76,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
             }
 
             if (!chainAddedToGroup) {
-               Object[][][] newGroup = new Object[][][]{currentChain};
+               Object[][] newGroup = new Object[][]{currentChain};
                groups.addElement(newGroup);
             }
          }

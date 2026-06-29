@@ -99,42 +99,17 @@ public class Reader implements ReaderConstants {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public boolean load(byte[][][] aData) {
-      // $VF: Couldn't be decompiled
-      // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-      // java.lang.RuntimeException: Constructor net/rim/tid/io/ContinuousInputStream.<init>([[B)V not found
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.ExprUtil.getSyntheticParametersMask(ExprUtil.java:49)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.InvocationExprent.appendParamList(InvocationExprent.java:982)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.NewExprent.toJava(NewExprent.java:462)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.ExprProcessor.getCastedExprent(ExprProcessor.java:1054)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.exps.AssignmentExprent.toJava(AssignmentExprent.java:161)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.ExprProcessor.listToJava(ExprProcessor.java:925)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.stats.BasicBlockStatement.toJava(BasicBlockStatement.java:87)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.ExprProcessor.jmpWrapper(ExprProcessor.java:860)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.stats.SequenceStatement.toJava(SequenceStatement.java:107)
-      //   at org.jetbrains.java.decompiler.modules.decompiler.stats.RootStatement.toJava(RootStatement.java:36)
-      //   at org.jetbrains.java.decompiler.main.ClassWriter.writeMethod(ClassWriter.java:1351)
-      //
-      // Bytecode:
-      // 00: new java/lang/Object
-      // 03: dup
-      // 04: aload 1
-      // 05: invokespecial net/rim/tid/io/ContinuousInputStream.<init> ([[B)V
-      // 08: astore 2
-      // 09: aload 0
-      // 0a: aload 2
-      // 0b: invokespecial net/rim/tid/im/conv/europe/repository/Reader.readStream (Lnet/rim/tid/io/ContinuousInputStream;)V
-      // 0e: aload 0
-      // 0f: invokespecial net/rim/tid/im/conv/europe/repository/Reader.init ()V
-      // 12: aload 0
-      // 13: invokespecial net/rim/tid/im/conv/europe/repository/Reader.validityCheck ()Z
-      // 16: ireturn
-      // 17: astore 3
-      // 18: aload 3
-      // 19: invokevirtual java/lang/Throwable.printStackTrace ()V
-      // 1c: bipush 0
-      // 1d: ireturn
-      // try (5 -> 12): 13 null
+   public boolean load(byte[][] aData) {
+      ContinuousInputStream bais = (ContinuousInputStream)(new Object(aData));
+
+      try {
+         this.readStream(bais);
+         this.init();
+         return this.validityCheck();
+      } catch (Throwable var5) {
+         e.printStackTrace();
+         return false;
+      }
    }
 
    public int loadLinguisticData(LinguisticData aData) {

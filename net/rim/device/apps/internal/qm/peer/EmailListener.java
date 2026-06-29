@@ -55,11 +55,11 @@ final class EmailListener implements TransmissionServiceListener {
             return false;
          }
 
-         String[][][] address = ((RIMMessagingMessage)var18).getFrom();
+         String[][] address = ((RIMMessagingMessage)var18).getFrom();
          sender = address[0][0];
          email.setReplyTo(sender);
-         String[][][] var23 = ((RIMMessagingMessage)var18).getTo();
-         recipient = var23[0][0];
+         address = ((RIMMessagingMessage)var18).getTo();
+         recipient = address[0][0];
       } finally {
          ;
       }

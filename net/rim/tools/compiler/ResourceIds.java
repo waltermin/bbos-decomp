@@ -14,7 +14,7 @@ public class ResourceIds {
    static String[] manifestVersion = new String[]{"Manifest-Version"};
    static String[] manifestVersionIds = new String[]{"_manifestVersion"};
    static String[] manifestRequired = new Object[]{midletProfile, midletConfiguration};
-   static String[][][] manifestRequiredAllowed = new Object[][][]{{"MIDP-1.0", "MIDP-2.0"}, {"CLDC-1.0", "CLDC-1.1"}};
+   static String[][] manifestRequiredAllowed = new Object[][]{{"MIDP-1.0", "MIDP-2.0"}, {"CLDC-1.0", "CLDC-1.1"}};
    static String[] manifestRequiredIds = new String[]{"_midletProfile", "_midletConfiguration"};
    static String[] jadRequired = new String[]{"MIDlet-Jar-URL", "MIDlet-Jar-Size"};
    static String[] jadRequiredIds = new String[]{"_url", "_midletJarSize"};

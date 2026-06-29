@@ -46,7 +46,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
    private int _fpHeight;
    PMEGraphics _pmeGraphics;
    private PMEGraphicsViewport$PMEConvertedImages _images;
-   char[][][] _convertedTextStrings;
+   char[][] _convertedTextStrings;
    private int[] _stats;
    private int _renderLogState;
    private int _renderLogNode;
@@ -111,8 +111,8 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
    private void setPMEGraphics() {
       synchronized (this._pmeGraphics) {
          boolean bChangedNodes = this._pmeGraphics.setNodes(this._model._nodes);
-         boolean bChangedCoords = this._pmeGraphics.setCoords((int[][])this._model._coords);
-         boolean bChangedTypes = this._pmeGraphics.setPointTypes((byte[][])this._model._pointTypes);
+         boolean bChangedCoords = this._pmeGraphics.setCoords(this._model._coords);
+         boolean bChangedTypes = this._pmeGraphics.setPointTypes(this._model._pointTypes);
          boolean bChangedFonts = this._pmeGraphics.setFontFamilies(this._model._platformFontFamilyStrings);
          boolean bChangedFO = this._pmeGraphics.setForeignObjects(this._model._foreignObjects);
          this._pmeGraphics.setDefaultFontFamily("BBMillbank");
@@ -145,7 +145,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
             synchronized (this._model._convertedTextStrings) {
                int nStrings = this._model._convertedTextStrings.length;
                if (this._convertedTextStrings == null || this._convertedTextStrings.length < nStrings) {
-                  this._convertedTextStrings = new char[nStrings][][];
+                  this._convertedTextStrings = new char[nStrings][];
                }
 
                int nChars = 0;
@@ -154,7 +154,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
                   if (this._model._convertedTextStrings[i] != null) {
                      nChars = this._model._convertedTextStrings[i].length;
                      if (this._convertedTextStrings[i] == null || this._convertedTextStrings[i].length != nChars) {
-                        this._convertedTextStrings[i] = (char[][])(new char[nChars]);
+                        this._convertedTextStrings[i] = new char[nChars];
                      }
 
                      System.arraycopy(this._model._convertedTextStrings[i], 0, this._convertedTextStrings[i], 0, nChars);
@@ -163,7 +163,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
             }
          }
 
-         boolean bChangedStrings = this._pmeGraphics.setStrings((char[][])this._convertedTextStrings);
+         boolean bChangedStrings = this._pmeGraphics.setStrings(this._convertedTextStrings);
          if (bChangedNodes || bChangedCoords || bChangedTypes || bChangedFonts || bChangedStrings || bChangeImage || bChangedFO) {
             this._dirty = (byte)(this._dirty | 128);
          }

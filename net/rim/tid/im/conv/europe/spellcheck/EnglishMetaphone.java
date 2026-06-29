@@ -43,7 +43,7 @@ public class EnglishMetaphone implements IMetaphone {
       "\u0002bcdfghjklmnpqrstvwxyz\u0003"
    };
    private static String FIRST_METAPHONE_ALPHABET = "AEIOUBCFHJKLMNPRSTWXY0\u0001";
-   private static String[][][] FIRST_METAPHONE_REPLACEMENTS = new Object[][][]{
+   private static String[][] FIRST_METAPHONE_REPLACEMENTS = new Object[][]{
       {"a", "o", "u"},
       {"e", "ae", "i", "a"},
       {"i", "e"},
@@ -68,7 +68,7 @@ public class EnglishMetaphone implements IMetaphone {
       {"th"},
       {"\u0001"}
    };
-   private static String[][][] SECOND_METAPHONE_REPLACEMENTS = new Object[][][]{
+   private static String[][] SECOND_METAPHONE_REPLACEMENTS = new Object[][]{
       {"b\u0002b\u0003\u0001"},
       {"cc"},
       {"f\u0002f\u0003\u0001", "v", "ph"},

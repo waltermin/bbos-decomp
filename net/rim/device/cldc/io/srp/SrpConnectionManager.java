@@ -28,9 +28,9 @@ import net.rim.device.internal.system.DataServices;
 import net.rim.vm.Array;
 
 final class SrpConnectionManager implements GlobalEventListener, RadioStatusListener, WLANListenerInternal, VPNListener, SystemListener2, ServiceRoutingListener {
-   private Vector[][][] _configurationsTable;
+   private Vector[][] _configurationsTable;
    Transport _transport;
-   private byte[][][][][][] _ipAddresses;
+   private byte[][][] _ipAddresses;
    private SrpConnectionManager$SrpConnectionMapper _connectionMapper;
    private static final long GUID = 7377066757694466844L;
    private static final int WLAN_NETWORK = 1;
@@ -733,12 +733,12 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
 
    SrpConnectionManager(Transport transport) {
       this._transport = transport;
-      this._configurationsTable = new Object[2][2][];
-      this._configurationsTable[0][0] = (Vector[])(new Object(2));
-      this._configurationsTable[0][1] = (Vector[])(new Object(2));
-      this._configurationsTable[1][0] = (Vector[])(new Object(2));
-      this._configurationsTable[1][1] = (Vector[])(new Object(2));
-      this._ipAddresses = (byte[][][][][][])(new byte[2][2][][]);
+      this._configurationsTable = new Object[2][2];
+      this._configurationsTable[0][0] = (Vector)(new Object(2));
+      this._configurationsTable[0][1] = (Vector)(new Object(2));
+      this._configurationsTable[1][0] = (Vector)(new Object(2));
+      this._configurationsTable[1][1] = (Vector)(new Object(2));
+      this._ipAddresses = new byte[2][2][];
       this._ipAddresses[0][0] = null;
       this._ipAddresses[0][1] = null;
       this._ipAddresses[1][0] = null;
@@ -941,14 +941,14 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
    private final byte[] getIPAddress(int linkType, int connectionType) {
       if (linkType != -1 && connectionType != -1) {
          synchronized (this._ipAddresses) {
-            byte[][][] ipAddresses = (byte[][][])((byte[][])null);
+            byte[][] ipAddresses = (byte[][])null;
             switch (linkType) {
                case -1:
                   return null;
                case 0:
                case 1:
                default:
-                  ipAddresses = (byte[][][])this._ipAddresses[linkType];
+                  ipAddresses = this._ipAddresses[linkType];
                   if (ipAddresses != null) {
                      switch (connectionType) {
                         case -1:
@@ -956,7 +956,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                         case 0:
                         case 1:
                         default:
-                           return (byte[])ipAddresses[connectionType];
+                           return ipAddresses[connectionType];
                      }
                   }
 
@@ -1002,14 +1002,14 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
    private final void setIPAddress(byte[] ipAddress, int linkType, int connectionType) {
       if (linkType != -1 && connectionType != -1) {
          synchronized (this._ipAddresses) {
-            byte[][][] ipAddresses = (byte[][][])((byte[][])null);
+            byte[][] ipAddresses = (byte[][])null;
             switch (linkType) {
                case -1:
                   return;
                case 0:
                case 1:
                default:
-                  ipAddresses = (byte[][][])this._ipAddresses[linkType];
+                  ipAddresses = this._ipAddresses[linkType];
                   if (ipAddresses != null) {
                      switch (connectionType) {
                         case -1:
@@ -1017,7 +1017,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                         case 0:
                         case 1:
                         default:
-                           ipAddresses[connectionType] = (byte[][])ipAddress;
+                           ipAddresses[connectionType] = ipAddress;
                      }
                   }
             }
@@ -1034,15 +1034,15 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
             case 0:
             case 1:
             default:
-               Vector[] var4 = this._configurationsTable[linkType];
-               if (var4 != null) {
+               linkConfigurations = this._configurationsTable[linkType];
+               if (linkConfigurations != null) {
                   switch (connectionType) {
                      case -1:
                         break;
                      case 0:
                      case 1:
                      default:
-                        return var4[connectionType];
+                        return linkConfigurations[connectionType];
                   }
                }
          }

@@ -145,8 +145,8 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
       int recordHandle = this._conn.getServiceRecordHandle();
       if (recordHandle != -1) {
          int[] attributes = this.getAttributeIDs();
-         byte[][][] values = (byte[][][])this.getAttributeValues();
-         if (BluetoothSDP.updateRecord(recordHandle, attributes, (byte[][])values, this._classes) != 0) {
+         byte[][] values = this.getAttributeValues();
+         if (BluetoothSDP.updateRecord(recordHandle, attributes, values, this._classes) != 0) {
             throw new ServiceRegistrationException();
          }
       }

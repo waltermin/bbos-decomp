@@ -53,12 +53,12 @@ public class SerialNumberIssuerKeyStoreIndex implements KeyStoreIndex {
 
    private SerialNumberIssuerKeyStoreIndex$Alias getAlias(KeyStoreData data) {
       try {
-         byte[][][] aData = (byte[][][])data.getAssociatedData(5689852616259641725L);
+         byte[][] aData = data.getAssociatedData(5689852616259641725L);
          if (aData != null) {
-            X509DistinguishedName issuer = new X509DistinguishedName((byte[])aData[0]);
-            byte[][][] bData = (byte[][][])data.getAssociatedData(7970222113131699770L);
+            X509DistinguishedName issuer = new X509DistinguishedName(aData[0]);
+            byte[][] bData = data.getAssociatedData(7970222113131699770L);
             if (bData != null) {
-               return new SerialNumberIssuerKeyStoreIndex$Alias((byte[])bData[0], issuer);
+               return new SerialNumberIssuerKeyStoreIndex$Alias(bData[0], issuer);
             }
          }
       } catch (ASN1EncodingException var5) {

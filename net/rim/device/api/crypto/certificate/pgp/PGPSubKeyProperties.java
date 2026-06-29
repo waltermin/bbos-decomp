@@ -42,14 +42,14 @@ public final class PGPSubKeyProperties extends CertificateProperties {
          cryptoSystemProperties = _defaultCryptoSystemProperties;
       }
 
-      byte[][][] subKeyIDs = certificate.getSubKeyIDs();
+      byte[][] subKeyIDs = certificate.getSubKeyIDs();
       if (subKeyIDs != null && subKeyIDs.length != 0) {
          int numSubKeys = subKeyIDs.length;
          long[] properties = new long[numSubKeys];
 
          for (int i = 0; i < numSubKeys; i++) {
-            if (certificate.queryKeyUsage((byte[])subKeyIDs[i], keyUsage) != 0) {
-               properties[i] = getPGPSubKeyProperties(certificate, (byte[])subKeyIDs[i], date, cryptoSystemProperties);
+            if (certificate.queryKeyUsage(subKeyIDs[i], keyUsage) != 0) {
+               properties[i] = getPGPSubKeyProperties(certificate, subKeyIDs[i], date, cryptoSystemProperties);
             } else {
                properties[i] = -1;
             }

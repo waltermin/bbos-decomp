@@ -23,7 +23,7 @@ public final class PGPUtilities extends SecureEmailUtilities {
 
    @Override
    public final long getCertificateProperties(Certificate certificate) {
-      Certificate[][][] certificateThreads = CertificateUtilities.buildCertificateChains(certificate, this._pgpKeyStore);
+      Certificate[][] certificateThreads = CertificateUtilities.buildCertificateChains(certificate, this._pgpKeyStore);
       long[] certificateThreadProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateThreads, this._pgpKeyStore, TrustedKeyStore.getInstance(), System.currentTimeMillis(), PGPFactory.getInstance().getCryptoSystemProperties()
       );

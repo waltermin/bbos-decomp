@@ -1,7 +1,9 @@
 package net.rim.device.apps.api.ui;
 
+import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
@@ -33,11 +35,11 @@ public class DurationField extends Field {
    public static final int HOURS = 2;
    public static final int MINUTES = 1;
    public static final int SECONDS = 0;
-   private static final int[][][] DISPLAY_NAMES = new int[][][]{
-      (int[][])({107, 108, -804651004, 1000, 60000, 3600000, 86400000, 207814912}),
-      (int[][])({105, 106, -804651006, 107, 108, -804651004, 1000, 60000}),
-      (int[][])({103, 104, -804651006, 105, 106, -804651006, 107, 108}),
-      (int[][])({101, 102, -804651006, 103, 104, -804651006, 105, 106})
+   private static final int[][] DISPLAY_NAMES = new int[][]{
+      {107, 108, -804651004, 1000, 60000, 3600000, 86400000, 207814912},
+      {105, 106, -804651006, 107, 108, -804651004, 1000, 60000},
+      {103, 104, -804651006, 105, 106, -804651006, 107, 108},
+      {101, 102, -804651006, 103, 104, -804651006, 105, 106}
    };
    private static final int MILLIS_PER_SECOND = 1000;
    private static final int MILLIS_PER_MINUTE = 60000;
@@ -278,7 +280,66 @@ public class DurationField extends Field {
    }
 
    private void calculateUIValues(int width) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      if (!this._calculatedDataSet) {
+         ResourceBundle rb = ResourceBundle.getBundle(2545338480386147321L, "net.rim.device.apps.internal.resource.Ui");
+         StringBuffer sb = this._fieldText;
+         sb.setLength(0);
+         long residue = this._duration;
+         long curAmount = 0;
+         int charOffsetToStartOfCursor = 0;
+         int charOffsetToEndOfCursor = 0;
+
+         for (int i = 3; i >= 0; i--) {
+            if (this._largestUnitsDisplayed >= i && this._smallestUnitsDisplayed <= i) {
+               int curUnits = UNITS[i];
+               curAmount = residue / curUnits;
+               residue -= curAmount * curUnits;
+               sb.append(' ');
+               if (i == this._currentUnit) {
+                  charOffsetToStartOfCursor = sb.length();
+               }
+
+               sb.append(curAmount);
+               if (i == this._currentUnit) {
+                  charOffsetToEndOfCursor = sb.length();
+               }
+
+               sb.append(' ');
+               if (curAmount == 1) {
+                  sb.append(rb.getString(DISPLAY_NAMES[i][0]));
+               } else {
+                  sb.append(rb.getString(DISPLAY_NAMES[i][1]));
+               }
+            }
+         }
+
+         Font font = this.getFont();
+         this._widthOfDurationString = font.getBounds(sb, 0, sb.length());
+         this._widthToCursor = font.getAdvance(sb, 0, charOffsetToStartOfCursor);
+         this._widthOfCursor = font.getBounds(sb, charOffsetToStartOfCursor, charOffsetToEndOfCursor - charOffsetToStartOfCursor);
+         this._calculatedDataSet = true;
+         if (width <= 0) {
+            width = this.getContentWidth();
+         }
+
+         int w = width;
+         int labelWidth = this._labelTextRect.getWidth();
+         boolean wasLabelOnOwnLine = this._isLabelOnOwnLine;
+         this._isLabelOnOwnLine = this._isLabelOnOwnLineTheme || labelWidth + this._widthOfDurationString + 2 > width;
+         if (!this._isLabelOnOwnLine) {
+            w -= this._widthOfDurationString + 2;
+         }
+
+         if (w < 0) {
+            int var17 = false;
+         }
+
+         if (this.getManager() != null
+            && this.getManager().isValidLayout()
+            && (this._widthOfDurationString > width || this._isLabelOnOwnLine != wasLabelOnOwnLine)) {
+            this.updateLayout();
+         }
+      }
    }
 
    public void changeOptionDialog() {

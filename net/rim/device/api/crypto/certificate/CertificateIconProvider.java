@@ -9,7 +9,7 @@ public class CertificateIconProvider {
    }
 
    public static int getCertificateIcon(Certificate certificate, KeyStore keyStore, KeyStore trustedKeyStore, CryptoSystemProperties cryptoSystemProperties) {
-      Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, keyStore);
+      Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, keyStore);
       long[] properties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, keyStore, trustedKeyStore, System.currentTimeMillis(), cryptoSystemProperties
       );

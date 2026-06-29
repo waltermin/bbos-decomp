@@ -41,7 +41,7 @@ class SAXAttributesImpl implements Attributes, RIMExtendedAttributes {
       }
    }
 
-   public void addAttribute(String uri, String localName, String qName, String type, String value, boolean isDefault, byte[][][] opaqueData) {
+   public void addAttribute(String uri, String localName, String qName, String type, String value, boolean isDefault, byte[][] opaqueData) {
       this.addAttribute(uri, localName, qName, type, value, isDefault);
       if (opaqueData != null) {
          int index = this._numAttributes - 1;
@@ -53,29 +53,29 @@ class SAXAttributesImpl implements Attributes, RIMExtendedAttributes {
       }
    }
 
-   public byte[][][] getOpaqueData(int index) {
+   public byte[][] getOpaqueData(int index) {
       if (this._opaqueData != null) {
          SAXAttributesImpl$ByteArrayArray data = (SAXAttributesImpl$ByteArrayArray)this._opaqueData.get(index);
          if (data != null) {
-            return (byte[][][])data.getArray();
+            return data.getArray();
          }
       }
 
-      return (byte[][][])((byte[][])null);
+      return (byte[][])null;
    }
 
-   public byte[][][] getOpaqueData(String qName) {
+   public byte[][] getOpaqueData(String qName) {
       int index = this.getIndex(qName);
-      return (byte[][][])(index == -1 ? (byte[][])null : this.getOpaqueData(index));
+      return index == -1 ? (byte[][])null : this.getOpaqueData(index);
    }
 
    void setURI(int index, String uri) {
       this._attributes[index * 6 + 0] = uri;
    }
 
-   public byte[][][] getOpaqueData(String uri, String localName) {
+   public byte[][] getOpaqueData(String uri, String localName) {
       int index = this.getIndex(uri, localName);
-      return (byte[][][])(index == -1 ? (byte[][])null : this.getOpaqueData(index));
+      return index == -1 ? (byte[][])null : this.getOpaqueData(index);
    }
 
    @Override

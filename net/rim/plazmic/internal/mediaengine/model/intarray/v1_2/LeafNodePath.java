@@ -18,18 +18,18 @@ class LeafNodePath extends LeafNode {
       int yCoordsIdx = super._model._nodes[super._visualNodeIdx + 24];
       int offsetsIdx = super._model._nodes[super._visualNodeIdx + 25];
       int pointTypesIdx = super._model._nodes[super._visualNodeIdx + 26];
-      int[] xCoords = (int[])super._model._coords[xCoordsIdx];
-      int[] finalXCoords = (int[])super._model._finalCoords[xCoordsIdx];
-      int[] yCoords = (int[])super._model._coords[yCoordsIdx];
-      int[] finalYCoords = (int[])super._model._finalCoords[yCoordsIdx];
+      int[] xCoords = super._model._coords[xCoordsIdx];
+      int[] finalXCoords = super._model._finalCoords[xCoordsIdx];
+      int[] yCoords = super._model._coords[yCoordsIdx];
+      int[] finalYCoords = super._model._finalCoords[yCoordsIdx];
       int[] offsets = null;
       byte[] pointTypes = null;
       if (offsetsIdx > -1) {
-         offsets = (int[])super._model._coords[offsetsIdx];
+         offsets = super._model._coords[offsetsIdx];
       }
 
       if (pointTypesIdx > -1) {
-         pointTypes = (byte[])super._model._pointTypes[pointTypesIdx];
+         pointTypes = super._model._pointTypes[pointTypesIdx];
       }
 
       super._meGraphic.pushContext(super._context);
@@ -43,18 +43,18 @@ class LeafNodePath extends LeafNode {
       int yCoordsIdx = super._model._nodes[super._visualNodeIdx + 24];
       int offsetsIdx = super._model._nodes[super._visualNodeIdx + 25];
       int pointTypesIdx = super._model._nodes[super._visualNodeIdx + 26];
-      int[] xCoords = (int[])super._model._coords[xCoordsIdx];
-      int[] finalXCoords = (int[])super._model._finalCoords[xCoordsIdx];
-      int[] yCoords = (int[])super._model._coords[yCoordsIdx];
-      int[] finalYCoords = (int[])super._model._finalCoords[yCoordsIdx];
+      int[] xCoords = super._model._coords[xCoordsIdx];
+      int[] finalXCoords = super._model._finalCoords[xCoordsIdx];
+      int[] yCoords = super._model._coords[yCoordsIdx];
+      int[] finalYCoords = super._model._finalCoords[yCoordsIdx];
       int[] offsets = null;
       byte[] pointTypes = null;
       if (offsetsIdx > -1) {
-         offsets = (int[])super._model._coords[offsetsIdx];
+         offsets = super._model._coords[offsetsIdx];
       }
 
       if (pointTypesIdx > -1) {
-         pointTypes = (byte[])super._model._pointTypes[pointTypesIdx];
+         pointTypes = super._model._pointTypes[pointTypesIdx];
       }
 
       super._context._coordsX = xCoords;
@@ -70,8 +70,8 @@ class LeafNodePath extends LeafNode {
       if (this._baseBoundingBox == null) {
          int xCoordsIdx = super._model._nodes[super._visualNodeIdx + 23];
          int yCoordsIdx = super._model._nodes[super._visualNodeIdx + 24];
-         int[] xCoords = (int[])super._model._coords[xCoordsIdx];
-         int[] yCoords = (int[])super._model._coords[yCoordsIdx];
+         int[] xCoords = super._model._coords[xCoordsIdx];
+         int[] yCoords = super._model._coords[yCoordsIdx];
          int nPts = xCoords.length;
          int minX;
          int minY;

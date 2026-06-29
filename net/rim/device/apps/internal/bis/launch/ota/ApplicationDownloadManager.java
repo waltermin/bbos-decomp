@@ -10,7 +10,7 @@ import net.rim.vm.Memory;
 
 public final class ApplicationDownloadManager implements Runnable {
    private String[] _codUrls;
-   private byte[][][] _digests;
+   private byte[][] _digests;
    private ApplicationDownloadListener _downloadListener;
    private HttpListener _httpListener;
    private boolean _aborted;
@@ -39,7 +39,7 @@ public final class ApplicationDownloadManager implements Runnable {
       requestProperties.put("Accept", "application/vnd.rim.cod");
       int numCods = this._codUrls.length;
       int lastCodIndex = numCods - 1;
-      byte[][][] codsBytes = new byte[numCods][][];
+      byte[][] codsBytes = new byte[numCods][];
       int[] moduleHandles = new int[numCods];
       int numInstalledModules = 0;
       int transactionHandle = 0;
@@ -66,7 +66,7 @@ public final class ApplicationDownloadManager implements Runnable {
                break;
             }
 
-            codsBytes[e] = (byte[][])codData;
+            codsBytes[e] = codData;
             if (e == lastCodIndex) {
                downloadSucceeded = true;
             }
@@ -80,7 +80,7 @@ public final class ApplicationDownloadManager implements Runnable {
                transactionHandle = CodeModuleManager.beginTransaction();
 
                for (int i = 0; i < numCods; i++) {
-                  int handle = CodeModuleManager.createNewModule(codsBytes[i].length, (byte[])codsBytes[i], codsBytes[i].length);
+                  int handle = CodeModuleManager.createNewModule(codsBytes[i].length, codsBytes[i], codsBytes[i].length);
                   if (handle == 0) {
                      break;
                   }
@@ -134,7 +134,7 @@ public final class ApplicationDownloadManager implements Runnable {
       }
    }
 
-   public ApplicationDownloadManager(String[] codUrls, byte[][][] digests, ApplicationDownloadListener downloadListener, HttpListener httpListener) {
+   public ApplicationDownloadManager(String[] codUrls, byte[][] digests, ApplicationDownloadListener downloadListener, HttpListener httpListener) {
       this._codUrls = codUrls;
       this._digests = digests;
       this._downloadListener = downloadListener;

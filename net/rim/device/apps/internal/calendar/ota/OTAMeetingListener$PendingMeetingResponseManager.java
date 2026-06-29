@@ -8,7 +8,7 @@ import net.rim.device.apps.api.calendar.ota.CICALEventLogger;
 import net.rim.vm.Array;
 
 public class OTAMeetingListener$PendingMeetingResponseManager {
-   private Object[][][] _meetingResponses;
+   private Object[][] _meetingResponses;
    private final OTAMeetingListener this$0;
    private static final long PENDING_MEETING_RESPONSE_MANAGER_GUID = -1037775804712219897L;
 
@@ -24,7 +24,7 @@ public class OTAMeetingListener$PendingMeetingResponseManager {
          }
 
          if (this._meetingResponses == null) {
-            this._meetingResponses = new Object[0][0][];
+            this._meetingResponses = new Object[0][0];
             persistentObject.setContents(this._meetingResponses, 51);
             persistentObject.commit();
          }

@@ -84,18 +84,15 @@ public final class SSLCipherSuites {
       boolean allowExport = options.allowExportCipherSuites();
       if (!allowExport) {
          return !restrictFIPS
-            ? TLSUtilities.concatenate((int[][])(new int[][][]{(int[][])_supportedNonExportCipherSuites, (int[][])_supportedFIPSNonExportCipherSuites}))
+            ? TLSUtilities.concatenate(new int[][]{_supportedNonExportCipherSuites, _supportedFIPSNonExportCipherSuites})
             : Arrays.copy(_supportedFIPSNonExportCipherSuites);
       } else {
          return restrictFIPS
-            ? TLSUtilities.concatenate((int[][])(new int[][][]{(int[][])_supportedFIPSNonExportCipherSuites, (int[][])_supportedFIPSExportCipherSuites}))
+            ? TLSUtilities.concatenate(new int[][]{_supportedFIPSNonExportCipherSuites, _supportedFIPSExportCipherSuites})
             : TLSUtilities.concatenate(
-               (int[][])(new int[][][]{
-                  (int[][])_supportedNonExportCipherSuites,
-                  (int[][])_supportedFIPSNonExportCipherSuites,
-                  (int[][])_supportedFIPSExportCipherSuites,
-                  (int[][])_supportedExportCipherSuites
-               })
+               new int[][]{
+                  _supportedNonExportCipherSuites, _supportedFIPSNonExportCipherSuites, _supportedFIPSExportCipherSuites, _supportedExportCipherSuites
+               }
             );
       }
    }

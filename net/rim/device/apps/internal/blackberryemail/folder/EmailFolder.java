@@ -15,6 +15,7 @@ import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.util.PersistedSortedCollection;
 import net.rim.device.apps.internal.api.quincy.QuincyManager;
 import net.rim.device.apps.internal.blackberryemail.email.EmailEventLoggerEvents;
+import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.vm.Array;
 
 public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, EmailEventLoggerEvents {
@@ -30,27 +31,10 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
    private EmailFolder _child;
    private EmailFolder _sibling;
    private int _attributes;
-   private static final int[][][] FOLDER_NAME_IDS = new int[][][]{
-      (int[][])({
-            95,
-            96,
-            97,
-            98,
-            -805044223,
-            1644232835,
-            6595183,
-            1829528321,
-            1842762890,
-            1092364649,
-            490435700,
-            1929445491,
-            1929445418,
-            7618858,
-            1802466817,
-            1979777125
-      }),
-      (int[][])({63, 64, 65, 66, -804651004, 67, 68, 69, 74, -804651004, 95, 96, 97, 98, -805044223, 1644232835}),
-      (int[][])({67, 68, 69, 74, -804651004, 95, 96, 97, 98, -805044223, 1644232835, 6595183, 1829528321, 1842762890, 1092364649, 490435700})
+   private static final int[][] FOLDER_NAME_IDS = new int[][]{
+      {95, 96, 97, 98, -805044223, 1644232835, 6595183, 1829528321, 1842762890, 1092364649, 490435700, 1929445491, 1929445418, 7618858, 1802466817, 1979777125},
+      {63, 64, 65, 66, -804651004, 67, 68, 69, 74, -804651004, 95, 96, 97, 98, -805044223, 1644232835},
+      {67, 68, 69, 74, -804651004, 95, 96, 97, 98, -805044223, 1644232835, 6595183, 1829528321, 1842762890, 1092364649, 490435700}
    };
 
    void setDesktopUID(int uid) {
@@ -514,6 +498,43 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
    }
 
    private String localizeFriendlyName(String name) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int typeIndex = 0;
+      byte var6;
+      switch (this._folderType) {
+         case 0:
+            return name;
+         case 1:
+            var6 = 3;
+            break;
+         case 2:
+         default:
+            var6 = 0;
+            break;
+         case 3:
+            var6 = 1;
+            break;
+         case 4:
+            var6 = 2;
+      }
+
+      int serverIndex = 0;
+      short besType = this.getServiceIdentifierSubType();
+      byte var7;
+      switch (besType) {
+         case 0:
+            return name;
+         case 1:
+         default:
+            var7 = 0;
+            break;
+         case 2:
+            var7 = 1;
+            break;
+         case 3:
+            var7 = 2;
+      }
+
+      int resId = FOLDER_NAME_IDS[var7][var6];
+      return EmailResources.getString(resId);
    }
 }

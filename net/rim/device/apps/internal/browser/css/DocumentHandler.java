@@ -11,9 +11,9 @@ public interface DocumentHandler {
 
    void endMedia(String[] var1);
 
-   void startSelector(int[][][] var1, int var2);
+   void startSelector(int[][] var1, int var2);
 
-   void endSelector(int[][][] var1, int var2);
+   void endSelector(int[][] var1, int var2);
 
    void property(int var1, int[] var2, boolean var3);
 }

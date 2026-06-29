@@ -33,7 +33,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
 
    @Override
    public final long getCertificateProperties(Certificate certificate) {
-      Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this._deviceKeyStore);
+      Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(certificate, this._deviceKeyStore);
       long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, this._trustedKeyStore, System.currentTimeMillis(), SMIMEFactory.getInstance().getCryptoSystemProperties()
       );

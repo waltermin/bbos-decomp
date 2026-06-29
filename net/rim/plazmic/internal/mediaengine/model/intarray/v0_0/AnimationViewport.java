@@ -17,7 +17,7 @@ public final class AnimationViewport implements MediaViewport, Pannable {
    private int _panYAmount;
    private Object[] _objects;
    private int[] _nodes;
-   private int[][][] _coords;
+   private int[][] _coords;
    private short[] _delta;
    private int _width;
    private int _height;
@@ -81,7 +81,7 @@ public final class AnimationViewport implements MediaViewport, Pannable {
          this._model = null;
          this._objects = null;
          this._nodes = null;
-         this._coords = (int[][][])((int[][])null);
+         this._coords = (int[][])null;
          this._delta = null;
          this._virtWidth = this._virtHeight = 0;
       } else {
@@ -92,7 +92,7 @@ public final class AnimationViewport implements MediaViewport, Pannable {
             this._delta = this._model.delta;
             this._objects = this._model.getObjects();
             this._nodes = this._model.getNodes();
-            this._coords = (int[][][])this._model.getPolygonCoords();
+            this._coords = this._model.getPolygonCoords();
             this.resetClip();
          }
       }
@@ -425,8 +425,8 @@ public final class AnimationViewport implements MediaViewport, Pannable {
                   int yPos = xlateY + this._nodes[index + 3];
                   int idx = this._nodes[nodesPos] >> 16;
                   if (this._delta[idx + 2] == 0) {
-                     int[] xCor = (int[])this._coords[this._nodes[index + 10]];
-                     int[] yCor = (int[])this._coords[this._delta[idx + 5]];
+                     int[] xCor = this._coords[this._nodes[index + 10]];
+                     int[] yCor = this._coords[this._delta[idx + 5]];
                      int numPoints = xCor.length;
                      if (numPoints == 0) {
                         return;
@@ -602,7 +602,7 @@ public final class AnimationViewport implements MediaViewport, Pannable {
          case 20:
             int xidx = this._nodes[index + 10];
             int yidx = this._nodes[index + 11];
-            this._meGraphic.fillPolygon(this._translateX, this._translateY, (int[])this._coords[xidx], (int[])this._coords[yidx]);
+            this._meGraphic.fillPolygon(this._translateX, this._translateY, this._coords[xidx], this._coords[yidx]);
             return;
          case 30:
             int fontType = this._nodes[index + 7];
@@ -636,7 +636,7 @@ public final class AnimationViewport implements MediaViewport, Pannable {
          case 20:
             int xidx = this._nodes[index + 10];
             int yidx = this._nodes[index + 11];
-            this._meGraphic.drawPolygon(this._translateX, this._translateY, (int[])this._coords[xidx], (int[])this._coords[yidx]);
+            this._meGraphic.drawPolygon(this._translateX, this._translateY, this._coords[xidx], this._coords[yidx]);
             return;
          case 60:
             int rx = this._nodes[index + 10];

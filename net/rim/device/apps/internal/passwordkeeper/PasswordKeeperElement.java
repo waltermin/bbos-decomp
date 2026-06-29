@@ -8,8 +8,8 @@ import net.rim.device.api.util.Persistable;
 import net.rim.device.api.util.StringUtilities;
 
 public final class PasswordKeeperElement implements Persistable, SyncObject {
-   private byte[][][] _labels;
-   private byte[][][] _fields;
+   private byte[][] _labels;
+   private byte[][] _fields;
    private byte[] _salt;
    private long _creationTime;
    private int _uid;
@@ -25,17 +25,15 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
    public static final int NOTES_LABEL = 3;
 
    public final String getField(int offset) {
-      return PasswordKeeperManager.getInstance().decrypt((byte[])this._fields[offset], this._salt);
+      return PasswordKeeperManager.getInstance().decrypt(this._fields[offset], this._salt);
    }
 
    public final String getTitle() {
-      return PasswordKeeperManager.getInstance().decrypt((byte[])this._fields[0], this._salt);
+      return PasswordKeeperManager.getInstance().decrypt(this._fields[0], this._salt);
    }
 
    public final String getLabel(int offset) {
-      return this._labels != null && this._labels.length > offset
-         ? PasswordKeeperManager.getInstance().decrypt((byte[])this._labels[offset], this._salt)
-         : null;
+      return this._labels != null && this._labels.length > offset ? PasswordKeeperManager.getInstance().decrypt(this._labels[offset], this._salt) : null;
    }
 
    @Override
@@ -48,11 +46,11 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
    }
 
    final byte[] getEncryptedField(int offset) {
-      return (byte[])this._fields[offset];
+      return this._fields[offset];
    }
 
    final byte[] getEncryptedLabel(int offset) {
-      return (byte[])this._labels[offset];
+      return this._labels[offset];
    }
 
    final byte[] getSalt() {
@@ -131,13 +129,13 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
       int numLabels = this._labels.length;
 
       for (int i = 0; i < numLabels; i++) {
-         this._labels[i] = (byte[][])manager.changePassword((byte[])this._labels[i], newPassword, this._salt);
+         this._labels[i] = manager.changePassword(this._labels[i], newPassword, this._salt);
       }
 
       int numFields = this._fields.length;
 
       for (int i = 0; i < numFields; i++) {
-         this._fields[i] = (byte[][])manager.changePassword((byte[])this._fields[i], newPassword, this._salt);
+         this._fields[i] = manager.changePassword(this._fields[i], newPassword, this._salt);
       }
    }
 
@@ -146,19 +144,19 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
       int numLabels = this._labels.length;
 
       for (int i = 0; i < numLabels; i++) {
-         this._labels[i] = (byte[][])manager.changePassword((byte[])this._labels[i], oldPassword, newPassword, this._salt);
+         this._labels[i] = manager.changePassword(this._labels[i], oldPassword, newPassword, this._salt);
       }
 
       int numFields = this._fields.length;
 
       for (int i = 0; i < numFields; i++) {
-         this._fields[i] = (byte[][])manager.changePassword((byte[])this._fields[i], oldPassword, newPassword, this._salt);
+         this._fields[i] = manager.changePassword(this._fields[i], oldPassword, newPassword, this._salt);
       }
    }
 
    final boolean checkPassword(byte[] password) {
       try {
-         PasswordKeeperManager.getInstance().decrypt((byte[])this._fields[0], password, this._salt);
+         PasswordKeeperManager.getInstance().decrypt(this._fields[0], password, this._salt);
          return true;
       } catch (DecryptionException e) {
          return false;
@@ -167,7 +165,7 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
       }
    }
 
-   PasswordKeeperElement(byte[][][] labels, byte[][][] fields, byte[] salt, long creationTime, int uid) {
+   PasswordKeeperElement(byte[][] labels, byte[][] fields, byte[] salt, long creationTime, int uid) {
       this._labels = labels;
       this._fields = fields;
       this._salt = salt;
@@ -192,7 +190,7 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
       }
 
       for (int i = 0; i < numLabels; i++) {
-         if (!Arrays.equals((byte[])element._labels[i], (byte[])this._labels[i])) {
+         if (!Arrays.equals(element._labels[i], this._labels[i])) {
             return false;
          }
       }
@@ -203,7 +201,7 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
       }
 
       for (int i = 0; i < numFields; i++) {
-         if (!Arrays.equals((byte[])element._fields[i], (byte[])this._fields[i])) {
+         if (!Arrays.equals(element._fields[i], this._fields[i])) {
             return false;
          }
       }
@@ -217,18 +215,18 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
          this._salt = RandomSource.getBytes(8);
          if (labels != null) {
             int length = labels.length;
-            this._labels = new byte[length][][];
+            this._labels = new byte[length][];
 
             for (int i = 0; i < length; i++) {
-               this._labels[i] = (byte[][])(labels[i] == null ? null : manager.encrypt(labels[i], this._salt));
+               this._labels[i] = labels[i] == null ? null : manager.encrypt(labels[i], this._salt);
             }
          }
 
          int length = fields.length;
-         this._fields = new byte[length][][];
+         this._fields = new byte[length][];
 
          for (int i = 0; i < length; i++) {
-            this._fields[i] = (byte[][])manager.encrypt(fields[i], this._salt);
+            this._fields[i] = manager.encrypt(fields[i], this._salt);
          }
 
          this._creationTime = System.currentTimeMillis();

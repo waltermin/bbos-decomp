@@ -867,15 +867,15 @@ final class PGPInternalArmorDecoder extends InputStream {
 
    private final void parseKeys(Base64InputStream keyStream) {
       PGPPacketParser parser = new PGPPacketParser(keyStream);
-      PGPPacket[][][] packets = parser.getPackets();
-      byte[][][] encodings = (byte[][][])parser.getEncodings();
+      PGPPacket[][] packets = parser.getPackets();
+      byte[][] encodings = parser.getEncodings();
       this._numKeys = packets.length;
       this._certificates = new PGPCertificate[this._numKeys];
       this._privateKeys = new PGPPrivateKey[this._numKeys];
 
       for (int i = 0; i < this._numKeys; i++) {
          PGPPrivateKeyPacket[] privatePackets = this.extractPrivatePackets(packets[i]);
-         this._certificates[i] = new PGPCertificate((byte[])encodings[i], packets[i]);
+         this._certificates[i] = new PGPCertificate(encodings[i], packets[i]);
          if (privatePackets.length > 0) {
             this._privateKeys[i] = new PGPPrivateKey(privatePackets, this._certificates[i].getSubjectFriendlyName());
          }

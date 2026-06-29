@@ -11,7 +11,7 @@ import net.rim.wica.runtime.ui.View;
 final class WicletGridFieldManager extends Manager implements View {
    private ScreenContext _context;
    private UIContainer _model;
-   private Field[][][] _grid;
+   private Field[][] _grid;
    private int[] _heights;
    private int _maxX;
    private int _maxY;
@@ -51,7 +51,7 @@ final class WicletGridFieldManager extends Manager implements View {
       this._maxX++;
       this._maxY++;
       this._heights = new int[this._maxY];
-      this._grid = new Object[this._maxX][this._maxY][];
+      this._grid = new Object[this._maxX][this._maxY];
 
       for (int var10 = 0; var10 < numFields; var10++) {
          Field field = this.getField(var10);

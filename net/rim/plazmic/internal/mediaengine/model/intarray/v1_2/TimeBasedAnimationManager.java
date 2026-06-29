@@ -54,7 +54,97 @@ public class TimeBasedAnimationManager {
    }
 
    public void getRelativeValues(int interpIdx, int targetIndex, int targetAttributeType, int[] returnValues) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int vnIndex = this._data._nodes[interpIdx + 18];
+      int numKeyValuesPerKeyTime = this.getKeyValueLength(targetAttributeType);
+      int queueIndex = this.findInList(this._targetList, targetIndex);
+      int queueLength = -1;
+      if (queueIndex >= 0) {
+         queueLength = this._interpolatorList[queueIndex].getSize();
+      }
+
+      if (queueLength > 0) {
+         MediaQueue mq = this._interpolatorList[queueIndex];
+         int hpIndex = mq.peekLast();
+         if (!this._data.bitsAreSet(hpIndex, 4096)) {
+            for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+               returnValues[i] = this._data._nodes[hpIndex + 21 + i];
+            }
+         } else {
+            int hpVnIndex = this._data._nodes[hpIndex + 18];
+            int hpTargetAttributeType = this._data._nodes[hpIndex + 17];
+            int hpOmValuesIdx = this._data._nodes[hpIndex + 20];
+
+            for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+               returnValues[i] = this._data._omValues[hpOmValuesIdx][i];
+            }
+
+            while (returnValues[0] == Integer.MAX_VALUE) {
+               int parentNode = this._data._nodes[hpVnIndex + 3];
+               if (hpVnIndex == -1) {
+                  this.getDefaultAttributeValues(hpTargetAttributeType, returnValues);
+               } else {
+                  int parentTargetIndex = this._data.resolveAttributeOffset(parentNode, hpTargetAttributeType);
+                  if (parentTargetIndex != -1) {
+                     for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+                        returnValues[i] = this._data._nodes[parentTargetIndex + i];
+                     }
+                  }
+               }
+            }
+
+            for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+               if (hpTargetAttributeType != 3 && hpTargetAttributeType != 5) {
+                  returnValues[i] += this._data._nodes[hpIndex + 21 + i];
+               } else {
+                  int oldModelValue = returnValues[i];
+                  int newModelValue = 0;
+
+                  for (int j = 0; j < 3; j++) {
+                     int currentColor = (oldModelValue >> 8 * j & 0xFF) + (this._data._nodes[hpIndex + 21 + i] >> 8 * j & 0xFF);
+                     if (currentColor > 255) {
+                        currentColor = 255;
+                     }
+
+                     newModelValue |= currentColor << 8 * j;
+                  }
+
+                  returnValues[i] = newModelValue;
+               }
+            }
+         }
+      } else {
+         int omValuesIdx = this._data._nodes[interpIdx + 20];
+         if (this.isMatrixTarget(targetAttributeType)) {
+            this.getMatrixValues(targetAttributeType, this._data._omValues[omValuesIdx], 0, returnValues);
+            return;
+         }
+
+         if (this.isMaskTarget(interpIdx)) {
+            returnValues[0] = this._data._omValues[omValuesIdx][0];
+            int mask = this._data._nodes[interpIdx + 29];
+            int shift = this._data._nodes[interpIdx + 30];
+            returnValues[0] = (returnValues[0] & mask) >>> shift;
+            return;
+         }
+
+         for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+            returnValues[i] = this._data._omValues[omValuesIdx][i];
+         }
+
+         while (returnValues[0] == Integer.MAX_VALUE) {
+            vnIndex = this._data._nodes[vnIndex + 3];
+            if (vnIndex == -1) {
+               this.getDefaultAttributeValues(targetAttributeType, returnValues);
+            } else {
+               int parentTargetIndex = this._data.resolveAttributeOffset(vnIndex, targetAttributeType);
+               if (parentTargetIndex != -1) {
+                  for (int i = 0; i < numKeyValuesPerKeyTime; i++) {
+                     returnValues[i] = this._data._nodes[parentTargetIndex + i];
+                  }
+               }
+            }
+         }
+      }
    }
 
    public void cancelAnimation(int targetIdx, int interpIdx, boolean resetOMValue) {
@@ -230,7 +320,10 @@ public class TimeBasedAnimationManager {
    }
 
    private void resetOMMaskTarget(int targetIndex, int mask, int interpIdx) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int omValuesIdx = this._data._nodes[interpIdx + 20];
+      int value = this._data._omValues[omValuesIdx][0] & mask;
+      this._data._nodes[targetIndex] = this._data._nodes[targetIndex] & ~mask;
+      this._data._nodes[targetIndex] = this._data._nodes[targetIndex] | value;
    }
 
    private void setMaskTarget(int targetIndex, int interpIdx, boolean firstPass) {
@@ -249,7 +342,13 @@ public class TimeBasedAnimationManager {
    }
 
    private void resetOMScalarTarget(int targetIdx, int interpIdx) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      int omValuesIdx = this._data._nodes[interpIdx + 20];
+      int size = this._data._omValues[omValuesIdx].length;
+      if (size > 1) {
+         System.arraycopy(this._data._omValues[omValuesIdx], 0, this._data._nodes, targetIdx, size);
+      } else {
+         this._data._nodes[targetIdx] = this._data._omValues[omValuesIdx][0];
+      }
    }
 
    private void setScalarTarget(int targetIndex, int interpIdx, int targetAttributeType, boolean firstPass) {

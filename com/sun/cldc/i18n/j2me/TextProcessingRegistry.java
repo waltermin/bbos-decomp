@@ -33,7 +33,7 @@ public final class TextProcessingRegistry {
       } else {
          byte[] data = resourceClass.getResource(dataName);
          if (data != null) {
-            byte[][][] blocks = new byte[][][]{(byte[][])data};
+            byte[][] blocks = new byte[][]{data};
             return loadTextProcessingData(blocks, dataType, dataSpecificName, dataSpecificID, localeCode, typeface);
          } else {
             return rc;
@@ -41,27 +41,25 @@ public final class TextProcessingRegistry {
       }
    }
 
-   public static final boolean loadTextProcessingData(
-      byte[][][] data, int dataType, String dataSpecificName, int dataSpecificID, int localeCode, String typeface
-   ) {
+   public static final boolean loadTextProcessingData(byte[][] data, int dataType, String dataSpecificName, int dataSpecificID, int localeCode, String typeface) {
       switch (dataType) {
          case 0:
             return getInstance()._conversionRegistryHelper.loadConversionData(dataSpecificName, dataSpecificID, localeCode, typeface, data);
          case 2:
-            return getInstance()._breakingDataRegistryHelper.loadBreakingData(localeCode, dataType, (byte[][])data);
+            return getInstance()._breakingDataRegistryHelper.loadBreakingData(localeCode, dataType, data);
          default:
             return false;
       }
    }
 
-   public final byte[][][] getTextProcessingData(int dataID, int dataType, int[] dataOffset) {
+   public final byte[][] getTextProcessingData(int dataID, int dataType, int[] dataOffset) {
       switch (dataType) {
          case 0:
-            return (byte[][][])this._conversionRegistryHelper.getConversionData(dataID, dataOffset);
+            return this._conversionRegistryHelper.getConversionData(dataID, dataOffset);
          case 2:
-            return (byte[][][])this._breakingDataRegistryHelper.getBreakingData(dataID, dataType);
+            return this._breakingDataRegistryHelper.getBreakingData(dataID, dataType);
          default:
-            return (byte[][][])((byte[][])null);
+            return (byte[][])null;
       }
    }
 

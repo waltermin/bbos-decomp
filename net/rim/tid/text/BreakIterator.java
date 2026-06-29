@@ -5,7 +5,7 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.internal.ui.StringBufferGap;
 
 public final class BreakIterator {
-   private byte[][][] _wordlistData = (byte[][][])((byte[][])null);
+   private byte[][] _wordlistData = (byte[][])null;
    private Locale _locale;
    private String _str;
    private StringBuffer _strB;
@@ -53,7 +53,7 @@ public final class BreakIterator {
       }
 
       int dataID = tpr.getTextProcessingDataID(localeCode, breakingDataType);
-      this._wordlistData = (byte[][][])tpr.getTextProcessingData(dataID, breakingDataType, null);
+      this._wordlistData = tpr.getTextProcessingData(dataID, breakingDataType, null);
    }
 
    public final void setText(String strToBreak) {
@@ -257,11 +257,11 @@ public final class BreakIterator {
       }
    }
 
-   private final native int scan(String var1, int var2, int var3, int var4, byte[][][] var5);
+   private final native int scan(String var1, int var2, int var3, int var4, byte[][] var5);
 
-   private final native int scan(StringBuffer var1, int var2, int var3, int var4, byte[][][] var5);
+   private final native int scan(StringBuffer var1, int var2, int var3, int var4, byte[][] var5);
 
-   private final native int scan(StringBufferGap var1, int var2, int var3, int var4, byte[][][] var5);
+   private final native int scan(StringBufferGap var1, int var2, int var3, int var4, byte[][] var5);
 
-   private final native int scan(char[] var1, int var2, int var3, int var4, byte[][][] var5);
+   private final native int scan(char[] var1, int var2, int var3, int var4, byte[][] var5);
 }

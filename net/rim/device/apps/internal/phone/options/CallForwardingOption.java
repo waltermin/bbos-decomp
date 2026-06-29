@@ -23,11 +23,11 @@ final class CallForwardingOption extends OptionsListItem implements PhoneOptions
    private static final int GSM = 1;
    private static final int CDMA = 2;
    private static final int IDEN = 3;
-   private static final int[][][] MIN_MAX_FWDING_NUMBER_LENGTHS = new int[][][]{
-      (int[][])({0, 0, -804651006, 0, 1, -804651003, 0, 1}),
-      (int[][])({3, 28, -804651004, 3, 58, 4, 17, -804651007}),
-      (int[][])({3, 20, -804651006, 3, 28, -804651004, 3, 58}),
-      (int[][])({10, 20, -804651003, 16, 8, 128, 64, 32})
+   private static final int[][] MIN_MAX_FWDING_NUMBER_LENGTHS = new int[][]{
+      {0, 0, -804651006, 0, 1, -804651003, 0, 1},
+      {3, 28, -804651004, 3, 58, 4, 17, -804651007},
+      {3, 20, -804651006, 3, 28, -804651004, 3, 58},
+      {10, 20, -804651003, 16, 8, 128, 64, 32}
    };
    protected static final int[] _forwardingTypesMap = new int[]{
       33, 41, 42, 43, 51, -804651005, 58, 17, 106, -804651007, 64, -804651007, 65, -804782078, 19661400, -804782066
@@ -55,7 +55,7 @@ final class CallForwardingOption extends OptionsListItem implements PhoneOptions
    }
 
    static final int[] getMinMaxForwardingNumberLengths() {
-      return (int[])MIN_MAX_FWDING_NUMBER_LENGTHS[getNetworkIndex()];
+      return MIN_MAX_FWDING_NUMBER_LENGTHS[getNetworkIndex()];
    }
 
    public CallForwardingOption(Object context) {

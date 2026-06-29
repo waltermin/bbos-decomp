@@ -16,7 +16,7 @@ public class AttachmentViewerModelConverter extends BaseConverter {
             CMIMEUtilities.decodeInteger(contentBytes);
          }
 
-         byte[][][] conversionsAvailable = (byte[][][])cmimeParameters.get((byte)-10);
+         byte[][] conversionsAvailable = cmimeParameters.get((byte)-10);
          if (conversionsAvailable != null) {
             int preferredConvertersion = AttachmentViewerModel.getPreferredConversion(conversionsAvailable);
             if (preferredConvertersion >= 0) {

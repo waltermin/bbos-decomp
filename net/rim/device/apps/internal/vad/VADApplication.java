@@ -409,7 +409,7 @@ public final class VADApplication extends UiApplication {
       return s.equals(this._manager.getVSTString(index));
    }
 
-   final void uiUpdate(String param1, byte[][][] param2) {
+   final void uiUpdate(String param1, byte[][] param2) {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -484,7 +484,7 @@ public final class VADApplication extends UiApplication {
       // 07d: bipush 0
       // 07e: bipush 0
       // 07f: bipush 0
-      // 080: invokespecial net/rim/device/apps/internal/vad/VADApplication.extractChoices ([[[BIIZ)[Ljava/lang/String;
+      // 080: invokespecial net/rim/device/apps/internal/vad/VADApplication.extractChoices ([[BIIZ)[Ljava/lang/String;
       // 083: invokevirtual net/rim/device/apps/internal/vad/VADApplication.setChoices ([Ljava/lang/String;)V
       // 086: bipush 5
       // 088: istore 3
@@ -730,7 +730,7 @@ public final class VADApplication extends UiApplication {
       // 249: bipush 2
       // 24b: bipush 0
       // 24c: bipush 1
-      // 24d: invokespecial net/rim/device/apps/internal/vad/VADApplication.extractChoices ([[[BIIZ)[Ljava/lang/String;
+      // 24d: invokespecial net/rim/device/apps/internal/vad/VADApplication.extractChoices ([[BIIZ)[Ljava/lang/String;
       // 250: invokevirtual net/rim/device/apps/internal/vad/VADApplication.setListeningChoices ([Ljava/lang/String;)V
       // 253: bipush 6
       // 255: istore 3
@@ -1025,12 +1025,12 @@ public final class VADApplication extends UiApplication {
       // try (0 -> 591): 594 null
    }
 
-   private final String[] extractChoices(byte[][][] list, int numStart, int numEnd, boolean skip) {
+   private final String[] extractChoices(byte[][] list, int numStart, int numEnd, boolean skip) {
       int numChoices = list.length - numStart - numEnd;
       String[] choices = new Object[0];
 
       for (int i = 0; i < numChoices; i++) {
-         byte[] data = (byte[])list[numStart + i];
+         byte[] data = list[numStart + i];
          Arrays.add(choices, new Object(data, 0, data.length, "UnicodeLittleUnmarked"));
          if (skip) {
             i++;

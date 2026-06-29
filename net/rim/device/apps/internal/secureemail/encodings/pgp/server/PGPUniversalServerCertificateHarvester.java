@@ -25,7 +25,7 @@ public class PGPUniversalServerCertificateHarvester extends SecureEmailServerCer
       for (int i = 0; i < certificateDetails.length; i++) {
          Certificate certificate = certificateDetails[i].getCertificate();
          if (certificate instanceof Object) {
-            byte[][][] adkFingerprints = (byte[][][])((PGPCertificate)certificate).getADKFingerprints();
+            byte[][] adkFingerprints = ((PGPCertificate)certificate).getADKFingerprints();
             if (adkFingerprints == null) {
                return;
             }

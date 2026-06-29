@@ -23,7 +23,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    private byte[] _remoteAddr;
    private Application _app = Application.getApplication();
    private int _channelID;
-   private byte[][][] _receivedPackets;
+   private byte[][] _receivedPackets;
    private int _receiveMTU;
    private int _transmitMTU;
    private int _requestedTransmitMTU;
@@ -212,7 +212,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
             throw new Object("Connection closed");
          }
 
-         byte[] packet = (byte[])this._receivedPackets[0];
+         byte[] packet = this._receivedPackets[0];
          int length = buf.length;
          if (length > packet.length) {
             length = packet.length;
@@ -484,6 +484,6 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
       this._channelID = -1;
       this._readSemaphore = new Object();
       this._writeSemaphore = new Object();
-      this._receivedPackets = new byte[0][][];
+      this._receivedPackets = new byte[0][];
    }
 }

@@ -69,7 +69,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
                }
             }
 
-            byte[][][] emailAddresses = (byte[][][])data.getAssociatedData(-1124699153917633064L);
+            byte[][] emailAddresses = data.getAssociatedData(-1124699153917633064L);
             if (emailAddresses != null) {
                int numEmailAddresses = emailAddresses.length;
                boolean sign = certificate.queryKeyUsage(1) != 0;
@@ -77,14 +77,14 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
 
                for (int i = 0; i < numEmailAddresses; i++) {
                   if (sign) {
-                     dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(0, (byte[])emailAddresses[i]), data);
+                     dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(0, emailAddresses[i]), data);
                      if (encrypt) {
-                        dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(2, (byte[])emailAddresses[i]), data);
+                        dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(2, emailAddresses[i]), data);
                      }
                   }
 
                   if (encrypt) {
-                     dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(1, (byte[])emailAddresses[i]), data);
+                     dataMap.add(KeyUsageEmailAddressKeyStoreIndex$Alias.computeHashCode(1, emailAddresses[i]), data);
                   }
                }
             }
@@ -109,7 +109,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
       }
 
       KeyUsageEmailAddressKeyStoreIndex$Alias a = (KeyUsageEmailAddressKeyStoreIndex$Alias)target;
-      byte[][][] emailAddresses = (byte[][][])data.getAssociatedData(-1124699153917633064L);
+      byte[][] emailAddresses = data.getAssociatedData(-1124699153917633064L);
       if (emailAddresses == null) {
          return false;
       }
@@ -144,7 +144,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
       int numEmailAddresses = emailAddresses.length;
 
       for (int i = 0; i < numEmailAddresses; i++) {
-         if (Arrays.equals((byte[])emailAddresses[i], a._emailAddress)) {
+         if (Arrays.equals(emailAddresses[i], a._emailAddress)) {
             return true;
          }
       }

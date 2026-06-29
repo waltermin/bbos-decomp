@@ -139,10 +139,10 @@ public class PGPKeyAttachmentModel extends CertificateAttachmentModel implements
                   Arrays.add(certsInsertedWithPrivateData, parentKeyX509Certs[i]);
                }
 
-               byte[][][] subKeyIDs = (byte[][][])pgpPrivateKey.getSubKeyIDs();
+               byte[][] subKeyIDs = pgpPrivateKey.getSubKeyIDs();
 
                for (int i = 0; i < subKeyIDs.length; i++) {
-                  Certificate[] subKeyX509Certs = pgpCert.getEmbeddedX509Certificates((byte[])subKeyIDs[i]);
+                  Certificate[] subKeyX509Certs = pgpCert.getEmbeddedX509Certificates(subKeyIDs[i]);
 
                   for (int j = 0; j < subKeyX509Certs.length; j++) {
                      if (!CertificateAttachmentModel.isCertificateImported(subKeyX509Certs[j], dummyKey, x509KeyStore)) {

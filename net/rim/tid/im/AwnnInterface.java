@@ -53,9 +53,9 @@ public class AwnnInterface {
             System.out.println("Encoding Shift_JIS is not suported!");
             return null;
          } else {
-            byte[][][] bData = (byte[][][])txtRg.getTextProcessingData(encoding, 0, conversionDataOffset);
+            byte[][] bData = txtRg.getTextProcessingData(encoding, 0, conversionDataOffset);
             if (bData != null && bData.length > 0) {
-               _instance = new AwnnInterface(encoding, (byte[])bData[0], conversionDataOffset[0]);
+               _instance = new AwnnInterface(encoding, bData[0], conversionDataOffset[0]);
                return _instance;
             } else {
                return null;

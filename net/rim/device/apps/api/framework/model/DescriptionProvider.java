@@ -16,7 +16,7 @@ public interface DescriptionProvider {
 
    String getStringForField(long var1, long var3);
 
-   int getIconsForField(long var1, IconCollection[] var3, int[][][] var4);
+   int getIconsForField(long var1, IconCollection[] var3, int[][] var4);
 
    byte getProperties();
 }

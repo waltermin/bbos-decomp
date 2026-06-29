@@ -12,12 +12,12 @@ public class AssociatedDataKeyStoreIndex implements KeyStoreIndex {
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {
-      byte[][][] associatedData = (byte[][][])data.getAssociatedData(this._association);
+      byte[][] associatedData = data.getAssociatedData(this._association);
       if (associatedData != null) {
          int numAliases = associatedData.length;
 
          for (int i = 0; i < numAliases; i++) {
-            dataMap.add(HashCodeCalculator.getCRC32((byte[])associatedData[i]), data);
+            dataMap.add(HashCodeCalculator.getCRC32(associatedData[i]), data);
          }
       }
    }
@@ -35,10 +35,10 @@ public class AssociatedDataKeyStoreIndex implements KeyStoreIndex {
    public boolean matches(KeyStoreData data, Object target) {
       if (target instanceof byte[]) {
          byte[] targetAssociation = (byte[])target;
-         byte[][][] association = (byte[][][])data.getAssociatedData(this._association);
+         byte[][] association = data.getAssociatedData(this._association);
          if (association != null) {
             for (int i = 0; i < association.length; i++) {
-               if (Arrays.equals(targetAssociation, (byte[])association[i])) {
+               if (Arrays.equals(targetAssociation, association[i])) {
                   return true;
                }
             }

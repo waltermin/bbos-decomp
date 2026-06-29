@@ -1,18 +1,8 @@
 package com.fourthpass.wapstack;
 
 public final class WAPManagementEntity {
-   private static byte[][][] _timerSettings = new byte[][][]{
-      (byte[][])({2, 2}),
-      (byte[][])({0, 1}),
-      (byte[][])({4, 4}),
-      (byte[][])({5, 5}),
-      (byte[][])({3, 4}),
-      (byte[][])({7, 7}),
-      (byte[][])({3, 3}),
-      (byte[][])({40, 40}),
-      (byte[][])({120, 120})
-   };
-   private static byte[][][] _counterSettings = new byte[][][]{(byte[][])({8, 8}), (byte[][])({6, 6})};
+   private static byte[][] _timerSettings = new byte[][]{{2, 2}, {0, 1}, {4, 4}, {5, 5}, {3, 4}, {7, 7}, {3, 3}, {40, 40}, {120, 120}};
+   private static byte[][] _counterSettings = new byte[][]{{8, 8}, {6, 6}};
    private static short _WTP_PDUBufferSize = 64;
    private static short _WSP_PDUBufferSize = 64;
 
@@ -33,7 +23,7 @@ public final class WAPManagementEntity {
       byte value = 0;
 
       try {
-         return (byte)_timerSettings[type][withUserAck];
+         return _timerSettings[type][withUserAck];
       } finally {
          ;
       }
@@ -48,7 +38,7 @@ public final class WAPManagementEntity {
       byte value = 0;
 
       try {
-         return (byte)_counterSettings[type][withUserAck];
+         return _counterSettings[type][withUserAck];
       } finally {
          ;
       }

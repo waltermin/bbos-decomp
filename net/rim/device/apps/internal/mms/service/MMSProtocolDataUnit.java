@@ -21,7 +21,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
    private Vector _recipients;
    private Vector _ccRecipients;
    private Vector _bccRecipients;
-   private byte[][][] _content;
+   private byte[][] _content;
    private Hashtable[] _contentHeader;
    private boolean _forwardLocked;
    private boolean _truncated;
@@ -247,7 +247,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
    }
 
    private final byte[] getAttachmentData(int idx) {
-      return (byte[])this._content[idx];
+      return this._content[idx];
    }
 
    private final String getAttachmentName(int attachmentNumber, int index) {
@@ -862,7 +862,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       if (this._contentHeader == null) {
          idx = 0;
          this._contentHeader = new Object[1];
-         this._content = new byte[1][][];
+         this._content = new byte[1][];
       } else {
          idx = this._contentHeader.length;
          Array.resize(this._contentHeader, idx + 1);
@@ -870,7 +870,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       }
 
       this._contentHeader[idx] = contentHeader;
-      this._content[idx] = (byte[][])content;
+      this._content[idx] = content;
       String name = this.getAttachmentName(idx, 0);
       if (name == null || this.findAttachment(name) != idx) {
          name = this.makeUniqueName(name);
@@ -881,7 +881,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
          this._forwardLocked = true;
          MMSAttachment attachment = DRMConverter.unwrap(this.getAttachment(idx));
          if (attachment != null) {
-            this._content[idx] = (byte[][])attachment.getData();
+            this._content[idx] = attachment.getData();
             contentHeader.put("content-location", attachment.getName());
             contentHeader.put("content-type", Integer.toString(attachment.getType()));
          }

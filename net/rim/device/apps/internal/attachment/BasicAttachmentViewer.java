@@ -45,8 +45,8 @@ public class BasicAttachmentViewer extends ModelScreen {
       if (attachmentViewerModel.isMoreAvailable() && EmailMoreVerb.isMoreAllAllowed(this._parentMessage)) {
          int preferredConversion = attachmentViewerModel.getPreferredConversion();
          if (preferredConversion >= 0) {
-            menu.add((Verb)(new Object(attachmentViewerModel, (byte)1, (byte[])attachmentViewerModel._conversionsAvailable[preferredConversion])));
-            menu.add((Verb)(new Object(attachmentViewerModel, (byte)2, (byte[])attachmentViewerModel._conversionsAvailable[preferredConversion])));
+            menu.add((Verb)(new Object(attachmentViewerModel, (byte)1, attachmentViewerModel._conversionsAvailable[preferredConversion])));
+            menu.add((Verb)(new Object(attachmentViewerModel, (byte)2, attachmentViewerModel._conversionsAvailable[preferredConversion])));
          }
       }
    }

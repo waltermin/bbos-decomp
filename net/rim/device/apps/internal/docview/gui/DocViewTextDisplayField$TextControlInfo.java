@@ -30,8 +30,8 @@ final class DocViewTextDisplayField$TextControlInfo {
    private IntIntHashtable _attrHashArray;
    private int[] _chunkLinksOffsets;
    private int[] _chunkTrackChangesOffsets;
-   private DocViewTrackChange[][][] _chunkTrackChanges;
-   private DocViewHyperlinkInfo[][][] _chunkLinks;
+   private DocViewTrackChange[][] _chunkTrackChanges;
+   private DocViewHyperlinkInfo[][] _chunkLinks;
    boolean _linksDirty;
    IntIntHashtable _bookmarkHash;
    private final Runnable _linksRefreshRunnable;
@@ -496,7 +496,7 @@ final class DocViewTextDisplayField$TextControlInfo {
 
                      Arrays.add(this._chunkLinksOffsets, formattingOffset - nCrtTextLength);
                      if (this._chunkLinks == null) {
-                        this._chunkLinks = new DocViewHyperlinkInfo[0][][];
+                        this._chunkLinks = new DocViewHyperlinkInfo[0][];
                      }
 
                      Arrays.add(this._chunkLinks, new DocViewHyperlinkInfo[0]);
@@ -526,7 +526,7 @@ final class DocViewTextDisplayField$TextControlInfo {
 
                      Arrays.add(this._chunkTrackChangesOffsets, formattingOffset - nCrtTextLength);
                      if (this._chunkTrackChanges == null) {
-                        this._chunkTrackChanges = new DocViewTrackChange[0][][];
+                        this._chunkTrackChanges = new DocViewTrackChange[0][];
                      }
 
                      Arrays.add(this._chunkTrackChanges, new DocViewTrackChange[0]);

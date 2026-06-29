@@ -18,7 +18,7 @@ import net.rim.vm.OTAUpgrade;
 public class WipeablePolicyCryptoBlock {
    private static final long ID = 7837055873320154475L;
    private static PersistentObject _persistentWLANLock = RIMPersistentStore.getPersistentObject(7837055873320154475L);
-   private static byte[][][] _wlanKey;
+   private static byte[][] _wlanKey;
    private static final long ID_WIPEABLE_POLICY_CRYPTOBLOCK = 8672312002842651356L;
 
    private WipeablePolicyCryptoBlock() {
@@ -93,9 +93,9 @@ public class WipeablePolicyCryptoBlock {
             ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();
             boolean injectKey = false;
             if (_wlanKey == null) {
-               _wlanKey = (byte[][][])((byte[][])appRegistry.get(7837055873320154475L));
+               _wlanKey = (byte[][])appRegistry.get(7837055873320154475L);
                if (_wlanKey == null) {
-                  _wlanKey = new byte[1][][];
+                  _wlanKey = new byte[1][];
                   injectKey = true;
                }
             }
@@ -107,12 +107,12 @@ public class WipeablePolicyCryptoBlock {
 
                byte[] nvStoreWLANKey = getNvStoreWLANKey();
                if (nvStoreWLANKey == null) {
-                  _wlanKey[0] = (byte[][])Memory.allocRAMOnlyBytes(32);
-                  RandomSource.getBytes((byte[])_wlanKey[0]);
-                  setNvStoreWLANKey(Arrays.copy((byte[])_wlanKey[0]));
-                  handleInternalUpgradeCase((byte[])_wlanKey[0]);
+                  _wlanKey[0] = Memory.allocRAMOnlyBytes(32);
+                  RandomSource.getBytes(_wlanKey[0]);
+                  setNvStoreWLANKey(Arrays.copy(_wlanKey[0]));
+                  handleInternalUpgradeCase(_wlanKey[0]);
                } else {
-                  _wlanKey[0] = (byte[][])Memory.allocRAMOnlyBytes(32);
+                  _wlanKey[0] = Memory.allocRAMOnlyBytes(32);
                   System.arraycopy(nvStoreWLANKey, 0, _wlanKey[0], 0, 32);
                }
 
@@ -123,7 +123,7 @@ public class WipeablePolicyCryptoBlock {
          }
       }
 
-      return (byte[])_wlanKey[0];
+      return _wlanKey[0];
    }
 
    private static void setNvStoreWLANKey(byte[] key) {
@@ -178,7 +178,7 @@ public class WipeablePolicyCryptoBlock {
       OTAUpgrade.addOTASLOnlyCollection(new WipeablePolicyCryptoBlock$WipeableCBCollection());
    }
 
-   static byte[][][] access$702(byte[][][] x0) {
+   static byte[][] access$702(byte[][] x0) {
       _wlanKey = x0;
       return x0;
    }

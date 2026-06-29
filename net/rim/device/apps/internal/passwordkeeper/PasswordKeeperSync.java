@@ -242,8 +242,8 @@ public final class PasswordKeeperSync implements SyncCollection, SyncConverter, 
                return null;
             }
 
-            byte[][][] labels = new byte[][][]{(byte[][])usernameLabel, (byte[][])passwordLabel, (byte[][])websiteLabel, (byte[][])notesLabel};
-            byte[][][] fields = new byte[][][]{(byte[][])title, (byte[][])username, (byte[][])password, (byte[][])website, (byte[][])notes};
+            byte[][] labels = new byte[][]{usernameLabel, passwordLabel, websiteLabel, notesLabel};
+            byte[][] fields = new byte[][]{title, username, password, website, notes};
             return new PasswordKeeperElement(labels, fields, salt, creationTime, uid);
          } else {
             return null;

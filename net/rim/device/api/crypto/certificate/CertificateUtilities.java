@@ -37,25 +37,25 @@ public final class CertificateUtilities {
    }
 
    public static final Certificate[] buildCertificateChain(Certificate certificate, Certificate[] pool, KeyStore keyStore) {
-      Certificate[][][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
+      Certificate[][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
       long[] properties = CertificateChainProperties.getCertificateChainProperties(certificateChains, keyStore, null, System.currentTimeMillis());
       int bestChainIndex = CertificateChainProperties.selectBestCertificateChain(properties);
       return certificateChains[bestChainIndex];
    }
 
-   public static final Certificate[][][] buildCertificateChains(Certificate certificate, KeyStore keyStore) {
+   public static final Certificate[][] buildCertificateChains(Certificate certificate, KeyStore keyStore) {
       return buildCertificateChains(certificate, null, keyStore, null);
    }
 
-   public static final Certificate[][][] buildCertificateChains(Certificate certificate, KeyStore keyStore, String emailAddress) {
+   public static final Certificate[][] buildCertificateChains(Certificate certificate, KeyStore keyStore, String emailAddress) {
       return buildCertificateChains(certificate, null, keyStore, emailAddress);
    }
 
-   public static final Certificate[][][] buildCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore) {
+   public static final Certificate[][] buildCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore) {
       return buildCertificateChains(certificate, pool, keyStore, null);
    }
 
-   public static final Certificate[][][] buildCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore, String emailAddress) {
+   public static final Certificate[][] buildCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore, String emailAddress) {
       return CertificateChainFactory.createCertificateChains(certificate, pool, keyStore, emailAddress);
    }
 
@@ -66,7 +66,7 @@ public final class CertificateUtilities {
          keyStore = new CombinedKeyStore(new KeyStore[]{keyStore, trustedKeyStore});
       }
 
-      Certificate[][][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
+      Certificate[][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
       long[] certificateProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, keyStore, trustedKeyStore, System.currentTimeMillis()
       );
@@ -81,14 +81,14 @@ public final class CertificateUtilities {
       return null;
    }
 
-   public static final Certificate[][][] buildTrustedCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore, KeyStore trustedKeyStore) {
+   public static final Certificate[][] buildTrustedCertificateChains(Certificate certificate, Certificate[] pool, KeyStore keyStore, KeyStore trustedKeyStore) {
       if (keyStore == null) {
          keyStore = trustedKeyStore;
       } else if (trustedKeyStore != null) {
          keyStore = new CombinedKeyStore(new KeyStore[]{keyStore, trustedKeyStore});
       }
 
-      Certificate[][][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
+      Certificate[][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
       long[] certificateProperties = CertificateChainProperties.getCertificateChainProperties(
          certificateChains, keyStore, trustedKeyStore, System.currentTimeMillis()
       );
@@ -161,7 +161,7 @@ public final class CertificateUtilities {
    }
 
    public static final boolean isCertificateTrusted(Certificate certificate, Certificate[] pool, KeyStore keyStore, KeyStore trustedKeyStore) {
-      Certificate[][][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
+      Certificate[][] certificateChains = buildCertificateChains(certificate, pool, keyStore);
       long[] properties = CertificateChainProperties.getCertificateChainProperties(certificateChains, keyStore, trustedKeyStore, System.currentTimeMillis());
       int numProperties = properties.length;
 
@@ -286,15 +286,15 @@ public final class CertificateUtilities {
    }
 
    public static final void displayCertificateChainDetails(String title, Certificate certificate, KeyStore keyStore) {
-      Certificate[][][] certificateChains = buildCertificateChains(certificate, keyStore);
+      Certificate[][] certificateChains = buildCertificateChains(certificate, keyStore);
       displayCertificateChainDetails(title, certificateChains, keyStore);
    }
 
    public static final void displayCertificateChainDetails(String title, Certificate[] certificateChain) {
-      displayCertificateChainDetails(title, new Certificate[][][]{certificateChain}, null);
+      displayCertificateChainDetails(title, new Certificate[][]{certificateChain}, null);
    }
 
-   public static final void displayCertificateChainDetails(String title, Certificate[][][] certificateChains, KeyStore keyStore) {
+   public static final void displayCertificateChainDetails(String title, Certificate[][] certificateChains, KeyStore keyStore) {
       BackgroundDialog.show(new CertificateChainInfoDialog(title, certificateChains, keyStore, 134217728));
    }
 

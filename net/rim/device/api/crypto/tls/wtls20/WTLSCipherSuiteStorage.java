@@ -7,7 +7,7 @@ import net.rim.device.api.util.Persistable;
 class WTLSCipherSuiteStorage implements Persistable {
    private byte[] _encryptionElements = WTLSCipherSuites.getDefaultEncryptionAlgorithms();
    private byte[] _macElements = WTLSCipherSuites.getDefaultMACAlgorithms();
-   private byte[][][] _keyExElements = WTLSCipherSuites.getDefaultKeyExchangeAlgorithms();
+   private byte[][] _keyExElements = WTLSCipherSuites.getDefaultKeyExchangeAlgorithms();
    private static final long ID = 7393491993781461490L;
    private static PersistentObject _persist;
 
@@ -48,11 +48,11 @@ class WTLSCipherSuiteStorage implements Persistable {
       _persist.commit();
    }
 
-   public byte[][][] getKeyExchangeElements() {
+   public byte[][] getKeyExchangeElements() {
       return this._keyExElements;
    }
 
-   public void setKeyExchangeElements(byte[][][] data) {
+   public void setKeyExchangeElements(byte[][] data) {
       this._keyExElements = data;
       _persist.commit();
    }

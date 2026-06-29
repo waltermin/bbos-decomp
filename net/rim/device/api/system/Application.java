@@ -23,7 +23,7 @@ import net.rim.vm.Process;
 import net.rim.vm.TraceBack;
 
 public class Application {
-   Object[][][] _listeners;
+   Object[][] _listeners;
    private ApplicationProcess _process;
    private int _processId;
    private ApplicationManagerImpl _appManager;
@@ -48,7 +48,7 @@ public class Application {
    private static final boolean DEBUG = false;
 
    protected Application() {
-      this._listeners = new Object[59][][];
+      this._listeners = new Object[59][];
       this._process = (ApplicationProcess)Process.currentProcess();
       this._processId = this._process.getProcessId();
       this._appManager = this._process.getApplicationManager();

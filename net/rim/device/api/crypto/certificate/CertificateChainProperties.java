@@ -16,22 +16,22 @@ public class CertificateChainProperties extends CertificateProperties {
       return CertificateProperties.select(properties, propertyMasks);
    }
 
-   public static long[] getCertificateChainProperties(Certificate[][][] chains, KeyStore trustedKeyStore, long date) {
+   public static long[] getCertificateChainProperties(Certificate[][] chains, KeyStore trustedKeyStore, long date) {
       return getCertificateChainProperties(chains, null, trustedKeyStore, date);
    }
 
-   public static long[] getCertificateChainProperties(Certificate[][][] chains, KeyStore keyStore, KeyStore trustedKeyStore, long date) {
+   public static long[] getCertificateChainProperties(Certificate[][] chains, KeyStore keyStore, KeyStore trustedKeyStore, long date) {
       return getCertificateChainProperties(chains, keyStore, trustedKeyStore, date, null);
    }
 
    public static long[] getCertificateChainProperties(
-      Certificate[][][] chains, KeyStore trustedKeyStore, long date, CryptoSystemProperties cryptoSystemProperties
+      Certificate[][] chains, KeyStore trustedKeyStore, long date, CryptoSystemProperties cryptoSystemProperties
    ) {
       return getCertificateChainProperties(chains, null, trustedKeyStore, date, cryptoSystemProperties);
    }
 
    public static long[] getCertificateChainProperties(
-      Certificate[][][] chains, KeyStore keyStore, KeyStore trustedKeyStore, long date, CryptoSystemProperties cryptoSystemProperties
+      Certificate[][] chains, KeyStore keyStore, KeyStore trustedKeyStore, long date, CryptoSystemProperties cryptoSystemProperties
    ) {
       if (chains != null && chains.length != 0) {
          long[] properties = new long[chains.length];

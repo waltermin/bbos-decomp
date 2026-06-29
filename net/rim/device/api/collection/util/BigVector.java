@@ -10,7 +10,7 @@ public class BigVector implements Persistable {
    private int _arrayChunkSize;
    private int _numArrayChunks;
    private int _vectorSize;
-   private Object[][][] _arrayChunks;
+   private Object[][] _arrayChunks;
    private int[] _firstElementIndex;
    private int[] _chunkStartIndex;
    private Object[] _currChunk;
@@ -137,7 +137,7 @@ public class BigVector implements Persistable {
    }
 
    private void init(Object[] elements) {
-      this._arrayChunks = new Object[this._numArrayChunks][][];
+      this._arrayChunks = new Object[this._numArrayChunks][];
       this._currChunkIndex = 0;
       this._chunkStartIndex = new int[this._numArrayChunks];
       this._firstElementIndex = new int[this._numArrayChunks + 1];

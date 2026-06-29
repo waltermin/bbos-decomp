@@ -4,12 +4,12 @@ import javax.wireless.messaging.Message;
 import net.rim.device.api.io.DatagramBase;
 
 final class Protocol$StoreMessage {
-   private byte[][][] _segments;
+   private byte[][] _segments;
    private int _count;
    private String _key;
 
    public Protocol$StoreMessage(int totalSegments, String key) {
-      this._segments = new byte[totalSegments][][];
+      this._segments = new byte[totalSegments][];
       this._key = key;
    }
 
@@ -18,7 +18,7 @@ final class Protocol$StoreMessage {
       Integer ref = (Integer)d.getProperty(SmsUtil.PROPERTY_SEGMENT_NUMBER);
       if (ref != null) {
          segment = ref;
-         this._segments[segment - 1] = (byte[][])d.getData();
+         this._segments[segment - 1] = d.getData();
          this._count++;
 
          for (int i = 0; i < this._segments.length; i++) {
@@ -48,7 +48,7 @@ final class Protocol$StoreMessage {
       int count = 0;
 
       for (int i = 0; i < this._segments.length; i++) {
-         byte[] b = (byte[])this._segments[i];
+         byte[] b = this._segments[i];
          System.arraycopy(b, 0, array, count, b.length);
          count += b.length;
       }

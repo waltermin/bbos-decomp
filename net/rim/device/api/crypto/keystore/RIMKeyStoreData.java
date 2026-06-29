@@ -429,8 +429,8 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
    }
 
    @Override
-   public final byte[][][] getAssociatedData(long association) {
-      return (byte[][][])(this._payload._associations == null ? (byte[][])null : (byte[][])this._payload._associations.get(association));
+   public final byte[][] getAssociatedData(long association) {
+      return this._payload._associations == null ? (byte[][])null : (byte[][])this._payload._associations.get(association);
    }
 
    @Override
@@ -445,7 +445,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
 
       while (enumeration.hasMoreElements()) {
          long association = enumeration.nextElement();
-         byte[][][] data = (byte[][][])((byte[][])this._payload._associations.get(association));
+         byte[][] data = (byte[][])this._payload._associations.get(association);
          dataArray[counter++] = new AssociatedData(association, data);
       }
 
@@ -669,8 +669,8 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
          for (int i = 0; i < associatedData.length; i++) {
             if (associatedData[i] != null) {
                association = associatedData[i].getAssociation();
-               byte[][][] data = (byte[][][])((byte[][])this._payload._associations.get(association));
-               byte[][][] newData = (byte[][][])associatedData[i].getData();
+               byte[][] data = (byte[][])this._payload._associations.get(association);
+               byte[][] newData = associatedData[i].getData();
                if (data != null) {
                   int offset = data.length;
                   Array.resize(data, data.length + newData.length);

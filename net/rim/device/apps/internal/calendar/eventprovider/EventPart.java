@@ -165,7 +165,7 @@ class EventPart
    }
 
    @Override
-   public int getIconsForField(long field, IconCollection[] icons, int[][][] indices) {
+   public int getIconsForField(long field, IconCollection[] icons, int[][] indices) {
       return this._event.getIconsForField(field, icons, indices);
    }
 

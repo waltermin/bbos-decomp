@@ -43,11 +43,11 @@ class EditDistance1WordMatch$PositionCharacterIterator implements RegularExpress
    @Override
    public char next() {
       if (this.lowerIndex < this.this$0.lower.length) {
-         return (char)this.this$0.lower[this.lowerIndex++][this.positions[this.currPosition]];
+         return this.this$0.lower[this.lowerIndex++][this.positions[this.currPosition]];
       }
 
       this.lowerIndex = 0;
-      return (char)this.this$0.lower[this.lowerIndex++][this.positions[++this.currPosition]];
+      return this.this$0.lower[this.lowerIndex++][this.positions[++this.currPosition]];
    }
 
    @Override

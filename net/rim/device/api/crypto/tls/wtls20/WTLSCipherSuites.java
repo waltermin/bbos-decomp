@@ -27,18 +27,7 @@ public final class WTLSCipherSuites {
    private static final byte[] _supportedNonExportEncryption = new byte[]{3};
    private static final byte[] _supportedFIPSNonExportEncryption = new byte[]{6, 5};
    private static final byte[] _supportedFIPSMACs = new byte[]{3, 7, 2, 1, 6, 5};
-   private static final byte[][][] _supportedFIPSKeyEx = new byte[][][]{
-      (byte[][])({8, 0}),
-      (byte[][])({10, 0}),
-      (byte[][])({9, 0}),
-      (byte[][])({5, 0}),
-      (byte[][])({7, 0}),
-      (byte[][])({6, 0}),
-      (byte[][])({2, 1}),
-      (byte[][])({2, 2}),
-      (byte[][])({4, 2}),
-      (byte[][])({3, 1})
-   };
+   private static final byte[][] _supportedFIPSKeyEx = new byte[][]{{8, 0}, {10, 0}, {9, 0}, {5, 0}, {7, 0}, {6, 0}, {2, 1}, {2, 2}, {4, 2}, {3, 1}};
 
    private WTLSCipherSuites() {
    }
@@ -47,12 +36,12 @@ public final class WTLSCipherSuites {
       return Arrays.copy(_supportedFIPSMACs);
    }
 
-   public static final byte[][][] getSupportedKeyExchangeAlgorithms() {
+   public static final byte[][] getSupportedKeyExchangeAlgorithms() {
       int length = _supportedFIPSKeyEx.length;
-      byte[][][] result = new byte[length][][];
+      byte[][] result = new byte[length][];
 
       for (int i = 0; i < length; i++) {
-         result[i] = (byte[][])Arrays.copy((byte[])_supportedFIPSKeyEx[i]);
+         result[i] = Arrays.copy(_supportedFIPSKeyEx[i]);
       }
 
       return result;
@@ -131,7 +120,7 @@ public final class WTLSCipherSuites {
    public static final void addKeyExchangeAlgorithm(byte[] algorithm, int priority) {
       removeKeyExchangeAlgorithm(algorithm);
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
-      byte[][][] vector = (byte[][][])storage.getKeyExchangeElements();
+      byte[][] vector = storage.getKeyExchangeElements();
       if (notSupportedKeyExchangeAlgorithm(algorithm)) {
          throw new Object();
       }
@@ -143,21 +132,21 @@ public final class WTLSCipherSuites {
             vector[i] = vector[i - 1];
          }
 
-         vector[priority] = (byte[][])Arrays.copy(algorithm);
+         vector[priority] = Arrays.copy(algorithm);
       } else {
          Array.resize(vector, vector.length + 1);
-         vector[vector.length - 1] = (byte[][])Arrays.copy(algorithm);
+         vector[vector.length - 1] = Arrays.copy(algorithm);
       }
 
-      storage.setKeyExchangeElements((byte[][])vector);
+      storage.setKeyExchangeElements(vector);
    }
 
    public static final void removeKeyExchangeAlgorithm(byte[] algorithm) {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
-      byte[][][] vector = (byte[][][])storage.getKeyExchangeElements();
+      byte[][] vector = storage.getKeyExchangeElements();
 
       for (int i = 0; i < vector.length; i++) {
-         if (Arrays.equals((byte[])vector[i], algorithm)) {
+         if (Arrays.equals(vector[i], algorithm)) {
             for (int j = i + 1; j < vector.length; i++) {
                vector[i] = vector[j];
                j++;
@@ -168,7 +157,7 @@ public final class WTLSCipherSuites {
          }
       }
 
-      storage.setKeyExchangeElements((byte[][])vector);
+      storage.setKeyExchangeElements(vector);
    }
 
    private static final void addAlgorithm(byte[] vector, byte algorithm, int priority) {
@@ -241,15 +230,15 @@ public final class WTLSCipherSuites {
 
    public static final void prioritizeKeyExchangeAlgorithms(byte[] higher, byte[] lower) {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
-      byte[][][] vector = (byte[][][])storage.getKeyExchangeElements();
+      byte[][] vector = storage.getKeyExchangeElements();
       if (higher != lower) {
          int searchHigher = -1;
          int searchLower = -1;
 
          for (int i = 0; i < vector.length; i++) {
-            if (Arrays.equals((byte[])vector[i], higher)) {
+            if (Arrays.equals(vector[i], higher)) {
                searchHigher = i;
-            } else if (Arrays.equals((byte[])vector[i], lower)) {
+            } else if (Arrays.equals(vector[i], lower)) {
                searchLower = i;
             }
          }
@@ -260,8 +249,8 @@ public final class WTLSCipherSuites {
                   vector[i] = vector[i - 1];
                }
 
-               vector[searchLower] = (byte[][])higher;
-               storage.setKeyExchangeElements((byte[][])vector);
+               vector[searchLower] = higher;
+               storage.setKeyExchangeElements(vector);
             }
          }
       }
@@ -279,14 +268,14 @@ public final class WTLSCipherSuites {
       return Arrays.copy(storage.getMACElements());
    }
 
-   public static final byte[][][] getKeyExchangePriority() {
+   public static final byte[][] getKeyExchangePriority() {
       verifyKeyExchangePriorities();
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
-      byte[][][] data = (byte[][][])storage.getKeyExchangeElements();
-      byte[][][] result = new byte[data.length][][];
+      byte[][] data = storage.getKeyExchangeElements();
+      byte[][] result = new byte[data.length][];
 
       for (int i = 0; i < result.length; i++) {
-         result[i] = (byte[][])Arrays.copy((byte[])data[i]);
+         result[i] = Arrays.copy(data[i]);
       }
 
       return result;
@@ -334,20 +323,20 @@ public final class WTLSCipherSuites {
 
    private static final void verifyKeyExchangePriorities() {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
-      byte[][][] data = (byte[][][])storage.getKeyExchangeElements();
+      byte[][] data = storage.getKeyExchangeElements();
       if (data != null) {
          int length = data.length;
          int insertionIndex = 0;
 
          for (int i = 0; i < length; i++) {
-            if (!notSupportedKeyExchangeAlgorithm((byte[])data[i])) {
+            if (!notSupportedKeyExchangeAlgorithm(data[i])) {
                data[insertionIndex++] = data[i];
             }
          }
 
          if (insertionIndex != length) {
             Array.resize(data, insertionIndex);
-            storage.setKeyExchangeElements((byte[][])data);
+            storage.setKeyExchangeElements(data);
          }
       }
    }
@@ -366,14 +355,14 @@ public final class WTLSCipherSuites {
    }
 
    public static final void removeAllKeyExchangeAlgorithms() {
-      WTLSCipherSuiteStorage.getInstance().setKeyExchangeElements((byte[][])(new byte[0][][]));
+      WTLSCipherSuiteStorage.getInstance().setKeyExchangeElements(new byte[0][]);
    }
 
    public static final void removeAllEncryptionAlgorithms() {
       WTLSCipherSuiteStorage.getInstance().setEncryptionElements(new byte[0]);
    }
 
-   public static final byte[][][] getDefaultKeyExchangeAlgorithms() {
+   public static final byte[][] getDefaultKeyExchangeAlgorithms() {
       return getSupportedKeyExchangeAlgorithms();
    }
 
@@ -396,7 +385,7 @@ public final class WTLSCipherSuites {
       int size = _supportedFIPSKeyEx.length;
 
       for (int i = 0; i < size; i++) {
-         if (Arrays.equals((byte[])_supportedFIPSKeyEx[i], algorithm)) {
+         if (Arrays.equals(_supportedFIPSKeyEx[i], algorithm)) {
             return false;
          }
       }

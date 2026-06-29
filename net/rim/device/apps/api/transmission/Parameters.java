@@ -67,11 +67,11 @@ public class Parameters {
       return this._offsets.size() == 0;
    }
 
-   public byte[][][] get(byte nameByte) {
+   public byte[][] get(byte nameByte) {
       int count = this.count(nameByte);
-      byte[][][] result = (byte[][][])((byte[][])null);
+      byte[][] result = (byte[][])null;
       if (count > 0) {
-         result = new byte[count][][];
+         result = new byte[count][];
          int size = this._offsets.size();
          int position = this._buffer.getPosition();
          int counter = 0;
@@ -81,7 +81,7 @@ public class Parameters {
             for (int index = 0; index < size; index++) {
                this._buffer.setPosition(this._offsets.get(index));
                if (this._buffer.readByte() == nameByte) {
-                  result[counter++] = (byte[][])this._buffer.readByteArray();
+                  result[counter++] = this._buffer.readByteArray();
                   if (counter >= count) {
                      break;
                   }

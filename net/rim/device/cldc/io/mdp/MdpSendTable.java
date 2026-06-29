@@ -5,17 +5,17 @@ import net.rim.device.api.util.Arrays;
 
 final class MdpSendTable {
    private byte[] _pendingDatagramsState = new byte[128];
-   private byte[][][] _pendingDatagramsPacketsState = new byte[128][][];
+   private byte[][] _pendingDatagramsPacketsState = new byte[128][];
 
    final void addPendingDatagram(int reference, int maxSequence) {
-      this._pendingDatagramsPacketsState[reference] = (byte[][])(new byte[maxSequence + 1]);
+      this._pendingDatagramsPacketsState[reference] = new byte[maxSequence + 1];
       this.resetPendingDatagram(reference);
    }
 
    final void resetPendingDatagram(int reference) {
       if (this._pendingDatagramsPacketsState[reference] != null) {
          this._pendingDatagramsState[reference] = 0;
-         Arrays.fill((byte[])this._pendingDatagramsPacketsState[reference], (byte)0);
+         Arrays.fill(this._pendingDatagramsPacketsState[reference], (byte)0);
       }
    }
 
@@ -28,19 +28,19 @@ final class MdpSendTable {
    }
 
    final byte[] findPendingDatagramPackets(int reference) {
-      return (byte[])this._pendingDatagramsPacketsState[reference];
+      return this._pendingDatagramsPacketsState[reference];
    }
 
    final void setPendingDatagramPacketState(int reference, int sequence, byte state) {
-      this._pendingDatagramsPacketsState[reference][sequence] = (byte[])state;
+      this._pendingDatagramsPacketsState[reference][sequence] = state;
    }
 
    final byte getPendingDatagramPacketState(int reference, int sequence) {
-      return (byte)this._pendingDatagramsPacketsState[reference][sequence];
+      return this._pendingDatagramsPacketsState[reference][sequence];
    }
 
    final int findPendingDatagramPacketByState(int reference, byte state) {
-      return Arrays.getIndex((byte[])this._pendingDatagramsPacketsState[reference], state);
+      return Arrays.getIndex(this._pendingDatagramsPacketsState[reference], state);
    }
 
    final void removePendingDatagram(int reference) {

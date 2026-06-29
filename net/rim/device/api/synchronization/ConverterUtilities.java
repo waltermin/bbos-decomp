@@ -379,12 +379,12 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final void writeCharArrayArray(DataBuffer buffer, int type, char[][][] array) {
+   public static final void writeCharArrayArray(DataBuffer buffer, int type, char[][] array) {
       int len = array.length;
       int count = 0;
 
       for (int idx = 0; idx < len; idx++) {
-         char[] d = (char[])array[idx];
+         char[] d = array[idx];
          if (d != null) {
             count += d.length;
          }
@@ -396,7 +396,7 @@ public final class ConverterUtilities {
       buffer.writeShort(len);
 
       for (int idx = 0; idx < len; idx++) {
-         char[] d = (char[])array[idx];
+         char[] d = array[idx];
          if (d == null) {
             buffer.writeShort(0);
          } else {
@@ -428,12 +428,12 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final void writeIntArrayArray(DataBuffer buffer, int type, int[][][] array) {
+   public static final void writeIntArrayArray(DataBuffer buffer, int type, int[][] array) {
       int len = array.length;
       int count = 0;
 
       for (int idx = 0; idx < len; idx++) {
-         int[] d = (int[])array[idx];
+         int[] d = array[idx];
          if (d != null) {
             count += array[idx].length;
          }
@@ -445,7 +445,7 @@ public final class ConverterUtilities {
       buffer.writeShort(len);
 
       for (int idx = 0; idx < len; idx++) {
-         int[] d = (int[])array[idx];
+         int[] d = array[idx];
          if (d == null) {
             buffer.writeShort(0);
          } else {
@@ -751,7 +751,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final int[][][] readIntArrayArray(DataBuffer buffer, boolean allowNulls) {
+   public static final int[][] readIntArrayArray(DataBuffer buffer, boolean allowNulls) {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -766,7 +766,7 @@ public final class ConverterUtilities {
          }
 
          int count = buffer.readUnsignedShort();
-         int[][][] data = new int[count][][];
+         int[][] data = new int[count][];
 
          for (int idx = 0; idx < count; idx++) {
             int sz = buffer.readUnsignedShort();
@@ -774,7 +774,7 @@ public final class ConverterUtilities {
                if (allowNulls) {
                   data[idx] = null;
                } else {
-                  data[idx] = (int[][])(new int[0]);
+                  data[idx] = new int[0];
                }
             } else {
                int[] d = new int[sz];
@@ -783,7 +783,7 @@ public final class ConverterUtilities {
                   d[i] = buffer.readInt();
                }
 
-               data[idx] = (int[][])d;
+               data[idx] = d;
             }
          }
 
@@ -822,7 +822,7 @@ public final class ConverterUtilities {
       }
    }
 
-   public static final char[][][] readCharArrayArray(DataBuffer buffer, boolean allowNulls) {
+   public static final char[][] readCharArrayArray(DataBuffer buffer, boolean allowNulls) {
       int pos = buffer.getPosition();
       int bufflen = buffer.available();
       if (bufflen < 3) {
@@ -837,7 +837,7 @@ public final class ConverterUtilities {
          }
 
          int count = buffer.readUnsignedShort();
-         char[][][] data = new char[count][][];
+         char[][] data = new char[count][];
 
          for (int idx = 0; idx < count; idx++) {
             int sz = buffer.readUnsignedShort();
@@ -845,7 +845,7 @@ public final class ConverterUtilities {
                if (allowNulls) {
                   data[idx] = null;
                } else {
-                  data[idx] = (char[][])(new char[0]);
+                  data[idx] = new char[0];
                }
             } else {
                char[] d = new char[sz];
@@ -854,7 +854,7 @@ public final class ConverterUtilities {
                   d[i] = buffer.readChar();
                }
 
-               data[idx] = (char[][])d;
+               data[idx] = d;
             }
          }
 

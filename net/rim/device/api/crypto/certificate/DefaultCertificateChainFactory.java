@@ -18,7 +18,7 @@ class DefaultCertificateChainFactory extends CertificateChainFactory {
    }
 
    @Override
-   protected Certificate[][][] createCertificateChainsInternal(Certificate certificate, Certificate[] pool, KeyStore keyStore, String emailAddress) {
+   protected Certificate[][] createCertificateChainsInternal(Certificate certificate, Certificate[] pool, KeyStore keyStore, String emailAddress) {
       if (certificate == null) {
          throw new Object();
       }
@@ -150,7 +150,7 @@ class DefaultCertificateChainFactory extends CertificateChainFactory {
          return (Certificate[][])null;
       }
 
-      Certificate[][][] result = new Certificate[numChains][][];
+      Certificate[][] result = new Certificate[numChains][];
 
       for (int i = 0; i < numChains; i++) {
          result[i] = (Certificate[])chains.elementAt(i);

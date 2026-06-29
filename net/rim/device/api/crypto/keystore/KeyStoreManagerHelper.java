@@ -30,7 +30,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
    private boolean _allowUnverifiedCRLs;
    private boolean _keyStoreAddressInjectorEnabled;
    private String _certificateServiceUID;
-   private byte[][][] _passwordHistory;
+   private byte[][] _passwordHistory;
    private static final long KEY_STORE_MANAGER_HELPER = 4177297936493411938L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(4177297936493411938L);
    private static boolean _access;
@@ -268,7 +268,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
       int historyLength = this._passwordHistory.length;
 
       for (int i = 0; i < historyLength; i++) {
-         if (Arrays.equals((byte[])this._passwordHistory[i], passwordHash)) {
+         if (Arrays.equals(this._passwordHistory[i], passwordHash)) {
             return true;
          }
       }
@@ -281,27 +281,27 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
       int numPasswords = ITPolicy.getInteger(22, 4, 0);
       if (numPasswords > 0) {
          if (this._passwordHistory == null) {
-            this._passwordHistory = new byte[1][][];
-            this._passwordHistory[0] = (byte[][])passwordHash;
+            this._passwordHistory = new byte[1][];
+            this._passwordHistory[0] = passwordHash;
             return;
          }
 
          int historyLength = this._passwordHistory.length;
          if (historyLength < numPasswords) {
             Array.resize(this._passwordHistory, historyLength + 1);
-            this._passwordHistory[historyLength] = (byte[][])passwordHash;
+            this._passwordHistory[historyLength] = passwordHash;
          } else if (historyLength == numPasswords) {
             for (int i = 0; i < historyLength - 1; i++) {
                this._passwordHistory[i] = this._passwordHistory[i + 1];
             }
 
-            this._passwordHistory[historyLength - 1] = (byte[][])passwordHash;
+            this._passwordHistory[historyLength - 1] = passwordHash;
          } else {
             if (historyLength <= numPasswords) {
                throw new Object();
             }
 
-            byte[][][] newHistory = new byte[numPasswords][][];
+            byte[][] newHistory = new byte[numPasswords][];
             int i = 0;
 
             for (int j = historyLength - numPasswords + 1; i < numPasswords - 1; j++) {
@@ -309,7 +309,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
                i++;
             }
 
-            newHistory[numPasswords - 1] = (byte[][])passwordHash;
+            newHistory[numPasswords - 1] = passwordHash;
             this._passwordHistory = newHistory;
          }
 

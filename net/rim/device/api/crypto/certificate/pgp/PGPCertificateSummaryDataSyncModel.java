@@ -15,7 +15,7 @@ class PGPCertificateSummaryDataSyncModel extends CertificateSummaryDataSyncModel
       PGPCertificate pgpCertificate = (PGPCertificate)certificate;
       if (isPrivateKeySet) {
          byte[] keyID = pgpCertificate.getKeyID();
-         byte[][][] subKeyIDs = pgpCertificate.getSubKeyIDs();
+         byte[][] subKeyIDs = pgpCertificate.getSubKeyIDs();
          int numSubKeyIDs = subKeyIDs.length;
          this._pgpKeyIDs = new byte[8 + 8 * numSubKeyIDs];
          System.arraycopy(keyID, 0, this._pgpKeyIDs, 0, 8);

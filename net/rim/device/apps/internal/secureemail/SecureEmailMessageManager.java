@@ -15,7 +15,7 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
    private SeparatorField _shortFormSeparator;
    private LabelField _shortTextField;
    private long[] _statusFieldTypes;
-   private StatusField[][][] _statusFieldsByType;
+   private StatusField[][] _statusFieldsByType;
    private StatusField _highestPriorityStatusField;
    private boolean _showShortForm;
    private VerbMenuItem _showShortFormVerb;
@@ -29,7 +29,7 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
       this._shortFormSeparator = (SeparatorField)(new Object());
       this._shortTextField = (LabelField)(new Object(null, 51539607552L));
       this._statusFieldTypes = new long[0];
-      this._statusFieldsByType = new StatusField[0][][];
+      this._statusFieldsByType = new StatusField[0][];
       this._showShortFormVerb = (VerbMenuItem)(new Object(
          new SecureEmailMessageManager$ShowShortFormVerb(this, SecureEmailResources.getBundle(), 23, true), Integer.MAX_VALUE
       ));
@@ -185,7 +185,7 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
       super.deleteAll();
       this._shortFormStatusManager.deleteAll();
       this._statusFieldTypes = new long[0];
-      this._statusFieldsByType = new StatusField[0][][];
+      this._statusFieldsByType = new StatusField[0][];
       this._highestPriorityStatusField = null;
       this.invalidateScreen();
    }

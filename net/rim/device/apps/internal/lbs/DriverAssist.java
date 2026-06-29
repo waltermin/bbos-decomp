@@ -30,11 +30,8 @@ public final class DriverAssist {
    private int _color;
    private int _pathColor;
    private MapPoint _curPathPoint = new MapPoint();
-   private byte[][][] _quads = new byte[][][]{
-      (byte[][])({-1, -1, 0, -1, 1, -1, 1, 0, 1, 1}),
-      (byte[][])({1, -1, 1, 0, 1, 1, 0, 1, -1, 1}),
-      (byte[][])({-1, -1, 0, 1, -1, 1, -1, 0, 1, 1}),
-      (byte[][])({-1, 1, -1, 0, -1, -1, 0, -1, 1, -1})
+   private byte[][] _quads = new byte[][]{
+      {-1, -1, 0, -1, 1, -1, 1, 0, 1, 1}, {1, -1, 1, 0, 1, 1, 0, 1, -1, 1}, {-1, -1, 0, 1, -1, 1, -1, 0, 1, 1}, {-1, 1, -1, 0, -1, -1, 0, -1, 1, -1}
    };
    private Transform _transform = new Transform();
    private MapRect _zRect = new MapRect();
@@ -388,7 +385,7 @@ public final class DriverAssist {
 
       byte threshold = 10;
       int bQuad = bearing / 90;
-      byte[] quad = (byte[])this._quads[bQuad];
+      byte[] quad = this._quads[bQuad];
       int x = this._currentCell.x;
       int y = this._currentCell.y;
       int nextX = -1;
@@ -421,17 +418,17 @@ public final class DriverAssist {
          int tx = nextX - x;
          int ty = nextY - y;
          if (tx >= 0 && ty < 0) {
-            quad = (byte[])this._quads[0];
+            quad = this._quads[0];
          } else if (tx > 0 && ty >= 0) {
-            quad = (byte[])this._quads[1];
+            quad = this._quads[1];
          } else if (tx <= 0 && ty > 0) {
-            quad = (byte[])this._quads[2];
+            quad = this._quads[2];
          } else {
             if (tx >= 0 || ty > 0) {
                return null;
             }
 
-            quad = (byte[])this._quads[3];
+            quad = this._quads[3];
          }
 
          x = nextX;

@@ -132,7 +132,7 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
          String displayCertificateVerbDescription = MessageFormat.format(SecureEmailResources.getString(57), containerStringUpperSingularArray);
          int numSecureEmailCertificateServers = this._secureEmailCertificateServers.length;
          if (numSecureEmailCertificateServers == 0) {
-            Certificate[][][] certificateChains = CertificateUtilities.buildCertificateChains(
+            Certificate[][] certificateChains = CertificateUtilities.buildCertificateChains(
                this._signerCertificate, this.getIncludedCertificates(), this._secureEmailFactory.getPreferredKeyStore(), this._senderEmailAddress
             );
             long[] certificateChainProperties = CertificateChainProperties.getCertificateChainProperties(

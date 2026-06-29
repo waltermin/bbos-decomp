@@ -174,7 +174,7 @@ final class ContentInteractorManager implements GlobalEventListener, SystemListe
       this.updateHandlersDateFormat();
       this._focusInteractor = fi;
       this._modelInteractor = mi;
-      String[][][] fieldLists = new Object[][][]{{"time", "info"}, {"time", "from", "subject"}, {"time", "subject", "location"}, {"time", "from", "body"}};
+      String[][] fieldLists = new Object[][]{{"time", "info"}, {"time", "from", "subject"}, {"time", "subject", "location"}, {"time", "from", "body"}};
       String[] names = new String[]{"missedcalls", "email", "calendar", "sms"};
       int maxCount = 0;
 

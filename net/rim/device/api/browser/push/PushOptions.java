@@ -148,19 +148,20 @@ public final class PushOptions extends OptionsBase {
    }
 
    public final int getFilterMode(int pushType, int protocolType) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      return this._persistedPushOptions._filterModes[pushType][protocolType];
    }
 
    public final int getAcceptMode(int pushType, int protocolType) {
-      throw new RuntimeException("cod2jar: array load: unknown element");
+      return this._persistedPushOptions._acceptModes[pushType][protocolType];
    }
 
    public final void setFilterMode(int pushType, int protocolType, int mode, String value) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._persistedPushOptions._filterModes[pushType][protocolType] = mode;
+      this._persistedPushOptions._filterValues[pushType][protocolType] = value;
    }
 
    public final void setAcceptMode(int pushType, int protocolType, int mode) {
-      throw new RuntimeException("cod2jar: array store: unknown element");
+      this._persistedPushOptions._acceptModes[pushType][protocolType] = mode;
    }
 
    public final int getDirtyMask() {
@@ -178,11 +179,11 @@ public final class PushOptions extends OptionsBase {
       this._persistedPushOptions._allowOtherApplications = true;
 
       for (int i = 0; i < this._persistedPushOptions._filterModes.length; i++) {
-         Arrays.fill((int[])this._persistedPushOptions._filterModes[i], 0);
+         Arrays.fill(this._persistedPushOptions._filterModes[i], 0);
       }
 
       for (int i = 0; i < this._persistedPushOptions._acceptModes.length; i++) {
-         Arrays.fill((int[])this._persistedPushOptions._acceptModes[i], 0);
+         Arrays.fill(this._persistedPushOptions._acceptModes[i], 0);
       }
 
       for (int i = 0; i < this._persistedPushOptions._acceptModes.length; i++) {

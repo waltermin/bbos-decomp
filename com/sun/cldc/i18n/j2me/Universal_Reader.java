@@ -36,9 +36,9 @@ public final class Universal_Reader extends StreamReader {
             throw new UnsupportedEncodingException("Encoding " + enc + " is not suported!");
          }
 
-         byte[][][] bData = (byte[][][])txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
+         byte[][] bData = txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
          if (bData != null && bData.length > 0) {
-            this._conversionData = (byte[])bData[0];
+            this._conversionData = bData[0];
          }
       } else {
          this._noConversionData = true;
@@ -337,9 +337,9 @@ public final class Universal_Reader extends StreamReader {
 
          if (encId != this._enc) {
             this._enc = encId;
-            byte[][][] bData = (byte[][][])txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
+            byte[][] bData = txtRg.getTextProcessingData(this._enc, 0, this._conversionDataOffset);
             if (bData != null && bData.length > 0) {
-               this._conversionData = (byte[])bData[0];
+               this._conversionData = bData[0];
             } else {
                this._conversionData = null;
                this._conversionDataOffset[0] = 0;

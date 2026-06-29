@@ -1791,8 +1791,8 @@ public class Compiler implements Optimization {
          byte[] codfile = (byte[])codfiles.elementAt(i);
          byte[] signatureTrailer = MIDletSecurity.genMIDletTrailer(codfile, this._midletPolicy);
          byte[] policyTrailer = CodeModuleManager.makeTrailer(2, 0, this._midletPolicy);
-         byte[][][] trailers = new byte[][][]{(byte[][])policyTrailer, (byte[][])signatureTrailer};
-         codfile = CodeModuleManager.appendTrailers(codfile, (byte[][])trailers);
+         byte[][] trailers = new byte[][]{policyTrailer, signatureTrailer};
+         codfile = CodeModuleManager.appendTrailers(codfile, trailers);
          codfiles.setElementAt(codfile, i);
       }
    }

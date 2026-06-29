@@ -39,7 +39,7 @@ public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
       for (int i = 0; i < certificateDetails.length; i++) {
          Certificate certificate = certificateDetails[i].getCertificate();
          if (certificate instanceof Object) {
-            byte[][][] adkFingerprints = (byte[][][])((PGPCertificate)certificate).getADKFingerprints();
+            byte[][] adkFingerprints = ((PGPCertificate)certificate).getADKFingerprints();
             if (adkFingerprints == null) {
                return;
             }
@@ -68,7 +68,7 @@ public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
       Certificate[] certificateChain = null;
       long certificateChainProperties = -1;
       if (certificate != null) {
-         Certificate[][][] allCertificateChains = CertificateUtilities.buildCertificateChains(certificate, super._preferredKeyStore, emailAddress);
+         Certificate[][] allCertificateChains = CertificateUtilities.buildCertificateChains(certificate, super._preferredKeyStore, emailAddress);
          int numCertChains = allCertificateChains.length;
          long[] allCertificateChainProperties = new long[numCertChains];
          long date = System.currentTimeMillis();

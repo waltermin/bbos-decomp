@@ -19,7 +19,7 @@ class LeafNodeText extends LeafNode {
    @Override
    public void renderImpl() {
       int textIdx = super._model._nodes[super._visualNodeIdx + 24];
-      char[] text = (char[])super._model._convertedTextStrings[textIdx];
+      char[] text = super._model._convertedTextStrings[textIdx];
       int startIndex = super._model._nodes[super._visualNodeIdx + 25];
       int length = text != null ? text.length - startIndex : 0;
       if (super._nextLeaf != null && text != null) {
@@ -43,7 +43,7 @@ class LeafNodeText extends LeafNode {
    @Override
    public void update() {
       int textIdx = super._model._nodes[super._visualNodeIdx + 24];
-      char[] text = (char[])super._model._convertedTextStrings[textIdx];
+      char[] text = super._model._convertedTextStrings[textIdx];
       if (text != null) {
          int startIndex = super._model._nodes[super._visualNodeIdx + 25];
          int length = text.length - startIndex;
@@ -69,7 +69,7 @@ class LeafNodeText extends LeafNode {
    @Override
    public XYRect computeBoundingBox() {
       int textIdx = super._model._nodes[super._visualNodeIdx + 24];
-      char[] text = (char[])super._model._convertedTextStrings[textIdx];
+      char[] text = super._model._convertedTextStrings[textIdx];
       int startIndex = super._model._nodes[super._visualNodeIdx + 25];
       int length = text.length - startIndex;
       if (super._nextLeaf != null) {

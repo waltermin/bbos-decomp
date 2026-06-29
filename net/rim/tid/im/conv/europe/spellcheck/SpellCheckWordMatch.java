@@ -12,7 +12,7 @@ import net.rim.vm.Array;
 
 public class SpellCheckWordMatch implements RegularExpression {
    int wordLen;
-   private char[][][] chars;
+   private char[][] chars;
    private int[] starts;
    private boolean isCaseSensitive;
    private boolean checkShared;
@@ -27,7 +27,7 @@ public class SpellCheckWordMatch implements RegularExpression {
       this.checkShared = checkShared;
       int sz = isCaseSensitive ? 1 : 2;
       sz *= checkShared ? 2 : 1;
-      this.chars = new char[sz][][];
+      this.chars = new char[sz][];
       this.starts = new int[sz];
    }
 
@@ -35,21 +35,21 @@ public class SpellCheckWordMatch implements RegularExpression {
       this.wordLen = word.length();
       int index = 0;
       if (this.isCaseSensitive) {
-         this.chars[index] = (char[][])word.text;
+         this.chars[index] = word.text;
          this.starts[index] = word.start;
       } else {
          Word lower = word.getLower();
-         this.chars[index] = (char[][])lower.text;
+         this.chars[index] = lower.text;
          this.starts[index] = lower.start;
          index++;
          Word upper = word.getUpper();
-         this.chars[index] = (char[][])upper.text;
+         this.chars[index] = upper.text;
          this.starts[index] = upper.start;
          if (this.checkShared) {
-            char[] currBuff = (char[])this.chars[++index];
+            char[] currBuff = this.chars[++index];
             if (currBuff == null) {
                currBuff = new char[this.wordLen];
-               this.chars[index] = (char[][])currBuff;
+               this.chars[index] = currBuff;
             } else if (currBuff.length < this.wordLen) {
                Array.resize(currBuff, this.wordLen);
             }
@@ -60,10 +60,10 @@ public class SpellCheckWordMatch implements RegularExpression {
             }
 
             this.starts[index] = 0;
-            char[] ucurrBuff = (char[])this.chars[++index];
+            char[] ucurrBuff = this.chars[++index];
             if (ucurrBuff == null) {
                ucurrBuff = new char[this.wordLen];
-               this.chars[index] = (char[][])ucurrBuff;
+               this.chars[index] = ucurrBuff;
             } else if (ucurrBuff.length < this.wordLen) {
                Array.resize(ucurrBuff, this.wordLen);
             }

@@ -91,17 +91,17 @@ public class CryptoSmartCardKeyStoreData implements KeyStoreData {
    }
 
    @Override
-   public byte[][][] getAssociatedData(long association) {
+   public byte[][] getAssociatedData(long association) {
       if (this._associatedData != null) {
          for (int i = this._associatedData.length - 1; i >= 0; i--) {
             AssociatedData associatedData = this._associatedData[i];
             if (associatedData.getAssociation() == association) {
-               return (byte[][][])associatedData.getData();
+               return associatedData.getData();
             }
          }
       }
 
-      return (byte[][][])((byte[][])null);
+      return (byte[][])null;
    }
 
    @Override

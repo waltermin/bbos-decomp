@@ -5,7 +5,7 @@ final class ConversionDataRegistryHelper$EncodingMappingData {
    int _locale;
    String _typeface;
    final String _encoding;
-   byte[][][] _binaryData;
+   byte[][] _binaryData;
    int _encodingDataOffset;
    int _encodingDataLength;
 
