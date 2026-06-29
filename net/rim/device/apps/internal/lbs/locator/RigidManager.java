@@ -1,0 +1,84 @@
+package net.rim.device.apps.internal.lbs.locator;
+
+import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.Font;
+import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.theme.ThemeAttributeSet;
+
+public final class RigidManager extends Manager {
+   private int _width;
+   private int _height;
+   private static final int HEIGHT_FACTOR;
+
+   public RigidManager(int x, int y, long style) {
+      super(style);
+      this._width = x;
+      this._height = y;
+   }
+
+   public RigidManager(int x, int y, long style, Font font) {
+      super(style);
+      this._width = Math.max(font.getBounds('x') * x, 1);
+      this._height = font.getHeight() * y;
+   }
+
+   @Override
+   protected final void sublayout(int width, int height) {
+      width = Math.min(width, this.getPreferredWidth());
+      height = Math.min(this.getAvailableHeight(height), this.getPreferredHeight());
+      int contentWidth = 0;
+      int contentHeight = 0;
+      if (this.getFieldCount() > 0) {
+         Field field = this.getField(0);
+         int childWidth = (this.getStyle() & 1125899906842624L) == 0 ? width : 1073741823;
+         int childHeight = (this.getStyle() & 281474976710656L) == 0 ? height : 1073741823;
+         this.layoutChild(field, childWidth, childHeight);
+         contentWidth = field.getWidth();
+         contentHeight = field.getHeight();
+      }
+
+      this.setExtent(width, height);
+      this.setVirtualExtent(Math.max(width, contentWidth), Math.max(height, contentHeight));
+   }
+
+   @Override
+   public final int getPreferredHeight() {
+      return this._height;
+   }
+
+   @Override
+   public final int getPreferredWidth() {
+      return this._width;
+   }
+
+   private final int getAvailableHeight(int height) {
+      return height - 20;
+   }
+
+   @Override
+   protected final void paint(Graphics graphics) {
+      if ((this.getStyle() & 137438953472L) != 0) {
+         XYRect clip = graphics.getClippingRect();
+         int oldColor = graphics.getColor();
+         graphics.setColor(ThemeAttributeSet.getColor(this, 0));
+         if (this.getFieldCount() > 0) {
+            Field field = this.getField(0);
+            if (!field.isEditable()) {
+               graphics.setColor(13882323);
+            }
+         }
+
+         graphics.fillRect(clip.x, clip.y, clip.width, clip.height);
+         graphics.setColor(oldColor);
+      }
+
+      super.paint(graphics);
+   }
+
+   @Override
+   public final int getFieldClosestToLocation(int x, int y, int status) {
+      return this.getFieldCount() > 0 ? 0 : -1;
+   }
+}

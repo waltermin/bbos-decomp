@@ -1,0 +1,30 @@
+package net.rim.device.apps.internal.browser.javascript;
+
+import net.rim.ecmascript.runtime.ESObject;
+import net.rim.ecmascript.runtime.GlobalObject;
+import net.rim.ecmascript.runtime.Value;
+
+class ESWindowPrototype$10 extends JavaScriptHostFunction {
+   private final ESWindowPrototype this$0;
+
+   ESWindowPrototype$10(ESWindowPrototype _1, String x0, String x1, int x2) {
+      super(x0, x1, x2);
+      this.this$0 = _1;
+   }
+
+   @Override
+   public long run() {
+      ESObject thiz = this.getThis();
+      ESObject windowObj = thiz;
+      if (thiz instanceof Object) {
+         windowObj = ((GlobalObject)thiz).getRedirectionObject();
+      }
+
+      if (windowObj instanceof ESWindow) {
+         ESWindow window = (ESWindow)windowObj;
+         window._location.loadPage("device:home", window._scriptEngine.getClickID());
+      }
+
+      return Value.NULL;
+   }
+}

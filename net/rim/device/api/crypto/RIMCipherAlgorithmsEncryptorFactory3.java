@@ -1,0 +1,50 @@
+package net.rim.device.api.crypto;
+
+import java.io.OutputStream;
+
+final class RIMCipherAlgorithmsEncryptorFactory3 extends EncryptorFactory {
+   private static String[] ALGORITHM_LIST = new String[]{"CFB", "CFB8", "OFB", "CTR", "ECIES", "EC"};
+
+   @Override
+   protected final String[] getFactoryAlgorithms() {
+      return ALGORITHM_LIST;
+   }
+
+   @Override
+   protected final Object create(String algorithm, String nextAlgorithm, Key key, OutputStream stream, InitializationVector iv) {
+      if (algorithm.equals("CFB")) {
+         if (iv == null) {
+            throw new Object();
+         } else {
+            return new CFBEncryptor((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv, stream, false);
+         }
+      } else if (algorithm.equals("CFB8")) {
+         if (iv == null) {
+            throw new Object();
+         } else {
+            return new CFBEncryptor((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv, stream, true);
+         }
+      } else if (algorithm.equals("OFB")) {
+         if (iv == null) {
+            throw new Object();
+         } else {
+            return new OFBPseudoRandomSource((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv);
+         }
+      } else if (algorithm.equals("CTR")) {
+         if (iv == null) {
+            throw new Object();
+         } else {
+            return new CTRPseudoRandomSource((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv);
+         }
+      } else {
+         if (!algorithm.startsWith("ECIES") && !algorithm.equals("EC")) {
+            throw new Object(algorithm);
+         }
+
+         nextAlgorithm = RIMFactoryUtilities.stripBaseAlgorithm(algorithm);
+         return nextAlgorithm == null
+            ? new ECIESEncryptor(stream, (ECPublicKey)key)
+            : new ECIESEncryptor(stream, (ECPublicKey)key, nextAlgorithm, -1, null, -1, null, null, true);
+      }
+   }
+}

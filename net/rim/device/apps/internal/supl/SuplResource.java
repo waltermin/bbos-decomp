@@ -1,0 +1,14 @@
+package net.rim.device.apps.internal.supl;
+
+public interface SuplResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int NOTIFICATION_PROMPT;
+   int CONTROL_PLANE_NOTIFICATION_SUFFIX;
+   int APPLICATION_TITLE;
+   int CONTROL_PLANE_THIRD_PARTY_PREFIX;
+   int VERIFICATION_PROMPT;
+   int APPLICATION_DESCRIPTION;
+   int CONTROL_PLANE_VERIFICATION_SUFFIX;
+   int CONTROL_PLANE_DEFAULT_CLIENT;
+}

@@ -1,0 +1,88 @@
+package net.rim.device.apps.api.framework.model;
+
+public interface Recur {
+   int MAX_RECURRENCE_PERIOD_DAILY;
+   int MAX_RECURRENCE_PERIOD_WEEKLY;
+   int MAX_RECURRENCE_PERIOD_MONTHLY;
+   int MAX_RECURRENCE_PERIOD_YEARLY;
+   byte RECUR_NONE;
+   byte RECUR_DAILY;
+   byte RECUR_WEEKLY;
+   byte RECUR_MONTHLY;
+   byte RECUR_YEARLY;
+   int MODIFIER_BYDOW;
+   int MODIFIER_BYMONTH;
+   int MODIFIER_BYMONTHBYDAY;
+   int FIRST_MODIFIER;
+   int LAST_MODIFIER;
+
+   void setFirstDayOfWeek(int var1);
+
+   int getFirstDayOfWeek();
+
+   void setRecurType(byte var1);
+
+   byte getRecurType();
+
+   void setRecurPeriod(int var1);
+
+   int getRecurPeriod();
+
+   void setAsFinite(boolean var1);
+
+   boolean isFinite();
+
+   void setEndDate(long var1);
+
+   long getEndDate();
+
+   void clearAllModifiers();
+
+   void addModificationValue(int var1, Recur$Modifier var2);
+
+   int numModifierValues(int var1);
+
+   boolean hasModifier(int var1, int var2);
+
+   void getModifierAt(int var1, int var2, Recur$Modifier var3);
+
+   void removeModifier(int var1, int var2);
+
+   long[] getDeletedExclusions();
+
+   void addExclusion(long var1);
+
+   void removeExclusion(long var1);
+
+   void removeAllExclusions();
+
+   int getExclusionCount();
+
+   long getExclusion(int var1);
+
+   long[] getExclusions(long[] var1);
+
+   void addInclusion(long var1);
+
+   void removeInclusion(long var1);
+
+   void removeAllInclusions();
+
+   int getInclusionCount();
+
+   long getInclusion(int var1);
+
+   long[] getInclusions(long[] var1);
+
+   void addChildDate(long var1);
+
+   void removeChildDate(long var1);
+
+   void removeAllChildDates();
+
+   int getChildDateCount();
+
+   long getChildDate(int var1);
+
+   long[] getChildDates(long[] var1);
+}

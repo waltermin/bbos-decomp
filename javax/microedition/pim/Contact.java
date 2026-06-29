@@ -1,0 +1,50 @@
+package javax.microedition.pim;
+
+public interface Contact extends PIMItem {
+   int ADDR_POBOX;
+   int ADDR_EXTRA;
+   int ADDR_STREET;
+   int ADDR_LOCALITY;
+   int ADDR_REGION;
+   int ADDR_POSTALCODE;
+   int ADDR_COUNTRY;
+   int NAME_FAMILY;
+   int NAME_GIVEN;
+   int NAME_OTHER;
+   int NAME_PREFIX;
+   int NAME_SUFFIX;
+   int CLASS_CONFIDENTIAL;
+   int CLASS_PRIVATE;
+   int CLASS_PUBLIC;
+   int ADDR;
+   int BIRTHDAY;
+   int CLASS;
+   int EMAIL;
+   int FORMATTED_ADDR;
+   int FORMATTED_NAME;
+   int NAME;
+   int NICKNAME;
+   int NOTE;
+   int ORG;
+   int PHOTO;
+   int PHOTO_URL;
+   int PUBLIC_KEY;
+   int PUBLIC_KEY_STRING;
+   int REVISION;
+   int TEL;
+   int TITLE;
+   int UID;
+   int URL;
+   int ATTR_ASST;
+   int ATTR_AUTO;
+   int ATTR_FAX;
+   int ATTR_HOME;
+   int ATTR_MOBILE;
+   int ATTR_OTHER;
+   int ATTR_PAGER;
+   int ATTR_PREFERRED;
+   int ATTR_SMS;
+   int ATTR_WORK;
+
+   int getPreferredIndex(int var1);
+}

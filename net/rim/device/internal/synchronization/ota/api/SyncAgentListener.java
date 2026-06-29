@@ -1,0 +1,24 @@
+package net.rim.device.internal.synchronization.ota.api;
+
+public interface SyncAgentListener {
+   int OTA_ENABLED;
+   int OTA_DISABLED;
+   int SERVICE_HAS_BEEN_UPDATED;
+   int DATABASE_OTA_ENABLED;
+   int DATABASE_OTA_DISABLED;
+   int DATABASE_STATISTICS_ADDED;
+   int DATABASE_STATISTICS_UPDATED;
+   int DATABASE_STATISTICS_REMOVED;
+   int START_INITIALIZING_DATABASE;
+   int END_INITIALIZING_DATABASE;
+   int START_TRANSACTION;
+   int END_TRANSACTION;
+   int USER_ENABLED;
+   int USER_DISABLED;
+   int CONFIG_REQUEST_SENT;
+   int CONFIG_REQUEST_RECEIVED;
+   int INITIALIZATION_ON_SERIAL_CONNECTION;
+   int OTA_SERVICE_INITIALIZED;
+
+   void onSyncAgentEvent(int var1, Object var2);
+}

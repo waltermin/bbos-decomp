@@ -1,0 +1,41 @@
+package net.rim.device.apps.internal.api.serialformats;
+
+public interface ParserTypes {
+   int NOT_EXIST;
+   int BIT7;
+   int BIT8;
+   int QUOTED_PRINTABLE;
+   int BASE64;
+   int B;
+   int INLINE;
+   int URI;
+   int CONTENT_ID;
+   int CID;
+   int BINARY;
+   int PCS;
+   int GIF;
+   int CGM;
+   int WMF;
+   int BMP;
+   int MET;
+   int PMB;
+   int DIB;
+   int PICT;
+   int TIFF;
+   int PS;
+   int PDF;
+   int JPEG;
+   int MPEG;
+   int MPEG2;
+   int AVI;
+   int QTIME;
+   int BASIC;
+   int WAVE;
+   int PCM;
+   int AIFF;
+   int X509;
+   int PGP;
+   int PUBLIC;
+   int PRIVATE;
+   int CONFIDENTIAL;
+}

@@ -1,0 +1,29 @@
+package net.rim.device.apps.internal.browser.stack;
+
+public interface BSMConstants {
+   byte CONSTANT_END;
+   byte CONSTANT_STR_I;
+   byte CONSTANT_STR_END;
+   int CONSTANT_ATTRIBUTE;
+   int CONSTANT_CONTENT;
+   int CONSTANT_OPAQUE;
+   byte ELEMENT_BSM;
+   byte ELEMENT_CACHE;
+   byte ELEMENT_SIZE;
+   byte ELEMENT_ENTRY;
+   byte ELEMENT_DEVICE;
+   byte ELEMENT_VERSION;
+   byte ELEMENT_MEMFREE;
+   byte ELEMENT_HMAC;
+   byte ELEMENT_DEFAULT_EXPIRY;
+   byte ATTRIBUTE_ID;
+   byte ATTRIBUTE_URL_HASH;
+   byte ATTRIBUTE_ETAG;
+   byte ATTRIBUTE_EXPIRY;
+   byte ATTRIBUTE_SIZE;
+   byte ATTRIBUTE_LAST_MODIFIED;
+   byte ATTRIBUTE_ACTION_ADD;
+   byte ATTRIBUTE_ACTION_REMOVE;
+   byte ATTRIBUTE_ACTION_REMOVE_ALL;
+   byte ATTRIBUTE_ACTION_QUICK_ADD;
+}

@@ -1,0 +1,32 @@
+package net.rim.device.apps.internal.resource;
+
+public interface VideoRecorderResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int VID_WHITE_BALANCE;
+   int VID_SEND;
+   int VID_MEMORY;
+   int VID_COLOUR_EFFECT;
+   int VID_VIDEO_FORMAT;
+   int APPLICATION_DESCRIPTION;
+   int VID_IT_POLICY_DISABLED;
+   int VID_UNEXPECTED_ERROR;
+   int APPLICATION_TITLE;
+   int VID_START_RECORD_ERROR;
+   int VID_FLASH_MODE_CHOICES;
+   int VID_SAVING;
+   int VID_FORMAT_CHOICES;
+   int VID_SYNC_NAME;
+   int VID_VIEW_VIDEOS;
+   int VID_MEMORY_CHOICES;
+   int VID_PHONE_CALL_IN_PROGRESS;
+   int VID_FLASH_WARNING_MSG;
+   int VID_FLASH_MODE;
+   int VID_WHITE_BALANCE_CHOICES;
+   int VID_INSERT_MEDIA_CARD;
+   int VID_MEDIA_CARD_ONLY;
+   int VID_COLOUR_EFFECT_CHOICES;
+   int VID_FOLDER;
+   int VID_VIDEO_FORMAT_CHOICES;
+   int VID_DISABLE_USB_MS;
+}

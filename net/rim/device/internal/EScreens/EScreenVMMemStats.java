@@ -1,0 +1,103 @@
+package net.rim.device.internal.EScreens;
+
+import net.rim.device.api.system.MemoryStats;
+import net.rim.device.api.ui.Font;
+import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.container.MainScreen;
+
+class EScreenVMMemStats extends MainScreen {
+   protected MemoryStats _stats;
+   private ObjectListField _list;
+   EScreenMemStatsRefresher _refresher;
+   private static final int STAT_ALLOC;
+   private static final int STAT_FREE;
+   private static final int STAT_OBJECTS;
+   private static final int STAT_OBJECT_SIZE;
+   private static final int NUM_STATS;
+   private static final int MENU_QUICK_GC;
+   private static final int MENU_FULL_GC;
+   private static final int MENU_THOROUGH_GC;
+
+   public EScreenVMMemStats(String title, EScreenMemStatsRefresher refresher, Font font) {
+      this.setFont(font);
+      this._refresher = refresher;
+      this._stats = (MemoryStats)(new Object());
+      this._list = (ObjectListField)(new Object());
+      this.add(this._list);
+      this.setTitle(title);
+   }
+
+   int addDigits(int i, int originalNumber, int magnitude, StringBuffer sb) {
+      if (i > magnitude) {
+         int digits = i / magnitude;
+         if (i != originalNumber) {
+            sb.append(',');
+            if (digits < 10) {
+               sb.append("00");
+            } else if (digits < 100) {
+               sb.append("0");
+            }
+         }
+
+         i -= digits * magnitude;
+         sb.append(Integer.toString(digits));
+         return i;
+      } else {
+         return i;
+      }
+   }
+
+   String fmt(String prefix, int i) {
+      StringBuffer sb = (StringBuffer)(new Object());
+      sb.append(prefix);
+      if (i <= 0) {
+         sb.append(Integer.toString(i));
+      } else {
+         int j = i;
+         j = this.addDigits(j, i, 1000000, sb);
+         j = this.addDigits(j, i, 1000, sb);
+         j = this.addDigits(j, i, 1, sb);
+      }
+
+      return sb.toString();
+   }
+
+   public void refresh() {
+      this._refresher.refresh(this._stats);
+      String[] data = new Object[4];
+      data[0] = this.fmt("Allocated: ", this._stats.getAllocated());
+      data[1] = this.fmt("Free: ", this._stats.getFree());
+      data[2] = this.fmt("Objects: ", this._stats.getObjectCount());
+      data[3] = this.fmt("Object Size: ", this._stats.getObjectSize());
+      this._list.set(data);
+      this._list.invalidate();
+   }
+
+   @Override
+   protected void makeMenu(Menu menu, int instance) {
+      menu.add(new EScreenVMMemStats$MyMenu(this, "Quick GC", 1));
+      menu.add(new EScreenVMMemStats$MyMenu(this, "Full GC", 2));
+      menu.add(new EScreenVMMemStats$MyMenu(this, "Thorough GC", 3));
+      super.makeMenu(menu, instance);
+   }
+
+   @Override
+   protected void onUiEngineAttached(boolean attached) {
+      super.onUiEngineAttached(attached);
+      if (attached) {
+         this.refresh();
+      }
+   }
+
+   @Override
+   protected boolean keyChar(char c, int status, int time) {
+      boolean result = super.keyChar(c, status, time);
+      if (!result && c == 'r') {
+         this.refresh();
+         return true;
+      } else {
+         return result;
+      }
+   }
+}

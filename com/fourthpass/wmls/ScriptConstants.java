@@ -1,0 +1,22 @@
+package com.fourthpass.wmls;
+
+interface ScriptConstants {
+   String TRUE_STRING;
+   String FALSE_STRING;
+   String INVALID_STRING;
+   String ERR_LONG_MBYTE;
+   String ERR_FUNC_NOT_EXTERN;
+   String ERR_OUTOFRANGE_FUNC_INDEX;
+   String ERR_CHAR_DECODE;
+   String ERR_BAD_INSTRUCTION;
+   String ERR_INTERRUPT;
+   String ERR_ACCESS_DENIED;
+   String ERR_URL_NOT_DEFINED;
+   String ERR_CONVER_STR_TO_URL;
+   String ERR_WSVERSION_NOT_SUPPORTED;
+   String ERR_INVALID_FUNC_ID;
+   String ERR_INVALID_CONSTANT;
+   String ERR_UNDEFINED_INTEGER;
+   String ERR_UNDEFINED_STRING_TYPE;
+   String ERR_INCORRECT_COMPILED_CODE;
+}

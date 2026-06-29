@@ -1,0 +1,9 @@
+package net.rim.device.api.itpolicy;
+
+public interface FirewallPolicy {
+   int PROPERTY_FIREWALL_POLICY_GROUP;
+   int PROPERTY_FDN_INCOMING_CELL_CALLS;
+   int PROPERTY_FDN_OUTGOING_CELL_CALLS;
+   int PROPERTY_FDN_INCOMING_VOIP_CALLS;
+   int PROPERTY_FDN_OUTGOING_VOIP_CALLS;
+}

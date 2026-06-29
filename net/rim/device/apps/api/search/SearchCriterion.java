@@ -1,0 +1,44 @@
+package net.rim.device.apps.api.search;
+
+public interface SearchCriterion {
+   int BODY_SEARCH;
+   int SUBJECT_SEARCH;
+   int UNUSED_1;
+   int HEADER_SEARCH_FROM;
+   int HEADER_SEARCH_ANY;
+   int HEADER_SEARCH_TO;
+   int HEADER_SEARCH_CC;
+   int HEADER_SEARCH_BCC;
+   int RECEIVED_SEARCH;
+   int SENT_SEARCH;
+   int SAVED_SEARCH;
+   int EMAIL_TYPE_SEARCH;
+   int SMS_TYPE_SEARCH;
+   int PHONE_TYPE_SEARCH;
+   int FOLDER_SEARCH;
+   int DIRECT_CONNECT_TYPE_SEARCH;
+   int SERVICE_SEARCH;
+   int VOICEMAIL_TYPE_SEARCH;
+   int PAGES_TYPE_SEARCH;
+   int MMS_TYPE_SEARCH;
+   int TEXT_SEARCH;
+   int DRAFT_SEARCH;
+   int ID_SEARCH;
+   int PIN_TYPE_SEARCH;
+   int EMAIL_WITH_ATTACHMENTS_TYPE_SEARCH;
+   int ENCODING_ACTION_SEARCH;
+   int UNOPENED_SEARCH;
+   int PHONE_NUMBER_SEARCH;
+   int OR_SEARCH;
+   int CRITERION_ARRAY_SIZE;
+   int ADDRESS_CARDS_INDEX;
+   int ADDRESS_CARD_LUIDS_INDEX;
+   int WORDS_INDEX;
+   int SERVICE_SEARCH_CRITERION_ARRAY_SIZE;
+   int SERVICE_USER_ID_INDEX;
+   int SERVICE_UID_HASH_INDEX;
+
+   int getType();
+
+   Object getValue();
+}

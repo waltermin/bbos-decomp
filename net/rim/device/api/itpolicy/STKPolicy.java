@@ -1,0 +1,10 @@
+package net.rim.device.api.itpolicy;
+
+public interface STKPolicy {
+   int DISABLE_STK_CALL_CONTROL;
+   int DISABLE_STK_PROVIDE_LOCAL_INFO;
+   int DISABLE_STK_SETUP_CALL;
+   boolean DISABLE_STK_CALL_CONTROL_DEFAULT;
+   boolean DISABLE_STK_PROVIDE_LOCAL_INFO_DEFAULT;
+   boolean DISABLE_STK_SETUP_CALL_DEFAULT;
+}

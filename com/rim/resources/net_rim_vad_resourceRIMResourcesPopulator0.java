@@ -1,0 +1,66 @@
+package com.rim.resources;
+
+import java.util.Hashtable;
+
+final class net_rim_vad_resourceRIMResourcesPopulator0 {
+   static final void populate(Hashtable localZero) {
+      byte[] var1 = new byte[]{
+         99,
+         114,
+         0,
+         6,
+         -112,
+         44,
+         0,
+         0,
+         0,
+         2,
+         0,
+         0,
+         0,
+         0,
+         0,
+         96,
+         -60,
+         10,
+         35,
+         -36,
+         38,
+         -127,
+         -32,
+         0,
+         1,
+         0,
+         0,
+         0,
+         40,
+         0,
+         0,
+         0,
+         22,
+         115,
+         0,
+         18,
+         0,
+         -87,
+         32,
+         50,
+         48,
+         48,
+         56,
+         32,
+         86,
+         111,
+         105,
+         99,
+         101,
+         83,
+         105,
+         103,
+         110,
+         97,
+         108
+      };
+      localZero.put("net.rim.device.apps.internal.vad.resource.VAD£.crb", var1);
+   }
+}

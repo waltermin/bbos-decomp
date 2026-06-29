@@ -1,0 +1,10 @@
+package net.rim.device.api.itpolicy;
+
+public interface SmartDialingPolicy {
+   int PROPERTY_SMART_DIALING_POLICY_GROUP;
+   int PROPERTY_ENABLE_SMART_DIALING;
+   int PROPERTY_DIALING_COUNTRY_CODE;
+   int PROPERTY_DIALING_AREA_CODE;
+   int PROPERTY_DIALING_COUNTRY_LENGTH;
+   boolean DEFAULT_PROPERTY_ENABLE_SMART_DIALING;
+}

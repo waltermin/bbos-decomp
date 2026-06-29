@@ -1,0 +1,20 @@
+package net.rim.device.apps.internal.resource.crypto;
+
+public interface SmartCardResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int ID_CERTIFICATE;
+   int ENCRYPTION_CERTIFICATE;
+   int CAC_LABEL;
+   int DATAKEY_LABEL;
+   int KEY_USAGE_SIGNATURE;
+   int SIGNING_CERTIFICATE;
+   int PIV_KEY_MAN_CERTIFICATE;
+   int EXTRACT_CERTIFICATES;
+   int PIV_AUTH_CERTIFICATE;
+   int CAC_AUTHENTICATOR;
+   int PIV_CARD_AUTH_CERTIFICATE;
+   int KEY_USAGE_DECRYPT;
+   int PIV_DIGITAL_SIG_CERTIFICATE;
+   int DATAKEY_AUTHENTICATOR;
+}

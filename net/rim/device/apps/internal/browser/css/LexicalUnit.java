@@ -1,0 +1,47 @@
+package net.rim.device.apps.internal.browser.css;
+
+public interface LexicalUnit {
+   short SAC_OPERATOR_COMMA;
+   short SAC_OPERATOR_PLUS;
+   short SAC_OPERATOR_MINUS;
+   short SAC_OPERATOR_MULTIPLY;
+   short SAC_OPERATOR_SLASH;
+   short SAC_OPERATOR_MOD;
+   short SAC_OPERATOR_EXP;
+   short SAC_OPERATOR_LT;
+   short SAC_OPERATOR_GT;
+   short SAC_OPERATOR_LE;
+   short SAC_OPERATOR_GE;
+   short SAC_OPERATOR_TILDE;
+   short SAC_INHERIT;
+   short SAC_INTEGER;
+   short SAC_REAL;
+   short SAC_EM;
+   short SAC_EX;
+   short SAC_PIXEL;
+   short SAC_INCH;
+   short SAC_CENTIMETER;
+   short SAC_MILLIMETER;
+   short SAC_POINT;
+   short SAC_PICA;
+   short SAC_PERCENTAGE;
+   short SAC_URI;
+   short SAC_COUNTER_FUNCTION;
+   short SAC_COUNTERS_FUNCTION;
+   short SAC_RGBCOLOR;
+   short SAC_DEGREE;
+   short SAC_GRADIAN;
+   short SAC_RADIAN;
+   short SAC_MILLISECOND;
+   short SAC_SECOND;
+   short SAC_HERTZ;
+   short SAC_KILOHERTZ;
+   short SAC_IDENT;
+   short SAC_STRING_VALUE;
+   short SAC_ATTR;
+   short SAC_RECT_FUNCTION;
+   short SAC_UNICODERANGE;
+   short SAC_SUB_EXPRESSION;
+   short SAC_FUNCTION;
+   short SAC_DIMENSION;
+}

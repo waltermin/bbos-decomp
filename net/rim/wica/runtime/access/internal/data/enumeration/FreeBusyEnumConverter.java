@@ -1,0 +1,27 @@
+package net.rim.wica.runtime.access.internal.data.enumeration;
+
+import net.rim.device.api.util.IntIntHashtable;
+
+public final class FreeBusyEnumConverter {
+   protected static IntIntHashtable _commonToDevice = (IntIntHashtable)(new Object(6));
+   protected static IntIntHashtable _deviceToCommon = (IntIntHashtable)(new Object(6));
+
+   public static final int deviceToCommon(int value) {
+      return _deviceToCommon.get(value);
+   }
+
+   public static final int commonToDevice(int value) {
+      return _commonToDevice.get(value);
+   }
+
+   static {
+      _commonToDevice.put(2, 2);
+      _commonToDevice.put(0, 0);
+      _commonToDevice.put(3, 3);
+      _commonToDevice.put(1, 1);
+      _deviceToCommon.put(2, 2);
+      _deviceToCommon.put(0, 0);
+      _deviceToCommon.put(3, 3);
+      _deviceToCommon.put(1, 1);
+   }
+}

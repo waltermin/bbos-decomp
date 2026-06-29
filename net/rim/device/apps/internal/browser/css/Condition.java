@@ -1,0 +1,18 @@
+package net.rim.device.apps.internal.browser.css;
+
+public interface Condition {
+   short SAC_AND_CONDITION;
+   short SAC_OR_CONDITION;
+   short SAC_NEGATIVE_CONDITION;
+   short SAC_POSITIONAL_CONDITION;
+   short SAC_ATTRIBUTE_CONDITION;
+   short SAC_ID_CONDITION;
+   short SAC_LANG_CONDITION;
+   short SAC_ONE_OF_ATTRIBUTE_CONDITION;
+   short SAC_BEGIN_HYPHEN_ATTRIBUTE_CONDITION;
+   short SAC_CLASS_CONDITION;
+   short SAC_PSEUDO_CLASS_CONDITION;
+   short SAC_ONLY_CHILD_CONDITION;
+   short SAC_ONLY_TYPE_CONDITION;
+   short SAC_CONTENT_CONDITION;
+}

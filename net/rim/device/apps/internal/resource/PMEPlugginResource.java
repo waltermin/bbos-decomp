@@ -1,0 +1,27 @@
+package net.rim.device.apps.internal.resource;
+
+public interface PMEPlugginResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int MENU_INFO;
+   int ORIGINAL_VIEW;
+   int INFO_VERB_TITLE;
+   int INFO_VERB_DESCRIPTION;
+   int ERROR_MSG_UNSUPPORTED_MEDIA;
+   int MENU_SCROLL;
+   int OVERLAY_PMB_URL;
+   int MENU_RESUME;
+   int ZOOM;
+   int ERROR_MSG_MISSINGRESOURCES2;
+   int ERROR_MSG_INVALID_HEADER;
+   int ERROR_MSG_MISSINGRESOURCES1;
+   int ERROR_MSG_UPGRADE;
+   int MENU_STOP_SCROLL;
+   int MENU_RESTART;
+   int MENU_PAUSE;
+   int ERROR_MSG_UNKNOWN;
+   int PAN;
+   int ERROR_MSG_OUT_OF_DATE;
+   int ERROR_MSG_CHECKSUM_MISMATCH;
+   int ERROR_MSG_OUT_OF_BOUNDS;
+}

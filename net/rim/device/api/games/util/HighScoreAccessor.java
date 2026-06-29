@@ -1,0 +1,141 @@
+package net.rim.device.api.games.util;
+
+import net.rim.device.api.system.ApplicationRegistry;
+import net.rim.device.api.system.DeviceInfo;
+import net.rim.device.cldc.io.utility.URIEncoder;
+
+public final class HighScoreAccessor {
+   private static final boolean RELEASE;
+   private static final boolean SENDVERSION;
+   private static final String INTERNAL_SERVER;
+   private static String SERVER = "http://blackberrycanbefun.plazmic.com";
+   private static String DEFAULT_SERVER = "http://blackberrycanbefun.plazmic.com";
+   private static final String VERSION;
+   public static final int WRONG_PASSWORD;
+   public static final int GAME_NOT_SUPPORTED;
+   public static final int SCORE_SUBMITTED;
+   public static final int SCORE_NOT_SUBMITTED;
+   public static final int USERNAME_REJECTED;
+   public static final int USERNAME_INVALID;
+   public static final int PASSWORD_INVALID;
+   public static final int USER_NOT_ADDED;
+   public static final int GAME_EXISTS;
+   public static final int GAME_NOT_EXISTS;
+   private static final byte[] laLlave;
+
+   private static final String getServer() {
+      ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
+      return (String)ar.get(-5985654863873213975L);
+   }
+
+   private static final String crypt(String data) {
+      StringBuffer result = (StringBuffer)(new Object());
+      byte[] pinData = laLlave;
+      byte[] urlData = data.getBytes();
+      int k = 0;
+
+      for (int i = 0; i < urlData.length; i++) {
+         int temp = urlData[i] + pinData[k++];
+         result.append(Integer.toHexString(temp));
+         if (k >= pinData.length) {
+            k = 0;
+         }
+      }
+
+      return (String)(new Object(result));
+   }
+
+   private static final String decrypt(String data) {
+      StringBuffer result = (StringBuffer)(new Object());
+      byte[] pinData = laLlave;
+      byte[] urlData = data.getBytes();
+      int k = 0;
+
+      for (int i = 0; i < urlData.length; i += 2) {
+         String temp = data.substring(i, i + 2);
+         result.append((char)(Integer.parseInt(temp, 16) - pinData[k++]));
+         if (k >= pinData.length) {
+            k = 0;
+         }
+      }
+
+      return (String)(new Object(result));
+   }
+
+   public static final void sendScore(
+      String userName, String password, int highScore, int highLevel, String game, String version, HighScoreServerListener listener
+   ) {
+      sendScore(userName, password, highScore, highLevel, game, version, listener, 30000);
+   }
+
+   public static final void sendScore(
+      String userName, String password, int highScore, int highLevel, String game, String version, HighScoreServerListener listener, int timeout
+   ) {
+      if (!DeviceInfo.isSimulator()) {
+         userName = URIEncoder.encode(null, userName, "utf-8", true);
+         password = URIEncoder.encode(null, password, "utf-8", true);
+         String crypted = crypt(
+            ((StringBuffer)(new Object("user_name=")))
+               .append(userName)
+               .append(";password=")
+               .append(password)
+               .append(";game_name=")
+               .append(game)
+               .append(";game_version=")
+               .append(version)
+               .append(";score_attr1=")
+               .append(highScore)
+               .append(";score_attr2=")
+               .append(highLevel)
+               .toString()
+         );
+         String url = ((StringBuffer)(new Object()))
+            .append(getServer())
+            .append("/mss/submithighscore?data=")
+            .append("01")
+            .append(crypted)
+            .append(";connectiontimeout=")
+            .append(timeout)
+            .toString();
+         Sender sender = new Sender(url, listener);
+         ((Thread)(new Object(sender))).start();
+      }
+   }
+
+   public static final String getHighScoreURL(String game, String version) {
+      String crypted = crypt(((StringBuffer)(new Object("game_name="))).append(game).append(";game_version=").append(version).toString());
+      return ((StringBuffer)(new Object())).append(getServer()).append("/mss/leaderboard?data=").append("01").append(crypted).toString();
+   }
+
+   public static final void isGameActivated(String game, String version, HighScoreServerListener listener) {
+      if (!DeviceInfo.isSimulator()) {
+         String crypted = crypt(((StringBuffer)(new Object("game_name="))).append(game).append(";game_version=").append(version).toString());
+         String url = ((StringBuffer)(new Object()))
+            .append(getServer())
+            .append("/mss/checkgame?data=")
+            .append("01")
+            .append(crypted)
+            .append(";connectiontimeout=30000")
+            .toString();
+         Sender sender = new Sender(url, listener);
+         ((Thread)(new Object(sender))).start();
+      }
+   }
+
+   public static final void setServerString(String newServer) {
+      SERVER = newServer;
+   }
+
+   public static final void resetServerString() {
+      SERVER = DEFAULT_SERVER;
+   }
+
+   static {
+      if (getServer() == null) {
+         ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
+         ar.replace(-5985654863873213975L, SERVER);
+      }
+
+      laLlave = new byte[]{97, 108, 108, 121, 111, 117, 114, 98, 97, 115, 101, 97, 114, 101, 98, 101, 108, 111, 110, 103, 116, 111, 117, 115};
+   }
+}

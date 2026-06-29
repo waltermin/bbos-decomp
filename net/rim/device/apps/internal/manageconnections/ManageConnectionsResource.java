@@ -1,0 +1,47 @@
+package net.rim.device.apps.internal.manageconnections;
+
+public interface ManageConnectionsResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int SERVICES_STATUS;
+   int BLUETOOTH;
+   int MOBILE_NETWORK_PROVIDER;
+   int ROAMING;
+   int OFF;
+   int EMERGENCY_ONLY;
+   int CANNOT_TURN_ON_WIRELESS_GAN_ONLY;
+   int UMA;
+   int SETUP_WIFI;
+   int ACTIVE_PROFILE_LABEL;
+   int ON;
+   int MOBILE_NETWORK;
+   int SSID_LABEL;
+   int SETUP_BLUETOOTH;
+   int CANNOT_TURN_ON_WIRELESS;
+   int NOT_CONNECTED;
+   int STATUS_LABEL;
+   int CONNECTION_LABEL;
+   int RESTORE_ALL;
+   int WIFI_BAND_G;
+   int NOT_AVAILABLE;
+   int WIFI;
+   int WIFI_NETWORK;
+   int WIFI_BAND_ABG;
+   int WIFI_BAND_B;
+   int BIS;
+   int WIFI_BAND_A;
+   int TYPE_LABEL;
+   int VOICE_SERVICES;
+   int WIFI_BAND_BG;
+   int APPLICATION_TITLE;
+   int WIFI_OPTIONS;
+   int BLUETOOTH_OPTIONS;
+   int CONNECTED;
+   int APPLICATION_DESCRIPTION;
+   int MOBILE_NETWORK_OPTIONS;
+   int TURN_ALL_OFF;
+   int CANNOT_TURN_ON_WIFI;
+   int TURN_ALL_ON;
+   int AVAILABLE;
+   int BES;
+}

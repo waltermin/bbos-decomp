@@ -1,0 +1,47 @@
+package net.rim.device.internal.provisioning;
+
+public final class ProvisioningConstants {
+   public static final int ENABLE_ENTERPRISE_ACTIVATE_UI_TYPE;
+   public static final int BB_EXP_MODE_TYPE;
+   public static final int IP_MODEM_TYPE;
+   public static final int MORE_IMAGES_URL_TYPE;
+   public static final int MORE_TUNES_URL_TYPE;
+   public static final int MORE_THEMES_URL_TYPE;
+   public static final int MDP_STACK_FLAG;
+   public static final int WLAN_PROFILES_TYPE;
+   public static final int GAN_SECURE_GATEWAY;
+   public static final int GAN_CONTROLLER;
+   public static final int GAN_ROOT_CERT_1;
+   public static final int GAN_ROOT_CERT_2;
+   public static final int GAN_ROOT_CERT_3;
+   public static final int GAN_ROOT_CERT_4;
+   public static final int ENABLE_WLAN;
+   public static final int ENABLE_GAN_PREFERENCE_WAN_ONLY;
+   public static final int ENABLE_GAN_PREFERENCE_WAN_PREFERRED;
+   public static final int ENABLE_GAN_PREFERENCE_GAN_ONLY;
+   public static final int ENABLE_GAN_PREFERENCE_GAN_PREFERRED;
+   public static final int SUPL_SERVER_ADDRESS;
+   public static final int GAN_WLAN_THRESHOLD;
+   public static final int GAN_SIGNAL_STRENGTH_THRESHOLD;
+   public static final int GAN_SIGNAL_QUALITY_THRESHOLD;
+   public static final int DTM_VERSION;
+   public static final int RRLP_VERSION;
+   public static final int SUPL_VERSION;
+   public static final int INTERACTIVE_PACKET_PING_TIMEOUT;
+   public static final int GAN_CERT_THUMBPRINT;
+   public static final int ENABLE_WLAN_ACCESS_TO_BLACKBERRY_ROUTER;
+   public static final int ENABLE_WLAN_ACCESS_TO_RELAY;
+   public static final int DISABLE_EXTENDED_EPHEMERIS;
+   public static final int GAN_PROTOCOL_VERSION;
+   public static final int GAN_PROTOCOL_VERSION_UMA_1_0_0;
+   public static final int GAN_PROTOCOL_VERSION_UMA_1_0_1;
+   public static final int GAN_PROTOCOL_VERSION_UMA_1_0_2;
+   public static final int GAN_PROTOCOL_VERSION_UMA_1_0_3;
+   public static final int GAN_PROTOCOL_VERSION_UMA_1_0_4;
+   public static final int GAN_PROTOCOL_VERSION_3GPP_rev6;
+   public static final int DISABLE_BLACKBERRY_PROTECTED_MODE;
+   public static final int SUPL_APN;
+   public static final int SUPL_APN_USERNAME;
+   public static final int SUPL_APN_PASSWORD;
+   public static final int ENABLE_QUICK_CONNECT;
+}

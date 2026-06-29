@@ -1,0 +1,77 @@
+package net.rim.device.apps.internal.explorer.content;
+
+import javax.microedition.io.Connector;
+import javax.microedition.io.HttpConnection;
+import javax.microedition.io.InputConnection;
+import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RequestedResource;
+import net.rim.device.api.browser.field.ResourceProvider;
+import net.rim.device.api.system.Application;
+import net.rim.device.apps.api.utility.general.URI;
+import net.rim.device.internal.io.file.FileUtilities;
+
+public final class RenderApp implements RenderingApplication, ResourceProvider {
+   private RenderScreen _renderScreen;
+   private String _baseUrl;
+
+   public RenderApp(RenderScreen renderScreen, String url) {
+      this._renderScreen = renderScreen;
+      this._baseUrl = url;
+   }
+
+   @Override
+   public final Object eventOccurred(Event event) {
+      if (event.getUID() == 10002) {
+         Application.getApplication().invokeAndWait(new RenderApp$1(this));
+      }
+
+      return null;
+   }
+
+   @Override
+   public final int getAvailableHeight(BrowserContent browserContent) {
+      return this._renderScreen.getContentWindowHeight();
+   }
+
+   @Override
+   public final int getAvailableWidth(BrowserContent browserContent) {
+      return this._renderScreen.getContentWindowWidth();
+   }
+
+   @Override
+   public final int getHistoryPosition(BrowserContent browserContent) {
+      return -1;
+   }
+
+   @Override
+   public final String getHTTPCookie(String url) {
+      return null;
+   }
+
+   @Override
+   public final HttpConnection getResource(RequestedResource resource, BrowserContent referrer) {
+      return null;
+   }
+
+   @Override
+   public final InputConnection getInputConnection(RequestedResource resource, BrowserContent referrer) {
+      String url = resource.getUrl();
+      if (!url.startsWith("file://") && this._baseUrl != null) {
+         String filename = FileUtilities.getName(url);
+         url = URI.getAbsoluteURL(filename, this._baseUrl);
+      }
+
+      try {
+         return (InputConnection)Connector.open(url);
+      } finally {
+         ;
+      }
+   }
+
+   @Override
+   public final void invokeRunnable(Runnable runnable) {
+      new RenderApp$2(this, runnable).start();
+   }
+}

@@ -1,0 +1,28 @@
+package net.rim.device.internal.resource;
+
+public interface PlatformSecurityResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int AC_ITEM_IDLE_TIMER;
+   int AC_ITEM_WIFI;
+   int AC_ITEM_IPC;
+   int AC_ITEM_IP_EXTERNAL;
+   int AC_ITEM_MEDIA;
+   int AC_ITEM_PHONE;
+   int AC_ITEM_BLUETOOTH;
+   int AC_ITEM_PIM;
+   int AC_ITEM_MODULE_MANAGEMENT;
+   int AC_ITEM_SCREEN_CAPTURE;
+   int AC_ITEM_DEVICE_SETTINGS;
+   int AC_ITEM_EMAIL;
+   int AC_ITEM_EVENT_INJECTION;
+   int AC_ITEM_FILE;
+   int AC_ITEM_LOCATION;
+   int AC_ITEM_KEYSTORE;
+   int AC_ITEM_IP_INTERNAL;
+   int AC_ITEM_BROWSER_FILTERS;
+   int AC_ITEM_USB;
+   int UNCAUGHT_CONTROLLED_ACCESS_EXCEPTION;
+   int AC_ITEM_KEYSTORE_MEDIUM_SECURITY;
+   int AC_ITEM_THEME_DATA;
+}

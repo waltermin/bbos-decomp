@@ -1,0 +1,31 @@
+package net.rim.device.cldc.impl.gcmp;
+
+interface GcmpEvents {
+   int INITIALIZE;
+   int SESSION_REGISTER;
+   int SESSION_DEREGISTER;
+   int COVERAGE_DELAY_SEND;
+   int COVERAGE_INACTIVITY;
+   int COVERAGE_GAINED;
+   int COVERAGE_NONE;
+   int COVERAGE_LOST;
+   int PDP_DELAY_SEND;
+   int PDP_GAINED;
+   int PDP_LOST;
+   int SENDING_PACKET;
+   int SENDING_CHALLENGE;
+   int SEND_FAILED;
+   int SEND_NO_RESPONSE;
+   int WAIT_INTERRUPTED;
+   int RECEIVED_PACKET;
+   int RECEIVED_CHALLENGE;
+   int RECV_BAD_LENGTH;
+   int RECV_BAD_TYPE;
+   int RECV_END_OF_DATA;
+   int RECV_NO_SESSION;
+   int RECV_BAD_HEADER;
+   int RECV_BAD_DEST;
+   int RCP_DELAY_SEND;
+   int RCP_CONNECTION_GAINED;
+   int RCP_CONNECTION_LOST;
+}

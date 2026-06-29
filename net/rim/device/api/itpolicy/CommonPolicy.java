@@ -1,0 +1,22 @@
+package net.rim.device.api.itpolicy;
+
+public interface CommonPolicy {
+   int LOCK_OWNER_INFO;
+   int IT_POLICY_NOTIFICATION;
+   int BES_VERSION;
+   int CONFIRM_ON_SEND;
+   int SET_OWNER_INFO;
+   int SET_OWNER_NAME;
+   int DISABLE_MMS;
+   int DISABLE_VAD;
+   int DISABLE_KPTT;
+   int DISABLE_VOICE_NOTE_RECORDING;
+   byte LOCK_OWNER_INFO_DEFAULT;
+   boolean IT_POLICY_NOTIFICATION_DEFAULT;
+   boolean DISABLE_MMS_DEFAULT;
+   boolean DISABLE_VAD_DEFAULT;
+   boolean DISABLE_KPTT_DEFAULT;
+   boolean DISABLE_VOICE_NOTE_RECORDING_DEFAULT;
+   byte LOCK_OWNER_INFO_LOCK_INFO;
+   byte LOCK_OWNER_INFO_LOCK_NAME;
+}

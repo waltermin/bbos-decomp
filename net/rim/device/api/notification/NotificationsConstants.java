@@ -1,0 +1,28 @@
+package net.rim.device.api.notification;
+
+public interface NotificationsConstants {
+   int FORCED;
+   int CRITICAL;
+   int SENSITIVE;
+   int IMPORTANT;
+   int CASUAL;
+   int DEFAULT_LEVEL;
+   int LEVEL_COUNT;
+   int OUT_OF_HOLSTER_TRIGGER;
+   int MANUAL_TRIGGER;
+   int TRIGGER_COUNT;
+   int OUT_OF_HOLSTER_ENGINE_STATE;
+   int IN_HOLSTER_ENGINE_STATE;
+   long NOTIFICATION_REPEAT_COUNT;
+   long NOTIFICATION_REPEAT_DELAY;
+   long STOP_CONDITIONS;
+   long NOTIFICATION_LEVEL_KEY;
+   long NOTIFICATION_PRIVATE_FLAG_KEY;
+   long CALLERID_ADDRESSCARD_UID;
+   long CUSTOM_TUNE_NAME;
+   int FORCE_NO_REPEAT_NOTIFICATIONS_FLAG;
+   long NO_RELATED_SOURCE;
+   long NO_SOURCE;
+   String ORPHANED_SOURCE;
+   int CONTINUOUS_REPEAT;
+}

@@ -1,0 +1,21 @@
+package net.rim.device.apps.api.search.criteria;
+
+import net.rim.device.apps.api.search.SearchCriterion;
+
+public class IdSearchModel implements SearchCriterion {
+   private Integer _id;
+
+   public void setValue(int id) {
+      this._id = (Integer)(new Object(id));
+   }
+
+   @Override
+   public int getType() {
+      return 24;
+   }
+
+   @Override
+   public Object getValue() {
+      return this._id;
+   }
+}

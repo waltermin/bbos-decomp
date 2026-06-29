@@ -1,0 +1,29 @@
+package net.rim.device.apps.internal.setupwizard;
+
+public interface SetupWizardResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int NO_THANKS;
+   int ROLL_TRACKWHEEL_BOLD;
+   int WIZARD_START_MESSAGE_INTRO;
+   int ROLL_TRACKBALL;
+   int CLICK_TRACKWHEEL_BOLD;
+   int ROLL_TRACKBALL_BOLD;
+   int CLICK_TRACKBALL;
+   int WIZARD_START_MESSAGE_RETURN;
+   int WIZARD_FINISH_MESSAGE2;
+   int WIZARD_FINISH_MESSAGE1;
+   int RUN_SETUP_WIZARD;
+   int WELCOME;
+   int DESCRIPTION;
+   int CLICK_TRACKBALL_BOLD;
+   int TITLE;
+   int WIZARD_FINISH_TITLE;
+   int CLICK_TRACKWHEEL;
+   int WIZARD_LOW_MEMORY;
+   int EXIT_DIALOG;
+   int WIZARD_START_MESSAGE_INTRO_SURETYPE;
+   int REMIND_ME_LATER;
+   int ROLL_TRACKWHEEL;
+   int WIZARD_START_TITLE;
+}

@@ -1,0 +1,37 @@
+package net.rim.device.api.crypto;
+
+public final class RC2EncryptorEngine implements SymmetricKeyEncryptorEngine {
+   private RC2CryptoToken _cryptoToken;
+   private CryptoTokenCipherContext _context;
+   private int _keyLength;
+   public static final int BLOCK_LENGTH;
+
+   public final int getKeyLength() {
+      return this._keyLength;
+   }
+
+   @Override
+   public final int getBlockLength() {
+      return 8;
+   }
+
+   @Override
+   public final String getAlgorithm() {
+      return ((StringBuffer)(new Object("RC2_"))).append(this.getKeyLength() << 3).toString();
+   }
+
+   @Override
+   public final void encrypt(byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
+      this._cryptoToken.encrypt(this._context, plaintext, plaintextOffset, ciphertext, ciphertextOffset);
+   }
+
+   public RC2EncryptorEngine(RC2Key key) {
+      if (key == null) {
+         throw new Object();
+      }
+
+      this._cryptoToken = key.getRC2CryptoToken();
+      this._context = this._cryptoToken.initializeEncrypt(key.getCryptoTokenData());
+      this._keyLength = key.getLength();
+   }
+}

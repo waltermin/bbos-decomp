@@ -1,0 +1,38 @@
+package net.rim.device.apps.internal.resource;
+
+public interface UiResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int HOTKEY_TUESDAY;
+   int DURATION_DAY;
+   int MENUITEM_ZOOM;
+   int MENUITEM_ZOOMIN;
+   int DURATION_HOURS;
+   int MENUITEM_ZOOMTOFILL;
+   int MENUITEM_ROTATE;
+   int MENUITEM_ZOOM1TO1;
+   int DURATION_MINUTE;
+   int HOTKEY_WEDNESDAY;
+   int DURATION_MINUTES;
+   int MENUITEM_ZOOMOUT;
+   int TCF_WEEKS;
+   int MENUITEM_SHOW_ORIGINAL;
+   int TCF_TIMES;
+   int DURATION_SECOND;
+   int HOTKEY_MONDAY;
+   int MENUITEM_ZOOMTOFIT;
+   int MENUITEM_ZOOMALL;
+   int TCF_MINUTES;
+   int HOTKEY_FRIDAY;
+   int DURATION_HOUR;
+   int DURATION_DAYS;
+   int TCF_DAYS;
+   int TCF_HOURS;
+   int TCF_MILLISECONDS;
+   int MENUITEM_CROP_AND_SAVE;
+   int TCF_SECONDS;
+   int HOTKEY_THURSDAY;
+   int HOTKEY_SATURDAY;
+   int HOTKEY_SUNDAY;
+   int DURATION_SECONDS;
+}

@@ -1,0 +1,42 @@
+package net.rim.device.apps.internal.api.serialformats;
+
+interface VCardDefine {
+   String VERSION_2_1_ID;
+   String VERSION_3_0_ID;
+   int ENCODING_PARAMETER;
+   int VALUE_PARAMETER;
+   int TN_BEGIN;
+   int TN_END;
+   int TN_SOURCE;
+   int TN_NAME;
+   int TN_PROFILE;
+   int TN_FN;
+   int TN_N;
+   int TN_NICKNAME;
+   int TN_PHOTO;
+   int TN_BDAY;
+   int TN_ADR;
+   int TN_LABEL;
+   int TN_TEL;
+   int TN_EMAIL;
+   int TN_MAILER;
+   int TN_TZ;
+   int TN_GEO;
+   int TN_TITLE;
+   int TN_ROLE;
+   int TN_LOGO;
+   int TN_AGENT;
+   int TN_ORG;
+   int TN_CATEGORIES;
+   int TN_NOTE;
+   int TN_PRODID;
+   int TN_REV;
+   int TN_SORT_STRING;
+   int TN_SOUND;
+   int TN_URL;
+   int TN_UID;
+   int TN_VERSION;
+   int TN_CLASS;
+   int TN_KEY;
+   int TN_EXTENSION;
+}

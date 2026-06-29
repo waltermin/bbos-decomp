@@ -1,0 +1,417 @@
+package net.rim.device.apps.internal.profiles;
+
+import net.rim.device.api.i18n.ResourceBundle;
+import net.rim.device.api.notification.NotificationsManager;
+import net.rim.device.api.synchronization.SyncObject;
+import net.rim.device.api.system.ApplicationRegistry;
+import net.rim.device.api.system.PersistentObject;
+import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.FieldChangeListener;
+import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.ChoiceField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.framework.model.PersistableRIMModel;
+import net.rim.device.apps.api.framework.profiles.TuneChoiceField;
+import net.rim.device.apps.api.framework.profiles.TuneManager;
+import net.rim.device.apps.api.utility.general.Copyable;
+import net.rim.device.internal.system.InternalServices;
+
+public final class AlertConfiguration implements PersistableRIMModel, SyncObject, FieldChangeListener, FieldProvider, Copyable {
+   private byte[] _settings = new byte[15];
+   private String[] _tuneNames = new Object[2];
+   public static final int NUMBER_OF_SETTINGS_PER_HOLSTER_STATE;
+   public static final int NUMBER_OF_SETTING_INDEPENDENT_OF_HOLSTER_STATE;
+   public static final int TOTAL_NUMBER_OF_SETTINGS;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_30;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_31;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_38;
+   public static final int ALERT_CHOICE;
+   public static final int TUNE_CHOICE;
+   public static final int VOLUME_CHOICE;
+   public static final int NUMBER_OF_BEEPS_CHOICE;
+   public static final int REPEAT_NOTIFICATION_CHOICE;
+   public static final int LEVEL_1_NOTIFY_ONLY_CHOICE;
+   public static final int DO_NOT_DISTURB_CHOICE;
+   public static final int NOTIFY_DURING_VOICE_CALL_CHOICE;
+   public static final int ENABLE_BACKLIGHT;
+   public static final int NUMBER_OF_VIBRATIONS_CHOICE;
+
+   public final String getTuneName(boolean inHolsterBoolean) {
+      return inHolsterBoolean ? this._tuneNames[1] : this._tuneNames[0];
+   }
+
+   public final void initialize(byte[] byteArray, String tuneNameOutOfHolster, String tuneNameInHolster, int numberOfSettings) {
+      if (byteArray != null && byteArray.length <= 15) {
+         this._settings = Arrays.copy(byteArray);
+         this.initHolsterTune(tuneNameOutOfHolster, false, numberOfSettings);
+         this.initHolsterTune(tuneNameInHolster, true, numberOfSettings);
+      } else {
+         throw new Object();
+      }
+   }
+
+   public final byte getSetting(int indexInt, boolean inHolsterBoolean) {
+      return this.getSetting(indexInt, inHolsterBoolean, Integer.MAX_VALUE);
+   }
+
+   @Override
+   public final int getUID() {
+      return 0;
+   }
+
+   public final byte getSetting(int indexInt, boolean inHolsterBoolean, int maxValue) {
+      byte result;
+      if (indexInt < 5) {
+         result = inHolsterBoolean ? this._settings[indexInt + 5] : this._settings[indexInt];
+      } else {
+         result = inHolsterBoolean ? this._settings[indexInt + 1] : this._settings[indexInt];
+      }
+
+      if (result >= maxValue) {
+         result = 0;
+      }
+
+      return result;
+   }
+
+   public final byte getHolsterIndependentSetting(int indexInt) {
+      return this._settings[indexInt];
+   }
+
+   public final void setSetting(int indexInt, byte valueByte, boolean inHolsterBoolean) {
+      if (indexInt < 5) {
+         this._settings[inHolsterBoolean ? indexInt + 5 : indexInt] = valueByte;
+      } else {
+         this._settings[inHolsterBoolean ? indexInt + 1 : indexInt] = valueByte;
+      }
+   }
+
+   public final void setTuneName(String tuneName, boolean inHolsterBoolean) {
+      this._tuneNames[inHolsterBoolean ? 1 : 0] = tuneName;
+   }
+
+   public final void setHolsterIndependentSetting(int indexInt, byte valueByte) {
+      this._settings[indexInt] = valueByte;
+   }
+
+   public final byte[] getSettings() {
+      return this._settings;
+   }
+
+   @Override
+   public final Object copy() {
+      return new AlertConfiguration(this._settings, this.getTuneName(false), this.getTuneName(true), this._settings.length);
+   }
+
+   @Override
+   public final void fieldChanged(Field aField, int context) {
+      AlertConsequence consequence = (AlertConsequence)ApplicationRegistry.getApplicationRegistry().get(-2870941457036655797L);
+      ChoiceField originalField = (ChoiceField)aField.getOriginal();
+      Manager manager = originalField.getManager();
+      int fieldIndex = manager.getFieldWithFocusIndex();
+      if (fieldIndex == 0 || fieldIndex == 1 || fieldIndex == 2) {
+         ChoiceField fieldWithChanges = (ChoiceField)aField;
+         long sourceId = 0;
+         int alertIndex = fieldIndex == 0 ? fieldWithChanges.getSelectedIndex() : 1;
+         int volumeIndex = 0;
+         int beepsIndex = 0;
+         int vibratesIndex = 0;
+         String tuneName = null;
+         int repeatCount = -1;
+         int fieldCount = manager.getFieldCount();
+         if (fieldCount <= 1) {
+            Object o = originalField.getCookie();
+            if (o instanceof Object) {
+               ContextObject co = (ContextObject)o;
+               if (ContextObject.getFlag(co, 48)) {
+                  sourceId = 3975384895524745189L;
+               }
+            }
+         } else {
+            TuneChoiceField tuneChoiceField = (TuneChoiceField)manager.getField(1);
+            tuneName = tuneChoiceField.getSelectedTuneName();
+            if (fieldIndex == 2) {
+               volumeIndex = fieldWithChanges.getSelectedIndex();
+               tuneChoiceField.setVolumeIndex(volumeIndex == 0 ? 1 : volumeIndex);
+            } else {
+               volumeIndex = ((ChoiceField)manager.getField(2)).getSelectedIndex();
+            }
+
+            if (fieldIndex == 1 && volumeIndex == 0) {
+               volumeIndex = 1;
+            }
+
+            if (fieldCount > 5) {
+               beepsIndex = fieldIndex != 1 ? ((ChoiceField)manager.getField(3)).getSelectedIndex() : 0;
+               vibratesIndex = ((ChoiceField)manager.getField(5)).getSelectedIndex();
+            } else {
+               vibratesIndex = ((ChoiceField)manager.getField(4)).getSelectedIndex();
+            }
+
+            Object cookie = originalField.getCookie();
+            if (cookie instanceof Object) {
+               Object source = ContextObject.get(cookie, 250);
+               long id = NotificationsManager.getSourceId(source);
+               if (id == 2868625504212929964L || NotificationsManager.getParentSourceID(id) == 2868625504212929964L) {
+                  repeatCount = 1;
+               }
+            }
+         }
+
+         if ((context & 2) == 0 && AlertConsequence._alertValues[alertIndex] > 0) {
+            consequence.triggerTuneAndVibration(alertIndex, tuneName, volumeIndex, beepsIndex, vibratesIndex, sourceId, -1, repeatCount, -1, -1);
+         }
+      }
+   }
+
+   @Override
+   public final Field getField(Object contextObject) {
+      ObjectChoiceField field = null;
+      String[] fieldValues = null;
+      String fieldName = null;
+      Field result = null;
+      ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
+      if (!ContextObject.getFlag(contextObject, 89)) {
+         ObjectChoiceField objectChoiceField = null;
+         Manager manager = (Manager)(new Object(1152921504606846976L));
+         boolean holstered = ContextObject.getFlag(contextObject, 67);
+         fieldName = resources.getString(holstered ? 301 : 300);
+         String[] var27 = (Object[])resources.getObject(302);
+         ObjectChoiceField var18 = (Field)(new Object(fieldName, var27, this.getSetting(0, holstered, var27.length)));
+         var18.setChangeListener(this);
+         var18.setCookie(contextObject);
+         manager.add(var18);
+         if (!ContextObject.getFlag(contextObject, 48)) {
+            fieldName = resources.getString(310);
+            String tuneName = this.getTuneName(holstered);
+            Object alertSource = ContextObject.get(contextObject, 250);
+            String currentTune = null;
+            if (alertSource != null) {
+               long sourceId = NotificationsManager.getSourceId(alertSource);
+               Integer profileIdentifier = (Integer)ContextObject.get(contextObject, -4054673099568009991L);
+               if (profileIdentifier != null) {
+                  String[] defaultTuneNames = Profiles.getDefaultTuneNames(sourceId, profileIdentifier.byteValue());
+                  currentTune = holstered ? defaultTuneNames[0] : defaultTuneNames[1];
+               }
+            }
+
+            TuneChoiceField tuneChoiceField = TuneManager.getTuneManager().getTuneChoiceField(fieldName, tuneName, currentTune, false);
+            var18 = tuneChoiceField;
+            manager.add(var18);
+            fieldName = resources.getString(320);
+            var27 = (Object[])resources.getObject(321);
+            byte volumeIndex = this.getSetting(2, holstered, var27.length);
+            var18 = (Field)(new Object(fieldName, var27, volumeIndex));
+            tuneChoiceField.setVolumeIndex(volumeIndex);
+            var18.setChangeListener(this);
+            var18.setCookie(contextObject);
+            manager.add(var18);
+            Object source = ContextObject.get(contextObject, 250);
+            long sourceId = NotificationsManager.getSourceId(source);
+            if (sourceId != 2868625504212929964L && NotificationsManager.getParentSourceID(sourceId) != 2868625504212929964L) {
+               fieldName = resources.getString(330);
+               var27 = (Object[])resources.getObject(331);
+               var18 = (Field)(new Object(fieldName, var27, this.getSetting(3, holstered, var27.length)));
+               manager.add(var18);
+            }
+
+            fieldName = resources.getString(340);
+            var27 = (Object[])resources.getObject(341);
+            var18 = (Field)(new Object(fieldName, var27, this.getSetting(4, holstered, var27.length)));
+            manager.add(var18);
+            fieldName = resources.getString(350);
+            var27 = (Object[])resources.getObject(351);
+            var18 = (Field)(new Object(fieldName, var27, this.getSetting(13, holstered, var27.length)));
+            manager.add(var18);
+         }
+
+         manager.setCookie(this);
+         result = manager;
+      } else {
+         Object source = ContextObject.get(contextObject, 250);
+         if (source != null) {
+            Manager manager = null;
+            if (supportsEnableBackLight(NotificationsManager.getSourceId(source))) {
+               manager = (Manager)(new Object(1152921504606846976L));
+               manager.setCookie(this);
+               fieldName = resources.getString(229);
+               String[] var32 = (Object[])resources.getObject(230);
+               ObjectChoiceField var24 = new Object(fieldName, var32, this.getHolsterIndependentSetting(12));
+               manager.add((Field)var24);
+            }
+
+            if (supportsDoNotDisturb(NotificationsManager.getSourceId(source))) {
+               if (manager == null) {
+                  manager = (Manager)(new Object(1152921504606846976L));
+                  manager.setCookie(this);
+               }
+
+               fieldName = resources.getString(360);
+               String[] var33 = (Object[])resources.getObject(361);
+               ObjectChoiceField var25 = new Object(fieldName, var33, this.getHolsterIndependentSetting(11));
+               ((Field)var25).setCookie(this);
+               manager.add((Field)var25);
+            }
+
+            if (supportsMuteDuringVoiceCall(NotificationsManager.getSourceId(source))) {
+               if (manager == null) {
+                  manager = (Manager)(new Object(1152921504606846976L));
+                  manager.setCookie(this);
+               }
+
+               fieldName = resources.getString(249);
+               String[] var34 = (Object[])resources.getObject(361);
+               ObjectChoiceField var26 = new Object(fieldName, var34, this.getHolsterIndependentSetting(11));
+               ((Field)var26).setCookie(this);
+               manager.add((Field)var26);
+            }
+
+            result = manager;
+         }
+      }
+
+      return result;
+   }
+
+   @Override
+   public final boolean grabDataFromField(Field aField, Object contextObject) {
+      String inHolsterLabel = null;
+      String outOfHolsterLabel = null;
+      String fieldLabel = null;
+      ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
+      if (aField instanceof Object) {
+         Manager manager = (Manager)aField;
+         inHolsterLabel = resources.getString(301);
+         outOfHolsterLabel = resources.getString(300);
+         fieldLabel = ((ChoiceField)manager.getField(0)).getLabel();
+         boolean holstered = false;
+         boolean normalSettings = false;
+         if (StringUtilities.compareToIgnoreCase(fieldLabel, inHolsterLabel) == 0) {
+            holstered = true;
+            normalSettings = true;
+         } else if (StringUtilities.compareToIgnoreCase(fieldLabel, outOfHolsterLabel) == 0) {
+            normalSettings = true;
+         }
+
+         if (!normalSettings) {
+            for (int index = 0; index < manager.getFieldCount(); index++) {
+               ObjectChoiceField field = (ObjectChoiceField)manager.getField(index);
+               fieldLabel = field.getLabel();
+               String labelToCompareTo = resources.getString(360);
+               if (StringUtilities.compareToIgnoreCase(fieldLabel, labelToCompareTo) == 0) {
+                  this.setHolsterIndependentSetting(11, (byte)field.getSelectedIndex());
+               }
+
+               labelToCompareTo = resources.getString(229);
+               if (StringUtilities.compareToIgnoreCase(fieldLabel, labelToCompareTo) == 0) {
+                  this.setHolsterIndependentSetting(12, (byte)field.getSelectedIndex());
+               }
+
+               labelToCompareTo = resources.getString(249);
+               if (StringUtilities.compareToIgnoreCase(fieldLabel, labelToCompareTo) == 0) {
+                  this.setHolsterIndependentSetting(11, (byte)field.getSelectedIndex());
+               }
+            }
+         } else {
+            this.setSetting(0, (byte)((ChoiceField)manager.getField(0)).getSelectedIndex(), holstered);
+            if (manager.getFieldCount() > 1) {
+               TuneChoiceField tuneChoiceField = (TuneChoiceField)manager.getField(1);
+               String tuneName = tuneChoiceField.getSelectedTuneName();
+               this.setSetting(1, (byte)tuneChoiceField.getSelectedIndex(), holstered);
+               this.setTuneName(tuneName, holstered);
+               this.setSetting(2, (byte)((ChoiceField)manager.getField(2)).getSelectedIndex(), holstered);
+               if (manager.getFieldCount() > 5) {
+                  this.setSetting(3, (byte)((ChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
+                  this.setSetting(4, (byte)((ChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
+                  this.setSetting(13, (byte)((ChoiceField)manager.getField(5)).getSelectedIndex(), holstered);
+               } else {
+                  this.setSetting(4, (byte)((ChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
+                  this.setSetting(13, (byte)((ChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
+               }
+            }
+         }
+      }
+
+      PersistentObject.commit(this);
+      return true;
+   }
+
+   @Override
+   public final boolean validate(Field aField, Object contextObject) {
+      return true;
+   }
+
+   @Override
+   public final int getOrder(Object contextObject) {
+      return 0;
+   }
+
+   private final int adjustForBrandingTune(int index, int numberOfSettings) {
+      int result = index;
+      if (TuneManager.isTuneManagerAvailable()) {
+         TuneManager tm = TuneManager.getTuneManager();
+         if (numberOfSettings == 12 || numberOfSettings == 14) {
+            int count = tm.getBuiltInTuneCount();
+            if (index >= count) {
+               String tuneName = tm.getBuiltInTuneFileName(count);
+               if (tuneName != null && tm.isBrandingTune(tuneName)) {
+                  result = index + 1;
+               }
+            }
+         }
+      }
+
+      return result;
+   }
+
+   static final boolean supportsMuteDuringVoiceCall(long sourceId) {
+      return !supportsDoNotDisturb(sourceId)
+         && (sourceId == 2666833733215697856L || sourceId == 7986617465467730856L || sourceId == 204325571560529255L || InternalServices.isDeviceClassA());
+   }
+
+   static final boolean supportsDoNotDisturb(long sourceId) {
+      return sourceId == 2868625504212929964L || NotificationsManager.getParentSourceID(sourceId) == 2868625504212929964L || sourceId == 4237171590573870406L;
+   }
+
+   static final boolean supportsEnableBackLight(long sourceId) {
+      return !ProfilesOptions.getOptions().isBacklightOptionEnabled()
+         ? false
+         : sourceId == -1845850106795451018L
+            || sourceId == -327746170160875990L
+            || sourceId == 7986617465467730856L
+            || sourceId == 8609386677418041260L
+            || sourceId == 2666833733215697856L;
+   }
+
+   public AlertConfiguration(byte[] byteArray, String tuneNameOutOfHolster, String tuneNameInHolster, int numberOfSettings) {
+      this();
+      this.initialize(byteArray, tuneNameOutOfHolster, tuneNameInHolster, numberOfSettings);
+   }
+
+   public AlertConfiguration() {
+   }
+
+   public AlertConfiguration(byte[] byteArray, int numberOfSettings) {
+      this();
+      this.initialize(byteArray, null, null, numberOfSettings);
+   }
+
+   private final void initHolsterTune(String tuneName, boolean inHolster, int numberOfSettings) {
+      if (tuneName == null) {
+         int tuneIndex = this.adjustForBrandingTune(this.getSetting(1, inHolster), numberOfSettings);
+         if (TuneManager.isTuneManagerAvailable()) {
+            TuneManager tm = TuneManager.getTuneManager();
+            tuneName = tm.getBuiltInTuneFileName(tuneIndex);
+            if (tuneName == null) {
+               tuneName = tm.getBuiltInTuneFileName(0);
+            }
+         }
+      }
+
+      this.setTuneName(tuneName, inHolster);
+   }
+}

@@ -1,0 +1,24 @@
+package net.rim.device.internal.resource;
+
+public interface SoftTokenResourcesResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int ERROR_BAD_PARAMETER;
+   int CURRENT_CODE_LABEL;
+   int TYPE_CHOICE_LABEL;
+   int ENTER_TOKEN_PIN_PROMPT;
+   int TOKENCODE;
+   int ERROR_UNABLE_TO_DECRYPT_TOKEN;
+   int NEXT_PASSCODE;
+   int ERROR_TOKEN_PIN_LENGTH;
+   int ERROR_UNABLE_TO_GENERATE_CODE;
+   int TOKEN_PIN_LABEL;
+   int NEXT_TOKENCODE;
+   int USE_CURRENT_CODE_BUTTON;
+   int NEXT_NEXT_TOKENCODE;
+   int SEND_PIN_ONLY;
+   int RESPONSE_LABEL;
+   int NEXT_NEXT_PASSCODE;
+   int PASSCODE;
+   int TOKEN_NICK_NAME_PREFIX;
+}

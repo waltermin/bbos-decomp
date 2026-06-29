@@ -1,0 +1,47 @@
+package net.rim.plazmic.internal.mediaengine.service.interaction;
+
+public interface PropertyList {
+   int ALPHA;
+   int VISIBILITY;
+   int FILL_ALPHA;
+   int FILL_COLOR;
+   int STROKE_ALPHA;
+   int STROKE_COLOR;
+   int X;
+   int Y;
+   int RECT_WIDTH;
+   int RECT_HEIGHT;
+   int ELLIPSE_X_RADIUS;
+   int ELLIPSE_Y_RADIUS;
+   int GROUP_CURRENT_CHILD;
+   int VIEWPORT_WIDTH;
+   int VIEWPORT_HEIGHT;
+   int TEXT_STRING;
+   int IMAGE_OBJECT;
+   int FOREIGN_OBJECT;
+   int TRANSFORM;
+   int ASPECT_RATIO;
+   int VIEWBOX;
+   int STROKE_WIDTH;
+   int TEXT_RENDERING_HINT;
+   int SHAPE_RENDERING_HINT;
+   int IMAGE_RENDERING_HINT;
+   int FILL_TYPE;
+   int FILL_TEXTURE;
+   int STROKE_TYPE;
+   int STROKE_LINECAP;
+   int STROKE_LINEJOIN;
+   int STROKE_TEXTURE;
+   int FONT_SIZE;
+   int FONT_STYLE;
+   int FONT_WEIGHT;
+   int FONT_FAMILY;
+   int TEXT_DECORATION;
+   int ZOOM_AND_PAN;
+   int X_POINTS;
+   int Y_POINTS;
+   int POINT_TYPES;
+   int DX;
+   int DY;
+   int DISPLAY;
+}

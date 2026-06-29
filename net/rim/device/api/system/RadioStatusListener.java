@@ -1,0 +1,71 @@
+package net.rim.device.api.system;
+
+public interface RadioStatusListener extends RadioListener {
+   int PDP_STATE_ACTIVE;
+   int PDP_STATE_INACTIVE;
+   int PDP_STATE_REJECTED;
+   int PDP_STATE_IP_ADDRESS_CHANGED;
+   int PDP_CAUSE_UNKNOWN;
+   int PDP_CAUSE_LLC_FAILURE;
+   int PDP_CAUSE_INSUFFICIENT_RESOURCES;
+   int PDP_CAUSE_UNKNOWN_APN;
+   int PDP_CAUSE_UNKNOWN_PDP;
+   int PDP_CAUSE_AUTHENTICATION_FAILED;
+   int PDP_CAUSE_REJECTED_BY_GGSN;
+   int PDP_CAUSE_REJECTED;
+   int PDP_CAUSE_SERVICE_NOT_SUPPORTED;
+   int PDP_CAUSE_SERVICE_NOT_SUBSCRIBED;
+   int PDP_CAUSE_SERVICE_OUT_OF_ORDER;
+   int PDP_CAUSE_NSAPI_ALREADY_USED;
+   int PDP_CAUSE_NORMAL_DEACTIVATION;
+   int PDP_CAUSE_QOS_NOT_ACCEPTED;
+   int PDP_CAUSE_NETWORK_FAILURED;
+   int PDP_CAUSE_REACTIVATION_REQUESTED;
+   int PDP_CAUSE_NOT_SUPPORTED;
+   int PDP_CAUSE_TFT_ALREADY_USED;
+   int PDP_CAUSE_TFT_INVALID;
+   int PDP_CAUSE_UNKNOWN_PDP_CONTEXT;
+   int MM_LOCATION_UPDATE_ACCEPT;
+   int MM_LOCATION_UPDATE_REJECT;
+   int MM_AUTHENTICATION_REQUEST;
+   int MM_AUTHENTICATION_REJECT;
+   int MM_IDENTITY_REQUEST;
+   int MM_TMSI_REALLOC_CMD;
+   int MM_CM_SERVICE_ACCEPT;
+   int MM_CM_SERVICE_REJECT;
+   int MM_MM_STATUS;
+   int MM_ABORT;
+   int MM_MM_INFORMATION;
+   int GMM_ATTACH_ACCEPT;
+   int GMM_ATTACH_REJECT;
+   int GMM_MO_DETACH_ACCEPT;
+   int GMM_RA_UPDATE_ACCEPT;
+   int GMM_MT_DETACH_REQUEST;
+   int GMM_RA_UPDATE_REJECT;
+   int GMM_PTMSI_REALLOC_CMD;
+   int GMM_AUTH_CIPHER_REQUEST;
+   int GMM_AUTH_CIPHER_REJECT;
+   int GMM_IDENTITY_REQUEST;
+   int GMM_GMM_INFORMATION;
+   int SM_PDP_ACTIVATE_ACCEPT;
+   int SM_PDP_ACTIVATE_REJECT;
+   int SM_DEACTIVATE_PDP_REQUEST;
+   int SM_DEACTIVATE_PDP_ACCEPT;
+   int CAUSE_NOT_APPLICABLE;
+
+   void signalLevel(int var1);
+
+   void networkStarted(int var1, int var2);
+
+   void baseStationChange();
+
+   void radioTurnedOff();
+
+   void pdpStateChange(int var1, int var2, int var3);
+
+   void networkStateChange(int var1);
+
+   void networkScanComplete(boolean var1);
+
+   void networkServiceChange(int var1, int var2);
+}

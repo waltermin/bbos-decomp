@@ -1,0 +1,100 @@
+package net.rim.device.api.system;
+
+public interface PhoneCallListener extends RadioListener {
+   int CALL_ERROR_SUBSCRIBER_BUSY;
+   int CALL_ERROR_CONGESTION;
+   int CALL_ERROR_RADIO_PATH_UNAVAILABLE;
+   int CALL_ERROR_NUMBER_UNOBTAINABLE;
+   int CALL_ERROR_AUTHORIZATION_FAILURE;
+   int CALL_ERROR_EMERGENCY_CALLS_ONLY;
+   int CALL_ERROR_HOLD_ERROR;
+   int CALL_ERROR_OUTGOING_CALLS_BARRED;
+   int CALL_ERROR_GENERAL;
+   int CALL_ERROR_MAINTENANCE_REQUIRED;
+   int CALL_ERROR_SERVICE_NOT_AVAILABLE;
+   int CALL_ERROR_DUE_TO_FADING;
+   int CALL_ERROR_LOST_DUE_TO_FADING;
+   int CALL_ERROR_TRY_AGAIN;
+   int CALL_ERROR_FDN_MISMATCH;
+   int CALL_ERROR_CONNECTION_DENIED_BY_NETWORK;
+   int CALL_ERROR_NUMBER_NOT_IN_SERVICE;
+   int CALL_ERROR_PLEASE_TRY_LATER;
+   int CALL_ERROR_SERVICE_CONFLICT;
+   int CALL_ERROR_SYSTEM_BUSY_TRY_LATER;
+   int CALL_ERROR_USER_BUSY_IN_PRIVATE;
+   int CALL_ERROR_USER_BUSY_IN_DATA;
+   int CALL_ERROR_USER_NOT_AUTHORIZED;
+   int CALL_ERROR_USER_NOT_AVAILABLE;
+   int CALL_ERROR_USER_UNKNOWN;
+   int CALL_ERROR_USER_NOT_REACHABLE;
+   int CALL_ERROR_INCOMING_CALL_BARRED;
+   int CALL_ERROR_CALL_REPLACED_BY_STK;
+   int CALL_ERROR_STK_CALL_NOT_ALLOWED;
+   int CALL_ERROR_NO_USER_RESPONDING;
+   int CALL_ERROR_ALERTING_NO_ANSWER;
+   int CALL_ERROR_CLIR_REJECTED;
+   int CALL_ERROR_CLIR_NOT_SUBSCRIBED;
+   int CALL_ERROR_CLIR_NOT_IMPLEMENTED;
+   int CALL_ERROR_IMSI_NOT_IN_VLR_CAUSE_4;
+   int CALL_ERROR_IMEI_NOT_ACCEPTED_CAUSE_5;
+   int OTA_STATUS_ACTIVATION_STARTED;
+   int OTA_STATUS_ACTIVATION_SUCCESS;
+   int OTA_STATUS_ACTIVATION_FAILED;
+   int OTA_STATUS_MAX_UNLOCK;
+   int OTA_STATUS_COMMIT_SUCCESS;
+   int OTA_STATUS_SPC_UNLOCK_SUCCESS;
+   int OTA_STATUS_SPC_UNLOCK_FAILED;
+   int OTA_STATUS_SPC_UPDATE_SUCCESS;
+   int OTA_STATUS_SPC_UPDATE_FAILED;
+   int OTA_STATUS_NAM_DOWNLOAD_SUCCESS;
+   int OTA_STATUS_NAM_DOWNLOAD_FAILED;
+   int OTA_STATUS_MDN_DOWNLOAD_SUCCESS;
+   int OTA_STATUS_MDN_DOWNLOAD_FAILED;
+   int OTA_STATUS_PRL_DOWNLOAD_SUCCESS;
+   int OTA_STATUS_PRL_DOWNLOAD_FAILED;
+   int OTA_STATUS_COMMIT_FAILED;
+   int CALL_TRANSFER_SUCCESSFUL;
+   int CALL_TRANSFER_TIMED_OUT;
+   int CALL_TRANSFER_ERROR;
+   int CALL_TRANSFER_STATE_NOT_IN_PROGRESS;
+   int CALL_TRANSFER_STATE_CALLING;
+   int CALL_TRANSFER_STATE_CONNECTED;
+   int CALL_TRANSFER_STATE_JOINED;
+   int CALL_TRANSFER_STATE_COMPLETE;
+
+   void callIncoming(int var1);
+
+   void callDisplayUpdated(int var1);
+
+   void callWaiting(int var1);
+
+   void callInitiated(int var1);
+
+   void callConnected(int var1);
+
+   void callFailed(int var1, int var2);
+
+   void callDelivered(int var1);
+
+   void callManipulateFailed(int var1, int var2);
+
+   void callDisconnected(int var1);
+
+   void callHeld(int var1);
+
+   void callResumed(int var1);
+
+   void callAdded(int var1);
+
+   void callRemoved(int var1);
+
+   void callTransferred(int var1, int var2);
+
+   void callTransferStateUpdated(int var1, int var2);
+
+   void callVoicePrivacyUpdated(int var1, boolean var2);
+
+   void callOTAStatusUpdated(int var1, int var2);
+
+   void dtmfData(int var1);
+}

@@ -1,0 +1,45 @@
+package net.rim.device.internal.system;
+
+public interface LEDConstants {
+   long DEFAULT_LED_TIME;
+   int STACK_SIZE_QUANTUM;
+   int LED_ENGINE_FLAG_MESSAGE;
+   int LED_ENGINE_FLAG_BLUETOOTH;
+   int LED_ENGINE_FLAG_BATT_OK;
+   int LED_ENGINE_FLAG_GSM;
+   int LED_ENGINE_PWR_ON;
+   int LED_ENGINE_FLAG_SMART_CARD;
+   int LED_ENGINE_FLAG_MEDIA_RECORD;
+   int LED_ENGINE_FLAG_ALL_FLAGS;
+   int LED_POLY_RED;
+   int LED_POLY_GREEN;
+   int LED_POLY_BLUE;
+   int LED_POLY_AMBER;
+   int LED_POLY_OFF;
+   int LED_BLUE_BIT;
+   int LED_AMBER_BIT;
+   int LED_RED_BIT;
+   int LED_GREEN_BIT;
+   int LED_POLY_DEFAULT_TRANSITION_TIME;
+   int[] flagColourMap;
+   int FAILED_TO_SET_LED_TIMER;
+   int LED_THREAD_FAILED;
+   int NO_GROUP;
+   int MESSAGE_LIST_GROUP;
+   long EVENT_LOGGER_GUID;
+   int STATE_OFF;
+   int STATE_ON;
+   int STATE_BLINKING;
+   int STATE_PATTERN;
+   int STATE_AUDIO_SYNC;
+   int BRIGHTNESS_12;
+   int BRIGHTNESS_25;
+   int BRIGHTNESS_50;
+   int BRIGHTNESS_100;
+   int LED_TYPE_STATUS;
+   int LED_TYPE_TRACKBALL;
+   int DEFAULT_LED_ON_TIME;
+   int MIC_LED_ON_TIME;
+   int DEFAULT_LED_OFF_TIME;
+   int MIC_LED_OFF_TIME;
+}

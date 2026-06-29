@@ -1,0 +1,10 @@
+package net.rim.wica.common;
+
+public interface PolicyConstants {
+   int PULL_PROVISIONING_DISALLOWED;
+   int PULL_PROVISIONING_TRUSTED;
+   int PULL_PROVISIONING_ALL;
+   int EXTERNAL_ACCESS_DISALLOWED;
+   int EXTERNAL_ACCESS_READ;
+   int EXTERNAL_ACCESS_READ_WRITE;
+}

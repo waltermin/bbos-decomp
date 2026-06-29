@@ -1,0 +1,18 @@
+package net.rim.device.apps.internal.smartcard.datakey;
+
+interface DatakeyPKCS11Constants extends PKCS11Constants {
+   int CKA_FILE_ID_PRIVATE_KEY;
+   int CKA_FILE_ID_PUBLIC_KEY;
+   int CKA_CERTIFICATE_PENDING;
+   int CKA_DATAKEY_KEY_TYPE;
+   int CKA_FILE_ID_PARAMETER;
+   int CKA_FILE_ID_SECRET_KEY;
+   int CKA_ECDH_PARAMS;
+   int CKA_CSP_CONTAINER_NAME;
+   int CKA_IDENTRUS_IDENTITY_KEY;
+   int CKA_IDENTRUS_UTILITY_KEY;
+   int CKA_CIP_PUBLIC_KEY;
+   int CKA_CERTIFICATE_FNAME;
+   int CKA_CERTIFICATE_ARCHIVED;
+   int CKA_IGNORE_UNWRAP;
+}

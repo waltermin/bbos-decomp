@@ -1,0 +1,24 @@
+package net.rim.device.apps.internal.resource;
+
+public interface SoftTokensOptionsResourcesResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int ERROR_DECRYPT_PASSPHRASE_INCORRECT;
+   int ERROR_WRONG_DEVICE_ID;
+   int SUCCESSFUL_UNINSTALL;
+   int TOKEN_LABEL;
+   int INSTALL_TOKEN;
+   int SPECIFY_PASSWORD_PROMPT;
+   int UNINSTALL_TOKEN;
+   int NO_TOKENS_INSTALLED;
+   int ERROR_OF_UNSPECIFIED_TYPE;
+   int SOFT_TOKEN_TITLE;
+   int UNSUCCESSFUL_UNINSTALL;
+   int OPEN_TOKEN;
+   int TOKEN_SUCCESSFUL_INSTALL;
+   int ERROR_FILE_NOT_FOUND;
+   int ERROR_DUPLICATE_SEED;
+   int ERROR_DECRYPT_NO_PASSPHRASE_SPECIFIED;
+   int ERROR_TOKEN_BAD_FORMAT;
+   int ERROR_DB_FULL;
+}

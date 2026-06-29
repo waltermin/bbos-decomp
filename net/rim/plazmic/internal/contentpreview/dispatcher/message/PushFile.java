@@ -1,0 +1,32 @@
+package net.rim.plazmic.internal.contentpreview.dispatcher.message;
+
+import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler;
+
+public final class PushFile extends Model {
+   private String _sessionName;
+   private String _fileName;
+   public static final String rcsid;
+
+   public PushFile(String sessionName, String fileName) {
+      this._sessionName = sessionName;
+      this._fileName = fileName;
+   }
+
+   @Override
+   public final void toEvent(DispatcherEventHandler handler) {
+      handler.pushFile(this._sessionName, this._fileName);
+   }
+
+   @Override
+   final String getClassName() {
+      return "PushFile";
+   }
+
+   @Override
+   final String getProperties() {
+      return ((StringBuffer)(new Object()))
+         .append(this.toPropertyString("sessionName", this._sessionName))
+         .append(this.toPropertyString("fileName", this._fileName))
+         .toString();
+   }
+}

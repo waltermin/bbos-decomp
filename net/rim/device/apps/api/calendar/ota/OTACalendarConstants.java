@@ -1,0 +1,15 @@
+package net.rim.device.apps.api.calendar.ota;
+
+public interface OTACalendarConstants extends OTAEvents {
+   String RIM_CALENDAR_APPT_UPDATE;
+   String RIM_CALENDAR_APPT_DELETE;
+   String RIM_CALENDAR_MEETING_REQUEST;
+   String RIM_CALENDAR_MEETING_RESPONSE;
+   String RIM_CALENDAR_MEETING_CANCEL;
+   String RIM_CALENDAR_CONFIG;
+   String RIM_CALENDAR_SLOW_SYNC;
+   String RIM_CALENDAR_FOLDER_MANAGEMENT;
+   int TYPE_MEETING_REQUEST;
+   int TYPE_MEETING_RESPONSE;
+   int TYPE_MEETING_CANCELATION;
+}

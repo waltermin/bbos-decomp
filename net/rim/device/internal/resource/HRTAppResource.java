@@ -1,0 +1,48 @@
+package net.rim.device.internal.resource;
+
+public interface HRTAppResource {
+   long BUNDLE_ID;
+   String BUNDLE_NAME;
+   int ADDR_PLURAL;
+   int CONTENTS_TITLE;
+   int EDIT_TITLE_VIEW;
+   int FIELD_LOAD_SHARING;
+   int FIELD_ART;
+   int FIELD_QOS_MEAN_TP;
+   int DIALOG_BAD_ADDR;
+   int BAD_NPC;
+   int REGISTER_NOW;
+   int EDIT_TITLE_NEW;
+   int EDIT_TITLE_EDIT;
+   int RECORD_TYPES;
+   int FIELD_QOS_PRECEDENCE;
+   int MENU_EDIT_ADDR;
+   int DIALOG_ACCEPT_ADDR;
+   int MENU_ADD_ADDR;
+   int FIELD_NPC;
+   int FIELD_HPID_VALUE;
+   int MISSING_REQUIRED_DATA;
+   int FIELD_QOS_DELAY;
+   int MENU_REMOVE_ADDR;
+   int NO_ENTRIES;
+   int FIELD_PRIORITY;
+   int REC_TYPE_QUERY;
+   int EDIT_REG_HRT;
+   int REG_REQ_SENT;
+   int BAD_PTE;
+   int REG_REQ_QUEUED;
+   int DELETE_QUESTION;
+   int FIELD_RADIO_NETID;
+   int FIELD_QOS_RELIABILITY;
+   int FIELD_HEADER_LENGTH;
+   int FIELD_APN;
+   int FIELD_PTE;
+   int ADDR_SINGULAR;
+   int FIELD_QOS_PEAK_TP;
+   int BAD_ART;
+   int FIELD_TRANSPORT_ID;
+   int FIELD_NAME;
+   int NO_ADDRS;
+   int DIALOG_EDIT_ADDR;
+   int DIALOG_NEW_ADDR;
+}
