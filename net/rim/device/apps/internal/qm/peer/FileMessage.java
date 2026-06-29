@@ -18,15 +18,15 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
    protected byte[] _data;
    private int _size;
    int _state;
-   static final int CONTENT_TYPE;
-   static final int FILE_NAME;
-   static final int FILE_DATA;
-   static final int FILE_SIZE;
-   static final int FILE_STATE;
-   static final int PENDING;
-   static final int ADDED;
-   static final int REMOVED;
-   static final int ERROR;
+   static final int CONTENT_TYPE = 4;
+   static final int FILE_NAME = 5;
+   static final int FILE_DATA = 6;
+   static final int FILE_SIZE = 7;
+   static final int FILE_STATE = 8;
+   static final int PENDING = 0;
+   static final int ADDED = 1;
+   static final int REMOVED = 2;
+   static final int ERROR = 3;
 
    FileMessage(MessengerContact contact, String contentType, byte[] data, String filename, int size) {
       super(contact);

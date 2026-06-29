@@ -16,10 +16,10 @@ import net.rim.device.internal.system.RadioInternal;
 
 public final class SmartDialingOptions extends OptionsBase {
    private SmartDialingOptions$PersistedSmartDialingOptions _persistedSmartDialingOptions;
-   private static final long PERSISTED_SMART_DIALING_OPTIONS;
-   public static final int UNINITIALIZED_COUNTRY_CODE;
-   private static final String UNINITIALIZED_COUNTRY_CODE_STRING;
-   public static final int CORPORATE_EXTENSION_LENGTH_UNKNOWN;
+   private static final long PERSISTED_SMART_DIALING_OPTIONS = 8848027432005871545L;
+   public static final int UNINITIALIZED_COUNTRY_CODE = -2;
+   private static final String UNINITIALIZED_COUNTRY_CODE_STRING = " ";
+   public static final int CORPORATE_EXTENSION_LENGTH_UNKNOWN = 0;
    private static SmartDialingOptions _options;
 
    private SmartDialingOptions() {

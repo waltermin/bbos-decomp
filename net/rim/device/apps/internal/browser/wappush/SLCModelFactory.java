@@ -11,15 +11,15 @@ import net.rim.device.apps.internal.browser.stack.HeaderParser;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 
 final class SLCModelFactory {
-   public static final int ACTION_EXECUTE_LOW;
-   public static final int ACTION_EXECUTE_HIGH;
-   public static final int ACTION_CACHE;
-   public static final int HREF;
-   public static final int HREF_HTTP;
-   public static final int HREF_HTTP_WWW;
-   public static final int HREF_HTTPS;
-   public static final int HREF_HTTPS_WWW;
-   public static final int SL;
+   public static final int ACTION_EXECUTE_LOW = 5;
+   public static final int ACTION_EXECUTE_HIGH = 6;
+   public static final int ACTION_CACHE = 7;
+   public static final int HREF = 8;
+   public static final int HREF_HTTP = 9;
+   public static final int HREF_HTTP_WWW = 10;
+   public static final int HREF_HTTPS = 11;
+   public static final int HREF_HTTPS_WWW = 12;
+   public static final int SL = 5;
 
    public static final SLCModel createSLCModel(DataInputStream inStream, HttpHeaders headers) {
       try {

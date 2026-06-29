@@ -7,8 +7,8 @@ import net.rim.device.api.util.Arrays;
 
 public class VerticalIndentFieldManager extends VerticalFieldManager {
    private int[] _indentAmounts = new int[0];
-   private static final int MAX_HEIGHT;
-   private static final int MAX_WIDTH;
+   private static final int MAX_HEIGHT = 1073741823;
+   private static final int MAX_WIDTH = 1073741823;
 
    public VerticalIndentFieldManager() {
       this(0);

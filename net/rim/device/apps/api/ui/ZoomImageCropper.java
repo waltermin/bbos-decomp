@@ -35,9 +35,9 @@ public class ZoomImageCropper extends MainScreen {
    private MenuItem _cancelItem = new ZoomImageCropper$3(
       this, ResourceBundle.getBundle(-6812884907508133143L, "net.rim.device.internal.resource.Common"), 19, 268500992, 0
    );
-   public static final long ZIC_CROP_RECT;
-   public static final long ZIC_CROP_CIRCLE;
-   public static final int MIN_SIZE_FOR_LOADING_DIALOG;
+   public static final long ZIC_CROP_RECT = 1L;
+   public static final long ZIC_CROP_CIRCLE = 2L;
+   public static final int MIN_SIZE_FOR_LOADING_DIALOG = 200000;
    private static final int ZERO_POINT_75_FP = Fixed32.div(Fixed32.toFP(3), Fixed32.toFP(4));
 
    public ZoomImageCropper(EncodedImage image, int width, int height, long zicStyle) {

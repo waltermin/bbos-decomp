@@ -15,7 +15,7 @@ import net.rim.device.internal.ui.component.PleaseWaitDialog;
 public class SecureEmailOptionsItem extends SaveableMainScreenOptionsListItem {
    private SecureEmailOptionsModel _optionsModel;
    private SecureEmailFactory _factory;
-   private static final long INJECTED_MESSAGE_CLASSIFICATIONS;
+   private static final long INJECTED_MESSAGE_CLASSIFICATIONS = -4543606409829069159L;
 
    public SecureEmailOptionsItem(SecureEmailFactory factory) {
       super(factory.getEncodingString(), 5294015899860238835L);

@@ -18,7 +18,7 @@ import net.rim.device.apps.internal.blackberryemail.properties.MessageProperties
 public class SendMethodSelector {
    private SendMethodFactory[] _registeredFactories = new Object[0];
    private SendMethodSelector$EmailBodyProviderRecognizer _emailBodyProviderRecognizer = new SendMethodSelector$EmailBodyProviderRecognizer(null);
-   private static final long ID;
+   private static final long ID = -7659632296316850234L;
    private static SendMethodSelector _instance;
 
    public static SendMethodSelector getInstance() {

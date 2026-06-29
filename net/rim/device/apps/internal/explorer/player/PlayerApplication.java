@@ -17,9 +17,9 @@ final class PlayerApplication extends UiApplication implements GlobalEventListen
    private boolean _exitOnEscape;
    private PlayerVerbManager _verbManager;
    private ActionProvider _actionProvider;
-   private static final long GUID_LAUNCH_PLAYER;
-   private static final long GUID_STOP_PLAYER;
-   private static final long GUID_SHOW_PLAYER;
+   private static final long GUID_LAUNCH_PLAYER = -2364922203810937362L;
+   private static final long GUID_STOP_PLAYER = 7880603250674304426L;
+   private static final long GUID_SHOW_PLAYER = 110711286572786542L;
 
    public final void stop() {
       this._verbManager.deRegister();

@@ -16,7 +16,7 @@ import net.rim.device.apps.internal.commonmodels.categories.CategoryList;
 import net.rim.device.apps.internal.commonmodels.title.TitleModel;
 
 public final class MemoListImpl extends PIMListImpl implements InternalBlackBerryMemoList {
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = 5549232429708694218L;
    private static Hashtable _actualListeners;
    private static ResourceBundle _resources;
    private static MemoCollection _memoCollection;

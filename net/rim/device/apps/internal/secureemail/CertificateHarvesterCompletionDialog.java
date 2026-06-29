@@ -36,7 +36,7 @@ public class CertificateHarvesterCompletionDialog extends PopupScreen implements
    private int _currentMaxGaugeValue;
    private Object _applicationEventLock;
    private Object _onDisplayLock = new Object();
-   protected static final int NUM_GAUGE_STEPS_PER_RECIPIENT;
+   protected static final int NUM_GAUGE_STEPS_PER_RECIPIENT = 4;
 
    public void setNumRecipients(int numRecipients) {
       synchronized (this._applicationEventLock) {

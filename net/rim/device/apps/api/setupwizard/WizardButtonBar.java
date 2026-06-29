@@ -16,10 +16,10 @@ public class WizardButtonBar extends HorizontalFieldManager {
    int _navigationMode;
    private long _buttonsDirection;
    private boolean _buttonInvokeOverride;
-   public static final int POSITION_NORMAL;
-   public static final int POSITION_FIRST;
-   public static final int POSITION_LAST;
-   private static final int BUTTON_FONT_SIZE_PT;
+   public static final int POSITION_NORMAL = 0;
+   public static final int POSITION_FIRST = 1;
+   public static final int POSITION_LAST = 2;
+   private static final int BUTTON_FONT_SIZE_PT = 5;
 
    public WizardButtonBar(int navigationMode) {
       super(12884901888L);

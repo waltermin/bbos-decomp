@@ -7,22 +7,22 @@ public class ProvisioningEvent {
    private Object _eventCookie;
    private Throwable provisioningError;
    private String errorMessage;
-   public static final int TYPE_STARTED;
-   public static final int TYPE_SUCCESSFUL_INSTALL;
-   public static final int TYPE_SUCCESSFUL_UPGRADE;
-   public static final int TYPE_ERROR;
-   public static final int TYPE_PROGRESS_UPDATE;
-   public static final int PARAM_PROGRESS_UPDATE_DOWNLOADING;
-   public static final int PARAM_PROGRESS_UPDATE_CONFIGURING;
-   public static final int PARAM_PROGRESS_UPDATE_INSTALLING;
-   public static final int PARAM_PROGRESS_UPDATE_FINISHED;
-   public static final int PARAM_PROGRESS_UPDATE_CANCELLED;
-   public static final int PARAM_ERROR_UNEXPECTED_PROVISIONING_PROBLEM;
-   public static final int PARAM_ERROR_HANDSHAKE_FAILED;
-   public static final int PARAM_ERROR_INVALID_WICLET_URL;
-   public static final int PARAM_ERROR_EXPIRED_WICLET_DOWNLOAD;
-   public static final int PARAM_ERROR_PROVISIONING_ENCODING;
-   public static final int PARAM_ERROR_APPLICATION_ALREADY_INSTALLED;
+   public static final int TYPE_STARTED = 1;
+   public static final int TYPE_SUCCESSFUL_INSTALL = 2;
+   public static final int TYPE_SUCCESSFUL_UPGRADE = 5;
+   public static final int TYPE_ERROR = 3;
+   public static final int TYPE_PROGRESS_UPDATE = 4;
+   public static final int PARAM_PROGRESS_UPDATE_DOWNLOADING = 1;
+   public static final int PARAM_PROGRESS_UPDATE_CONFIGURING = 2;
+   public static final int PARAM_PROGRESS_UPDATE_INSTALLING = 3;
+   public static final int PARAM_PROGRESS_UPDATE_FINISHED = 4;
+   public static final int PARAM_PROGRESS_UPDATE_CANCELLED = 5;
+   public static final int PARAM_ERROR_UNEXPECTED_PROVISIONING_PROBLEM = 190;
+   public static final int PARAM_ERROR_HANDSHAKE_FAILED = 191;
+   public static final int PARAM_ERROR_INVALID_WICLET_URL = 192;
+   public static final int PARAM_ERROR_EXPIRED_WICLET_DOWNLOAD = 193;
+   public static final int PARAM_ERROR_PROVISIONING_ENCODING = 194;
+   public static final int PARAM_ERROR_APPLICATION_ALREADY_INSTALLED = 195;
 
    public ProvisioningEvent() {
    }

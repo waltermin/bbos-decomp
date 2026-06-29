@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.EncodedImage;
 
 public class MetadataHandlerFactory {
-   protected static final long GUID;
+   protected static final long GUID = -3049172664916265609L;
    private static MetadataHandlerFactory _instance;
 
    MetadataHandlerFactory() {

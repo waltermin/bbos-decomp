@@ -15,7 +15,7 @@ public final class AddressSelectionContext {
    private Object _selectedSource;
    private String[] _useEntryPrefixes;
    private int _preferredDefaultIndex;
-   public static final long CONTEXT_ID;
+   public static final long CONTEXT_ID = -2045338148608603372L;
 
    public AddressSelectionContext(String listScreenTitle, String pickDialogTitle, String badAddressError, Recognizer recognizer, Verb[] useOnceVerbs) {
       this._listScreenTitle = listScreenTitle;

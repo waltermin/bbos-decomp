@@ -42,19 +42,19 @@ public final class HierarchyManager implements GlobalEventListener {
    private int _flagsID;
    private Hashtable _baseHierarchies;
    HierarchyManager$EntryChangeListener[] _entryChangeListeners = new HierarchyManager$EntryChangeListener[0];
-   private static final int GRID;
-   private static final int STANDARD_VL;
-   private static final int MENU_VL;
-   private static final byte HIERARCHY_DATA_COMPLETE;
-   private static final byte HIERARCHY_NAME;
-   private static final byte HIERARCHY_DATA;
-   private static final int MODULE_DELETE_COUNT_BEFORE_PROPERTY_CLEAN;
-   private static final int FLAG_NO_SUB_FOLDERS;
-   private static final long HIERARCHY_MANAGER_GUID;
-   private static final long HIERARCHY_COLLECTION_GUID;
-   private static final long USER_HIERARCHY_GUID;
-   public static final long ACTIVE_HIERARCHY_CHANGED_GUID;
-   public static final long FLAGS_GUID;
+   private static final int GRID = 0;
+   private static final int STANDARD_VL = 1;
+   private static final int MENU_VL = 2;
+   private static final byte HIERARCHY_DATA_COMPLETE = 0;
+   private static final byte HIERARCHY_NAME = 1;
+   private static final byte HIERARCHY_DATA = 2;
+   private static final int MODULE_DELETE_COUNT_BEFORE_PROPERTY_CLEAN = 10;
+   private static final int FLAG_NO_SUB_FOLDERS = 1;
+   private static final long HIERARCHY_MANAGER_GUID = -5218883541955797034L;
+   private static final long HIERARCHY_COLLECTION_GUID = -1404412532621532483L;
+   private static final long USER_HIERARCHY_GUID = -5359506686284008855L;
+   public static final long ACTIVE_HIERARCHY_CHANGED_GUID = 3536078662966037734L;
+   public static final long FLAGS_GUID = -7870816478501154318L;
 
    public final void moveToFolder(ApplicationEntry applicationEntry, String newFolder) {
       this.removeApplication(applicationEntry);

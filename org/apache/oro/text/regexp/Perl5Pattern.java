@@ -14,11 +14,11 @@ public final class Perl5Pattern implements Pattern {
    int _options;
    char[] _mustString;
    char[] _startString;
-   static final int _OPT_ANCH_BOL;
-   static final int _OPT_ANCH_MBOL;
-   static final int _OPT_SKIP;
-   static final int _OPT_IMPLICIT;
-   static final int _OPT_ANCH;
+   static final int _OPT_ANCH_BOL = 1;
+   static final int _OPT_ANCH_MBOL = 2;
+   static final int _OPT_SKIP = 4;
+   static final int _OPT_IMPLICIT = 8;
+   static final int _OPT_ANCH = 3;
 
    Perl5Pattern() {
    }

@@ -2,7 +2,7 @@ package net.rim.device.internal.io.streamdatagram;
 
 public class StreamDatagramConnectionBaseFactory {
    private String _className;
-   private static final int STREAM_DEBUG_LEVEL;
+   private static final int STREAM_DEBUG_LEVEL = 1000000;
 
    public StreamDatagramConnectionBaseFactory() {
    }

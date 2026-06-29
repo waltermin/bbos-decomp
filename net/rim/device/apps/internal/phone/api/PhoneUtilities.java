@@ -50,20 +50,20 @@ import net.rim.vm.Array;
 import net.rim.vm.PersistentInteger;
 
 public final class PhoneUtilities {
-   public static final int CLIP_QUERY_EVENT;
-   public static final long BOLD_FONT_IN_PHONE_NUMBER_INPUT;
-   public static final String NUMERIC_HELP;
-   public static final String SERVICE_CALL;
-   private static final int DEVICE_PHONE_NUMBER_MSISDN;
-   private static final int VOICE_MAIL_NUMBER_INDEX;
+   public static final int CLIP_QUERY_EVENT = 1129072976;
+   public static final long BOLD_FONT_IN_PHONE_NUMBER_INPUT = 2907897523069873290L;
+   public static final String NUMERIC_HELP = "#4357*";
+   public static final String SERVICE_CALL = "*611";
+   private static final int DEVICE_PHONE_NUMBER_MSISDN = 0;
+   private static final int VOICE_MAIL_NUMBER_INDEX = 0;
    private static final int _screenHeight = Display.getHeight();
    private static final int _screenWidth = Display.getWidth();
    private static final int _systemKeyboardId = Keypad.getHardwareLayout();
    private static final int _networkType = RadioInfo.getNetworkType();
    private static final int _screenVerticalResolution = Display.getVerticalResolution();
-   private static final int HIGH_RES_COLOUR_SCREEN_VRES_MAGIC_NUMBER;
-   public static final long LAST_NUMBER_DIALED_KEY;
-   public static final long PERSISTENT_CONTENT_LISTENER_KEY;
+   private static final int HIGH_RES_COLOUR_SCREEN_VRES_MAGIC_NUMBER = 5000;
+   public static final long LAST_NUMBER_DIALED_KEY = 1197739752382153834L;
+   public static final long PERSISTENT_CONTENT_LISTENER_KEY = -3841047781361656227L;
    private static PhoneNumberCounter _phoneNumberCounter;
 
    public static final boolean isCDMAServiceCall(String phoneNumber) {
@@ -1265,7 +1265,7 @@ public final class PhoneUtilities {
       // 18: sipush 6305
       // 1b: invokestatic net/rim/device/apps/internal/phone/resource/PhoneResources.getString (I)Ljava/lang/String;
       // 1e: bipush 1
-      // 1f: anewarray 3511
+      // 1f: anewarray 3534
       // 22: dup
       // 23: bipush 0
       // 24: new java/lang/Object
@@ -1289,7 +1289,7 @@ public final class PhoneUtilities {
       // 48: sipush 6305
       // 4b: invokestatic net/rim/device/apps/internal/phone/resource/PhoneResources.getString (I)Ljava/lang/String;
       // 4e: bipush 1
-      // 4f: anewarray 3553
+      // 4f: anewarray 3576
       // 52: dup
       // 53: bipush 0
       // 54: new java/lang/Object
@@ -1313,7 +1313,7 @@ public final class PhoneUtilities {
       // 78: sipush 6305
       // 7b: invokestatic net/rim/device/apps/internal/phone/resource/PhoneResources.getString (I)Ljava/lang/String;
       // 7e: bipush 1
-      // 7f: anewarray 3595
+      // 7f: anewarray 3618
       // 82: dup
       // 83: bipush 0
       // 84: new java/lang/Object

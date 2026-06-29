@@ -16,11 +16,11 @@ public class TimeBasedAnimationManager {
    private Platform _platform = MediaFactory.getPlatform();
    private AnimationModel _data;
    private boolean _updateRequired;
-   private static final int INIT_TARGET_LIST_SIZE;
-   private static final int TARGET_LIST_GROWTH_RATE;
-   private static final int INIT_INTERPOLATOR_QUEUE_SIZE;
-   private static final int INTERPOLATOR_QUEUE_GROWTH_RATE;
-   private static final int SPACE_AVAILABLE;
+   private static final int INIT_TARGET_LIST_SIZE = 20;
+   private static final int TARGET_LIST_GROWTH_RATE = 10;
+   private static final int INIT_INTERPOLATOR_QUEUE_SIZE = 5;
+   private static final int INTERPOLATOR_QUEUE_GROWTH_RATE = 5;
+   private static final int SPACE_AVAILABLE = -1;
 
    public TimeBasedAnimationManager() {
       this._tempMatrix = new int[9];

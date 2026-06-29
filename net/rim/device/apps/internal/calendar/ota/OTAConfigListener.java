@@ -11,7 +11,7 @@ import net.rim.device.apps.api.transmission.TransmissionService;
 public class OTAConfigListener extends OTABaseListener {
    byte[] _emptySettings = new byte[]{0, 0};
    private static OTAConfigListener _instance;
-   private static final long ID;
+   private static final long ID = -4778897293134846142L;
 
    private OTAConfigListener() {
    }

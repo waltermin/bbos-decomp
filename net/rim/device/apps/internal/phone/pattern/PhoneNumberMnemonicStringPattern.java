@@ -15,18 +15,18 @@ public final class PhoneNumberMnemonicStringPattern extends StringPattern {
    private int _digitCount;
    private int _letterCount;
    private int _runCount;
-   private static final int MINIMUM_LEAD_DIGIT_COUNT;
-   private static final int MINIMUM_LETTER_COUNT;
-   private static final int MAXIMUM_RUN_COUNT;
-   private static final int SCAN_BUFFER_SIZE;
-   static final int STATE_VALID_BEGIN;
-   static final int STATE_INVALID_A;
-   static final int STATE_INVALID_B;
-   static final int STATE_RUN;
-   static final int STATE_SEPARATOR_A;
-   static final int STATE_SEPARATOR_B;
-   static final int STATE_SEPARATOR_C;
-   static final int STATE_FOUND_MATCH;
+   private static final int MINIMUM_LEAD_DIGIT_COUNT = 4;
+   private static final int MINIMUM_LETTER_COUNT = 2;
+   private static final int MAXIMUM_RUN_COUNT = 5;
+   private static final int SCAN_BUFFER_SIZE = 32;
+   static final int STATE_VALID_BEGIN = 0;
+   static final int STATE_INVALID_A = 1;
+   static final int STATE_INVALID_B = 2;
+   static final int STATE_RUN = 3;
+   static final int STATE_SEPARATOR_A = 4;
+   static final int STATE_SEPARATOR_B = 5;
+   static final int STATE_SEPARATOR_C = 6;
+   static final int STATE_FOUND_MATCH = 7;
 
    @Override
    public final long getPatternTypeIdentifier() {

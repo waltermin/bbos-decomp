@@ -20,15 +20,15 @@ public class MediaPlayer implements MediaEventListener {
    private Application _app;
    private MediaEventListener _listener;
    private static String MIME_TYPE_AMR = "audio/amr";
-   public static final int MEDIA_STREAM_AUDIO;
-   public static final int MEDIA_STREAM_VIDEO;
-   public static final int MEDIA_SUCCESS;
-   public static final int MEDIA_ERROR_BUSY;
-   public static final int MEDIA_ERROR_PARAM;
-   public static final int MEDIA_ERROR_MEMORY;
-   public static final int MEDIA_ERROR_NEED_MORE_DATA;
-   public static final int MEDIA_ERROR_UNSPECIFIED;
-   public static final int MEDIA_ERROR_FORMAT;
+   public static final int MEDIA_STREAM_AUDIO = 0;
+   public static final int MEDIA_STREAM_VIDEO = 1;
+   public static final int MEDIA_SUCCESS = 0;
+   public static final int MEDIA_ERROR_BUSY = 1;
+   public static final int MEDIA_ERROR_PARAM = 2;
+   public static final int MEDIA_ERROR_MEMORY = 3;
+   public static final int MEDIA_ERROR_NEED_MORE_DATA = 4;
+   public static final int MEDIA_ERROR_UNSPECIFIED = 5;
+   public static final int MEDIA_ERROR_FORMAT = 6;
 
    boolean isAlive() {
       return this._mediaHandle != -1;

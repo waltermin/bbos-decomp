@@ -6,19 +6,19 @@ import net.rim.device.api.ui.FieldChangeListener;
 
 public class TextField extends Item {
    MIDPEditField _edit;
-   public static final int ANY;
-   public static final int EMAILADDR;
-   public static final int NUMERIC;
-   public static final int PHONENUMBER;
-   public static final int URL;
-   public static final int DECIMAL;
-   public static final int PASSWORD;
-   public static final int UNEDITABLE;
-   public static final int SENSITIVE;
-   public static final int NON_PREDICTIVE;
-   public static final int INITIAL_CAPS_WORD;
-   public static final int INITIAL_CAPS_SENTENCE;
-   public static final int CONSTRAINT_MASK;
+   public static final int ANY = 0;
+   public static final int EMAILADDR = 1;
+   public static final int NUMERIC = 2;
+   public static final int PHONENUMBER = 3;
+   public static final int URL = 4;
+   public static final int DECIMAL = 5;
+   public static final int PASSWORD = 65536;
+   public static final int UNEDITABLE = 131072;
+   public static final int SENSITIVE = 262144;
+   public static final int NON_PREDICTIVE = 524288;
+   public static final int INITIAL_CAPS_WORD = 1048576;
+   public static final int INITIAL_CAPS_SENTENCE = 2097152;
+   public static final int CONSTRAINT_MASK = 65535;
 
    public TextField(String label, String text, int maxSize, int constraints) {
       synchronized (Application.getEventLock()) {

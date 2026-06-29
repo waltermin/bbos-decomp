@@ -15,8 +15,8 @@ public final class SyncAgentStatistics implements Persistable {
    private SyncAgentUrl _syncAgentUrl;
    private boolean _allowIntegrityChecks;
    private boolean _removedDueToFailure;
-   public static final int SUCCESS;
-   public static final int GENERAL_FAILURE;
+   public static final int SUCCESS = 1;
+   public static final int GENERAL_FAILURE = 2;
 
    public SyncAgentStatistics(SyncAgentUrl aUrl, boolean allowIntegrityChecks) {
       this.softReset();

@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class WAPPushProviderRegistry {
    private IWAPPushProvider _instance;
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = -4435977049555571020L;
 
    private WAPPushProviderRegistry(IWAPPushProvider instance) {
       this._instance = instance;

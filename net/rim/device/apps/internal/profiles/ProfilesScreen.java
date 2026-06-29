@@ -20,7 +20,7 @@ final class ProfilesScreen extends AppsMainScreen {
    private OverrideListField _overrideListField;
    private LabelField _overrideTitleField;
    private SeparatorField _overrideSeparatorField;
-   private static final String PROFILE_MODULE_NAME;
+   private static final String PROFILE_MODULE_NAME = "net_rim_bb_profiles_app";
 
    ProfilesScreen(boolean shouldDoSystemExit) {
       super(0);

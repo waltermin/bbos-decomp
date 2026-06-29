@@ -20,13 +20,13 @@ import net.rim.device.internal.ui.container.VerticalIndentFieldManager;
 public final class ApplicationControlSetupWizard extends BasicWizardPage {
    private ApplicationRegistry _ar = ApplicationRegistry.getApplicationRegistry();
    private RadioButtonGroup _settingRadios;
-   private static final long ID;
-   private static final int INDENT;
-   private static final int RESTRICTIVE;
-   private static final int DEFAULT;
-   private static final int PERMISSIVE;
-   private static final int CUSTOM;
-   private static final int NUM_RADIOS;
+   private static final long ID = 8230353045335363579L;
+   private static final int INDENT = 20;
+   private static final int RESTRICTIVE = 0;
+   private static final int DEFAULT = 1;
+   private static final int PERMISSIVE = 2;
+   private static final int CUSTOM = 3;
+   private static final int NUM_RADIOS = 4;
 
    public ApplicationControlSetupWizard() {
       super(OptionsResources.getResourceBundle(), 2061, 1110, SetupWizardOrdering.TIPS_AND_TRICKS_CATEGORY, 2);

@@ -72,13 +72,13 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
    private boolean _inFolderWidthCalculation;
    private FolderList$DataSearchRepositoryImpl _inputMethodSearchDelegate = new FolderList$DataSearchRepositoryImpl(this, null);
    private StringBuffer _getQueryBuffer = (StringBuffer)(new Object());
-   private static final long DEFAULT_STYLE;
-   private static final int FL_REFLAST_LAST_IDX;
-   private static final int FL_REFLAST_CURR_IDX;
-   private static final int FL_REFLAST_SIZE;
-   private static final byte UNMARK;
-   private static final byte MARK;
-   private static final byte EXT_MARK;
+   private static final long DEFAULT_STYLE = 1196268651020288L;
+   private static final int FL_REFLAST_LAST_IDX = 0;
+   private static final int FL_REFLAST_CURR_IDX = 1;
+   private static final int FL_REFLAST_SIZE = 2;
+   private static final byte UNMARK = 0;
+   private static final byte MARK = 1;
+   private static final byte EXT_MARK = 2;
    private static final int HORIZONTAL_SCROLL_INCR = Display.getWidth() >> 2;
 
    public BasicEditField getSearchField() {

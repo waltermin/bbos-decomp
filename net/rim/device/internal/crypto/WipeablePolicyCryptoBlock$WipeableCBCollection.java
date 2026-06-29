@@ -8,7 +8,7 @@ import net.rim.device.api.util.DataBuffer;
 
 public final class WipeablePolicyCryptoBlock$WipeableCBCollection implements SyncCollection, SyncConverter {
    SyncObject _keySyncObject = new WipeablePolicyCryptoBlock$WipeableCBSyncObject();
-   private static final int CURRENT_VERSION;
+   private static final int CURRENT_VERSION = 1;
 
    WipeablePolicyCryptoBlock$WipeableCBCollection() {
    }

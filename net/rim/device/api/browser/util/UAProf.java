@@ -6,7 +6,7 @@ import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.cldc.io.utility.URIEncoder;
 
 public final class UAProf {
-   public static final String SPRINT_UAPROF_URI;
+   public static final String SPRINT_UAPROF_URI = "http://device.sprintpcs.com/RIM/BlackBerry{0}/{2}.rdf";
 
    private UAProf() {
    }

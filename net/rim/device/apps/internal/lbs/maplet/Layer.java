@@ -10,17 +10,17 @@ public final class Layer implements Persistable {
    private int _attr2;
    private short[][][] _dentryHeaders;
    private byte[][][] _dentries;
-   public static final byte ATTRIB_LAYER_ID;
-   public static final byte ATTRIB_SHAPE_TYPE;
-   public static final byte ATTRIB_ZOOM_INDEX;
-   public static final byte ATTRIB_DENTRY_COUNT;
-   public static final byte ATTRIB_BLX;
-   public static final byte ATTRIB_BLY;
-   public static final byte ATTRIB_DETYPE;
-   public static final int SHAPE_LINE;
-   public static final int SHAPE_POLYGON;
-   public static final int DETYPE_POINT;
-   public static final int DETYPE_LABEL;
+   public static final byte ATTRIB_LAYER_ID = 1;
+   public static final byte ATTRIB_SHAPE_TYPE = 2;
+   public static final byte ATTRIB_ZOOM_INDEX = 3;
+   public static final byte ATTRIB_DENTRY_COUNT = 7;
+   public static final byte ATTRIB_BLX = 8;
+   public static final byte ATTRIB_BLY = 9;
+   public static final byte ATTRIB_DETYPE = 10;
+   public static final int SHAPE_LINE = 3;
+   public static final int SHAPE_POLYGON = 5;
+   public static final int DETYPE_POINT = 0;
+   public static final int DETYPE_LABEL = 1;
 
    public final void parseHeader(byte[] header) {
       this._layerHeader = header;

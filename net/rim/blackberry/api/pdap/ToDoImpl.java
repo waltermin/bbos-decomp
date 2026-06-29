@@ -29,7 +29,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
    private boolean priorityFieldSet;
    private boolean statusFieldSet;
    private boolean completedFieldSet;
-   public static final int STATUS;
+   public static final int STATUS = 16777225;
    private static Factory _taskModelFactory;
    private static Factory _titleModelFactory;
 

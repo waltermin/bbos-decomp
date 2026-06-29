@@ -19,10 +19,10 @@ public final class OutboundQueue extends SplitQueue {
    private static final OutboundQueue$OnAgDisabledBridge _onAgDisabledBridge = new OutboundQueue$OnAgDisabledBridge();
    private static final OutboundQueue$OnDeviceDisabledBridge _onDeviceDisabledBridge = new OutboundQueue$OnDeviceDisabledBridge();
    private static final OutboundQueue$Unregistered _unregistered = new OutboundQueue$Unregistered();
-   public static final int SCHEDULE_FOR_SEND;
-   public static final int SCHEDULE_FOR_RESPONSE;
-   public static final int SCHEDULE_FOR_STATE;
-   public static final int SCHEDULE_FOR_HEARTBEAT;
+   public static final int SCHEDULE_FOR_SEND = 0;
+   public static final int SCHEDULE_FOR_RESPONSE = 1;
+   public static final int SCHEDULE_FOR_STATE = 2;
+   public static final int SCHEDULE_FOR_HEARTBEAT = 3;
 
    OutboundQueue(long id, String url) {
       this._agId = id;

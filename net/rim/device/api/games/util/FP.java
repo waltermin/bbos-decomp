@@ -5,12 +5,12 @@ import net.rim.device.api.math.VecMath;
 import net.rim.device.api.ui.XYPoint;
 
 public final class FP {
-   public static final int PI;
-   public static final int TWOPI;
-   public static final int PI_OVER_2;
-   public static final int E;
-   public static final int HALF;
-   public static final int QUARTER;
+   public static final int PI = 205887;
+   public static final int TWOPI = 411774;
+   public static final int PI_OVER_2 = 102943;
+   public static final int E = 178145;
+   public static final int HALF = 65536;
+   public static final int QUARTER = 16384;
 
    public static final int toInt(int x) {
       return Fixed32.toInt(x);

@@ -6,16 +6,16 @@ public class Command {
    private String _menuLabel;
    private int _commandType;
    private int _priority;
-   public static final int SCREEN;
-   private static final int FIRST_COMMAND_TYPE;
-   public static final int BACK;
-   public static final int CANCEL;
-   public static final int OK;
-   public static final int HELP;
-   public static final int STOP;
-   public static final int EXIT;
-   public static final int ITEM;
-   private static final int LAST_COMMAND_TYPE;
+   public static final int SCREEN = 1;
+   private static final int FIRST_COMMAND_TYPE = 1;
+   public static final int BACK = 2;
+   public static final int CANCEL = 3;
+   public static final int OK = 4;
+   public static final int HELP = 5;
+   public static final int STOP = 6;
+   public static final int EXIT = 7;
+   public static final int ITEM = 8;
+   private static final int LAST_COMMAND_TYPE = 8;
 
    public Command(String label, int commandType, int priority) {
       label.length();

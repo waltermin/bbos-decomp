@@ -5,9 +5,9 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 
 final class EditCallNotesScreen$EditCallNotesManager extends Manager {
-   private static final int HEADER;
-   private static final int NOTES;
-   private static final int CALL_CONTAINER;
+   private static final int HEADER = 0;
+   private static final int NOTES = 1;
+   private static final int CALL_CONTAINER = 2;
 
    EditCallNotesScreen$EditCallNotesManager() {
       super(0);

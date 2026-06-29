@@ -14,12 +14,12 @@ final class WLANSignalComponentFactory implements Factory, RadioStatusListener {
    private int _lastLevel = 0;
    boolean _numericDisplay;
    StringBuffer _valueString = (StringBuffer)(new Object(8));
-   static final int RADIO_OFF_LEVEL;
-   static final int RADIO_NO_COVERAGE_LEVEL;
-   static final int RADIO_WEAK_LEVEL;
-   static final int RADIO_MEDIUM_LEVEL;
-   static final int RADIO_HIGH_LEVEL;
-   static final int NUMBER_OF_LEVELS;
+   static final int RADIO_OFF_LEVEL = 0;
+   static final int RADIO_NO_COVERAGE_LEVEL = 1;
+   static final int RADIO_WEAK_LEVEL = 2;
+   static final int RADIO_MEDIUM_LEVEL = 3;
+   static final int RADIO_HIGH_LEVEL = 4;
+   static final int NUMBER_OF_LEVELS = 5;
 
    final void updateSignalLevel() {
       int newLevel = this.signalToLevel(RadioInfo.getSignalLevel(4));

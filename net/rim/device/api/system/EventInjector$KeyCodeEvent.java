@@ -3,9 +3,9 @@ package net.rim.device.api.system;
 import net.rim.device.api.ui.KeypadUtil;
 
 public class EventInjector$KeyCodeEvent extends EventInjector$Event {
-   public static final int KEY_DOWN;
-   public static final int KEY_REPEAT;
-   public static final int KEY_UP;
+   public static final int KEY_DOWN = 513;
+   public static final int KEY_REPEAT = 514;
+   public static final int KEY_UP = 515;
 
    public EventInjector$KeyCodeEvent(int event, char keyName, int status, int time) {
       super(2, event, 0, charToScancode(keyName, status), time, null, null);

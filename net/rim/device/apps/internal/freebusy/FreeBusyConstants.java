@@ -1,18 +1,18 @@
 package net.rim.device.apps.internal.freebusy;
 
 public class FreeBusyConstants {
-   public static final int FB_REQUESTING_DATA;
-   public static final int FB_REQUESTING_DATA_COLOR;
-   public static final int FB_NO_INFORMATION;
-   public static final int FB_NO_INFORMATION_COLOR;
-   public static final int FB_AVAILABLE;
-   public static final int FB_AVAILABLE_COLOR;
-   public static final int FB_TENTATIVE;
-   public static final int FB_TENTATIVE_COLOR;
-   public static final int FB_BUSY;
-   public static final int FB_BUSY_COLOR;
-   public static final int FB_OUT_OF_OFFICE;
-   public static final int FB_OUT_OF_OFFICE_COLOR;
+   public static final int FB_REQUESTING_DATA = 0;
+   public static final int FB_REQUESTING_DATA_COLOR = 13882323;
+   public static final int FB_NO_INFORMATION = 1;
+   public static final int FB_NO_INFORMATION_COLOR = 16777184;
+   public static final int FB_AVAILABLE = 2;
+   public static final int FB_AVAILABLE_COLOR = 16777215;
+   public static final int FB_TENTATIVE = 3;
+   public static final int FB_TENTATIVE_COLOR = 65535;
+   public static final int FB_BUSY = 4;
+   public static final int FB_BUSY_COLOR = 255;
+   public static final int FB_OUT_OF_OFFICE = 5;
+   public static final int FB_OUT_OF_OFFICE_COLOR = 6957182;
 
    private FreeBusyConstants() {
    }

@@ -81,7 +81,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
    private Vector _enrollmentPendingDialogs;
    private SendMethodFactory _sendMethodFactory;
    private int _authenticationState;
-   private static final long PERSISTED_COOKIES_ID;
+   private static final long PERSISTED_COOKIES_ID = 3499486419240605781L;
    private static PersistentObject _persistedCookieHashtable;
    private static Hashtable _cookieHashtable;
    private static final long[] ENCODING_UIDS = new long[]{
@@ -119,22 +119,22 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       6730182323398263048L
    };
    private static Object _persistentObjectLock = new Object();
-   private static final int POLICY_TYPE_LEGACY;
-   private static final int POLICY_TYPE_GRANULAR;
-   private static final long ENROLLMENT_RETRY_WINDOW;
-   private static final int STATE_NOT_ENROLLED;
-   private static final int STATE_ENROLLMENT_PENDING;
-   private static final int STATE_NOT_AUTHENTICATED;
-   private static final int STATE_AUTHENTICATED;
-   private static final int ENROLLMENT_FAILED;
-   private static final int ENROLLMENT_COMPLETE;
-   private static final int ENROLLMENT_PENDING;
-   private static final int AUTHENTICATE_FAILED;
-   private static final int AUTHENTICATE_COMPLETE;
-   private static final int AUTHENTICATE_RE_ENROLL;
-   private static final int DOWNLOAD_KEYS_FAILED;
-   private static final int DOWNLOAD_KEYS_COMPLETE;
-   private static final int DOWNLOAD_KEYS_NO_PRIVATE_KEY;
+   private static final int POLICY_TYPE_LEGACY = 0;
+   private static final int POLICY_TYPE_GRANULAR = 1;
+   private static final long ENROLLMENT_RETRY_WINDOW = 300000L;
+   private static final int STATE_NOT_ENROLLED = 0;
+   private static final int STATE_ENROLLMENT_PENDING = 1;
+   private static final int STATE_NOT_AUTHENTICATED = 2;
+   private static final int STATE_AUTHENTICATED = 3;
+   private static final int ENROLLMENT_FAILED = 0;
+   private static final int ENROLLMENT_COMPLETE = 1;
+   private static final int ENROLLMENT_PENDING = 2;
+   private static final int AUTHENTICATE_FAILED = 0;
+   private static final int AUTHENTICATE_COMPLETE = 1;
+   private static final int AUTHENTICATE_RE_ENROLL = 2;
+   private static final int DOWNLOAD_KEYS_FAILED = 0;
+   private static final int DOWNLOAD_KEYS_COMPLETE = 1;
+   private static final int DOWNLOAD_KEYS_NO_PRIVATE_KEY = 2;
 
    public String[] getServiceUIDs() {
       return this._serviceUIDs;
@@ -1552,13 +1552,13 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 058: bipush 0
       // 059: ireturn
       // 05a: bipush 0
-      // 05b: anewarray 4408
+      // 05b: anewarray 4444
       // 05e: astore 8
       // 060: bipush 0
-      // 061: anewarray 4410
+      // 061: anewarray 4446
       // 064: astore 9
       // 066: bipush 0
-      // 067: anewarray 4412
+      // 067: anewarray 4448
       // 06a: astore 10
       // 06c: new java/lang/Object
       // 06f: dup

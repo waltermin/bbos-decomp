@@ -7,7 +7,7 @@ import net.rim.device.internal.io.file.MetaDataListener;
 
 public class VideoCollection extends MediaInfoCollection implements MetaDataListener {
    private MediaLibrary _library;
-   private static final String _preloadedVideoPath;
+   private static final String _preloadedVideoPath = "file:///store/samples/videos/";
 
    public VideoCollection(MediaLibrary library) {
       this._library = library;

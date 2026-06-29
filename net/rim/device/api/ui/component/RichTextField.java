@@ -21,12 +21,12 @@ public class RichTextField extends TextField implements ActiveRegionSupport$Acti
    private int[] _colorBackground;
    private Object[] _cookies;
    private int _layoutWidth;
-   public static final int TEXT_ALIGN_LEFT;
-   public static final int USE_TEXT_WIDTH;
-   public static final int TEXT_ALIGN_HCENTER;
-   public static final int TEXT_ALIGN_RIGHT;
-   private static final long LEGACY_FONT_INDEX_ATTRIB_MASK;
-   private static final int LEGACY_FONT_INDEX_ATTRIB_SHIFT;
+   public static final int TEXT_ALIGN_LEFT = 0;
+   public static final int USE_TEXT_WIDTH = 67108864;
+   public static final int TEXT_ALIGN_HCENTER = 262144;
+   public static final int TEXT_ALIGN_RIGHT = 524288;
+   private static final long LEGACY_FONT_INDEX_ATTRIB_MASK = 16711680L;
+   private static final int LEGACY_FONT_INDEX_ATTRIB_SHIFT = 16;
 
    public void setText(String text, int[] offsets, byte[] attributes, Font[] fonts) {
       this.setText(text, offsets, attributes, fonts, null);

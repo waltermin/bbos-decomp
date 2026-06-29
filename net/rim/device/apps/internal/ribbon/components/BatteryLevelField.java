@@ -13,9 +13,9 @@ import net.rim.device.internal.ui.IconCollection;
 final class BatteryLevelField extends TextRibbonComponent implements RibbonComponent$RibbonComponentChangeListener {
    private RibbonComponent$RibbonComponentChangeListener _listener;
    private IconCollection _batteryIcons;
-   private static final int ICON_COLUMNS;
-   private static final int ICON_ROWS;
-   private static final int INVALID_BATTERY_INDEX;
+   private static final int ICON_COLUMNS = 12;
+   private static final int ICON_ROWS = 2;
+   private static final int INVALID_BATTERY_INDEX = 11;
 
    public BatteryLevelField() {
    }

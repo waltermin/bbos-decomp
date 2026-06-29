@@ -43,9 +43,9 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
    private static String IF_MODIFIED_SINCE = "If-Modified-Since";
    private static String LAST_MODIFIED = "Last-Modified";
    private static String CACHE_SCHEME = "cache:";
-   private static final int ADDED_SHORT_TERM;
-   private static final int ADDED_LONG_TERM;
-   private static final long SHORT_TERM_RAW_DATA_CACHE_KEY;
+   private static final int ADDED_SHORT_TERM = 1;
+   private static final int ADDED_LONG_TERM = 2;
+   private static final long SHORT_TERM_RAW_DATA_CACHE_KEY = -4455003596529320285L;
 
    @Override
    public final void browserStateChanged(int newState) {

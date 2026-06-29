@@ -13,7 +13,7 @@ public class InPlaceScreen extends Screen {
    private Manager _delegate;
    int _fontHeight;
    int _result;
-   public static final long ALT_DISMISS;
+   public static final long ALT_DISMISS = 1L;
    private static final Tag TAG = Tag.create("inplace");
 
    public InPlaceScreen(Field original, Field fake, long style) {

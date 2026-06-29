@@ -12,21 +12,21 @@ public final class Inflater {
    private int _distCodeOffset;
    private int _nextCodeOffset;
    private boolean _lenDistFixed;
-   public static final int MAX_WBITS;
-   public static final int DEF_WBITS;
-   public static final int Z_SYNC_FLUSH;
-   public static final int Z_FULL_FLUSH;
-   public static final int Z_FINISH;
-   public static final int Z_NO_COMPRESSION;
-   public static final int Z_BEST_SPEED;
-   public static final int Z_BEST_COMPRESSION;
-   public static final int Z_DEFAULT_COMPRESSION;
-   public static final int Z_FILTERED;
-   public static final int Z_HUFFMAN_ONLY;
-   public static final int Z_RLE;
-   public static final int Z_DEFAULT_STRATEGY;
-   public static final int Z_DEF_MEM_LEVEL;
-   public static final int GZIP_DEF_WBITS;
+   public static final int MAX_WBITS = 15;
+   public static final int DEF_WBITS = 15;
+   public static final int Z_SYNC_FLUSH = 2;
+   public static final int Z_FULL_FLUSH = 3;
+   public static final int Z_FINISH = 4;
+   public static final int Z_NO_COMPRESSION = 0;
+   public static final int Z_BEST_SPEED = 1;
+   public static final int Z_BEST_COMPRESSION = 9;
+   public static final int Z_DEFAULT_COMPRESSION = -1;
+   public static final int Z_FILTERED = 1;
+   public static final int Z_HUFFMAN_ONLY = 2;
+   public static final int Z_RLE = 3;
+   public static final int Z_DEFAULT_STRATEGY = 0;
+   public static final int Z_DEF_MEM_LEVEL = 1;
+   public static final int GZIP_DEF_WBITS = 31;
 
    public Inflater(int windowBits) {
       this.init(windowBits);

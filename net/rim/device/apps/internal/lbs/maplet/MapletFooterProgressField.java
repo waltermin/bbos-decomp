@@ -37,10 +37,10 @@ public final class MapletFooterProgressField {
    private int _height = 0;
    private MapletFooterProgressField$EmptyField _emptyField;
    private static final Tag TAG = Tag.create("browser-footer");
-   private static final String BROWSER_FOOTER_PROGRESS_BITMAP;
-   private static final String BROWSER_FOOTER_BITMAP;
-   private static final int SEPARATOR_HEIGHT;
-   private static final int MIN_PAINT_DELAY;
+   private static final String BROWSER_FOOTER_PROGRESS_BITMAP = "browser-footer~progress";
+   private static final String BROWSER_FOOTER_BITMAP = "browser-footer";
+   private static final int SEPARATOR_HEIGHT = 1;
+   private static final int MIN_PAINT_DELAY = 100;
 
    public MapletFooterProgressField(MapField parent) {
       this.setupBitmaps();

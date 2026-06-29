@@ -11,7 +11,7 @@ public final class HotlistView extends PhoneListView implements ListFieldCallbac
    private Hotlist _hotlist;
    private boolean _refreshPending;
    private boolean _invalidatePending;
-   private static final long MANAGER_FLAGS;
+   private static final long MANAGER_FLAGS = 3459063580983296000L;
    private static final int[] HOTLIST_BASE_CONTEXT_FLAGS = new int[]{
       3, 58, 4, 17, -804651007, 4, -804782076, 9832200, 9831900, -804651006, 10, 20, -804651003, 16, 8, 128
    };

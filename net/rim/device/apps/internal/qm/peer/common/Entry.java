@@ -37,7 +37,7 @@ public class Entry implements EntryPointDescriptor, IntegerProps, StringProps, O
    private boolean _contentProtectionEnabled;
    protected String _state;
    Entry$UpdateRunnable _updateRunnable = new Entry$UpdateRunnable(this);
-   public static final long LARGE_BITMAP_FOCUS;
+   public static final long LARGE_BITMAP_FOCUS = 10L;
 
    public boolean isDeviceLocked() {
       return this._contentProtectionEnabled;

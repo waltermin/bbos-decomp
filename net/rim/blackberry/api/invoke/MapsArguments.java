@@ -7,7 +7,7 @@ public final class MapsArguments extends ApplicationArguments {
    private Contact _contact;
    private int _addressIndex;
    private MapView _mapView;
-   public static final String ARG_LOCATION_DOCUMENT;
+   public static final String ARG_LOCATION_DOCUMENT = "location_document";
 
    public MapsArguments() {
    }

@@ -5,7 +5,7 @@ import net.rim.device.cldc.io.ssl.TLSException;
 public class TLSAlertException extends TLSException {
    private byte _alertLevel;
    private byte _alertDescription;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public TLSAlertException(byte alertLevel, byte alertDescription) {
       super((String)((Object)null));

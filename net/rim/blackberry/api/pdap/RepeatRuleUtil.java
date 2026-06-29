@@ -11,10 +11,10 @@ import net.rim.device.apps.api.framework.model.Recur$Modifier;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 
 public class RepeatRuleUtil {
-   static final int MONTH_IN_YEAR_SHAMT;
-   static final int DAY_IN_WEEK_SHAMT;
-   static final int WEEK_IN_MONTH_SHAMT;
-   private static final int RECUR_ANY_DAY;
+   static final int MONTH_IN_YEAR_SHAMT = 17;
+   static final int DAY_IN_WEEK_SHAMT = 10;
+   static final int WEEK_IN_MONTH_SHAMT = 0;
+   private static final int RECUR_ANY_DAY = 7;
 
    public static RepeatRule createRepeatRule(Recur recur) {
       RepeatRule repeat = new RepeatRule();

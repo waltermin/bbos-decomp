@@ -22,12 +22,12 @@ import net.rim.device.internal.ui.component.PasswordDialog;
 public class NNEPasswordManager implements PersistentContentListener, RealtimeClockListener, GlobalEventListener {
    private IntHashtable _cache = (IntHashtable)(new Object(2));
    private long _nextTimestamp = -1;
-   private static final long INSTANCE_GUID;
+   private static final long INSTANCE_GUID = 7962629012429714450L;
    private static NNEPasswordManager _instance;
-   private static final int MAX_NNE_PASSWORD_LENGTH;
-   private static final int IT_POLICY_PASSWORD_NEVER_EXPIRES;
-   private static final int IT_POLICY_PASSWORD_TIMEOUT_DEFAULT;
-   private static final int INVALID_TIME;
+   private static final int MAX_NNE_PASSWORD_LENGTH = 32;
+   private static final int IT_POLICY_PASSWORD_NEVER_EXPIRES = -1;
+   private static final int IT_POLICY_PASSWORD_TIMEOUT_DEFAULT = -1;
+   private static final int INVALID_TIME = -1;
 
    private NNEPasswordManager() {
    }

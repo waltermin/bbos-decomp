@@ -25,9 +25,9 @@ public final class Scrollbar extends Field implements ScrollChangeListener {
    private int _lastCalculatedSize;
    private int _lastCalculatedOffset;
    private static final Tag TAG = Tag.create("browser-scrollbar");
-   private static final int MINIMUM_SCROLLBAR_HEIGHT;
-   private static final int PREFERRED_SCROLLBAR_WIDTH;
-   private static final int ARROW_HEIGHT;
+   private static final int MINIMUM_SCROLLBAR_HEIGHT = 7;
+   private static final int PREFERRED_SCROLLBAR_WIDTH = 5;
+   private static final int ARROW_HEIGHT = 7;
    private static final int[] ARROW_X_POINTS = new int[]{
       0,
       5,
@@ -128,14 +128,14 @@ public final class Scrollbar extends Field implements ScrollChangeListener {
       57,
       60
    };
-   private static final String SCROLLBAR_TRACK_VERT_BITMAP;
-   private static final String SCROLLBAR_TRACK_HORZ_BITMAP;
-   private static final String SCROLLBAR_TOP_ARROW_BITMAP;
-   private static final String SCROLLBAR_BOTTOM_ARROW_BITMAP;
-   private static final String SCROLLBAR_LEFT_ARROW_BITMAP;
-   private static final String SCROLLBAR_RIGHT_ARROW_BITMAP;
-   private static final String SCROLLBAR_SLIDER_VERT_BITMAP;
-   private static final String SCROLLBAR_SLIDER_HORZ_BITMAP;
+   private static final String SCROLLBAR_TRACK_VERT_BITMAP = "browser-scrollbar~track-vert";
+   private static final String SCROLLBAR_TRACK_HORZ_BITMAP = "browser-scrollbar~track-horz";
+   private static final String SCROLLBAR_TOP_ARROW_BITMAP = "browser-scrollbar~top-arrow";
+   private static final String SCROLLBAR_BOTTOM_ARROW_BITMAP = "browser-scrollbar~bottom-arrow";
+   private static final String SCROLLBAR_LEFT_ARROW_BITMAP = "browser-scrollbar~left-arrow";
+   private static final String SCROLLBAR_RIGHT_ARROW_BITMAP = "browser-scrollbar~right-arrow";
+   private static final String SCROLLBAR_SLIDER_VERT_BITMAP = "browser-scrollbar~slider-vert";
+   private static final String SCROLLBAR_SLIDER_HORZ_BITMAP = "browser-scrollbar~slider-horz";
 
    public Scrollbar() {
       this(true);

@@ -43,10 +43,10 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.system.Security;
 
 public final class PackageManager implements EmailEventLoggerEvents, GlobalEventListener, PersistentContentListener {
-   private static final long PIN_COMPOSE_VERB;
-   private static final long PIN_USE_ONCE_VERB;
-   private static final long REGISTERED_PIN_ALREADY;
-   private static final long PIN_FORWARD_VERB;
+   private static final long PIN_COMPOSE_VERB = -2492130528195666495L;
+   private static final long PIN_USE_ONCE_VERB = -8411466535318801376L;
+   private static final long REGISTERED_PIN_ALREADY = -5708873098720308072L;
+   private static final long PIN_FORWARD_VERB = 1862171883528027662L;
    private static boolean ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME = false;
 
    private PackageManager() {

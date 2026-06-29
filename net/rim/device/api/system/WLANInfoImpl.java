@@ -9,7 +9,7 @@ final class WLANInfoImpl implements WLANExtendedListener, RadioStatusListener {
    private int _radioBand;
    private int _dataRate;
    private int _signalLevel;
-   private static final long ID;
+   private static final long ID = 7226364515336065262L;
    private static WLANInfoImpl _instance;
 
    private WLANInfoImpl() {

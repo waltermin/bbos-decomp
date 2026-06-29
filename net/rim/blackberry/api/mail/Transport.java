@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.blackberryemail.email.api.EmailMoreVerb;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailSendUtility;
 
 public class Transport extends Service {
-   private static final int MORE_REQUEST_SIZE;
+   private static final int MORE_REQUEST_SIZE = 1500;
 
    Transport() {
    }

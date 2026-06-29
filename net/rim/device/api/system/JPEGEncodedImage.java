@@ -4,13 +4,13 @@ import net.rim.vm.TraceBack;
 
 public final class JPEGEncodedImage extends EncodedImage {
    private JPEGEncodedImage$JPEGImageInfo _jpegInfo;
-   public static final int FILETYPE_UNKNOWN;
-   public static final int FILETYPE_JFIF;
-   public static final int FILETYPE_EXIF;
-   public static final int FILETYPE_SPIFF;
-   public static final int FRAMETYPE_BASELINE;
-   public static final int FRAMETYPE_SEQUENTIAL;
-   public static final int FRAMETYPE_PROGRESSIVE;
+   public static final int FILETYPE_UNKNOWN = 0;
+   public static final int FILETYPE_JFIF = 1;
+   public static final int FILETYPE_EXIF = 2;
+   public static final int FILETYPE_SPIFF = 3;
+   public static final int FRAMETYPE_BASELINE = 0;
+   public static final int FRAMETYPE_SEQUENTIAL = 1;
+   public static final int FRAMETYPE_PROGRESSIVE = 2;
 
    JPEGEncodedImage(byte[] data, int offset, int length) {
       super._data = data;

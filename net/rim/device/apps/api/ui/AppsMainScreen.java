@@ -18,7 +18,7 @@ public class AppsMainScreen extends MainScreen {
    private boolean _clickAndHoldKeySupport;
    private char _clickedKey = 0;
    protected ClickAndHoldKey _clickAndHoldKey;
-   public static final long CLICK_AND_HOLD_GUID;
+   public static final long CLICK_AND_HOLD_GUID = -6860088460751500843L;
 
    public AppsMainScreen(long style) {
       super(style);

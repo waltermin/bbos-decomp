@@ -4,7 +4,7 @@ import java.util.Vector;
 
 final class WorkerThread extends Thread {
    private Vector _queue;
-   private static final long THREAD_TIMEOUT;
+   private static final long THREAD_TIMEOUT = 10000L;
 
    WorkerThread(Vector queue) {
       this._queue = queue;

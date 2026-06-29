@@ -23,8 +23,8 @@ public final class VolumeField {
    private boolean _enabled;
    private int _additionalCount;
    private long _lastPressTime;
-   private static final int MAX_VOLUME;
-   private static final String VOLUMESTR;
+   private static final int MAX_VOLUME = 10;
+   private static final String VOLUMESTR = "volume";
 
    public VolumeField(int initialVolumeLevel) {
       this._volumeLevel = initialVolumeLevel * 10 / 100;

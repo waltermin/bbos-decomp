@@ -4,10 +4,10 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.util.ToIntHashtable;
 
 public class Colors {
-   public static final int TRANSPARENT;
-   private static final int NUM_COLORS;
-   private static final String HEXVALUE_ID;
-   private static final String RGB_COLOR_ID;
+   public static final int TRANSPARENT = -1;
+   private static final int NUM_COLORS = 147;
+   private static final String HEXVALUE_ID = "#";
+   private static final String RGB_COLOR_ID = "rgb(";
    private static ToIntHashtable colors;
 
    public static int getColor(String name) {

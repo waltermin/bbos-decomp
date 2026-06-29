@@ -28,9 +28,9 @@ public final class EnterpriseConfigImpl
    OTASyncPriorityAndDependencyProvider,
    SyncCollectionStatusProvider {
    private SimplePersistentSyncCollection$SimpleData _data = (SimplePersistentSyncCollection$SimpleData)this._persistentObject.getContents();
-   private static final long PERSISTED_ENTERPRISE_CONFIGURATION;
+   private static final long PERSISTED_ENTERPRISE_CONFIGURATION = 1348834229778161606L;
    private static ResourceBundleFamily _resourceBundle = ResourceBundle.getBundle(457834568927961098L, "net.rim.device.apps.internal.resource.EnterpriseConfig");
-   private static final int ENTERPRISE_CONFIGURATION_INITIAL_SIZE;
+   private static final int ENTERPRISE_CONFIGURATION_INITIAL_SIZE = 16;
    private static EnterpriseConfigImpl _instance;
 
    public static final void libMain(String[] args) {

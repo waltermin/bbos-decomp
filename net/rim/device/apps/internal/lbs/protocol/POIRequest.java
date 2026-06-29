@@ -22,12 +22,12 @@ public final class POIRequest extends Request {
    private long _originLongitude;
    private byte[] _rawXMLData;
    protected String _poiXmlString;
-   public static final int SUCCESS;
-   public static final int INVALID_REQUEST;
-   public static final int SERVER_INTERNAL_ERROR;
-   public static final int NO_DATA;
-   public static final int SERVER_BUSY;
-   public static final int SERVER_TEMPORARILY_UNAVAILABLE;
+   public static final int SUCCESS = 0;
+   public static final int INVALID_REQUEST = 1;
+   public static final int SERVER_INTERNAL_ERROR = 2;
+   public static final int NO_DATA = 3;
+   public static final int SERVER_BUSY = 30;
+   public static final int SERVER_TEMPORARILY_UNAVAILABLE = 31;
 
    @Override
    public final byte getCommand() {

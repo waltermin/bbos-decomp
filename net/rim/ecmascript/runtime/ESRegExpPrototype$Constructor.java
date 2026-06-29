@@ -3,21 +3,21 @@ package net.rim.ecmascript.runtime;
 import net.rim.ecmascript.util.Resources;
 
 class ESRegExpPrototype$Constructor extends Constructor {
-   private static final int LASTMATCH;
-   private static final int DOLLAR_1;
-   private static final int DOLLAR_2;
-   private static final int DOLLAR_3;
-   private static final int DOLLAR_4;
-   private static final int DOLLAR_5;
-   private static final int DOLLAR_6;
-   private static final int DOLLAR_7;
-   private static final int DOLLAR_8;
-   private static final int DOLLAR_9;
-   private static final int INPUT;
-   private static final int MULTILINE;
-   private static final int LASTPAREN;
-   private static final int LEFTCONTEXT;
-   private static final int RIGHTCONTEXT;
+   private static final int LASTMATCH = 0;
+   private static final int DOLLAR_1 = 1;
+   private static final int DOLLAR_2 = 2;
+   private static final int DOLLAR_3 = 3;
+   private static final int DOLLAR_4 = 4;
+   private static final int DOLLAR_5 = 5;
+   private static final int DOLLAR_6 = 6;
+   private static final int DOLLAR_7 = 7;
+   private static final int DOLLAR_8 = 8;
+   private static final int DOLLAR_9 = 9;
+   private static final int INPUT = 10;
+   private static final int MULTILINE = 11;
+   private static final int LASTPAREN = 12;
+   private static final int LEFTCONTEXT = 13;
+   private static final int RIGHTCONTEXT = 14;
    private static final String[] staticProperties = new String[]{
       "$1",
       "$2",

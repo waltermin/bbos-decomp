@@ -65,12 +65,12 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
    private RenderingApplication _renderingApp;
    private InputStream _jarStream;
    private boolean _drmProtected;
-   private static final int OK;
-   private static final int DETAILS;
-   private static final int LATER;
-   private static final int REBOOT;
-   private static final int COPY;
-   private static final int RUN;
+   private static final int OK = 0;
+   private static final int DETAILS = 1;
+   private static final int LATER = 0;
+   private static final int REBOOT = 1;
+   private static final int COPY = 1;
+   private static final int RUN = 1;
 
    public JADBrowserField(BrowserContentBaseImpl browserContent, JADAttributeParser jad, InputStream jarStream) {
       super(281474976710656L);

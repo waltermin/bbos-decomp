@@ -6,7 +6,7 @@ public final class RimEscapedTextCoder extends EscapedTextCoder {
    private static final String[] RimStrings = new String[]{
       "Browser-Channel", "Browser-Content", "Browser-Message", "cookie", "etag", "server", "set-cookie", "via", "warning"
    };
-   private static final long ID;
+   private static final long ID = -688136161628172402L;
 
    public static final RimEscapedTextCoder getInstance() {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();

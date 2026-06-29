@@ -10,9 +10,9 @@ public final class PeerContactList implements ContactList {
    private int _idHash;
    private Object _displayName;
    private IntHashtable _persistentData;
-   static final int NAME_ID;
-   static final int HASH_ID;
-   static final int CONTACTS_ID;
+   static final int NAME_ID = 1;
+   static final int HASH_ID = 3;
+   static final int CONTACTS_ID = 5;
 
    public PeerContactList(String displayName) {
       this._persistentData = (IntHashtable)(new Object());

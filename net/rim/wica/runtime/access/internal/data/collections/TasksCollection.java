@@ -18,7 +18,7 @@ public class TasksCollection extends StdCmpCollectionImpl {
    private ToDoList _taskList;
    private ToDo _uidMatchToDo;
    private IntHashtable _uidsToTasks;
-   public static final int STATUS;
+   public static final int STATUS = 16777225;
 
    public TasksCollection(WicletEx wiclet) {
       super(wiclet, TaskCompDef.getInstance());

@@ -13,9 +13,9 @@ public final class SSManager {
    private boolean _gotFeatureReadyMessage;
    private boolean _simValid;
    private SSMessageHandler _messageHandler;
-   public static final int SS_OPTION_NOT_PROVISIONED;
-   public static final int SIM_NOT_READY;
-   private static final long GUID;
+   public static final int SS_OPTION_NOT_PROVISIONED = 0;
+   public static final int SIM_NOT_READY = 100;
+   private static final long GUID = -6825634774143615650L;
    private static SSManager _instance;
    private static boolean _isSimulator = DeviceInfo.isSimulator();
    private static Phone _phone = Phone.getInstance();

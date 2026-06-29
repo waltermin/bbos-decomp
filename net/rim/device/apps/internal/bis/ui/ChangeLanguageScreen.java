@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 public final class ChangeLanguageScreen extends UserSettingsScreen {
    private Locale[] _availableLocales;
    private RadioButtonGroup _languageGroup;
-   private static final String PARAM_LOCALE;
+   private static final String PARAM_LOCALE = "locale";
 
    public ChangeLanguageScreen() {
       super(27);

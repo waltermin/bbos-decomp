@@ -64,10 +64,10 @@ public final class SessionManager extends Thread implements SyncConnectionListen
    private TriggerSyncEvent _triggerBatchSyncEvent = new TriggerSyncEvent(this, false);
    private boolean _sendSlowSyncOccurred;
    private SessionManager$IgnoredSessionCleanup _ignoredSessionCleanup;
-   private static final byte MAX_SESSION_TIMEOUT_FACTOR;
-   private static final byte ALL_POOLS;
-   private static final byte INITIALIZATION_POOLS;
-   private static final byte SYNC_POOLS;
+   private static final byte MAX_SESSION_TIMEOUT_FACTOR = 24;
+   private static final byte ALL_POOLS = 1;
+   private static final byte INITIALIZATION_POOLS = 2;
+   private static final byte SYNC_POOLS = 3;
 
    public final int getMaxSessionTimeoutFactor() {
       return 24;

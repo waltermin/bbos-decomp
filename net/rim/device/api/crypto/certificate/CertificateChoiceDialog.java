@@ -21,7 +21,7 @@ public class CertificateChoiceDialog extends PopupDialog implements FieldChangeL
    private HorizontalFieldManager _buttonManager;
    private CertificateChoiceField _certificateChoiceField;
    private KeyStore _keyStore;
-   public static final int IMPORT_SMART_CARD_CERTS;
+   public static final int IMPORT_SMART_CARD_CERTS = 1;
    private static final ResourceBundle _smartCardRB = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
 
    public CertificateChoiceDialog(

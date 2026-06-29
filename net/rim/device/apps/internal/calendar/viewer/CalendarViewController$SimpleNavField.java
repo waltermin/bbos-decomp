@@ -8,7 +8,7 @@ final class CalendarViewController$SimpleNavField extends Field {
    private int _navBarWidth;
    private int _totalNavBarWidth;
    private final CalendarViewController this$0;
-   private static final int ARROW_WIDTH;
+   private static final int ARROW_WIDTH = 3;
 
    CalendarViewController$SimpleNavField(CalendarViewController _1) {
       this.this$0 = _1;

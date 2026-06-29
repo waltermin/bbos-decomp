@@ -23,11 +23,11 @@ public class Gauge extends Item {
    private FieldChangeListener _changeListener;
    private int _currentIncrementalUpdatingAnimationIndex;
    private EncodedImage _animationImage;
-   public static final int INDEFINITE;
-   public static final int CONTINUOUS_IDLE;
-   public static final int INCREMENTAL_IDLE;
-   public static final int CONTINUOUS_RUNNING;
-   public static final int INCREMENTAL_UPDATING;
+   public static final int INDEFINITE = -1;
+   public static final int CONTINUOUS_IDLE = 0;
+   public static final int INCREMENTAL_IDLE = 1;
+   public static final int CONTINUOUS_RUNNING = 2;
+   public static final int INCREMENTAL_UPDATING = 3;
 
    private EncodedImage getAnimationImage() {
       if (this._animationImage == null) {

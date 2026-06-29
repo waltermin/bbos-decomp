@@ -3,9 +3,9 @@ package net.rim.device.apps.api.framework.model;
 import net.rim.device.internal.ui.IconCollection;
 
 public class ColumnPainter {
-   public static final byte PRIORITY_NORMAL;
-   public static final byte PRIORITY_HIGH;
-   public static final byte PRIORITY_LOW;
+   public static final byte PRIORITY_NORMAL = 1;
+   public static final byte PRIORITY_HIGH = 2;
+   public static final byte PRIORITY_LOW = 3;
 
    public void setPriority(int _1) {
       throw null;

@@ -3,7 +3,7 @@ package net.rim.device.api.crypto.keystore;
 import net.rim.device.api.crypto.PublicKey;
 
 public class PublicKeyKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = 7540601854220086457L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

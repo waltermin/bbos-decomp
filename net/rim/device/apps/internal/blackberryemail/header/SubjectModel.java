@@ -33,7 +33,7 @@ public final class SubjectModel
    CloneProvider,
    EncryptableProvider {
    private Object _subjectEncoding;
-   private static final char WIDE_COLON;
+   private static final char WIDE_COLON = '：';
    private static int SUBJECT_MAX_LENGTH = 255;
 
    public final void setSubject(String subject) {

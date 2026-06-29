@@ -7,7 +7,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 
 final class PlayerVerbManager implements VerbFactory {
    private PlayerApplication _app;
-   private static final long GUID;
+   private static final long GUID = -1063589100647616419L;
 
    final void register() {
       VerbFactoryRepository.addFactory(8522643724050848398L, this);

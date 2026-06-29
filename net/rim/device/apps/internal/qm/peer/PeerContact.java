@@ -42,17 +42,17 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
    private String _displayNameSmileys;
    private int[] _smileyOffsets = new int[0];
    private long[] _smileyIds = new long[0];
-   static final int CONTACT_ID;
-   static final int DISPLAY_NAME_ID;
-   static final int OVERRIDE_DISPLAY_NAME_ID;
-   static final int PASSCODE_ANSWER_ID;
-   static final int KEY_ID;
-   static final int CRYPTO_KEY_ID;
-   static final int ORIGINAL_CONTACT_INFO_ID;
-   static final int CONTACT_ID_HASH;
-   static final int CONTACT_COOKIE;
-   static final int REFERENCE_COUNT;
-   private static final char PLACEHOLDER;
+   static final int CONTACT_ID = 1;
+   static final int DISPLAY_NAME_ID = 2;
+   static final int OVERRIDE_DISPLAY_NAME_ID = 3;
+   static final int PASSCODE_ANSWER_ID = 5;
+   static final int KEY_ID = 6;
+   static final int CRYPTO_KEY_ID = 8;
+   static final int ORIGINAL_CONTACT_INFO_ID = 9;
+   static final int CONTACT_ID_HASH = 17;
+   static final int CONTACT_COOKIE = 18;
+   static final int REFERENCE_COUNT = 19;
+   private static final char PLACEHOLDER = '￼';
    static EmoticonStringPattern _smileyFacility = Smileys.getSmileyFacility();
    private static StringBuffer _buffer = (StringBuffer)(new Object());
 

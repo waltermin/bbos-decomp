@@ -3,11 +3,11 @@ package net.rim.device.internal.crypto.vpn;
 import net.rim.device.api.i18n.ResourceBundle;
 
 public interface VPNPolicy {
-   int BOOLEAN_TYPE;
-   int STRING_TYPE;
-   int INT_TYPE;
-   int ENUM_TYPE;
-   int IP_TYPE;
+   int BOOLEAN_TYPE = 0;
+   int STRING_TYPE = 1;
+   int INT_TYPE = 2;
+   int ENUM_TYPE = 3;
+   int IP_TYPE = 4;
 
    ResourceBundle getResourceBundle();
 

@@ -16,15 +16,15 @@ import net.rim.vm.Array;
 import net.rim.vm.DebugSupport;
 
 public final class MIDletSecurity {
-   public static final long MIDLET_UNTRUSTED_POLICY_GUID;
-   private static final boolean ENABLE_HTTP_NEVER_DENY_KLUDGE;
-   private static final byte DEFAULT_SETTING;
-   private static final byte UNKNOWN_SETTING;
-   private static final byte ALLOW_SETTING;
-   private static final byte DISALLOW_SETTING;
-   private static final int MAX_SIG_LEN;
-   private static final int MAX_HASH_LEN;
-   private static final String CONNECTOR_PREFIX;
+   public static final long MIDLET_UNTRUSTED_POLICY_GUID = -8029111670665436014L;
+   private static final boolean ENABLE_HTTP_NEVER_DENY_KLUDGE = true;
+   private static final byte DEFAULT_SETTING = 1;
+   private static final byte UNKNOWN_SETTING = 5;
+   private static final byte ALLOW_SETTING = 6;
+   private static final byte DISALLOW_SETTING = 0;
+   private static final int MAX_SIG_LEN = 128;
+   private static final int MAX_HASH_LEN = 20;
+   private static final String CONNECTOR_PREFIX = "javax.microedition.io.Connector.";
    private static final byte[] DEFAULT_MIDLET_PERM_SETTING = new byte[]{
       3, 3, 3, 3, 3, 3, 3, 4, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 4, 4, 4, 4, 1, 1, 1, 3
    };
@@ -33,7 +33,7 @@ public final class MIDletSecurity {
    private static byte[] _domainCache;
    private static Object _userLock = new Object();
    private static boolean _isUntrusted;
-   public static final String MIDLET_CERT_PREFIX;
+   public static final String MIDLET_CERT_PREFIX = "MIDlet-Certificate-";
 
    private MIDletSecurity() {
    }

@@ -5,9 +5,9 @@ import net.rim.device.apps.api.calendar.calconstants.CalOptionCache;
 final class GotoDateVerb extends CalendarViewerVerb {
    private int _type;
    private long _target;
-   public static final int GOTO_DATE;
-   public static final int GOTO_TODAY;
-   public static final int GOTO_PICK;
+   public static final int GOTO_DATE = 0;
+   public static final int GOTO_TODAY = 1;
+   public static final int GOTO_PICK = 2;
 
    public GotoDateVerb(int displayStringId, int order, int hotkeyResourceId) {
       super(displayStringId, order, hotkeyResourceId);

@@ -13,7 +13,7 @@ public final class PMEFormHandler extends DefaultHandler implements ResourceProv
    private String _currentControl;
    private boolean _isInInstance;
    private SAXParser _parser;
-   public static final String EXTENSION_ID;
+   public static final String EXTENSION_ID = "pme://xforms";
 
    public final void clear() {
       this._form = null;

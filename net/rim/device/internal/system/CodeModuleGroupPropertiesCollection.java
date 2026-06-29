@@ -29,9 +29,9 @@ public class CodeModuleGroupPropertiesCollection implements SyncCollection, Sync
    private IntHashtable _properties;
    private CodeModuleGroupPropertiesCollection$CheckGroupsThread _checkGroupsThread;
    private CollectionListenerManager _listeners = new CollectionListenerManager();
-   private static final long PROPERTIES_ID;
-   private static final int TYPE_PROPERTY_KEY;
-   private static final int TYPE_PROPERTY_VALUE;
+   private static final long PROPERTIES_ID = -1494190557092396307L;
+   private static final int TYPE_PROPERTY_KEY = 1;
+   private static final int TYPE_PROPERTY_VALUE = 2;
    private static Object _lock = new Object();
 
    private CodeModuleGroupPropertiesCollection() {

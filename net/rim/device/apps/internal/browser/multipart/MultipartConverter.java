@@ -30,16 +30,16 @@ import net.rim.vm.Array;
 
 public final class MultipartConverter extends BaseConverter {
    private Object _context;
-   private static final int WAP_ALTERNATIVE;
-   private static final int WAP_MIXED;
-   private static final int WAP_RELATED;
-   private static final int ALTERNATIVE;
-   private static final int MIXED;
-   private static final int RELATED;
-   static final int RETURN_FIRST;
-   static final int RETURN_FIRST_CONVERTED;
-   static final int RETURN_JUST_CACHE;
-   static final int RETURN_CONVERT_ALL;
+   private static final int WAP_ALTERNATIVE = 1;
+   private static final int WAP_MIXED = 2;
+   private static final int WAP_RELATED = 3;
+   private static final int ALTERNATIVE = 4;
+   private static final int MIXED = 5;
+   private static final int RELATED = 6;
+   static final int RETURN_FIRST = 1;
+   static final int RETURN_FIRST_CONVERTED = 2;
+   static final int RETURN_JUST_CACHE = 3;
+   static final int RETURN_CONVERT_ALL = 4;
 
    public MultipartConverter(Object context) {
       this._context = context;

@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class Proxy extends Application {
    private RunnableThread _runnableThread;
-   private static final long ID;
+   private static final long ID = 2026383997602970267L;
 
    public final void submitRunnable(Runnable runnable) {
       this.invokeLater(new Proxy$UtilRunnable(runnable, false));

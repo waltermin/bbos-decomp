@@ -9,7 +9,7 @@ public final class StructuredInputStream implements Constants {
    private int _delta;
    private int _length;
    private int _offset;
-   private static final boolean _littleEndian;
+   private static final boolean _littleEndian = false;
 
    public StructuredInputStream(byte[] bytes, int start, int length, boolean littleEndian, int offset) {
       this._bytes = bytes;

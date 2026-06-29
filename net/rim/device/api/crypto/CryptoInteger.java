@@ -9,9 +9,9 @@ public class CryptoInteger {
    private int _flags;
    private int _offset;
    private int _hashCode;
-   private static final int MAX_LENGTH;
-   private static final int OFFSET_IS_VALID;
-   private static final int HASH_CODE_IS_VALID;
+   private static final int MAX_LENGTH = 256;
+   private static final int OFFSET_IS_VALID = 1;
+   private static final int HASH_CODE_IS_VALID = 2;
 
    public CryptoInteger(int value) {
       if (value < 0) {

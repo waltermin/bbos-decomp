@@ -8,14 +8,14 @@ class SAXAttributesImpl implements Attributes, RIMExtendedAttributes {
    private int _numAttributes;
    private int _numElements;
    private IntHashtable _opaqueData;
-   private static final int URI;
-   private static final int LOCALNAME;
-   private static final int QNAME;
-   private static final int TYPE;
-   private static final int VALUE;
-   private static final int ISDEFAULT;
-   private static final int NUM_ELEMENTS_PER_ATTRIBUTE;
-   private static final int ATTRIBUTES_INITIAL_SIZE;
+   private static final int URI = 0;
+   private static final int LOCALNAME = 1;
+   private static final int QNAME = 2;
+   private static final int TYPE = 3;
+   private static final int VALUE = 4;
+   private static final int ISDEFAULT = 5;
+   private static final int NUM_ELEMENTS_PER_ATTRIBUTE = 6;
+   private static final int ATTRIBUTES_INITIAL_SIZE = 4;
 
    public void addAttribute(String uri, String localName, String qName, String type, String value, boolean isDefault) {
       int startIndex = this._numElements;

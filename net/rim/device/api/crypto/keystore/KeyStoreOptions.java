@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.cldc.io.ippp.SocketTransportBase;
 
 public final class KeyStoreOptions {
-   private static final long SINGLETON_ID;
+   private static final long SINGLETON_ID = -3208094400127735410L;
 
    private KeyStoreOptions() {
    }

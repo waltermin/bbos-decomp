@@ -25,17 +25,17 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
    private int _tag;
    protected int _uiPeerType;
    private long _style;
-   protected static final int HIDDEN;
-   protected static final int RADIO;
-   protected static final int CHECK;
-   protected static final int TEXT;
-   protected static final int SUBMIT;
-   protected static final int RESET;
-   protected static final int IMAGE;
-   protected static final int BUTTON;
-   protected static final int TEXT_AREA;
-   protected static final int SELECT;
-   protected static final int FILE;
+   protected static final int HIDDEN = 0;
+   protected static final int RADIO = 1;
+   protected static final int CHECK = 2;
+   protected static final int TEXT = 3;
+   protected static final int SUBMIT = 4;
+   protected static final int RESET = 5;
+   protected static final int IMAGE = 6;
+   protected static final int BUTTON = 7;
+   protected static final int TEXT_AREA = 8;
+   protected static final int SELECT = 9;
+   protected static final int FILE = 10;
 
    public void setPeer(Field field) {
       this._uiPeer = field;

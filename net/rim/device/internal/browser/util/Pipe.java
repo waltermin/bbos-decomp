@@ -17,8 +17,8 @@ public final class Pipe implements Persistable {
    private boolean _readKicked;
    private boolean _notifyOnWrite;
    private byte[][][] _window;
-   private static final int WAIT_START;
-   private static final int WAIT_FINISH;
+   private static final int WAIT_START = 1114666867;
+   private static final int WAIT_FINISH = 1114666854;
 
    public Pipe() {
       this._window = new byte[1][][];

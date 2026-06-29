@@ -8,18 +8,18 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.LongHashtable;
 
 public class FolderMerge {
-   private static final long MERGES_HASHTABLE;
+   private static final long MERGES_HASHTABLE = 928076599182245850L;
    private static LongHashtable _mergesHashtable = ApplicationRegistry.getApplicationRegistry().getLongHashtable(928076599182245850L);
-   private static final long MERGE_COLLECTIONS;
-   public static final long MERGE_ID_MESSAGE_CENTRE_ALL;
-   public static final long MERGE_ID_MESSAGE_CENTRE_HIDE_FILED;
-   public static final long MERGE_ID_SAVED_MESSAGES;
-   public static final long MERGE_ID_SEARCH;
-   public static final long MERGE_ID_SMS;
-   public static final long MERGE_ID_MMS;
-   public static final long MERGE_ID_SMS_AND_MMS;
-   public static final int MERGE_TYPE_ALL;
-   public static final int MERGE_TYPE_HIDE_FILED;
+   private static final long MERGE_COLLECTIONS = 3670675554506915300L;
+   public static final long MERGE_ID_MESSAGE_CENTRE_ALL = -5581791943352753293L;
+   public static final long MERGE_ID_MESSAGE_CENTRE_HIDE_FILED = 2993144521330132876L;
+   public static final long MERGE_ID_SAVED_MESSAGES = 6368823655991217730L;
+   public static final long MERGE_ID_SEARCH = 7509894771240321003L;
+   public static final long MERGE_ID_SMS = -7118119043524803584L;
+   public static final long MERGE_ID_MMS = -942103673428357213L;
+   public static final long MERGE_ID_SMS_AND_MMS = -4696470826620059293L;
+   public static final int MERGE_TYPE_ALL = -271343505;
+   public static final int MERGE_TYPE_HIDE_FILED = 734877078;
    protected static LongKeyProviderAdaptor _longKeyProviderAdaptor = new DateSortKeyProviderIndirection();
 
    private FolderMerge() {

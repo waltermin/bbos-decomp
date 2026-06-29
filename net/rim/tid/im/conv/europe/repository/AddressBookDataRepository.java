@@ -15,10 +15,10 @@ public final class AddressBookDataRepository extends IRepository implements Cust
    private CustomWordsRepository _freqRepository;
    private ExtendedCurrentVariant _tempVariant = (ExtendedCurrentVariant)(new Object(15));
    private ResultContainer _resContainer = (ResultContainer)(new Object());
-   private static final int MAX_SPLIT_NESTING_LEVEL;
-   private static final int DEFAULT_FRQ;
-   private static final int MAX_FRQ;
-   private static final int FRQ_INCREASE_FACTOR;
+   private static final int MAX_SPLIT_NESTING_LEVEL = 3;
+   private static final int DEFAULT_FRQ = 25000;
+   private static final int MAX_FRQ = 64000;
+   private static final int FRQ_INCREASE_FACTOR = 3900;
 
    public final void init(CustomWordsRepository repository, CustomWordsRepository freqRepository) {
       if (this._reader == null) {

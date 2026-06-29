@@ -17,7 +17,7 @@ public class BitmapField extends Field implements DrawStyle {
    private int _hSpace;
    private int _vSpace;
    private static Tag TAG = Tag.create("bitmap");
-   public static final int STAMP_MONOCHROME;
+   public static final int STAMP_MONOCHROME = 65536;
 
    public BitmapField() {
       this(null, 0);

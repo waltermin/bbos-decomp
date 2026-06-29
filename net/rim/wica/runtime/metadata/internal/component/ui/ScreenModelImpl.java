@@ -55,9 +55,9 @@ public class ScreenModelImpl extends UIContainerImpl implements ScreenModel {
    private int _valid;
    private ControlMappingResolver _mappingResolver;
    private Command _defaultActionCommand;
-   public static final int STATE_VALID;
-   public static final int STATE_INVALID_UI;
-   public static final int STATE_INVALID_UI_FULL;
+   public static final int STATE_VALID = 0;
+   public static final int STATE_INVALID_UI = 1;
+   public static final int STATE_INVALID_UI_FULL = 2;
    static Class class$net$rim$wica$runtime$metadata$internal$handler$UIHandler;
    static Class class$net$rim$wica$runtime$ui$UiService;
    static Class class$net$rim$wica$runtime$metadata$internal$transaction$TransactionManager;

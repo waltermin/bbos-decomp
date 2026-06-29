@@ -9,15 +9,15 @@ public final class SmsAddress extends DatagramAddressBase {
    private boolean _statusReportSpecified;
    private boolean _userHeaderSpecified;
    private int[] _ports;
-   public static final byte ORIGINATOR_PORT_INDEX;
-   public static final byte DESTINATION_PORT_INDEX;
-   public static final int PORT_NBS_VCARD;
-   public static final int PORT_NBS_VCALENDAR;
-   public static final int PORT_NBS_RING_TONE;
-   public static final int PORT_NBS_SIMPLE_EMAIL;
-   public static final int PORT_WAP_PUSH;
-   public static final int PORT_GCMP;
-   public static final int PORT_KODIAK_NETWORKS_WV;
+   public static final byte ORIGINATOR_PORT_INDEX = 1;
+   public static final byte DESTINATION_PORT_INDEX = 0;
+   public static final int PORT_NBS_VCARD = 226;
+   public static final int PORT_NBS_VCALENDAR = 228;
+   public static final int PORT_NBS_RING_TONE = 5505;
+   public static final int PORT_NBS_SIMPLE_EMAIL = 5512;
+   public static final int PORT_WAP_PUSH = 2948;
+   public static final int PORT_GCMP = 65536;
+   public static final int PORT_KODIAK_NETWORKS_WV = 65552;
 
    public SmsAddress() {
       this._header = new SMSPacketHeader();

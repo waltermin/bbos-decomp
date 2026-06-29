@@ -8,7 +8,7 @@ public final class X931SignatureSigner implements SignatureSigner {
    private int _length;
    private Digest _digest;
    private byte _digestByte;
-   private static final long ID_TEST_SIGNER_X931;
+   private static final long ID_TEST_SIGNER_X931 = 9145168413953113866L;
 
    public final void initialize(RSAPrivateKey key, Digest digest) {
       if (key != null && digest != null) {

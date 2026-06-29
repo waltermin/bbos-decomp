@@ -64,7 +64,7 @@ final class ListenerManager
    private IntHashtable _serviceListeners = (IntHashtable)(new Object());
    private LongHashtable _sendListeners = (LongHashtable)(new Object());
    private Vector _defaultSessionListeners = (Vector)(new Object());
-   private static final long ID;
+   private static final long ID = 4422687540963743150L;
 
    public final boolean removeEmailSendListener(long serviceUidHash, SendListener l) {
       Vector v = (Vector)this._sendListeners.get(serviceUidHash);

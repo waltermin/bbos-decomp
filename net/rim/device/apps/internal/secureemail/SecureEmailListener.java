@@ -22,8 +22,8 @@ public class SecureEmailListener implements MemoryCleanerListener, ModelViewList
    private MultiMap _messageClosedListeners = (MultiMap)(new Object());
    private MultiMap _collectionListeners = (MultiMap)(new Object());
    private Hashtable _openMessages = (Hashtable)(new Object());
-   private static final long ID_LOCK;
-   private static final long ID;
+   private static final long ID_LOCK = -7546370436645685145L;
+   private static final long ID = -7678865984852433251L;
 
    private SecureEmailListener() {
       CertificateStatusManager.getInstance().addCollectionListener(this);

@@ -14,7 +14,7 @@ class ContactVCardProvider implements VCardProvider {
    private int _currentEmailIndex;
    private int _hasExtension = 20000927;
    private boolean _labelNeeded;
-   private static final int MAX_ADDR;
+   private static final int MAX_ADDR = 2;
    private static String PIN_NAME = "RIM-PIN";
    private static String USER1_NAME = "RIM-USER1";
    private static String USER2_NAME = "RIM-USER2";

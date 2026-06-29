@@ -18,7 +18,7 @@ public class LongSortedReadableList implements ChainableCollection, LoadableColl
    private int _numElements;
    private CollectionListenerManager _collectionNotifier = new CollectionListenerManager();
    private LongKeyProviderAdaptor _keyProvider;
-   private static final int GROW_SIZE;
+   private static final int GROW_SIZE = 20;
 
    @Override
    public void loadFrom(Object collection) {

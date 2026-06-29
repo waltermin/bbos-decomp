@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.phone.api.ui.PhoneEventListenerStatusDialog;
 
 public class SSRequestStatusDialog extends PhoneEventListenerStatusDialog {
    private boolean _suppressMessageDialogs = true;
-   public static final int TIMEOUT;
+   public static final int TIMEOUT = 10;
 
    public SSRequestStatusDialog() {
       this(10, true);

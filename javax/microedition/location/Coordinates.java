@@ -10,18 +10,18 @@ public class Coordinates {
    private double _oldLat2;
    private double _oldLon1;
    private double _oldLon2;
-   public static final int DD_MM_SS;
-   public static final int DD_MM;
-   private static final int MAX_ITERATIONS;
-   private static final double F;
-   private static final double R;
-   private static final double SEMI_MAJOR_AXIS;
-   private static final double pi;
-   private static final double pibysix;
-   private static final double pibyfour;
-   private static final double pibytwo;
-   private static final double tan15;
-   private static final double sqrt3;
+   public static final int DD_MM_SS = 1;
+   public static final int DD_MM = 2;
+   private static final int MAX_ITERATIONS = 100;
+   private static final double F = 0.0033528106811836675;
+   private static final double R = 0.9966471893188164;
+   private static final double SEMI_MAJOR_AXIS = 6378.137;
+   private static final double pi = Math.PI;
+   private static final double pibysix = Math.PI / 6;
+   private static final double pibyfour = Math.PI / 4;
+   private static final double pibytwo = Math.PI / 2;
+   private static final double tan15 = 0.2679491924311227;
+   private static final double sqrt3 = 1.7320508075688772;
    private static final double[] atanPoly = new double[]{
       (double)4586558024442191043L,
       (double)-4634035982931263455L,

@@ -15,20 +15,20 @@ public class MediaStreamingManagerImpl extends MediaStreamingManager {
    private MediaStreamingManagerImpl$StreamingSessionImpl[] _sessions;
    private int[] _codecInstances;
    private Object[] _listeners;
-   public static final int NO_SESSION;
-   private static final int WAVE_INDEX;
-   private static final int MP3_INDEX;
-   private static final int AMR_INDEX;
-   private static final int PCM_INDEX;
-   private static final int AAC_INDEX;
-   private static final int WMA_INDEX;
-   private static final int GSM610_INDEX;
-   private static final int RECORD_PCM_INDEX;
-   private static final int QCELP_INDEX;
-   private static final int EVRC_INDEX;
-   private static final int MAX_INDEX;
-   private static final boolean DEBUG;
-   private static final int BIG_SESSION;
+   public static final int NO_SESSION = -1;
+   private static final int WAVE_INDEX = 0;
+   private static final int MP3_INDEX = 1;
+   private static final int AMR_INDEX = 2;
+   private static final int PCM_INDEX = 3;
+   private static final int AAC_INDEX = 4;
+   private static final int WMA_INDEX = 5;
+   private static final int GSM610_INDEX = 6;
+   private static final int RECORD_PCM_INDEX = 7;
+   private static final int QCELP_INDEX = 8;
+   private static final int EVRC_INDEX = 9;
+   private static final int MAX_INDEX = 10;
+   private static final boolean DEBUG = false;
+   private static final int BIG_SESSION = 0;
 
    MediaStreamingManagerImpl() {
       int[] handles = MediaNatives.getStreamingSessionHandles();

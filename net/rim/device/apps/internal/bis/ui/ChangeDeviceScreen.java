@@ -15,8 +15,8 @@ import net.rim.device.apps.internal.bis.utils.InputValidationUtils;
 public final class ChangeDeviceScreen extends UserSettingsScreen {
    private BasicEditField _pinEdit;
    private BasicEditField _imeiEdit;
-   private static final String PARAM_PIN;
-   private static final String PARAM_IMEI;
+   private static final String PARAM_PIN = "pin";
+   private static final String PARAM_IMEI = "imei";
 
    public ChangeDeviceScreen() {
       super(29);

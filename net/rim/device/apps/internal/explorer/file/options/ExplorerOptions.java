@@ -11,24 +11,24 @@ import net.rim.device.apps.api.options.OptionsBase;
 public final class ExplorerOptions extends OptionsBase {
    private ExplorerOptions$PersistedExplorerOptions _persistedExplorerOptions = (ExplorerOptions$PersistedExplorerOptions)this.getPersistentObject()
       .getContents();
-   private static final long EXPLORER_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_EXPLORER_OPTIONS;
+   private static final long EXPLORER_OPTIONS_SYNC_ITEM = -4805530286105058278L;
+   private static final long PERSISTED_EXPLORER_OPTIONS = -7371350987134899973L;
    public static final int MIN_NUMBER_OF_COLUMNS = Display.getWidth() / 100;
    public static final int MAX_NUMBER_OF_COLUMNS = Display.getWidth() / 60;
    public static final int DEFAULT_NUMBER_OF_COLUMNS = Display.getWidth() / 100;
-   public static final int FILELIST_SORT_PROPERTY_DATE;
-   public static final int FILELIST_SORT_PROPERTY_FILENAME;
-   public static final int FILELIST_SORT_DIRECTION_ASCENDING;
-   public static final int FILELIST_SORT_DIRECTION_DESCENDING;
-   public static final int DEFAULT_SORT_PROPERTY;
-   public static final int DEFAULT_SORT_DIRECTION;
-   public static final int OPTION_SLIDE_SHOW_DISPLAY_TIME;
-   public static final int OPTION_VIEW_MODE;
-   public static final int OPTION_NUMBER_OF_COLUMNS;
-   public static final int OPTION_SORT_PROPERTY;
-   public static final int OPTION_SORT_DIRECTION;
-   public static final int MIN_SLIDESHOW_TIME;
-   public static final int MAX_SLIDESHOW_TIME;
+   public static final int FILELIST_SORT_PROPERTY_DATE = 0;
+   public static final int FILELIST_SORT_PROPERTY_FILENAME = 1;
+   public static final int FILELIST_SORT_DIRECTION_ASCENDING = 0;
+   public static final int FILELIST_SORT_DIRECTION_DESCENDING = 1;
+   public static final int DEFAULT_SORT_PROPERTY = 0;
+   public static final int DEFAULT_SORT_DIRECTION = 1;
+   public static final int OPTION_SLIDE_SHOW_DISPLAY_TIME = 1;
+   public static final int OPTION_VIEW_MODE = 2;
+   public static final int OPTION_NUMBER_OF_COLUMNS = 3;
+   public static final int OPTION_SORT_PROPERTY = 4;
+   public static final int OPTION_SORT_DIRECTION = 5;
+   public static final int MIN_SLIDESHOW_TIME = 1;
+   public static final int MAX_SLIDESHOW_TIME = 15;
    private static ExplorerOptions _options;
 
    private ExplorerOptions() {

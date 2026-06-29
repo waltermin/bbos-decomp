@@ -8,8 +8,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class SetupWizardOptions extends OptionsBase {
    private SetupWizardOptions$PersistedOptions _persistedOptions;
-   private static final long SYNC_ITEM;
-   private static final long PERSISTED_OPTIONS;
+   private static final long SYNC_ITEM = 1589882223105669807L;
+   private static final long PERSISTED_OPTIONS = -1311642877708701802L;
    private static SetupWizardOptions _options;
 
    private SetupWizardOptions() {

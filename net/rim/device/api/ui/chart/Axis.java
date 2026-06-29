@@ -18,19 +18,19 @@ public class Axis {
    private int _scaleTickSpacing;
    private boolean _showValues = true;
    ChartField _field;
-   private static final int AXIS_WIDTH;
-   public static final int PADDING_NONE;
-   public static final int PADDING_LOW;
-   public static final int PADDING_MEDIUM;
-   public static final int PADDING_HIGH;
-   private static final int X_SCALE_SPACER;
-   private static final int Y_SCALE_SPACER;
-   private static final int SCALE_TICK_BREADTH;
-   private static final int SCALE_TICK_LENGTH;
-   public static final int EDGE_TOP;
-   public static final int EDGE_RIGHT;
-   public static final int EDGE_BOTTOM;
-   public static final int EDGE_LEFT;
+   private static final int AXIS_WIDTH = 2;
+   public static final int PADDING_NONE = 0;
+   public static final int PADDING_LOW = 12;
+   public static final int PADDING_MEDIUM = 18;
+   public static final int PADDING_HIGH = 24;
+   private static final int X_SCALE_SPACER = 2;
+   private static final int Y_SCALE_SPACER = 4;
+   private static final int SCALE_TICK_BREADTH = 2;
+   private static final int SCALE_TICK_LENGTH = 6;
+   public static final int EDGE_TOP = 0;
+   public static final int EDGE_RIGHT = 1;
+   public static final int EDGE_BOTTOM = 2;
+   public static final int EDGE_LEFT = 3;
 
    public Axis(ChartField field) {
       this._field = field;

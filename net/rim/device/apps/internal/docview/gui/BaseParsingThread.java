@@ -4,7 +4,7 @@ class BaseParsingThread implements Runnable {
    protected DocViewParser _coreData;
    protected int _consecutiveBlockCount;
    protected DocViewParserObj _notifyObj;
-   private static final long PARSE_TIMEOUT;
+   private static final long PARSE_TIMEOUT = 15000L;
 
    BaseParsingThread(DocViewParser coreData, int consecutiveBlockCount, DocViewParserObj notifyObj) {
       if (coreData != null && consecutiveBlockCount > 0) {

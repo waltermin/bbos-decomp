@@ -66,11 +66,11 @@ public class ManagementServiceImpl
    private static int[] _events = new int[]{
       404, 403, 406, 405, 1000, -804651005, 200, 201, 202, -804651004, 500, 107, 203, 204, 521863424, 1886404972, 16827085, 1466703643, 133481, 1813977857
    };
-   private static final String RUNTIME_AG_REGISTRATION_SERVLET_SUBPATH;
-   private static final String IPPP_SERVICE_CID;
-   private static final long MILLIS_IN_24HOURS;
-   private static final long MILLIS_IN_30DAYS;
-   private static final long MILLIS_IN_19HOURS;
+   private static final String RUNTIME_AG_REGISTRATION_SERVLET_SUBPATH = "/DeviceInitListener";
+   private static final String IPPP_SERVICE_CID = "IPPP";
+   private static final long MILLIS_IN_24HOURS = 86400000L;
+   private static final long MILLIS_IN_30DAYS = 2592000000L;
+   private static final long MILLIS_IN_19HOURS = 68400000L;
    static Class class$net$rim$wica$runtime$persistence$PersistenceService;
    static Class class$net$rim$wica$runtime$comm$CommunicationService;
    static Class class$net$rim$wica$runtime$security$SecurityService;

@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.supl;
 
 final class Min implements SetId {
    private long min;
-   static final byte MIN_BIT_SIZE;
+   static final byte MIN_BIT_SIZE = 34;
 
    @Override
    public final void decode(Nibbler nib) {

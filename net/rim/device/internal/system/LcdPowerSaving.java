@@ -12,9 +12,9 @@ public final class LcdPowerSaving {
    private int _reserved1;
    private int _reserved2;
    private int _reserved3;
-   public static final int PARTIAL_DISPLAY_MODE;
-   public static final int PARTIAL_COLOUR_MODE;
-   public static final int SLEEP_MODE;
+   public static final int PARTIAL_DISPLAY_MODE = 0;
+   public static final int PARTIAL_COLOUR_MODE = 1;
+   public static final int SLEEP_MODE = 2;
    private static LcdPowerSaving _singleton = new LcdPowerSaving();
 
    private LcdPowerSaving() {

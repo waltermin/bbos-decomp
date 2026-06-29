@@ -7,7 +7,7 @@ public final class PKCS1UnformatterEngine implements BlockUnformatterEngine {
    private int _inputBlockLength;
    private int _outputBlockLength;
    private byte[] _decryptedInput;
-   private static final int MIN_OVERHEAD;
+   private static final int MIN_OVERHEAD = 11;
 
    public PKCS1UnformatterEngine(PrivateKeyDecryptorEngine decryptorEngine) {
       if (decryptorEngine == null) {

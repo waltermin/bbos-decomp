@@ -13,8 +13,8 @@ import net.rim.device.internal.proxy.Proxy;
 
 public class WizardIdleHelper implements RealtimeClockListener, PhoneEventListener {
    private ApplicationDescriptor _descriptor;
-   private static final long GUID_WIZARD_SCHEDULED_RUN_FAILED;
-   private static final int REMINDER_IDLE_SECONDS;
+   private static final long GUID_WIZARD_SCHEDULED_RUN_FAILED = 4002776916212129330L;
+   private static final int REMINDER_IDLE_SECONDS = 120;
 
    private WizardIdleHelper(ApplicationDescriptor descriptor) {
       this._descriptor = descriptor;

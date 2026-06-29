@@ -17,9 +17,9 @@ class DateSortedSeparatedMessageArray$ApplyRunnable implements DialogWithBackgro
    boolean _askedToStop;
    DialogWithBackgroundThread _DialogWithBackgroundThread;
    private final DateSortedSeparatedMessageArray this$0;
-   private static final int PERSISTENT_GC_THRESHOLD;
-   private static final int NOTIFY_THRESHOLD;
-   private static final int PROGRESS_INCREMENT_DIVISOR;
+   private static final int PERSISTENT_GC_THRESHOLD = 10;
+   private static final int NOTIFY_THRESHOLD = 64;
+   private static final int PROGRESS_INCREMENT_DIVISOR = 10;
 
    DateSortedSeparatedMessageArray$ApplyRunnable(DateSortedSeparatedMessageArray _1) {
       this.this$0 = _1;

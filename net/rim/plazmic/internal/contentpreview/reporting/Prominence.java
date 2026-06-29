@@ -3,7 +3,7 @@ package net.rim.plazmic.internal.contentpreview.reporting;
 public final class Prominence {
    private String _name;
    private int _level;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/reporting/Prominence.java#1 $";
    public static final Prominence LOW = new Prominence("LOW", 1);
    public static final Prominence MEDIUM_LOW = new Prominence("MEDIUM_LOW", 2);
    public static final Prominence MEDIUM = new Prominence("MEDIUM", 3);

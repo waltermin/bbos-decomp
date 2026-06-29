@@ -14,11 +14,11 @@ final class CallLogsOption extends VoiceOptionsListItem {
    private RadioButtonField _allCallsRb;
    private RadioButtonField _allCallsNoDirectConnectRb;
    private int _originalSelectedIndex;
-   private static final int MISSED_CALLS_RADIO_BTN_INDEX;
-   private static final int ALL_CALLS_RADIO_BTN_INDEX;
-   private static final int ALL_CALLS_NO_DC_RADIO_BTN_INDEX;
-   private static final int NONE_RADIO_BTN_INDEX_WITH_NO_DC_SUPPORT;
-   private static final int NONE_RADIO_BTN_INDEX_WITH_DC_SUPPORT;
+   private static final int MISSED_CALLS_RADIO_BTN_INDEX = 0;
+   private static final int ALL_CALLS_RADIO_BTN_INDEX = 1;
+   private static final int ALL_CALLS_NO_DC_RADIO_BTN_INDEX = 2;
+   private static final int NONE_RADIO_BTN_INDEX_WITH_NO_DC_SUPPORT = 2;
+   private static final int NONE_RADIO_BTN_INDEX_WITH_DC_SUPPORT = 3;
 
    public CallLogsOption(Object context) {
       super(PhoneResources.getString(187), context);

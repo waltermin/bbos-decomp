@@ -1,41 +1,41 @@
 package net.rim.wica.common.builtindata.componentdefn;
 
 public class EventCompDef extends DataComponentDefinition {
-   public static final String EVENT_COMP_NAME;
-   public static final int UID_ID;
+   public static final String EVENT_COMP_NAME = "Event";
+   public static final int UID_ID = 0;
    public static final int[] KEYS = new int[]{0, -804651005, 1, 3};
-   public static final String UID;
-   public static final int UID_TYPE;
-   public static final int SUMMARY_ID;
-   public static final String SUMMARY;
-   public static final int SUMMARY_TYPE;
-   public static final int LOCATION_ID;
-   public static final String LOCATION;
-   public static final int LOCATION_TYPE;
-   public static final int NOTE_ID;
-   public static final String NOTE;
-   public static final int NOTE_TYPE;
-   public static final int START_ID;
-   public static final String START;
-   public static final int START_TYPE;
-   public static final int END_ID;
-   public static final String END;
-   public static final int END_TYPE;
-   public static final int ALARM_ID;
-   public static final String ALARM;
-   public static final int ALARM_TYPE;
-   public static final int REPEAT_RULE_ID;
-   public static final String REPEAT_RULE;
-   public static final int REPEAT_RULE_TYPE;
-   public static final int ATTENDEES_ID;
-   public static final String ATTENDEES;
-   public static final int ATTENDEES_TYPE;
-   public static final int FREE_BUSY_ID;
-   public static final String FREE_BUSY;
-   public static final int FREE_BUSY_TYPE;
-   public static final int ALLDAY_ID;
-   public static final String ALLDAY;
-   public static final int ALLDAY_TYPE;
+   public static final String UID = "uid";
+   public static final int UID_TYPE = 1;
+   public static final int SUMMARY_ID = 1;
+   public static final String SUMMARY = "summary";
+   public static final int SUMMARY_TYPE = 3;
+   public static final int LOCATION_ID = 2;
+   public static final String LOCATION = "location";
+   public static final int LOCATION_TYPE = 3;
+   public static final int NOTE_ID = 3;
+   public static final String NOTE = "note";
+   public static final int NOTE_TYPE = 3;
+   public static final int START_ID = 4;
+   public static final String START = "start";
+   public static final int START_TYPE = 4;
+   public static final int END_ID = 5;
+   public static final String END = "end";
+   public static final int END_TYPE = 4;
+   public static final int ALARM_ID = 6;
+   public static final String ALARM = "alarm";
+   public static final int ALARM_TYPE = 4;
+   public static final int REPEAT_RULE_ID = 7;
+   public static final String REPEAT_RULE = "repeatRule";
+   public static final int REPEAT_RULE_TYPE = 6;
+   public static final int ATTENDEES_ID = 8;
+   public static final String ATTENDEES = "attendees";
+   public static final int ATTENDEES_TYPE = 32774;
+   public static final int FREE_BUSY_ID = 9;
+   public static final String FREE_BUSY = "free_busy";
+   public static final int FREE_BUSY_TYPE = 5;
+   public static final int ALLDAY_ID = 10;
+   public static final String ALLDAY = "allday";
+   public static final int ALLDAY_TYPE = 0;
    private static final int[] _fieldTypes = new int[]{
       1,
       3,
@@ -85,10 +85,10 @@ public class EventCompDef extends DataComponentDefinition {
    private static final String[] _fieldNames = new String[]{
       "uid", "summary", "location", "note", "start", "end", "alarm", "repeatRule", "attendees", "free_busy", "allday"
    };
-   public static final int EVENT_NUM_OBJECT_FIELDS;
-   public static final int EVENT_NUM_INT_FIELDS;
-   public static final int EVENT_NUM_LONG_FIELDS;
-   public static final int EVENT_NUM_BOOLEAN_FIELDS;
+   public static final int EVENT_NUM_OBJECT_FIELDS = 4;
+   public static final int EVENT_NUM_INT_FIELDS = 2;
+   public static final int EVENT_NUM_LONG_FIELDS = 3;
+   public static final int EVENT_NUM_BOOLEAN_FIELDS = 1;
    private static EventCompDef _instance;
 
    public static EventCompDef getInstance() {

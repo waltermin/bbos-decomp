@@ -51,7 +51,7 @@ public class Reader implements ReaderConstants {
    private Reader$EditDistanceFrequencyModifier _spellCheckFrequencyModifier;
    private PredictiveWordMatch _spellCheckVariantsExpr;
    private PredictiveWordMatchState _spellCheckVariantsState;
-   public static final int WORDLIST_MAJOR_VERSION;
+   public static final int WORDLIST_MAJOR_VERSION = 1;
 
    public SimplePrefixTable getSimplePrefixTable(int aLevel) {
       this.iSimplePrefixTable.setLevel(aLevel);

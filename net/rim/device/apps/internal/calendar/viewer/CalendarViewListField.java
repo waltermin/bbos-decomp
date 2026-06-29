@@ -15,7 +15,7 @@ class CalendarViewListField extends Field {
    private int _anchorIndex = -1;
    private int[] _cumulativeHeights;
    private boolean _multiSelectAllowed;
-   private static final int EMPTY_LIST_HEIGHT;
+   private static final int EMPTY_LIST_HEIGHT = 8;
 
    CalendarViewListField(CalendarViewListField$CalendarViewListFieldCallback callback, boolean multiSelectAllowed) {
       super(18014398509481984L);

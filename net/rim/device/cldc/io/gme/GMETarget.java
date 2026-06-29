@@ -4,9 +4,9 @@ public final class GMETarget {
    public String address;
    public String redirect;
    public int type;
-   public static final int TYPE_UNKNOWN;
-   public static final int TYPE_SERVICE;
-   public static final int TYPE_PEER;
+   public static final int TYPE_UNKNOWN = 0;
+   public static final int TYPE_SERVICE = 1;
+   public static final int TYPE_PEER = 2;
 
    public GMETarget() {
       this(null, 1, null);

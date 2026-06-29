@@ -22,15 +22,15 @@ final class FileTransferBlob extends PeerDataBlob implements PersistableRIMModel
    String _application;
    int _id;
    int _sessionId;
-   private static final int CONTENT_TYPE;
-   private static final int FILENAME;
-   private static final int DATA;
-   private static final int SIZE;
-   private static final int INT;
-   private static final int URL;
-   private static final int APP;
-   private static final int ID;
-   private static final int SESSION;
+   private static final int CONTENT_TYPE = 1;
+   private static final int FILENAME = 2;
+   private static final int DATA = 3;
+   private static final int SIZE = 4;
+   private static final int INT = 5;
+   private static final int URL = 6;
+   private static final int APP = 7;
+   private static final int ID = 8;
+   private static final int SESSION = 9;
 
    @Override
    public final Object clone(Object context) {

@@ -3,9 +3,9 @@ package net.rim.device.apps.api.ui;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 
 public class BooleanChoiceField extends ObjectChoiceField {
-   public static final int YES_NO;
-   public static final int ON_OFF;
-   public static final int ENABLED_DISABLED;
+   public static final int YES_NO = 0;
+   public static final int ON_OFF = 1;
+   public static final int ENABLED_DISABLED = 2;
 
    public BooleanChoiceField(String label, String[] customValues, boolean initialValue) {
       this(label, customValues, initialValue, 0);

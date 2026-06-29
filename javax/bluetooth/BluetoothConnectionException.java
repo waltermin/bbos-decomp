@@ -4,12 +4,12 @@ import java.io.IOException;
 
 public class BluetoothConnectionException extends IOException {
    private int _error;
-   public static final int UNKNOWN_PSM;
-   public static final int SECURITY_BLOCK;
-   public static final int NO_RESOURCES;
-   public static final int FAILED_NOINFO;
-   public static final int TIMEOUT;
-   public static final int UNACCEPTABLE_PARAMS;
+   public static final int UNKNOWN_PSM = 1;
+   public static final int SECURITY_BLOCK = 2;
+   public static final int NO_RESOURCES = 3;
+   public static final int FAILED_NOINFO = 4;
+   public static final int TIMEOUT = 5;
+   public static final int UNACCEPTABLE_PARAMS = 6;
 
    public BluetoothConnectionException(int error) {
       this.checkError(error);

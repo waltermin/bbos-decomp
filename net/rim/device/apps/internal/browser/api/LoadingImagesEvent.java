@@ -4,8 +4,8 @@ import net.rim.device.api.browser.field.Event;
 
 public final class LoadingImagesEvent extends Event {
    private int _state;
-   public static final int STATE_INITIATE;
-   public static final int STATE_DONE;
+   public static final int STATE_INITIATE = 0;
+   public static final int STATE_DONE = 1;
 
    public LoadingImagesEvent(Object src, int state) {
       super(1, src);

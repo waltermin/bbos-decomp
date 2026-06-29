@@ -15,9 +15,9 @@ public class WordLearningSimplePrefixTable extends LearningSimplePrefixTable {
    private int _currFileSize;
    private int _trimmedWordCount;
    private WordLearningSimplePrefixTable$ReadInfo _info = new WordLearningSimplePrefixTable$ReadInfo();
-   public static final int MAX_WORDS_PER_TABLE;
-   static final int ACTION_ADD;
-   static final int ACTION_UPDATE_TIME_STAMP;
+   public static final int MAX_WORDS_PER_TABLE = 255;
+   static final int ACTION_ADD = 0;
+   static final int ACTION_UPDATE_TIME_STAMP = 1;
 
    public WordLearningSimplePrefixTable(int aLevel, LearningReader aReader, byte type) {
       super(aLevel, aReader);

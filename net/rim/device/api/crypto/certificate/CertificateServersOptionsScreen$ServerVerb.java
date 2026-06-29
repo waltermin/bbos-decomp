@@ -7,9 +7,9 @@ import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 class CertificateServersOptionsScreen$ServerVerb extends Verb {
    private int _type;
    private final CertificateServersOptionsScreen this$0;
-   public static final int SAVE;
-   public static final int DELETE;
-   public static final int CLOSE;
+   public static final int SAVE = 0;
+   public static final int DELETE = 1;
+   public static final int CLOSE = 2;
 
    public CertificateServersOptionsScreen$ServerVerb(CertificateServersOptionsScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

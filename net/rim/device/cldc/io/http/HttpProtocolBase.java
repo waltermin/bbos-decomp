@@ -26,12 +26,12 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
    protected boolean _outputStreamOpened;
    private ResourceBundle _resources;
    private boolean _untrustedMIDlet = MIDletSecurity.checkUntrustedMIDlet();
-   protected static final int STATE_SETUP;
-   protected static final int STATE_CONNECTED;
-   protected static final int STATE_CLOSED;
-   protected static final int STATE_REQUEST_WRITTEN;
-   protected static final int STATE_ABOUT_TO_WRITE_REQUEST;
-   private static final String UNTRUSTED_USER_AGENT_TOKEN;
+   protected static final int STATE_SETUP = 0;
+   protected static final int STATE_CONNECTED = 1;
+   protected static final int STATE_CLOSED = 2;
+   protected static final int STATE_REQUEST_WRITTEN = 3;
+   protected static final int STATE_ABOUT_TO_WRITE_REQUEST = 4;
+   private static final String UNTRUSTED_USER_AGENT_TOKEN = "UNTRUSTED/1.0";
 
    @Override
    public void close() {

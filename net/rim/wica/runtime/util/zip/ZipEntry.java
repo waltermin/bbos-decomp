@@ -10,8 +10,8 @@ public class ZipEntry {
    private String _name;
    private int _offset;
    private int _size;
-   public static final int STORED;
-   public static final int DEFLATE;
+   public static final int STORED = 0;
+   public static final int DEFLATE = 8;
 
    ZipEntry(byte[] bytes, int offset) {
       this._bytes = bytes;

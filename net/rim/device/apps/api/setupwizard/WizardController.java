@@ -29,12 +29,12 @@ public class WizardController implements WizardPage, ValidationProvider {
    private LogManager _logManager;
    private StringBuffer _buffer;
    private Object[] _wizardControllerListeners = new Object[0];
-   public static final int NO_PROGRESS_INCREMENT;
-   public static final int NO_CLOSE_ON_ESCAPE_KEY;
-   public static final int DEFAULT_FLAGS;
-   private static final int LOG_IN;
-   private static final int LOG_OUT;
-   private static final int LOG_SKIP;
+   public static final int NO_PROGRESS_INCREMENT = 1;
+   public static final int NO_CLOSE_ON_ESCAPE_KEY = 2;
+   public static final int DEFAULT_FLAGS = 0;
+   private static final int LOG_IN = 0;
+   private static final int LOG_OUT = 1;
+   private static final int LOG_SKIP = 2;
 
    protected void calculateProgress() {
       int visibleMax = 0;

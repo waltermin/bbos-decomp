@@ -8,7 +8,7 @@ public final class FontFactory {
    private String _fontFamilyName;
    private Font _baseFont;
    private IntHashtable _fontHash = (IntHashtable)(new Object());
-   private static final int PREF_HEIGHT;
+   private static final int PREF_HEIGHT = 10;
 
    public final void setFontFamilyName(String fontFamily) {
       if (this._fontFamilyName == null || this._baseFont == null || fontFamily.compareTo(this._baseFont.getFontFamily().toString()) != 0) {

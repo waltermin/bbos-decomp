@@ -27,8 +27,8 @@ public class DatagramTransportBase extends TransportBase implements GlobalEventL
    private Datagram[] _sendDatagramList = new Datagram[4];
    private Thread[] _sendThreadList = new Thread[4];
    private int _sendListCount;
-   private static final int MAX_DATAGRAM_IDS;
-   private static final int INITIAL_SEND_CAPACITY;
+   private static final int MAX_DATAGRAM_IDS = 16;
+   private static final int INITIAL_SEND_CAPACITY = 4;
 
    @Override
    public void init() {

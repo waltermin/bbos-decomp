@@ -4,12 +4,12 @@ public class TTSEngineEvent {
    private int _type;
    private int _id;
    private Object _listener;
-   public static final int TTS_EVENT_STARTED;
-   public static final int TTS_EVENT_ENDED;
-   public static final int TTS_EVENT_CANCELLED;
-   public static final int TTS_ENGINE_STARTED;
-   public static final int TTS_ENGINE_STOPPED;
-   public static final int TTS_ENGINE_DEFOCUSED;
+   public static final int TTS_EVENT_STARTED = 117440514;
+   public static final int TTS_EVENT_ENDED = 117440516;
+   public static final int TTS_EVENT_CANCELLED = 117440544;
+   public static final int TTS_ENGINE_STARTED = 1;
+   public static final int TTS_ENGINE_STOPPED = 2;
+   public static final int TTS_ENGINE_DEFOCUSED = 3;
 
    public TTSEngineEvent(int type, int id, Object listener) {
       this._type = type;

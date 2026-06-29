@@ -10,14 +10,14 @@ import net.rim.device.internal.ui.ScaleBitmap;
 
 final class CallDisplayDialog$CallDisplayManager extends Manager {
    private final CallDisplayDialog this$0;
-   private static final int ALTLINE;
-   private static final int SEPARATOR;
-   private static final int TITLE;
-   private static final int ANSWERIGNOREBACKGROUND;
-   private static final int ANSWERIGNOREICONS;
-   private static final int ANSWERIGNORETEXT;
-   private static final int CALLER_ID;
-   private static final int PICTURE;
+   private static final int ALTLINE = 0;
+   private static final int SEPARATOR = 1;
+   private static final int TITLE = 2;
+   private static final int ANSWERIGNOREBACKGROUND = 3;
+   private static final int ANSWERIGNOREICONS = 4;
+   private static final int ANSWERIGNORETEXT = 5;
+   private static final int CALLER_ID = 6;
+   private static final int PICTURE = 7;
 
    CallDisplayDialog$CallDisplayManager(CallDisplayDialog _1) {
       super(0);

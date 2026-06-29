@@ -8,13 +8,13 @@ import net.rim.device.api.util.IntEnumeration;
 import net.rim.device.api.util.IntIntHashtable;
 
 final class ExplorerOptions$ExplorerOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int SLIDESHOW_DISPLAY_TIME_TAG;
-   private static final int DEPRECATED_VIEW_MODE_TAG;
-   private static final int NUMBER_OF_COLUMNS_TAG;
-   private static final int SORT_PROPERTY_TAG;
-   private static final int SORT_DIRECTION_TAG;
-   private static final int VIEW_MODE_TAG;
-   private static final int DB_VERSION;
+   private static final int SLIDESHOW_DISPLAY_TIME_TAG = 1;
+   private static final int DEPRECATED_VIEW_MODE_TAG = 2;
+   private static final int NUMBER_OF_COLUMNS_TAG = 3;
+   private static final int SORT_PROPERTY_TAG = 4;
+   private static final int SORT_DIRECTION_TAG = 5;
+   private static final int VIEW_MODE_TAG = 6;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

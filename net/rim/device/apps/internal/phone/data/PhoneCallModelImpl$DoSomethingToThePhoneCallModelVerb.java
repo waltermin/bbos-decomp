@@ -6,10 +6,10 @@ import net.rim.device.apps.api.framework.verb.Verb;
 final class PhoneCallModelImpl$DoSomethingToThePhoneCallModelVerb extends Verb {
    private int _whatToDo;
    private final PhoneCallModelImpl this$0;
-   public static final int OPEN;
-   public static final int MARK_OPENED;
-   public static final int MARK_UNOPENED;
-   public static final int FORWARD;
+   public static final int OPEN = 0;
+   public static final int MARK_OPENED = 1;
+   public static final int MARK_UNOPENED = 2;
+   public static final int FORWARD = 3;
 
    PhoneCallModelImpl$DoSomethingToThePhoneCallModelVerb(PhoneCallModelImpl _1, int whatToDo, int ordering) {
       super(ordering);

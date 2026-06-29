@@ -1,7 +1,7 @@
 package net.rim.device.internal.media;
 
 final class AmrDuration {
-   private static final int AUDIO_DATA_OFFSET;
+   private static final int AUDIO_DATA_OFFSET = 6;
    private static final int[] bits = new int[]{
       95,
       103,

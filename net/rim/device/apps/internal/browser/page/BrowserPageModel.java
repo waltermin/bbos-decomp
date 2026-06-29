@@ -65,16 +65,16 @@ public final class BrowserPageModel
    private int _updateStart;
    private int _updatePeriod;
    private long _lastAccessedTime;
-   private static final int PAGE_MODEL_VERSION;
-   private static final int MODEL_RESULT_VERSION;
-   public static final int AUTO_UPDATE_NONE;
-   public static final int AUTO_UPDATE_WHEN_PERIOD_EXPIRED;
-   static final int ICON_PAINT_WIDTH;
-   static final int TIME_PAINT_WIDTH;
-   static final int DESCRIPTION_PAINT_WIDTH;
-   static final int ICON_COLUMN;
-   static final int TIME_COLUMN;
-   static final int DESCRIPTION_COLUMN;
+   private static final int PAGE_MODEL_VERSION = 4;
+   private static final int MODEL_RESULT_VERSION = 4;
+   public static final int AUTO_UPDATE_NONE = 0;
+   public static final int AUTO_UPDATE_WHEN_PERIOD_EXPIRED = 1;
+   static final int ICON_PAINT_WIDTH = 15;
+   static final int TIME_PAINT_WIDTH = 35;
+   static final int DESCRIPTION_PAINT_WIDTH = 105;
+   static final int ICON_COLUMN = 0;
+   static final int TIME_COLUMN = 1;
+   static final int DESCRIPTION_COLUMN = 2;
    private static WeakReference _dataBufferWR = (WeakReference)(new Object(null));
    private static ContextObject _notificationsContext = (ContextObject)(new Object());
 

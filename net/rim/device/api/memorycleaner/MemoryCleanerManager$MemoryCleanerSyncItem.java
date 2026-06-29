@@ -9,11 +9,11 @@ import net.rim.device.api.util.DataBuffer;
 
 class MemoryCleanerManager$MemoryCleanerSyncItem extends OTASyncCapableSyncItem {
    private final MemoryCleanerManager this$0;
-   private static final int CLEAN_WHEN_HOLSTERED;
-   private static final int CLEAN_WHEN_IDLE;
-   private static final int SHOW_APP_ON_RIBBON;
-   private static final int IDLE_TIMEOUT;
-   private static final int USER_CLEAN_ENABLED;
+   private static final int CLEAN_WHEN_HOLSTERED = 1;
+   private static final int CLEAN_WHEN_IDLE = 2;
+   private static final int SHOW_APP_ON_RIBBON = 3;
+   private static final int IDLE_TIMEOUT = 4;
+   private static final int USER_CLEAN_ENABLED = 5;
 
    MemoryCleanerManager$MemoryCleanerSyncItem(MemoryCleanerManager _1) {
       this.this$0 = _1;

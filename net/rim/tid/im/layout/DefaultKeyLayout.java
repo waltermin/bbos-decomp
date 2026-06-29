@@ -8,7 +8,7 @@ import net.rim.device.api.ui.Keypad;
 public class DefaultKeyLayout {
    private String[] MAP_LOCATIONS = new String[]{"net_rim_platform_im_resource", "net_rim_tid"};
    private SLKeyLayout _layout;
-   private static final long REGISTRY_NAME;
+   private static final long REGISTRY_NAME = 7549901632574121075L;
    private static DefaultKeyLayout _instance;
 
    private DefaultKeyLayout() {

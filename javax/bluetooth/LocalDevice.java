@@ -14,7 +14,7 @@ public class LocalDevice {
    private BluetoothDeviceManagerImpl _btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
    private DeviceClass _deviceClass = new DeviceClass(5243404);
    private DiscoveryAgent _discoveryAgent = new DiscoveryAgent(this._btManager);
-   private static final long GUID;
+   private static final long GUID = -8665271906926764260L;
 
    private LocalDevice() {
    }

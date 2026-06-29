@@ -198,26 +198,26 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    private boolean _useReducedAcceptHeader = true;
    private int _ykMemLimitHint = 256;
    private boolean _wlanEnabled;
-   public static final String RIM_ID_NAME;
-   public static final int NO_COVERAGE;
-   public static final int COVERAGE_SUFFICIENT_FOR_WAP;
-   public static final int COVERAGE_SUFFICIENT_FOR_MDS;
-   private static final long ACCEPT_VALUE_PROVIDERS_REGISTRY_KEY;
-   private static final String TEST_FILE_MAGIC_COOKIE;
-   private static final long TEST_FILE_WAIT_INTERVAL;
-   public static final String TYPE_ACTIVATE_BROWSER;
-   public static final String TYPE_FETCH_URL;
-   public static final String TYPE_OPEN_CHANNEL;
-   public static final int STATE_LOADED;
-   public static final int STATE_LOADING_FETCHING;
-   public static final int STATE_LOADING_RENDERING;
-   public static final int STATE_LOADING_SECONDARY_URLS;
-   public static final int STATE_EXECUTING_SCRIPT;
-   public static final int STATE_TERMINATED;
-   public static final int STATE_LOADING_NEGOTIATING;
-   public static final int STATE_LOADING_SECURING;
-   public static final int STATE_LOADING_IMAGE_FRAGMENTS;
-   public static final int STATE_LOADING_WAITING;
+   public static final String RIM_ID_NAME = "XXX_RIM_ID";
+   public static final int NO_COVERAGE = 0;
+   public static final int COVERAGE_SUFFICIENT_FOR_WAP = 1;
+   public static final int COVERAGE_SUFFICIENT_FOR_MDS = 2;
+   private static final long ACCEPT_VALUE_PROVIDERS_REGISTRY_KEY = -728596185634430319L;
+   private static final String TEST_FILE_MAGIC_COOKIE = "_92d8ccd86360b48b.wml";
+   private static final long TEST_FILE_WAIT_INTERVAL = 20000L;
+   public static final String TYPE_ACTIVATE_BROWSER = "activate";
+   public static final String TYPE_FETCH_URL = "url";
+   public static final String TYPE_OPEN_CHANNEL = "channel";
+   public static final int STATE_LOADED = 0;
+   public static final int STATE_LOADING_FETCHING = 1;
+   public static final int STATE_LOADING_RENDERING = 2;
+   public static final int STATE_LOADING_SECONDARY_URLS = 3;
+   public static final int STATE_EXECUTING_SCRIPT = 4;
+   public static final int STATE_TERMINATED = 5;
+   public static final int STATE_LOADING_NEGOTIATING = 6;
+   public static final int STATE_LOADING_SECURING = 7;
+   public static final int STATE_LOADING_IMAGE_FRAGMENTS = 8;
+   public static final int STATE_LOADING_WAITING = 9;
 
    public final void activateConfig(String config, boolean refreshAcceptValues) {
       if (this._currentSession != null) {

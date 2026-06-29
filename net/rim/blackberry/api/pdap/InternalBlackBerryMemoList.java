@@ -1,7 +1,7 @@
 package net.rim.blackberry.api.pdap;
 
 public interface InternalBlackBerryMemoList extends BlackBerryMemoList {
-   String LIST_NAME;
+   String LIST_NAME = "Memo List";
 
    void initialize(int var1);
 

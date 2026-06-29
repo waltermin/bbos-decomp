@@ -14,7 +14,7 @@ import net.rim.tid.im.conv.repository.ResultContainer;
 
 public class PairLearningSimplePrefixTable extends LearningSimplePrefixTable {
    protected PairLearningPrefixTableHelper _helper = new PairLearningPrefixTableHelper();
-   private static final int MAX_INVOCATION_COUNT;
+   private static final int MAX_INVOCATION_COUNT = 127;
 
    public PairLearningSimplePrefixTable(int aLevel, LearningReader aReader, byte type) {
       super(aLevel, aReader);

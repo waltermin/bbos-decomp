@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.supl;
 
 final class KeyIdentity {
    private byte[] keyIdentity = new byte[16];
-   static final short KEY_IDENTITY_BIT_SIZE;
-   static final short KEY_IDENTITY_OCTET_SIZE;
+   static final short KEY_IDENTITY_BIT_SIZE = 128;
+   static final short KEY_IDENTITY_OCTET_SIZE = 16;
 
    final void decode(Nibbler nib) {
       for (int i = 0; i < 16; i++) {

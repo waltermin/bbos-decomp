@@ -26,12 +26,12 @@ final class StandardRibbonBannerField extends Manager implements BannerField, Ri
    private int _height = -1;
    private RibbonComponent$RibbonComponentChangeListener _listener;
    private boolean _twoLine;
-   public static final int SIZE_DONT_CARE;
-   private static final int SMALL_SCREEN_THRESHOLD;
+   public static final int SIZE_DONT_CARE = -1;
+   private static final int SMALL_SCREEN_THRESHOLD = 160;
    private static final int BANNER_HEIGHT = Display.getHeight() < 160 ? 34 : 35;
    private static final int BANNER_WITH_SEPARATOR_HEIGHT = Display.getHeight() < 160 ? 35 : 38;
-   private static final int TITLE_HEIGHT;
-   private static final int NORMAL_BANNERS_SCREEN_HEIGHT;
+   private static final int TITLE_HEIGHT = 8;
+   private static final int NORMAL_BANNERS_SCREEN_HEIGHT = 160;
 
    StandardRibbonBannerField(RibbonComponent$RibbonComponentChangeListener listener, String title, boolean twoLine) {
       super(0);

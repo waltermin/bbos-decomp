@@ -6,7 +6,7 @@ public final class CAST128Key implements SymmetricKey, Persistable {
    private CAST128CryptoToken _cryptoToken;
    private CryptoTokenSymmetricKeyData _cryptoTokenData;
    private int _hashCode;
-   public static final int LENGTH;
+   public static final int LENGTH = 16;
 
    public final CryptoTokenSymmetricKeyData getCryptoTokenData() {
       return this._cryptoTokenData;

@@ -16,16 +16,16 @@ public final class OffOnThread extends Thread implements DataRecoveryListener, O
    private int _waitTmo;
    private int _waitState;
    private int _nextAction;
-   public static final int CYCLE_RADIO;
-   public static final int CYCLE_ATTACH;
-   private static final int OFF_TMO;
-   private static final int ON_TMO;
-   private static final int WAIT_NONE;
-   private static final int WAIT_OFF;
-   private static final int WAIT_ON;
-   private static final int ACTION_NONE;
-   private static final int ACTION_OFF;
-   private static final int ACTION_ON;
+   public static final int CYCLE_RADIO = 0;
+   public static final int CYCLE_ATTACH = 1;
+   private static final int OFF_TMO = 60000;
+   private static final int ON_TMO = 30000;
+   private static final int WAIT_NONE = 0;
+   private static final int WAIT_OFF = 1;
+   private static final int WAIT_ON = 2;
+   private static final int ACTION_NONE = 0;
+   private static final int ACTION_OFF = 1;
+   private static final int ACTION_ON = 2;
 
    OffOnThread(int mode) {
       this._mode = mode;

@@ -28,13 +28,13 @@ public final class SBAppContents extends MainScreen implements ListFieldCallback
    private int _curViewingId = -1;
    private int _numRecords;
    private IconCollection _icons;
-   static final int VIEW_MODE_UNKNOWN;
-   static final int VIEW_MODE_RW;
-   static final int VIEW_MODE_R;
-   static final int VIEW_MODE_RO;
+   static final int VIEW_MODE_UNKNOWN = -1;
+   static final int VIEW_MODE_RW = 0;
+   static final int VIEW_MODE_R = 1;
+   static final int VIEW_MODE_RO = 2;
    private static final int[] DISPLAY_TYPES = new int[]{1, 0, 6, -804651005, 10, 11, 12, -805044219, 1718183726, 10, -805044223, 48};
-   private static final int NUMBER_OF_FONT_SIZES;
-   private static final String PROV_SB_CID;
+   private static final int NUMBER_OF_FONT_SIZES = 3;
+   private static final String PROV_SB_CID = "PROVISIONING";
 
    public SBAppContents(ServiceBook sb, int viewMode) {
       this._sb = sb;

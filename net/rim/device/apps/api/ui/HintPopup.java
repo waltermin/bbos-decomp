@@ -18,7 +18,7 @@ public final class HintPopup extends Screen implements Runnable, UserInputEventL
    private int _duration;
    private HintPollingThread$HintProvider _hintProvider;
    private static Tag TAG = Tag.create("inplace");
-   private static final int DEFAULT_HINT_DURATION;
+   private static final int DEFAULT_HINT_DURATION = 2000;
 
    final Screen getScreenBeneath() {
       return this._screen;

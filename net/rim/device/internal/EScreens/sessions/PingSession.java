@@ -29,20 +29,20 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
    private EditField _pingSizeField = (EditField)(new Object("Ping size/start ping size: ", "2", Integer.MAX_VALUE, 16777216));
    private EditField _timeoutField = (EditField)(new Object("Delay between pings (in secs): ", "3", Integer.MAX_VALUE, 16777216));
    private ObjectChoiceField _incrementalPingsField;
-   private static final int PING_HEADER_SIZE;
-   public static final int MIN_PING_SIZE;
-   public static final int MAX_PING_SIZE;
-   public static final int MAX_RESULT_STRS;
-   public static final int COUNTER_TX;
-   public static final int COUNTER_TX_ERROR;
-   public static final int COUNTER_RX;
-   public static final int COUNTER_RX_ERROR;
-   public static final int COUNTER_RX_TIMEOUT;
-   public static final int COUNTER_MIN_TIME;
-   public static final int COUNTER_MAX_TIME;
-   public static final int COUNTER_AVG_TIME;
-   public static final int COUNTER_PING_SIZE;
-   public static final int MAX_COUNTERS;
+   private static final int PING_HEADER_SIZE = 4;
+   public static final int MIN_PING_SIZE = 1;
+   public static final int MAX_PING_SIZE = 1484;
+   public static final int MAX_RESULT_STRS = 10;
+   public static final int COUNTER_TX = 0;
+   public static final int COUNTER_TX_ERROR = 1;
+   public static final int COUNTER_RX = 2;
+   public static final int COUNTER_RX_ERROR = 3;
+   public static final int COUNTER_RX_TIMEOUT = 4;
+   public static final int COUNTER_MIN_TIME = 5;
+   public static final int COUNTER_MAX_TIME = 6;
+   public static final int COUNTER_AVG_TIME = 7;
+   public static final int COUNTER_PING_SIZE = 8;
+   public static final int MAX_COUNTERS = 9;
    private static final String[] COUNTER_HEADERS = new String[]{
       "Tx Count: ",
       "Tx ErrorCount: ",

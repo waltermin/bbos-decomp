@@ -10,7 +10,7 @@ final class BrowserTitleField extends Field {
    private int _numCerts;
    private int _currentProgress;
    private int _updateDelta;
-   private static final int PADDING;
+   private static final int PADDING = 5;
 
    public BrowserTitleField(String label) {
       this._label = label;

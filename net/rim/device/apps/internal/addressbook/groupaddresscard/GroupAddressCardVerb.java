@@ -10,9 +10,9 @@ final class GroupAddressCardVerb extends Verb {
    private GroupAddressCardModel _gacm;
    private int _type;
    Screen _screenToClose;
-   static final int NEW_GROUP_VERB_TYPE;
-   static final int EDIT_GROUP_VERB_TYPE;
-   static final int VIEW_GROUP_VERB_TYPE;
+   static final int NEW_GROUP_VERB_TYPE = 0;
+   static final int EDIT_GROUP_VERB_TYPE = 1;
+   static final int VIEW_GROUP_VERB_TYPE = 2;
    private static final int[] resourceStringID = new int[]{
       706, 1005, 810, 712179968, 712179968, 16806977, -2104615050, 1870004480, 16803179, 16827829, 13157813, -1073325306
    };

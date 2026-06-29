@@ -14,7 +14,7 @@ final class DisplayNameDialog extends OkCancelDialog {
    private RichTextField _promptField;
    private AutoTextEditField _nameField;
    private OkCancelDialog$OkCancelDialogScrollManager _customVfm = new OkCancelDialog$OkCancelDialogScrollManager();
-   static final int MAX_DISPLAY_NAME_LENGTH;
+   static final int MAX_DISPLAY_NAME_LENGTH = 200;
 
    DisplayNameDialog(String title, String message, String oldDisplayName) {
       this.addTitle(title);

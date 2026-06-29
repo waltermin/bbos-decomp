@@ -20,9 +20,9 @@ public final class FileSelectionVerb extends Verb implements SelectionListener, 
    private Verb _selectVerb;
    private Verb _selectFolderVerb;
    private int _allowedSelectionType = 1;
-   private static final String FILE_SELECTION_VERB_TEXT;
-   private static final int SELECT_FILE;
-   private static final int SELECT_FOLDER;
+   private static final String FILE_SELECTION_VERB_TEXT = "Select File";
+   private static final int SELECT_FILE = 1;
+   private static final int SELECT_FOLDER = 2;
 
    public FileSelectionVerb(Object ctx) {
       this(ctx, ExplorerResources.getResourceBundleFamily(), 40);

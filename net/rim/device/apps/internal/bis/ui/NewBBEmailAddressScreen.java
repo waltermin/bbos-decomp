@@ -37,12 +37,12 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
    private BasicEditField _secretAnswer;
    private int _customEditPosition = -1;
    private int _customLabelPosition = -1;
-   public static final String PARAM_SUGGESTIONS;
-   public static final String PARAM_USERNAME;
-   public static final String PARAM_PASSWORD;
-   public static final String PARAM_QUESTION;
-   public static final String PARAM_QUESTION_ID;
-   public static final String PARAM_ANSWER;
+   public static final String PARAM_SUGGESTIONS = "suggestions";
+   public static final String PARAM_USERNAME = "userName";
+   public static final String PARAM_PASSWORD = "password";
+   public static final String PARAM_QUESTION = "question";
+   public static final String PARAM_QUESTION_ID = "questionId";
+   public static final String PARAM_ANSWER = "answer";
 
    public NewBBEmailAddressScreen() {
       super(31);

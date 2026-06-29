@@ -9,7 +9,7 @@ final class CategoriesField extends HorizontalFieldManager {
    private LabelField _namesField;
    private Verb _displayCategoriesVerb;
    private boolean _visible = true;
-   private static final String EMPTY_CATEGORIES;
+   private static final String EMPTY_CATEGORIES = " ";
 
    public CategoriesField(String label, String initialCategoryNames) {
       if (label != null) {

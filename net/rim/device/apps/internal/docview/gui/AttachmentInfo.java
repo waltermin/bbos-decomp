@@ -20,12 +20,12 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
    private String _archiveIndicator;
    private byte _type = -1;
    private byte _subtype = -1;
-   private static final int MAXDATACHUNKS_BACKUP;
-   private static final String TYPESUBTYPE_DOMID;
-   static final int RESET_ERROR;
-   static final int RESET_EMBEDDED_STARTCHUNK;
-   static final int RESET_EMBEDDED_NONSTARTCHUNK;
-   static final int RESET_MAINDOC;
+   private static final int MAXDATACHUNKS_BACKUP = 100;
+   private static final String TYPESUBTYPE_DOMID = "TypeSubtype";
+   static final int RESET_ERROR = -1;
+   static final int RESET_EMBEDDED_STARTCHUNK = -2;
+   static final int RESET_EMBEDDED_NONSTARTCHUNK = -3;
+   static final int RESET_MAINDOC = -4;
 
    final int getAttachmentDataSize() {
       int size = 0;

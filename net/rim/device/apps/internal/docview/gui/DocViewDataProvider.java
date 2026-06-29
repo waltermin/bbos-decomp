@@ -1,16 +1,16 @@
 package net.rim.device.apps.internal.docview.gui;
 
 public interface DocViewDataProvider {
-   byte DATA_LOADED;
-   byte DATA_INSTORE;
-   byte DATA_NOTAVAILABLE;
-   byte DATA_NOTALLOWED;
-   byte RENDER_DATA;
-   byte PREVIEW_DATA;
-   byte ENLARGE_DATA;
-   byte RENDERDOMIDIDX_DATA;
-   byte TXTOFFSET_DATA;
-   byte DOCINFO_DATA;
+   byte DATA_LOADED = 0;
+   byte DATA_INSTORE = 1;
+   byte DATA_NOTAVAILABLE = 2;
+   byte DATA_NOTALLOWED = 3;
+   byte RENDER_DATA = 0;
+   byte PREVIEW_DATA = 1;
+   byte ENLARGE_DATA = 2;
+   byte RENDERDOMIDIDX_DATA = 3;
+   byte TXTOFFSET_DATA = 4;
+   byte DOCINFO_DATA = 5;
 
    boolean isMoreAvailable();
 

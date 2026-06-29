@@ -10,11 +10,11 @@ public final class CSSTokenizer implements CSSTokens {
    private int _token;
    private int _startIndex;
    private int _endIndex;
-   private static final String IMPORT_RULE;
-   private static final String PAGE_RULE;
-   private static final String MEDIA_RULE;
-   private static final String CHARSET_RULE;
-   private static final String IMPORTANT_PRIORITY;
+   private static final String IMPORT_RULE = "import";
+   private static final String PAGE_RULE = "page";
+   private static final String MEDIA_RULE = "media";
+   private static final String CHARSET_RULE = "charset";
+   private static final String IMPORTANT_PRIORITY = "important";
 
    public CSSTokenizer(String source) {
       this._source = source;

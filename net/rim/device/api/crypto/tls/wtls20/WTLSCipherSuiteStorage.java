@@ -8,7 +8,7 @@ class WTLSCipherSuiteStorage implements Persistable {
    private byte[] _encryptionElements = WTLSCipherSuites.getDefaultEncryptionAlgorithms();
    private byte[] _macElements = WTLSCipherSuites.getDefaultMACAlgorithms();
    private byte[][][] _keyExElements = WTLSCipherSuites.getDefaultKeyExchangeAlgorithms();
-   private static final long ID;
+   private static final long ID = 7393491993781461490L;
    private static PersistentObject _persist;
 
    private WTLSCipherSuiteStorage() {

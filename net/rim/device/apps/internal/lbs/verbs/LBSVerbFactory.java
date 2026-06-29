@@ -11,7 +11,7 @@ import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 public final class LBSVerbFactory implements VerbFactory {
-   private static final long LBS_VERB_FACTORY_GUID;
+   private static final long LBS_VERB_FACTORY_GUID = 2622913951318770504L;
 
    public static final void registerOnceOnSystemStart() {
       Object object = ApplicationRegistry.getApplicationRegistry().get(2622913951318770504L);

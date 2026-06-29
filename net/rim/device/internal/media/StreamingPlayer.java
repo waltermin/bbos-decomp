@@ -28,7 +28,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
    private DataSource _dataSource;
    private MediaStreamingManager _streamingManager = MediaStreamingManager.getInstance();
    private MediaStreamingManager$StreamingSession _streamingSession;
-   private static final String ROUTE_AS_ALERT;
+   private static final String ROUTE_AS_ALERT = "route_as_alert";
    private static String PCM_TYPE = "audio/basic";
    private static String WAVE_TYPE = "audio/x-wav";
    private static String MP3_TYPE = "audio/mpeg";

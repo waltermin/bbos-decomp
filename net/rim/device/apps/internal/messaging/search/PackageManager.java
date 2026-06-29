@@ -21,7 +21,7 @@ import net.rim.device.apps.internal.messaging.search.criteria.TypeSearchModelFac
 import net.rim.device.apps.internal.messaging.search.resources.SearchResources;
 
 final class PackageManager {
-   static final long VIEW_FOLDER_VERB_KEY;
+   static final long VIEW_FOLDER_VERB_KEY = 7054367301267426154L;
 
    public static final void libMain(String[] args) {
       Application.setAcceptEventsForProcess(false);

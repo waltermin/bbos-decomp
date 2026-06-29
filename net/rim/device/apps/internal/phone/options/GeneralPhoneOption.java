@@ -24,7 +24,7 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
    private ObjectChoiceField _defaultEnhanceCallAudioField;
    private ObjectChoiceField _ringtoneLightField;
    private ObjectChoiceField _currentLineField;
-   private static final int VOLUME_CHOICE_INCREMENT;
+   private static final int VOLUME_CHOICE_INCREMENT = 25;
 
    public GeneralPhoneOption(Object context) {
       super(PhoneResources.getString(504), context);

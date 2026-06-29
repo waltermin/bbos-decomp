@@ -9,7 +9,7 @@ import net.rim.vm.Persistence;
 public final class ReferenceGenerator implements Persistable {
    private short _positiveRefId;
    private short _negativeRefId;
-   private static final long GUID;
+   private static final long GUID = -8042806557911297349L;
    private static ReferenceGenerator theReferenceGenerator;
 
    public static final ReferenceGenerator getSingletonInstance() {

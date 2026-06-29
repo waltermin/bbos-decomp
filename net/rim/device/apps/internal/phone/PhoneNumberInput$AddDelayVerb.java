@@ -6,8 +6,8 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 final class PhoneNumberInput$AddDelayVerb extends Verb {
    private int _type;
    private final PhoneNumberInput this$0;
-   static final int STOP;
-   static final int PAUSE;
+   static final int STOP = 0;
+   static final int PAUSE = 1;
 
    public PhoneNumberInput$AddDelayVerb(PhoneNumberInput _1, int type) {
       super(16864261);

@@ -3,7 +3,7 @@ package net.rim.plazmic.internal.mediaengine.service;
 import net.rim.plazmic.mediaengine.MediaListener;
 
 public interface EventSubscription {
-   String ID;
+   String ID = "EventSubscription";
 
    void addListener(MediaListener var1);
 

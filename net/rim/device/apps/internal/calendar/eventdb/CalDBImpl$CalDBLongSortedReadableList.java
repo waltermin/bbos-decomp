@@ -18,7 +18,7 @@ final class CalDBImpl$CalDBLongSortedReadableList implements CollectionListener,
    private LongKeyProviderAdaptor _keyProvider;
    private boolean _acceptNonRecurring;
    private boolean _acceptRecurring;
-   private static final int GROW_SIZE;
+   private static final int GROW_SIZE = 20;
 
    CalDBImpl$CalDBLongSortedReadableList(LongKeyProviderAdaptor adaptor, boolean acceptNonRecurring, boolean acceptRecurring) {
       this._keyProvider = adaptor;

@@ -17,9 +17,9 @@ final class AddressBookData implements Persistable {
    private BigLongVector _reverseLookupLeaves;
    private boolean _tablesValid;
    private Object[] _contentProtectionQueue;
-   private static final int BIT_NUMBER_MASK;
-   private static final int BIT_NUMBER_SHIFT;
-   private static final int LEFT_SIZE_MASK;
+   private static final int BIT_NUMBER_MASK = 65535;
+   private static final int BIT_NUMBER_SHIFT = 16;
+   private static final int LEFT_SIZE_MASK = 65535;
 
    AddressBookData() {
       this.reset();

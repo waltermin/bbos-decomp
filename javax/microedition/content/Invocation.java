@@ -31,14 +31,14 @@ public final class Invocation {
    private Connection _connection;
    private ApplicationDescriptor _invokerDescriptor;
    private int[] _invokerStack;
-   public static final int INIT;
-   public static final int ACTIVE;
-   public static final int WAITING;
-   public static final int HOLD;
-   public static final int OK;
-   public static final int CANCELLED;
-   public static final int ERROR;
-   public static final int INITIATED;
+   public static final int INIT = 1;
+   public static final int ACTIVE = 2;
+   public static final int WAITING = 3;
+   public static final int HOLD = 4;
+   public static final int OK = 5;
+   public static final int CANCELLED = 6;
+   public static final int ERROR = 7;
+   public static final int INITIATED = 8;
 
    public Invocation() {
       this(null, null, null, true, null);

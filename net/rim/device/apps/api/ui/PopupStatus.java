@@ -14,7 +14,7 @@ public class PopupStatus extends PopupScreen {
    protected LabelField _label;
    protected BitmapField _icon;
    protected VerticalFieldManager _vfm = (VerticalFieldManager)this.getDelegate();
-   private static final int MIN_DISMISS_TIME;
+   private static final int MIN_DISMISS_TIME = 1000;
 
    public PopupStatus(String message, Bitmap bitmap) {
       super((Manager)(new Object()));

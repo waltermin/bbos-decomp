@@ -56,10 +56,10 @@ public final class BrowserScreen extends Screen {
    private int _layoutDepth;
    private static final boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
    private static IntIntHashtable _subMenuMapping = (IntIntHashtable)(new Object());
-   private static final int MENU_MAIN;
-   private static final int MENU_TOOLS;
-   private static final int MENU_VIEW;
-   private static final int MENU_ACTIONS;
+   private static final int MENU_MAIN = 0;
+   private static final int MENU_TOOLS = 1;
+   private static final int MENU_VIEW = 2;
+   private static final int MENU_ACTIONS = 3;
 
    public BrowserScreen() {
       super(new BrowserScreen$ScreenManager(), 65536);

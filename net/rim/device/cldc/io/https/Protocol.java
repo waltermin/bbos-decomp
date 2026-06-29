@@ -21,13 +21,13 @@ import net.rim.device.cldc.io.utility.URLParameters;
 import net.rim.device.internal.system.ITPolicyInternal;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static final String STRING_ConnectionHandler;
-   private static final String STRING_ConnectionTimeout;
-   private static final String STRING_ConnectionUID;
-   private static final String STRING_RdHTTPS;
-   private static final String STRING_trustAll;
-   public static final String END_TO_END_REQUIRED;
-   public static final String END_TO_END_DESIRED;
+   private static final String STRING_ConnectionHandler = "ConnectionHandler";
+   private static final String STRING_ConnectionTimeout = "ConnectionTimeout";
+   private static final String STRING_ConnectionUID = "ConnectionUID";
+   private static final String STRING_RdHTTPS = "RdHTTPS";
+   private static final String STRING_trustAll = "trustAll";
+   public static final String END_TO_END_REQUIRED = "EndToEndRequired";
+   public static final String END_TO_END_DESIRED = "EndToEndDesired";
    private static String PROXY_HTTPS = "proxyhttps";
    private static String DEVICE_HTTPS = "devicehttps";
    private static String DEVICE_SIDE = "DeviceSide";

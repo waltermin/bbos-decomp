@@ -6,8 +6,8 @@ final class CpTicketHolder extends Thread {
    private Object _cpTicket;
    private long _timeToWait;
    private int _action;
-   private static final byte KILL_TIMER_ACTION;
-   private static final byte RESET_TIMER_ACTION;
+   private static final byte KILL_TIMER_ACTION = 1;
+   private static final byte RESET_TIMER_ACTION = 2;
 
    public CpTicketHolder(Object cpTicket) {
       this.setPriority(10);

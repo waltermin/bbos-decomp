@@ -39,19 +39,19 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
    private IMPlusPhoneComposeVerbCombiner _phoneCombiner;
    public RIMModelFactory _faxFactory;
    private Verb _faxUseOnceVerb;
-   private static final long IMPLUSCMIMELISTENER_ID;
-   private static final String CMIME_CID;
-   private static final int DSN_MESSAGE_FAILED;
-   private static final byte RECOGNIZED_ADDRESS_TYPES_TAG;
-   private static final byte DEVICE_CAPABILITIES_TAG;
-   private static final byte SERVICE_CAPABILITIES_TAG;
-   private static final byte SEND_VERBOSE_DSN_RESPONSE;
-   private static final byte ENABLE_CONFIRM_DELIVERY_UI;
-   private static final byte DEFAULT_CONFIRM_DELIVERY;
-   private static final byte ENABLE_CONFIRM_READ_UI;
-   private static final byte DEFAULT_CONFIRM_READ;
-   private static final byte ALLOW_READ_CONFIRM_UI;
-   private static final byte DEFAULT_ALLOW_READ_CONFIRM;
+   private static final long IMPLUSCMIMELISTENER_ID = 1708259843772261205L;
+   private static final String CMIME_CID = "CMIME";
+   private static final int DSN_MESSAGE_FAILED = 63;
+   private static final byte RECOGNIZED_ADDRESS_TYPES_TAG = 48;
+   private static final byte DEVICE_CAPABILITIES_TAG = -16;
+   private static final byte SERVICE_CAPABILITIES_TAG = -15;
+   private static final byte SEND_VERBOSE_DSN_RESPONSE = 16;
+   private static final byte ENABLE_CONFIRM_DELIVERY_UI = 1;
+   private static final byte DEFAULT_CONFIRM_DELIVERY = 2;
+   private static final byte ENABLE_CONFIRM_READ_UI = 4;
+   private static final byte DEFAULT_CONFIRM_READ = 8;
+   private static final byte ALLOW_READ_CONFIRM_UI = 16;
+   private static final byte DEFAULT_ALLOW_READ_CONFIRM = 32;
 
    public final IMPlusCmimeListener$ReceiptCapableService findReceiptCapableService(int serviceRecId) {
       for (int i = this._serviceArray.length - 1; i >= 0; i--) {
@@ -382,7 +382,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 1ae: bipush 6
       // 1b0: if_icmpne 1ca
       // 1b3: bipush 2
-      // 1b5: anewarray 696
+      // 1b5: anewarray 724
       // 1b8: astore 17
       // 1ba: aload 15
       // 1bc: aload 17
@@ -452,7 +452,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 24f: ifnonnull 253
       // 252: return
       // 253: bipush 2
-      // 255: anewarray 746
+      // 255: anewarray 774
       // 258: astore 12
       // 25a: aload 11
       // 25c: aload 12

@@ -6,7 +6,7 @@ public class PinInfo {
    private byte[] _tones = new byte[8];
    private byte[] _indexes = new byte[8];
    private int _length;
-   private static final int MAX_LENGTH;
+   private static final int MAX_LENGTH = 8;
 
    public PinInfo() {
    }

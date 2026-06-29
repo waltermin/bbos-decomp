@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public class OptionsProviderRegistration {
    private static Vector _optionsProviders;
-   private static final long KEY_NAME;
+   private static final long KEY_NAME = -4040876185295916320L;
 
    public static void registerOptionsProvider(OptionsProviderRegistration$OptionsProvider optionsProvider) {
       synchronized (_optionsProviders) {

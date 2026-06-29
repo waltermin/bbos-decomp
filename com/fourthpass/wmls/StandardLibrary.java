@@ -5,7 +5,7 @@ final class StandardLibrary {
    private short _cacheIndex;
    private Lib[] _libs = new Lib[5];
    private int[] _keys = new int[5];
-   private static final int MAX_CACHE;
+   private static final int MAX_CACHE = 5;
    private static final String[] _libPath = new String[]{
       "com.fourthpass.wmls.L0",
       "com.fourthpass.wmls.L1",

@@ -10,10 +10,10 @@ public final class CBPacketHeader implements RadioPacketHeader {
    private int _messageCode;
    private int _updateNumber;
    private int _messageID;
-   public static final int GEO_SCOPE_IMMEDIATE_CELL_WIDE;
-   public static final int GEO_SCOPE_NORMAL_PLMN_WIDE;
-   public static final int GEO_SCOPE_NORMAL_LOCATION_AREA_WIDE;
-   public static final int GEO_SCOPE_NORMAL_CELL_WIDE;
+   public static final int GEO_SCOPE_IMMEDIATE_CELL_WIDE = 0;
+   public static final int GEO_SCOPE_NORMAL_PLMN_WIDE = 1;
+   public static final int GEO_SCOPE_NORMAL_LOCATION_AREA_WIDE = 2;
+   public static final int GEO_SCOPE_NORMAL_CELL_WIDE = 3;
 
    public CBPacketHeader() {
    }

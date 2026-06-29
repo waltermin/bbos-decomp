@@ -6,8 +6,8 @@ import net.rim.device.api.ui.container.DialogFieldManager;
 
 class MIDPAlert extends MIDPScreen {
    private AlertType _alertType;
-   private static final int SCALE_FACTOR;
-   private static final int INSIDE_SPACE;
+   private static final int SCALE_FACTOR = 9;
+   private static final int INSIDE_SPACE = 2;
 
    MIDPAlert(Manager delegate, AlertType at) {
       super(delegate);

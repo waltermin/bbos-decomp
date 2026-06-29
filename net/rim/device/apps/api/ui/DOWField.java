@@ -32,10 +32,10 @@ public class DOWField extends Field implements FieldLabelProvider {
    private int _firstDOWIndex;
    private int _greatestWidth;
    private int _totalWidth;
-   private static final int NUM_DAYS_IN_WEEK;
-   private static final int MAX_DOW_INDEX;
-   protected static final int LABEL_PADDING;
-   protected static final int WEEK_DAYS_PADDING;
+   private static final int NUM_DAYS_IN_WEEK = 7;
+   private static final int MAX_DOW_INDEX = 6;
+   protected static final int LABEL_PADDING = 2;
+   protected static final int WEEK_DAYS_PADDING = 2;
    private static MenuItem _changeOptionsItem = new DOWField$1(CommonResource.getBundle(), 1, 30270, Integer.MAX_VALUE);
 
    public DOWField(String label, BitSet daysOfTheWeek) {

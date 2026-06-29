@@ -10,7 +10,7 @@ public final class MultipartFormData extends FormData implements Persistable {
    private boolean _useWAPConventions;
    private String _boundary;
    private Object _dataEncoding;
-   public static final String DEFAULT_CHARSET;
+   public static final String DEFAULT_CHARSET = "iso-8859-1";
    private static final byte[] CRLF = new byte[]{13, 10};
 
    public MultipartFormData(String charset, boolean useWAPConventions) {

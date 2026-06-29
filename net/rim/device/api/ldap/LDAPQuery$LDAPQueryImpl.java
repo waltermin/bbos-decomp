@@ -26,10 +26,10 @@ final class LDAPQuery$LDAPQueryImpl extends Thread implements StreamProtocolList
    private String _queryString;
    private boolean _isDone;
    private final LDAPQuery this$0;
-   private static final byte PARAM_USERNAME;
-   private static final byte PARAM_PASSWORD;
-   private static final byte PARAM_HASHED_ATTRIBUTE;
-   private static final byte PARAM_CONNECTION_TYPE;
+   private static final byte PARAM_USERNAME = 1;
+   private static final byte PARAM_PASSWORD = 2;
+   private static final byte PARAM_HASHED_ATTRIBUTE = 3;
+   private static final byte PARAM_CONNECTION_TYPE = 4;
 
    LDAPQuery$LDAPQueryImpl(LDAPQuery _1, LDAPQuery query) {
       this.this$0 = _1;

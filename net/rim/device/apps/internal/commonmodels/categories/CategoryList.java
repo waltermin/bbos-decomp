@@ -25,17 +25,17 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
    private PersistentObject _oldCategoryIdsPersistentObject = RIMPersistentStore.getPersistentObject(9169138517289043186L);
    private IntHashtable _categoryHashtable;
    private SyncCollectionSchema _schema = (SyncCollectionSchema)(new Object());
-   private static final long PERSISTED_CATEGORIES;
-   private static final long PERSISTED_OLD_CATEGORY_IDS;
-   private static final long CATEGORY_LIST;
-   private static final long CATEGORY_ID;
-   private static final int CATEGORIES_INITIAL_SIZE;
+   private static final long PERSISTED_CATEGORIES = -253933379052014540L;
+   private static final long PERSISTED_OLD_CATEGORY_IDS = 9169138517289043186L;
+   private static final long CATEGORY_LIST = 7441508056667167330L;
+   private static final long CATEGORY_ID = 7353985417580865631L;
+   private static final int CATEGORIES_INITIAL_SIZE = 16;
    private static int _persistentNextCategoryId = PersistentInteger.getId(7353985417580865631L, 1);
    private static SyncConverter _syncConverter;
    private static WeakReference _sbWR = (WeakReference)(new Object(null));
    private static CategoryList _instance;
    private static final int[] KEY_FIELD_IDS = new int[]{1, -804651007, 51, -805044223};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    private CategoryList() {
       super(new CategoryList$CategoryComparator(), -253933379052014540L);

@@ -21,14 +21,14 @@ public class MediaLibrary implements MetaDataListener {
    private MediaInfoCollection _preloadedTrackCollection;
    private final Object _lock = new Object();
    private boolean _backdoor;
-   private static final long GUID;
+   private static final long GUID = -4618605792851823899L;
    private static final String[] _ringtonePaths = new String[]{
       "file:///SDCard/BlackBerry/ringtones/", "file:///store/samples/ringtones/", "file:///store/home/user/ringtones/"
    };
    private static final String[] _voiceNotePaths = new String[]{"file:///SDCard/BlackBerry/voicenotes/", "file:///store/home/user/voicenotes/"};
-   private static final String _preloadedSamplesPath;
-   private static final String _preloadedRingtonePath;
-   private static final String _preloadedTrackPath;
+   private static final String _preloadedSamplesPath = "file:///store/samples/";
+   private static final String _preloadedRingtonePath = "file:///store/samples/ringtones/";
+   private static final String _preloadedTrackPath = "file:///store/samples/music/";
 
    public Object getLock() {
       return this._lock;

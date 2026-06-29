@@ -40,10 +40,10 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
    private Screen _screenToRemove;
    private Date _today;
    private static DateFormat DATE_FORMAT = DateFormat.getInstance(54);
-   private static final int NUMBER_OF_DATE_FOLDERS;
-   private static final int SORT_TYPE_DATE;
-   private static final int SORT_TYPE_SITE;
-   private static final int SORT_TYPE_TODAYS_ORDER;
+   private static final int NUMBER_OF_DATE_FOLDERS = 8;
+   private static final int SORT_TYPE_DATE = 0;
+   private static final int SORT_TYPE_SITE = 1;
+   private static final int SORT_TYPE_TODAYS_ORDER = 2;
 
    public LongTermHistoryScreen() {
       this(null);

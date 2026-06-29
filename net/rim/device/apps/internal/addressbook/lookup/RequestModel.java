@@ -34,7 +34,7 @@ public class RequestModel
    long _sortOrder;
    private Object _search;
    int _transactionId;
-   public static final long SELECTION_LISTENER;
+   public static final long SELECTION_LISTENER = -7302237785847991426L;
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {

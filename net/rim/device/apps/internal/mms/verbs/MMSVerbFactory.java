@@ -13,8 +13,8 @@ public final class MMSVerbFactory implements MMSPolicy$ChangeListener {
    private MMSForwardVerb _forwardAsVerb = new MMSForwardVerb(true);
    private MMSManualDialVerb _manualDialVerb = new MMSManualDialVerb(this._composeVerb);
    private MMSSendVCalVerb _sendVCalVerb = new MMSSendVCalVerb();
-   private static final boolean ENABLE_COMPOSE_VERBS;
-   private static final boolean ENABLE_SEND_AS_VERBS;
+   private static final boolean ENABLE_COMPOSE_VERBS = true;
+   private static final boolean ENABLE_SEND_AS_VERBS = true;
 
    public static final void registerOnceOnSystemStart() {
       TemplateComposeVerb.registerTemplateAlias();

@@ -14,11 +14,11 @@ public final class SessionManagerState implements Persistable {
    private int _flags = 1;
    private int _logMessageId;
    private String _logMessage;
-   private static final int FLAGS_CONFIG_REQUEST;
-   private static final int FLAGS_SUSPEND_COMMANDS_REQUEST;
-   private static final int FLAGS_RESUME_COMMANDS_REQUEST;
-   private static final int FLAGS_SERVER_IS_SUSPENDED;
-   private static final int FLAGS_DEVICE_LOG_REQUEST;
+   private static final int FLAGS_CONFIG_REQUEST = 1;
+   private static final int FLAGS_SUSPEND_COMMANDS_REQUEST = 2;
+   private static final int FLAGS_RESUME_COMMANDS_REQUEST = 4;
+   private static final int FLAGS_SERVER_IS_SUSPENDED = 8;
+   private static final int FLAGS_DEVICE_LOG_REQUEST = 16;
 
    private static final long getKeyFor(long sid) {
       String xCompleteKey = ((StringBuffer)(new Object("net.rim.device.internal.synchronization.ota.session.SessionManagerState:"))).append(sid).toString();

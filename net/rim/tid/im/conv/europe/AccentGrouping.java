@@ -234,7 +234,7 @@ public class AccentGrouping implements AlphabetChangeListener {
    private StringBuffer _tempExtendedAccBuffer = (StringBuffer)(new Object());
    private StringBuffer _getAccentsTempBuffer;
    private String[] _getAccentsReturnContainer = new Object[2];
-   private static final int GROWTH_STEP;
+   private static final int GROWTH_STEP = 10;
    static int[] BASE_CHARS = new int[]{
       97,
       99,

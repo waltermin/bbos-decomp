@@ -8,12 +8,12 @@ public class LoadingStatus {
    private int _status;
    private int _code = 0;
    protected String _message;
-   public static final int LOADING_STARTED;
-   public static final int LOADING_READING;
-   public static final int LOADING_FINISHED;
-   public static final int LOADING_FAILED;
-   public static final int LOADING_INSUFFICIENT_SPACE;
-   private static final int LOADING_UNKNOWN;
+   public static final int LOADING_STARTED = 1;
+   public static final int LOADING_READING = 2;
+   public static final int LOADING_FINISHED = 3;
+   public static final int LOADING_FAILED = 4;
+   public static final int LOADING_INSUFFICIENT_SPACE = 5;
+   private static final int LOADING_UNKNOWN = 0;
 
    public final long getReadBytes() {
       return this._readBytes;

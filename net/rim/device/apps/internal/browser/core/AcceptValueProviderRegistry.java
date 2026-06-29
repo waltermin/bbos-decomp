@@ -11,8 +11,8 @@ import net.rim.device.apps.internal.browser.javascript.JavaScriptRegistry;
 
 public final class AcceptValueProviderRegistry {
    private Vector _acceptValueProviders = (Vector)(new Object());
-   static final String MIME_TYPE_BINARY_CSS;
-   static final String MIME_TYPE_TEXT_CSS;
+   static final String MIME_TYPE_BINARY_CSS = "application/vnd.rim.css;v=1";
+   static final String MIME_TYPE_TEXT_CSS = "text/css;media=";
 
    private AcceptValueProviderRegistry() {
    }

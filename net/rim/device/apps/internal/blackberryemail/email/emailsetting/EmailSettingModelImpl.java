@@ -50,15 +50,15 @@ public final class EmailSettingModelImpl
    private Object _outOfOfficeTextEncoded = null;
    Vector _fields = (Vector)(new Object());
    private Object _additionalData;
-   private static final int MAX_SIZE;
-   public static final int AUTO_SIGNATURE_AND_REDIRECT;
-   public static final int EMAIL_REDIRECTION_AND_SAVESENT;
-   public static final int SAVE_IN_SENT_ITEMS_AND_NOFILTER;
-   public static final int FILTER_DEFAULT_ACTION_AND_SIGNATURE;
-   public static final int OUT_OF_OFFICE_AND_OUTOFOFFICE;
-   public static final int OUT_OF_OFFICE_MESSAGE_AND_SIGNATURE_TEXT;
-   public static final int OUT_OF_OFFICE_DATE_AND_OUTOFOFFICE_TEXT;
-   public static final int KEY;
+   private static final int MAX_SIZE = 2048;
+   public static final int AUTO_SIGNATURE_AND_REDIRECT = 1;
+   public static final int EMAIL_REDIRECTION_AND_SAVESENT = 2;
+   public static final int SAVE_IN_SENT_ITEMS_AND_NOFILTER = 3;
+   public static final int FILTER_DEFAULT_ACTION_AND_SIGNATURE = 4;
+   public static final int OUT_OF_OFFICE_AND_OUTOFOFFICE = 5;
+   public static final int OUT_OF_OFFICE_MESSAGE_AND_SIGNATURE_TEXT = 6;
+   public static final int OUT_OF_OFFICE_DATE_AND_OUTOFOFFICE_TEXT = 7;
+   public static final int KEY = 8;
    private static ContextObject _filterSyncContext = (ContextObject)(new Object(50, 19));
 
    public final String getAutoSignature() {

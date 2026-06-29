@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable {
    private static SoftwareDESCryptoToken _instance = new SoftwareDESCryptoToken();
-   private static final long ID_TEST_DES;
+   private static final long ID_TEST_DES = -64388735954851049L;
    private static final byte[][][] WEAK_KEYS;
 
    static final SoftwareDESCryptoToken getInstance() {

@@ -5,8 +5,8 @@ import net.rim.plazmic.internal.mediaengine.service.FocusInteractor;
 
 class MediaController extends Field {
    private MenuItem _activateMenu;
-   public static final int ORDINAL_TOP;
-   public static final int PRIORITY_LOW;
+   public static final int ORDINAL_TOP = 0;
+   public static final int PRIORITY_LOW = 100;
    private static ResourceBundle _resources = ResourceBundle.getBundle(7570626400829226451L, "net.rim.device.internal.resource.MediaEngine");
 
    public MediaController(long style) {

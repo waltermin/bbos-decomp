@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class GoDaddyRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -8196397448731006209L;
+   private static final long CERTSTATUSTIME = 1158007107581L;
    private static final byte[] GD_CLASS2_ROOT_CERT = new byte[]{
       48,
       -126,

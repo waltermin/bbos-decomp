@@ -8,7 +8,7 @@ class TextFieldLookup$Invoker implements Runnable {
    private int _id;
    private WeakReference _applicationWR;
    private final TextFieldLookup this$0;
-   public static final short LOOKUP_TIMEOUT;
+   public static final short LOOKUP_TIMEOUT = 100;
 
    TextFieldLookup$Invoker(TextFieldLookup _1) {
       this.this$0 = _1;

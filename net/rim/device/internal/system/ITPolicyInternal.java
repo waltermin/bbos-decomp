@@ -21,10 +21,10 @@ import net.rim.device.internal.provisioning.ActivationService;
 import net.rim.vm.Memory;
 
 public final class ITPolicyInternal {
-   private static final int PROCESSED_TIMESTAMP;
-   public static final int OTA_ITADMIN_ENABLED;
-   public static final int POLICY_BINDING_ENABLED;
-   private static final long UPDATE_MONITOR_KEY;
+   private static final int PROCESSED_TIMESTAMP = 1;
+   public static final int OTA_ITADMIN_ENABLED = 2;
+   public static final int POLICY_BINDING_ENABLED = 3;
+   private static final long UPDATE_MONITOR_KEY = -2240729434218296975L;
 
    private ITPolicyInternal() {
    }

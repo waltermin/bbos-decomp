@@ -9,11 +9,11 @@ public class MessageClassification {
    private String _displayString;
    private String _subjectSuffix;
    private int _minimumEncodingActions;
-   private static final long INJECTED_MESSAGE_CLASSIFICATIONS;
-   private static final int OUTER_TYPE_MESSAGE_CLASSIFICATION;
-   private static final int INNER_TYPE_DISPLAY_STRING;
-   private static final int INNER_TYPE_SUBJECT_SUFFIX;
-   private static final int INNER_TYPE_MINIMUM_ACTIONS;
+   private static final long INJECTED_MESSAGE_CLASSIFICATIONS = -4543606409829069159L;
+   private static final int OUTER_TYPE_MESSAGE_CLASSIFICATION = 1;
+   private static final int INNER_TYPE_DISPLAY_STRING = 1;
+   private static final int INNER_TYPE_SUBJECT_SUFFIX = 2;
+   private static final int INNER_TYPE_MINIMUM_ACTIONS = 3;
 
    public static MessageClassification[] getMessageClassifications() {
       // $VF: Couldn't be decompiled
@@ -36,7 +36,7 @@ public class MessageClassification {
       // 18: checkcast [Lnet/rim/device/apps/internal/blackberryemail/classification/MessageClassification;
       // 1b: areturn
       // 1c: bipush 0
-      // 1d: anewarray 48
+      // 1d: anewarray 59
       // 20: astore 1
       // 21: new java/lang/Object
       // 24: dup

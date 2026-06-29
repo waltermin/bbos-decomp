@@ -15,12 +15,12 @@ import net.rim.device.internal.io.tunnel.TunnelCredentialsProvider;
 import net.rim.device.internal.io.tunnel.TunnelWorker;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static final String LOCAL_PORT;
-   private static final String INTERFACE;
-   private static final String APN;
-   private static final String TUNNEL_AUTH_USERNAME;
-   private static final String TUNNEL_AUTH_PASSWORD;
-   private static final String RETRY_NO_CONTEXT;
+   private static final String LOCAL_PORT = "localport";
+   private static final String INTERFACE = "interface";
+   private static final String APN = "apn";
+   private static final String TUNNEL_AUTH_USERNAME = "tunnelauthusername";
+   private static final String TUNNEL_AUTH_PASSWORD = "tunnelauthpassword";
+   private static final String RETRY_NO_CONTEXT = "retrynocontext";
 
    @Override
    public final int getProperties(String name) {

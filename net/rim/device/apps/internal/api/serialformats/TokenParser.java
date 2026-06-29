@@ -19,19 +19,19 @@ final class TokenParser {
    private boolean _ignoreWhitespace;
    private boolean _isLineBreak;
    private boolean _isUTCTime;
-   private static final int FOLDING_LIMIT;
-   private static final int LIMIT_TO_READ;
-   private static final int END_STATE;
-   private static final int CR;
-   private static final int LF;
-   private static final int TAB;
-   private static final int SPACE;
-   private static final int BACKSLASH;
-   private static final int COMMA;
-   private static final int COLON;
-   private static final int SEMICOLON;
-   private static final int EQUAL;
-   private static final int END_OF_TOKEN;
+   private static final int FOLDING_LIMIT = 75;
+   private static final int LIMIT_TO_READ = 375;
+   private static final int END_STATE = 1000;
+   private static final int CR = 13;
+   private static final int LF = 10;
+   private static final int TAB = 9;
+   private static final int SPACE = 32;
+   private static final int BACKSLASH = 92;
+   private static final int COMMA = 44;
+   private static final int COLON = 58;
+   private static final int SEMICOLON = 59;
+   private static final int EQUAL = 61;
+   private static final int END_OF_TOKEN = 1;
 
    TokenParser(InputStream in, String encoding) {
       if (encoding.length() == 0) {

@@ -14,7 +14,7 @@ public class USBPasswordRedirectManager$USBPasswordRedirectDialog extends Simple
    private String _usbPeripheralName;
    private boolean _lookingForKnownPassword;
    private final USBPasswordRedirectManager this$0;
-   public static final int DISMISS;
+   public static final int DISMISS = 1;
 
    public USBPasswordRedirectManager$USBPasswordRedirectDialog(USBPasswordRedirectManager _1, String usbPeripheralName) {
       super(null, 1, 32, false, 134217728);

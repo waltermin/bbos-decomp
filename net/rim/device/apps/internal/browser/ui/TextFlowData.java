@@ -40,23 +40,23 @@ public final class TextFlowData {
    private byte[] _outoflineFlags;
    private IntStack _nesting = (IntStack)(new Object());
    private int _nextCellId = 1;
-   private static final short REGION_INLINE;
-   private static final short REGION_OUTOFLINE;
-   private static final short REGION_TEXT;
-   private static final short REGION_DIRTY;
-   private static final byte OUTOFLINE_TYPE_MASK;
-   private static final byte OUTOFLINE_INVALID;
-   private static final byte OUTOFLINE_NESTED;
-   private static final byte OUTOFLINE_NEWLINE;
-   private static final byte OUTOFLINE_LEAF;
-   private static final byte OUTOFLINE_DIRTY;
-   public static final int INVALID_SCALAR_COOKIE;
+   private static final short REGION_INLINE = 64;
+   private static final short REGION_OUTOFLINE = 128;
+   private static final short REGION_TEXT = 256;
+   private static final short REGION_DIRTY = 512;
+   private static final byte OUTOFLINE_TYPE_MASK = 7;
+   private static final byte OUTOFLINE_INVALID = 0;
+   private static final byte OUTOFLINE_NESTED = 1;
+   private static final byte OUTOFLINE_NEWLINE = 2;
+   private static final byte OUTOFLINE_LEAF = 3;
+   private static final byte OUTOFLINE_DIRTY = 8;
+   public static final int INVALID_SCALAR_COOKIE = 0;
    private static String INLINE_OBJECT_TEXT = "￼";
    private static String OUTOFLINE_OBJECT_TEXT = "\u200b";
    private static final int INLINE_OBJECT_TEXT_LENGTH = INLINE_OBJECT_TEXT.length();
    private static final int OUTOFLINE_OBJECT_TEXT_LENGTH = OUTOFLINE_OBJECT_TEXT.length();
-   public static final int INVALID_COLOUR;
-   public static final int DEFAULT_COLOUR;
+   public static final int INVALID_COLOUR = -2;
+   public static final int DEFAULT_COLOUR = -1;
 
    public TextFlowData() {
       this._text = (StringBuffer)(new Object());

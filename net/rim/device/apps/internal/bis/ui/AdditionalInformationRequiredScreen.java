@@ -27,9 +27,9 @@ public final class AdditionalInformationRequiredScreen extends UserSettingsScree
    private CommandEvent _setupExistingMailEvent;
    private LinkEvent _selectAccountLinkEvent;
    private EventWrapper _nextEvent;
-   private static final String PARAM_EMAIL;
-   private static final String PARAM_PASSWORD;
-   private static final String PARAM_REENTERED;
+   private static final String PARAM_EMAIL = "email";
+   private static final String PARAM_PASSWORD = "password";
+   private static final String PARAM_REENTERED = "reentered";
 
    public AdditionalInformationRequiredScreen() {
       super(31);

@@ -19,9 +19,9 @@ import net.rim.tid.util.Utils;
 public final class CustomWordsSyncCollection extends WordSyncCollection {
    protected AmbigiousWordsChecker _ambigiousWordChecker;
    private final String[] DEPRICATED_DATA_TYPES = new String[]{"frq"};
-   public static final long REGISTRY_ID;
-   private static final long PERSISTENCE_ID;
-   private static final long CLOCKS_COUNT_PERSISTENCE_ID;
+   public static final long REGISTRY_ID = 2311779573471752100L;
+   private static final long PERSISTENCE_ID = -8522499434933243818L;
+   private static final long CLOCKS_COUNT_PERSISTENCE_ID = -6865884521018630058L;
    private static final String CURRENT_LOCALE = Locale.get(2053636096).getLanguage();
    private static CustomWordsSyncCollection _instance;
 

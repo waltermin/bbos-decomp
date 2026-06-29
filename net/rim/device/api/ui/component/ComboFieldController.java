@@ -2,9 +2,9 @@ package net.rim.device.api.ui.component;
 
 public class ComboFieldController {
    protected ComboField _comboField;
-   public static final int SELECT_TRACKWHEEL_CLICK;
-   public static final int SELECT_TRACKBALL_CLICK;
-   public static final int SELECT_ENTER;
+   public static final int SELECT_TRACKWHEEL_CLICK = 1;
+   public static final int SELECT_TRACKBALL_CLICK = 2;
+   public static final int SELECT_ENTER = 3;
 
    protected void setComboField(ComboField comboField) {
       this._comboField = comboField;

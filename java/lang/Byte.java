@@ -2,8 +2,8 @@ package java.lang;
 
 public final class Byte {
    private byte value;
-   public static final byte MIN_VALUE;
-   public static final byte MAX_VALUE;
+   public static final byte MIN_VALUE = -128;
+   public static final byte MAX_VALUE = 127;
 
    public static final byte parseByte(String s) {
       return parseByte(s, 10);

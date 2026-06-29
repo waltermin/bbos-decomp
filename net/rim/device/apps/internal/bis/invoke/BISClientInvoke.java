@@ -7,10 +7,10 @@ import net.rim.device.apps.internal.bis.config.BISClientConfigRecord;
 import net.rim.vm.Process;
 
 public class BISClientInvoke {
-   public static final String WIZARD_INVOKE_ARGUMENT;
-   public static final String RIBBON_INVOKE_ARGUMENT;
-   public static final String BIS_CLIENT_MODULE_NAME;
-   public static final String BIS_LAUNCH_MODULE_NAME;
+   public static final String WIZARD_INVOKE_ARGUMENT = "WIZARD";
+   public static final String RIBBON_INVOKE_ARGUMENT = "RIBBON";
+   public static final String BIS_CLIENT_MODULE_NAME = "net_rim_bis_client";
+   public static final String BIS_LAUNCH_MODULE_NAME = "net_rim_bis_launch";
    private static ApplicationDescriptor _wizardDescriptor = (ApplicationDescriptor)(new Object(
       BISClientInvoke._baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"}
    ));

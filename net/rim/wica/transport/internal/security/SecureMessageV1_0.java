@@ -26,10 +26,10 @@ public class SecureMessageV1_0 implements SecureMessageV1 {
    private CommonHeaderV1_0 _header;
    private byte[] _secureMsg;
    private int _headerLength;
-   private static final int _RSA_SHA1_SIG_LENGTH;
-   private static final int _ECDSA_SHA1_SIG_LENGTH;
-   private static final int _ENC_AES_KEY_LENGTH;
-   private static final int _EC_KEY_LENGTH;
+   private static final int _RSA_SHA1_SIG_LENGTH = 128;
+   private static final int _ECDSA_SHA1_SIG_LENGTH = 42;
+   private static final int _ENC_AES_KEY_LENGTH = 128;
+   private static final int _EC_KEY_LENGTH = 22;
    private static final byte[] _IV = new byte[16];
 
    public SecureMessageV1_0(byte[] secureMsg, VersionProvider versionProvider, KeyProvider keyProvider, SecurityProvider securityProvider) {

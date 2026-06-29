@@ -8,7 +8,7 @@ import net.rim.plazmic.internal.mediaengine.service.node.SVGNode;
 import net.rim.plazmic.internal.mediaengine.service.node.VisualNode;
 
 public interface ModelInteractor extends EventSubscription, MediaModel {
-   String ID;
+   String ID = "ModelInteractor";
 
    int getHandle(String var1);
 

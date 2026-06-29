@@ -4,9 +4,9 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class SyncManager {
-   public static final long APP_REG_KEY;
-   public static final long GUID_KICK_SERIAL_SYNC_DAEMON;
-   public static final long GUID_SET_SERIAL_SYNC_STATUS_MESSAGE;
+   public static final long APP_REG_KEY = 8853100293560663175L;
+   public static final long GUID_KICK_SERIAL_SYNC_DAEMON = -4783788168994715579L;
+   public static final long GUID_SET_SERIAL_SYNC_STATUS_MESSAGE = -6549094840388549801L;
 
    protected SyncManager() {
    }

@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class AAALibrary {
-   private static final long GUID;
+   private static final long GUID = 6785790243489840050L;
    static String FONT_DIR = "/system/fonts/";
    static String STORE_FONT_DIR = "/store/system/fonts/";
 

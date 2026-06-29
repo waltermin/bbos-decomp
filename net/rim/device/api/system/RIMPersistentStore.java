@@ -7,7 +7,7 @@ import net.rim.vm.Persistence;
 import net.rim.vm.TraceBack;
 
 public final class RIMPersistentStore implements Persistable {
-   private static final int IT_POLICY_PERSISTENT_STORE_ACCESS;
+   private static final int IT_POLICY_PERSISTENT_STORE_ACCESS = 1433440295;
 
    private RIMPersistentStore() {
    }

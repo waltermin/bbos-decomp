@@ -51,7 +51,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
    protected VoiceApp _voiceApp;
    private char _initialKey;
    private static ThemedBannerCache _idleBannerCache;
-   private static final int DIALING_FIELD_SPACING;
+   private static final int DIALING_FIELD_SPACING = 4;
    private static PhoneOptionsVerb _phoneOptionsVerb = (PhoneOptionsVerb)(new Object());
    private static PhoneAppScreen$PhoneInfoVerb _phoneInfoVerb = new PhoneAppScreen$PhoneInfoVerb();
 

@@ -8,7 +8,7 @@ public final class PKCS1FormatterEngine implements BlockFormatterEngine {
    private int _inputBlockLength;
    private int _outputBlockLength;
    private byte[] _encodedMessage;
-   private static final int MIN_OVERHEAD;
+   private static final int MIN_OVERHEAD = 11;
    static final long ID_TEST_FORMATTER_PKCS1 = 7451575862581721272L;
 
    public PKCS1FormatterEngine(PublicKeyEncryptorEngine encryptorEngine) {

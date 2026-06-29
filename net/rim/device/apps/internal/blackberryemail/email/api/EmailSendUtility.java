@@ -49,9 +49,9 @@ import net.rim.device.internal.deviceoptions.Owner;
 import net.rim.device.internal.ui.UiInternal;
 
 public final class EmailSendUtility {
-   public static final long ORIGINAL_EMAIL_MESSAGE_MODEL;
-   private static final String CORPORATE_PIN_KEY_NAME;
-   private static final long SENDLISTENERS_ID;
+   public static final long ORIGINAL_EMAIL_MESSAGE_MODEL = 2691016377741031418L;
+   private static final String CORPORATE_PIN_KEY_NAME = "SCRAMBLE_CURRENT";
+   private static final long SENDLISTENERS_ID = 922368635746834671L;
 
    public static final boolean determineWhetherMessageAlreadyFiled(EmailMessageModel message, Object context) {
       int CMIMEReferenceIdentifier = message.getCMIMEReferenceIdentifier();

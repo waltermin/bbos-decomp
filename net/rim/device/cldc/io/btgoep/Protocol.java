@@ -7,15 +7,15 @@ import net.rim.device.cldc.io.utility.EventThreadCheck;
 import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 
 public class Protocol implements ConnectionBaseInterface {
-   static final int CONNECT;
-   static final int DISCONNECT;
-   static final int PUT;
-   static final int PUT_FINAL;
-   static final int GET;
-   static final int GET_FINAL;
-   static final int SET_PATH;
-   static final int ABORT;
-   static final int MAX_PACKET_SIZE;
+   static final int CONNECT = 128;
+   static final int DISCONNECT = 129;
+   static final int PUT = 2;
+   static final int PUT_FINAL = 130;
+   static final int GET = 3;
+   static final int GET_FINAL = 131;
+   static final int SET_PATH = 133;
+   static final int ABORT = 255;
+   static final int MAX_PACKET_SIZE = 8192;
 
    @Override
    public int getProperties(String name) {

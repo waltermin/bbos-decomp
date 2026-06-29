@@ -9,7 +9,7 @@ import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
 public final class BodySearchModelFactory extends RIMModelFactory {
    private RIMModelFactory[] _subCriterionFactories;
-   private static final long REGKEY;
+   private static final long REGKEY = 2553254370272492794L;
    private static BodySearchModelFactory _factory;
 
    private BodySearchModelFactory() {

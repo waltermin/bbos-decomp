@@ -17,8 +17,8 @@ import net.rim.device.cldc.io.ssl.SSLConnectionOptions;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 
 public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
-   private static final long KEY;
-   private static final boolean DEBUG;
+   private static final long KEY = 4941551061071482255L;
+   private static final boolean DEBUG = false;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(5710659227867441061L, "net.rim.device.internal.resource.crypto.SSL");
 
    private SSLHandshakeUtilities() {
@@ -344,10 +344,10 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 0c: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
       // 11: pop
       // 12: bipush 0
-      // 13: anewarray 522
+      // 13: anewarray 527
       // 16: astore 2
       // 17: bipush 0
-      // 18: anewarray 524
+      // 18: anewarray 529
       // 1b: astore 3
       // 1c: bipush 0
       // 1d: istore 4

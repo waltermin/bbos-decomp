@@ -6,7 +6,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.ActiveRichTextFieldWrapper;
 
 public class PlainTextServiceProvider extends UIComponentServiceProvider {
-   private static final int NUM_SERVICES;
+   private static final int NUM_SERVICES = 3;
 
    public PlainTextServiceProvider() {
       super(3);

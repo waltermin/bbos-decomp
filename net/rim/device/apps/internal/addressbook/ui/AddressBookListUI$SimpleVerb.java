@@ -10,10 +10,10 @@ import net.rim.tid.awt.im.InputContext;
 final class AddressBookListUI$SimpleVerb extends Verb {
    int _type;
    private final AddressBookListUI this$0;
-   static final int TYPE_OPTIONS;
-   static final int TYPE_LOOKUP;
-   static final int TYPE_CANCEL;
-   static final int TYPE_SHOW_ALL;
+   static final int TYPE_OPTIONS = 1;
+   static final int TYPE_LOOKUP = 2;
+   static final int TYPE_CANCEL = 3;
+   static final int TYPE_SHOW_ALL = 4;
 
    AddressBookListUI$SimpleVerb(AddressBookListUI _1, int ordering, ResourceBundleFamily rb, int rbKey, int type) {
       super(ordering, rb, rbKey);

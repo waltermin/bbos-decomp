@@ -16,7 +16,7 @@ import net.rim.tid.itie.EventHandler;
 
 public class MultilineLookup extends Lookup implements TextInputDialog {
    private LookupManager _manager;
-   public static final int INPUT_METHOD_LOOKUP_PRIORITY;
+   public static final int INPUT_METHOD_LOOKUP_PRIORITY = 550;
    private static final Tag TAG = Tag.create("input-method-popup");
 
    public MultilineLookup() {

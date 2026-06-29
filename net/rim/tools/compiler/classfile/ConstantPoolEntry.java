@@ -4,18 +4,18 @@ import net.rim.tools.compiler.io.StructuredInputStream;
 import net.rim.tools.compiler.vm.Constants;
 
 public class ConstantPoolEntry implements Constants {
-   public static final byte _UTF8;
-   public static final byte _Integer;
-   public static final byte _Float;
-   public static final byte _Long;
-   public static final byte _Double;
-   public static final byte _Class;
-   public static final byte _AString;
-   public static final byte _FieldRef;
-   public static final byte _MethodRef;
-   public static final byte _InterfaceMethodRef;
-   public static final byte _NameAndType;
-   static final byte _Manufactured;
+   public static final byte _UTF8 = 1;
+   public static final byte _Integer = 3;
+   public static final byte _Float = 4;
+   public static final byte _Long = 5;
+   public static final byte _Double = 6;
+   public static final byte _Class = 7;
+   public static final byte _AString = 8;
+   public static final byte _FieldRef = 9;
+   public static final byte _MethodRef = 10;
+   public static final byte _InterfaceMethodRef = 11;
+   public static final byte _NameAndType = 12;
+   static final byte _Manufactured = -1;
 
    public ConstantPoolEntry(int tag) {
    }

@@ -12,20 +12,20 @@ import net.rim.device.internal.bluetooth.BluetoothME;
 
 final class BluetoothDeviceManagerImpl$BluetoothSyncItem extends OTASyncCapableSyncItem implements SyncCollectionStatusProvider {
    private final BluetoothDeviceManagerImpl this$0;
-   private static final int TYPE_FLAGS;
-   private static final int TYPE_LOCAL_NAME;
-   private static final int TYPE_PAIRED_DEVICE;
-   private static final int TYPE_MAC_ADDRESS;
-   private static final int TYPE_PIN;
-   private static final int TYPE_ALLOW_OUTGOING_CALLS;
-   private static final int TYPE_ADDRESS_BOOK_TRANSFER_MODE;
-   private static final int TYPE_ADDRESS_BOOK_CATEGORIES;
-   private static final int TYPE_SECURITY_MODE;
-   private static final int TYPE_LAST_CONNECTED_DEVICE;
-   private static final int FLAG_POWER_ON;
-   private static final int FLAG_DISCOVERABLE;
-   private static final int FLAG_LED_INDICATOR_DISABLED;
-   private static final int FLAG_CONNECT_ON_POWER_UP_DISABLED;
+   private static final int TYPE_FLAGS = 0;
+   private static final int TYPE_LOCAL_NAME = 1;
+   private static final int TYPE_PAIRED_DEVICE = 2;
+   private static final int TYPE_MAC_ADDRESS = 4;
+   private static final int TYPE_PIN = 5;
+   private static final int TYPE_ALLOW_OUTGOING_CALLS = 6;
+   private static final int TYPE_ADDRESS_BOOK_TRANSFER_MODE = 7;
+   private static final int TYPE_ADDRESS_BOOK_CATEGORIES = 8;
+   private static final int TYPE_SECURITY_MODE = 9;
+   private static final int TYPE_LAST_CONNECTED_DEVICE = 10;
+   private static final int FLAG_POWER_ON = 1;
+   private static final int FLAG_DISCOVERABLE = 2;
+   private static final int FLAG_LED_INDICATOR_DISABLED = 4;
+   private static final int FLAG_CONNECT_ON_POWER_UP_DISABLED = 8;
 
    BluetoothDeviceManagerImpl$BluetoothSyncItem(BluetoothDeviceManagerImpl _1) {
       this.this$0 = _1;

@@ -46,7 +46,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
    private boolean _segmented;
    private int _truncatedCharacterCount = 0;
    private Hashtable _addressHashtable;
-   private static final boolean DISPLAY_NUMBER_CHARS_REMAINING;
+   private static final boolean DISPLAY_NUMBER_CHARS_REMAINING = false;
 
    public final Object run() {
       if (!SMSService.canSend()) {

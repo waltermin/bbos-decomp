@@ -9,10 +9,10 @@ import net.rim.wica.runtime.persistence.PersStandaloneDataStruct;
 
 final class IntPersistablePairSerializer extends AbstractArraySerializer {
    private static IntPersistablePairSerializer _instance;
-   private static final byte DEF_ID;
-   private static final byte PERS_STANDALONE_DATA_STRUCT;
-   private static final byte PERS_DATA_COLLECTION_STRUCT;
-   private static final byte PERS_KEYLESS_DATA_COLLECTION_STRUCT;
+   private static final byte DEF_ID = 0;
+   private static final byte PERS_STANDALONE_DATA_STRUCT = 1;
+   private static final byte PERS_DATA_COLLECTION_STRUCT = 2;
+   private static final byte PERS_KEYLESS_DATA_COLLECTION_STRUCT = 3;
 
    static final IntPersistablePairSerializer getInstance() {
       if (_instance == null) {

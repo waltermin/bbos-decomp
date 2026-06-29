@@ -37,9 +37,9 @@ public class MergedCollection
    private LongKeyProviderAdaptor _longKeyProviderAdaptor;
    private Comparator _comparator;
    private MergedCollection$Merger _merger = new MergedCollection$Merger(this);
-   private static final long EVENT_LOGGER_ID;
+   private static final long EVENT_LOGGER_ID = 9050144090681394981L;
    private static boolean _inResume;
-   private static final long MERGED_COLLECTION_LIST;
+   private static final long MERGED_COLLECTION_LIST = -7129038961228312064L;
    private static Vector _mergedCollectionList = ApplicationRegistry.getApplicationRegistry().getVector(-7129038961228312064L);
 
    protected void assertHaveFolderLock() {

@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.search.GlobalSearchRegistry;
 
 final class MemoApp extends UiApplication {
-   private static final long MEMO_SEARCHABLE_ID;
+   private static final long MEMO_SEARCHABLE_ID = -4956786003477159331L;
 
    private MemoApp() {
    }

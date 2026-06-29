@@ -6,7 +6,7 @@ import net.rim.device.internal.ui.Image;
 
 public class ProcessingField extends StatusField {
    private String _processingText;
-   private static final long STATUS_TYPE_PROCESSING;
+   private static final long STATUS_TYPE_PROCESSING = -3092861192590837945L;
 
    ProcessingField(String processingText) {
       super(Application.getApplication());

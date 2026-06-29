@@ -72,11 +72,11 @@ public final class Transport
    private MdpReceiveTable _rxTable;
    private FastDormancyManager _fastDormancy;
    private DataRecovery _dataRecovery;
-   private static final long TRANSPORT_GUID;
+   private static final long TRANSPORT_GUID = 4175103112525226476L;
    private static Transport _instance;
-   private static final int MAX_SEND_STATUS;
-   private static final byte _numRetries;
-   private static final int _retriesBackoffMax;
+   private static final int MAX_SEND_STATUS = 16;
+   private static final byte _numRetries = 8;
+   private static final int _retriesBackoffMax = 600000;
    private static final int MFH_OPTIMIZED_ACKS_FLAG_PERSISTENT_ID = PersistentInteger.getId(5818824363781589698L, 1);
 
    final void superSendInternal(Datagram datagram) {

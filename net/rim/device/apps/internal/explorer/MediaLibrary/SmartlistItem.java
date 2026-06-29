@@ -28,8 +28,8 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
    String[] _genres = new Object[0];
    String _unknown;
    private static Bitmap _image = Bitmap.getBitmapResource("lightbulbsmall.png");
-   private static final int VERSION;
-   private static final int END_OF_FILE;
+   private static final int VERSION = 1;
+   private static final int END_OF_FILE = 0;
 
    @Override
    public final int paint(Graphics graphics, int x, int y, int width, int height, Object context) {

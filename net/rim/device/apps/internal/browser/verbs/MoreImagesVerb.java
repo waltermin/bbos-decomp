@@ -8,8 +8,8 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 public final class MoreImagesVerb extends Verb {
    private boolean _doMoreAll;
    private BrowserContentImpl _browserContent;
-   private static final int DESCRIPTION_MORE_IMAGES;
-   private static final int DESCRIPTION_ALL_IMAGES;
+   private static final int DESCRIPTION_MORE_IMAGES = 460;
+   private static final int DESCRIPTION_ALL_IMAGES = 461;
 
    public MoreImagesVerb(BrowserContentImpl browserContent, boolean doMoreAll) {
       super(doMoreAll ? 344069 : 344064);

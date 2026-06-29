@@ -8,31 +8,31 @@ import net.rim.device.internal.system.EventDispatchManager;
 import net.rim.device.internal.system.InternalServices;
 
 public final class Audio {
-   public static final int AUDIO_CODEC_WAVE;
-   public static final int AUDIO_CODEC_ADPCM;
-   public static final int AUDIO_CODEC_MIDI;
-   public static final int AUDIO_CODEC_MP3;
-   public static final int AUDIO_CODEC_G711A;
-   public static final int AUDIO_CODEC_G711U;
-   public static final int AUDIO_CODEC_VOICENOTE;
-   public static final int AUDIO_CODEC_AMR;
-   public static final int AUDIO_CODEC_RAW_PCM;
-   public static final int AUDIO_CODEC_AAC;
-   public static final int AUDIO_CODEC_GSM610;
-   public static final int AUDIO_CODEC_WMA;
-   public static final int AUDIO_CODEC_QCELP;
-   public static final int AUDIO_CODEC_EVRC;
-   public static final int SAMPLE_RATE_8KHZ;
-   public static final int SAMPLE_RATE_16KHZ;
-   public static final int SAMPLE_RATE_32KHZ;
-   public static final int SAMPLE_RATE_44_1KHZ;
-   public static final int SAMPLE_RATE_48KHZ;
-   public static final int AUDIO_OK;
-   public static final int AUDIO_ERROR_UNKNOWN;
-   public static final int AUDIO_ERROR_BAD_DATA;
-   public static final int AUDIO_ERROR_BAD_STATE;
-   public static final int AUDIO_ERROR_FILESYSTEM_FULL;
-   public static final int AUDIO_REQUEST_PENDING;
+   public static final int AUDIO_CODEC_WAVE = 0;
+   public static final int AUDIO_CODEC_ADPCM = 1;
+   public static final int AUDIO_CODEC_MIDI = 2;
+   public static final int AUDIO_CODEC_MP3 = 3;
+   public static final int AUDIO_CODEC_G711A = 4;
+   public static final int AUDIO_CODEC_G711U = 5;
+   public static final int AUDIO_CODEC_VOICENOTE = 6;
+   public static final int AUDIO_CODEC_AMR = 7;
+   public static final int AUDIO_CODEC_RAW_PCM = 9;
+   public static final int AUDIO_CODEC_AAC = 10;
+   public static final int AUDIO_CODEC_GSM610 = 11;
+   public static final int AUDIO_CODEC_WMA = 12;
+   public static final int AUDIO_CODEC_QCELP = 13;
+   public static final int AUDIO_CODEC_EVRC = 14;
+   public static final int SAMPLE_RATE_8KHZ = 8000;
+   public static final int SAMPLE_RATE_16KHZ = 16000;
+   public static final int SAMPLE_RATE_32KHZ = 32000;
+   public static final int SAMPLE_RATE_44_1KHZ = 44100;
+   public static final int SAMPLE_RATE_48KHZ = 48000;
+   public static final int AUDIO_OK = 0;
+   public static final int AUDIO_ERROR_UNKNOWN = 1;
+   public static final int AUDIO_ERROR_BAD_DATA = 2;
+   public static final int AUDIO_ERROR_BAD_STATE = 3;
+   public static final int AUDIO_ERROR_FILESYSTEM_FULL = 4;
+   public static final int AUDIO_REQUEST_PENDING = 5;
 
    private Audio() {
    }

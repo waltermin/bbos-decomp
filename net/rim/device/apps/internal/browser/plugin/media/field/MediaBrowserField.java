@@ -191,22 +191,22 @@ public final class MediaBrowserField
    private static final Tag EMBEDDED_AUDIO_TAG = Tag.create("media-player-audio-embedded");
    private static Tag PROPERTY_TAG = Tag.create("media-property");
    private static Tag TRACK_TITLE_TAG = Tag.create("media-track-title");
-   private static final int DESIRED_ALBUM_WIDTH;
-   private static final int DESIRED_ALBUM_HEIGHT;
-   private static final int TWO_SECONDS;
-   private static final int DEFAULT_TRACK_INDEX;
+   private static final int DESIRED_ALBUM_WIDTH = 175;
+   private static final int DESIRED_ALBUM_HEIGHT = 175;
+   private static final int TWO_SECONDS = 2000000;
+   private static final int DEFAULT_TRACK_INDEX = 0;
    private static final EncodedImage _noArt = ThemeManager.getActiveTheme().getImage("noart");
-   private static final String BUTTON_PLAY_IMAGE;
-   private static final String BUTTON_STOP_IMAGE;
-   private static final String BUTTON_PLAY;
-   private static final String BUTTON_PAUSE;
-   private static final String BUTTON_STOP;
-   private static final String BUTTON_MENU;
-   private static final String BUTTON_NEXT;
-   private static final String BUTTON_PREVIOUS;
-   private static final String SLIDERBAR;
-   private static final String LINE_ANIM;
-   private static final String VOLUMESLIDER;
+   private static final String BUTTON_PLAY_IMAGE = "playbutton";
+   private static final String BUTTON_STOP_IMAGE = "stopbutton";
+   private static final String BUTTON_PLAY = "play";
+   private static final String BUTTON_PAUSE = "pause";
+   private static final String BUTTON_STOP = "stop";
+   private static final String BUTTON_MENU = "menu";
+   private static final String BUTTON_NEXT = "next";
+   private static final String BUTTON_PREVIOUS = "previous";
+   private static final String SLIDERBAR = "sliderbargroup";
+   private static final String LINE_ANIM = "lineAnim";
+   private static final String VOLUMESLIDER = "volumecontrolgroup";
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
@@ -2536,7 +2536,7 @@ public final class MediaBrowserField
       // 32f: aload 1
       // 330: ifnull 391
       // 333: bipush 1
-      // 334: anewarray 6512
+      // 334: anewarray 6553
       // 337: dup
       // 338: bipush 0
       // 339: ldc_w "author"

@@ -9,8 +9,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class TaskOptions extends OptionsBase {
    private TaskOptions$PersistedTaskOptions _persistedTaskOptions;
-   private static final long TASK_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_TASK_OPTIONS;
+   private static final long TASK_OPTIONS_SYNC_ITEM = 6732024294714330815L;
+   private static final long PERSISTED_TASK_OPTIONS = -1892585988930736260L;
    public static int SORT_ORDER = 1;
    private static TaskOptions _options;
 

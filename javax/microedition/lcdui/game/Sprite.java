@@ -24,18 +24,18 @@ public class Sprite extends Layer {
    int t_collisionRectY;
    int t_collisionRectWidth;
    int t_collisionRectHeight;
-   public static final int TRANS_NONE;
-   public static final int TRANS_ROT90;
-   public static final int TRANS_ROT180;
-   public static final int TRANS_ROT270;
-   public static final int TRANS_MIRROR;
-   public static final int TRANS_MIRROR_ROT90;
-   public static final int TRANS_MIRROR_ROT180;
-   public static final int TRANS_MIRROR_ROT270;
-   private static final int INVERTED_AXES;
-   private static final int X_FLIP;
-   private static final int Y_FLIP;
-   private static final int ALPHA_BITMASK;
+   public static final int TRANS_NONE = 0;
+   public static final int TRANS_ROT90 = 5;
+   public static final int TRANS_ROT180 = 3;
+   public static final int TRANS_ROT270 = 6;
+   public static final int TRANS_MIRROR = 2;
+   public static final int TRANS_MIRROR_ROT90 = 7;
+   public static final int TRANS_MIRROR_ROT180 = 1;
+   public static final int TRANS_MIRROR_ROT270 = 4;
+   private static final int INVERTED_AXES = 4;
+   private static final int X_FLIP = 2;
+   private static final int Y_FLIP = 1;
+   private static final int ALPHA_BITMASK = -16777216;
 
    public Sprite(Image image) {
       super(image.getWidth(), image.getHeight());

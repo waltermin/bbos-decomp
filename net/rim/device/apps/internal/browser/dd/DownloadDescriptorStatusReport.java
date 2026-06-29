@@ -13,16 +13,16 @@ final class DownloadDescriptorStatusReport extends Thread {
    private boolean _aborted;
    private FetchRequest _fetchRequest;
    private Object _waitingForResponseLock = new Object();
-   public static final int SUCCESS;
-   public static final int INSUFFICIENT_MEMORY;
-   public static final int USER_CANCELLED;
-   public static final int LOSS_OF_SERVICE;
-   public static final int ATTRIBUTE_MISMATCH;
-   public static final int INVALID_DESCRIPTOR;
-   public static final int INVALID_DD_VERSION;
-   public static final int DEVICE_ABORTED;
-   public static final int NON_ACCEPTABLE_CONTENT;
-   public static final int LOADER_ERROR;
+   public static final int SUCCESS = 900;
+   public static final int INSUFFICIENT_MEMORY = 901;
+   public static final int USER_CANCELLED = 902;
+   public static final int LOSS_OF_SERVICE = 903;
+   public static final int ATTRIBUTE_MISMATCH = 905;
+   public static final int INVALID_DESCRIPTOR = 906;
+   public static final int INVALID_DD_VERSION = 951;
+   public static final int DEVICE_ABORTED = 952;
+   public static final int NON_ACCEPTABLE_CONTENT = 953;
+   public static final int LOADER_ERROR = 954;
 
    public DownloadDescriptorStatusReport(String url, int statusCode, DownloadDescriptorField listener, String referer) {
       if (url == null) {

@@ -3,8 +3,8 @@ package net.rim.plazmic.internal.mediaengine.ui;
 import net.rim.device.api.ui.XYRect;
 
 public interface PME12Graphics {
-   String ID;
-   int INVALID_BUFFER_ID;
+   String ID = "PME12Graphics";
+   int INVALID_BUFFER_ID = -1;
 
    void setGraphics(Object var1);
 

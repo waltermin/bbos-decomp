@@ -37,23 +37,23 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    private Runnable _cleanupRunnable;
    private ApplicationProcess _applicationProcess;
    private Proxy _proxy = Proxy.getInstance();
-   private static final int PIN_LENGTH;
-   private static final int MIN_PIN_LENGTH;
-   private static final int PIN1_FOR_APPLICATION_2;
-   private static final int PIN1_FOR_APPLICATION_3;
-   private static final int PIN1_FOR_APPLICATION_4;
-   private static final int PIN1_FOR_APPLICATION_5;
-   private static final int PIN1_FOR_APPLICATION_6;
-   private static final int PIN1_FOR_APPLICATION_7;
-   private static final int PIN1_FOR_APPLICATION_8;
-   private static final int PIN2_FOR_APPLICATION_2;
-   private static final int PIN2_FOR_APPLICATION_3;
-   private static final int PIN2_FOR_APPLICATION_4;
-   private static final int PIN2_FOR_APPLICATION_5;
-   private static final int PIN2_FOR_APPLICATION_6;
-   private static final int PIN2_FOR_APPLICATION_7;
-   private static final int PIN2_FOR_APPLICATION_8;
-   private static final long GUID;
+   private static final int PIN_LENGTH = 8;
+   private static final int MIN_PIN_LENGTH = 4;
+   private static final int PIN1_FOR_APPLICATION_2 = 2;
+   private static final int PIN1_FOR_APPLICATION_3 = 3;
+   private static final int PIN1_FOR_APPLICATION_4 = 4;
+   private static final int PIN1_FOR_APPLICATION_5 = 5;
+   private static final int PIN1_FOR_APPLICATION_6 = 6;
+   private static final int PIN1_FOR_APPLICATION_7 = 7;
+   private static final int PIN1_FOR_APPLICATION_8 = 8;
+   private static final int PIN2_FOR_APPLICATION_2 = 130;
+   private static final int PIN2_FOR_APPLICATION_3 = 131;
+   private static final int PIN2_FOR_APPLICATION_4 = 132;
+   private static final int PIN2_FOR_APPLICATION_5 = 133;
+   private static final int PIN2_FOR_APPLICATION_6 = 134;
+   private static final int PIN2_FOR_APPLICATION_7 = 135;
+   private static final int PIN2_FOR_APPLICATION_8 = 136;
+   private static final long GUID = 487410666346702508L;
 
    @Override
    public void close() {

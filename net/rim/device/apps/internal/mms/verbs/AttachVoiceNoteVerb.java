@@ -9,9 +9,9 @@ import net.rim.device.internal.io.file.FileUtilities;
 
 public final class AttachVoiceNoteVerb extends Verb {
    private MMSPresentationModel _presentation;
-   private static final String MMS_VOICENOTE_FOLDER_DEVICEMEMORY;
-   private static final String MMS_VOICENOTE_FOLDER_MEDICARD;
-   private static final String AMR_MIME_TYPE;
+   private static final String MMS_VOICENOTE_FOLDER_DEVICEMEMORY = "file:///store/home/user/voicenotes/";
+   private static final String MMS_VOICENOTE_FOLDER_MEDICARD = "file:///SDCard/BlackBerry/voicenotes/";
+   private static final String AMR_MIME_TYPE = "audio/amr";
 
    public AttachVoiceNoteVerb(MMSPresentationModel presentation) {
       super(16864080);

@@ -48,13 +48,13 @@ public final class FolderList extends Field implements CollectionListener, HintP
    private boolean _userSelected;
    private boolean _bulkAddMode;
    private static final Tag TOOLTIP_TAG = Tag.create("fileviewtooltip");
-   public static final int VIEW_MODE_THUMBNAIL;
-   public static final int VIEW_MODE_DETAILS;
-   public static final int VIEW_MODE_TITLE;
-   public static final int VIEW_MODE_MAX_VALUE;
-   public static final int VIEW_MODE_ICON;
-   private static final int THUMBNAIL_PADDING;
-   private static final int FOCUS_BORDER_WIDTH;
+   public static final int VIEW_MODE_THUMBNAIL = 0;
+   public static final int VIEW_MODE_DETAILS = 1;
+   public static final int VIEW_MODE_TITLE = 2;
+   public static final int VIEW_MODE_MAX_VALUE = 3;
+   public static final int VIEW_MODE_ICON = 3;
+   private static final int THUMBNAIL_PADDING = 4;
+   private static final int FOCUS_BORDER_WIDTH = 4;
    private static Border3d _focusBorder;
    private static ReadableList _emptyList = new FolderList$EmptyList();
 

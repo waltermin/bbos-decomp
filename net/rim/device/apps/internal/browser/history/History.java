@@ -7,8 +7,8 @@ public final class History {
    private Vector _nodes = (Vector)(new Object());
    private int _currentNode = -1;
    private int _lastViewedNode = -1;
-   private static final int VERSION;
-   private static final int MAX_HISTORY_SIZE;
+   private static final int VERSION = 6;
+   private static final int MAX_HISTORY_SIZE = 20;
 
    public final synchronized HistoryNode lookupNodeAt(int index) {
       return index >= 0 && index < this._nodes.size() ? (HistoryNode)this._nodes.elementAt(index) : null;

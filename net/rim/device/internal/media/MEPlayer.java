@@ -25,9 +25,9 @@ class MEPlayer implements Player, StreamDataControl {
    private InputStream _inputStream;
    private SourceStream[] _sourceStreams;
    private int _state;
-   private static final String PLAYER_CLOSED;
-   private static final String PLAYER_UNREALIZED;
-   private static final String INVALID_KEY;
+   private static final String PLAYER_CLOSED = "Player is CLOSED";
+   private static final String PLAYER_UNREALIZED = "Player is Unrealized";
+   private static final String INVALID_KEY = "Invalid Key";
 
    protected void notifyListeners(String event) {
       if (this._listeners != null) {

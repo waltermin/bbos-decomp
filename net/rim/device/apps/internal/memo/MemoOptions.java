@@ -9,8 +9,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class MemoOptions extends OptionsBase {
    private MemoOptions$PersistedMemoOptions _persistedMemoOptions;
-   private static final long MEMO_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_MEMO_OPTIONS;
+   private static final long MEMO_OPTIONS_SYNC_ITEM = -8592906356569155066L;
+   private static final long PERSISTED_MEMO_OPTIONS = -1985181723073357990L;
    private static MemoOptions _options;
 
    private MemoOptions() {

@@ -4,9 +4,9 @@ import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.system.Bitmap;
 
 public class ScaleBitmap {
-   public static final int FILTER_LANCZOS;
-   public static final int FILTER_BOX;
-   public static final int FILTER_BILINEAR;
+   public static final int FILTER_LANCZOS = 0;
+   public static final int FILTER_BOX = 1;
+   public static final int FILTER_BILINEAR = 2;
    static Filter _filterBox = new BoxFilter();
    static Filter _filterBilinear = new BilinearFilter();
    static Filter _filterLanczos = new LanczosFilter();

@@ -25,7 +25,7 @@ public final class UrlEscapedTextCoder extends EscapedTextCoder {
       "PUT",
       "TRACE"
    };
-   private static final long ID;
+   private static final long ID = 4482128995303993346L;
 
    public static final UrlEscapedTextCoder getInstance() {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();

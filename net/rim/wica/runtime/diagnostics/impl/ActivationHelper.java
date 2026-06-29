@@ -14,8 +14,8 @@ final class ActivationHelper implements EventListener {
    private EventService _eventService;
    private ManagementService _managementService;
    private boolean _activated = false;
-   private static final String IPPP_SERVICE_CID;
-   private static final String IPPP_SIM_SB_NAME;
+   private static final String IPPP_SERVICE_CID = "IPPP";
+   private static final String IPPP_SIM_SB_NAME = "MDS Transport (Sim)";
    private static final int[] EVENTS = new int[]{100, -804651006, 901, 900};
    static Class class$net$rim$wica$runtime$event$EventService;
    static Class class$net$rim$wica$runtime$management$ManagementService;

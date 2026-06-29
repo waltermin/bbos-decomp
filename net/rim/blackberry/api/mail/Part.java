@@ -5,8 +5,8 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 
 public interface Part {
-   String ATTACHMENT;
-   String INLINE;
+   String ATTACHMENT = "attachment";
+   String INLINE = "inline";
 
    void addHeader(String var1, String var2);
 

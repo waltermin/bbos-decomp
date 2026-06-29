@@ -10,7 +10,7 @@ class PersistentContent$ResetPasswordData implements Persistable {
    private byte[] _digestOfB;
    private byte[] _D;
    private byte[] _passwordCiphertext;
-   private static final long ID;
+   private static final long ID = -4896566637383887503L;
 
    private PersistentContent$ResetPasswordData(byte[] B, byte[] D, byte[] passwordCiphertext) {
       this._B = B;

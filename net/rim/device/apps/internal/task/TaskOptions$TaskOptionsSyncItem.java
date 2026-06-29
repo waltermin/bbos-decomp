@@ -5,9 +5,9 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class TaskOptions$TaskOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int DATA_LENGTH;
-   private static final int TASK_OPTIONS_DB_VERSION;
+   private static final int MIN_DATA_LENGTH = 6;
+   private static final int DATA_LENGTH = 15;
+   private static final int TASK_OPTIONS_DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

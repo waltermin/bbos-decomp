@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.vm.WeakReference;
 
 final class BrowserFolderConverter implements SyncConverter {
-   public static final int VERSION_SUPPORTED;
+   public static final int VERSION_SUPPORTED = 1;
    private static WeakReference _tmpWriteDataBufferWR = (WeakReference)(new Object(null));
    private static WeakReference _tmpReadDataBufferWR = (WeakReference)(new Object(null));
    private static int FOLDER_FIELD_ID = 0;

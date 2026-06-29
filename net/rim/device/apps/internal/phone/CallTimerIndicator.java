@@ -19,9 +19,9 @@ public final class CallTimerIndicator implements Indicator, PhoneEventListener, 
    private IndicatorManager _indicatorManager;
    private int _callTimerCount;
    private StringBuffer _strBuffer = (StringBuffer)(new Object());
-   private static final int STARTING_CALL_TIMER_VALUE;
-   private static final int INVALID_CALL_TIMER_VALUE;
-   private static final long GUID;
+   private static final int STARTING_CALL_TIMER_VALUE = 0;
+   private static final int INVALID_CALL_TIMER_VALUE = -1;
+   private static final long GUID = -2142843617924625277L;
    private static CallTimerIndicator _timerInstance;
    private static int _networkType = RadioInfo.getNetworkType();
 

@@ -24,7 +24,7 @@ public final class SearchEditScreen extends EditorUsingRIMModelFactory {
    private Verb _lastSearchVerb;
    private boolean _fromRibbon;
    private MessageSearchImpl _search;
-   public static final int INDENT_AMOUNT;
+   public static final int INDENT_AMOUNT = 16;
 
    public SearchEditScreen(MessageSearchImpl search, boolean fromRibbon) {
       super(new Object(0, 56), CommonResources.getString(9136), search.getCollectionId(), 10000);

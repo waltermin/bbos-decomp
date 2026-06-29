@@ -3,8 +3,8 @@ package javax.bluetooth;
 import javax.microedition.io.Connection;
 
 public interface L2CAPConnection extends Connection {
-   int DEFAULT_MTU;
-   int MINIMUM_MTU;
+   int DEFAULT_MTU = 672;
+   int MINIMUM_MTU = 48;
 
    int getTransmitMTU();
 

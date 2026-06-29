@@ -11,7 +11,7 @@ public class LandmarkStore {
    Vector _landmarkStore;
    Hashtable _categories;
    String _name;
-   private static final long ID;
+   private static final long ID = 6274003102685756378L;
    private static Hashtable _landmarkStores;
    static String DEFAULT_STORE = "DEFAULT";
    private static PersistentObject _store = PersistentStore.getPersistentObject(6274003102685756378L);

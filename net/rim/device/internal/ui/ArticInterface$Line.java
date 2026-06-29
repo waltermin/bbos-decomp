@@ -14,9 +14,9 @@ public final class ArticInterface$Line {
    public int _flags;
    public ArticInterface$LayoutRun[] _layoutRun;
    public byte[] _bidi;
-   public static final int KParStart;
-   public static final int KParEnd;
-   public static final int KForcedStart;
-   public static final int KForcedEnd;
-   public static final int KRightToLeft;
+   public static final int KParStart = 1;
+   public static final int KParEnd = 2;
+   public static final int KForcedStart = 4;
+   public static final int KForcedEnd = 8;
+   public static final int KRightToLeft = 16;
 }

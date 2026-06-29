@@ -27,12 +27,12 @@ final class MdpReceiveTable implements RealtimeClockListener {
    private Vector _confirmationTimes = (Vector)(new Object());
    private IntHashtable _confirmationDatagrams = (IntHashtable)(new Object());
    private Transport _mdpTransport;
-   private static final int MAXIMUM_DUPLICATES;
-   private static final int DUPLICATE_TMO;
-   private static final int ASSEMBLY_TMO;
-   private static final int ASSEMBLY_COUNT;
-   private static final int CONFIRMATION_TMO;
-   private static final long GUID;
+   private static final int MAXIMUM_DUPLICATES = 32;
+   private static final int DUPLICATE_TMO = 30;
+   private static final int ASSEMBLY_TMO = 30;
+   private static final int ASSEMBLY_COUNT = 32;
+   private static final int CONFIRMATION_TMO = 2;
+   private static final long GUID = 15827351342928456L;
 
    MdpReceiveTable() {
       this._assemblyPersist = RIMPersistentStore.getPersistentObject(15827351342928456L);

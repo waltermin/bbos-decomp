@@ -9,9 +9,9 @@ public final class ContactKeywordsData implements GTPatriciaTreeData {
    private IntVector _nodes = (IntVector)(new Object());
    private IntVector _leaves = (IntVector)(new Object());
    private SparseList _contactMap = (SparseList)(new Object());
-   private static final int BIT_NUMBER_MASK;
-   private static final int BIT_NUMBER_SHIFT;
-   private static final int LEFT_SIZE_MASK;
+   private static final int BIT_NUMBER_MASK = 65535;
+   private static final int BIT_NUMBER_SHIFT = 16;
+   private static final int LEFT_SIZE_MASK = 65535;
 
    @Override
    public final void removeAll() {

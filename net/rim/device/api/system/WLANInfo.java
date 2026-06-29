@@ -4,11 +4,11 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 import net.rim.device.internal.i18n.CommonResource;
 
 public class WLANInfo {
-   public static final int WLAN_BAND_A;
-   public static final int WLAN_BAND_B;
-   public static final int WLAN_BAND_BG;
-   public static final int WLAN_STATE_CONNECTED;
-   public static final int WLAN_STATE_DISCONNECTED;
+   public static final int WLAN_BAND_A = 2;
+   public static final int WLAN_BAND_B = 4;
+   public static final int WLAN_BAND_BG = 1;
+   public static final int WLAN_STATE_CONNECTED = 4620;
+   public static final int WLAN_STATE_DISCONNECTED = 4621;
 
    private WLANInfo() {
    }

@@ -28,9 +28,9 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvider, MatchProvider, Recognizer, URLProvider, FieldLabelProvider {
-   public static final int DEFAULT_DIGITS_IN_REVERSE_LOOKUP_HASH;
-   public static final int SHORT_NUMBER_TYPE;
-   public static final int TYPE_IN_PARENS;
+   public static final int DEFAULT_DIGITS_IN_REVERSE_LOOKUP_HASH = 7;
+   public static final int SHORT_NUMBER_TYPE = 2;
+   public static final int TYPE_IN_PARENS = 4;
    protected static WeakReference _strBufferWR = (WeakReference)(new Object(null));
    protected static ContextObjectWR _friendlyContextWR = (ContextObjectWR)(new Object(10));
    protected static String[] _nameStrings = new Object[2];

@@ -18,7 +18,7 @@ public class BehaviorManager implements MediaService, MediaListener {
    private boolean _updateRequested;
    private AnimationHandler _animationHandler;
    private MediaObjectHandler _mediaObjectHandler;
-   public static final String ID;
+   public static final String ID = "Behaviors";
 
    @Override
    public void setServices(MediaServices s) {

@@ -48,7 +48,7 @@ final class TextSegment extends TaskContainer {
    private int _minimumFontSize;
    private int _minimumFontStyle;
    private boolean _removeLeadingSpaces;
-   private static final int DEFAULT_PT_SIZE_DELTA;
+   private static final int DEFAULT_PT_SIZE_DELTA = 2;
    private static Stack _defaultManagerStack = (Stack)(new Object());
 
    TextSegment(Font defaultFont, int minimumFontSize, int minimumFontStyle, boolean minimalMenuMode) {

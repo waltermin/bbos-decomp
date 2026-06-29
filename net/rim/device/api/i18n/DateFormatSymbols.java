@@ -21,7 +21,7 @@ public final class DateFormatSymbols implements Persistable {
    private String[] _weekdays;
    private String[] _weekdays_short;
    private char _undefinedSymbol;
-   private static final long SYMBOLS;
+   private static final long SYMBOLS = 1125501472565950566L;
    private static DateFormatSymbols _default;
 
    private DateFormatSymbols() {

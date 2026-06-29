@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.util.Arrays;
 
 public class PGPFingerprintKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = 3692091765934112220L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

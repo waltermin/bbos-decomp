@@ -65,14 +65,14 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
    private static final float MAX_ZOOM_LOG = (float)MathUtilities.log((double)4620693217682128896L) / ZOOMSTEP_LOG;
    private static final int MIN_ZOOM_FP_STD = Fixed32.div(65536, Fixed32.toFP(8));
    private static final float MIN_ZOOM_LOG_STD = (float)MathUtilities.log((double)4593671619917905920L) / ZOOMSTEP_LOG;
-   private static final int LEGACY_ALT_TRACKWHEEL;
-   public static final int REFLECTION_HORIZONTAL;
-   public static final int REFLECTION_VERTICAL;
+   private static final int LEGACY_ALT_TRACKWHEEL = 1073741825;
+   public static final int REFLECTION_HORIZONTAL = 2;
+   public static final int REFLECTION_VERTICAL = 1;
    private static Image _zoomImage = ThemeManager.getThemeAwareImage("net_rim_zoom");
    private static Image _zoomElevatorImage = ThemeManager.getThemeAwareImage("net_rim_zoom_elevator");
-   private static final int ZOOM_TO_NONE;
-   private static final int ZOOM_TO_FILL;
-   private static final int ZOOM_TO_FIT;
+   private static final int ZOOM_TO_NONE = 0;
+   private static final int ZOOM_TO_FILL = 1;
+   private static final int ZOOM_TO_FIT = 2;
 
    public void zoomOriginal() {
       if (!this.isInOriginalState()) {

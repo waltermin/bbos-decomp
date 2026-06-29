@@ -9,7 +9,7 @@ public class LiveCallFactoryRegistry {
    private Vector _factories;
    private LiveCallFactory _defaultFactory;
    private LiveCall _createdCall;
-   private static final long GUID;
+   private static final long GUID = -7549607856025806600L;
    private static LiveCallFactoryRegistry _instance;
 
    public static LiveCallFactoryRegistry getRegistry() {

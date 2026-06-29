@@ -7,9 +7,9 @@ final class ChangeInfoBlob extends PeerDataBlob {
    private String _contactId;
    private String _contactName;
    private String _oldPin;
-   private static final int CONTACT_ID;
-   private static final int CONTACT_NAME;
-   private static final int OLD_PIN;
+   private static final int CONTACT_ID = 1;
+   private static final int CONTACT_NAME = 2;
+   private static final int OLD_PIN = 3;
 
    public ChangeInfoBlob() {
    }

@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class GlobalSignRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -4180313753675649232L;
+   private static final long CERTSTATUSTIME = 1158007107581L;
    private static final byte[] GLOBAL_SIGN_ROOT_CA_2014 = new byte[]{
       48,
       -126,

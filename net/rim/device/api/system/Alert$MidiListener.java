@@ -6,7 +6,7 @@ import net.rim.device.api.util.Arrays;
 
 class Alert$MidiListener implements AlertListener2 {
    private Reference[] _midiListeners = new Reference[0];
-   public static final long GUID;
+   public static final long GUID = 2808165152854904955L;
 
    private Alert$MidiListener() {
    }

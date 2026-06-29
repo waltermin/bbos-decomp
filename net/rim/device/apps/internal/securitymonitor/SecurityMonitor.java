@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.services.runtime.ServiceStartup;
 
 final class SecurityMonitor extends Application {
-   private static final long ID;
+   private static final long ID = 4540117967283091590L;
 
    public static final void main(String[] args) {
       if (args.length == 0) {

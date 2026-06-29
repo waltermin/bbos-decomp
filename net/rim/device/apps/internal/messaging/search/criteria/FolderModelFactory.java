@@ -8,7 +8,7 @@ import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.internal.messaging.search.LegacyFilterConvert;
 
 public final class FolderModelFactory extends RIMModelFactory {
-   private static final long REGKEY;
+   private static final long REGKEY = 2031962665796173461L;
    private static FolderModelFactory _factory;
 
    private FolderModelFactory() {

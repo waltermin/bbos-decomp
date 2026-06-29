@@ -10,10 +10,10 @@ import net.rim.device.cldc.io.utility.URIDecoder;
 import net.rim.vm.Array;
 
 final class MailToMessageFactory implements Factory {
-   private static final int SUBJECTLENGTH;
-   private static final int TOLENGTH;
-   private static final int CCLENGTH;
-   private static final int BODYLENGTH;
+   private static final int SUBJECTLENGTH = 8;
+   private static final int TOLENGTH = 3;
+   private static final int CCLENGTH = 3;
+   private static final int BODYLENGTH = 5;
 
    @Override
    public final Object createInstance(Object initialData) {

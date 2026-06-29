@@ -20,7 +20,7 @@ import net.rim.vm.Array;
 
 public final class UserFieldsModel implements PersistableRIMModel, VerbProvider, FieldProvider, ConversionProvider, MatchProvider {
    String[] _userDefinedFields = new Object[4];
-   static final int USER_FIELD_COUNT;
+   static final int USER_FIELD_COUNT = 4;
 
    public final void setUserDefinedField(int id, String value) {
       this._userDefinedFields[id] = value;

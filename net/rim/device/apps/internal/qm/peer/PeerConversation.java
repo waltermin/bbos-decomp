@@ -57,17 +57,17 @@ final class PeerConversation
    private boolean _unread;
    private PeerConversation$OpenConversationVerb _openConv = new PeerConversation$OpenConversationVerb(this);
    private PeerConversation$ConversationMarkVerb _markUnread = new PeerConversation$ConversationMarkVerb(this);
-   static final int UNIQUE_ID;
-   static final int UNIQUE_ID_HASH;
-   static final int PARTICIPANTS_ID;
-   static final int UNREAD_ID;
-   static final int CONFERENCE_ID;
-   static final int MESSAGES_ID;
-   static final int TIMESTARTED_ID;
-   static final int FIRST_PARTICIPANT;
-   static final int PARTICIPANT_HASH_ID;
-   static final int PARTICIPANT_STRING_NAME;
-   static final int PARTICIPANT_STRING_ID;
+   static final int UNIQUE_ID = 1;
+   static final int UNIQUE_ID_HASH = 2;
+   static final int PARTICIPANTS_ID = 3;
+   static final int UNREAD_ID = 4;
+   static final int CONFERENCE_ID = 5;
+   static final int MESSAGES_ID = 6;
+   static final int TIMESTARTED_ID = 7;
+   static final int FIRST_PARTICIPANT = 8;
+   static final int PARTICIPANT_HASH_ID = 1;
+   static final int PARTICIPANT_STRING_NAME = 2;
+   static final int PARTICIPANT_STRING_ID = 3;
 
    final IntHashtable getPersistentData() {
       return this._persistentData;

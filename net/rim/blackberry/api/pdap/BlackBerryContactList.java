@@ -6,11 +6,11 @@ import javax.microedition.pim.ContactList;
 import javax.microedition.pim.PIMItem;
 
 public interface BlackBerryContactList extends ContactList, BlackBerryPIMList {
-   int SORT_ORDER_FIRST_NAME;
-   int SORT_ORDER_LAST_NAME;
-   int SORT_ORDER_COMPANY;
-   int SEARCH_CONTACTS;
-   int SEARCH_GROUPS;
+   int SORT_ORDER_FIRST_NAME = 0;
+   int SORT_ORDER_LAST_NAME = 1;
+   int SORT_ORDER_COMPANY = 2;
+   int SEARCH_CONTACTS = 1;
+   int SEARCH_GROUPS = 2;
 
    void lookup(String var1, RemoteLookupListener var2);
 

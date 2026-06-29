@@ -10,7 +10,7 @@ import net.rim.device.internal.proxy.Proxy;
 final class ScheduledAppLauncher implements SystemListener, RadioStatusListener {
    private ApplicationDescriptor _applicationDescriptor;
    private boolean _useCdmaRadioListener;
-   static final long REMINDER_KEY;
+   static final long REMINDER_KEY = -3358579878181152826L;
 
    public static final void register(ApplicationDescriptor application, boolean useCdmaRadioListener) {
       ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();

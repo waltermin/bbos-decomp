@@ -3,11 +3,11 @@ package net.rim.plazmic.internal.mediaengine.dataformat;
 import net.rim.device.api.math.Fixed32;
 
 public class Units {
-   private static final String MILLISECONDS;
-   private static final String SECONDS;
-   private static final String PIXELS;
-   private static final String PERCENTAGE;
-   private static final int SECONDS_TO_MILLISECONDS;
+   private static final String MILLISECONDS = "ms";
+   private static final String SECONDS = "s";
+   private static final String PIXELS = "px";
+   private static final String PERCENTAGE = "%";
+   private static final int SECONDS_TO_MILLISECONDS = 1000;
    private static final String[] TIME_UNITS = new String[]{"ms", "s"};
    private static final int[] CONVERSION_TO_MILLISECONDS = new int[]{1, 1000, -805044223, 2, -804651006, 3, 7, -805044219};
    private static final String[] LENGTH_UNITS = new String[]{"px"};

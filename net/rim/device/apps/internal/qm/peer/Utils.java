@@ -10,17 +10,17 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.vm.Array;
 
 final class Utils {
-   public static final int FIELD_ELEMENT_BIT_LENGTH;
-   public static final int FIELD_ELEMENT_BYTE_LENGTH;
-   public static final int PRIVATE_KEY_BYTE_LENGTH;
-   public static final int COMPRESSED_POINT_BYTE_LENGTH;
-   public static final int PUBLIC_KEY_BYTE_LENGTH;
-   public static final byte HIGH_BYTE_MASK;
-   public static final byte LOW_BYTE_MASK;
+   public static final int FIELD_ELEMENT_BIT_LENGTH = 160;
+   public static final int FIELD_ELEMENT_BYTE_LENGTH = 20;
+   public static final int PRIVATE_KEY_BYTE_LENGTH = 21;
+   public static final int COMPRESSED_POINT_BYTE_LENGTH = 21;
+   public static final int PUBLIC_KEY_BYTE_LENGTH = 21;
+   public static final byte HIGH_BYTE_MASK = 0;
+   public static final byte LOW_BYTE_MASK = 2;
    private static StringBuffer _buffer = (StringBuffer)(new Object());
    private static byte[] _codes = new byte[256];
-   private static final String _alphabet;
-   private static final String TOSTRIP;
+   private static final String _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+   private static final String TOSTRIP = "\n\n";
    private static final String TOSTRIP_GROUPWISE = (String)(new Object(new byte[]{32, 10, 32, 10}));
 
    private Utils() {

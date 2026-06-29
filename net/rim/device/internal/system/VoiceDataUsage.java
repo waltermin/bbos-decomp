@@ -3,13 +3,13 @@ package net.rim.device.internal.system;
 import net.rim.vm.PersistentInteger;
 
 public final class VoiceDataUsage {
-   public static final int DATA_MAX;
-   public static final int VOICE_MAX;
-   public static final int DATA_COMMIT;
-   public static final int VOICE_COMMIT;
-   public static final int ILLEGAL_VALUE;
-   private static final long DATA_PERSIST_KEY;
-   private static final long VOICE_PERSIST_KEY;
+   public static final int DATA_MAX = 256000;
+   public static final int VOICE_MAX = 3600;
+   public static final int DATA_COMMIT = 65536;
+   public static final int VOICE_COMMIT = 120;
+   public static final int ILLEGAL_VALUE = -1;
+   private static final long DATA_PERSIST_KEY = 5479242016585988378L;
+   private static final long VOICE_PERSIST_KEY = 4462726683010157038L;
    private static int _persistDataHandle = PersistentInteger.getId(5479242016585988378L, -1);
    private static int _persistVoiceHandle = PersistentInteger.getId(4462726683010157038L, -1);
 

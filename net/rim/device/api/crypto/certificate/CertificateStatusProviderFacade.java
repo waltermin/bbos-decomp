@@ -5,11 +5,11 @@ import net.rim.device.api.crypto.certificate.status.CertificateStatusRequest;
 
 public class CertificateStatusProviderFacade {
    private static CertificateStatusProviderFacade _certificateStatusProvider;
-   static final int REQUEST_START;
-   static final int REQUEST_COMPLETE;
-   static final int REQUEST_DISMISS;
-   static final int REQUEST_CANCEL;
-   static final int REQUEST_ERROR;
+   static final int REQUEST_START = 0;
+   static final int REQUEST_COMPLETE = 1;
+   static final int REQUEST_DISMISS = 2;
+   static final int REQUEST_CANCEL = 3;
+   static final int REQUEST_ERROR = 4;
 
    public static boolean available() {
       return _certificateStatusProvider != null;

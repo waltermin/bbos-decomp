@@ -13,7 +13,7 @@ import net.rim.device.apps.api.messaging.util.SortedCollection;
 public class SMSUtilityFolder extends SortedCollection implements Folder, CollectionListener {
    LongHashtable _messageEntries;
    private static SMSUtilityFolder _utilityFolderAllItems;
-   private static final long SMS_UTILITY_FOLDER_ALL;
+   private static final long SMS_UTILITY_FOLDER_ALL = -8262673811206753019L;
 
    private SMSUtilityFolder() {
       super.initialize(-6498019436237624557L, -8262673811206753019L, Storage.getLongKeyProviderAdaptor(), null);

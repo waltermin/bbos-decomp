@@ -36,7 +36,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
    private byte[] _authenticationCertificateHash;
    private int _maxAuthenticationAttempts;
    private int _remainingAuthenticationAttempts;
-   private static final int ATTEMPTS_DEFAULT_VALUE;
+   private static final int ATTEMPTS_DEFAULT_VALUE = 2147483646;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
 
    public boolean isChallengeResponseEnabled() {

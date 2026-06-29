@@ -4,7 +4,7 @@ import java.io.OutputStream;
 
 public class StreamEncryptor extends EncryptorOutputStream {
    private byte[] _buffer = new byte[128];
-   private static final int BUFFER_LENGTH;
+   private static final int BUFFER_LENGTH = 128;
 
    protected StreamEncryptor(OutputStream output) {
       super(output);

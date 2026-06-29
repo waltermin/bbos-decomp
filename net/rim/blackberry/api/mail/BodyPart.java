@@ -14,7 +14,7 @@ public class BodyPart implements Part {
    private EmailMessageModel _internalModel;
    private int _morePartId;
    public static String CONTENT_TYPE = "Content-Type";
-   protected static final char SEPARATOR;
+   protected static final char SEPARATOR = ':';
    protected static final byte[] CRLF = new byte[]{13, 10};
    protected static final byte[] EMPTY = new byte[]{0};
 

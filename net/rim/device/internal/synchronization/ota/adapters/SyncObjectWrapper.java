@@ -35,12 +35,12 @@ final class SyncObjectWrapper {
    private int[] _tempKeyFieldsSet;
    private int[] _allFieldsHashes;
    private int[] _keyFieldsHashes;
-   public static final byte IgnoreUnMappedFields;
-   public static final byte IncludeUnMappedFieldsOnly;
-   public static final byte ForHashCalculation;
-   public static final byte IncludeEmptyFields;
-   public static final int OrderedHash;
-   public static final byte FIELD_ATTRIBUTES_TRANCATED;
+   public static final byte IgnoreUnMappedFields = 1;
+   public static final byte IncludeUnMappedFieldsOnly = 2;
+   public static final byte ForHashCalculation = 4;
+   public static final byte IncludeEmptyFields = 8;
+   public static final int OrderedHash = 16;
+   public static final byte FIELD_ATTRIBUTES_TRANCATED = 1;
 
    SyncObjectWrapper() {
    }

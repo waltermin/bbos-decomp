@@ -22,9 +22,9 @@ public final class SMIMEOptions extends SecureEmailOptions implements Persistabl
    private byte[] _signingIssuer;
    private byte[] _encryptionSerialNumber;
    private byte[] _encryptionIssuer;
-   private static final int CONTENT_CIPHERS_BITFIELD_DEFAULT;
-   private static final boolean INCLUDE_CERTIFICATES_DEFAULT;
-   private static final boolean REQUEST_SIGNED_RECEIPTS_DEFAULT;
+   private static final int CONTENT_CIPHERS_BITFIELD_DEFAULT = 39;
+   private static final boolean INCLUDE_CERTIFICATES_DEFAULT = true;
+   private static final boolean REQUEST_SIGNED_RECEIPTS_DEFAULT = false;
 
    public SMIMEOptions() {
       this.reset();

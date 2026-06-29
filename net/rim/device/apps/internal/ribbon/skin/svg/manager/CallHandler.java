@@ -17,7 +17,7 @@ import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorI
 
 class CallHandler extends Handler {
    PhoneCallModelImpl[] _callModel = new Object[this.MaxEntries];
-   private static final int NUM_ENTRIES_PER_LOG;
+   private static final int NUM_ENTRIES_PER_LOG = 2;
 
    CallHandler(ModelInteractorImpl mi, UiApplication app) {
       super(mi, app);

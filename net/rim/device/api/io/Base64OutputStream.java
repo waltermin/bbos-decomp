@@ -13,8 +13,8 @@ public class Base64OutputStream extends OutputStream {
    private boolean _insertLF;
    private OutputStream _outputStream;
    private IOException _lastException;
-   private static final int INPUT_BUFFER_LENGTH;
-   private static final int OUTPUT_BUFFER_LENGTH;
+   private static final int INPUT_BUFFER_LENGTH = 1539;
+   private static final int OUTPUT_BUFFER_LENGTH = 2106;
 
    public Base64OutputStream(OutputStream outputStream) {
       this(outputStream, false, false);

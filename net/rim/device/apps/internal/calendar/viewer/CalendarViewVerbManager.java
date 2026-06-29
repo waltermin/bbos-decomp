@@ -25,10 +25,10 @@ class CalendarViewVerbManager {
    private IntHashtable _hk = (IntHashtable)(new Object());
    private CalendarActions _calActions;
    private Verb _defaultVerb;
-   protected static final byte VIEW_DAY_VERB;
-   protected static final byte VIEW_WEEK_VERB;
-   protected static final byte VIEW_MONTH_VERB;
-   protected static final byte VIEW_AGENDA_VERB;
+   protected static final byte VIEW_DAY_VERB = 1;
+   protected static final byte VIEW_WEEK_VERB = 2;
+   protected static final byte VIEW_MONTH_VERB = 3;
+   protected static final byte VIEW_AGENDA_VERB = 4;
 
    public CalendarViewVerbManager(CalendarActions calActions) {
       this._calActions = calActions;

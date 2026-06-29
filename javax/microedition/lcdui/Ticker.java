@@ -9,9 +9,9 @@ public class Ticker {
    private int _pixelLength;
    private int _pixelOffset;
    private int _width;
-   private static final int TICKER_ADVANCE;
-   static final int TICKER_DELAY;
-   static final int TICKER_IDLE;
+   private static final int TICKER_ADVANCE = 4;
+   static final int TICKER_DELAY = 150;
+   static final int TICKER_IDLE = 120;
 
    public Ticker(String str) {
       str.length();

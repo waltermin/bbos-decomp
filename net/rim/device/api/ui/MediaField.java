@@ -36,17 +36,17 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
    private int _preferredHeight = -1;
    private Pannable _pannable;
    private Zoomable _zoomable;
-   private static final int MEDIA_SHIFT;
-   public static final long WRAP_ALLOWED;
-   public static final long TRANSPARENT;
-   public static final long ACTIVATE_ON_CLICK;
-   public static final long NO_CONTEXT_MENU;
-   public static final long PREFERRED_WIDTH;
-   public static final long PREFERRED_HEIGHT;
-   public static final long CONTROLLER_STYLE_MASK;
-   private static final int CONTROLLER_INDEX;
-   private static final int DIMENSION_NOT_SET;
-   private static final int SCROLL_DELTA;
+   private static final int MEDIA_SHIFT = 18;
+   public static final long WRAP_ALLOWED = 262144L;
+   public static final long TRANSPARENT = 524288L;
+   public static final long ACTIVATE_ON_CLICK = 1048576L;
+   public static final long NO_CONTEXT_MENU = 2097152L;
+   public static final long PREFERRED_WIDTH = 8388608L;
+   public static final long PREFERRED_HEIGHT = 16777216L;
+   public static final long CONTROLLER_STYLE_MASK = 18014398512889856L;
+   private static final int CONTROLLER_INDEX = 0;
+   private static final int DIMENSION_NOT_SET = -1;
+   private static final int SCROLL_DELTA = 6;
 
    void killFocus(Field field) {
       if (this.isForeignObject(field) && this.getFieldWithFocus() == field) {

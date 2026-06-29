@@ -5,7 +5,7 @@ import net.rim.device.internal.vad.VADNatives;
 
 final class VADContentProtectedFile extends VADPersistentFile {
    private byte[][][] _plaintext;
-   private static final boolean DEBUG_TIMINGS;
+   private static final boolean DEBUG_TIMINGS = false;
 
    VADContentProtectedFile(VADEngineManager manager, int handle) {
       super(manager, handle);

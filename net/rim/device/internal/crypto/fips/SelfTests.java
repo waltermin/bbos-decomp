@@ -11,7 +11,7 @@ public final class SelfTests {
    private boolean _testsFailed;
    private boolean _startupRun;
    SelfTestModule[] _modules;
-   private static final long LOGGER_GUID;
+   private static final long LOGGER_GUID = 7146679653930594060L;
 
    public SelfTests(boolean startupRun) {
       EventLogger.register(7146679653930594060L, "Security Self Tests", 2);

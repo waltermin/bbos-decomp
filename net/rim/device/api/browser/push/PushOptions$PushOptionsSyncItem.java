@@ -5,7 +5,7 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class PushOptions$PushOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int DB_VERSION;
+   private static final int DB_VERSION = 3;
 
    @Override
    public final String getSyncName() {

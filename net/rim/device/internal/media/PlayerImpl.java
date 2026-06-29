@@ -44,10 +44,10 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
    private int _playRunnableID = -1;
    private WeakReference _activeMedia;
    private int _killRunnableId = -1;
-   private static final String FLAG_NOT_UNLOADABLE;
-   private static final String ACTIVE_MEDIA_SOURCE;
-   static final String INTERRUPTABLE_KEY;
-   private static final int PLAY_DELAY;
+   private static final String FLAG_NOT_UNLOADABLE = "flag_not_unloadable";
+   private static final String ACTIVE_MEDIA_SOURCE = "active_media_source";
+   static final String INTERRUPTABLE_KEY = "interrupt_on_user_input";
+   private static final int PLAY_DELAY = 1000;
 
    protected void cleanUp() {
       if (this._audioSourceAdded) {

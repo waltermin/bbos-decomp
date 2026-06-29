@@ -26,10 +26,10 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
    private int _verticalSpacing;
    private boolean _noAutoFocus;
    private boolean _advanceOnSelect;
-   public static final int ADVANCE_ON_ENTER_KEY;
-   public static final int SMALL_LIST_FONT;
-   public static final int NO_AUTO_FOCUS;
-   public static final int ADVANCE_ON_SELECT;
+   public static final int ADVANCE_ON_ENTER_KEY = 131072;
+   public static final int SMALL_LIST_FONT = 262144;
+   public static final int NO_AUTO_FOCUS = 524288;
+   public static final int ADVANCE_ON_SELECT = 1048576;
 
    public ListWizardPage(String title, int priority, WizardCategory category, int wizardFlags) {
       super(title, priority, category, wizardFlags | 16);

@@ -5,8 +5,8 @@ import net.rim.device.api.util.AbstractString;
 
 public class NumericTextFilter extends TextFilter {
    private final int _style;
-   public static final int ALLOW_NEGATIVE;
-   public static final int ALLOW_DECIMAL;
+   public static final int ALLOW_NEGATIVE = 1;
+   public static final int ALLOW_DECIMAL = 2;
 
    public NumericTextFilter() {
       this(0);

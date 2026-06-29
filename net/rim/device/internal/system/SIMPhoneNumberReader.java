@@ -6,8 +6,8 @@ public final class SIMPhoneNumberReader implements SIMCardEfTask {
    SIMPhoneNumberReader$PhoneNumberList _list;
    int _recNum;
    int _efID;
-   static final byte INTERNATIONAL_CONST;
-   static final byte UNKNOWN_CONST;
+   static final byte INTERNATIONAL_CONST = -112;
+   static final byte UNKNOWN_CONST = -128;
    static StringBuffer _tempNumber = new StringBuffer();
 
    public SIMPhoneNumberReader(SIMPhoneNumberReader$PhoneNumberList list, int efID, int recNum) {

@@ -14,7 +14,7 @@ import net.rim.device.internal.system.SE13NetworkTable;
 import net.rim.vm.Array;
 
 final class NetworkOptionsUtils {
-   static final int MCC_MNC_SIZE;
+   static final int MCC_MNC_SIZE = 3;
 
    public static final int scanForNetworks() {
       SpinnerDialog d = new SpinnerDialog(1, -1, -1);

@@ -6,8 +6,8 @@ import net.rim.device.api.util.CharacterUtilities;
 
 public class IPTextFilter extends TextFilter {
    private int _flags;
-   public static final int NO_PORTS;
-   public static final int NUMERIC_IP_ONLY;
+   public static final int NO_PORTS = 1;
+   public static final int NUMERIC_IP_ONLY = 2;
 
    public IPTextFilter() {
    }

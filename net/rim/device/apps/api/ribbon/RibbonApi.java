@@ -5,7 +5,7 @@ import net.rim.device.api.system.Bitmap;
 
 public class RibbonApi {
    public static long ID = 3160072486533847306L;
-   public static final long USER_INITIATED_LOCK;
+   public static final long USER_INITIATED_LOCK = 386954390916129487L;
    public static boolean _logONSState;
 
    public static RibbonApi getInstance() {

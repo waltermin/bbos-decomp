@@ -11,8 +11,8 @@ public class WBXMLCodeBookCreationHandler extends DefaultHandler implements RIMW
    private String _codeBookID;
    private long _codeBookHash;
    private int _currentPage = -1;
-   private static final int _pageTableSize;
-   private static final int _hashTableSize;
+   private static final int _pageTableSize = 3;
+   private static final int _hashTableSize = 31;
 
    public WBXMLCodeBookCreationHandler() {
       this._codeBookID = null;

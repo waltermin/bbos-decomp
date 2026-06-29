@@ -25,7 +25,7 @@ public class Alert extends Screen {
    private SimpleSortingVector _commands;
    private VerticalFieldManager _buttonContainer;
    private static int _timerId = -1;
-   public static final int FOREVER;
+   public static final int FOREVER = -2;
    public static final Command DISMISS_COMMAND = new Command("", 4, 0);
 
    public Alert(String title) {

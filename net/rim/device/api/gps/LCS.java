@@ -4,9 +4,9 @@ import net.rim.device.api.system.Application;
 import net.rim.device.internal.system.EventDispatchManager;
 
 public final class LCS {
-   public static final int LCS_NOTIFICATION_ONLY;
-   public static final int LCS_VERIFICATION_DEFAULT_ALLOWED;
-   public static final int LCS_VERIFICATION_DEFAULT_NOT_ALLOWED;
+   public static final int LCS_NOTIFICATION_ONLY = 0;
+   public static final int LCS_VERIFICATION_DEFAULT_ALLOWED = 1;
+   public static final int LCS_VERIFICATION_DEFAULT_NOT_ALLOWED = 2;
 
    public static final void addListener(Application app, LCSListener listener) {
       EventDispatchManager dispatchManager = EventDispatchManager.getInstance();

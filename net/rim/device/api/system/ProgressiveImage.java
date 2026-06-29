@@ -9,7 +9,7 @@ public class ProgressiveImage extends EncodedImage {
    private EncodedImage _standardEncoding;
    private boolean _isReplacementNecessary;
    private boolean _isReplacementNecessaryDetermined;
-   private static final int REPLACEMENT_IMAGE_THRESHOLD;
+   private static final int REPLACEMENT_IMAGE_THRESHOLD = 76800;
 
    public ProgressiveImage(byte[] progressiveFile, int offset, int length, boolean appMode) {
       this._appMode = appMode;

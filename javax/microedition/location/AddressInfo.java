@@ -2,23 +2,23 @@ package javax.microedition.location;
 
 public class AddressInfo {
    private String[] _values = new Object[17];
-   public static final int EXTENSION;
-   public static final int STREET;
-   public static final int POSTAL_CODE;
-   public static final int CITY;
-   public static final int COUNTY;
-   public static final int STATE;
-   public static final int COUNTRY;
-   public static final int COUNTRY_CODE;
-   public static final int DISTRICT;
-   public static final int BUILDING_NAME;
-   public static final int BUILDING_FLOOR;
-   public static final int BUILDING_ROOM;
-   public static final int BUILDING_ZONE;
-   public static final int CROSSING1;
-   public static final int CROSSING2;
-   public static final int URL;
-   public static final int PHONE_NUMBER;
+   public static final int EXTENSION = 1;
+   public static final int STREET = 2;
+   public static final int POSTAL_CODE = 3;
+   public static final int CITY = 4;
+   public static final int COUNTY = 5;
+   public static final int STATE = 6;
+   public static final int COUNTRY = 7;
+   public static final int COUNTRY_CODE = 8;
+   public static final int DISTRICT = 9;
+   public static final int BUILDING_NAME = 10;
+   public static final int BUILDING_FLOOR = 11;
+   public static final int BUILDING_ROOM = 12;
+   public static final int BUILDING_ZONE = 13;
+   public static final int CROSSING1 = 14;
+   public static final int CROSSING2 = 15;
+   public static final int URL = 16;
+   public static final int PHONE_NUMBER = 17;
 
    public AddressInfo() {
       for (int i = 0; i < 17; i++) {

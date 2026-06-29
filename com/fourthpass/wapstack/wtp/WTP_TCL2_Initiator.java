@@ -25,8 +25,8 @@ final class WTP_TCL2_Initiator extends WTP_Transaction_Initiator {
    private BitSet _psnSentAcks = (BitSet)(new Object(256));
    private int _numSendPackets;
    private int _lastSendPacketNumber;
-   private static final int SEND_PACKET_GROUP_SIZE;
-   private static final int MAX_PACKET_SIZE;
+   private static final int SEND_PACKET_GROUP_SIZE = 5;
+   private static final int MAX_PACKET_SIZE = 1400;
 
    public WTP_TCL2_Initiator(WTPLayer wtpLayer, int TID, boolean TIDnew) {
       super(wtpLayer, TID, TIDnew, (byte)2);

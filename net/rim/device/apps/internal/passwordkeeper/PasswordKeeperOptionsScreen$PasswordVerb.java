@@ -6,8 +6,8 @@ import net.rim.device.apps.api.framework.verb.Verb;
 final class PasswordKeeperOptionsScreen$PasswordVerb extends Verb {
    private int _type;
    private final PasswordKeeperOptionsScreen this$0;
-   private static final int SAVE;
-   private static final int CLOSE;
+   private static final int SAVE = 1;
+   private static final int CLOSE = 2;
 
    PasswordKeeperOptionsScreen$PasswordVerb(PasswordKeeperOptionsScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

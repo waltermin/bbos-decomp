@@ -7,7 +7,7 @@ class AbstractCallEventHandler implements PhoneListener {
    private int _order;
    private AbstractCallEventHandler _next;
    private boolean _registered;
-   private static final long HANDLERS_GUID;
+   private static final long HANDLERS_GUID = -3955160615553205537L;
    private static AbstractCallEventHandler _first;
 
    protected AbstractCallEventHandler(int order) {

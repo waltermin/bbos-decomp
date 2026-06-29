@@ -29,13 +29,13 @@ public final class BISLaunch extends UiApplication {
    protected String[] _urls;
    byte[][][] _digests;
    int _size;
-   public static final int RIBBON_UI_MODE;
-   public static final int WIZARD_UI_MODE;
-   private static final String WAP_CID;
-   private static final int AUTOSTART_TIME_DELAY;
-   static final long APP_GUID;
-   static final String BIS_LAUNCH_MODULE_NAME;
-   static final String BIS_CLIENT_MODULE_NAME;
+   public static final int RIBBON_UI_MODE = 0;
+   public static final int WIZARD_UI_MODE = 1;
+   private static final String WAP_CID = "WAP";
+   private static final int AUTOSTART_TIME_DELAY = 5000;
+   static final long APP_GUID = -5149637025418560721L;
+   static final String BIS_LAUNCH_MODULE_NAME = "net_rim_bis_launch";
+   static final String BIS_CLIENT_MODULE_NAME = "net_rim_bis_client";
    static String _version;
    public static BISClientConfigRecord _configRecord;
    private static ApplicationDescriptor _wizardDescriptor = (ApplicationDescriptor)(new Object(

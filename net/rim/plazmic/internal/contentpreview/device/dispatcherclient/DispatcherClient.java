@@ -19,9 +19,9 @@ public final class DispatcherClient extends AbstractDispatcher {
    private StreamConnection _connection;
    private OutputStream _out;
    private InputStream _in;
-   public static final String rcsid;
-   private static final boolean USE_DIRECT_TCP;
-   private static final boolean DEBUG;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/dispatcherclient/DispatcherClient.java#1 $";
+   private static final boolean USE_DIRECT_TCP = true;
+   private static final boolean DEBUG = false;
 
    public DispatcherClient() {
       ServiceInfo info = ServiceInfo.getDispatcherServiceInfo();

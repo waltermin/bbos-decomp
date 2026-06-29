@@ -9,7 +9,7 @@ class DownloadPage$DownloadItem$UpdateRunner implements Runnable {
    private long[] _bytesDownloaded;
    private int _head;
    private final DownloadPage$DownloadItem this$1;
-   private static final int ITEMS_TO_TRACK;
+   private static final int ITEMS_TO_TRACK = 5;
 
    public DownloadPage$DownloadItem$UpdateRunner(DownloadPage$DownloadItem _1) {
       this.this$1 = _1;

@@ -42,9 +42,9 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
    private boolean _persistenceReadable;
    private Object _globalTicket;
    private Object _dummy = new Object();
-   private static final long OP_CREATE;
-   private static final long OP_MODIFY;
-   private static final long OP_DELETE;
+   private static final long OP_CREATE = 4294967296L;
+   private static final long OP_MODIFY = 8589934592L;
+   private static final long OP_DELETE = 17179869184L;
    static Class class$net$rim$wica$runtime$metadata$WicletRuntime;
    static Class class$net$rim$wica$runtime$persistence$PersistentContentHelper;
    static Class class$net$rim$wica$runtime$event$EventService;

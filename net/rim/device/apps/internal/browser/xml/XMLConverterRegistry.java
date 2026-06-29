@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class XMLConverterRegistry {
    private Hashtable _contentTypes = (Hashtable)(new Object());
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = 3348499767394966251L;
 
    private XMLConverterRegistry() {
       this._contentTypes.put("html", "text/html");

@@ -56,14 +56,14 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
    private int _status;
    private int _priority;
    private int _configType;
-   public static final int PRIORITY_NONE;
-   public static final int PRIORITY_LOW;
-   public static final int PRIORITY_MEDIUM;
-   public static final int PRIORITY_HIGH;
-   public static final int DEFAULT_PRIORITY;
-   public static final int STATUS_READ;
-   public static final int STATUS_UNREAD;
-   private static final int VERSION;
+   public static final int PRIORITY_NONE = 0;
+   public static final int PRIORITY_LOW = 1;
+   public static final int PRIORITY_MEDIUM = 2;
+   public static final int PRIORITY_HIGH = 3;
+   public static final int DEFAULT_PRIORITY = 0;
+   public static final int STATUS_READ = 0;
+   public static final int STATUS_UNREAD = 1;
+   private static final int VERSION = 7;
    private static WeakReference _dataBufferWR = (WeakReference)(new Object(null));
 
    public final String getID() {

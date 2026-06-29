@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class VerisignRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -7134668480456601469L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] VERISIGN_C3_G3_V2_X509_CERT = new byte[]{
       48,
       -126,

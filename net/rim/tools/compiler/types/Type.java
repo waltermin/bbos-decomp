@@ -15,20 +15,20 @@ public class Type implements Constants {
    String _typeName;
    ArrayType _arrayType;
    private TypeList[] _typeLists;
-   public static final char DESC_BYTE;
-   public static final char DESC_CHAR;
-   public static final char DESC_DOUBLE;
-   public static final char DESC_FLOAT;
-   public static final char DESC_INT;
-   public static final char DESC_LONG;
-   public static final char DESC_SHORT;
-   public static final char DESC_BOOLEAN;
-   public static final char DESC_ARRAY;
-   public static final char DESC_OBJECT;
-   public static final char DESC_OBJECT_SUFFIX;
-   public static final char DESC_VOID;
-   public static final char DESC_OPEN_PAREN;
-   public static final char DESC_CLOSE_PAREN;
+   public static final char DESC_BYTE = 'B';
+   public static final char DESC_CHAR = 'C';
+   public static final char DESC_DOUBLE = 'D';
+   public static final char DESC_FLOAT = 'F';
+   public static final char DESC_INT = 'I';
+   public static final char DESC_LONG = 'J';
+   public static final char DESC_SHORT = 'S';
+   public static final char DESC_BOOLEAN = 'Z';
+   public static final char DESC_ARRAY = '[';
+   public static final char DESC_OBJECT = 'L';
+   public static final char DESC_OBJECT_SUFFIX = ';';
+   public static final char DESC_VOID = 'V';
+   public static final char DESC_OPEN_PAREN = '(';
+   public static final char DESC_CLOSE_PAREN = ')';
    private static Vector _items = (Vector)(new Object());
 
    public Type(String typeName) {

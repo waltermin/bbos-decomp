@@ -19,15 +19,15 @@ import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 public final class MailingAddressModelImpl implements MailingAddressModel, FieldProvider, ConversionProvider, FieldLabelProvider {
    private byte[] _data;
    private int _type;
-   private static final byte ADDRESS1_TAG;
-   private static final byte ADDRESS2_TAG;
-   private static final byte CITY_TAG;
-   private static final byte AREA_TAG;
-   private static final byte ZIP_TAG;
-   private static final byte COUNTRY_TAG;
-   private static final byte COMPRESSED_COUNTRY_TAG;
-   private static final int REVERSE_ORDER;
-   private static final int FORWARD_ORDER;
+   private static final byte ADDRESS1_TAG = 1;
+   private static final byte ADDRESS2_TAG = 2;
+   private static final byte CITY_TAG = 3;
+   private static final byte AREA_TAG = 4;
+   private static final byte ZIP_TAG = 5;
+   private static final byte COUNTRY_TAG = 6;
+   private static final byte COMPRESSED_COUNTRY_TAG = 7;
+   private static final int REVERSE_ORDER = 0;
+   private static final int FORWARD_ORDER = 1;
    private static String[] _countryNames = new String[]{"United States of America", "Canada"};
 
    @Override

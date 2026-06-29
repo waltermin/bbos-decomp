@@ -23,16 +23,16 @@ public final class EmailFolderSync
    StateInfoListener,
    SyncEventListener,
    SyncCollectionStatistics {
-   private static final int SYNC_VERSION;
+   private static final int SYNC_VERSION = 0;
    private static String SYNC_NAME = "Folders";
-   private static final int FOLDERID;
-   private static final int PARENTFOLDERID;
-   private static final int FOLDERNAME;
-   private static final int SERVICENAME;
-   private static final int SERVICEID;
-   private static final int FOLDERTYPE;
-   private static final int FOLDERATTR;
-   private static final int USERID;
+   private static final int FOLDERID = 10;
+   private static final int PARENTFOLDERID = 11;
+   private static final int FOLDERNAME = 12;
+   private static final int SERVICENAME = 13;
+   private static final int SERVICEID = 14;
+   private static final int FOLDERTYPE = 15;
+   private static final int FOLDERATTR = 16;
+   private static final int USERID = 17;
 
    EmailFolderSync() {
    }

@@ -7,7 +7,7 @@ public class Message {
    private int _integer;
    private String _url;
    public static final String DEFAULT_NAME = null;
-   public static final int DEFAULT_INTEGER;
+   public static final int DEFAULT_INTEGER = -1;
    public static final String DEFAULT_URL = null;
 
    public Message(String contentType, byte[] data) {

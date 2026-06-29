@@ -25,9 +25,9 @@ final class AfterDialDialog extends PopupDialog {
    private int _userResponse;
    private Font _font;
    private boolean _isDisplaying;
-   public static final int DIAL;
-   public static final int SKIP;
-   public static final int ENDCALL;
+   public static final int DIAL = 0;
+   public static final int SKIP = 1;
+   public static final int ENDCALL = 2;
 
    AfterDialDialog(PopupDialogClosedListener listener) {
       super((Manager)(new Object(1152921504606846976L)), 33554432);

@@ -29,11 +29,11 @@ public class ScalableBitmapField extends MIMEContentAnimatedBitmapField {
    private Bitmap[] _frameCache;
    private Bitmap _bitmapBuffer;
    private Graphics _gBuffer;
-   public static final int HIDDEN;
-   public static final int FIT;
-   public static final int SLICE;
-   public static final int MEET;
-   public static final int SCROLL;
+   public static final int HIDDEN = 0;
+   public static final int FIT = 1;
+   public static final int SLICE = 2;
+   public static final int MEET = 4;
+   public static final int SCROLL = 8;
 
    public ScalableBitmapField() {
       this(null, 0);

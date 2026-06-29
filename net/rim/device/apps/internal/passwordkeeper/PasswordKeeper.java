@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class PasswordKeeper {
    private PasswordKeeperSync _collection = new PasswordKeeperSync();
-   private static final long ID;
+   private static final long ID = 2846117606586001482L;
    private static ResourceBundleFamily _rb = ResourceBundle.getBundle(
       7414812286470404095L, "net.rim.device.apps.internal.passwordkeeper.resource.PasswordKeeper"
    );

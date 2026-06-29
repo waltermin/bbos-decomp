@@ -34,11 +34,11 @@ public final class DateTimeSetupWizard extends BasicWizardPage implements RadioS
    private DateTimeSetupWizard$ConnectionTimeOutThread _connectionTimeOutThread;
    private boolean _secondConnectionAttempt;
    public static long WIZARD_WAIT_THREAD_UPDATE = 5663798581947223657L;
-   private static final int UPDATE_IDLE;
-   private static final int CONNECTING;
-   private static final int UPDATING_TIME;
-   private static final int TIME_UPDATED;
-   private static final int CONNECT_FAILED;
+   private static final int UPDATE_IDLE = 0;
+   private static final int CONNECTING = 1;
+   private static final int UPDATING_TIME = 2;
+   private static final int TIME_UPDATED = 3;
+   private static final int CONNECT_FAILED = 4;
 
    public DateTimeSetupWizard() {
       super(OptionsResources.getResourceBundle(), 2104, 200, SetupWizardOrdering.DATE_AND_TIME_CATEGORY);

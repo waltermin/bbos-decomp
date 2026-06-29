@@ -41,19 +41,19 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
    protected EditField _apnField;
    protected ListField _listField;
    private Vector _fields;
-   public static final int STATE_IDLE;
-   public static final int STATE_ACTIVE;
-   public static final int STATE_DONE;
-   public static final int STATE_OPEN;
+   public static final int STATE_IDLE = 0;
+   public static final int STATE_ACTIVE = 1;
+   public static final int STATE_DONE = 2;
+   public static final int STATE_OPEN = 3;
    private static final String[] STATE_STRS = new String[]{"Idle", "Active", "Done", "Open", "Idle"};
-   public static final int IM_STATE;
-   public static final int TIMEOUT_NOW;
-   protected static final int MENU_REFRESH;
-   protected static final int MENU_START;
-   protected static final int MENU_STOP;
+   public static final int IM_STATE = 0;
+   public static final int TIMEOUT_NOW = -1;
+   protected static final int MENU_REFRESH = 1;
+   protected static final int MENU_START = 3;
+   protected static final int MENU_STOP = 4;
    protected static Random _rand = (Random)(new Object());
-   protected static final int UDP_HEADER;
-   protected static final int ICMP_HEADER;
+   protected static final int UDP_HEADER = 0;
+   protected static final int ICMP_HEADER = 1;
 
    public void init(EScreenSessionManager manager, int si) {
       this._manager = manager;

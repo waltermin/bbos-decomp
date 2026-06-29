@@ -50,11 +50,11 @@ public class WordSyncCollection
    protected String _syncName = "";
    protected String _otaPrefix = "";
    protected int _syncVersion = 0;
-   protected static final int WORD_ID;
-   protected static final int FREQ_ID;
-   protected static final int TIME_OUT;
-   protected static final int SHORT_TIME_OUT;
-   protected static final int IDLE_TIME_OUT;
+   protected static final int WORD_ID = 1;
+   protected static final int FREQ_ID = 2;
+   protected static final int TIME_OUT = 480;
+   protected static final int SHORT_TIME_OUT = 5;
+   protected static final int IDLE_TIME_OUT = 300;
 
    protected OTASyncableCustomWordsProvider getReader(String _1) {
       throw null;

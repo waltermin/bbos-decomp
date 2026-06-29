@@ -80,10 +80,10 @@ public final class AddressCardModelImpl
    int _uid;
    private Object[] _fields;
    private boolean _showActivityLog = true;
-   private static final int QUICK_NAME_INDEX;
-   private static final int QUICK_COMPANY_INDEX;
+   private static final int QUICK_NAME_INDEX = 0;
+   private static final int QUICK_COMPANY_INDEX = 1;
    private static int[] _hints = new int[0];
-   static final String COMMA_SPACE;
+   static final String COMMA_SPACE = ", ";
    static ContextObjectWR _addressBookSyncContextWR = (ContextObjectWR)(new Object(11, 19, 57));
    private static ContextObjectWR _attachmentContextWR = (ContextObjectWR)(new Object(11, 43, 54));
    private static WeakReference _attachmentStringBufferWR = (WeakReference)(new Object(null));

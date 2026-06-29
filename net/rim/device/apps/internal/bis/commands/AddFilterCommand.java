@@ -14,14 +14,14 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 import net.rim.device.apps.internal.bis.utils.ObjectRegistry;
 
 public final class AddFilterCommand implements DomainCommand {
-   public static final String PARAM_FILTER_ID;
-   public static final String PARAM_FILTER_NAME;
-   public static final String PARAM_SEND_ALERT;
-   public static final String PARAM_HEADERS_ONLY;
-   public static final String PARAM_LEVEL_ONE;
-   public static final String PARAM_FILTER_OPERATOR;
-   public static final String PARAM_FILTER_VALUE;
-   public static final String PARAM_FILTER_CONFIRM;
+   public static final String PARAM_FILTER_ID = "filterid";
+   public static final String PARAM_FILTER_NAME = "filtername";
+   public static final String PARAM_SEND_ALERT = "sendalert";
+   public static final String PARAM_HEADERS_ONLY = "headersonly";
+   public static final String PARAM_LEVEL_ONE = "levelone";
+   public static final String PARAM_FILTER_OPERATOR = "filteroperator";
+   public static final String PARAM_FILTER_VALUE = "filtervalue";
+   public static final String PARAM_FILTER_CONFIRM = "filterconfirm";
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // $VF: Could not inline inconsistent finally blocks

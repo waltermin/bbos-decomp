@@ -58,12 +58,12 @@ public class SpellCheckVariantsCreator {
    private Stack _wordStateStack = (Stack)(new Object());
    private Stack _wordStack = (Stack)(new Object());
    private Stack _charBufferStack = (Stack)(new Object());
-   private static final long ADDRESS_BOOK_KEY;
-   private static final int CASE_SENSITIVE_MATCH;
-   private static final int CASE_INSENSITIVE_MATCH;
-   private static final int AMBIGUOUS_MATCH;
-   private static final int EDIT_DIST_1_MATCH;
-   private static final int MULTI_CLICK_MATCH;
+   private static final long ADDRESS_BOOK_KEY = 5765246712487104764L;
+   private static final int CASE_SENSITIVE_MATCH = 1;
+   private static final int CASE_INSENSITIVE_MATCH = 2;
+   private static final int AMBIGUOUS_MATCH = 3;
+   private static final int EDIT_DIST_1_MATCH = 1;
+   private static final int MULTI_CLICK_MATCH = 2;
    private static boolean NEW_LOOKUP = true;
 
    public SpellCheckVariantsCreator() {

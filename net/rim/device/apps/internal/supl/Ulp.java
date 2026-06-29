@@ -7,8 +7,8 @@ public final class Ulp {
    Version version;
    SessionId sessionId;
    UlpMessage ulpMessage;
-   static final byte SUPL_ULP_LENGTH_BIT_SIZE;
-   static final int ULP_MAX_PDU_SIZE;
+   static final byte SUPL_ULP_LENGTH_BIT_SIZE = 16;
+   static final int ULP_MAX_PDU_SIZE = 65535;
 
    Ulp() {
    }

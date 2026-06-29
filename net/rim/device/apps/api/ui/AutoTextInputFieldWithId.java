@@ -14,13 +14,13 @@ public class AutoTextInputFieldWithId extends Manager implements FocusChangeList
    protected AutoTextEditField _edit;
    protected long _editFlags;
    protected int _id;
-   private static final int SUB_BORDER_PADDING;
-   private static final int DOUBLE_SUB_BORDER_PADDING;
-   private static final int BORDER_WIDTH;
-   private static final int DOUBLE_BORDER_WIDTH;
-   public static final byte FLAG_READ_ONLY;
-   public static final byte FLAG_ALLOW_CR;
-   private static final int DEFAULT_INPUT_SIZE;
+   private static final int SUB_BORDER_PADDING = 1;
+   private static final int DOUBLE_SUB_BORDER_PADDING = 2;
+   private static final int BORDER_WIDTH = 2;
+   private static final int DOUBLE_BORDER_WIDTH = 4;
+   public static final byte FLAG_READ_ONLY = 1;
+   public static final byte FLAG_ALLOW_CR = 2;
+   private static final int DEFAULT_INPUT_SIZE = 20;
    private static String INPUT_TEXT_LABEL = ((StringBuffer)(new Object())).append(String.valueOf('▶')).append(' ').toString();
 
    public int getFieldId() {

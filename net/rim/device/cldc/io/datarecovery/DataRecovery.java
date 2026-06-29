@@ -15,22 +15,22 @@ public class DataRecovery implements GlobalEventListener {
    protected int _currentRecoveryBackoff;
    protected boolean _primed;
    protected Object[] _listeners;
-   public static final long GUID;
-   public static final long GUID_WIFI;
-   public static final int LINK_TYPE_CELLULAR;
-   public static final int LINK_TYPE_WIFI;
-   public static final int CONNECTION_TYPE_RELAY;
-   public static final int CONNECTION_TYPE_ROUTER;
-   public static final int CONNECTION_TYPE_UNC;
-   public static final int CONNECTION_TYPE_VPN;
-   public static final int REPORT_ACTIVITY;
-   public static final int REPORT_NO_RESPONSE;
-   public static final int REPORT_UNREACHABLE;
-   public static final int REPORT_TX_FLOW_CTRL;
-   protected static final int THRESHOLD_RECOVERY;
-   protected static final int THRESHOLD_RELAY_UNREACHABLE;
-   protected static final int START_RECOVERY_BACKOFF;
-   protected static final int MAX_RECOVERY_BACKOFF;
+   public static final long GUID = -8817198204729214607L;
+   public static final long GUID_WIFI = 1916912427746348095L;
+   public static final int LINK_TYPE_CELLULAR = 1;
+   public static final int LINK_TYPE_WIFI = 2;
+   public static final int CONNECTION_TYPE_RELAY = 1;
+   public static final int CONNECTION_TYPE_ROUTER = 2;
+   public static final int CONNECTION_TYPE_UNC = 3;
+   public static final int CONNECTION_TYPE_VPN = 4;
+   public static final int REPORT_ACTIVITY = 0;
+   public static final int REPORT_NO_RESPONSE = 1;
+   public static final int REPORT_UNREACHABLE = 2;
+   public static final int REPORT_TX_FLOW_CTRL = 3;
+   protected static final int THRESHOLD_RECOVERY = 4;
+   protected static final int THRESHOLD_RELAY_UNREACHABLE = 326;
+   protected static final int START_RECOVERY_BACKOFF = 3600000;
+   protected static final int MAX_RECOVERY_BACKOFF = 115200000;
 
    public synchronized void addListener(DataRecoveryListener listener) {
       this._listeners = ListenerUtilities.addListener(this._listeners, listener);

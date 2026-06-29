@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 final class NewCallScreen extends PhoneAppScreen {
    private VoiceApp _voiceApp;
-   static final int CANCELLED;
+   static final int CANCELLED = 1;
 
    NewCallScreen(VoiceApp voiceApp) {
       super(voiceApp, true);

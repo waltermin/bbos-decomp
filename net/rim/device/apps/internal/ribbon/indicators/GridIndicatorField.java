@@ -32,9 +32,9 @@ final class GridIndicatorField extends TextRibbonComponent implements RibbonComp
    private IndicatorDisplay[] _indicatorsForPainting = new IndicatorDisplay[0];
    private RibbonComponent$RibbonComponentChangeListener _listener;
    private IndicatorManagerImpl _indicatorManagerImpl;
-   protected static final int INDICATOR_HEIGHT;
-   protected static final int INDICATOR_WIDTH;
-   protected static final int MINIMUM_VERTICAL_GAP;
+   protected static final int INDICATOR_HEIGHT = 8;
+   protected static final int INDICATOR_WIDTH = 25;
+   protected static final int MINIMUM_VERTICAL_GAP = 1;
 
    public GridIndicatorField(IndicatorManagerImpl indicatorManagerImpl) {
       this._indicatorManagerImpl = indicatorManagerImpl;

@@ -7,14 +7,14 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class WicletAdminPolicySerializer extends AbstractSerializer {
    private static WicletAdminPolicySerializer _instance;
-   private static final byte ID;
-   private static final byte MESSAGE_SENDING_ALLOWED;
-   private static final byte INBOUND_QUEUE_SIZE_LIMIT;
-   private static final byte OUTBOUND_QUEUE_SIZE_LIMIT;
-   private static final byte PERFORMANCE_MODE;
-   private static final byte EXTERNAL_ACCESS_ALLOWED;
-   private static final byte DEDICATED_SERVER_ALLOWED;
-   private static final byte CLEAR_ERRORS_ALLOWED;
+   private static final byte ID = 0;
+   private static final byte MESSAGE_SENDING_ALLOWED = 1;
+   private static final byte INBOUND_QUEUE_SIZE_LIMIT = 2;
+   private static final byte OUTBOUND_QUEUE_SIZE_LIMIT = 3;
+   private static final byte PERFORMANCE_MODE = 4;
+   private static final byte EXTERNAL_ACCESS_ALLOWED = 5;
+   private static final byte DEDICATED_SERVER_ALLOWED = 6;
+   private static final byte CLEAR_ERRORS_ALLOWED = 7;
 
    static final WicletAdminPolicySerializer getInstance() {
       if (_instance == null) {

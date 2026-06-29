@@ -13,12 +13,12 @@ public final class ShowUrlVerb extends Verb {
    private String _url;
    private String _title;
    private int _type;
-   public static final int TYPE_PAGE_URL;
-   public static final int TYPE_LINK_URL;
-   public static final int TYPE_IMAGE_URL;
-   private static final int SHOW_PAGE_URL_DESCRIPTION;
-   private static final int SHOW_LINK_URL_DESCRIPTION;
-   private static final int SHOW_IMAGE_URL_DESCRIPTION;
+   public static final int TYPE_PAGE_URL = 0;
+   public static final int TYPE_LINK_URL = 1;
+   public static final int TYPE_IMAGE_URL = 2;
+   private static final int SHOW_PAGE_URL_DESCRIPTION = 162;
+   private static final int SHOW_LINK_URL_DESCRIPTION = 352;
+   private static final int SHOW_IMAGE_URL_DESCRIPTION = 547;
 
    public ShowUrlVerb(String title, String url, BrowserContent browserContent, int type) {
       super(type == 0 ? 16987157 : 16987136);

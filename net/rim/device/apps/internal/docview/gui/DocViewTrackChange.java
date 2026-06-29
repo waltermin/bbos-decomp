@@ -6,9 +6,9 @@ public final class DocViewTrackChange {
    public int _trackChangeStartOffset = -1;
    public int _trackChangeEndOffset = -1;
    public byte _trackChangeType = 0;
-   public static final byte DOCVIEWTRACKCHANGE_UNKNOWN;
-   public static final byte DOCVIEWTRACKCHANGE_DELETED;
-   public static final byte DOCVIEWTRACKCHANGE_INSERTED;
+   public static final byte DOCVIEWTRACKCHANGE_UNKNOWN = 0;
+   public static final byte DOCVIEWTRACKCHANGE_DELETED = 1;
+   public static final byte DOCVIEWTRACKCHANGE_INSERTED = 2;
 
    DocViewTrackChange(String trackChangeAuthor, String trackChangeDateTime) {
       this._trackChangeAuthor = trackChangeAuthor;

@@ -1,7 +1,7 @@
 package net.rim.device.apps.api.framework.model;
 
 public interface KeyProvider extends RIMModel {
-   long TIME_DATE_KEY;
+   long TIME_DATE_KEY = 92199951187614847L;
 
    int getKeys(Object var1, Object[] var2, int var3, long var4);
 

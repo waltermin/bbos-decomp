@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.browser.core.IBrowserContext;
 
 public final class HTMLContext implements IBrowserContext, Persistable {
    private Hashtable _nameToValue;
-   private static final int VERSION;
+   private static final int VERSION = 1;
 
    HTMLContext() {
       this._nameToValue = (Hashtable)(new Object());

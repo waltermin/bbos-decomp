@@ -6,7 +6,7 @@ import net.rim.wica.runtime.persistence.PersKeylessDataCollectionStruct;
 
 final class PersKeylessDataCollectionStructSerializer extends PersDataCollectionStructSerializer {
    private static PersKeylessDataCollectionStructSerializer _instance;
-   private static final byte PERSISTENT_REF_COUNTS;
+   private static final byte PERSISTENT_REF_COUNTS = 4;
 
    static final PersDataCollectionStructSerializer getInstance() {
       if (_instance == null) {

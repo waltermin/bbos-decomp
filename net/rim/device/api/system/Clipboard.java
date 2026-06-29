@@ -10,8 +10,8 @@ public final class Clipboard {
    private long _pastePriorityTimeout = 60000;
    private long _pastePriorityExpiration;
    private boolean _notYetPasted = false;
-   private static final long REGISTRY_NAME;
-   private static final long PASTE_PRIORITY_TIMEOUT;
+   private static final long REGISTRY_NAME = -2401061171848633112L;
+   private static final long PASTE_PRIORITY_TIMEOUT = 60000L;
    private static Clipboard _instance;
 
    private Clipboard() {

@@ -24,12 +24,12 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
    private MediaStreamingCallback _callback;
    private MediaPlayer _mediaPlayer;
    private final MediaStreamingManagerImpl this$0;
-   private static final int CODEC_NOT_IN_USE;
-   private static final int STATE_UNINITIALIZED;
-   private static final int STATE_WAITING;
-   private static final int STATE_STREAMING;
-   private static final int STATE_ALL_DATA_SENT;
-   private static final int STATE_CLOSING;
+   private static final int CODEC_NOT_IN_USE = Integer.MAX_VALUE;
+   private static final int STATE_UNINITIALIZED = 0;
+   private static final int STATE_WAITING = 1;
+   private static final int STATE_STREAMING = 2;
+   private static final int STATE_ALL_DATA_SENT = 3;
+   private static final int STATE_CLOSING = 4;
 
    MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread createReadThread() {
       return new MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread(this);

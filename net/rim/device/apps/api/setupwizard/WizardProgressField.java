@@ -25,9 +25,9 @@ class WizardProgressField extends Field {
    private Bitmap _progressBitmap;
    private boolean _isHidden;
    private static final Tag TAG = Tag.create("browser-footer");
-   private static final String BROWSER_FOOTER_PROGRESS_BITMAP;
-   private static final String BROWSER_FOOTER_BITMAP;
-   private static final int SEPARATOR_HEIGHT;
+   private static final String BROWSER_FOOTER_PROGRESS_BITMAP = "browser-footer~progress";
+   private static final String BROWSER_FOOTER_BITMAP = "browser-footer";
+   private static final int SEPARATOR_HEIGHT = 0;
 
    public WizardProgressField() {
       this.setTag(TAG);

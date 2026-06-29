@@ -34,17 +34,17 @@ final class CryptoBlock$CryptoBlockKey implements Persistable, SyncObject {
    byte[] _data;
    long _expireTime;
    boolean _enterpriseClassKey;
-   static final int CBK_NAME;
-   static final int CBK_ID;
-   static final int CBK_ALGORITHM;
-   static final int CBK_KEY_LENGTH;
-   static final int CBK_DATA;
-   static final int CBK_EXPIRE_TIME;
-   static final int CBK_ENTERPRISE_CLASS_KEY;
-   static final int CBK_DEVICE_KEY;
-   static final int CBK_DEVICE_KEY_ENCODED;
-   static final int CBK_MASK_ALL;
-   private static final long ID;
+   static final int CBK_NAME = 0;
+   static final int CBK_ID = 1;
+   static final int CBK_ALGORITHM = 2;
+   static final int CBK_KEY_LENGTH = 3;
+   static final int CBK_DATA = 4;
+   static final int CBK_EXPIRE_TIME = 5;
+   static final int CBK_ENTERPRISE_CLASS_KEY = 6;
+   static final int CBK_DEVICE_KEY = 7;
+   static final int CBK_DEVICE_KEY_ENCODED = 8;
+   static final int CBK_MASK_ALL = 255;
+   private static final long ID = -6938461211042858691L;
    private static PersistentObject _persistentDeviceKey = RIMPersistentStore.getPersistentObject(-6938461211042858691L);
    private static byte[][][] _deviceKey;
 

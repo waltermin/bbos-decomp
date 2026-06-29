@@ -12,22 +12,22 @@ final class Bricks {
    private final int _brickHeight;
    private byte[] _levels;
    private int amountMoved;
-   static final int XSIZE;
-   static final int YSIZE;
-   static final int XSIZE_MINUS_1;
-   static final int YSIZE_MINUS_1;
+   static final int XSIZE = 7;
+   static final int YSIZE = 10;
+   static final int XSIZE_MINUS_1 = 6;
+   static final int YSIZE_MINUS_1 = 9;
    static short[][][] Field;
    static short[][][] Bonus;
    private static final Bitmap BRICKS = Bitmap.getBitmapResource(Game.currentModule, "bricks.png");
-   private static final int X4;
-   private static final int X3;
-   private static final int X2;
-   private static final int X1;
-   private static final int A;
-   private static final int B;
-   private static final int C;
-   private static final int D;
-   private static final int GLASS;
+   private static final int X4 = 0;
+   private static final int X3 = 1;
+   private static final int X2 = 2;
+   private static final int X1 = 3;
+   private static final int A = 4;
+   private static final int B = 5;
+   private static final int C = 6;
+   private static final int D = 7;
+   private static final int GLASS = 8;
    private static int numLevels;
 
    Bricks(Board board) {

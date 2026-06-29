@@ -14,7 +14,7 @@ public class RecordBaseSyncCommand extends SyncCommand {
    private int[] _recordFieldsAttributes = new int[0];
    private int _bitflags;
    private int _sizeInBytes;
-   private static final byte FORSLOWSYNC;
+   private static final byte FORSLOWSYNC = 1;
 
    public RecordBaseSyncCommand() {
    }

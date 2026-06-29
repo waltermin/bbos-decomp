@@ -4,7 +4,7 @@ import net.rim.device.api.crypto.DESEncryptorEngine;
 import net.rim.device.api.crypto.DESKey;
 
 public final class NTLM {
-   private static final String _LMPWD;
+   private static final String _LMPWD = "KGS!@#$%";
 
    public static final byte[] getLMResponse(String password, byte[] challenge) {
       byte[] lmHash = getLMHash(password);

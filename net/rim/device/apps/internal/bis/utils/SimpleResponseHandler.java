@@ -6,7 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public final class SimpleResponseHandler extends DefaultHandler {
    private String _response;
    private boolean _foundResponseTag;
-   private static final String TAG_RESPONSE;
+   private static final String TAG_RESPONSE = "response";
 
    @Override
    public final void characters(char[] ch, int start, int length) {

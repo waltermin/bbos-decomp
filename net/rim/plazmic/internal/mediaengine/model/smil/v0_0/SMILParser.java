@@ -29,15 +29,15 @@ public class SMILParser {
    private SMILTimingParser _timingParser = new SMILTimingParser();
    private int _horizontalScaleFactor;
    private int _verticalScaleFactor;
-   public static final int CONFIGURATION_SMIL;
-   public static final int CONFIGURATION_MMS;
-   private static final int LEFT;
-   private static final int RIGHT;
-   private static final int WIDTH;
-   private static final int TOP;
-   private static final int BOTTOM;
-   private static final int HEIGHT;
-   private static final String TEXT;
+   public static final int CONFIGURATION_SMIL = 0;
+   public static final int CONFIGURATION_MMS = 1;
+   private static final int LEFT = 0;
+   private static final int RIGHT = 1;
+   private static final int WIDTH = 2;
+   private static final int TOP = 3;
+   private static final int BOTTOM = 4;
+   private static final int HEIGHT = 5;
+   private static final String TEXT = "Text";
 
    public SMILParser() {
       this._triggerEvent = (Event)(new Object());

@@ -20,10 +20,10 @@ final class SendReadNotificationTask implements MMSTask {
    private MMSMessageModel _message;
    private int _status;
    private int _attempts;
-   private static final int MAX_ATTEMPTS;
-   private static final int FIRST_RETRY_DELAY;
-   private static final int LAST_RETRY_DELAY;
-   private static final int RETRY_SCALE_FACTOR;
+   private static final int MAX_ATTEMPTS = 5;
+   private static final int FIRST_RETRY_DELAY = 10;
+   private static final int LAST_RETRY_DELAY = 300;
+   private static final int RETRY_SCALE_FACTOR = 24;
 
    SendReadNotificationTask(String url, MMSMessageModel message, int status) {
       this._url = url;

@@ -25,12 +25,12 @@ import net.rim.vm.Memory;
 
 public final class X509Certificate implements Certificate, Persistable {
    private Mid _mid;
-   public static final int CERTIFICATE_V1;
-   public static final int CERTIFICATE_V2;
-   public static final int CERTIFICATE_V3;
-   public static final int ALT_NAME_EMAIL;
-   public static final int ALT_NAME_DNS;
-   public static final int ALT_NAME_URL;
+   public static final int CERTIFICATE_V1 = 0;
+   public static final int CERTIFICATE_V2 = 1;
+   public static final int CERTIFICATE_V3 = 2;
+   public static final int ALT_NAME_EMAIL = 10;
+   public static final int ALT_NAME_DNS = 11;
+   public static final int ALT_NAME_URL = 12;
 
    public final int getBasicConstraints() {
       return this._mid._content.getBasicConstraints();

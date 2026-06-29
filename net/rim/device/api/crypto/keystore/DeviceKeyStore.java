@@ -6,7 +6,7 @@ import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.internal.applicationcontrol.ApplicationControl;
 
 public final class DeviceKeyStore extends SyncableRIMKeyStore {
-   private static final long DEVICE;
+   private static final long DEVICE = -6191874725138003853L;
    private static SyncableRIMKeyStore _deviceKeyStore;
 
    private DeviceKeyStore() {

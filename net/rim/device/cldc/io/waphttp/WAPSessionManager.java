@@ -7,7 +7,7 @@ import net.rim.device.api.util.Persistable;
 
 final class WAPSessionManager implements Persistable {
    private WAPSession[] _sessions = new WAPSession[0];
-   private static final long ID;
+   private static final long ID = 1236620482268733072L;
    private static PersistentObject _persist;
 
    private WAPSessionManager() {

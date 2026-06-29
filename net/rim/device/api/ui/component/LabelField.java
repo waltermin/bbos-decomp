@@ -28,13 +28,13 @@ public class LabelField extends Field implements DrawStyle {
    private boolean _inSetTextInternal;
    private boolean _isSingleLine;
    private boolean _inLayout;
-   public static final int DEFAULT_POSITION;
-   public static final long REMOVE_COMBINING_LOW_LINE;
-   private static final int ATTRIBUTES_MASK;
-   private static final int STRING;
-   private static final int STRINGBUFFER;
-   private static final int CHARARRAY;
-   private static final int BYTEARRAY;
+   public static final int DEFAULT_POSITION = 1;
+   public static final long REMOVE_COMBINING_LOW_LINE = 268435456L;
+   private static final int ATTRIBUTES_MASK = 199;
+   private static final int STRING = 1;
+   private static final int STRINGBUFFER = 2;
+   private static final int CHARARRAY = 3;
+   private static final int BYTEARRAY = 4;
 
    public LabelField() {
       this(null);

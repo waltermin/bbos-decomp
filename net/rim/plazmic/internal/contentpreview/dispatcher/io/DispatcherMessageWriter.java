@@ -9,7 +9,7 @@ import net.rim.plazmic.internal.contentpreview.message.AbstractMessageWriter;
 
 public final class DispatcherMessageWriter extends AbstractMessageWriter implements DispatcherEventHandler {
    private final byte[] HEADER = new byte[]{76};
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/DispatcherMessageWriter.java#1 $";
 
    public DispatcherMessageWriter(OutputStream os) {
       super(os);

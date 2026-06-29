@@ -8,8 +8,8 @@ class EScreenSecurityData implements Persistable {
    private long _unlockTime;
    private long _unlockLength;
    private boolean _allowAccess;
-   public static final int FEATURE_ESCREEN_ACCESS;
-   private static final long ESCREEN_SECURITY_DATA;
+   public static final int FEATURE_ESCREEN_ACCESS = 0;
+   private static final long ESCREEN_SECURITY_DATA = 2418345044197243008L;
 
    static EScreenSecurityData get(int feature) {
       PersistentObject persist = RIMPersistentStore.getPersistentObject(2418345044197243008L + feature);

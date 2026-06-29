@@ -2,7 +2,7 @@ package net.rim.plazmic.internal.contentpreview;
 
 public final class MishandleException extends Exception {
    private Throwable _cause;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/MishandleException.java#1 $";
 
    public MishandleException() {
    }

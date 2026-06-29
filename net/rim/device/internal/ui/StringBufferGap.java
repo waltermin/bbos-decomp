@@ -12,7 +12,7 @@ public final class StringBufferGap implements AbstractString {
    private int _gapLength;
    private int _size;
    private StringBufferGap$SBGAbstractString _abstractString = new StringBufferGap$SBGAbstractString(this);
-   private static final int GAPSIZE;
+   private static final int GAPSIZE = 100;
 
    public final void set(StringBuffer s) {
       int startSize = 10;

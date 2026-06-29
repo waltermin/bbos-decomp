@@ -9,7 +9,7 @@ final class VADApplication$ChoiceListField extends ObjectListField {
    private int _index;
    private boolean _override;
    private final VADApplication this$0;
-   private static final int ATTRIBUTES_MASK;
+   private static final int ATTRIBUTES_MASK = 71;
 
    VADApplication$ChoiceListField(VADApplication _1, Object[] choices) {
       this.this$0 = _1;

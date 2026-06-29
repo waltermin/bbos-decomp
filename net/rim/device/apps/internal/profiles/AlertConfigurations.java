@@ -5,7 +5,7 @@ import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.profiles.TuneManager;
 
 final class AlertConfigurations {
-   private static final int NUMBER_OF_PRECONFIGURED_PROFILES;
+   private static final int NUMBER_OF_PRECONFIGURED_PROFILES = 7;
    private static byte[] LOUD_0;
    private static byte[] DISCREET_0;
    private static byte[] QUIET_0;

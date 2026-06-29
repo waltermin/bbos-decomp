@@ -4,8 +4,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public class CryptoApplicationProperties {
    private long _flags;
-   public static final long PGP_UNIVERSAL_SERVER_REGISTERED;
-   private static final long ID;
+   public static final long PGP_UNIVERSAL_SERVER_REGISTERED = 1L;
+   private static final long ID = -8113189467387665237L;
    private static CryptoApplicationProperties _instance;
 
    public static CryptoApplicationProperties getInstance() {

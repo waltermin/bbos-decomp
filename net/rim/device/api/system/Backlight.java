@@ -6,9 +6,9 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.vm.TraceBack;
 
 public final class Backlight {
-   public static final int BACKLIGHT_LCD;
-   public static final int BACKLIGHT_KEYPAD;
-   public static final int BACKLIGHT_LCD_KEYPAD;
+   public static final int BACKLIGHT_LCD = 1;
+   public static final int BACKLIGHT_KEYPAD = 2;
+   public static final int BACKLIGHT_LCD_KEYPAD = 4;
 
    private static final void assertPermission() {
       ApplicationControl.assertChangeDeviceSettingsPermitted(true, CommonResource.getBundle(), 10133);

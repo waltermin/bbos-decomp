@@ -7,11 +7,11 @@ import net.rim.device.internal.crypto.CryptoBlock;
 import net.rim.device.resources.Resource;
 
 final class UsbMuxerThread extends MuxerThread {
-   private static final byte SC_MAJOR;
-   private static final byte SC_MINOR;
-   private static final byte OV_MAJOR;
-   private static final byte OV_MINOR;
-   private static final int VERSION;
+   private static final byte SC_MAJOR = 2;
+   private static final byte SC_MINOR = 0;
+   private static final byte OV_MAJOR = 3;
+   private static final byte OV_MINOR = 0;
+   private static final int VERSION = 131075;
 
    protected UsbMuxerThread(NativeLayer nativeLayer) {
       super(nativeLayer);

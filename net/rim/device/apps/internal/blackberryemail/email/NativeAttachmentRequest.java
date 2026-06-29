@@ -20,10 +20,10 @@ public class NativeAttachmentRequest {
    private boolean _shouldResend;
    private boolean _requestFailed;
    private IntHashtable _chunks;
-   public static final int BAD_INT_VALUE;
-   public static final int MAX_RETRIES;
-   public static final long MAX_SEND_TIME;
-   public static final long INVALID_TIME;
+   public static final int BAD_INT_VALUE = Integer.MIN_VALUE;
+   public static final int MAX_RETRIES = 3;
+   public static final long MAX_SEND_TIME = 1800000L;
+   public static final long INVALID_TIME = -1L;
 
    public void setShouldResend(boolean resend) {
       this._shouldResend = resend;

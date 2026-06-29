@@ -25,12 +25,12 @@ final class ReceiveThread extends Thread {
    private Vector _updateRequests;
    private boolean _waitingForResponse;
    private StringMatch _stringMatch = (StringMatch)(new Object(new String[]{"<", ">", "&"}, false, false));
-   private static final int ERROR_OK;
-   private static final int ERROR_BAD_REQUEST;
-   private static final int ERROR_FILE_NOT_FOUND;
-   private static final int ERROR_GENERAL_ERROR;
-   private static final int ERROR_METHOD_NOT_IMPLEMENTED;
-   private static final int ERROR_SERVICE_UNAVAILABLE;
+   private static final int ERROR_OK = 200;
+   private static final int ERROR_BAD_REQUEST = 400;
+   private static final int ERROR_FILE_NOT_FOUND = 404;
+   private static final int ERROR_GENERAL_ERROR = 500;
+   private static final int ERROR_METHOD_NOT_IMPLEMENTED = 501;
+   private static final int ERROR_SERVICE_UNAVAILABLE = 503;
    private static String DIRECTORY_START = "<directory>";
    private static String DIRECTORY_END = "</directory>";
    private static String FILE_START = "<file>";
@@ -52,7 +52,7 @@ final class ReceiveThread extends Thread {
    private static String CRLF = "\r\n";
    private static String DFTP_VERSION_10 = "DFTP/1.0 ";
    private static String DFTP = "DFTP";
-   private static final int UPDATE_REQUEST_QUEUE_SIZE;
+   private static final int UPDATE_REQUEST_QUEUE_SIZE = 20;
 
    public ReceiveThread(Connection conn) {
       this._conn = conn;

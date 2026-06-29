@@ -4,8 +4,8 @@ import net.rim.device.api.util.Arrays;
 
 final class Imsi implements SetId {
    private char[] imsi = new char[8];
-   static final byte IMSI_SIZE;
-   static final byte OCTET_BIT_SIZE;
+   static final byte IMSI_SIZE = 8;
+   static final byte OCTET_BIT_SIZE = 8;
 
    Imsi() {
    }

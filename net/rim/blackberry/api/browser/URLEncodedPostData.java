@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.browser.stack.URLEncodedFormData;
 
 public final class URLEncodedPostData extends PostData {
    private StringBuffer _buffer;
-   public static final String DEFAULT_CHARSET;
+   public static final String DEFAULT_CHARSET = "iso-8859-1";
 
    private final void init() {
       this._buffer = (StringBuffer)(new Object());

@@ -4,8 +4,8 @@ import javax.microedition.pim.ToDo;
 
 public final class TaskArguments extends ApplicationArguments {
    private ToDo _todo;
-   public static final String ARG_NEW;
-   public static final String ARG_VIEW;
+   public static final String ARG_NEW = "new";
+   public static final String ARG_VIEW = "view";
 
    public TaskArguments() {
    }

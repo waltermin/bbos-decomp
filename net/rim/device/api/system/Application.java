@@ -43,9 +43,9 @@ public class Application {
    private int[] _invokeLaterIds = new int[20];
    private int _uniqueInvokeLaterCounter;
    private static Application _application;
-   private static final int NUM_TIMED_RUNNABLES;
-   private static final int NUM_EXTERNAL_TIMED_RUNNABLES;
-   private static final boolean DEBUG;
+   private static final int NUM_TIMED_RUNNABLES = 20;
+   private static final int NUM_EXTERNAL_TIMED_RUNNABLES = 16;
+   private static final boolean DEBUG = false;
 
    protected Application() {
       this._listeners = new Object[59][][];

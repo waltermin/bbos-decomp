@@ -53,8 +53,8 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
    private SMSService$SMSSendThread _sendThread;
    private Vector _sendQueue;
    private SMSService$SingleSMSNotificationDialog _voicemailMessageDialog;
-   private static final int MAX_EMAIL_ADDRESS_LENGTH;
-   private static final long GUID;
+   private static final int MAX_EMAIL_ADDRESS_LENGTH = 120;
+   private static final long GUID = 4928152549260665053L;
 
    public final synchronized void addSMSServiceListener(SMSServiceListener listener) {
       this._smsServiceListeners = ListenerUtilities.addListener(this._smsServiceListeners, listener);

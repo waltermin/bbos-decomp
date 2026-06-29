@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 
 public final class AddImageVerb extends Verb {
    private MMSPresentationModel _presentation;
-   private static final String MMS_IMAGE_FOLDER;
+   private static final String MMS_IMAGE_FOLDER = "file:///store/samples/mms/pictures/";
 
    public AddImageVerb(MMSPresentationModel presentation) {
       super(16864032);

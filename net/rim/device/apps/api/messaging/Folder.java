@@ -4,7 +4,7 @@ import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
 
 public interface Folder {
-   int INVALID_FOLDER_ID;
+   int INVALID_FOLDER_ID = 0;
 
    long getLUID();
 

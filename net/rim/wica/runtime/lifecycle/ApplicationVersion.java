@@ -6,7 +6,7 @@ public final class ApplicationVersion {
    private int _dataVersion;
    private int _messageVersion;
    private int _featureVersion;
-   private static final char DELIMETER;
+   private static final char DELIMETER = '.';
 
    public ApplicationVersion(String version) {
       StringTokenizer st = (StringTokenizer)(new Object(version, '.'));

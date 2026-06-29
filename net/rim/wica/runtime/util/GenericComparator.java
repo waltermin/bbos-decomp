@@ -3,10 +3,10 @@ package net.rim.wica.runtime.util;
 import net.rim.device.api.util.Comparator;
 
 public class GenericComparator implements Comparator {
-   public static final int EQUALS;
-   public static final int LESS_THAN;
-   public static final int GREATER_THAN;
-   public static final int UNDEFINED;
+   public static final int EQUALS = 0;
+   public static final int LESS_THAN = -1;
+   public static final int GREATER_THAN = 1;
+   public static final int UNDEFINED = Integer.MAX_VALUE;
 
    @Override
    public int compare(Object ob1, Object ob2) {

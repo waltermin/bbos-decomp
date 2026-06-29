@@ -19,10 +19,10 @@ final class SendMessageTask implements MMSTask {
    private HttpHeaders _headers;
    private byte[] _pdu;
    private int _attempts;
-   private static final int MAX_ATTEMPTS;
-   private static final int FIRST_RETRY_DELAY;
-   private static final int LAST_RETRY_DELAY;
-   private static final int RETRY_SCALE_FACTOR;
+   private static final int MAX_ATTEMPTS = 10;
+   private static final int FIRST_RETRY_DELAY = 10;
+   private static final int LAST_RETRY_DELAY = 600;
+   private static final int RETRY_SCALE_FACTOR = 8;
 
    public SendMessageTask(MMSMessageModel message, String url, String authHeader, boolean cancelSendIfDeleted) {
       this._message = message;

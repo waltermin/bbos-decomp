@@ -22,9 +22,9 @@ final class WebFeedItem extends Field {
    private String _enclosureLink;
    private int _enclosureSize;
    private String _enclosureMimeType;
-   public static final int STATUS_READ;
-   public static final int STATUS_UNREAD;
-   private static final int ICON_COUNT;
+   public static final int STATUS_READ = 0;
+   public static final int STATUS_UNREAD = 1;
+   private static final int ICON_COUNT = 2;
    private static IconCollection _icons = IconCollection.get("net_rim_browser_webfeeds", 2);
 
    public WebFeedItem() {

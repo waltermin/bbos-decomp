@@ -25,8 +25,8 @@ final class ETManager implements SyncAgentListener {
    private SessionManager _mgr;
    private Application _app;
    private ETManager$GPSFixThread _gpsFixThread;
-   public static final long PARAM_TRACKING_ENABLED_BY_USER;
-   private static final long GUID;
+   public static final long PARAM_TRACKING_ENABLED_BY_USER = -5569314734131765067L;
+   private static final long GUID = -4208570663947666709L;
 
    public final void locationError() {
       synchronized (this) {

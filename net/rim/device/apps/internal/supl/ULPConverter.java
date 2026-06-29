@@ -4,9 +4,9 @@ import java.io.DataInput;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 
 final class ULPConverter extends BaseConverter {
-   private static final byte ASCII_LF;
-   private static final byte ASCII_CR;
-   private static final int MAX_PDU_LEN;
+   private static final byte ASCII_LF = 10;
+   private static final byte ASCII_CR = 13;
+   private static final int MAX_PDU_LEN = 1024;
 
    @Override
    public final boolean canConvert(Object parameters) {

@@ -45,7 +45,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
    private int _delayedInvocationId = -1;
    private Runnable _timeOutRunnable = new ConversationScreen$1(this);
    private static Tag TAG = Tag.create("bbmessenger-conversationscreen");
-   private static final boolean _walkieTalkie;
+   private static final boolean _walkieTalkie = false;
    private static QmVerb _sendVerb = new QmVerb(332032, 61);
    private static QmVerb _closeVerb = new QmVerb(268501007, 79);
    private static QmVerb _endVerb = new QmVerb(268501007, 28);

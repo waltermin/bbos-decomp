@@ -8,7 +8,7 @@ public class SafeArray {
    private int _safeArrayReferenceCount;
    public Object[] array;
    public int count;
-   private static final int INCREMENT_CAPACITY;
+   private static final int INCREMENT_CAPACITY = 4;
 
    public SafeArray() {
       this(false);

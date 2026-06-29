@@ -3,8 +3,8 @@ package org.apache.oro.text.regexp;
 import java.util.Vector;
 
 public final class Util {
-   public static final int SUBSTITUTE_ALL;
-   public static final int SPLIT_ALL;
+   public static final int SUBSTITUTE_ALL = -1;
+   public static final int SPLIT_ALL = 0;
 
    private Util() {
    }

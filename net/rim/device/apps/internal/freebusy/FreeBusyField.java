@@ -41,16 +41,16 @@ class FreeBusyField extends Field {
    private Date _highlightedDate;
    private FreeBusyController _callback;
    private boolean _fieldHasFocus;
-   private static final int NUM_TIME_INTERVAL_COLUMNS;
-   private static final int NUM_SUB_TIME_INTERVALS;
-   private static final int NUM_ATTENDEE_COLUMNS;
-   private static final int ATTENDEE_TIME_WIDTH_RATIO;
-   private static final int MINUTES_PER_INTERVAL;
-   private static final int MINUTES_PER_SUB_INTERVAL;
-   private static final int MAX_ATTENDEES_ON_SCREEN;
-   private static final int EXTRA_ROWS_NEEDED;
-   private static final int COLUMN_SEPARATOR_WIDTH;
-   private static final int ROW_SEPARATOR_HEIGHT;
+   private static final int NUM_TIME_INTERVAL_COLUMNS = 4;
+   private static final int NUM_SUB_TIME_INTERVALS = 4;
+   private static final int NUM_ATTENDEE_COLUMNS = 1;
+   private static final int ATTENDEE_TIME_WIDTH_RATIO = 2;
+   private static final int MINUTES_PER_INTERVAL = 60;
+   private static final int MINUTES_PER_SUB_INTERVAL = 15;
+   private static final int MAX_ATTENDEES_ON_SCREEN = 6;
+   private static final int EXTRA_ROWS_NEEDED = 2;
+   private static final int COLUMN_SEPARATOR_WIDTH = 1;
+   private static final int ROW_SEPARATOR_HEIGHT = 1;
 
    FreeBusyField(Enumeration attendees, long meetingStartDate, long meetingEndDate, FreeBusyController callback) {
       super(18014398509481984L);

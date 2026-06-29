@@ -3,8 +3,8 @@ package net.rim.device.apps.api.addressbook;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 
 public interface MailingAddressModel extends PersistableRIMModel {
-   int WORK_ADDRESS;
-   int HOME_ADDRESS;
+   int WORK_ADDRESS = 0;
+   int HOME_ADDRESS = 1;
 
    String getAddressLine1();
 

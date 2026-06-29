@@ -8,9 +8,9 @@ import net.rim.wica.runtime.metadata.component.ui.control.TableModel;
 import net.rim.wica.runtime.script.internal.WicaAppContext;
 
 final class ESTableElement extends ESControl {
-   private static final String ColumnsProperty;
-   private static final String SelectedColumnIndexProperty;
-   private static final String SelectedRowIndexProperty;
+   private static final String ColumnsProperty = "columns";
+   private static final String SelectedColumnIndexProperty = "selectedColumnIndex";
+   private static final String SelectedRowIndexProperty = "selectedRowIndex";
 
    ESTableElement(TableModel model, WicaAppContext context) {
       super("TableElement", model, context, context.getTablePrototype());

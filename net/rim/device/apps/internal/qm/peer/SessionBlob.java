@@ -8,14 +8,14 @@ final class SessionBlob extends PeerDataBlob {
    private int _id;
    private String _application;
    private String _message;
-   public static final int TYPE_REQUEST;
-   public static final int TYPE_ACCEPT;
-   public static final int TYPE_DENY;
-   public static final int TYPE_END;
-   private static final int TYPE;
-   private static final int APP;
-   private static final int MSG;
-   private static final int ID;
+   public static final int TYPE_REQUEST = 0;
+   public static final int TYPE_ACCEPT = 1;
+   public static final int TYPE_DENY = 2;
+   public static final int TYPE_END = 3;
+   private static final int TYPE = 1;
+   private static final int APP = 2;
+   private static final int MSG = 3;
+   private static final int ID = 4;
 
    public SessionBlob() {
    }

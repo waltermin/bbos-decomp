@@ -16,7 +16,7 @@ public final class ESApplication extends RedirectedObject {
    private Wiclet _application;
    private ScriptEngineInternal _engine;
    private Data _globals;
-   private static final String Platform;
+   private static final String Platform = "platform";
 
    public ESApplication(WicaAppContext context, Data globals) {
       super("Application", GlobalObject.getInstance().getObjectPrototype());

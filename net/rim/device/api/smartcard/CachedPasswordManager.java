@@ -3,7 +3,7 @@ package net.rim.device.api.smartcard;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class CachedPasswordManager {
-   protected static final long GUID;
+   protected static final long GUID = 6437022998700452919L;
 
    public static CachedPasswordManager getInstance() {
       return (CachedPasswordManager)ApplicationRegistry.getApplicationRegistry().waitForStartup(6437022998700452919L);

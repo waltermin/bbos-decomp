@@ -7,9 +7,9 @@ public class PushSource {
    protected String _apn;
    protected String _apnUsername;
    protected String _apnPassword;
-   public static final int MDS_SOURCE;
-   public static final int WAP_SOURCE;
-   public static final int SERIAL_SOURCE;
+   public static final int MDS_SOURCE = 1;
+   public static final int WAP_SOURCE = 2;
+   public static final int SERIAL_SOURCE = 3;
 
    protected PushSource(int port, String apn, String apnUsername, String apnPassword) {
       this._port = port;

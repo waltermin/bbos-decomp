@@ -80,17 +80,17 @@ final class ActivationServiceImpl
    private String _newKeyId;
    private String _activatingUID;
    private DataBuffer _intDataBuffer = (DataBuffer)(new Object(new byte[4], 0, 4, true));
-   public static final long ACTIVATION_EVENT;
-   static final long EVENT_LOGGER_GUID;
-   static final long EVENT_LOGGER_DATA_GUID;
-   static final String EVENT_LOGGER_NAME;
-   private static final long LAST_OTA_KEYGREN_STORE_ID;
-   private static final int TIMEOUT_DELAY;
-   private static final int MAX_RETRIES;
-   private static final int USER_STATUS_ACTIVATED;
-   private static final int USER_STATUS_CANCELLED;
-   private static final String ACTIVATION_BBR_SUFFIX;
-   private static final int ACTIVATION_PORT;
+   public static final long ACTIVATION_EVENT = -4731267519193158412L;
+   static final long EVENT_LOGGER_GUID = -5915434835955743234L;
+   static final long EVENT_LOGGER_DATA_GUID = 1200380696048604626L;
+   static final String EVENT_LOGGER_NAME = "net.rim.activation";
+   private static final long LAST_OTA_KEYGREN_STORE_ID = -4223553005304200338L;
+   private static final int TIMEOUT_DELAY = 1200000;
+   private static final int MAX_RETRIES = 3;
+   private static final int USER_STATUS_ACTIVATED = 1;
+   private static final int USER_STATUS_CANCELLED = 2;
+   private static final String ACTIVATION_BBR_SUFFIX = "activationBBR";
+   private static final int ACTIVATION_PORT = 4101;
 
    final void initProvisioning() {
       try {

@@ -20,8 +20,8 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
    private String _commonName;
    private byte[] _derEncoding;
    private int _hashCode;
-   private static final int INITIAL_NUM_TYPES;
-   private static final int INITIAL_NUM_VALUES_PER_TYPE;
+   private static final int INITIAL_NUM_TYPES = 6;
+   private static final int INITIAL_NUM_VALUES_PER_TYPE = 2;
    private static final OID[] RFC2253_OIDS = new Object[]{
       OIDs.getOID(-1250238803),
       OIDs.getOID(-1253056853),
@@ -34,8 +34,8 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
       OIDs.getOID(-1252860245)
    };
    private static final char[] RFC2253_ESCAPE_CHARACTERS = new char[]{',', '+', '"', '\\', '<', '>', ';', '\u0000', 'ǂ', '퀄', '舰', '븁', '舰', '✁'};
-   public static final int STRING_FORMAT_DEFAULT;
-   public static final int STRING_FORMAT_RFC2253;
+   public static final int STRING_FORMAT_DEFAULT = 0;
+   public static final int STRING_FORMAT_RFC2253 = 1;
 
    public final String toString(int stringFormat) {
       StringBuffer outputBuffer = (StringBuffer)(new Object());

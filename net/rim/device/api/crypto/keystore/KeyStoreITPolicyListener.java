@@ -5,7 +5,7 @@ import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class KeyStoreITPolicyListener implements GlobalEventListener {
-   private static final long ID;
+   private static final long ID = 2061894209299239981L;
 
    private KeyStoreITPolicyListener() {
       Proxy.getInstance().addGlobalEventListener(this);

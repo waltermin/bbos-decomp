@@ -50,23 +50,23 @@ public class MediaRecorderScreen extends MainScreen implements MediaListener, Sc
    private TextNode _filesizeNode;
    private TextNode _mmsNode;
    protected boolean _recording;
-   private static final String RECORD;
-   private static final String PAUSE;
-   private static final String RESUME;
-   private static final String STOP;
-   private static final String DELETE;
-   private static final String FOLDER;
-   private static final String PLAY;
-   private static final String SEND;
+   private static final String RECORD = "record";
+   private static final String PAUSE = "pause";
+   private static final String RESUME = "resume";
+   private static final String STOP = "stop";
+   private static final String DELETE = "delete";
+   private static final String FOLDER = "folder";
+   private static final String PLAY = "play";
+   private static final String SEND = "send";
    private static final String[] MEMORY = new String[]{
       "memory0", "memory10", "memory20", "memory30", "memory40", "memory50", "memory60", "memory70", "memory80", "memory90", "memory100"
    };
    private static final String[] FLASH_EVENT = new String[]{"flashOff", "flashOn", "flashAuto"};
-   private static final String MMS_MODE;
-   private static final String CE_RECORDING;
-   private static final String CE_PAUSING;
-   private static final String CE_DISABLE_RESUME;
-   private static final String CE_ENABLE_RESUME;
+   private static final String MMS_MODE = "MMS";
+   private static final String CE_RECORDING = "recording";
+   private static final String CE_PAUSING = "pausing";
+   private static final String CE_DISABLE_RESUME = "disableResume";
+   private static final String CE_ENABLE_RESUME = "enableResume";
    private static ResourceBundle _MediaRecorderBundle = ResourceBundle.getBundle(-6927834585541129670L, "net.rim.device.apps.internal.resource.MediaRecorder");
 
    public void updateMemoryRemainingIndicator(int percentageRemaining) {

@@ -11,7 +11,7 @@ public class ResourceBundle {
    private ResourceBundleFamily _family;
    private Locale _locale;
    private ResourceBundle _parent;
-   private static final long COLLECTION_ID;
+   private static final long COLLECTION_ID = 2465954242248413450L;
    private static LongHashtable _table = ApplicationRegistry.getApplicationRegistry().getLongHashtable(2465954242248413450L);
 
    protected ResourceBundle(Locale locale) {

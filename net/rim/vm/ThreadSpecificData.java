@@ -2,10 +2,10 @@ package net.rim.vm;
 
 public class ThreadSpecificData {
    private WeakReference[] data = new WeakReference[3];
-   public static final int ECMA_GLOBAL_OBJECT;
-   public static final int APPCONTROL_GLOBAL_OBJECT;
-   public static final int JAVASCRIPT_ENGINE_GLOBAL_OBJECT;
-   private static final int NUM_DATA_SLOTS;
+   public static final int ECMA_GLOBAL_OBJECT = 0;
+   public static final int APPCONTROL_GLOBAL_OBJECT = 1;
+   public static final int JAVASCRIPT_ENGINE_GLOBAL_OBJECT = 2;
+   private static final int NUM_DATA_SLOTS = 3;
 
    private static native ThreadSpecificData getData(Thread var0);
 

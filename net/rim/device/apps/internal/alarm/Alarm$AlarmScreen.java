@@ -19,7 +19,7 @@ final class Alarm$AlarmScreen extends AppsMainScreen implements FieldChangeListe
    private Verb _dateTimeVerb;
    private Runnable _backgroundCommitRunnable;
    private final Alarm this$0;
-   private static final long COMMIT_IDLE_TIMEOUT;
+   private static final long COMMIT_IDLE_TIMEOUT = 30L;
 
    public Alarm$AlarmScreen(Alarm _1) {
       super(17594333724672L);

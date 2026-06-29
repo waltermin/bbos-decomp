@@ -14,7 +14,7 @@ public final class CallControlLogger {
    private byte[] _buf = new byte[0];
    private StringBuffer _strbuf;
    private int _strbufRootLen;
-   private static final long LOGGER_GUID;
+   private static final long LOGGER_GUID = -1833974700407082449L;
    private static final byte[] ACTIVATEBARRING = "ActivateBarring".getBytes();
    private static final byte[] ACTIVATEWAITING = "ActivateWaiting".getBytes();
    private static final byte[] ADDED = "Added".getBytes();

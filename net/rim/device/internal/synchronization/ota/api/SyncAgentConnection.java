@@ -31,7 +31,7 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
    private DataSourceDatabase _dataSourceDatabase;
    private int _retryCount = 0;
    private static final IOException ClosedConnectionIOException = (IOException)(new Object("Closed"));
-   private static final int MAX_RETRY;
+   private static final int MAX_RETRY = 10;
 
    public final Configuration getConfiguration() {
       return this._configuration;

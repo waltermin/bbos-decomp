@@ -28,10 +28,10 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
    private ObjectChoiceField _net3GField;
    private RichTextField _netNameField;
    private int _type;
-   static final int TYPE_ADD;
-   static final int TYPE_EDIT;
-   static final int TYPE_VIEW;
-   static final int MCC_MNC_FIELD_SIZE;
+   static final int TYPE_ADD = 1;
+   static final int TYPE_EDIT = 2;
+   static final int TYPE_VIEW = 3;
+   static final int MCC_MNC_FIELD_SIZE = 6;
 
    public PrefNetworkItemOptions(int priority, PrefNetworkList netList, int type) {
       super(2251799813685248L);

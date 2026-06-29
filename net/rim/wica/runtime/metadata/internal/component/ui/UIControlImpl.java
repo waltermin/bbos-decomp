@@ -28,10 +28,10 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
    protected Object _mappedValue;
    protected String _mappingKey;
    protected ControlMappingResolver _mappingResolver;
-   private static final int IN_ARRAY_FIELDS_OFFSET_ENUM_CASE;
-   private static final int IN_ARRAY_FIELDS_OFFSET;
-   protected static final int BIT_IS_MANDATORY;
-   protected static final int BIT_IS_READONLY;
+   private static final int IN_ARRAY_FIELDS_OFFSET_ENUM_CASE = 3;
+   private static final int IN_ARRAY_FIELDS_OFFSET = 2;
+   protected static final int BIT_IS_MANDATORY = 1;
+   protected static final int BIT_IS_READONLY = 536870912;
 
    protected void onValueChanged(boolean fromUI) {
       if (!fromUI) {

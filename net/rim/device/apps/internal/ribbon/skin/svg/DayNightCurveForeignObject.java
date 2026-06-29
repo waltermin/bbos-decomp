@@ -58,11 +58,11 @@ class DayNightCurveForeignObject extends AbstractForeignObject implements Global
    private int _handle1;
    int _C;
    private static GregorianCalendar _cal = (GregorianCalendar)(new Object());
-   private static final int MAX_C;
-   private static final int MIN_1_OVER_C;
+   private static final int MAX_C = 11863283;
+   private static final int MIN_1_OVER_C = 363;
    private static final int MAX_THETA_32 = Fixed32.tenThouToFP(4102);
    private static final int COS_PI_2__MAX_THETA_32 = Fixed32.Cos(102943 - MAX_THETA_32);
-   private static final int SHIFT_INTERVAL;
+   private static final int SHIFT_INTERVAL = 600000;
 
    void setHandle2(int h) {
    }

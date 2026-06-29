@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.bis.data;
 public final class SecretQuestion {
    private int _id;
    private String _text;
-   public static final int CUSTOM_ID;
+   public static final int CUSTOM_ID = -1;
 
    public SecretQuestion(int id, String text) {
       this._id = id;

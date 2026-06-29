@@ -15,10 +15,10 @@ public final class PurgeManager implements LowMemoryListener {
    private long[] _purgeCollectionKeys = new long[1];
    private Vector _collections = (Vector)(new Object());
    private long[] _sort = new long[1];
-   private static final long KEY;
-   public static final long MIN_PURGE_IDLE_TIME;
-   public static final long MAX_PURGE_TIME;
-   public static final long MAX_PURGE_COUNT;
+   private static final long KEY = 8720984902929879083L;
+   public static final long MIN_PURGE_IDLE_TIME = 30L;
+   public static final long MAX_PURGE_TIME = 5L;
+   public static final long MAX_PURGE_COUNT = 50L;
    private static PurgeManager _instance;
 
    public static final PurgeManager getInstance() {

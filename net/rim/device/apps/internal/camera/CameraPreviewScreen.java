@@ -59,17 +59,17 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
    private Verb[] _sendVerbs;
    private int _sendHandle;
    private CameraPreviewScreen$CustomFocusOrder _focusManager = new CameraPreviewScreen$CustomFocusOrder(this);
-   private static final String MIME_TYPE;
-   private static final String CAPTURE;
-   private static final String DELETE;
-   private static final String FOLDER;
-   private static final String SEND;
-   private static final String SETAS;
-   private static final String FILENAME;
-   private static final String ENABLE_SEND;
-   private static final String DISABLE_SEND;
-   private static final long CONTROL_STYLE;
-   private static final long INDICATOR_STYLE;
+   private static final String MIME_TYPE = "image/jpeg";
+   private static final String CAPTURE = "capture";
+   private static final String DELETE = "delete";
+   private static final String FOLDER = "folder";
+   private static final String SEND = "send";
+   private static final String SETAS = "setAs";
+   private static final String FILENAME = "filename";
+   private static final String ENABLE_SEND = "enableSend";
+   private static final String DISABLE_SEND = "disableSend";
+   private static final long CONTROL_STYLE = 12884967424L;
+   private static final long INDICATOR_STYLE = 36028809903865856L;
 
    public final void updatePreview() {
       if (this._previewBitmap == null) {

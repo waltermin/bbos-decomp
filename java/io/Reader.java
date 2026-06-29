@@ -3,7 +3,7 @@ package java.io;
 public class Reader {
    protected Object lock;
    private char[] skipBuffer;
-   private static final int maxSkipBufferSize;
+   private static final int maxSkipBufferSize = 8192;
 
    protected Reader() {
       this.lock = this;

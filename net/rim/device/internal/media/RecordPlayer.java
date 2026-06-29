@@ -37,13 +37,13 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    private long _endTime;
    private int _audioSourceId = 8;
    private boolean _audioRouted = false;
-   public static final String RECORD_COMMITTED;
-   private static final int COMMITTED;
-   private static final int READY;
-   private static final int STANDBY;
-   private static final int RECORDING;
-   private static final int PREEMPTED;
-   private static final int AMR_HEADER_SIZE;
+   public static final String RECORD_COMMITTED = "net.rim.device.internal.media.recordCommitted";
+   private static final int COMMITTED = 0;
+   private static final int READY = 1;
+   private static final int STANDBY = 2;
+   private static final int RECORDING = 3;
+   private static final int PREEMPTED = 4;
+   private static final int AMR_HEADER_SIZE = 6;
 
    protected void notifyPlayerListeners(String event, Object eventData) {
       if (this._listeners != null) {

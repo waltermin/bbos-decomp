@@ -22,12 +22,12 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
    private MessagingService _messaging;
    private ManagementService _management;
    private CredentialStore _store;
-   private static final int SCHEME_BASIC;
-   private static final int SCHEME_NTLM;
-   private static final int TYPE_PROXY;
-   private static final int TYPE_TARGET;
-   private static final String CLEAR_CREDENTIALS;
-   private static final String CLEAR_ALL_CREDENTIALS;
+   private static final int SCHEME_BASIC = 0;
+   private static final int SCHEME_NTLM = 1;
+   private static final int TYPE_PROXY = 1;
+   private static final int TYPE_TARGET = 0;
+   private static final String CLEAR_CREDENTIALS = "outClearCredentials";
+   private static final String CLEAR_ALL_CREDENTIALS = "outClearAllCredentials";
    static Class class$net$rim$wica$runtime$messaging$MessagingService;
    static Class class$net$rim$wica$runtime$management$ManagementService;
 

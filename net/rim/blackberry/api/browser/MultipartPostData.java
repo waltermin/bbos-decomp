@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.browser.stack.MultipartFormData;
 
 public final class MultipartPostData extends PostData {
    private ByteArrayOutputStream _baos;
-   public static final String DEFAULT_CHARSET;
+   public static final String DEFAULT_CHARSET = "iso-8859-1";
 
    public MultipartPostData(String charset, boolean useWAPConventions) {
       super._formData = (FormData)(new Object(charset, useWAPConventions));

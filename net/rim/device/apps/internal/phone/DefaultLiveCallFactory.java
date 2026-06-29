@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCallFactory;
 
 final class DefaultLiveCallFactory implements LiveCallFactory {
-   static final long GUID;
+   static final long GUID = 1881261337111763937L;
 
    @Override
    public final Application getApplication() {

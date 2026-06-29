@@ -4,10 +4,10 @@ import net.rim.device.api.util.CharacterUtilities;
 
 public final class Character {
    private char value;
-   public static final int MIN_RADIX;
-   public static final int MAX_RADIX;
-   public static final char MIN_VALUE;
-   public static final char MAX_VALUE;
+   public static final int MIN_RADIX = 2;
+   public static final int MAX_RADIX = 36;
+   public static final char MIN_VALUE = '\u0000';
+   public static final char MAX_VALUE = '\uffff';
 
    public Character(char value) {
       this.value = value;

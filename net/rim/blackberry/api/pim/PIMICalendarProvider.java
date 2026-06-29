@@ -7,10 +7,10 @@ class PIMICalendarProvider implements ICalendarProvider {
    private int _calendarComponent;
    private int _alarmNestedCalendarComponent;
    protected int _version = 0;
-   private static final String _prodid;
+   private static final String _prodid = "-//Research In Motion//Blackberry//EN";
    private static final String[] _versionArray = new String[]{"VCALENDAR/1.0", "VCALENDAR/2.0"};
-   static final int VERSION_1_0;
-   static final int VERSION_2_0;
+   static final int VERSION_1_0 = 0;
+   static final int VERSION_2_0 = 1;
 
    public boolean isDaysSpecified() {
       return false;

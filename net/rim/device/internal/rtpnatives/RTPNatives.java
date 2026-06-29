@@ -5,13 +5,13 @@ import net.rim.device.api.rtp.RtpModify;
 import net.rim.device.api.rtp.RtpParameters;
 
 public class RTPNatives {
-   public static final int RTP_DEVICE;
-   public static final int NETWORK_ERROR;
-   public static final int NETWORK_EVENT;
-   public static final int REMOTE_DISCONNECTED;
-   public static final int DTMF_RTP_2833;
-   public static final int DTMF_RTP_AUDIO;
-   public static final int DTMF_SIP_INFO;
+   public static final int RTP_DEVICE = 17;
+   public static final int NETWORK_ERROR = 4353;
+   public static final int NETWORK_EVENT = 4354;
+   public static final int REMOTE_DISCONNECTED = 1;
+   public static final int DTMF_RTP_2833 = 2;
+   public static final int DTMF_RTP_AUDIO = 1;
+   public static final int DTMF_SIP_INFO = 3;
 
    private RTPNatives() {
    }

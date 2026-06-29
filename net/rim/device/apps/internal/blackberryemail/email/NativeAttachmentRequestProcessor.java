@@ -19,7 +19,7 @@ public class NativeAttachmentRequestProcessor {
    private TransmissionService _transmissionService = TransmissionServiceManager.get(8399767144006445082L);
    private ContextObject _transmissionContextObject = ContextObject.castOrCreate(null);
    private boolean _cancelCurrentRequest;
-   private static final long ID;
+   private static final long ID = -285957192141787993L;
    private static NativeAttachmentRequestProcessor _self = null;
 
    public boolean addRequest(NativeAttachmentRequest request) {

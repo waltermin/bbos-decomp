@@ -11,12 +11,12 @@ public class HeaderSetImpl implements HeaderSet {
    private Object[] _objects;
    private int _responseCode = -1;
    byte[] _nonce;
-   public static final int BODY;
-   public static final int END_OF_BODY;
-   public static final int CONNECTION_ID;
-   public static final int AUTH_CHALLENGE;
-   public static final int AUTH_RESPONSE;
-   private static final String NONCE_KEY;
+   public static final int BODY = 72;
+   public static final int END_OF_BODY = 73;
+   public static final int CONNECTION_ID = 203;
+   public static final int AUTH_CHALLENGE = 77;
+   public static final int AUTH_RESPONSE = 78;
+   private static final String NONCE_KEY = "RIM-NONCE-KEY";
 
    public HeaderSetImpl() {
       this.reset();

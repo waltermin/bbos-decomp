@@ -14,8 +14,8 @@ final class VideoPresentationElementField extends HorizontalFieldManager impleme
    private boolean _isEditable;
    private AttachmentDataProvider _attachmentProvider;
    private boolean _isForwardLocked;
-   public static final int FLAG_DISPLAY_CONTROLS;
-   public static final int FLAG_MOVE_MODE;
+   public static final int FLAG_DISPLAY_CONTROLS = 1;
+   public static final int FLAG_MOVE_MODE = 2;
 
    public VideoPresentationElementField(MMSAttachment param1, int param2, boolean param3, AttachmentDataProvider param4, boolean param5) {
       // $VF: Couldn't be decompiled

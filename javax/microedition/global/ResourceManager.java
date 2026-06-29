@@ -9,8 +9,8 @@ public class ResourceManager {
    private String _baseName;
    private String _locale;
    private ResourceFile[] _resourceFile;
-   public static final String DEVICE;
-   private static final String ROOT_DIRECTORY;
+   public static final String DEVICE = "";
+   private static final String ROOT_DIRECTORY = "global/";
    private static String EMPTY = "";
 
    private String getResourceFilename(String baseName, String locale) {

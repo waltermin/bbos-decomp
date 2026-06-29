@@ -26,9 +26,9 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
    private SimplePersistentSyncCollection$SimpleData _data = (SimplePersistentSyncCollection$SimpleData)this._persistentObject.getContents();
    private KeywordFilterList _keywordList;
    private boolean _dirty;
-   private static final int MEMO_INITIAL_SIZE;
-   private static final long MEMO_DATA_NAME;
-   private static final long MEMO_COLLECTION_ID;
+   private static final int MEMO_INITIAL_SIZE = 16;
+   private static final long MEMO_DATA_NAME = -1744790729544506738L;
+   private static final long MEMO_COLLECTION_ID = -5965364677584041048L;
    private static ContextObjectWR _encodeContextWR = (ContextObjectWR)(new Object(8, 35, 19));
    private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(8, 35, 19));
    private static RIMModelFactory[] _factoryCache = RIMModelFactoryCache.allocate();

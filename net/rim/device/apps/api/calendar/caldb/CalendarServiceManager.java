@@ -20,7 +20,7 @@ public class CalendarServiceManager implements GlobalEventListener, CalendarServ
    private MultiServiceManager _multiServiceManager;
    private CalendarService _baseService;
    private CalendarServiceListenerManager _calendarServiceListenerManager = CalendarServiceListenerManager.getInstance();
-   private static final long ID;
+   private static final long ID = -3570401404658009870L;
    private static CalendarServiceManager _instance;
    protected static final Comparator _calendarServiceComparator = new CalendarServiceManager$CalendarServiceComparator(null);
 

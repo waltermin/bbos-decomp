@@ -13,7 +13,7 @@ public class Process {
    private int _haltOnProcessDeath;
    private String _displayName;
    protected MessageQueue _messageQueue = new MessageQueue();
-   public static final int ID_NONE;
+   public static final int ID_NONE = -1;
 
    private static native int nextProcessId();
 

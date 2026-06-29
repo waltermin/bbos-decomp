@@ -3,8 +3,8 @@ package net.rim.wica.runtime.comm;
 import net.rim.device.api.io.http.HttpHeaders;
 
 public interface OutgoingRequest {
-   String GET;
-   String POST;
+   String GET = "GET";
+   String POST = "POST";
 
    String getUrl();
 

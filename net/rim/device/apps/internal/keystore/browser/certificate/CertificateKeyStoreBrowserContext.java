@@ -17,7 +17,7 @@ import net.rim.vm.PersistentInteger;
 public final class CertificateKeyStoreBrowserContext implements KeyStoreBrowserContext {
    private int certificateFilterId = PersistentInteger.getId(8223641991913099402L, 5);
    private KeyStoreBrowserVerb _fetchStatusChainVerb = (KeyStoreBrowserVerb)(new Object(5, 1200241));
-   private static final long CERTIFICATE_FILTER_GUID;
+   private static final long CERTIFICATE_FILTER_GUID = 8223641991913099402L;
    private static final int[] REVOCATION_REASONS = new int[]{
       0,
       1,

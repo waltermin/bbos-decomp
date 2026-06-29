@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.ToIntHashtable;
 
 public class InitializationVectorFactory {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = -2089495853761416774L;
    private static ToIntHashtable _hashtable;
 
    protected InitializationVectorFactory() {

@@ -6,7 +6,7 @@ import net.rim.device.internal.util.ByteArray;
 
 public final class DecryptionCache {
    private Hashtable _hashtable = (Hashtable)(new Object());
-   private static final long ID;
+   private static final long ID = -7206766548996023071L;
 
    private DecryptionCache() {
    }

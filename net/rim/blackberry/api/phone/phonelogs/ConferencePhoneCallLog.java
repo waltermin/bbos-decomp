@@ -5,7 +5,7 @@ import java.util.Vector;
 import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 
 public final class ConferencePhoneCallLog extends CallLog {
-   private static final int CONFERENCE_CALL;
+   private static final int CONFERENCE_CALL = 4;
 
    public ConferencePhoneCallLog(Date date, int callDuration, int callStatus, PhoneCallLogID caller1, PhoneCallLogID caller2, String notes) {
       super(date, 4, callDuration, callStatus, (Vector)(new Object()), notes);

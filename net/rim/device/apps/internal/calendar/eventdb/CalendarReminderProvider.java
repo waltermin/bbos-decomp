@@ -26,7 +26,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
    private long _nearestEventLUID;
    private boolean _nearestFutureSet;
    private Recur$Handle _sharedHandle = (Recur$Handle)(new Object());
-   private static final int REMINDER_COUNT_MISMATCH;
+   private static final int REMINDER_COUNT_MISMATCH = 1380796755;
    private static boolean _markAllPendingForRetry = true;
 
    public CalendarReminderProvider(ReminderManager reminderManager, CalDB calendardb) {

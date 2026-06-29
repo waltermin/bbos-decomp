@@ -23,8 +23,8 @@ public class MessageVisitor extends DefinitionVisitorAdapter {
    Vector _wicletAlerts;
    WicletElement _wicletElement;
    Hashtable _mappingResolvers;
-   private static final int MAPPING_TO_GLOBAL_VAR_SIZE;
-   private static final int MAPPING_TO_DATA_VAR_SIZE;
+   private static final int MAPPING_TO_GLOBAL_VAR_SIZE = 2;
+   private static final int MAPPING_TO_DATA_VAR_SIZE = 1;
 
    public MessageVisitor(UniqueCodeGenerator ucg, int globalDataDefId, WicletElement we) {
       this._uniqueCodeGenerator = ucg;

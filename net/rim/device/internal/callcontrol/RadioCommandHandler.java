@@ -13,7 +13,7 @@ import net.rim.device.internal.system.RadioInternal;
 
 final class RadioCommandHandler extends AbstractCallCommandHandler {
    private RadioEventHandler _eventHandler;
-   private static final int WORLD_PHONE_WAFS;
+   private static final int WORLD_PHONE_WAFS = 3;
    private static final boolean CDMA_GSM_WORLD_PHONE = (RadioInfo.getSupportedWAFs() & 3) == 3;
    static final int CELL_WAFS = !CDMA_GSM_WORLD_PHONE ? RadioInfo.getSupportedWAFs() & -5 : RadioInfo.getEnabledWAFs();
 

@@ -14,8 +14,8 @@ import net.rim.plazmic.internal.math.HashSum;
 
 public class Main extends Application implements GlobalEventListener {
    private ThemeEventLogger _themeEventLogger = ThemeEventLogger.getThemeEventLogger();
-   private static final String THEME_MODULE_NAME_PREFIX;
-   private static final int MAX_SIZE;
+   private static final String THEME_MODULE_NAME_PREFIX = "com_plazmic_theme_";
+   private static final int MAX_SIZE = 1572864;
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

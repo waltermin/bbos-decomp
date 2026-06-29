@@ -5,8 +5,8 @@ import net.rim.device.api.util.DataBuffer;
 
 final class LongBigVectorPairSerializer extends AbstractArraySerializer {
    private static LongBigVectorPairSerializer _instance;
-   private static final byte LONG;
-   private static final byte BIG_VECTOR;
+   private static final byte LONG = 0;
+   private static final byte BIG_VECTOR = 1;
 
    static final LongBigVectorPairSerializer getInstance() {
       if (_instance == null) {

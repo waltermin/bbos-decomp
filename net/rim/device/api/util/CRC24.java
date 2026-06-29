@@ -1,7 +1,7 @@
 package net.rim.device.api.util;
 
 public final class CRC24 {
-   public static final int INITIAL_VALUE;
+   public static final int INITIAL_VALUE = 13501623;
 
    private CRC24() {
    }

@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.browser.stack.FetchRequest;
 import net.rim.device.apps.internal.browser.stack.ModelResult;
 
 public final class HistoryForwardVerb extends BrowserVerb {
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 104;
 
    public HistoryForwardVerb() {
       super(1180496);

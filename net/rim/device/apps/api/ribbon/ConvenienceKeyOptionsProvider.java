@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.container.MainScreen;
 
 public class ConvenienceKeyOptionsProvider {
-   private static final long KEY;
+   private static final long KEY = 6253790733817506976L;
 
    public static void register(ConvenienceKeyOptionsProvider provider) {
       ApplicationRegistry.getApplicationRegistry().put(6253790733817506976L, provider);

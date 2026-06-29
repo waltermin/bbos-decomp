@@ -7,8 +7,8 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
    private CryptoTokenCryptoSystemData _cryptoTokenData;
    private int _hashCode;
    private boolean _verified;
-   public static final String SUN1024;
-   public static final String FORTEZZA;
+   public static final String SUN1024 = "SUN1024";
+   public static final String FORTEZZA = "FORTEZZA";
    private static final byte[] FORTEZZA_P = new byte[]{
       -3,
       127,

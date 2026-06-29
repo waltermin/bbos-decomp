@@ -29,12 +29,12 @@ import net.rim.device.internal.media.MediaOptionsUtilities;
 public final class FileExplorerApp extends UiApplication implements KeyListener, GlobalEventListener, FileSystemListener, DialogClosedListener {
    private boolean _escapeCharPressed;
    private Dialog _mediaDialog;
-   private static final long DISPLAY_MEDIA_GUID;
-   private static final long DISPLAY_MUSIC_GUID;
-   private static final long DISPLAY_VOICENOTE_GUID;
+   private static final long DISPLAY_MEDIA_GUID = 5632215308423875952L;
+   private static final long DISPLAY_MUSIC_GUID = 1126161790194782224L;
+   private static final long DISPLAY_VOICENOTE_GUID = -8370052414117276795L;
    private static String _entry = null;
-   public static final int PICTURES_ROOT;
-   public static final int TUNES_ROOT;
+   public static final int PICTURES_ROOT = 1;
+   public static final int TUNES_ROOT = 2;
 
    public FileExplorerApp(String entry) {
       ContextObject context = (ContextObject)(new Object());

@@ -3,14 +3,14 @@ package net.rim.wica.common.builtindata.componentEnums;
 import net.rim.device.api.util.ToIntHashtable;
 
 public final class PriorityEnumDef extends EnumDefinition {
-   public static final int NUM_ENUM_VALUES;
-   private static final String PRIORITY_HIGH;
-   private static final String PRIORITY_NORMAL;
-   private static final String PRIORITY_LOW;
-   public static final int PRIORITY_HIGH_VALUE;
-   public static final int PRIORITY_NORMAL_VALUE;
-   public static final int PRIORITY_LOW_VALUE;
-   public static final String PRIORITY_ENUM_NAME;
+   public static final int NUM_ENUM_VALUES = 3;
+   private static final String PRIORITY_HIGH = "HIGH";
+   private static final String PRIORITY_NORMAL = "NORMAL";
+   private static final String PRIORITY_LOW = "LOW";
+   public static final int PRIORITY_HIGH_VALUE = 0;
+   public static final int PRIORITY_NORMAL_VALUE = 1;
+   public static final int PRIORITY_LOW_VALUE = 2;
+   public static final String PRIORITY_ENUM_NAME = "PRIORITY";
 
    public PriorityEnumDef() {
       super._enumNames = new Object[3];

@@ -8,8 +8,8 @@ public class WordLearningHeader extends LearningHeader {
    protected byte _timeTick;
    protected byte _leastTimeStamp;
    private int _timeStampOffset;
-   private static final byte MAX_TICK;
-   private static final byte MAX_LOW_PRIORITY_GROUP;
+   private static final byte MAX_TICK = 9;
+   private static final byte MAX_LOW_PRIORITY_GROUP = 10;
 
    @Override
    protected void readHelper(DataInputStream aDis) {

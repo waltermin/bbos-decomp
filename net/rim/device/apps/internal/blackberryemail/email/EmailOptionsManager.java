@@ -23,7 +23,7 @@ import net.rim.vm.Array;
 
 public class EmailOptionsManager implements GlobalEventListener {
    private String[] _registeredUserIdArray = new Object[0];
-   private static final long GUID;
+   private static final long GUID = -3920253466163615500L;
 
    private EmailOptionsManager() {
    }

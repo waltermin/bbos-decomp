@@ -16,18 +16,18 @@ public class DataSourceImpl extends DataSource implements SourceStream {
    long _contentLength = -1;
    long _position;
    int _seekType = 0;
-   public static final String MIME_AUDIO_MIDI;
-   public static final String MIME_AUDIO_X_MIDI;
-   public static final String MIME_AUDIO_MID;
-   public static final String MIME_AUDIO_X_NOKIA_RINGTONE;
-   public static final String MIME_AUDIO_MP3;
-   public static final String MIME_AUDIO_WAV;
-   public static final String MIME_AUDIO_AMR;
-   public static final String MIME_AUDIO_RAW_PCM;
-   public static final String MIME_IMAGE_GIF;
-   public static final String MIME_IMAGE_PNG;
-   public static final String MIME_MEDIA_PME;
-   public static final String MIME_MEDIA_PMB;
+   public static final String MIME_AUDIO_MIDI = "audio/midi";
+   public static final String MIME_AUDIO_X_MIDI = "audio/x-midi";
+   public static final String MIME_AUDIO_MID = "audio/mid";
+   public static final String MIME_AUDIO_X_NOKIA_RINGTONE = "audio/x-nokia-ringtone";
+   public static final String MIME_AUDIO_MP3 = "audio/mpeg";
+   public static final String MIME_AUDIO_WAV = "audio/x-wav";
+   public static final String MIME_AUDIO_AMR = "audio/amr";
+   public static final String MIME_AUDIO_RAW_PCM = "audio/basic";
+   public static final String MIME_IMAGE_GIF = "image/gif";
+   public static final String MIME_IMAGE_PNG = "image/png";
+   public static final String MIME_MEDIA_PME = "application/x-vnd.rim.pme";
+   public static final String MIME_MEDIA_PMB = "application/x-vnd.rim.pme.b";
 
    public DataSourceImpl(String locator) {
       super(null);

@@ -9,7 +9,7 @@ public final class CyclicQueue {
    private int _modulus;
    private int _head;
    private int _tail;
-   public static final int DEFAULT_INITIAL_CAPACITY;
+   public static final int DEFAULT_INITIAL_CAPACITY = 8;
 
    public CyclicQueue() {
       this(8);

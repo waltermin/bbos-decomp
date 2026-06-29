@@ -16,11 +16,11 @@ import net.rim.tid.data.LearningDataManager;
 import net.rim.tid.im.util.algorithm.Counter;
 
 public class ChCustomWordsSyncCollection extends WordSyncCollection {
-   public static final long REGISTRY_ID;
-   private static final long PERSISTENCE_ID;
-   private static final long CLOCKS_COUNT_PERSISTENCE_ID;
-   private static final String LEARNING_READER_NAME;
-   private static final String BIGRAMS_READER_NAME;
+   public static final long REGISTRY_ID = -1037950266182389283L;
+   private static final long PERSISTENCE_ID = 6205514177874464825L;
+   private static final long CLOCKS_COUNT_PERSISTENCE_ID = -6401963580920179664L;
+   private static final String LEARNING_READER_NAME = "net.rim.tid.im.conv.zh.repository.SlChLearningWriter";
+   private static final String BIGRAMS_READER_NAME = "net.rim.tid.im.conv.zh.learning.SlChLearningBigramsWordlist";
    private static final String CURRENT_LOCALE = ((StringBuffer)(new Object("__")))
       .append(Locale.get(2053636096).getLanguage())
       .append("_CN_Pinyin_")

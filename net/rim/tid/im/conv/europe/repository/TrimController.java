@@ -10,8 +10,8 @@ public class TrimController {
    protected int _removeInterval;
    protected int _wordsToRemoveInitCount;
    protected int _wordsToRemoveCount;
-   public static final byte REMOVE_WORD_ACTION;
-   public static final byte PROMOTE_TS_ACTION;
+   public static final byte REMOVE_WORD_ACTION = 1;
+   public static final byte PROMOTE_TS_ACTION = 2;
 
    public void init(int aLeastTimeStamp, int aCurrTimeStamp, int aRemoveInterval) {
       this._leastTimeStamp = aLeastTimeStamp;

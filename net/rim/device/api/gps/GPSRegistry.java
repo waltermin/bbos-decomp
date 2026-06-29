@@ -32,17 +32,17 @@ public final class GPSRegistry {
    private boolean _pdeRequestSuccess;
    private long _lastLogEntryTime;
    Object _locationLock = new Object();
-   private static final long REGISTRY_NAME;
-   private static final long LAST_FIX_TIME;
-   public static final long FIX_REQUESTED;
+   private static final long REGISTRY_NAME = 131144863201889171L;
+   private static final long LAST_FIX_TIME = 6548244683844264658L;
+   public static final long FIX_REQUESTED = -2101050060249085778L;
    private static GPSRegistry _registry;
    private static int _maxGPSInterval = 9;
    private static Object _pdeLock = new Object();
-   private static final long LOG_ENTRY_INTERVAL;
-   private static final long EVENT_LOGGER_GUID;
-   private static final String EVENT_LOGGER_NAME;
-   public static final long LOCATION_EVENT;
-   public static final long GPS_TEMPORARILY_UNAVAILABLE;
+   private static final long LOG_ENTRY_INTERVAL = 60000L;
+   private static final long EVENT_LOGGER_GUID = 2845560962249627645L;
+   private static final String EVENT_LOGGER_NAME = "Location API";
+   public static final long LOCATION_EVENT = 5678354684824604352L;
+   public static final long GPS_TEMPORARILY_UNAVAILABLE = -7999774137434187609L;
    private static PersistentObject _lastFixTimeStore;
    private static long[] _lastFixTimes;
 

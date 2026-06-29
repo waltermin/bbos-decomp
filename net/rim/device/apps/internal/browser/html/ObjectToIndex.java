@@ -9,8 +9,8 @@ class ObjectToIndex {
    private int _added = 0;
    private int _sizeAdded = 0;
    private ToIntHashtable _h = (ToIntHashtable)(new Object());
-   private static final int NULLINDEX;
-   static final int CDATA_INDEX;
+   private static final int NULLINDEX = -1;
+   static final int CDATA_INDEX = -2;
    private static String CDATA_STR = "CDATA";
 
    Object get(int index) {

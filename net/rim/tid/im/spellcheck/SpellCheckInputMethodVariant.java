@@ -97,18 +97,18 @@ public class SpellCheckInputMethodVariant
    private Application _app;
    private boolean _cancelDelay;
    private boolean _userInteractionOccurred;
-   private static final int STARTING_STATE;
-   private static final int STOPPED_STATE;
-   private static final int STOPPING_STATE;
-   private static final int LOOKUP_STATE;
-   private static final int SCANNING_STATE;
-   private static final int UNCOMMITTED_KEY_INPUT_STATE;
-   private static final int COMMITTED_KEY_INPUT_STATE;
-   private static final int TOTAL_STATES;
-   public static final int INVALID_MODE;
-   public static final int MISSPELLED_MODE;
-   public static final int DUPLICATE_MODE;
-   public static final int EDIT_MODE;
+   private static final int STARTING_STATE = 0;
+   private static final int STOPPED_STATE = 1;
+   private static final int STOPPING_STATE = 2;
+   private static final int LOOKUP_STATE = 3;
+   private static final int SCANNING_STATE = 4;
+   private static final int UNCOMMITTED_KEY_INPUT_STATE = 5;
+   private static final int COMMITTED_KEY_INPUT_STATE = 6;
+   private static final int TOTAL_STATES = 7;
+   public static final int INVALID_MODE = 0;
+   public static final int MISSPELLED_MODE = 1;
+   public static final int DUPLICATE_MODE = 2;
+   public static final int EDIT_MODE = 3;
    private static boolean AMBIGUOUS_WORDS_SUPPORTED = false;
 
    void updateOptionsOnEngine() {

@@ -25,15 +25,15 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.vm.Array;
 
 public class CRLProvider extends CertificateStatusProvider {
-   private static final long ID;
-   private static final int TAG_RESPONDER_URL;
-   private static final int TAG_SERIAL_NUMBER;
-   private static final int TAG_STATUS;
-   private static final int TAG_ISSUER;
-   private static final int TAG_ISSUER_KEY;
-   private static final int TAG_UNVERIFIED_OK;
-   private static final int GOOD;
-   private static final int REVOKED;
+   private static final long ID = -2255283056435802812L;
+   private static final int TAG_RESPONDER_URL = 1;
+   private static final int TAG_SERIAL_NUMBER = 2;
+   private static final int TAG_STATUS = 3;
+   private static final int TAG_ISSUER = 4;
+   private static final int TAG_ISSUER_KEY = 5;
+   private static final int TAG_UNVERIFIED_OK = 6;
+   private static final int GOOD = 0;
+   private static final int REVOKED = 1;
 
    public CRLProvider() {
       super(-2255283056435802812L);

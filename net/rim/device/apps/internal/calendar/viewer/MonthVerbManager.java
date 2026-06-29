@@ -14,7 +14,7 @@ final class MonthVerbManager extends CalendarViewVerbManager {
    private GotoDateVerb _prevYearVerb = new GotoDateVerb(322, 479568, 341);
    private Calendar _cal = Calendar.getInstance();
    private CalendarExtensions _calEx = (CalendarExtensions)this._cal;
-   private static final int MONTHS_IN_YEAR;
+   private static final int MONTHS_IN_YEAR = 12;
 
    public MonthVerbManager(CalendarActions calActions) {
       super(calActions);

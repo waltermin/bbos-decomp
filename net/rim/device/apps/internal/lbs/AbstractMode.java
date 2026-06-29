@@ -7,10 +7,10 @@ import net.rim.device.api.ui.UiApplication;
 public class AbstractMode {
    private int _view = 0;
    private boolean _enabled = false;
-   public static final int VIEW_HIDDEN;
-   public static final int VIEW_SUMMARY;
-   public static final int VIEW_FULL;
-   public static final int VIEW_SCREEN;
+   public static final int VIEW_HIDDEN = 0;
+   public static final int VIEW_SUMMARY = 1;
+   public static final int VIEW_FULL = 2;
+   public static final int VIEW_SCREEN = 3;
 
    public void setEnabled(boolean enable) {
       this._enabled = enable;

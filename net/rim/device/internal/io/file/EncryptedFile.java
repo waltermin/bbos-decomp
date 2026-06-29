@@ -22,8 +22,8 @@ public final class EncryptedFile {
    private int _headerLength;
    private FileInfo _fileInfo = new FileInfo();
    private boolean _drmForwardLocked;
-   public static final int BLOCK_LENGTH;
-   private static final int SIGNATURE_LENGTH;
+   public static final int BLOCK_LENGTH = 16;
+   private static final int SIGNATURE_LENGTH = 15;
 
    private EncryptedFile() {
    }

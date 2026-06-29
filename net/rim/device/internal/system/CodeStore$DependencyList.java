@@ -12,7 +12,7 @@ class CodeStore$DependencyList {
    private IntHashtable _dependencyLists;
    private IntHashtable _moduleHandleToDependencyHandles;
    private int[] _queue;
-   private static final int IS_DEPENDENCY;
+   private static final int IS_DEPENDENCY = 1;
 
    CodeStore$DependencyList() {
       this.reset();

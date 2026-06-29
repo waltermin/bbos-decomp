@@ -11,10 +11,10 @@ import net.rim.device.apps.internal.mms.ui.MMSPresentationField;
 
 final class DraftPresentationModel implements MMSPresentationModel, FieldProvider {
    Vector _content = (Vector)(new Object());
-   static final int ATTACHMENT_NAME;
-   static final int ATTACHMENT_TYPE;
-   static final int IS_EDITABLE;
-   static final int SLIDE_BREAK;
+   static final int ATTACHMENT_NAME = 1;
+   static final int ATTACHMENT_TYPE = 2;
+   static final int IS_EDITABLE = 3;
+   static final int SLIDE_BREAK = 4;
 
    DraftPresentationModel() {
    }

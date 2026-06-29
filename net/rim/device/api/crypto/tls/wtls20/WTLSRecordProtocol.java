@@ -55,27 +55,27 @@ final class WTLSRecordProtocol extends RecordProtocol {
    private int _hostIP;
    private int _hostPort;
    private byte[] _openwaveSignatureData;
-   private static final int MAX_PACKET_SIZE;
-   private static final int MAX_WTLS_DATAGRAM;
-   private static final int _timeout;
-   private static final long EVENT_LOGGER_GUID;
-   private static final int EVENT_LOG_UPDATE_KEY;
-   private static final int EVENT_LOG_SEQUENCE_TOO_LARGE;
-   private static final int EVENT_LOG_NO_SEQUENCE_NO;
-   private static final int EVENT_LOG_MAC_TOO_SHORT;
-   private static final int EVENT_LOG_NO_CIPHER;
-   private static final int EVENT_LOG_BAD_MAC;
-   private static final int EVENT_LOG_CRYPTO_EXCEPTION;
-   private static final boolean DEBUG;
+   private static final int MAX_PACKET_SIZE = 1400;
+   private static final int MAX_WTLS_DATAGRAM = 1492;
+   private static final int _timeout = 5000;
+   private static final long EVENT_LOGGER_GUID = -6885353762573497192L;
+   private static final int EVENT_LOG_UPDATE_KEY = 1465021803;
+   private static final int EVENT_LOG_SEQUENCE_TOO_LARGE = 1467184236;
+   private static final int EVENT_LOG_NO_SEQUENCE_NO = 1466856302;
+   private static final int EVENT_LOG_MAC_TOO_SHORT = 1466791027;
+   private static final int EVENT_LOG_NO_CIPHER = 1465020003;
+   private static final int EVENT_LOG_BAD_MAC = 1465016941;
+   private static final int EVENT_LOG_CRYPTO_EXCEPTION = 1465017189;
+   private static final boolean DEBUG = false;
    private static final byte[] CLIENT_EXPANSION = new byte[]{99, 108, 105, 101, 110, 116, 32, 101, 120, 112, 97, 110, 115, 105, 111, 110};
    private static final byte[] SERVER_EXPANSION = new byte[]{115, 101, 114, 118, 101, 114, 32, 101, 120, 112, 97, 110, 115, 105, 111, 110};
    private static final byte[] CLIENT_WRITE_KEY = new byte[]{99, 108, 105, 101, 110, 116, 32, 119, 114, 105, 116, 101, 32, 107, 101, 121};
    private static final byte[] CLIENT_WRITE_IV = new byte[]{99, 108, 105, 101, 110, 116, 32, 119, 114, 105, 116, 101, 32, 73, 86};
    private static final byte[] SERVER_WRITE_KEY = new byte[]{115, 101, 114, 118, 101, 114, 32, 119, 114, 105, 116, 101, 32, 107, 101, 121};
    private static final byte[] SERVER_WRITE_IV = new byte[]{115, 101, 114, 118, 101, 114, 32, 119, 114, 105, 116, 101, 32, 73, 86};
-   protected static final int LOCAL_VERSION;
-   private static final int WINDOW_SIZE;
-   private static final int HEADER_SIZE;
+   protected static final int LOCAL_VERSION = 1;
+   private static final int WINDOW_SIZE = 32;
+   private static final int HEADER_SIZE = 5;
 
    public WTLSRecordProtocol(
       WTLSDataTransport subConnection, String apn, String name, int flags, int clientIdType, String clientIdValue, int ipAddress, int port

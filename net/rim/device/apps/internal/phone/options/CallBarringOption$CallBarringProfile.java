@@ -7,7 +7,7 @@ final class CallBarringOption$CallBarringProfile extends AbstractSSOptionProfile
    private boolean _incoming;
    int _statusFlags;
    private final CallBarringOption this$0;
-   private static final int SS_REQUEST_TIMEOUT;
+   private static final int SS_REQUEST_TIMEOUT = 5;
 
    public CallBarringOption$CallBarringProfile(CallBarringOption _1, String name, int type, int statusFlags, boolean incoming) {
       super(name);

@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements Persistable {
    private static SoftwareSkipjackCryptoToken _instance = new SoftwareSkipjackCryptoToken();
-   private static final long ID_TEST_SKIPJACK;
+   private static final long ID_TEST_SKIPJACK = -3707306364575989291L;
 
    static final SoftwareSkipjackCryptoToken getInstance() {
       return _instance;

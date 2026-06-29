@@ -7,10 +7,10 @@ import net.rim.device.api.io.Base64OutputStream;
 import net.rim.device.api.util.Arrays;
 
 public final class IdEncryptor {
-   private static final int VERSION;
-   private static final int BLOCK_LEN;
-   private static final int MODULUS_BIT_LENGTH;
-   private static final int MODULUS_LENGTH;
+   private static final int VERSION = 1;
+   private static final int BLOCK_LEN = 100;
+   private static final int MODULUS_BIT_LENGTH = 1024;
+   private static final int MODULUS_LENGTH = 128;
    private static final byte[] RSA_E = new byte[]{1, 0, 1};
    private static final byte[] RSA_N_0 = new byte[]{
       -95,

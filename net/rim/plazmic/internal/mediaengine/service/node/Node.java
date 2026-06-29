@@ -3,7 +3,7 @@ package net.rim.plazmic.internal.mediaengine.service.node;
 import net.rim.plazmic.internal.mediaengine.service.ModelInteractor;
 
 public interface Node {
-   int NO_HANDLE;
+   int NO_HANDLE = -1;
 
    String getId();
 

@@ -62,19 +62,19 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
    private int _delayingEchoId = -1;
    StringBuffer _bufferedString = (StringBuffer)(new Object());
    private Runnable _delayEchoToneRunnable = new PhoneNumberInput$2(this);
-   private static final int MAX_INPUT;
+   private static final int MAX_INPUT = 80;
    private static final int INPUT_SCREEN_WIDTH = Display.getWidth();
-   private static final int IMAGE_PADDING;
-   private static final char REPLACEMENT;
+   private static final int IMAGE_PADDING = 4;
+   private static final char REPLACEMENT = '�';
    private static boolean _isReducedKeyboard = PhoneUtilities.isQwertyReducedKeyboard();
    private static IconCollection _returnKeyIconCollection;
-   static final int AMBIGUOUS_MODE;
-   static final int NUMBER_MODE;
-   static final int ADDRESS_MODE;
-   private static final int INVALID_STATE;
+   static final int AMBIGUOUS_MODE = 0;
+   static final int NUMBER_MODE = 1;
+   static final int ADDRESS_MODE = 2;
+   private static final int INVALID_STATE = -1;
    private static final int MIN_FONT_HEIGHT = Math.max(20, getReturnKeyImage(0).getHeight(25, 25));
    static FontFamily _phoneScreenFontFamily;
-   private static final int HANDLED;
+   private static final int HANDLED = -1;
    private static VerbRepository _rawPhoneNumberRepository = VerbRepository.getVerbRepository(-5389783330697330291L);
    private static ContextObjectWR _rawPhoneNumberInputContextWR = (ContextObjectWR)(new Object());
 

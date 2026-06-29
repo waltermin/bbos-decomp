@@ -8,15 +8,15 @@ import net.rim.device.internal.vad.VADParameters;
 
 final class VADEngineManager$VADSyncItem extends OTASyncCapableSyncItem {
    private final VADEngineManager this$0;
-   private static final int TYPE_FLAGS;
-   private static final int TYPE_CONFIRMATION;
-   private static final int TYPE_SENSITIVITY;
-   private static final int TYPE_TTS_SPEED;
-   private static final int TYPE_TTS_VOLUME;
-   private static final int TYPE_LANGUAGE;
-   private static final int FLAG_PLAY_PROMPTS;
-   private static final int FLAG_PLAY_DIGITS;
-   private static final int FLAG_PLAY_NAMES;
+   private static final int TYPE_FLAGS = 0;
+   private static final int TYPE_CONFIRMATION = 1;
+   private static final int TYPE_SENSITIVITY = 2;
+   private static final int TYPE_TTS_SPEED = 4;
+   private static final int TYPE_TTS_VOLUME = 5;
+   private static final int TYPE_LANGUAGE = 6;
+   private static final int FLAG_PLAY_PROMPTS = 1;
+   private static final int FLAG_PLAY_DIGITS = 2;
+   private static final int FLAG_PLAY_NAMES = 4;
 
    VADEngineManager$VADSyncItem(VADEngineManager _1) {
       this.this$0 = _1;

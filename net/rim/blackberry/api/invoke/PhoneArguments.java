@@ -1,10 +1,10 @@
 package net.rim.blackberry.api.invoke;
 
 public final class PhoneArguments extends ApplicationArguments {
-   public static final String ARG_CALL;
-   public static final String VOICEMAIL;
-   private static final String ARG_NUMBER;
-   private static final String ARG_SMART_DIAL;
+   public static final String ARG_CALL = "call";
+   public static final String VOICEMAIL = "voicemail";
+   private static final String ARG_NUMBER = "number=";
+   private static final String ARG_SMART_DIAL = "smartdial";
 
    public PhoneArguments() {
    }

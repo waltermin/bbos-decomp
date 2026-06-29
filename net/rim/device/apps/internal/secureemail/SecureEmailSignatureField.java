@@ -53,10 +53,10 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
    private boolean _threadWaiting;
    private Object _threadWaitingLock;
    protected int[] _overallStatusArray = new int[3];
-   protected static final long TIME_DIFFERENCE_THRESHOLD;
-   protected static final int OVERALL_SIGNATURE_STATUS_BAD;
-   protected static final int OVERALL_SIGNATURE_STATUS_CAUTION;
-   protected static final int OVERALL_SIGNATURE_STATUS_GOOD;
+   protected static final long TIME_DIFFERENCE_THRESHOLD = 1800000L;
+   protected static final int OVERALL_SIGNATURE_STATUS_BAD = 0;
+   protected static final int OVERALL_SIGNATURE_STATUS_CAUTION = 1;
+   protected static final int OVERALL_SIGNATURE_STATUS_GOOD = 2;
 
    protected void initialize() {
       String signatureStatusDetails = null;

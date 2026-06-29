@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.lbs.LBSOptions;
 
 public final class LBSStringPattern extends StringPattern {
    StringSetSearch _search = new StringSetSearch();
-   private static final long LBS_HYPERLINK_FACTORY;
+   private static final long LBS_HYPERLINK_FACTORY = -4732549676614397488L;
    static LBSOptions _options = LBSOptions.getInstance();
 
    public static final void registerOnStartup() {

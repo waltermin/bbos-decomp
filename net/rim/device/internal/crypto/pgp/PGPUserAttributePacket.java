@@ -8,7 +8,7 @@ import net.rim.device.api.util.Persistable;
 
 public final class PGPUserAttributePacket extends PGPPacket implements Persistable {
    byte[][][] _userImageEncodings = new byte[0][][];
-   private static final byte SUBPACKET_TYPE_IMAGE;
+   private static final byte SUBPACKET_TYPE_IMAGE = 1;
    private static final byte[] VERSION_1_JPEG_HEADER = new byte[]{16, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
    public PGPUserAttributePacket(int tag, byte[] encoding) {

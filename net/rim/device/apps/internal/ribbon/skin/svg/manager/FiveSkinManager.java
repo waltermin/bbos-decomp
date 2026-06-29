@@ -18,8 +18,8 @@ public class FiveSkinManager extends SkinManager {
    private FocusInteractor _focusInteractor;
    private MediaLayout _mediaLayout;
    private CustomFocusOrder _customFocusOrder;
-   private static final String FIVE_MARKER;
-   private static final String FIVE_PREFIX;
+   private static final String FIVE_MARKER = "TMO_Five_Theme";
+   private static final String FIVE_PREFIX = "five_";
    private static final String[] FIVE_HOTSPOTS = new String[]{"five_hs1", "five_hs2", "five_hs3", "five_hs4", "five_hs5"};
    private static final String[] FIVE_ENTRIES = new String[]{
       "net_rim_tmo_five1", "net_rim_tmo_five3", "net_rim_tmo_five5", "net_rim_tmo_five4", "net_rim_tmo_five2"

@@ -20,10 +20,10 @@ import net.rim.plazmic.mediaengine.MediaPlayer;
 
 final class ContentPreviewPMEBrowserField extends PMEBrowserField implements PlaybackCommandHandler {
    private Timer _timer;
-   public static final String rcsid;
-   private static final String CONTROL_PANEL_SERVER_HOST;
-   private static final boolean DEBUG;
-   private static final long TIMER_INTERVAL;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/apps/ContentPreviewPMEBrowserField.java#2 $";
+   private static final String CONTROL_PANEL_SERVER_HOST = "127.0.0.1";
+   private static final boolean DEBUG = false;
+   private static final long TIMER_INTERVAL = 100L;
    private static TimeSourceImpl _timeSource = new TimeSourceImpl();
    private static Dispatcher _dispatcherClient;
    private static PlaybackCommandServer _playbackCommandServer;

@@ -3,7 +3,7 @@ package net.rim.wica.transport.handshake;
 public class HandshakeMessageBuffer {
    private int _cursor;
    private byte[] _buffer;
-   private static final int FIELD_SIZE_LIMIT;
+   private static final int FIELD_SIZE_LIMIT = 131072;
 
    public HandshakeMessageBuffer(int length) {
       if (length < 0) {

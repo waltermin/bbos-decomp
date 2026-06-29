@@ -30,14 +30,14 @@ public final class TLSOptionStore implements Persistable {
    private boolean _useSSL;
    private boolean _doRedirection;
    private Vector _trustedHosts = (Vector)(new Object());
-   private static final long ID;
-   private static final long SYNC_ID;
-   public static final int PROXY_TLS;
-   public static final int DEVICE_TLS;
-   private static final int MIN_STRONG_RSA_KEY_LENGTH_DEFAULT;
-   private static final int MIN_STRONG_DH_KEY_LENGTH_DEFAULT;
-   private static final int MIN_STRONG_ECC_KEY_LENGTH_DEFAULT;
-   private static final int MIN_STRONG_DSA_KEY_LENGTH_DEFAULT;
+   private static final long ID = -8454003508201959L;
+   private static final long SYNC_ID = -7331796252605079226L;
+   public static final int PROXY_TLS = 1;
+   public static final int DEVICE_TLS = 2;
+   private static final int MIN_STRONG_RSA_KEY_LENGTH_DEFAULT = 1000;
+   private static final int MIN_STRONG_DH_KEY_LENGTH_DEFAULT = 1024;
+   private static final int MIN_STRONG_ECC_KEY_LENGTH_DEFAULT = 163;
+   private static final int MIN_STRONG_DSA_KEY_LENGTH_DEFAULT = 1024;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(-8454003508201959L);
 
    private TLSOptionStore() {

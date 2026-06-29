@@ -25,8 +25,8 @@ public final class QmThemedDialogFieldManager extends Manager {
    private Manager _bottomManager;
    private QmThemedDialogFieldManager$FocusNullField _focusNullField;
    private static final Tag TAG_ICON = Tag.create("dialog-icon");
-   private static final int PADDING;
-   private static final int FRACTION_RESERVED_FOR_BUTTONS;
+   private static final int PADDING = 4;
+   private static final int FRACTION_RESERVED_FOR_BUTTONS = 3;
 
    public QmThemedDialogFieldManager() {
       this(0);

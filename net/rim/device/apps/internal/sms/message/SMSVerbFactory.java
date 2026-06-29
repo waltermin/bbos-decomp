@@ -17,11 +17,11 @@ public class SMSVerbFactory implements GlobalEventListener {
    private Verb _useOnceButtonVerb;
    private Verb _smsForwardVerb;
    private boolean _registerSMS;
-   public static final long SMS_COMPOSE_VERB;
-   public static final long SMS_FORWARD_VERB;
-   public static final long USE_ONCE_VERB;
-   public static final long USE_ONCE_BUTTON_VERB;
-   private static final long REGISTER_SMS;
+   public static final long SMS_COMPOSE_VERB = 6790437200588381895L;
+   public static final long SMS_FORWARD_VERB = 3717785362621998069L;
+   public static final long USE_ONCE_VERB = -3014132759451700551L;
+   public static final long USE_ONCE_BUTTON_VERB = 6105870237412407148L;
+   private static final long REGISTER_SMS = 8570221746716860371L;
 
    public SMSVerbFactory() {
       this.registerVerb();

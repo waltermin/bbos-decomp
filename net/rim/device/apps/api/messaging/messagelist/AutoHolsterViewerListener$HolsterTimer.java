@@ -7,7 +7,7 @@ import java.util.TimerTask;
 final class AutoHolsterViewerListener$HolsterTimer {
    private Timer _timer;
    private final AutoHolsterViewerListener this$0;
-   public static final long SAFETY_OFFSET;
+   public static final long SAFETY_OFFSET = 1000L;
 
    private AutoHolsterViewerListener$HolsterTimer(AutoHolsterViewerListener _1) {
       this.this$0 = _1;

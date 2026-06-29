@@ -4,9 +4,9 @@ import net.rim.ecmascript.util.Resources;
 
 class NodeAssignment extends NodeBinary {
    private String _notLValue = Resources.getString(15);
-   protected static final int LHS_NAME;
-   protected static final int LHS_DOT;
-   protected static final int LHS_INDEX;
+   protected static final int LHS_NAME = 0;
+   protected static final int LHS_DOT = 1;
+   protected static final int LHS_INDEX = 2;
 
    NodeAssignment(Node lhs, Node rhs) {
       super(lhs, rhs);

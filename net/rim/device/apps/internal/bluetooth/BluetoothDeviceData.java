@@ -18,21 +18,21 @@ final class BluetoothDeviceData implements Persistable {
    int _linkKeyType;
    int _nrecMode;
    boolean _sniffModeEnabled = true;
-   private static final int TYPE_ADDRESS;
-   private static final int TYPE_NAME;
-   private static final int TYPE_FRIENDLY_NAME;
-   private static final int TYPE_DEVICE_CLASS;
-   private static final int TYPE_NEXT_UUID;
-   private static final int TYPE_SUPPORTED_PROFILES;
-   private static final int TYPE_FLAGS;
-   private static final int TYPE_SERVICE_RECORD;
-   private static final int TYPE_LINK_KEY;
-   private static final int TYPE_LINK_KEY_TYPE;
-   private static final int TYPE_AUTHORIZED;
-   private static final int TYPE_NREC_MODE;
-   private static final int FLAG_AUTHORIZED;
-   private static final int FLAG_ENCRYPT;
-   private static final int FLAG_SNIFF_MODE_ENABLED;
+   private static final int TYPE_ADDRESS = 0;
+   private static final int TYPE_NAME = 1;
+   private static final int TYPE_FRIENDLY_NAME = 2;
+   private static final int TYPE_DEVICE_CLASS = 3;
+   private static final int TYPE_NEXT_UUID = 4;
+   private static final int TYPE_SUPPORTED_PROFILES = 5;
+   private static final int TYPE_FLAGS = 6;
+   private static final int TYPE_SERVICE_RECORD = 7;
+   private static final int TYPE_LINK_KEY = 8;
+   private static final int TYPE_LINK_KEY_TYPE = 9;
+   private static final int TYPE_AUTHORIZED = 10;
+   private static final int TYPE_NREC_MODE = 11;
+   private static final int FLAG_AUTHORIZED = 1;
+   private static final int FLAG_ENCRYPT = 2;
+   private static final int FLAG_SNIFF_MODE_ENABLED = 4;
 
    BluetoothDeviceData() {
       this._serviceRecords = new RemoteServiceRecord[0];

@@ -9,9 +9,9 @@ import net.rim.device.apps.api.options.OptionsBase;
 public final class PasswordKeeperOptions extends OptionsBase {
    private PasswordKeeperOptions$PersistedPasswordKeeperOptions _persistedPasswordKeeperOptions = (PasswordKeeperOptions$PersistedPasswordKeeperOptions)this.getPersistentObject()
       .getContents();
-   private static final long PASSWORD_KEEPER_OPTIONS;
-   private static final long PASSWORD_KEEPER_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_PASSWORD_KEEPER_OPTIONS;
+   private static final long PASSWORD_KEEPER_OPTIONS = 7004071661761945143L;
+   private static final long PASSWORD_KEEPER_OPTIONS_SYNC_ITEM = -6828216187231796412L;
+   private static final long PERSISTED_PASSWORD_KEEPER_OPTIONS = 5195381784668223364L;
 
    private PasswordKeeperOptions() {
    }

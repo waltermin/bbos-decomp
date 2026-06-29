@@ -24,7 +24,7 @@ public class VolumeControlDialog extends PopupDialog {
    private int _volume = 0;
    private static Object _lock = new Object();
    private static VolumeControlDialog _vcd;
-   private static final int TIMEOUT;
+   private static final int TIMEOUT = 2500;
    private static Tag TAG = Tag.create("volume-dialog");
    private static Tag TAG_TEXT = Tag.create("volume-text");
 

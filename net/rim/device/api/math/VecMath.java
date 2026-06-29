@@ -1,7 +1,7 @@
 package net.rim.device.api.math;
 
 public final class VecMath {
-   private static final int ONE;
+   private static final int ONE = 65536;
    public static final int[] IDENTITY_3X3 = new int[]{
       65536,
       0,

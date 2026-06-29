@@ -10,7 +10,7 @@ final class ManagementServiceImpl$InCoverageTimer implements EventListener {
    private long _timeCreated;
    private long _timeLeft;
    private final ManagementServiceImpl this$0;
-   private static final long WAIT_FOR_POLICIES_DELAY;
+   private static final long WAIT_FOR_POLICIES_DELAY = 600000L;
 
    public ManagementServiceImpl$InCoverageTimer(ManagementServiceImpl this$0) {
       this(this$0, 600000);

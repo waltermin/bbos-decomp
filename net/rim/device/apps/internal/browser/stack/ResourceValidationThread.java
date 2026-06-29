@@ -18,7 +18,7 @@ public final class ResourceValidationThread extends Thread {
    private boolean _running = true;
    private boolean _terminated;
    private long _expiryCheckTime;
-   private static final long FAILURE_DATES_KEY;
+   private static final long FAILURE_DATES_KEY = 7352072977602323789L;
 
    public ResourceValidationThread(BrowserConfigRecord config, RawDataCache cache, long expiryCheckTime) {
       this._cache = cache;

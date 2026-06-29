@@ -12,9 +12,9 @@ public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudo
    byte[] _salt;
    Digest _digest;
    int _digestLength;
-   private static final int DEFAULT_SALT_LENGTH;
-   private static final int EXPBIAS;
-   private static final int CONCATENATED_HASH_LENGTH;
+   private static final int DEFAULT_SALT_LENGTH = 8;
+   private static final int EXPBIAS = 6;
+   private static final int CONCATENATED_HASH_LENGTH = 1024;
 
    public final byte getCodedCount() {
       return this._codedCount;

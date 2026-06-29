@@ -15,8 +15,8 @@ import net.rim.vm.WeakReference;
 
 public final class RibbonUpdater {
    private LongHashtable _unreadCounts = (LongHashtable)(new Object(2));
-   private static final long INSTANCE_GUID;
-   private static final String MESSAGING_MODULE_NAME;
+   private static final long INSTANCE_GUID = 483921869676550299L;
+   private static final String MESSAGING_MODULE_NAME = "net_rim_bb_messaging_app";
    private static RibbonUpdater _instance;
    private static WeakReference _stringBufferWR = (WeakReference)(new Object(null));
    private static final MessageListOptions _messageListOptions;

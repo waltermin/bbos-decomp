@@ -12,8 +12,8 @@ public final class TickerField extends LabelField implements Runnable {
    private boolean _isPopupDismissed;
    private int _tickerStyle;
    private Object _callback;
-   private static final long DEFAULT_LABEL_STYLE;
-   private static final int DEFAULT_TICKER_DRAW_STYLE;
+   private static final long DEFAULT_LABEL_STYLE = 51539607616L;
+   private static final int DEFAULT_TICKER_DRAW_STYLE = 6;
 
    public TickerField(Object ticker) {
       this(ticker, 6);

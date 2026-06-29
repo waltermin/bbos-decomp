@@ -34,11 +34,11 @@ final class ScreenKeyboardController implements FieldChangeListener {
    private MainScreen _mainScreen;
    private boolean _isJapanese;
    private boolean _isFontSizeChanged = false;
-   private static final boolean SUB_PIXEL_RENDERING_DISABLED;
-   private static final byte STYLE_UPDATED;
-   private static final byte SIZE_UPDATED;
-   private static final byte FAMILY_UPDATED;
-   private static final byte ANTIALIAS_UPDATED;
+   private static final boolean SUB_PIXEL_RENDERING_DISABLED = true;
+   private static final byte STYLE_UPDATED = 0;
+   private static final byte SIZE_UPDATED = 1;
+   private static final byte FAMILY_UPDATED = 2;
+   private static final byte ANTIALIAS_UPDATED = 3;
    private static final int[] FONT_STYLES = new int[]{0, 1, 64, 3, 2, -804651006, 1, 2, -804651005, 1, 4, 3, -804650999, 6, 7, 8, 9, 10, 11, 12};
    private static final int[] FONT_SIZES = Display.getVerticalResolution() > 5000
       ? new int[]{
@@ -114,9 +114,9 @@ final class ScreenKeyboardController implements FieldChangeListener {
          -804519925
       };
    private static final int[] ANTIALIAS_VALUES = new int[]{1, 4, 3, -804650999, 6, 7, 8, 9, 10, 11, 12, 13};
-   private static final int JA_SMALL_FONT_SIZE;
-   private static final int JA_MIN_FONT_SIZE;
-   private static final int JA_MAX_FONT_SIZE;
+   private static final int JA_SMALL_FONT_SIZE = 8;
+   private static final int JA_MIN_FONT_SIZE = 10;
+   private static final int JA_MAX_FONT_SIZE = 13;
 
    public ScreenKeyboardController() {
       this(false);

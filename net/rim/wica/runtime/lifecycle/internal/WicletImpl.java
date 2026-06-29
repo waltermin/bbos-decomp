@@ -49,9 +49,9 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
    private Object _lock = new Object();
    private Hashtable _properties;
    private static final Integer DEFAULT_HOME_SCREEN_POSITION = (Integer)(new Object(60));
-   private static final String BUNDLE_NAME;
+   private static final String BUNDLE_NAME = "net.rim.mds.runtime.ribbon";
    private static final Bitmap DEFAULT_ICON_RESOURCE = RuntimeResources.getBitmapResource("default_icon.png");
-   private static final long BUNDLE_ID;
+   private static final long BUNDLE_ID = 8037818566004125802L;
    static Class class$net$rim$wica$runtime$event$EventService;
    static Class class$net$rim$wica$runtime$persistence$PersistenceService;
    static Class class$net$rim$wica$runtime$management$ManagementService;

@@ -5,7 +5,7 @@ import net.rim.device.api.system.Application;
 final class TestTrackball extends TestTaskBase {
    TestTrackballScreen taskScreen = new TestTrackballScreen();
    private boolean isDialogOn;
-   static final int MAX_ROW_NUMBER;
+   static final int MAX_ROW_NUMBER = 5;
 
    TestTrackball() {
       super.app.pushScreen(this.taskScreen);

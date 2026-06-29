@@ -12,11 +12,11 @@ public class WizardTitleBar extends VerticalFieldManager {
    private LabelField _label;
    private StringBuffer _buffer;
    private int _progressMode;
-   public static final int PROGRESS_INCREMENTAL;
-   public static final int PROGRESS_PERCENTAGE;
-   public static final int PROGRESS_NONE;
-   private static final int TITLEBAR_FONT_SIZE_PT;
-   private static final int TITLEBAR_ALT_FONT_SIZE_PT;
+   public static final int PROGRESS_INCREMENTAL = 0;
+   public static final int PROGRESS_PERCENTAGE = 1;
+   public static final int PROGRESS_NONE = 2;
+   private static final int TITLEBAR_FONT_SIZE_PT = 7;
+   private static final int TITLEBAR_ALT_FONT_SIZE_PT = 8;
 
    public WizardTitleBar(String label) {
       this._label = (LabelField)(new Object(label, 64));

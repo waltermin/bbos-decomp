@@ -10,8 +10,8 @@ import net.rim.device.api.browser.plugin.BrowserContentProviderRegistry;
 import net.rim.device.api.browser.plugin.BrowserPageContext;
 
 public final class ContentConverter extends BrowserContentProvider implements BrowserPageContext {
-   public static final String TLE_CONTENT_TYPE;
-   public static final String XML_CONTENT_TYPE;
+   public static final String TLE_CONTENT_TYPE = "application/vnd.rim.location";
+   public static final String XML_CONTENT_TYPE = "text/vnd.rim.location";
    private static final String[] ACCEPT = new String[]{"application/vnd.rim.location", "text/vnd.rim.location"};
    private static final LBSOptions _options = LBSOptions.getInstance();
 

@@ -21,11 +21,11 @@ public class MediaPlayer {
    private MediaListener _eventFilter;
    private int _state = 0;
    private Object _lock;
-   public static final int UNREALIZED;
-   public static final int REALIZED;
-   public static final int STARTED;
-   private static final String UICOMPONENT_ID;
-   public static final String ID;
+   public static final int UNREALIZED = 0;
+   public static final int REALIZED = 1;
+   public static final int STARTED = 2;
+   private static final String UICOMPONENT_ID = "UIComponent";
+   public static final String ID = "MediaPlayer";
 
    public MediaPlayer() {
       this._listeners = new SafeArray();

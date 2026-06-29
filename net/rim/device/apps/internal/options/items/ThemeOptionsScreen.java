@@ -34,7 +34,7 @@ final class ThemeOptionsScreen extends AppsMainScreen implements ListFieldCallba
    private boolean _showNone;
    private ThemeOptionsScreen$ThemePreviewField _previewField;
    private Hashtable _thumbnailCache;
-   private static final double THUMBNAIL_SCALE;
+   private static final double THUMBNAIL_SCALE = 0.4;
    private static int _thumbnailWidth = (int)(Display.getWidth() * 4600877379321698714L);
    private static int _thumbnailHeight = (int)(Display.getHeight() * 4600877379321698714L);
 

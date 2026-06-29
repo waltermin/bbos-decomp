@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.Image;
 
 public class PhoneResources {
    private static ResourceBundleFamily _resources = ResourceBundle.getBundle(2699923441625099942L, "net.rim.device.apps.internal.resource.Phone");
-   private static final int NUM_PHONE_CALL_TYPES;
+   private static final int NUM_PHONE_CALL_TYPES = 8;
    private static final int[] CALL_TYPE_RES_IDS = new int[]{
       120,
       121,
@@ -45,30 +45,30 @@ public class PhoneResources {
       -1646626816,
       1398040403
    };
-   public static final int ICON_CALL_LOG_INCOMING;
-   public static final int ICON_CALL_LOG_OUTGOING;
-   public static final int ICON_MISSED_CALL_UNOPENED;
-   public static final int ICON_MISSED_CALL_OPENED;
-   public static final int ICON_CONFERENCE_CALL_LOG;
-   public static final int ICON_ALERT_UNHANDLED;
-   public static final int ICON_ALERT_HANDLED;
-   public static final int ICON_CALL_LOG_DC;
-   public static final int ICON_DTMF_PAUSE;
-   public static final int ICON_DTMF_WAIT;
-   public static final int ICON_PADLOCK;
-   public static final int ICON_CALL_ACTIVE;
-   public static final int ICON_CALL_MUTED;
-   public static final int ICON_CALL_FORWARDING;
-   public static final int ICON_CALL_NOTES;
-   public static final int ICON_SEND_KEY;
-   public static final int ICON_END_KEY;
-   public static final int ICON_COUNT;
-   public static final String BITMAP_ANSWERIGNORE240;
-   public static final String BITMAP_ANSWERIGNORE320;
-   public static final String BITMAP_ANSWERICON;
-   public static final String BITMAP_ANSWERBTICON;
-   public static final String BITMAP_IGNOREICON;
-   public static final String BITMAP_MOREICON;
+   public static final int ICON_CALL_LOG_INCOMING = 0;
+   public static final int ICON_CALL_LOG_OUTGOING = 1;
+   public static final int ICON_MISSED_CALL_UNOPENED = 2;
+   public static final int ICON_MISSED_CALL_OPENED = 3;
+   public static final int ICON_CONFERENCE_CALL_LOG = 4;
+   public static final int ICON_ALERT_UNHANDLED = 5;
+   public static final int ICON_ALERT_HANDLED = 6;
+   public static final int ICON_CALL_LOG_DC = 7;
+   public static final int ICON_DTMF_PAUSE = 8;
+   public static final int ICON_DTMF_WAIT = 9;
+   public static final int ICON_PADLOCK = 10;
+   public static final int ICON_CALL_ACTIVE = 11;
+   public static final int ICON_CALL_MUTED = 12;
+   public static final int ICON_CALL_FORWARDING = 13;
+   public static final int ICON_CALL_NOTES = 14;
+   public static final int ICON_SEND_KEY = 15;
+   public static final int ICON_END_KEY = 16;
+   public static final int ICON_COUNT = 17;
+   public static final String BITMAP_ANSWERIGNORE240 = "AnswerIgnoreBanner240.png";
+   public static final String BITMAP_ANSWERIGNORE320 = "AnswerIgnoreBanner320.png";
+   public static final String BITMAP_ANSWERICON = "net_rim_Phone-Send.png";
+   public static final String BITMAP_ANSWERBTICON = "net_rim_Phone-SendBT.png";
+   public static final String BITMAP_IGNOREICON = "net_rim_Phone-End.png";
+   public static final String BITMAP_MOREICON = "net_rim_Phone-More.png";
    private static IconCollection _icons = IconCollection.get("net_rim_Phone", 17);
 
    public static ResourceBundleFamily getResourceBundle() {

@@ -15,7 +15,7 @@ public final class StpBridge extends GmeRouterConnection implements ServiceRouti
    private int _routingHandle = -1;
    private ServiceRouting _serviceRouting;
    private static String SCHEME = "stp:";
-   private static final int CAPABILITIES;
+   private static final int CAPABILITIES = 2;
 
    protected StpBridge(Transport transport) {
       super(transport, (DatagramConnectionBase)Connector.open(SCHEME));

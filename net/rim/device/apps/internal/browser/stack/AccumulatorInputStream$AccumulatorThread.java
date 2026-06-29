@@ -7,7 +7,7 @@ import net.rim.vm.Array;
 final class AccumulatorInputStream$AccumulatorThread extends Thread {
    private SessionStats _stats;
    private final AccumulatorInputStream this$0;
-   private static final int MAX_DESIRED_ARRAY_CHUNK;
+   private static final int MAX_DESIRED_ARRAY_CHUNK = 262144;
 
    public AccumulatorInputStream$AccumulatorThread(AccumulatorInputStream _1, SessionStats stats) {
       this.this$0 = _1;

@@ -15,10 +15,10 @@ public class RecipientData {
    private RecipientData$CertificateDetails[] _allowedCertificates;
    private RecipientData$CertificateDetails[] _allCertificates;
    private RecipientData$CertificateDetails[] _selectedCertificates;
-   public static final int TYPE_UI_RECIPIENT;
-   public static final int TYPE_ALWAYS_BCC_RECIPIENT;
-   public static final int TYPE_EMS_RECIPIENT;
-   public static final int ADK_RECIPIENT;
+   public static final int TYPE_UI_RECIPIENT = 0;
+   public static final int TYPE_ALWAYS_BCC_RECIPIENT = 1;
+   public static final int TYPE_EMS_RECIPIENT = 2;
+   public static final int ADK_RECIPIENT = 3;
 
    public RecipientData(String name, int type, String[] addresses, EmailHeaderModel emailHeaderModel) {
       this._name = name;

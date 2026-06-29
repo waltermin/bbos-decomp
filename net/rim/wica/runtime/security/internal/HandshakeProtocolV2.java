@@ -52,11 +52,11 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
    private int _retryRegisterCount = 2;
    private long _agId;
    private boolean _usingRecoveryKeys;
-   private static final byte STATE_NOT_NEGOTIATED;
-   private static final byte STATE_HELLO_WAIT;
-   private static final byte STATE_REGISTER_WAIT;
-   private static final byte STATE_NEGOTIATED;
-   private static final int MAX_RETRY_COUNT;
+   private static final byte STATE_NOT_NEGOTIATED = 0;
+   private static final byte STATE_HELLO_WAIT = 1;
+   private static final byte STATE_REGISTER_WAIT = 2;
+   private static final byte STATE_NEGOTIATED = 3;
+   private static final int MAX_RETRY_COUNT = 2;
    static Class class$net$rim$wica$runtime$comm$CommunicationService;
    static Class class$net$rim$wica$runtime$security$SecurityService;
 
@@ -331,7 +331,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 26: iload 3
       // 27: bipush 1
       // 28: isub
-      // 29: anewarray 1632
+      // 29: anewarray 1642
       // 2c: astore 4
       // 2e: bipush 1
       // 2f: istore 5

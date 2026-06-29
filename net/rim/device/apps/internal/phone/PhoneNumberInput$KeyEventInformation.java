@@ -7,7 +7,7 @@ final class PhoneNumberInput$KeyEventInformation {
    private char _keyChar;
    private int _returnState;
    private final PhoneNumberInput this$0;
-   private static final String validAltChars;
+   private static final String validAltChars = "01234567890+*#\uf3fe\uf402";
 
    public PhoneNumberInput$KeyEventInformation(PhoneNumberInput _1) {
       this.this$0 = _1;

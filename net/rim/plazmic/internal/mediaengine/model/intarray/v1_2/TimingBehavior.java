@@ -3,12 +3,12 @@ package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 import net.rim.plazmic.internal.mediaengine.event.Event;
 
 public interface TimingBehavior extends Behavior {
-   int ALWAYS;
-   int WHEN_NOT_ACTIVE;
-   int NEVER;
-   int INDEFINITE;
-   int FREEZE;
-   int REMOVE;
+   int ALWAYS = 0;
+   int WHEN_NOT_ACTIVE = 1;
+   int NEVER = 2;
+   int INDEFINITE = -1;
+   int FREEZE = 0;
+   int REMOVE = 1;
 
    void setStartedTime(int var1);
 

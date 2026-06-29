@@ -14,14 +14,14 @@ public final class PhoneNumberComparator {
    private StringBuffer _dtmfB = (StringBuffer)(new Object());
    private int _nnl = Math.max(7, SmartDialingOptions.getOptions().getNationalPhoneNumberLength());
    private int _comparisonFlags;
-   private static final int A_SUBSET_OF_B;
-   private static final int B_SUBSET_OF_A;
-   private static final int EXTENSION_MATCH;
-   private static final int NNL_MATCH;
-   private static final int NUMBER_MATCH;
-   private static final int EXACT_MATCH;
-   private static final int NO_MATCH;
-   private static final long SCRATCH_KEY;
+   private static final int A_SUBSET_OF_B = 1;
+   private static final int B_SUBSET_OF_A = 2;
+   private static final int EXTENSION_MATCH = 4;
+   private static final int NNL_MATCH = 8;
+   private static final int NUMBER_MATCH = 3;
+   private static final int EXACT_MATCH = 7;
+   private static final int NO_MATCH = 0;
+   private static final long SCRATCH_KEY = -8445063537528043454L;
    private static WeakReference _comparatorWR;
 
    public static final PhoneNumberComparator getScratchComparator() {

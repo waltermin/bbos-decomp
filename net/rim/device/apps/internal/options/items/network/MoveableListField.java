@@ -21,7 +21,7 @@ final class MoveableListField extends ListField implements ListFieldCallback {
    private MoveableListFieldCallback _realCallback;
    Image _imageUpDown = IconCollection.get("net_rim_options_MoveUpDown", 1).getImage(0);
    Tag tagMove = Tag.create("list-move");
-   private static final int SPACER;
+   private static final int SPACER = 2;
 
    public MoveableListField() {
       super.setCallback(this);

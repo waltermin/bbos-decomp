@@ -7,7 +7,7 @@ import net.rim.device.api.util.Arrays;
 public class SecureEmailServerManager {
    private SecureEmailPolicyServer[] _policyServers = new SecureEmailPolicyServer[0];
    private SecureEmailCertificateServer[] _certificateServers = new SecureEmailCertificateServer[0];
-   private static final long ID;
+   private static final long ID = 8438912290859323134L;
    private static SecureEmailServerManager _instance;
 
    public static SecureEmailServerManager getInstance() {

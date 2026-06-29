@@ -78,9 +78,9 @@ public class PhoneNumberModel
    int _type;
    private Object _phoneNumberEncoding;
    private int _hashCode;
-   private static final boolean ALLOW_PHONE_TYPE_CHANGES;
+   private static final boolean ALLOW_PHONE_TYPE_CHANGES = false;
    private static String CTI_PREFIX = "cti:";
-   private static final int MESSAGE_ADDRESS_DATA_SIZE;
+   private static final int MESSAGE_ADDRESS_DATA_SIZE = 8;
    private static WeakReference _convertBufferWR = (WeakReference)(new Object(null));
 
    protected void getTransmittablePhoneNumber(StringBuffer buffer, Object context) {

@@ -57,31 +57,31 @@ public final class AlertEngine extends Thread implements AlertListener, AlertSta
    private int _pendingEventId = -1;
    private int _interruptible = 0;
    private static long ALERT_ENGINE_GUID = -8252744704328301837L;
-   private static final int DEFAULT_BEEP_PAUSE;
+   private static final int DEFAULT_BEEP_PAUSE = 2000;
    private static final int[] _vibrateDurationValues = new int[]{
       1000, 1000, 750, 1866989824, 727916, 2781953, 1093300993, 1929445492, 996951338, 7618954, -1910540799, 1979777154
    };
-   private static final int WAIT_THRESHOLD;
-   private static final int READY_STATE;
-   private static final int NEW_ALARM;
-   private static final int VIBRATE_STATE;
-   private static final int TONE_STATE;
-   private static final int ALERT_COMPLETED;
-   private static final int AUDIO_CHAR;
-   private static final int PLAYER_CHAR;
-   private static final int VIBRATE_CHAR;
-   private static final int SPACE_CHAR;
+   private static final int WAIT_THRESHOLD = 60000;
+   private static final int READY_STATE = 0;
+   private static final int NEW_ALARM = 1;
+   private static final int VIBRATE_STATE = 2;
+   private static final int TONE_STATE = 3;
+   private static final int ALERT_COMPLETED = 99;
+   private static final int AUDIO_CHAR = 65;
+   private static final int PLAYER_CHAR = 80;
+   private static final int VIBRATE_CHAR = 86;
+   private static final int SPACE_CHAR = 32;
    private static final short[] BLACKBERRY_1 = new short[]{2000, 100, 3000, 200, 4000, 200, 5000, 100, 3, -12278, 1000, 0, 1000, 0, 750, 0};
    private static int[] _volumes = AlertConsequence.getVolumeLevels(0);
    private static int _headsetLowVolume = AlertConsequence.getLowVolume(1);
-   private static final int WAIT_FOR_AUDIO;
-   private static final int WAIT_FOR_VIBRATE;
-   private static final int WAIT_FOR_PLAYER;
-   private static final int VOLUME_INCREMENT;
-   private static final int SECONDS_BETWEEN_INCREMENT;
-   private static final int INITIAL_VOLUME;
-   private static final int MAX_VOLUME;
-   private static final int MAX_PREVIEW_DURATION;
+   private static final int WAIT_FOR_AUDIO = 2162688;
+   private static final int WAIT_FOR_VIBRATE = 13824;
+   private static final int WAIT_FOR_PLAYER = 48;
+   private static final int VOLUME_INCREMENT = 15;
+   private static final int SECONDS_BETWEEN_INCREMENT = 3;
+   private static final int INITIAL_VOLUME = 55;
+   private static final int MAX_VOLUME = 100;
+   private static final int MAX_PREVIEW_DURATION = 15;
 
    public final boolean isPlayingForSource(long sourceIdLong) {
       return this._sourceIdLong != -1 && sourceIdLong == this._sourceIdLong;

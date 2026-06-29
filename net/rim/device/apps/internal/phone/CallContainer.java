@@ -28,11 +28,11 @@ final class CallContainer extends Field implements PersistentContentListener {
    private Bitmap _cachedBitmap = null;
    private String _cachedBitmapID = "";
    private static final boolean _charmScreen = PhoneUtilities.isCharm240x260Screen();
-   private static final int MIN_CALL_STATUS_FONT_HEIGHT;
-   private static final int MIN_CONFERENCE_MEMBER_FONT;
-   private static final int CKJ_FUDGE_FACTOR;
-   static final int MAINTAIN_FONT;
-   private static final int BITMAP_PADDING;
+   private static final int MIN_CALL_STATUS_FONT_HEIGHT = 12;
+   private static final int MIN_CONFERENCE_MEMBER_FONT = 12;
+   private static final int CKJ_FUDGE_FACTOR = 2;
+   static final int MAINTAIN_FONT = 2;
+   private static final int BITMAP_PADDING = 4;
    private static int _minCallerIDFontSize;
 
    public CallContainer(Object calls) {

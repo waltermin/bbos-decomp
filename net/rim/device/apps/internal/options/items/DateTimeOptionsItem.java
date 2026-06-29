@@ -59,12 +59,12 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
    private MainScreen _mainScreen;
    private DateField _rawNetworkTimeField;
    private CheckboxField _autoAdjustForDSTField;
-   private static final int NONE;
-   private static final int DATE;
-   private static final int TIME;
-   private static final int OFF;
-   private static final int BLACKBERRY;
-   private static final int NETWORK;
+   private static final int NONE = 0;
+   private static final int DATE = 1;
+   private static final int TIME = 2;
+   private static final int OFF = 0;
+   private static final int BLACKBERRY = 1;
+   private static final int NETWORK = 2;
 
    public DateTimeOptionsItem() {
       super(OptionsResources.getString(500));

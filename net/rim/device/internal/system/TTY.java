@@ -1,10 +1,10 @@
 package net.rim.device.internal.system;
 
 public final class TTY {
-   public static final int MODE_FULL;
-   public static final int MODE_TALK;
-   public static final int MODE_HEAR;
-   public static final int MODE_OFF;
+   public static final int MODE_FULL = 0;
+   public static final int MODE_TALK = 1;
+   public static final int MODE_HEAR = 2;
+   public static final int MODE_OFF = 3;
 
    private TTY() {
    }

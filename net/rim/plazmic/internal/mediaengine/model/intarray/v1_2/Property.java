@@ -1,11 +1,11 @@
 package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 
 public interface Property {
-   int BOOL;
-   int INT;
-   int OBJECT;
-   int OBJECT_ARRAY;
-   int INT_ARRAY;
+   int BOOL = 0;
+   int INT = 1;
+   int OBJECT = 2;
+   int OBJECT_ARRAY = 3;
+   int INT_ARRAY = 4;
 
    int getDataType();
 

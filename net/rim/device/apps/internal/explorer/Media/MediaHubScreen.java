@@ -34,11 +34,11 @@ public final class MediaHubScreen extends AppsMainScreen implements MediaListene
    private TextNode _text;
    private String _focus;
    private ContextInfo _context;
-   private static final String MUSIC;
-   private static final String VIDEO;
-   private static final String RINGTONES;
-   private static final String PICTURES;
-   private static final String VOICENOTES;
+   private static final String MUSIC = "hs1";
+   private static final String VIDEO = "hs2";
+   private static final String RINGTONES = "hs3";
+   private static final String PICTURES = "hs4";
+   private static final String VOICENOTES = "hs5";
 
    public MediaHubScreen(ContextInfo context) {
       super(0);

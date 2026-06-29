@@ -48,7 +48,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
    private Field[] _fieldList;
    boolean _infoVisible;
    private static IntHashtable _hotkeyToRecognizerTable = (IntHashtable)(new Object());
-   static final long IGNORE_MODEL;
+   static final long IGNORE_MODEL = -8746885042893430564L;
    private static final int[] _hotkeyResId = new int[]{
       1500,
       1501,

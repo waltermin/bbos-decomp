@@ -14,24 +14,24 @@ public class FileIndexService {
    private MetaDataFileInfo _info = new MetaDataFileInfo();
    private int _fileMediaTypeFilterMask;
    private int _folderMediaTypeFilterMask;
-   private static final long GUID;
-   protected static final int METADATAFILE_UNAVAILABLE;
-   protected static final int METADATA_DELETED;
-   protected static final int METADATA_ADDED;
-   protected static final int NON_METADATA_FILE_DELETED;
-   protected static final int NON_METADATA_FILE_ADDED;
-   protected static final int FOLDER_DELETED;
-   protected static final int FOLDER_ADDED;
-   protected static final int FLASH;
-   protected static final int SDCARD;
-   private static final int TOTAL_FS_MAP_INDICIES;
-   private static final int MAX_MEDIA_TYPE;
+   private static final long GUID = 4014511989342665574L;
+   protected static final int METADATAFILE_UNAVAILABLE = 0;
+   protected static final int METADATA_DELETED = 1;
+   protected static final int METADATA_ADDED = 2;
+   protected static final int NON_METADATA_FILE_DELETED = 4;
+   protected static final int NON_METADATA_FILE_ADDED = 5;
+   protected static final int FOLDER_DELETED = 6;
+   protected static final int FOLDER_ADDED = 7;
+   protected static final int FLASH = 0;
+   protected static final int SDCARD = 1;
+   private static final int TOTAL_FS_MAP_INDICIES = 2;
+   private static final int MAX_MEDIA_TYPE = 7;
    private static final int[] _MediaTypeMap = new int[8];
    private static final String[][][] _DefaultMediaFolders = new Object[2][][];
    private static final int RINGTONE;
    private static String SDCARD_HOME_STR = "/SDCard/";
    private static String FLASH_HOME_STR = "/store/home/user/";
-   private static final int RINGTONE_SIZE_THRESHOLD;
+   private static final int RINGTONE_SIZE_THRESHOLD = 614400;
 
    private static int initMediaFolderMapping(int mapIndex, int mediaType, String flashFolder, String SDCardFolder) {
       _MediaTypeMap[mediaType] = mapIndex;

@@ -54,8 +54,8 @@ public final class ServerSession extends Session {
    private Configuration _configuration;
    private Vector _syncAgentConnectionList;
    private IntHashtable _listOfFragmentedRecords;
-   private static final int DATAGRAM_RECEIVED;
-   private static final int INVALID_DATAGRAM;
+   private static final int DATAGRAM_RECEIVED = 1;
+   private static final int INVALID_DATAGRAM = 2;
 
    public ServerSession(SessionManager aSessionManager, int aSessionId, int aChangeListId, int aSessionType, CpTicketHolder cpTicketHolder) {
       super(aSessionManager, aSessionId, aChangeListId);

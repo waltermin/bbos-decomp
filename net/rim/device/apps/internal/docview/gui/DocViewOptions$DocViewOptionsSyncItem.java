@@ -6,9 +6,9 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.util.DataBuffer;
 
 final class DocViewOptions$DocViewOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int DATA_LENGTH;
-   private static final int DB_VERSION;
+   private static final int MIN_DATA_LENGTH = 10;
+   private static final int DATA_LENGTH = 29;
+   private static final int DB_VERSION = 0;
 
    private DocViewOptions$DocViewOptionsSyncItem() {
    }

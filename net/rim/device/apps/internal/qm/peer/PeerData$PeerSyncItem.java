@@ -14,17 +14,17 @@ import net.rim.device.api.util.LongEnumeration;
 
 public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private CollectionListener _callback;
-   private static final long PEER_SYNC_ITEM;
-   private static final int TYPE_ENTRY_KEY;
-   private static final int TYPE_PEER_CONTACT_LIST_COLLECTION;
-   private static final int TYPE_USER_NAME_KEY;
-   private static final int TYPE_PASSWORD_KEY;
-   private static final int TYPE_PEER_CONTACT_LIST;
-   private static final int TYPE_PEER_CONTACT_LIST_COLLECTION_KEY;
-   private static final int TYPE_REQUESTS;
-   private static final int TYPE_AUDIT_DATA;
-   private static final int TYPE_CONTACT_ID_KEY;
-   private static final int TYPE_FLAGS_KEY;
+   private static final long PEER_SYNC_ITEM = -2083195621769849627L;
+   private static final int TYPE_ENTRY_KEY = 1;
+   private static final int TYPE_PEER_CONTACT_LIST_COLLECTION = 2;
+   private static final int TYPE_USER_NAME_KEY = 3;
+   private static final int TYPE_PASSWORD_KEY = 4;
+   private static final int TYPE_PEER_CONTACT_LIST = 6;
+   private static final int TYPE_PEER_CONTACT_LIST_COLLECTION_KEY = 7;
+   private static final int TYPE_REQUESTS = 8;
+   private static final int TYPE_AUDIT_DATA = 9;
+   private static final int TYPE_CONTACT_ID_KEY = 10;
+   private static final int TYPE_FLAGS_KEY = 11;
 
    private final void setCallback(CollectionListener callback) {
       throw new RuntimeException("cod2jar: stack: underflow");

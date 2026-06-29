@@ -6,8 +6,8 @@ import net.rim.device.api.ui.UiApplication;
 final class BrickBreaker extends UiApplication implements HolsterListener {
    MenuScreen _menuScreen = new MenuScreen();
    Game _game;
-   public static final String NAME;
-   public static final String VERSION;
+   public static final String NAME = "BrickBreaker";
+   public static final String VERSION = "4.1";
 
    public static final void main(String[] args) {
       BrickBreaker app = new BrickBreaker();

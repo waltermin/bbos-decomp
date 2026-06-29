@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 public final class PLSPlaylist extends Playlist {
    private Hashtable _table;
-   public static final String CONTENT_TYPE;
+   public static final String CONTENT_TYPE = "audio/x-scpls";
 
    private PLSPlaylist() {
    }

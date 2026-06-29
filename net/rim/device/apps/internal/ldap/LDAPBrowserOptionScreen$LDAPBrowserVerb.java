@@ -6,8 +6,8 @@ import net.rim.device.apps.api.framework.verb.Verb;
 class LDAPBrowserOptionScreen$LDAPBrowserVerb extends Verb {
    private int _type;
    private final LDAPBrowserOptionScreen this$0;
-   static final int SAVE;
-   static final int CLOSE;
+   static final int SAVE = 1;
+   static final int CLOSE = 2;
 
    public LDAPBrowserOptionScreen$LDAPBrowserVerb(LDAPBrowserOptionScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

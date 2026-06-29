@@ -28,16 +28,16 @@ public class Menu {
    private int _instance;
    private Menu _parentMenu;
    private static String SEPARATOR_STRING = "-";
-   public static final int CANCELLED;
-   public static final int UNDEFINED;
-   public static final long SORTED;
-   public static final long HORIZONTAL_ROLL_TO_CLOSE;
-   public static final int INSTANCE_DEFAULT;
-   public static final int INSTANCE_CONTEXT;
-   public static final int INSTANCE_CONTEXT_SELECTION;
-   public static final int INSTANCE_FROM_MENU_KEY;
-   public static final int MENU_FULL;
-   public static final int MENU_SHORT;
+   public static final int CANCELLED = -1;
+   public static final int UNDEFINED = -1;
+   public static final long SORTED = 65536L;
+   public static final long HORIZONTAL_ROLL_TO_CLOSE = 262144L;
+   public static final int INSTANCE_DEFAULT = 0;
+   public static final int INSTANCE_CONTEXT = 65536;
+   public static final int INSTANCE_CONTEXT_SELECTION = 65537;
+   public static final int INSTANCE_FROM_MENU_KEY = 1073741824;
+   public static final int MENU_FULL = 1;
+   public static final int MENU_SHORT = 2;
    private static Screen _targetScreen;
 
    public Menu() {

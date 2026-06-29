@@ -8,14 +8,14 @@ import net.rim.device.api.util.DataBuffer;
 
 class RecipientCache$RecipientCacheSyncItem extends OTASyncCapableSyncItem {
    private final RecipientCache this$0;
-   private static final int RECEPIENT_CACHE_DATA_LENGTH;
-   private static final int RECIPIENT;
-   private static final int SERVICE_RECORD_ID;
-   private static final int ENCODING_UID;
-   private static final int FLAGS;
-   private static final int SERVICE_UID_HASH;
-   private static final int SERVICE_USERID;
-   private static final int MESSAGE_CLASSIFICATION;
+   private static final int RECEPIENT_CACHE_DATA_LENGTH = 0;
+   private static final int RECIPIENT = 1;
+   private static final int SERVICE_RECORD_ID = 2;
+   private static final int ENCODING_UID = 3;
+   private static final int FLAGS = 4;
+   private static final int SERVICE_UID_HASH = 5;
+   private static final int SERVICE_USERID = 6;
+   private static final int MESSAGE_CLASSIFICATION = 7;
 
    RecipientCache$RecipientCacheSyncItem(RecipientCache _1) {
       this.this$0 = _1;

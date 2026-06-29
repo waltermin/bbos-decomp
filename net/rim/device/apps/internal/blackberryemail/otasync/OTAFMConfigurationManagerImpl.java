@@ -12,9 +12,9 @@ import net.rim.device.apps.api.transmission.rim.otasync.OTAFMConfigurationManage
 public final class OTAFMConfigurationManagerImpl implements OTAFMConfigurationManager {
    private OTAFMConfigurationData _configurations;
    private SyncWorkerThread _workerThread;
-   static final long COLLECTION_GUID;
-   private static final byte OTAFM_SB_FIELD_TYPE;
-   private static final byte OTAFM_DELETE_ON_DEFAULT_FIELD_TYPE;
+   static final long COLLECTION_GUID = 8822586609645349199L;
+   private static final byte OTAFM_SB_FIELD_TYPE = 80;
+   private static final byte OTAFM_DELETE_ON_DEFAULT_FIELD_TYPE = 82;
 
    private OTAFMConfigurationManagerImpl() {
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(8822586609645349199L);

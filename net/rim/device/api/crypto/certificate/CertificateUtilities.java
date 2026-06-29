@@ -23,11 +23,11 @@ import net.rim.vm.Array;
 
 public final class CertificateUtilities {
    private static final byte[] BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----".getBytes();
-   private static final String END_CERTIFICATE;
+   private static final String END_CERTIFICATE = "-----END CERTIFICATE-----";
    private static final byte[] BEGIN_WTLS_CERTIFICATE = "-----BEGIN WTLS CERTIFICATE-----".getBytes();
-   private static final String END_WTLS_CERTIFICATE;
+   private static final String END_WTLS_CERTIFICATE = "-----END WTLS CERTIFICATE-----";
    private static final byte[] BEGIN_PGP_CERTIFICATE = "-----BEGIN PGP PUBLIC KEY BLOCK-----".getBytes();
-   private static final String END_PGP_CERTIFICATE;
+   private static final String END_PGP_CERTIFICATE = "-----END PGP PUBLIC KEY BLOCK-----";
 
    private CertificateUtilities() {
    }

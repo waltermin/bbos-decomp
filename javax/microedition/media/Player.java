@@ -1,12 +1,12 @@
 package javax.microedition.media;
 
 public interface Player extends Controllable {
-   int UNREALIZED;
-   int REALIZED;
-   int PREFETCHED;
-   int STARTED;
-   int CLOSED;
-   long TIME_UNKNOWN;
+   int UNREALIZED = 100;
+   int REALIZED = 200;
+   int PREFETCHED = 300;
+   int STARTED = 400;
+   int CLOSED = 0;
+   long TIME_UNKNOWN = -1L;
 
    void realize();
 

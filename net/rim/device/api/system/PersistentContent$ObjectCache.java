@@ -9,7 +9,7 @@ final class PersistentContent$ObjectCache implements MemoryCleanerListener {
    private IntHashtable _hashtable = new IntHashtable(131);
    private int[] _hashes = new int[131];
    private int _victim;
-   private static final int SIZE;
+   private static final int SIZE = 131;
 
    PersistentContent$ObjectCache() {
       for (int i = 130; i >= 0; this._hashes[i] = i--) {

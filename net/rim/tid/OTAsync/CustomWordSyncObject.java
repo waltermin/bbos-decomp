@@ -12,10 +12,10 @@ public class CustomWordSyncObject implements SyncObject, Persistable {
    private int _type;
    private int _uid = -1;
    private boolean _needImmediateSynch;
-   public static final int TYPE_DEFAULT;
-   public static final int TYPE_ADDED;
-   public static final int TYPE_REMOVED;
-   public static final int TYPE_UPDATED;
+   public static final int TYPE_DEFAULT = 0;
+   public static final int TYPE_ADDED = 1;
+   public static final int TYPE_REMOVED = 2;
+   public static final int TYPE_UPDATED = 3;
    private static StringBuffer _buffer = (StringBuffer)(new Object());
 
    public boolean needImmediateSynch() {

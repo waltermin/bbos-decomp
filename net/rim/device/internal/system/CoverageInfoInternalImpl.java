@@ -31,8 +31,8 @@ public final class CoverageInfoInternalImpl extends CoverageInfoInternal impleme
    private int _serialBypassCoverage;
    private int _routableServiceRecords;
    private int _totalCoverage;
-   private static final int SR_ALWAYS_ROUTABLE;
-   private static final int COVERAGE_MDS_AND_BIS_B;
+   private static final int SR_ALWAYS_ROUTABLE = 1;
+   private static final int COVERAGE_MDS_AND_BIS_B = 6;
    private static int _lastEmailApnId = -1;
    private static Object _apnIdLock = new Object();
    private static String IPPP = "IPPP";

@@ -20,10 +20,10 @@ final class PeerSession {
    private PeerApplication _application;
    PeerMessageReceipts _messageReceipts;
    private final NotificationDataBlob _notifBlob = new NotificationDataBlob();
-   static final String CID;
-   static final int MAJOR_VERSION;
-   static final int MINOR_VERSION;
-   static final int VERSION;
+   static final String CID = "RIM_IM";
+   static final int MAJOR_VERSION = 16;
+   static final int MINOR_VERSION = 0;
+   static final int VERSION = 16;
    private static final DeleteContactBlob _deleteContactBlob = new DeleteContactBlob();
    private static final PasswordKeyBlob _passwordBlob = new PasswordKeyBlob();
 

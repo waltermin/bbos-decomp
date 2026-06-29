@@ -15,7 +15,7 @@ import net.rim.wica.runtime.metadata.internal.component.DataCollectionImpl;
 public class DeviceInfoCollection extends DataCollectionImpl {
    private long _deviceInfoHandle;
    private EventService _eventService;
-   private static final String DEVICE_INFO_COLLECTION_NAME;
+   private static final String DEVICE_INFO_COLLECTION_NAME = "Device Info Collection";
    static Class class$net$rim$wica$runtime$event$EventService;
 
    public DeviceInfoCollection(WicletEx wiclet) {

@@ -6,11 +6,11 @@ import net.rim.device.apps.api.utility.serialization.ConverterDescriptor;
 import net.rim.device.apps.api.utility.serialization.SerializationManager;
 
 public final class BrowserPushConverterDescriptor implements ConverterDescriptor {
-   static final String PUSH_TYPE_MESSAGE_VALUE;
-   static final String PUSH_TYPE_CHANNEL_VALUE;
-   static final String PUSH_TYPE_CHANNEL_DELETE_VALUE;
-   static final String PUSH_TYPE_CONTENT_VALUE;
-   static final String PUSH_TYPE_STORE_VALUE;
+   static final String PUSH_TYPE_MESSAGE_VALUE = "browser-message";
+   static final String PUSH_TYPE_CHANNEL_VALUE = "browser-channel";
+   static final String PUSH_TYPE_CHANNEL_DELETE_VALUE = "browser-channel-delete";
+   static final String PUSH_TYPE_CONTENT_VALUE = "browser-content";
+   static final String PUSH_TYPE_STORE_VALUE = "store";
 
    public final void register() {
       try {

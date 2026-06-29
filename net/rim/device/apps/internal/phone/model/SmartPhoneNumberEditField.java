@@ -5,7 +5,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.internal.ui.component.PhoneNumberEditField;
 
 public final class SmartPhoneNumberEditField extends PhoneNumberEditField {
-   private static final int MAX_CHARS;
+   private static final int MAX_CHARS = 80;
 
    public SmartPhoneNumberEditField(String label, String initialValue, Object context) {
       super(label, getTrimmedInitialValue(initialValue, 80), 80, getPreferredFilterType(context));

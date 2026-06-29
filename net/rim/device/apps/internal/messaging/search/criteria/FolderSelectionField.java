@@ -32,7 +32,7 @@ public final class FolderSelectionField extends Field {
    private MenuItem _clearFieldItem = new FolderSelectionField$2(
       this, ResourceBundle.getBundle(570792712302434978L, "net.rim.device.apps.internal.resource.Search"), 38, 75900, 10
    );
-   private static final int PADDING;
+   private static final int PADDING = 1;
    private static Tag TAG = Tag.create("choice");
    private static Tag TAG_LABEL = Tag.create("label");
    private static String CMIME_CONTENT = "CMIME";

@@ -3,18 +3,18 @@ package net.rim.plazmic.mediaengine;
 public class MediaException extends Exception {
    private int _code = -1;
    private Object _data;
-   public static final int UPGRADE_PLAYER;
-   public static final int UPGRADE_MEDIA;
-   public static final int UNSUPPORTED_MEDIA;
-   public static final int INVALID_HEADER;
-   public static final int OUT_OF_BOUNDS;
-   public static final int INTERRUPTED_DOWNLOAD;
-   public static final int REQUEST_TIMED_OUT;
-   public static final int UNSUPPORTED_TYPE;
-   public static final int INSUFFICIENT_SPACE;
-   public static final int CHECKSUM_MISMATCH;
-   public static final int INVALID_SUB_PME;
-   private static final int DEFAULT_ERROR_CODE;
+   public static final int UPGRADE_PLAYER = 1;
+   public static final int UPGRADE_MEDIA = 2;
+   public static final int UNSUPPORTED_MEDIA = 11;
+   public static final int INVALID_HEADER = 3;
+   public static final int OUT_OF_BOUNDS = 4;
+   public static final int INTERRUPTED_DOWNLOAD = 5;
+   public static final int REQUEST_TIMED_OUT = 7;
+   public static final int UNSUPPORTED_TYPE = 8;
+   public static final int INSUFFICIENT_SPACE = 9;
+   public static final int CHECKSUM_MISMATCH = 10;
+   public static final int INVALID_SUB_PME = 11;
+   private static final int DEFAULT_ERROR_CODE = -1;
 
    public MediaException() {
       this(-1, null, null);

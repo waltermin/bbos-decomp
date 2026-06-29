@@ -20,7 +20,7 @@ public final class Universal_Reader extends StreamReader {
    private long _streamPos;
    private long _markPos;
    private boolean _noConversionData;
-   private static final int BUF_SIZE;
+   private static final int BUF_SIZE = 1024;
 
    @Override
    public final Reader open(InputStream in, String enc) {

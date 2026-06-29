@@ -30,8 +30,8 @@ final class MIDletMain$MIDletPushRegistryWorkerThread extends Thread {
    private boolean _askUser;
    private boolean _allowConnection;
    private final MIDletMain this$0;
-   private static final long LOGGER_GUID;
-   private static final String LOGGER_NAME;
+   private static final long LOGGER_GUID = 3284866745973826674L;
+   private static final String LOGGER_NAME = "MIDletPushRegistryWorkerThread";
 
    public MIDletMain$MIDletPushRegistryWorkerThread(MIDletMain _1, String connection) {
       this.this$0 = _1;

@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.mms.verbs.MMSVerbFactory;
 import net.rim.device.internal.io.file.MetaDataProvider;
 
 final class MMSRegistrationRunnable implements Runnable {
-   private static final String MESSAGING_MODULE_NAME;
+   private static final String MESSAGING_MODULE_NAME = "net_rim_bb_messaging_app";
 
    @Override
    public final void run() {

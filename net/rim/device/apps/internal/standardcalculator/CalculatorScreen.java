@@ -13,7 +13,7 @@ import net.rim.device.apps.api.ui.SystemEnabledMenu;
 final class CalculatorScreen extends AppsMainScreen implements MenuHandler {
    private CalculatorUI _calculatorUI = new CalculatorUI(this, 0);
    private static Tag TAG = Tag.create("client");
-   protected static final String ID;
+   protected static final String ID = "calculator";
    private static final int[] ToMetric = new int[]{
       401,
       402,

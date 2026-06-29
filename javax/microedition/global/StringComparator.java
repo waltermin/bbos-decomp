@@ -5,10 +5,10 @@ import net.rim.device.api.util.Arrays;
 public final class StringComparator {
    private int _level;
    private String _locale;
-   public static final int IDENTICAL;
-   public static final int LEVEL1;
-   public static final int LEVEL2;
-   public static final int LEVEL3;
+   public static final int IDENTICAL = 15;
+   public static final int LEVEL1 = 1;
+   public static final int LEVEL2 = 2;
+   public static final int LEVEL3 = 3;
 
    public StringComparator() {
       this(System.getProperty("microedition.locale"), 1);

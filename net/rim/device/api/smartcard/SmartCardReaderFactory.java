@@ -11,7 +11,7 @@ import net.rim.vm.Array;
 
 public final class SmartCardReaderFactory {
    private static final ResourceBundle _rb = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
-   private static final long ID;
+   private static final long ID = -1627428637371680177L;
    private static Vector _readers = ApplicationRegistry.getApplicationRegistry().getVector(-1627428637371680177L);
 
    private SmartCardReaderFactory() {

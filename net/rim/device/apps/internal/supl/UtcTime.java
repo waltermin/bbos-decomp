@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.supl;
 
 final class UtcTime {
    private String utcTimeString;
-   static final byte UTC_LENGTH;
-   static final byte LENGTH_BIT_SIZE;
-   static final byte UTCTIME_CHAR_BIT_SIZE;
+   static final byte UTC_LENGTH = 13;
+   static final byte LENGTH_BIT_SIZE = 8;
+   static final byte UTCTIME_CHAR_BIT_SIZE = 7;
 
    final void encode(Stuffer stuff) {
    }

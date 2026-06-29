@@ -30,10 +30,10 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
    protected boolean _showNames;
    protected ContextObject _paintContext;
    protected GroupAddressCardModel _gacm;
-   protected static final int MAX_NAME_LENGTH;
+   protected static final int MAX_NAME_LENGTH = 100;
    private static ContextObjectWR _contextWR = (ContextObjectWR)(new Object(108));
-   private static final int VIEW_MEMBER_VERB;
-   private static final int SHOW_NAMES_OR_ADDRESSES_VERB;
+   private static final int VIEW_MEMBER_VERB = 0;
+   private static final int SHOW_NAMES_OR_ADDRESSES_VERB = 1;
 
    GroupAddressCardScreen(GroupAddressCardModel gacm) {
       super(0, gacm.getName(), _contextWR.getContextObject());

@@ -9,14 +9,14 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.vm.TraceBack;
 
 public final class Alert {
-   public static final int ALERT_OK;
-   public static final int ALERT_ERROR_UNKNOWN;
-   public static final int ALERT_ERROR_BAD_DATA;
-   public static final int ALERT_ERROR_BAD_STATE;
-   public static final int ALERT_ERROR_FILESYSTEM_FULL;
-   public static final int ALERT_INTERRUPT_OFF;
-   public static final int ALERT_INTERRUPT_ON;
-   public static final int ALERT_INTERRUPT_ON_NO_TRACKBALL;
+   public static final int ALERT_OK = 0;
+   public static final int ALERT_ERROR_UNKNOWN = 1;
+   public static final int ALERT_ERROR_BAD_DATA = 2;
+   public static final int ALERT_ERROR_BAD_STATE = 3;
+   public static final int ALERT_ERROR_FILESYSTEM_FULL = 4;
+   public static final int ALERT_INTERRUPT_OFF = 0;
+   public static final int ALERT_INTERRUPT_ON = 1;
+   public static final int ALERT_INTERRUPT_ON_NO_TRACKBALL = 2;
 
    private Alert() {
    }

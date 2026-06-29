@@ -1,8 +1,8 @@
 package net.rim.device.api.synchronization;
 
 public interface SyncCollectionStatusProvider {
-   int SCSP_BACKUP_NO_REMOVE;
-   int SCSP_NULL;
+   int SCSP_BACKUP_NO_REMOVE = 1;
+   int SCSP_NULL = 0;
 
    boolean isWritableForSerialSync();
 

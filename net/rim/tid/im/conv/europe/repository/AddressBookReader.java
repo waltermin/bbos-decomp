@@ -4,8 +4,8 @@ import net.rim.tid.data.LearningData;
 import net.rim.tid.data.LearningDataManager;
 
 public class AddressBookReader extends WordLearningReader {
-   private static final int MIN_INITIAL_SIZE;
-   private static final int MAX_BUFFER_SIZE;
+   private static final int MIN_INITIAL_SIZE = 20480;
+   private static final int MAX_BUFFER_SIZE = 51200;
 
    public AddressBookReader() {
       super.init((byte)3);

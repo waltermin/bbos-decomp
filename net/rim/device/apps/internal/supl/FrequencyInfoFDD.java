@@ -4,8 +4,8 @@ final class FrequencyInfoFDD extends FrequencyInfo {
    private short uarfcnUl;
    private short uarfcnDl;
    private byte optionals;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte FREQ_INFO_FDD_OPT_UARFCN_UL;
+   static final byte NUM_OPT_ELEMENTS = 1;
+   static final byte FREQ_INFO_FDD_OPT_UARFCN_UL = 1;
 
    @Override
    final void encode(Stuffer stuff) {

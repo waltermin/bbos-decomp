@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.util.Arrays;
 
 public class CertificateHashKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = 4966172969402917741L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class CalendarSetupScreen extends UserSettingsScreen {
    private RadioButtonGroup _synchCalendarGroup;
-   private static final String PARAM_SYNCH_CALENDAR;
+   private static final String PARAM_SYNCH_CALENDAR = "synch_calendar";
 
    public CalendarSetupScreen() {
       super(31);

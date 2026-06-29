@@ -11,13 +11,13 @@ class MessengerMessageImpl implements MessengerMessage, FieldProvider {
    private long _time;
    protected boolean _isSystem;
    IntHashtable _serialized;
-   static final int MESSAGE_TYPE;
-   static final int CONTACT_ID_HASH;
-   static final int SYSTEM;
-   static final int TIME;
-   static final int TEXT_MESSAGE;
-   static final int FILE_MESSAGE;
-   static final int VCARD_MESSAGE;
+   static final int MESSAGE_TYPE = 0;
+   static final int CONTACT_ID_HASH = 1;
+   static final int SYSTEM = 2;
+   static final int TIME = 3;
+   static final int TEXT_MESSAGE = 0;
+   static final int FILE_MESSAGE = 1;
+   static final int VCARD_MESSAGE = 2;
 
    protected void commit() {
       PersistentObject.commit(this._serialized);

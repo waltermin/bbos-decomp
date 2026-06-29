@@ -11,16 +11,16 @@ public final class SBSerialUpdaterThread extends Thread {
    private ServiceBook _mySB;
    private DatagramConnection _myConn;
    private DatagramBase _dg;
-   public static final long GUID;
-   public static final String STR;
-   public static final int ERROR_FIPS_REQUIRMENT_NOT_MET;
-   public static final int ERROR_CANNOT_CREATE_SB_CONNECTION;
-   public static final int ERROR_UNKNOWN_EXCEPTION_SENDING_RESPONSE;
-   public static final int ERROR_UNKNOWN_EXCEPTION_PROCESSING_PACKET;
-   public static final int ERROR_UNABLE_TO_OBTAIN_SERVICEBOOK;
-   public static final int ERROR_UNABLE_TO_OBTAIN_SERVICEBOOK_BAILING;
-   public static final int ERROR_IOEXCEPTION_SENDING_RESPONSE;
-   private static final int APP_CANNOT_OPERATE_DUE_TO_LOCK;
+   public static final long GUID = -4609695795537859281L;
+   public static final String STR = "net.rim.desktop.sb";
+   public static final int ERROR_FIPS_REQUIRMENT_NOT_MET = 1179799117;
+   public static final int ERROR_CANNOT_CREATE_SB_CONNECTION = 1128485699;
+   public static final int ERROR_UNKNOWN_EXCEPTION_SENDING_RESPONSE = 1430606674;
+   public static final int ERROR_UNKNOWN_EXCEPTION_PROCESSING_PACKET = 1430605904;
+   public static final int ERROR_UNABLE_TO_OBTAIN_SERVICEBOOK = 1431588691;
+   public static final int ERROR_UNABLE_TO_OBTAIN_SERVICEBOOK_BAILING = 1431588691;
+   public static final int ERROR_IOEXCEPTION_SENDING_RESPONSE = 1229935442;
+   private static final int APP_CANNOT_OPERATE_DUE_TO_LOCK = 40966;
 
    public SBSerialUpdaterThread() {
       EventLogger.register(-4609695795537859281L, "net.rim.desktop.sb", 2);

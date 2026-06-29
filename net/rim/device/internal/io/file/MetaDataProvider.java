@@ -7,7 +7,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.EncodedImage;
 
 public class MetaDataProvider {
-   private static final long THUMBNAIL_PROVIDERS;
+   private static final long THUMBNAIL_PROVIDERS = 5925472548652966264L;
    private static Hashtable _providers;
    private static ImageThumbnailProvider _imageProvider;
    private static MediaMetaDataProvider _mediaProvider;

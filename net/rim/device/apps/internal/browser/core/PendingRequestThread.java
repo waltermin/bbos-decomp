@@ -12,7 +12,7 @@ final class PendingRequestThread {
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(-4718791899384625364L);
    private PendingRequestThread$PendingRequestStore _store;
    private PendingRequestThread$RunThread _pendingRequestThread;
-   private static final long PENDING_REQUEST_STORE_KEY;
+   private static final long PENDING_REQUEST_STORE_KEY = -4718791899384625364L;
    private static PendingRequestThread _instance;
 
    private PendingRequestThread() {

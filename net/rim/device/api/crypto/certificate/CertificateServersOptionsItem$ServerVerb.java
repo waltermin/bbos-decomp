@@ -8,9 +8,9 @@ class CertificateServersOptionsItem$ServerVerb extends OptionsItemVerb {
    private int _type;
    private CertificateServerInfo _info;
    private final CertificateServersOptionsItem this$0;
-   public static final int ADD;
-   public static final int EDIT;
-   public static final int DELETE;
+   public static final int ADD = 0;
+   public static final int EDIT = 1;
+   public static final int DELETE = 2;
 
    public CertificateServersOptionsItem$ServerVerb(CertificateServersOptionsItem _1, int type, String description, int ordering) {
       super(description, ordering);

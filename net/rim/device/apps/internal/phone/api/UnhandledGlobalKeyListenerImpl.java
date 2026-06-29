@@ -13,9 +13,9 @@ public class UnhandledGlobalKeyListenerImpl implements RibbonListener, Unhandled
    private int _timerID = -1;
    private boolean _isKeyDown;
    private boolean _sendKeyPressed;
-   private static final long PHONE_APP_KEY_HANDLER;
-   private static final int INVALID_TIMER_ID;
-   private static final int DEFAULT_TIMEOUT;
+   private static final long PHONE_APP_KEY_HANDLER = 1941799441586864365L;
+   private static final int INVALID_TIMER_ID = -1;
+   private static final int DEFAULT_TIMEOUT = 1000;
    private static UnhandledGlobalKeyListenerImpl _instance;
 
    protected void handleApplicationKeyPress() {

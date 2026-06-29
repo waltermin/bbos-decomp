@@ -3,7 +3,7 @@ package com.sun.cldc.i18n.j2me;
 final class BreakingDataRegistryHelper {
    private BreakingDataRegistryHelper$BreakingData[] _breakingDataTable = new BreakingDataRegistryHelper$BreakingData[0];
    private int _supportedLocalesNum;
-   private static final int BREAKING_INCREMENT_NUMBER;
+   private static final int BREAKING_INCREMENT_NUMBER = 2;
 
    final synchronized boolean loadBreakingData(int locale, int dataType, byte[][][] data) {
       int i = 0;

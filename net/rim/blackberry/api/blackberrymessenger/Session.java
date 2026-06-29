@@ -4,9 +4,9 @@ import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.ui.Field;
 
 public interface Session {
-   int STATE_CLOSED;
-   int STATE_REQUESTING;
-   int STATE_OPEN;
+   int STATE_CLOSED = 1;
+   int STATE_REQUESTING = 2;
+   int STATE_OPEN = 3;
 
    boolean isOpen();
 

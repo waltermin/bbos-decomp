@@ -26,8 +26,8 @@ public final class StatusOptionsItem extends MainScreenOptionsListItem implement
    private ListField _listField;
    private final String DEVICE_SELF_TEST_MODULE_NAME = "net_rim_bb_device_selftest";
    private static Object[] _listItems;
-   private static final int SIGNAL_LEVEL;
-   private static final int BATTERY_LEVEL;
+   private static final int SIGNAL_LEVEL = 0;
+   private static final int BATTERY_LEVEL = 1;
 
    public StatusOptionsItem() {
       super(OptionsResources.getString(400), new Object(2, 3));

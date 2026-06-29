@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.UiSettings;
 final class ProfilesApp$HomeScreenUpdater implements GlobalEventListener {
    private Profiles _profileManager;
    private ApplicationDescriptor _baseDescriptor;
-   private static final String PROFILE_APP_IDENTIFIER;
+   private static final String PROFILE_APP_IDENTIFIER = "net.rim.ProfileHomeScreenApp";
 
    final void updateHomeScreen(Profile activeProfile) {
       ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(

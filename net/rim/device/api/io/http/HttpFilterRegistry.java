@@ -7,7 +7,7 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 
 public final class HttpFilterRegistry {
    private Hashtable _filters = (Hashtable)(new Object());
-   private static final long ID;
+   private static final long ID = 1270710104458132462L;
    private static HttpFilterRegistry _instance;
 
    private HttpFilterRegistry() {

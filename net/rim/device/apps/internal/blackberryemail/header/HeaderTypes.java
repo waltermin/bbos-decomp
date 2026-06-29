@@ -3,13 +3,13 @@ package net.rim.device.apps.internal.blackberryemail.header;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public class HeaderTypes {
-   public static final int TO;
-   public static final int CC;
-   public static final int BCC;
-   public static final int FROM;
-   public static final int SENDER;
-   public static final int REPLY_TO;
-   public static final int ORIGINAL_RECIPIENT;
+   public static final int TO = 0;
+   public static final int CC = 1;
+   public static final int BCC = 2;
+   public static final int FROM = 3;
+   public static final int SENDER = 4;
+   public static final int REPLY_TO = 5;
+   public static final int ORIGINAL_RECIPIENT = 6;
    public static final Integer[] _typesAsInteger = new Object[]{
       new Object(0), new Object(1), new Object(2), new Object(3), new Object(4), new Object(5), new Object(6)
    };

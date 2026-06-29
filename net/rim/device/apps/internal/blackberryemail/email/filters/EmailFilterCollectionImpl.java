@@ -34,10 +34,10 @@ public final class EmailFilterCollectionImpl
    private String _userId;
    private static ContextObjectWR _encodeContextWR = (ContextObjectWR)(new Object(33, 33, 19));
    private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(33, 33, 19));
-   private static final int FILTER_INITIAL_SIZE;
-   private static final String FILTER_DATA_NAME_STR;
+   private static final int FILTER_INITIAL_SIZE = 16;
+   private static final String FILTER_DATA_NAME_STR = "net.rim.device.apps.internal.blackberryemail.email.filters.FILTER_DATA_NAME.";
    private static long FILTER_DATA_NAME;
-   private static final String EMAIL_FILTER_COLLECTION_ID_STR;
+   private static final String EMAIL_FILTER_COLLECTION_ID_STR = "net.rim.device.apps.internal.blackberryemail.email.filters.EMAIL_FILTER_COLLECTION_ID.";
    private static long EMAIL_FILTER_COLLECTION_ID;
 
    private EmailFilterCollectionImpl(String userId) {

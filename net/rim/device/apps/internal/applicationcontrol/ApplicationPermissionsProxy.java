@@ -10,8 +10,8 @@ import net.rim.device.apps.api.ui.ApplicationControlScreen;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 
 public final class ApplicationPermissionsProxy extends UiApplication {
-   private static final long DESCRIPTOR_ID;
-   private static final long SCREEN_ID;
+   private static final long DESCRIPTOR_ID = 3353949624016666498L;
+   private static final long SCREEN_ID = 5402085941883890214L;
    private static String _randomString = (String)(new Object(RandomSource.getBytes(32)));
 
    public static final void main(String[] args) {

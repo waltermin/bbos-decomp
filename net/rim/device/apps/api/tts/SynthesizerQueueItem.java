@@ -9,11 +9,11 @@ public class SynthesizerQueueItem {
    private int _state = 1;
    private boolean _cancelPending;
    private boolean _cancelling;
-   public static final int STATE_QUEUED;
-   public static final int STATE_STARTING;
-   public static final int STATE_STARTED;
-   public static final int STATE_INTERRUPTED;
-   public static final int STATE_COMPLETE;
+   public static final int STATE_QUEUED = 1;
+   public static final int STATE_STARTING = 2;
+   public static final int STATE_STARTED = 4;
+   public static final int STATE_INTERRUPTED = 8;
+   public static final int STATE_COMPLETE = 16;
 
    public SynthesizerQueueItem(TTSListener source, TTSManager engine, String text, Object listener, int id) {
       this._source = source;

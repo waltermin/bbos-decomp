@@ -16,9 +16,9 @@ final class CurrentLocations implements CollectionListener {
    int _focus;
    int _count;
    boolean _semiFocus = false;
-   public static final int NO_PAN;
-   public static final int PAN_IF_OFFSCREEN;
-   public static final int PAN_TO_CENTRE;
+   public static final int NO_PAN = 0;
+   public static final int PAN_IF_OFFSCREEN = 1;
+   public static final int PAN_TO_CENTRE = 2;
 
    public CurrentLocations(MapField mapField) {
       this._mapField = mapField;

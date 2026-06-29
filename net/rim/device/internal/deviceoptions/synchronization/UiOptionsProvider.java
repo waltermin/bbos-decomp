@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.UiOptionsRegistry;
 
 class UiOptionsProvider implements OptionsProvider, CollectionListener {
    private OptionsSyncCollection _syncCollection;
-   private static final int UID;
+   private static final int UID = -1860137122;
 
    @Override
    public void reset(Collection collection) {

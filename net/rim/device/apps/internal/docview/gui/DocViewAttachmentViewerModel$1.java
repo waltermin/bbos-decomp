@@ -14,7 +14,7 @@ class DocViewAttachmentViewerModel$1 extends TimerTask {
    private final byte[] val$moreData;
    private final Timer val$timerFinal;
    private final DocViewAttachmentViewerModel this$0;
-   private static final int NUM_EXECUTIONS_ALLOWED;
+   private static final int NUM_EXECUTIONS_ALLOWED = 15;
 
    DocViewAttachmentViewerModel$1(DocViewAttachmentViewerModel _1, String _2, String _3, int _4, int _5, ServerResponse _6, Object _7, byte[] _8, Timer _9) {
       this.this$0 = _1;

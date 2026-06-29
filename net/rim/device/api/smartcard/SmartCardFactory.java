@@ -14,8 +14,8 @@ public final class SmartCardFactory {
    private static Vector _cards = ApplicationRegistry.getApplicationRegistry().getVector(-23670249000819764L);
    private static Hashtable _supportedATRs = ApplicationRegistry.getApplicationRegistry().getHashtable(8183956272243042995L);
    private static final ResourceBundle _rb = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
-   private static final long APPLICATION_REGISTRY_ID;
-   private static final long SUPPORTED_ATRS_APPLICATION_REGISTRY_ID;
+   private static final long APPLICATION_REGISTRY_ID = -23670249000819764L;
+   private static final long SUPPORTED_ATRS_APPLICATION_REGISTRY_ID = 8183956272243042995L;
 
    private SmartCardFactory() {
    }

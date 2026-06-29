@@ -5,8 +5,8 @@ import net.rim.device.api.ui.Graphics;
 final class ProfileString {
    private byte[] _data = new byte[128];
    private int _pointer;
-   private static final int SIZE;
-   private static final int MODULO;
+   private static final int SIZE = 128;
+   private static final int MODULO = 127;
 
    final void add(int code) {
       this._data[this._pointer] = (byte)code;

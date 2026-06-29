@@ -19,7 +19,7 @@ import net.rim.device.internal.io.FilenameValidator;
 
 public final class FileUtilities {
    public static String ENCRYPTED_MEDIA_EXTENSION = PosixFileConnection.ENCRYPTED_MEDIA_EXTENSION;
-   private static final char DIRECTORY_NAME_SEPERATOR;
+   private static final char DIRECTORY_NAME_SEPERATOR = '/';
    private static String FILE_COLON_SLASH_SLASH = "file://";
    private static String FILE_SYSTEM_STORE_ROOT_STR = "/store/";
    private static String USER_STORE_ROOT_STR = "/store/home/user/";
@@ -50,7 +50,7 @@ public final class FileUtilities {
       -1438311245835636745L,
       -3455386809805045760L
    };
-   private static final int RINGTONE_SIZE_THRESHOLD;
+   private static final int RINGTONE_SIZE_THRESHOLD = 614400;
    private static ResourceBundle _fileSystemRb = ResourceBundle.getBundle(-538091128501376688L, "net.rim.device.internal.resource.FileSystem");
 
    private FileUtilities() {

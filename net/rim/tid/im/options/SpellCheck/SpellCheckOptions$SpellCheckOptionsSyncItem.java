@@ -6,7 +6,7 @@ import net.rim.device.api.util.DataBuffer;
 
 final class SpellCheckOptions$SpellCheckOptionsSyncItem extends OTASyncCapableSyncItem {
    private DataBuffer _buffer;
-   private static final int DB_VERSION;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

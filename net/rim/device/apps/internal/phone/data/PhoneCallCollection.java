@@ -48,13 +48,13 @@ final class PhoneCallCollection
    private PersistedSortedCollection _dcAlertFolderData;
    private RIMModelSyncConverter _syncConverter = (RIMModelSyncConverter)(new Object(20, -5829986326706945081L));
    private SyncCollectionSchema _schema;
-   static final int SYNC_TYPE_PHONE;
-   static final int SYNC_TYPE_GENERAL;
-   private static final int MIN_CALL_LOG_COUNT_FOR_STATUS;
+   static final int SYNC_TYPE_PHONE = 0;
+   static final int SYNC_TYPE_GENERAL = 1;
+   private static final int MIN_CALL_LOG_COUNT_FOR_STATUS = 10;
    private static long PHONE_CALL_COLLECTION_ENABLE_SYNC = 8364368765202218487L;
    private static PhoneCallCollection _instance;
    private static final int[] KEY_FIELD_IDS = new int[]{4, -804782076, 9832200, 9831900};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    final synchronized void deferCallLogAddition(Object callLog) {
       if (this._deferredCallLogAdditions == null) {

@@ -3,13 +3,13 @@ package net.rim.device.internal.deviceagent;
 import net.rim.device.api.system.EventLogger;
 
 class DeviceAgentEventLogger {
-   public static final long EVENT_LOGGER_GUID;
-   public static final long EVENT_LOGGER_DATA_GUID;
-   public static final int EVENT_ADD_SYNC_OBJECT;
-   public static final int EVENT_REMOVE_SYNC_OBJECT;
-   public static final int EVENT_UPDATE_SYNC_OBJECT;
-   public static final int EVENT_ADD_SYNC_OBJECT_DATA;
-   public static final String EVENT_LOGGER_NAME;
+   public static final long EVENT_LOGGER_GUID = 8267520505383620909L;
+   public static final long EVENT_LOGGER_DATA_GUID = 8388771406474631800L;
+   public static final int EVENT_ADD_SYNC_OBJECT = 1094992975;
+   public static final int EVENT_REMOVE_SYNC_OBJECT = 1145392207;
+   public static final int EVENT_UPDATE_SYNC_OBJECT = 1431323727;
+   public static final int EVENT_ADD_SYNC_OBJECT_DATA = 1145132097;
+   public static final String EVENT_LOGGER_NAME = "net.rim.deviceagent";
 
    private DeviceAgentEventLogger() {
    }

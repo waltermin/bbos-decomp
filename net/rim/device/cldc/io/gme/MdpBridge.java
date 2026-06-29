@@ -16,8 +16,8 @@ import net.rim.device.internal.system.DataServices;
 public final class MdpBridge extends GmeRouterConnection {
    private HostRoutingTable _defHrt;
    private DataServices _dataServices;
-   private static final int MDP_DATA_PORT;
-   private static final int CAPABILITIES;
+   private static final int MDP_DATA_PORT = 2;
+   private static final int CAPABILITIES = 63;
 
    protected MdpBridge(Transport transport) {
       super(transport, (DatagramConnectionBase)Connector.open(MdpAddress.makeAddress(true, (String)((Object)null), 2, 2)));

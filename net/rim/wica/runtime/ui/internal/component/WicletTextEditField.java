@@ -24,13 +24,13 @@ final class WicletTextEditField extends Manager implements FieldChangeListener, 
    private BasicEditField _edit;
    private byte _visibility;
    private boolean _valid;
-   private static final int BORDER;
-   private static final int DOUBLE_BORDER;
-   private static final int PADDING;
-   private static final int DOUBLE_PADDING;
-   private static final char MANDATORY_MARKER_CHAR;
-   private static final int INVALID_MARKER_COLOR;
-   private static final int VALID_MARKER_COLOR;
+   private static final int BORDER = 1;
+   private static final int DOUBLE_BORDER = 2;
+   private static final int PADDING = 1;
+   private static final int DOUBLE_PADDING = 2;
+   private static final char MANDATORY_MARKER_CHAR = '*';
+   private static final int INVALID_MARKER_COLOR = 16711680;
+   private static final int VALID_MARKER_COLOR = 32768;
 
    final boolean performDefaultAction() {
       this.updateModel();

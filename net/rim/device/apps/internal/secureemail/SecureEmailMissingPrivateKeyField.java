@@ -7,7 +7,7 @@ import net.rim.device.internal.ui.Image;
 
 public class SecureEmailMissingPrivateKeyField extends StatusField implements ContextMenuDelegate {
    private SecureEmailFactory _secureEmailFactory;
-   private static final long STATUS_TYPE_MISSING_PRIVATE_KEY;
+   private static final long STATUS_TYPE_MISSING_PRIVATE_KEY = -4997593557371589019L;
 
    public SecureEmailMissingPrivateKeyField(SecureEmailFactory secureEmailFactory) {
       super(Application.getApplication());

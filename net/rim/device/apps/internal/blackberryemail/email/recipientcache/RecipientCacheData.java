@@ -15,18 +15,18 @@ public final class RecipientCacheData implements Persistable, SyncObject, Encryp
    private int _uid;
    private int _flags;
    private int _hashCode;
-   public static final int SMIME_SUPPORTS_AES_256_FLAG;
-   public static final int SMIME_SUPPORTS_AES_192_FLAG;
-   public static final int SMIME_SUPPORTS_AES_128_FLAG;
-   public static final int SMIME_SUPPORTS_CAST_128_FLAG;
-   public static final int PGP_SUPPORTS_AES_256_FLAG;
-   public static final int PGP_SUPPORTS_AES_192_FLAG;
-   public static final int PGP_SUPPORTS_AES_128_FLAG;
-   public static final int PGP_SUPPORTS_CAST_128_FLAG;
-   public static final int LAST_SENT_SIGNED_FLAG;
-   public static final int LAST_SENT_ENCRYPTED_FLAG;
-   public static final int CIPHER_SUPPORT_FLAGS;
-   public static final int LAST_SENT_ACTION_FLAGS;
+   public static final int SMIME_SUPPORTS_AES_256_FLAG = 1;
+   public static final int SMIME_SUPPORTS_AES_192_FLAG = 2;
+   public static final int SMIME_SUPPORTS_AES_128_FLAG = 4;
+   public static final int SMIME_SUPPORTS_CAST_128_FLAG = 8;
+   public static final int PGP_SUPPORTS_AES_256_FLAG = 16;
+   public static final int PGP_SUPPORTS_AES_192_FLAG = 32;
+   public static final int PGP_SUPPORTS_AES_128_FLAG = 64;
+   public static final int PGP_SUPPORTS_CAST_128_FLAG = 128;
+   public static final int LAST_SENT_SIGNED_FLAG = 256;
+   public static final int LAST_SENT_ENCRYPTED_FLAG = 512;
+   public static final int CIPHER_SUPPORT_FLAGS = 255;
+   public static final int LAST_SENT_ACTION_FLAGS = 768;
 
    final void setRecipient(String recipient) {
       this._hashCode = recipient.hashCode();

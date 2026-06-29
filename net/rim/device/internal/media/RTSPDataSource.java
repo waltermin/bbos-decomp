@@ -23,8 +23,8 @@ public final class RTSPDataSource extends DataSource implements SourceStream, Tu
    private int _tunnelStatus;
    private String _userAgent;
    private Object _tunnelSyncObject = new Object();
-   private static final int MAX_RETRIES;
-   private static final int SESSION_TIMEOUT;
+   private static final int MAX_RETRIES = 3;
+   private static final int SESSION_TIMEOUT = 165000;
 
    public RTSPDataSource(String locator, String userAgent, String apn, String apnUsername, String apnPassword) {
       super(locator);

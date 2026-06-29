@@ -32,16 +32,16 @@ import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 
 public class MessageEncoderLocator {
-   private static final boolean DEBUG;
-   private static final int PROBLEM_NO_CERTS;
-   private static final int PROBLEM_NO_ALLOWED_CERTS;
-   private static final int PROBLEM_UNVERIFIED;
-   private static final int PROBLEM_REVOKED;
-   private static final int PROBLEM_UNTRUSTED;
-   private static final int PROBLEM_WEAK;
-   private static final int PROBLEM_INVALID;
-   private static final int PROBLEM_STALE_STATUS;
-   private static final int NUM_PROBLEMS;
+   private static final boolean DEBUG = false;
+   private static final int PROBLEM_NO_CERTS = 0;
+   private static final int PROBLEM_NO_ALLOWED_CERTS = 1;
+   private static final int PROBLEM_UNVERIFIED = 2;
+   private static final int PROBLEM_REVOKED = 3;
+   private static final int PROBLEM_UNTRUSTED = 4;
+   private static final int PROBLEM_WEAK = 5;
+   private static final int PROBLEM_INVALID = 6;
+   private static final int PROBLEM_STALE_STATUS = 7;
+   private static final int NUM_PROBLEMS = 8;
 
    private MessageEncoderLocator() {
    }

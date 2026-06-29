@@ -32,8 +32,8 @@ class DateNavField extends Field {
    private int _dayIndicatorSelectedColorBackground;
    private Calendar _scratchCalendar;
    private static final Tag DAY_INDICATOR_SELECTED_TAG = Tag.create("day-indicator-selected");
-   private static final int PREVIOUS_DAY_CONTROL;
-   private static final int NEXT_DAY_CONTROL;
+   private static final int PREVIOUS_DAY_CONTROL = -1;
+   private static final int NEXT_DAY_CONTROL = 7;
 
    DateNavField(long selectedTime) {
       super(18014398509481984L);

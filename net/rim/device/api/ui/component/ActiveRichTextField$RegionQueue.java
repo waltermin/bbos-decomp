@@ -16,8 +16,8 @@ public class ActiveRichTextField$RegionQueue {
    protected int _maxregions;
    protected int _numfonts;
    protected int _maxfonts;
-   private static final int REGION_ARRAY_INCR;
-   private static final int FONT_ARRAY_INCR;
+   private static final int REGION_ARRAY_INCR = 10;
+   private static final int FONT_ARRAY_INCR = 2;
 
    public ActiveRichTextField$RegionQueue(int initMaxRegions, int initMaxFonts) {
       if (initMaxRegions > 0) {

@@ -1,11 +1,11 @@
 package net.rim.device.api.system;
 
 public class GANConnectivityPreference {
-   public static final int GAN_PREFERENCE_WAN_ONLY;
-   public static final int GAN_PREFERENCE_WAN_PREFERRED;
-   public static final int GAN_PREFERENCE_GAN_ONLY;
-   public static final int GAN_PREFERENCE_GAN_PREFERRED;
-   public static final long GUID;
+   public static final int GAN_PREFERENCE_WAN_ONLY = 0;
+   public static final int GAN_PREFERENCE_WAN_PREFERRED = 1;
+   public static final int GAN_PREFERENCE_GAN_ONLY = 2;
+   public static final int GAN_PREFERENCE_GAN_PREFERRED = 3;
+   public static final long GUID = 6614774638737238176L;
 
    public static GANConnectivityPreference getInstance() {
       return (GANConnectivityPreference)ApplicationRegistry.getApplicationRegistry().waitFor(6614774638737238176L);

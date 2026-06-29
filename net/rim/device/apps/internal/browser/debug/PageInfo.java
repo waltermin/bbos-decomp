@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.browser.page.Page;
 final class PageInfo implements DebugListItem {
    private String _data;
    private String _url;
-   private static final String PAGE_INFO;
+   private static final String PAGE_INFO = "Page Info";
 
    public PageInfo() {
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();

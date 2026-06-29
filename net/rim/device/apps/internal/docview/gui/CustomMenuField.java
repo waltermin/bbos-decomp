@@ -7,7 +7,7 @@ import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.internal.ui.RichText;
 
 public final class CustomMenuField extends ObjectChoiceField {
-   private static final int EDGE_GAP;
+   private static final int EDGE_GAP = 2;
 
    public CustomMenuField(String[] choices, int initialSelection) {
       super(null, choices, initialSelection);

@@ -7,10 +7,10 @@ import javax.microedition.io.HttpConnection;
 import net.rim.device.cldc.io.utility.URL;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static final String APN;
-   private static final String DEVICE_SIDE;
-   private static final String CONNECTION_UID;
-   private static final String CONNECTION_HANDLER;
+   private static final String APN = "apn";
+   private static final String DEVICE_SIDE = "deviceside";
+   private static final String CONNECTION_UID = "connectionuid";
+   private static final String CONNECTION_HANDLER = "connectionhandler";
 
    @Override
    public final int getProperties(String name) {

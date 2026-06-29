@@ -19,21 +19,21 @@ public class SimpleInputDialog extends PopupDialog {
    private int _maxLength;
    private DialogFieldManager _dfm;
    private byte _isUnicodeInputAllowed = 0;
-   public static final int NORMAL_INPUT;
-   public static final int LOWER_CASE_INPUT;
-   public static final int UPPER_CASE_INPUT;
-   public static final int NUMERIC_INPUT;
-   public static final int HEX_NUMERIC_INPUT;
-   public static final int PASSWORD_INPUT;
-   public static final int NUMERIC_PASSWORD_INPUT;
-   public static final int PHONE_NUMBER_INPUT;
-   public static final int EMAIL_ADDRESS_INPUT;
-   public static final int URL_INPUT;
-   public static final int NORMAL_INPUT_NO_COMPLEX;
-   public static final int AUTOTEXT_INPUT;
-   private static final byte UNICODE_INPUT_UNSET;
-   private static final byte UNICODE_INPUT_ALLOWED;
-   private static final byte UNICODE_INPUT_FORBIDDEN;
+   public static final int NORMAL_INPUT = 0;
+   public static final int LOWER_CASE_INPUT = 1;
+   public static final int UPPER_CASE_INPUT = 2;
+   public static final int NUMERIC_INPUT = 3;
+   public static final int HEX_NUMERIC_INPUT = 4;
+   public static final int PASSWORD_INPUT = 5;
+   public static final int NUMERIC_PASSWORD_INPUT = 6;
+   public static final int PHONE_NUMBER_INPUT = 7;
+   public static final int EMAIL_ADDRESS_INPUT = 8;
+   public static final int URL_INPUT = 9;
+   public static final int NORMAL_INPUT_NO_COMPLEX = 10;
+   public static final int AUTOTEXT_INPUT = 11;
+   private static final byte UNICODE_INPUT_UNSET = 0;
+   private static final byte UNICODE_INPUT_ALLOWED = 1;
+   private static final byte UNICODE_INPUT_FORBIDDEN = 2;
 
    public SimpleInputDialog(int type, String prompt) {
       this(type, prompt, 0, 1000000, 0);

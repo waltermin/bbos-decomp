@@ -5,7 +5,7 @@ import java.util.Vector;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 public interface MMSPayloadModel {
-   int SUBJECT_MAX_LENGTH;
+   int SUBJECT_MAX_LENGTH = 40;
 
    long getCreationDate();
 

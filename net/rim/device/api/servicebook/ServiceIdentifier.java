@@ -6,7 +6,7 @@ import net.rim.device.api.util.CRC32;
 public class ServiceIdentifier {
    private ServiceRecord _sr;
    private long _sid;
-   public static final long INVALID_SID;
+   public static final long INVALID_SID = -1L;
 
    public ServiceIdentifier(ServiceRecord sr) {
       this._sr = sr;

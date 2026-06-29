@@ -24,14 +24,14 @@ import net.rim.vm.ThreadSpecificData;
 import net.rim.vm.TraceBack;
 
 final class ApplicationControlImpl {
-   private static final long FLAG;
-   private static final long GUID;
-   private static final long PERM_KEY;
-   private static final long USER_PERMS_KEY;
-   private static final long STACK_HASHES_KEY;
-   private static final int ALLOW;
-   private static final int PROMPT;
-   private static final int DENY;
+   private static final long FLAG = Long.MIN_VALUE;
+   private static final long GUID = -4492041993596154793L;
+   private static final long PERM_KEY = 1222085937471710457L;
+   private static final long USER_PERMS_KEY = 1903692481843231563L;
+   private static final long STACK_HASHES_KEY = 978707214979453905L;
+   private static final int ALLOW = 2;
+   private static final int PROMPT = 1;
+   private static final int DENY = 0;
    private static ApplicationRegistry _ar;
    private static int _processModuleHandle;
    private static byte[] _processModuleHash;

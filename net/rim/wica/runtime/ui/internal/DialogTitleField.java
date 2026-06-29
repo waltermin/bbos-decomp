@@ -8,7 +8,7 @@ import net.rim.device.api.ui.XYRect;
 final class DialogTitleField extends Field {
    private String _title;
    private DialogTitleField$RedrawRunnable _redrawRunnable = new DialogTitleField$RedrawRunnable(this);
-   private static final int SEPARATOR_HEIGHT;
+   private static final int SEPARATOR_HEIGHT = 1;
 
    final void setTitle(String title) {
       if (title != null) {

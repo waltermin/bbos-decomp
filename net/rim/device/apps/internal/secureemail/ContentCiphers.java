@@ -1,19 +1,19 @@
 package net.rim.device.apps.internal.secureemail;
 
 public class ContentCiphers {
-   public static final int NUM_CONTENT_CIPHERS;
-   public static final int AES_256;
-   public static final int AES_192;
-   public static final int AES_128;
-   public static final int CAST_128;
-   public static final int RC2_128;
-   public static final int TRIPLE_DES;
-   public static final int RC2_64;
-   public static final int RC2_40;
-   public static final int DES;
-   public static final int ALL;
-   public static final int STRONG;
-   public static final int FIPS;
+   public static final int NUM_CONTENT_CIPHERS = 9;
+   public static final int AES_256 = 1;
+   public static final int AES_192 = 2;
+   public static final int AES_128 = 4;
+   public static final int CAST_128 = 8;
+   public static final int RC2_128 = 16;
+   public static final int TRIPLE_DES = 32;
+   public static final int RC2_64 = 64;
+   public static final int RC2_40 = 128;
+   public static final int DES = 256;
+   public static final int ALL = 511;
+   public static final int STRONG = 63;
+   public static final int FIPS = 39;
 
    public static String[] getLabels() {
       return SecureEmailResources.getStringArray(30);

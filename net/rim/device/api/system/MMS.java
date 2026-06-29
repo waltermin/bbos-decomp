@@ -3,7 +3,7 @@ package net.rim.device.api.system;
 import net.rim.device.api.itpolicy.ITPolicy;
 
 public final class MMS {
-   public static final long BACKDOOR_INJECT_MMS_SERVICE_BOOK;
+   public static final long BACKDOOR_INJECT_MMS_SERVICE_BOOK = -2734094174038131697L;
 
    public static final boolean isSupported() {
       try {

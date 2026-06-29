@@ -1,17 +1,17 @@
 package net.rim.wica.common.builtindata.componentdefn;
 
 public class AttendeeCompDef extends BuiltinKeylessDataComponentDefinition {
-   public static final String ATTENDEE_COMP_NAME;
-   public static final int TYPE_ID;
-   public static final String TYPE;
-   public static final int TYPE_TYPE;
-   public static final int ADDRESS_ID;
-   public static final String ADDRESS;
-   public static final int ADDRESS_TYPE;
+   public static final String ATTENDEE_COMP_NAME = "Attendee";
+   public static final int TYPE_ID = 0;
+   public static final String TYPE = "type";
+   public static final int TYPE_TYPE = 5;
+   public static final int ADDRESS_ID = 1;
+   public static final String ADDRESS = "address";
+   public static final int ADDRESS_TYPE = 3;
    private static final int[] _fieldTypes = new int[]{5, 3, -804651005, 5, 6, 7, -804651007, 9};
    private static final String[] _fieldNames = new String[]{"type", "address"};
-   public static final int ATTENDEE_NUM_OBJECT_FIELDS;
-   public static final int ATTENDEE_NUM_INT_FIELDS;
+   public static final int ATTENDEE_NUM_OBJECT_FIELDS = 1;
+   public static final int ATTENDEE_NUM_INT_FIELDS = 1;
    private static AttendeeCompDef _instance;
 
    public static AttendeeCompDef getInstance() {

@@ -172,18 +172,18 @@ public class EventViewer
    private CalendarServiceManager _calendarServiceManager;
    private boolean _attendeesChanged;
    private EventViewer$UpdateLookupFields _updateLookupFields = new EventViewer$UpdateLookupFields(this, null);
-   private static final int MAX_RECURRENCE_PERIOD;
-   private static final int MAX_NOTES_CHARS;
-   private static final long FIFTEEN_MINUTES;
-   private static final long SCREEN_UPDATE_INTERVAL;
-   private static final long CONFLICT_MESSAGE_DELAY;
+   private static final int MAX_RECURRENCE_PERIOD = 999;
+   private static final int MAX_NOTES_CHARS = 4096;
+   private static final long FIFTEEN_MINUTES = 900000L;
+   private static final long SCREEN_UPDATE_INTERVAL = 2000L;
+   private static final long CONFLICT_MESSAGE_DELAY = 5000L;
    private static final Tag SECTION_AREA_TAG = Tag.create("calendar-appointment-section-area");
    private static final Tag SUBJECT_TEXT_TAG = Tag.create("calendar-appointment-subject-text");
    private static final Tag WARNING_AREA_TAG = Tag.create("calendar-appointment-warning-area");
    private static final Tag EVENT_VIEWER_SCREEN_TAG = Tag.create("event-viewer-screen");
    private static ResourceBundle _rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
    private static TimeZone _gmtTZ = TimeZone.getTimeZone(DateTimeUtilities.GMT);
-   private static final int ALL_DAY_DURATION_ADJUSTMENT;
+   private static final int ALL_DAY_DURATION_ADJUSTMENT = 86400000;
 
    public String getViewerSubject() {
       return this._subject.getText().trim();

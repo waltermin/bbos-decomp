@@ -15,7 +15,7 @@ final class CalendarOptionsEntryScreen$CalendarFolderField extends Field {
    private int _color;
    private CalendarKey _key;
    private int _iconSpace;
-   private static final int ICON_PADDING;
+   private static final int ICON_PADDING = 2;
 
    public CalendarOptionsEntryScreen$CalendarFolderField(String name, String value, CalendarKey calendarKey) {
       super(18014398509481984L);

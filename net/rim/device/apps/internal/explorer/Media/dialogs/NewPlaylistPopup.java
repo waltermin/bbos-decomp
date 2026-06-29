@@ -22,8 +22,8 @@ public final class NewPlaylistPopup extends PopupScreen {
    private AutoTextEditField _name;
    private boolean _isModal;
    private MediaInfo _result;
-   public static final int TYPE_PLAYLIST;
-   public static final int TYPE_SMARTLIST;
+   public static final int TYPE_PLAYLIST = 0;
+   public static final int TYPE_SMARTLIST = 1;
 
    public NewPlaylistPopup(int type) {
       super((Manager)(new Object()));

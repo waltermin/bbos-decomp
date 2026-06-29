@@ -12,13 +12,13 @@ import net.rim.device.apps.internal.lbs.model.SearchAddressModel;
 final class LocationField extends ObjectChoiceField implements ReadableIntMap {
    SearchAddressModel _model = new SearchAddressModel(null);
    LocationField$LocationChoice[] _choices = new LocationField$LocationChoice[0];
-   private static final long LOCATION_FIELD_UID;
-   private static final long RECENT_LOCATIONS_UID;
-   private static final int PROPERTY_CONTEXT;
-   private static final int PROPERTY_MIDP_COORDINDATES;
-   private static final int PROPERTY_MAPS_URL;
-   private static final int PROPERTY_MAPS_LOCATION_XML;
-   private static final int PROPERTY_MAPS_LOCATION_TLE;
+   private static final long LOCATION_FIELD_UID = 5131152744609439366L;
+   private static final long RECENT_LOCATIONS_UID = -8558719100366407608L;
+   private static final int PROPERTY_CONTEXT = 1;
+   private static final int PROPERTY_MIDP_COORDINDATES = 2;
+   private static final int PROPERTY_MAPS_URL = 3;
+   private static final int PROPERTY_MAPS_LOCATION_XML = 4;
+   private static final int PROPERTY_MAPS_LOCATION_TLE = 5;
    static Location[] _recentLocations;
    static SimpleDateFormat _timeFormat = (SimpleDateFormat)(new Object("MMM d h:mma"));
 

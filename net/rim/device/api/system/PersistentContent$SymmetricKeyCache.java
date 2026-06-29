@@ -8,7 +8,7 @@ final class PersistentContent$SymmetricKeyCache {
    private IntHashtable _references = new IntHashtable(2053);
    private int[] _hashes = new int[2053];
    private int _victim = 0;
-   private static final int SIZE;
+   private static final int SIZE = 2053;
 
    final byte[] get(char[] encoding, int offset) {
       int hash = net.rim.vm.Memory.objectToInt(encoding) + (offset << 16);

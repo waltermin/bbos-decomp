@@ -83,12 +83,12 @@ public final class PageHeaderField
    private static Hashtable _wlanSignalParameters = (Hashtable)(new Object());
    private static Hashtable _coverageParameters = (Hashtable)(new Object());
    private static ThemeAttributeSet _signalAttributes;
-   private static final int SEPARATOR_HEIGHT;
-   private static final int COMPONENT_GAP;
+   private static final int SEPARATOR_HEIGHT = 1;
+   private static final int COMPONENT_GAP = 2;
    private static String INDICATOR_ICONS = "net_rim_Browser_Indicator";
    private static final int SIGNAL_ARROW_WIDTH = Graphics.isColor() ? (InternalServices.isReducedFormFactor() ? -2 : 12) : 7;
    private static IconCollection _browserIndicatorIcons;
-   private static final int ICON_COUNT;
+   private static final int ICON_COUNT = 4;
    private static int _browserIndicatorIconWidth;
    private static int _browserIndicatorIconHeight;
    private static int _themeGeneration;

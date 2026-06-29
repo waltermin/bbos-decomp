@@ -7,12 +7,12 @@ final class SuplPosInit extends UlpMessage {
    private Position position;
    private char[] ver = new char[8];
    private byte optionals;
-   static final byte POS_INIT_OPT_REQ_ASSIST_DATA;
-   static final byte POS_INIT_OPT_POSITION;
-   static final byte POS_INIT_OPT_VER;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte OCTET_BIT_SIZE;
-   static final byte MAX_VER_SIZE;
+   static final byte POS_INIT_OPT_REQ_ASSIST_DATA = 8;
+   static final byte POS_INIT_OPT_POSITION = 4;
+   static final byte POS_INIT_OPT_VER = 1;
+   static final byte NUM_OPT_ELEMENTS = 4;
+   static final byte OCTET_BIT_SIZE = 8;
+   static final byte MAX_VER_SIZE = 8;
 
    SuplPosInit() {
       this.optionals = 0;

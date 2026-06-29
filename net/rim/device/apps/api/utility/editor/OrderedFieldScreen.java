@@ -14,8 +14,8 @@ public class OrderedFieldScreen implements FieldOrders {
    private EditorUsingRIMModelFactory _owner;
    private IntHashtable _managers = (IntHashtable)(new Object());
    private Hashtable _managerFieldOrders = (Hashtable)(new Object());
-   public static final int NO_SEPARATORS;
-   private static final int SEP;
+   public static final int NO_SEPARATORS = -1;
+   private static final int SEP = -1;
 
    public OrderedFieldScreen(EditorUsingRIMModelFactory owner, int separatorInterval) {
       this._owner = owner;

@@ -5,11 +5,11 @@ import net.rim.device.api.xml.parsers.SAXParser;
 import net.rim.device.api.xml.parsers.SAXParserFactory;
 
 public class SAXParserFactoryImpl extends SAXParserFactory {
-   private static final String FEATURE_PREFIX;
-   private static final int FEATURE_PREFIX_STRLEN;
-   private static final String FEATURE_NAMESPACES;
-   private static final String FEATURE_NAMESPACE_PREFIXES;
-   private static final String ERROR_NOT_SUPPORTED;
+   private static final String FEATURE_PREFIX = "http://xml.org/sax/features/";
+   private static final int FEATURE_PREFIX_STRLEN = 28;
+   private static final String FEATURE_NAMESPACES = "namespaces";
+   private static final String FEATURE_NAMESPACE_PREFIXES = "namespace-prefixes";
+   private static final String ERROR_NOT_SUPPORTED = "not supported";
 
    @Override
    public SAXParser newSAXParser() {

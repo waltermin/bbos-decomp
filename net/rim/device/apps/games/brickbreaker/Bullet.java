@@ -11,7 +11,7 @@ final class Bullet {
    Board _board;
    int height;
    int width;
-   static final int MAX_HEIGHT;
+   static final int MAX_HEIGHT = 0;
 
    Bullet(Bitmap b, Board board) {
       this.bmp = b;

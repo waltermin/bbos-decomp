@@ -41,12 +41,12 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    private boolean _suspendUpdates = false;
    private AddressVerifier _addressVerifier = null;
    private Field _addressTrustIndicatorField;
-   public static final int EMAIL_MESSAGE;
-   public static final int PIN_MESSAGE;
+   public static final int EMAIL_MESSAGE = 0;
+   public static final int PIN_MESSAGE = 1;
    private static final Bitmap UNTRUSTED_ADDRESS_BITMAP = Bitmap.getBitmapResource("net_rim_bb_framework_api", "untrustedaddress.png");
    private static final XYEdges DROP_MARGIN = (XYEdges)(new Object(0, 5, 0, 0));
-   private static final int VISIBLE_ROWS;
-   private static final int SCROLL_PADDING;
+   private static final int VISIBLE_ROWS = 2;
+   private static final int SCROLL_PADDING = 3;
 
    public Verb getVerbs(Object createContext, Verb[] verbs) {
       if (this._lookup == null) {

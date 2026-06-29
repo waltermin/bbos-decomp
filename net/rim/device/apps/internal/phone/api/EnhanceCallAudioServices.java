@@ -11,14 +11,14 @@ public class EnhanceCallAudioServices {
    private int _ecaState;
    private IconCollection _icons = PhoneResources.getECAIcons();
    private Image _currentIcon = this._icons.getImage(0);
-   public static final int STATE_BLANK;
-   public static final int STATE_BOOST_BASS;
-   public static final int STATE_BOOST_TREBLE;
-   public static final int STATE_BOOST_NONE;
-   private static final int DEFAULT_WIDTH;
-   private static final int DEFAULT_HEIGHT;
+   public static final int STATE_BLANK = 0;
+   public static final int STATE_BOOST_BASS = 1;
+   public static final int STATE_BOOST_TREBLE = 2;
+   public static final int STATE_BOOST_NONE = 3;
+   private static final int DEFAULT_WIDTH = 27;
+   private static final int DEFAULT_HEIGHT = 19;
    private static EnhanceCallAudioServices _ecaInstance = null;
-   private static final long ECA_GUID;
+   private static final long ECA_GUID = -8184463205606674193L;
 
    EnhanceCallAudioServices() {
    }

@@ -11,8 +11,8 @@ import net.rim.wica.runtime.ui.internal.MultiFocusable;
 public class WicletBasicEditField extends ActiveAutoTextEditField implements MultiFocusable {
    private IntIntHashtable _literals;
    private boolean _inInputMethodTextChanged;
-   private static final int DEFAULT_MAXCHARS;
-   private static final char LITERAL_CHAR;
+   private static final int DEFAULT_MAXCHARS = 124000;
+   private static final char LITERAL_CHAR = '\\';
 
    public WicletBasicEditField(String format) {
       super(null, null, 124000, 0);

@@ -31,12 +31,12 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
    private boolean _keyStoreAddressInjectorEnabled;
    private String _certificateServiceUID;
    private byte[][][] _passwordHistory;
-   private static final long KEY_STORE_MANAGER_HELPER;
+   private static final long KEY_STORE_MANAGER_HELPER = 4177297936493411938L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(4177297936493411938L);
    private static boolean _access;
    private static boolean _backupFlag;
    private static KeyStoreManagerHelper _helper;
-   private static final long SINGLETON_ID;
+   private static final long SINGLETON_ID = -7560559415799202491L;
 
    final void resetOptions() {
       this._passphraseTimeout = 60000;

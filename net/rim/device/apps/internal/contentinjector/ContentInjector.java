@@ -33,9 +33,9 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
    private Object _lock = new Object();
    private boolean _checkServiceBooks;
    private Thread _workThread;
-   private static final long ID;
-   private static final long LOGGER_GUID;
-   private static final long SR_SELECTOR_GUID;
+   private static final long ID = 2962258110575299323L;
+   private static final long LOGGER_GUID = -1639924839295312060L;
+   private static final long SR_SELECTOR_GUID = 5429069385946712194L;
    private static String EXCEPTION_CONTENT_STORE = "Exception adding content to ContentStore\n";
    private static String CONTENT_FETCH_FAILURE = "Failed to fetch content from provided url\n";
    private static String CONTENT_TYPE = "Content-Type";
@@ -44,9 +44,9 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
    private static String CONTENT_LOCATION = "/appdata/rim/idlescreen/carrier/";
    public static String CID = "CONTENTINJECTOR";
    public static String APP_NAME = "ContentInjector";
-   public static final int URL;
-   public static final int LOCATIONINCS;
-   public static final int CONNECTIONPARAMETERS;
+   public static final int URL = 1;
+   public static final int LOCATIONINCS = 2;
+   public static final int CONNECTIONPARAMETERS = 3;
 
    public final void mobilityManagementEvent(int eventCode, int cause) {
    }

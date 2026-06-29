@@ -14,9 +14,9 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
    private int _type;
    private BluetoothServerConnection _conn;
    private int _classes;
-   public static final int TYPE_L2CAP;
-   public static final int TYPE_RFCOMM;
-   public static final int TYPE_GOEP;
+   public static final int TYPE_L2CAP = 0;
+   public static final int TYPE_RFCOMM = 1;
+   public static final int TYPE_GOEP = 2;
 
    public LocalServiceRecord() {
       super._address = BluetoothME.getLocalDeviceAddress();

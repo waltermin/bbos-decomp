@@ -4,7 +4,7 @@ public class CharacterIterator {
    protected int iBegin;
    protected int iEnd;
    protected int iIndex;
-   public static final char DONE;
+   public static final char DONE = '\uffff';
 
    public char current() {
       throw null;

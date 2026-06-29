@@ -11,10 +11,10 @@ public final class PNGImageWriter extends Thread {
    private Graphics _graphics;
    private Manager _mgr;
    private String _url;
-   private static final int CHUNK_OVERHEAD;
-   private static final int RIMPNG_IHDR_SIZE;
-   private static final int RIMPNG_IDAT_SIZE;
-   private static final int RIMPNG_IEND_SIZE;
+   private static final int CHUNK_OVERHEAD = 12;
+   private static final int RIMPNG_IHDR_SIZE = 25;
+   private static final int RIMPNG_IDAT_SIZE = 12;
+   private static final int RIMPNG_IEND_SIZE = 12;
    private static final byte[] RIMPNG_SIG = new byte[]{-119, 80, 78, 71, 13, 10, 26, 10};
    private static final byte[] CHUNK_IHDR = new byte[]{73, 72, 68, 82};
    private static final byte[] CHUNK_IDAT = new byte[]{73, 68, 65, 84};

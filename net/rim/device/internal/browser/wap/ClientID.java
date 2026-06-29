@@ -8,18 +8,18 @@ import net.rim.device.api.util.NumberUtilities;
 import net.rim.device.api.util.StringUtilities;
 
 public final class ClientID {
-   public static final int ASSIGNED_TYPE;
-   public static final int NATIVE_TYPE_ICCID;
-   public static final int NATIVE_TYPE_MIN;
-   public static final int NATIVE_TYPE_ESN;
-   public static final int NATIVE_TYPE_MSISDN;
-   public static final int NATIVE_TYPE_IMSI;
-   public static final int NATIVE_TYPE_IPV4;
-   public static final int NATIVE_TYPE_IPV6;
-   public static final int NATIVE_TYPE_ITSI;
-   public static final int NATIVE_TYPE_MAN;
-   public static final int NATIVE_TYPE_SIMID;
-   public static final int NATIVE_TYPE_MDN;
+   public static final int ASSIGNED_TYPE = 0;
+   public static final int NATIVE_TYPE_ICCID = 1;
+   public static final int NATIVE_TYPE_MIN = 2;
+   public static final int NATIVE_TYPE_ESN = 3;
+   public static final int NATIVE_TYPE_MSISDN = 4;
+   public static final int NATIVE_TYPE_IMSI = 5;
+   public static final int NATIVE_TYPE_IPV4 = 6;
+   public static final int NATIVE_TYPE_IPV6 = 7;
+   public static final int NATIVE_TYPE_ITSI = 8;
+   public static final int NATIVE_TYPE_MAN = 9;
+   public static final int NATIVE_TYPE_SIMID = 10;
+   public static final int NATIVE_TYPE_MDN = 11;
 
    private ClientID() {
    }

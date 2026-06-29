@@ -19,8 +19,8 @@ public class HostDialog extends PopupDialog implements FieldChangeListener {
    private HorizontalFieldManager _buttonManager;
    private ObjectChoiceField _certificateChoiceField;
    private EditField _hostNameField;
-   public static final int OK;
-   public static final int CANCEL;
+   public static final int OK = 1;
+   public static final int CANCEL = 2;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(5710659227867441061L, "net.rim.device.internal.resource.crypto.SSL");
 
    public HostDialog(String hostName, String hostCertificate) {

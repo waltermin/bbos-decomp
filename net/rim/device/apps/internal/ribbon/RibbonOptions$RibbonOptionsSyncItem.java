@@ -14,19 +14,19 @@ import net.rim.device.apps.internal.ribbon.launcher.HierarchyManager;
 
 final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem implements SyncEventListener, OTASyncPriorityProvider {
    private boolean _inSerialSync;
-   private static final byte APPLICATION_PRIORITY_RECORD;
-   private static final byte APPLICATION_VISIBILITY_RECORD;
-   private static final byte HIERARCHY_INFORMATION_RECORD;
-   private static final byte BACKGROUND_IMAGE_NAME;
-   private static final byte BACKGROUND_IMAGE_THEME_NAME;
-   private static final byte BACKGROUND_IMAGE_PROPERTIES;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD_COMPLETE;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_NAME;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_IMAGE_NAME;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_IMAGE_PROPERTIES;
-   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_END;
-   private static final int DB_VERSION;
+   private static final byte APPLICATION_PRIORITY_RECORD = 0;
+   private static final byte APPLICATION_VISIBILITY_RECORD = 1;
+   private static final byte HIERARCHY_INFORMATION_RECORD = 3;
+   private static final byte BACKGROUND_IMAGE_NAME = 4;
+   private static final byte BACKGROUND_IMAGE_THEME_NAME = 5;
+   private static final byte BACKGROUND_IMAGE_PROPERTIES = 6;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD = 7;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD_COMPLETE = 0;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_NAME = 1;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_IMAGE_NAME = 2;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_IMAGE_PROPERTIES = 3;
+   private static final byte BACKGROUND_IMAGE_DATA_RECORD_THEME_END = 4;
+   private static final int DB_VERSION = 0;
 
    final void readBackgroundImageData(DataBuffer buffer) {
       synchronized (RibbonOptions._options._persistedRibbonOptions._backgroundImages) {
@@ -268,7 +268,7 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
       // 140: astore 12
       // 142: aload 12
       // 144: arraylength
-      // 145: anewarray 583
+      // 145: anewarray 609
       // 148: astore 10
       // 14a: bipush 0
       // 14b: istore 13

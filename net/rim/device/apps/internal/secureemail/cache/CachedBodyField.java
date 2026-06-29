@@ -7,7 +7,7 @@ import net.rim.device.apps.internal.secureemail.CursorProviderActiveRichTextFiel
 
 public class CachedBodyField extends CachedField {
    private String _body;
-   private static final int BODY_SPACER_HEIGHT;
+   private static final int BODY_SPACER_HEIGHT = 4;
 
    public CachedBodyField(String body) {
       this._body = body;

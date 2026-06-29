@@ -22,14 +22,14 @@ public class Region extends Manager {
    private boolean _heightIsPercent;
    private int _backgroundColor;
    private int _fit;
-   public static final int UNDEFINED;
-   public static final long DEFAULT_STYLE;
-   public static final long SCROLL_STYLE;
-   public static final int HIDDEN;
-   public static final int FIT;
-   public static final int SLICE;
-   public static final int MEET;
-   public static final int SCROLL;
+   public static final int UNDEFINED = Integer.MAX_VALUE;
+   public static final long DEFAULT_STYLE = 18014398509481984L;
+   public static final long SCROLL_STYLE = 145610523889631232L;
+   public static final int HIDDEN = 0;
+   public static final int FIT = 1;
+   public static final int SLICE = 2;
+   public static final int MEET = 4;
+   public static final int SCROLL = 8;
 
    public Region(long style) {
       super(style);

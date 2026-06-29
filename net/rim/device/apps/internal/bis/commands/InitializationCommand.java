@@ -17,7 +17,7 @@ import net.rim.device.apps.internal.bis.utils.ObjectRegistry;
 import net.rim.device.apps.internal.bis.utils.system.DeviceIDs;
 
 public final class InitializationCommand implements DomainCommand {
-   public static final String TMOBILE_BRAND;
+   public static final String TMOBILE_BRAND = "tmobile";
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

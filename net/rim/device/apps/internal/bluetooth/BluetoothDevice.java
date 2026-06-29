@@ -40,13 +40,13 @@ public final class BluetoothDevice implements Runnable {
    private BluetoothDevice$PINDialog _pinDialog;
    private RemoteDevice _remoteDevice;
    private Vector _sdpQueryQueue;
-   private static final int SERVICE_INDEX_HANDSFREE;
-   private static final int SERVICE_INDEX_HEADSET;
-   private static final int SERVICE_INDEX_SERIAL_PORT;
-   private static final int SERVICE_INDEX_OBJECT_PUSH;
-   private static final int SERVICE_INDEX_AVRCP_TARGET;
-   private static final int SERVICE_INDEX_AVRCP_CONTROLLER;
-   private static final int SERVICE_INDEX_A2DP_SINK;
+   private static final int SERVICE_INDEX_HANDSFREE = 0;
+   private static final int SERVICE_INDEX_HEADSET = 1;
+   private static final int SERVICE_INDEX_SERIAL_PORT = 2;
+   private static final int SERVICE_INDEX_OBJECT_PUSH = 3;
+   private static final int SERVICE_INDEX_AVRCP_TARGET = 4;
+   private static final int SERVICE_INDEX_AVRCP_CONTROLLER = 5;
+   private static final int SERVICE_INDEX_A2DP_SINK = 6;
    private static final UUID[][][] SERVICE_CLASS_UUIDS = new UUID[][][]{
       {ServiceRecordImpl.HANDSFREE_UUID, ServiceRecordImpl.GENERIC_AUDIO_UUID},
       {ServiceRecordImpl.HEADSET_UUID, ServiceRecordImpl.GENERIC_AUDIO_UUID},
@@ -56,13 +56,13 @@ public final class BluetoothDevice implements Runnable {
       {ServiceRecordImpl.AVRCP_CONTROLLER_UUID, null},
       {ServiceRecordImpl.A2DP_SINK_UUID, null}
    };
-   static final int PROFILE_FLAG_HANDSFREE;
-   static final int PROFILE_FLAG_HEADSET;
-   static final int PROFILE_FLAG_SERIAL_PORT;
-   static final int PROFILE_FLAG_OBJECT_PUSH;
-   static final int PROFILE_FLAG_AVRCP_TARGET;
-   static final int PROFILE_FLAG_AVRCP_CONTROLLER;
-   static final int PROFILE_FLAG_A2DP_SINK;
+   static final int PROFILE_FLAG_HANDSFREE = 1;
+   static final int PROFILE_FLAG_HEADSET = 2;
+   static final int PROFILE_FLAG_SERIAL_PORT = 4;
+   static final int PROFILE_FLAG_OBJECT_PUSH = 8;
+   static final int PROFILE_FLAG_AVRCP_TARGET = 16;
+   static final int PROFILE_FLAG_AVRCP_CONTROLLER = 32;
+   static final int PROFILE_FLAG_A2DP_SINK = 64;
    private static final int[] SDP_QUERY_ATTRIBUTE_IDS = new int[]{
       0,
       1,
@@ -89,17 +89,17 @@ public final class BluetoothDevice implements Runnable {
       1769370213,
       740451683
    };
-   public static final int AUTH_ASK;
-   public static final int AUTH_YES;
-   public static final int AUTH_NO;
-   static final int NREC_MODE_AUTO;
-   static final int NREC_MODE_ON;
-   static final int NREC_MODE_OFF;
+   public static final int AUTH_ASK = 0;
+   public static final int AUTH_YES = 1;
+   public static final int AUTH_NO = 2;
+   static final int NREC_MODE_AUTO = 0;
+   static final int NREC_MODE_ON = 1;
+   static final int NREC_MODE_OFF = 2;
    private static IconCollection _icons = IconCollection.get("net_rim_bluetooth_device", 1);
-   private static final int CONNECTION_NONE;
-   private static final int CONNECTION_FOR_PAIRING;
-   private static final int CONNECTION_FOR_SDP;
-   private static final int CONNECTION_FOR_UNKNOWN_REASON;
+   private static final int CONNECTION_NONE = 0;
+   private static final int CONNECTION_FOR_PAIRING = 1;
+   private static final int CONNECTION_FOR_SDP = 2;
+   private static final int CONNECTION_FOR_UNKNOWN_REASON = 3;
 
    final void init() {
       this._waitingForPINRequest = false;

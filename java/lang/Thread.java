@@ -10,9 +10,9 @@ public class Thread implements Runnable {
    private Runnable target;
    private Object threadSpecificData;
    private String name;
-   public static final int MIN_PRIORITY;
-   public static final int NORM_PRIORITY;
-   public static final int MAX_PRIORITY;
+   public static final int MIN_PRIORITY = 1;
+   public static final int NORM_PRIORITY = 5;
+   public static final int MAX_PRIORITY = 10;
 
    public synchronized void start() {
       this.start0();

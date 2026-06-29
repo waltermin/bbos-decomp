@@ -63,13 +63,13 @@ final class PeerApplication
    PeerPresenceManager _presenceManager;
    PeerContactListCollection _contactListCollection;
    MessageFieldLookup _messageFieldLookup;
-   private static final boolean DEBUG_LMM;
-   private static final int IT_POLICY_GROUP;
-   private static final int DISABLE_BLACKBERRY_MESSENGER;
-   static final long GUID;
-   private static final int MAX_FILE_SIZE;
-   static final int USER_ALERT_SYSTEM_MESSAGE;
-   static final int USER_ALERT_IMMEDIATE;
+   private static final boolean DEBUG_LMM = false;
+   private static final int IT_POLICY_GROUP = 149;
+   private static final int DISABLE_BLACKBERRY_MESSENGER = 15;
+   static final long GUID = -9029900896793868512L;
+   private static final int MAX_FILE_SIZE = 15360;
+   static final int USER_ALERT_SYSTEM_MESSAGE = 2;
+   static final int USER_ALERT_IMMEDIATE = 3;
    private static PeerApplication _instance = (PeerApplication)ApplicationRegistry.getApplicationRegistry().get(-9029900896793868512L);
 
    public final void postInvokeLaterInternal(Runnable runnable) {

@@ -14,8 +14,8 @@ import net.rim.device.resources.Resource$Internal;
 import net.rim.vm.TraceBack;
 
 class RecordStoreManager implements RecordStoreManagerProxy {
-   private static final long RECORD_STORE_ID;
-   private static final long RECORD_STORE_LISTENER_ID;
+   private static final long RECORD_STORE_ID = 5639922433554527164L;
+   private static final long RECORD_STORE_LISTENER_ID = 8689535865899788676L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(5639922433554527164L);
    private static Hashtable _midletStores;
    private static Hashtable _activeStores;

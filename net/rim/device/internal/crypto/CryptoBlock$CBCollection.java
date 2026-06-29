@@ -13,7 +13,7 @@ import net.rim.device.api.util.DataBuffer;
 public final class CryptoBlock$CBCollection implements SyncCollection, SyncConverter, OTASyncPriorityProvider {
    PersistentObject _root;
    Object[] _key = new Object[1];
-   private static final int CURRENT_VERSION;
+   private static final int CURRENT_VERSION = 1;
 
    CryptoBlock$CBCollection(PersistentObject root) {
       this._root = root;

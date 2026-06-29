@@ -9,12 +9,12 @@ final class SuplInit extends UlpMessage {
    Mac mac;
    KeyIdentity keyIdentity;
    byte optionals;
-   static final byte SUPL_MASK_INIT_NOTIFICATION;
-   static final byte SUPL_MASK_INIT_SLP_ADDRESS;
-   static final byte SUPL_MASK_INIT_QOP;
-   static final byte SUPL_MASK_INIT_MAC;
-   static final byte SUPL_MASK_INIT_KEY_IDENTITY;
-   static final byte SUPL_INIT_OPTIONALS_BIT_SIZE;
+   static final byte SUPL_MASK_INIT_NOTIFICATION = 16;
+   static final byte SUPL_MASK_INIT_SLP_ADDRESS = 8;
+   static final byte SUPL_MASK_INIT_QOP = 4;
+   static final byte SUPL_MASK_INIT_MAC = 2;
+   static final byte SUPL_MASK_INIT_KEY_IDENTITY = 1;
+   static final byte SUPL_INIT_OPTIONALS_BIT_SIZE = 5;
 
    @Override
    final void decode(Nibbler nib) {

@@ -17,7 +17,7 @@ public final class WSPHeaderDecoder {
    private byte[] _buf;
    private HttpHeaders _nameValuePairs;
    private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776)));
-   private static final int DEFAULT_STRING_BUFFER_LENGTH;
+   private static final int DEFAULT_STRING_BUFFER_LENGTH = 128;
 
    public WSPHeaderDecoder(HttpHeaders decodeTo) {
       this._nameValuePairs = decodeTo;

@@ -9,11 +9,11 @@ import net.rim.device.api.util.Persistable;
 final class SymbolicLinkImpl extends FileImpl implements Persistable {
    private int _linkType;
    private String _linkName = "";
-   private static final int TYPE_UNDETERMINED;
-   private static final int TYPE_FILE;
-   private static final int TYPE_URL;
-   private static final String PROTOCOL_COD;
-   private static final String PROTOCOL_STORE;
+   private static final int TYPE_UNDETERMINED = -1;
+   private static final int TYPE_FILE = 0;
+   private static final int TYPE_URL = 1;
+   private static final String PROTOCOL_COD = "cod";
+   private static final String PROTOCOL_STORE = "store";
 
    protected SymbolicLinkImpl(int uid) {
       super(uid);

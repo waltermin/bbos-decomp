@@ -13,7 +13,7 @@ public final class PrefNetworkListOptions$StatusScreen extends PopupScreen {
    private BitmapField _iconField;
    private int _timeoutTimerId = -1;
    private boolean _timeoutExpired;
-   private static final long DEFAULT_TIMEOUT;
+   private static final long DEFAULT_TIMEOUT = 5000L;
 
    public PrefNetworkListOptions$StatusScreen() {
       super((Manager)(new Object()), 0);

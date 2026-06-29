@@ -22,11 +22,11 @@ public class SIMCardEfHandler implements Runnable, SIMCardEFListener {
    private SIMCardEfHandler$PleaseWaitDialog _dialog;
    private Application _application;
    private Object _gate;
-   private static final int STATE_IDLE;
-   private static final int STATE_RUNNING;
-   private static final int STATE_INFO_WAIT;
-   private static final int STATE_READ_WAIT;
-   private static final int STATE_WRITE_WAIT;
+   private static final int STATE_IDLE = 0;
+   private static final int STATE_RUNNING = 1;
+   private static final int STATE_INFO_WAIT = 2;
+   private static final int STATE_READ_WAIT = 3;
+   private static final int STATE_WRITE_WAIT = 4;
 
    public void startTask(SIMCardEfTask task, boolean wait) {
       if (task == null) {

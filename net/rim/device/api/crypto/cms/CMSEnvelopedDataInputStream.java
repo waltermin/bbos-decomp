@@ -62,7 +62,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
    private boolean _displayUI;
    private boolean _contentComplete;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(60462186577914032L, "net.rim.device.internal.resource.crypto.KeyStore");
-   private static final int MAX_CMS_PASSWORD_LENGTH;
+   private static final int MAX_CMS_PASSWORD_LENGTH = 255;
 
    CMSEnvelopedDataInputStream(InputStream inputStream, KeyStore keyStore) {
       this(inputStream, keyStore, null, false, true);
@@ -838,7 +838,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 39: ifnonnull 4b
       // 3c: aload 0
       // 3d: bipush 1
-      // 3e: anewarray 2613
+      // 3e: anewarray 2615
       // 41: dup
       // 42: bipush 0
       // 43: aload 1
@@ -972,7 +972,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 97: ifle c4
       // 9a: aload 0
       // 9b: iload 4
-      // 9d: anewarray 2838
+      // 9d: anewarray 2840
       // a0: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipients [Lnet/rim/device/api/crypto/cms/CMSEntityIdentifier;
       // a3: iload 4
       // a5: bipush 1

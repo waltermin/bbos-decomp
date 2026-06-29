@@ -3,8 +3,8 @@ package net.rim.device.apps.api.quickcontact;
 public class QuickContactLookupResult {
    QuickContactItem _item;
    int _flags;
-   static final int OPERATION_CANCELLED;
-   static final int MULTIPLE_MATCHES_DETECTED;
+   static final int OPERATION_CANCELLED = 2;
+   static final int MULTIPLE_MATCHES_DETECTED = 4;
 
    public QuickContactLookupResult() {
       this(null, 0);

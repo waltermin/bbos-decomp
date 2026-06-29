@@ -24,8 +24,8 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
    private InputStream _input;
    private OutputStream _output;
    private long _readTimeout;
-   private static final long TIMEOUT_PERIOD;
-   private static final boolean DEBUG;
+   private static final long TIMEOUT_PERIOD = 60000L;
+   private static final boolean DEBUG = false;
 
    @Override
    public void close() {

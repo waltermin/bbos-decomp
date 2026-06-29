@@ -12,19 +12,19 @@ import net.rim.device.cldc.io.utility.URL;
 import net.rim.device.cldc.io.utility.URLParameters;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static final String STRING_ConnectionHandler;
-   private static final String STRING_ConnectionTimeout;
-   private static final String STRING_FlowControlTimeout;
-   private static final String STRING_ConnectionUID;
-   private static final String STRING_SpecificUID;
-   private static final String STRING_ConnectionType;
-   private static final String STRING_UseCompression;
-   private static final String STRING_RdHTTPS;
-   private static final String STRING_trustAll;
-   private static final String STRING_GenericCompressedHandler;
-   private static final String STRING_DefaultCompressedHandler;
-   private static final String STRING_NotCompressedHandler;
-   private static final boolean BOOLEAN_UseCompression;
+   private static final String STRING_ConnectionHandler = "ConnectionHandler";
+   private static final String STRING_ConnectionTimeout = "ConnectionTimeout";
+   private static final String STRING_FlowControlTimeout = "FlowControlTimeout";
+   private static final String STRING_ConnectionUID = "ConnectionUID";
+   private static final String STRING_SpecificUID = "SpecificUID";
+   private static final String STRING_ConnectionType = "ConnectionType";
+   private static final String STRING_UseCompression = "UseCompression";
+   private static final String STRING_RdHTTPS = "RdHTTPS";
+   private static final String STRING_trustAll = "trustAll";
+   private static final String STRING_GenericCompressedHandler = "httpcgen";
+   private static final String STRING_DefaultCompressedHandler = "httpc";
+   private static final String STRING_NotCompressedHandler = "http";
+   private static final boolean BOOLEAN_UseCompression = true;
 
    @Override
    public final int getProperties(String name) {

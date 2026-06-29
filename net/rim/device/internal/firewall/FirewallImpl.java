@@ -31,8 +31,8 @@ public final class FirewallImpl extends Firewall {
    private IntHashtable _blockings;
    private IntHashtable _droppings;
    private ResourceBundle _rb = ResourceBundle.getBundle(3100685609005034344L, "net.rim.device.internal.resource.Firewall");
-   private static final long KEY;
-   private static final long GUID;
+   private static final long KEY = -6336176786833674023L;
+   private static final long GUID = 7954265007165122082L;
    private static String[] ALLOWED_PROTOCOLS_WHITELIST = new String[]{
       "apdu",
       "btgoep",
@@ -448,7 +448,7 @@ public final class FirewallImpl extends Firewall {
       // 1aa: bipush 27
       // 1ac: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 1af: bipush 3
-      // 1b1: anewarray 983
+      // 1b1: anewarray 989
       // 1b4: dup
       // 1b5: bipush 0
       // 1b6: aload 7
@@ -503,7 +503,7 @@ public final class FirewallImpl extends Firewall {
       // 215: bipush 27
       // 217: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 21a: bipush 3
-      // 21c: anewarray 1059
+      // 21c: anewarray 1065
       // 21f: dup
       // 220: bipush 0
       // 221: aload 7
@@ -542,7 +542,7 @@ public final class FirewallImpl extends Firewall {
       // 262: bipush 27
       // 264: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 267: bipush 3
-      // 269: anewarray 1125
+      // 269: anewarray 1131
       // 26c: dup
       // 26d: bipush 0
       // 26e: aload 7
@@ -596,7 +596,7 @@ public final class FirewallImpl extends Firewall {
       // 2cb: bipush 27
       // 2cd: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 2d0: bipush 3
-      // 2d2: anewarray 1201
+      // 2d2: anewarray 1207
       // 2d5: dup
       // 2d6: bipush 0
       // 2d7: aload 7
@@ -653,7 +653,7 @@ public final class FirewallImpl extends Firewall {
       // 33b: bipush 27
       // 33d: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 340: bipush 3
-      // 342: anewarray 1271
+      // 342: anewarray 1277
       // 345: dup
       // 346: bipush 0
       // 347: aload 7
@@ -713,7 +713,7 @@ public final class FirewallImpl extends Firewall {
       // 3b1: bipush 27
       // 3b3: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 3b6: bipush 3
-      // 3b8: anewarray 1341
+      // 3b8: anewarray 1347
       // 3bb: dup
       // 3bc: bipush 0
       // 3bd: aload 7
@@ -770,7 +770,7 @@ public final class FirewallImpl extends Firewall {
       // 420: bipush 27
       // 422: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 425: bipush 3
-      // 427: anewarray 1405
+      // 427: anewarray 1411
       // 42a: dup
       // 42b: bipush 0
       // 42c: aload 7
@@ -800,7 +800,7 @@ public final class FirewallImpl extends Firewall {
       // 45b: bipush 27
       // 45d: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 460: bipush 3
-      // 462: anewarray 1457
+      // 462: anewarray 1463
       // 465: dup
       // 466: bipush 0
       // 467: aload 7
@@ -830,7 +830,7 @@ public final class FirewallImpl extends Firewall {
       // 496: bipush 27
       // 498: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 49b: bipush 3
-      // 49d: anewarray 1509
+      // 49d: anewarray 1515
       // 4a0: dup
       // 4a1: bipush 0
       // 4a2: aload 7
@@ -860,7 +860,7 @@ public final class FirewallImpl extends Firewall {
       // 4d1: bipush 27
       // 4d3: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 4d6: bipush 3
-      // 4d8: anewarray 1561
+      // 4d8: anewarray 1567
       // 4db: dup
       // 4dc: bipush 0
       // 4dd: aload 7
@@ -890,7 +890,7 @@ public final class FirewallImpl extends Firewall {
       // 50c: bipush 27
       // 50e: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 511: bipush 3
-      // 513: anewarray 1613
+      // 513: anewarray 1619
       // 516: dup
       // 517: bipush 0
       // 518: aload 7
@@ -920,7 +920,7 @@ public final class FirewallImpl extends Firewall {
       // 547: bipush 27
       // 549: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 54c: bipush 3
-      // 54e: anewarray 1665
+      // 54e: anewarray 1671
       // 551: dup
       // 552: bipush 0
       // 553: aload 7
@@ -950,7 +950,7 @@ public final class FirewallImpl extends Firewall {
       // 582: bipush 27
       // 584: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 587: bipush 3
-      // 589: anewarray 1717
+      // 589: anewarray 1723
       // 58c: dup
       // 58d: bipush 0
       // 58e: aload 7
@@ -1053,7 +1053,7 @@ public final class FirewallImpl extends Firewall {
       // 650: bipush 27
       // 652: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 655: bipush 3
-      // 657: anewarray 1819
+      // 657: anewarray 1825
       // 65a: dup
       // 65b: bipush 0
       // 65c: aload 7
@@ -1090,7 +1090,7 @@ public final class FirewallImpl extends Firewall {
       // 698: bipush 27
       // 69a: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 69d: bipush 3
-      // 69f: anewarray 1877
+      // 69f: anewarray 1883
       // 6a2: dup
       // 6a3: bipush 0
       // 6a4: aload 7
@@ -1144,7 +1144,7 @@ public final class FirewallImpl extends Firewall {
       // 704: bipush 10
       // 706: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 709: bipush 1
-      // 70a: anewarray 1953
+      // 70a: anewarray 1959
       // 70d: dup
       // 70e: bipush 0
       // 70f: aload 7
@@ -1165,7 +1165,7 @@ public final class FirewallImpl extends Firewall {
       // 72e: bipush 10
       // 730: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 733: bipush 1
-      // 734: anewarray 1981
+      // 734: anewarray 1987
       // 737: dup
       // 738: bipush 0
       // 739: aload 7

@@ -95,11 +95,11 @@ final class WMLRenderer extends Renderer {
    private boolean _minimalMenuMode;
    private boolean _ignoreTimer;
    private DeviceDataConversionEvent _convEvent;
-   private static final String EMAIL_FORMAT_IDENTIFIER;
-   private static final String NO_BORDER_TABLE_IDENTIFIER;
-   private static final String FIRST_CARD_UNIQUE_ID;
-   private static final int PROGRESS_UPDATE_TRIGGER;
-   private static final int PROGRESS_UPDATE_TRIGGER_BYTES;
+   private static final String EMAIL_FORMAT_IDENTIFIER = "XXX_RIM_EMAIL_INPUT";
+   private static final String NO_BORDER_TABLE_IDENTIFIER = "XXX_RIM_TABLE_NO_BORDER_UID";
+   private static final String FIRST_CARD_UNIQUE_ID = "UD123456789";
+   private static final int PROGRESS_UPDATE_TRIGGER = 25;
+   private static final int PROGRESS_UPDATE_TRIGGER_BYTES = 512;
    private static final int[] RTF_ALIGNMENT_TRANSLATOR = new int[]{
       262144, 524288, 0, 0, 51, 1963524352, -447731706, 1704354115, 207814912, 1756490177, 1929445492, 1821066026, 712179968, -1975817147, 16806977, -716035469
    };

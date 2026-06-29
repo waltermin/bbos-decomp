@@ -19,7 +19,7 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
    private WeakReference[] _wrIndicatorChangedListeners = new Object[0];
    private IndicatorDisplay[] _sortedIndicators = new IndicatorDisplay[0];
    private IndicatorComparator _indicatorComparator = new IndicatorComparator();
-   private static final long MAXIMUM_INDICATOR_SUSPEND_TIME;
+   private static final long MAXIMUM_INDICATOR_SUSPEND_TIME = 240000L;
 
    public static void init() {
       IndicatorManagerImpl imi = new IndicatorManagerImpl();

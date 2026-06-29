@@ -26,7 +26,7 @@ import net.rim.device.internal.proxy.Proxy;
 class OTAMeetingListener extends OTABaseListener implements OTACalendarConstants, GlobalEventListener {
    private OTAMeetingListener$PendingMeetingResponseManager _responseQueue = new OTAMeetingListener$PendingMeetingResponseManager(this);
    private CalendarServiceManager _calendarServiceManager;
-   private static final long REMINDER_FIELD;
+   private static final long REMINDER_FIELD = 6784165211264038547L;
 
    OTAMeetingListener() {
       this._responseQueue.processAllPendingResponses();

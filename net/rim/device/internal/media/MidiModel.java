@@ -14,12 +14,12 @@ class MidiModel implements MetaDataControl {
    private long _duration;
    private short[] _buzzerTune;
    static final short[] NOTE_FREQUENCIES = TonePlayer._noteFreq;
-   static final int SECONDS_PER_MINUTE;
-   static final int MICRO_PER_UNIT;
-   private static final int POLYPHONIC_UNKNOWN;
-   private static final int POLYPHONIC_YES;
-   private static final int POLYPHONIC_NO;
-   private static final String POLYPHONIC_KEY;
+   static final int SECONDS_PER_MINUTE = 60;
+   static final int MICRO_PER_UNIT = 1000000;
+   private static final int POLYPHONIC_UNKNOWN = 0;
+   private static final int POLYPHONIC_YES = 1;
+   private static final int POLYPHONIC_NO = 2;
+   private static final String POLYPHONIC_KEY = "polyphonic";
 
    public String getCopyright() {
       return this._copyright;

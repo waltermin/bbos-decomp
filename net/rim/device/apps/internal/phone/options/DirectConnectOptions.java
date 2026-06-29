@@ -10,17 +10,17 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 public final class DirectConnectOptions extends OptionsBase {
    private DirectConnectOptions$PersistedDirectConnectOptions _persistedDirectConnectOptions;
-   private static final long PERSISTED_DIRECT_CONNECT_OPTIONS;
-   private static final int NUM_DIRECT_CONNECT_OPTIONS;
-   private static final int PHONE_ONLY;
-   private static final int SILENT_PRIVATE_CALL;
-   private static final int SILENT_CALL_ALERT;
-   private static final int SILENT_TALK_GROUP;
-   private static final int TALK_GROUP_ID;
-   private static final int TALK_GROUP_AREA;
-   public static final int SERVICE_UNKNOWN;
-   public static final int SERVICE_DISABLED;
-   public static final int SERVICE_ENABLED;
+   private static final long PERSISTED_DIRECT_CONNECT_OPTIONS = 5346469576985826158L;
+   private static final int NUM_DIRECT_CONNECT_OPTIONS = 6;
+   private static final int PHONE_ONLY = 0;
+   private static final int SILENT_PRIVATE_CALL = 1;
+   private static final int SILENT_CALL_ALERT = 2;
+   private static final int SILENT_TALK_GROUP = 3;
+   private static final int TALK_GROUP_ID = 4;
+   private static final int TALK_GROUP_AREA = 5;
+   public static final int SERVICE_UNKNOWN = -1;
+   public static final int SERVICE_DISABLED = 0;
+   public static final int SERVICE_ENABLED = 1;
    private static DirectConnectOptions _options;
 
    private DirectConnectOptions() {

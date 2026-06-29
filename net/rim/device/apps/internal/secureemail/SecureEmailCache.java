@@ -29,9 +29,9 @@ public class SecureEmailCache {
    private SecureEmailListener _secureEmailListener = SecureEmailListener.getInstance();
    private static int ldapServer = 1;
    public static CertificateServerInfo _defaultServer = (CertificateServerInfo)(new Object("", 1, "default Server", "", 0));
-   private static final long TIME_BETWEEN_FAILED_AUTO_FETCHES;
-   private static final long ID_LOCK;
-   private static final long ID;
+   private static final long TIME_BETWEEN_FAILED_AUTO_FETCHES = 3600000L;
+   private static final long ID_LOCK = -2405970696515239737L;
+   private static final long ID = 6573482441497432665L;
 
    private SecureEmailCache() {
       CertificateServers certificateServers = CertificateServers.getInstance();

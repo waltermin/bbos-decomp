@@ -110,9 +110,9 @@ public final class EventImpl
    private String _iCalID;
    private int _accessibleStateSet = 1;
    private int _numOfAccessibleItems = 4;
-   private static final long EVENT_SEQUENCE_ID;
+   private static final long EVENT_SEQUENCE_ID = 5328208744741124224L;
    private static int _persistentId = PersistentInteger.getId(5328208744741124224L, -1);
-   static final long CONTROLLER_ID;
+   static final long CONTROLLER_ID = 7604121982064887442L;
    static RecurCalc _recurCalc = (RecurCalc)(new Object());
    private static Recur$Modifier _modifier = (Recur$Modifier)(new Object());
    private static long[] _exclusions = new long[0];
@@ -121,12 +121,12 @@ public final class EventImpl
    private static Calendar _gmtCal = Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT));
    private static Calendar _currCal = Calendar.getInstance();
    private static ContextObjectWR _reconcileContextWR = (ContextObjectWR)(new Object());
-   private static final int PACKEDINFO_FREE_BUSY;
-   private static final int PACKEDINFO_ALL_DAY;
+   private static final int PACKEDINFO_FREE_BUSY = 255;
+   private static final int PACKEDINFO_ALL_DAY = 256;
    private static int[] _hints = new int[0];
-   private static final long SORT_KEY_START;
-   private static final long SORT_KEY_END;
-   private static final long SORT_KEY_DUR;
+   private static final long SORT_KEY_START = -7347526267900023482L;
+   private static final long SORT_KEY_END = -104331952420113366L;
+   private static final long SORT_KEY_DUR = -1863931878973078146L;
    private static Recur$Handle _sharedHandle = (Recur$Handle)(new Object());
 
    protected final void accessibleEventOccurred(int event, Object oldValue, Object newValue, AccessibleContext context) {

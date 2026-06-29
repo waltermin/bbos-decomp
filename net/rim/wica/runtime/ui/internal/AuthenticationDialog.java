@@ -40,8 +40,8 @@ public final class AuthenticationDialog extends PopupDialog implements FieldChan
    private int[] _offsets;
    private byte[] _attributes;
    private Font[] _fonts;
-   public static final int BASIC_MODE;
-   public static final int NTLM_MODE;
+   public static final int BASIC_MODE = 1;
+   public static final int NTLM_MODE = 2;
 
    public AuthenticationDialog(
       String username, String domain, String password, String serviceName, String serviceDetails, boolean isProxy, int mode, long style

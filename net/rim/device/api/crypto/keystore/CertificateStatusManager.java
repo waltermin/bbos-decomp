@@ -18,17 +18,17 @@ import net.rim.device.internal.ui.component.BackgroundDialog;
 
 public final class CertificateStatusManager implements Collection, CollectionEventSource {
    private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
-   private static final long CLOCK_SKEW;
-   private static final long CLEAN_THRESHOLD;
-   static final byte ALWAYS_PROMPT;
-   static final byte PROMPT_ON_ERROR;
-   static final byte NEVER_PROMPT;
-   private static final long CERTIFICATE_STATUS_MANAGER;
+   private static final long CLOCK_SKEW = 1800000L;
+   private static final long CLEAN_THRESHOLD = 86400000L;
+   static final byte ALWAYS_PROMPT = 0;
+   static final byte PROMPT_ON_ERROR = 1;
+   static final byte NEVER_PROMPT = 2;
+   private static final long CERTIFICATE_STATUS_MANAGER = -1593645258214481195L;
    private static CertificateStatusManager _manager;
-   private static final int NO_UPDATE;
-   private static final int UPDATE_NO_TICKET;
-   private static final int UPDATE_TICKET;
-   private static final long TWO_WEEKS;
+   private static final int NO_UPDATE = 0;
+   private static final int UPDATE_NO_TICKET = 1;
+   private static final int UPDATE_TICKET = 2;
+   private static final long TWO_WEEKS = 1209600000L;
 
    private CertificateStatusManager() {
    }

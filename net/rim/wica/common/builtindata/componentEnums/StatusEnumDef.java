@@ -3,18 +3,18 @@ package net.rim.wica.common.builtindata.componentEnums;
 import net.rim.device.api.util.ToIntHashtable;
 
 public final class StatusEnumDef extends EnumDefinition {
-   public static final int NUM_ENUM_VALUES;
-   private static final String STATUS_NOT_STARTED;
-   private static final String STATUS_IN_PROGRESS;
-   private static final String STATUS_COMPLETED;
-   private static final String STATUS_WAITING;
-   private static final String STATUS_DEFERRED;
-   public static final int STATUS_NOT_STARTED_VALUE;
-   public static final int STATUS_IN_PROGRESS_VALUE;
-   public static final int STATUS_COMPLETED_VALUE;
-   public static final int STATUS_WAITING_VALUE;
-   public static final int STATUS_DEFERRED_VALUE;
-   public static final String STATUS_ENUM_NAME;
+   public static final int NUM_ENUM_VALUES = 5;
+   private static final String STATUS_NOT_STARTED = "NOT_STARTED";
+   private static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
+   private static final String STATUS_COMPLETED = "COMPLETED";
+   private static final String STATUS_WAITING = "WAITING";
+   private static final String STATUS_DEFERRED = "DEFERRED";
+   public static final int STATUS_NOT_STARTED_VALUE = 0;
+   public static final int STATUS_IN_PROGRESS_VALUE = 1;
+   public static final int STATUS_COMPLETED_VALUE = 2;
+   public static final int STATUS_WAITING_VALUE = 3;
+   public static final int STATUS_DEFERRED_VALUE = 4;
+   public static final String STATUS_ENUM_NAME = "STATUS";
 
    public StatusEnumDef() {
       super._enumNames = new Object[5];

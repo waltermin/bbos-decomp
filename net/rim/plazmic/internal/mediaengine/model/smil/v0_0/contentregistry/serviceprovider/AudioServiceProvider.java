@@ -8,7 +8,7 @@ import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player.AudioPlayerWr
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player.Player;
 
 public class AudioServiceProvider extends ServiceProvider {
-   private static final int NUM_SERVICES;
+   private static final int NUM_SERVICES = 2;
 
    public AudioServiceProvider() {
       super(2);

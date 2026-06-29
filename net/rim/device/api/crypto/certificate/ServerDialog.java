@@ -31,8 +31,8 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
    private static final ResourceBundle _rb = ResourceBundle.getBundle(
       -3843310740975580338L, "net.rim.device.internal.resource.crypto.CertificateServersOptions"
    );
-   private static final int DEFAULT_LDAP_PORT;
-   private static final int INDENT_PIXEL_WIDTH;
+   private static final int DEFAULT_LDAP_PORT = 389;
+   private static final int INDENT_PIXEL_WIDTH = 12;
 
    public final int getPort() {
       if (this._portField != null) {

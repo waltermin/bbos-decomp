@@ -91,10 +91,10 @@ public final class MEGraphics2dContext {
    public int[] _finalCoordsX;
    public int[] _finalCoordsY;
    private boolean _displayable = true;
-   public static final int NONE;
-   public static final String NONE_STRING;
-   public static final int INHERIT;
-   public static final String INHERIT_STRING;
+   public static final int NONE = Integer.MIN_VALUE;
+   public static final String NONE_STRING = "none";
+   public static final int INHERIT = Integer.MAX_VALUE;
+   public static final String INHERIT_STRING = "inherit";
    static int[] _tempPoint = new int[2];
    static int[] _tempXPoints = new int[4];
    static int[] _transformedXPoints = new int[4];

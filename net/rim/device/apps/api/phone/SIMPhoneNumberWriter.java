@@ -24,9 +24,9 @@ public final class SIMPhoneNumberWriter extends PopupScreen implements SIMCardEF
    private int _structure;
    private boolean _show;
    private int _record;
-   static final byte INTERNATIONAL_CONST;
-   static final byte UNKNOWN_CONST;
-   private static final long DEFAULT_TIMEOUT;
+   static final byte INTERNATIONAL_CONST = -112;
+   static final byte UNKNOWN_CONST = -128;
+   private static final long DEFAULT_TIMEOUT = 20000L;
 
    private SIMPhoneNumberWriter(String phoneNumber, String phoneNumberDescription, int structure, int id, int record, boolean show) {
       super((Manager)(new Object()), 0);

@@ -14,8 +14,8 @@ import net.rim.vm.TraceBack;
 
 public final class ApplicationPermissionsManager {
    private Object _closedSignal = new Object();
-   private static final long DESCRIPTOR_ID;
-   private static final long SCREEN_ID;
+   private static final long DESCRIPTOR_ID = 3353949624016666498L;
+   private static final long SCREEN_ID = 5402085941883890214L;
    private static ApplicationPermissionsManager _instance = new ApplicationPermissionsManager();
 
    private ApplicationPermissionsManager() {

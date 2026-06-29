@@ -33,11 +33,11 @@ final class SmartDialingOption extends VoiceOptionsListItem {
    private int _origNationalNumberLength;
    private String _origDefaultPhoneNumber;
    private Verb _resetVerb = new SmartDialingOption$ResetSmartDialingVerb(this);
-   private static final int NNL_MIN;
-   private static final int NNL_MAX;
-   private static final int MAX_AREA_CODE_LENGTH;
-   private static final int MIN_EXT_LENGTH;
-   private static final int MAX_EXT_LENGTH;
+   private static final int NNL_MIN = 0;
+   private static final int NNL_MAX = 32;
+   private static final int MAX_AREA_CODE_LENGTH = 40;
+   private static final int MIN_EXT_LENGTH = 2;
+   private static final int MAX_EXT_LENGTH = 6;
    private static final String[] ADDITIONAL_TONES = new String[]{"!", ",", ",,", ",,,", ""};
 
    public SmartDialingOption(Object context) {

@@ -70,15 +70,15 @@ final class SystemOnOffManager
    private boolean _autoOffWhenIdle;
    static String AUTO_ON = "AutoOn";
    static String AUTO_OFF = "AutoOff";
-   private static final int BAT_TOO_LOW_PROMPT_TIME;
-   private static final int BAT_TOO_LOW_WARNING_INTERVAL;
+   private static final int BAT_TOO_LOW_PROMPT_TIME = 30000;
+   private static final int BAT_TOO_LOW_WARNING_INTERVAL = 120000;
    private static SystemOnOffManager _cachedManager;
-   private static final long GUID;
-   private static final long RADIO_STATE;
-   private static final long LOW_CHARGING_WARNING_INTERVAL;
+   private static final long GUID = -2419897739206856258L;
+   private static final long RADIO_STATE = 734913344992711259L;
+   private static final long LOW_CHARGING_WARNING_INTERVAL = 1800000L;
    private static Dialog _usbLowChargingDialog;
    private static final short[] BATTERY_LOW_TUNE = new short[]{2000, 500, 256, 28488};
-   private static final int REMINDER_IDLE_SECONDS;
+   private static final int REMINDER_IDLE_SECONDS = 120;
 
    static final void init() {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();

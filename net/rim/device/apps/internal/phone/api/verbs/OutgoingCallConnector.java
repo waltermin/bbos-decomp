@@ -43,14 +43,14 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
    private boolean _waitForRadio;
    private PhoneStatusDialog _statusDialog;
    private int _communicationsState;
-   static final int LOG_OUTGOING_CALL_REJECTED;
-   private static final long DEFAULT_TIMEOUT;
-   private static final long WAIT_FOR_RADIO_TIMEOUT;
-   private static final int COMM_STATE_ON;
-   private static final int COMM_STATE_OFF;
-   private static final int COMM_STATE_LOW_BATTERY;
-   private static final int COMM_STATE_TURNING_ON;
-   private static final int COMM_STATE_OTHER;
+   static final int LOG_OUTGOING_CALL_REJECTED = 1380598612;
+   private static final long DEFAULT_TIMEOUT = 4000L;
+   private static final long WAIT_FOR_RADIO_TIMEOUT = 60000L;
+   private static final int COMM_STATE_ON = 1;
+   private static final int COMM_STATE_OFF = 2;
+   private static final int COMM_STATE_LOW_BATTERY = 3;
+   private static final int COMM_STATE_TURNING_ON = 4;
+   private static final int COMM_STATE_OTHER = 5;
 
    public static boolean outgoingCallPermitted() {
       switch (RadioInfo.getNetworkType()) {

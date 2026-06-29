@@ -20,9 +20,9 @@ final class IMPlusRequestOptionModelImpl implements RIMModel, VerbProvider, Fiel
    private boolean _default;
    private int _msgComposeOptionSetting;
    private IMPlusCmimeListener$ReceiptCapableService _receiptCapableService;
-   private static final byte CONFIRM_DELIVERY_TYPE;
-   private static final byte CONFIRM_READ_TYPE;
-   private static final byte ALLOW_READ_CONFIRM_TYPE;
+   private static final byte CONFIRM_DELIVERY_TYPE = 0;
+   private static final byte CONFIRM_READ_TYPE = 1;
+   private static final byte ALLOW_READ_CONFIRM_TYPE = 2;
 
    final void initialize(Object context) {
       this._msgComposeOptionSetting = 0;

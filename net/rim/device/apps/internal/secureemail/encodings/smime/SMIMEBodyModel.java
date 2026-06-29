@@ -17,9 +17,9 @@ public final class SMIMEBodyModel extends SecureEmailBodyModel implements Persis
    boolean _isSignedReceipt;
    boolean _isSignedReceiptRequest;
    boolean _isStoredAsBase64;
-   public static final int SIGNED_RECEIPT_BIT;
-   public static final int SIGNED_RECEIPT_REQUEST_BIT;
-   public static final int IS_STORED_AS_BASE64_BIT;
+   public static final int SIGNED_RECEIPT_BIT = 1;
+   public static final int SIGNED_RECEIPT_REQUEST_BIT = 2;
+   public static final int IS_STORED_AS_BASE64_BIT = 4;
 
    public SMIMEBodyModel(byte[] text, Object initialData) {
       super(text, initialData);

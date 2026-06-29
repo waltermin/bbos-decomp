@@ -10,7 +10,7 @@ import net.rim.device.apps.api.search.GlobalSearchRegistry;
 import net.rim.device.internal.proxy.Proxy;
 
 final class PackageManager {
-   private static final long TASK_SEARCHABLE_ID;
+   private static final long TASK_SEARCHABLE_ID = -5331631597610348814L;
 
    static final void registerOnceOnSystemStart() {
       UnreadCountManager.setUnreadCountVisible(9, false);

@@ -20,12 +20,12 @@ public final class ApplicationProcess extends Process implements Runnable {
    private int _lastHandle;
    private Vector _cleanupRunnables;
    private boolean _droppingKeys;
-   private static final int LAST_MESSAGE_GENERIC;
-   private static final int LAST_MESSAGE_THUMB_ROLL;
-   private static final int LAST_MESSAGE_STYLUS_DRAG;
-   private static final int LAST_MESSAGE_TRACKBALL_ROLL;
-   private static final int LAST_MESSAGE_STREAMING_SESSION_WATERMARK;
-   private static final int LAST_MESSAGE_MEDIA_STATUS;
+   private static final int LAST_MESSAGE_GENERIC = 0;
+   private static final int LAST_MESSAGE_THUMB_ROLL = 1;
+   private static final int LAST_MESSAGE_STYLUS_DRAG = 2;
+   private static final int LAST_MESSAGE_TRACKBALL_ROLL = 3;
+   private static final int LAST_MESSAGE_STREAMING_SESSION_WATERMARK = 4;
+   private static final int LAST_MESSAGE_MEDIA_STATUS = 5;
 
    ApplicationProcess(ApplicationManagerImpl appManager, ApplicationDescriptor descriptor, boolean grabForegroundOnStartup) {
       this._appManager = appManager;

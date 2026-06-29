@@ -9,10 +9,10 @@ import net.rim.device.internal.i18n.DateTimeFormatOptions;
 import net.rim.device.internal.timesync.TimeSync;
 
 final class TimeOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int TIMEFORMAT1224_TAG;
-   private static final int TIMEZONEID_TAG;
-   private static final int AUTO_TIME_SET;
+   private static final int UID = -447168820;
+   private static final int TIMEFORMAT1224_TAG = 1;
+   private static final int TIMEZONEID_TAG = 2;
+   private static final int AUTO_TIME_SET = 3;
 
    TimeOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

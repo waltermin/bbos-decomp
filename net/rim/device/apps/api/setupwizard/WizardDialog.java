@@ -14,7 +14,7 @@ import net.rim.device.api.ui.theme.ThemeManager;
 public class WizardDialog extends Dialog {
    boolean _warnOnSoftKeys;
    boolean _isWaitingDialog = false;
-   private static final int DIALOG_FONT_SIZE;
+   private static final int DIALOG_FONT_SIZE = 7;
 
    public WizardDialog(int type, String message, int defaultChoice, Bitmap bitmap, long style, boolean warnOnSoftKeys) {
       super(type, "", defaultChoice, bitmap, style);

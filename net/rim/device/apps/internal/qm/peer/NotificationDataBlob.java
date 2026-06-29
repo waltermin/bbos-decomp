@@ -7,18 +7,18 @@ final class NotificationDataBlob extends PeerDataBlob {
    private int _notifyCode;
    private String _message;
    private String _from;
-   private static final int NOTIF_CODE;
-   private static final int NOTIF_MSG;
-   private static final int FROM_ID;
-   public static final int NOTIF_UNKNOWN;
-   public static final int NOTIF_UNAVAILABLE;
-   public static final int NOTIF_AVAILABLE;
-   public static final int NOTIF_BUSY;
-   public static final int NOTIF_THREAD_READ;
-   public static final int NOTIF_TYPING;
-   public static final int NOTIF_NOT_TYPING;
-   public static final int NO_PRESENCE_SUPPORT;
-   public static final int READ_ONLY_PRESENCE_SUPPORT;
+   private static final int NOTIF_CODE = 1;
+   private static final int NOTIF_MSG = 2;
+   private static final int FROM_ID = 3;
+   public static final int NOTIF_UNKNOWN = -1;
+   public static final int NOTIF_UNAVAILABLE = 0;
+   public static final int NOTIF_AVAILABLE = 1;
+   public static final int NOTIF_BUSY = 2;
+   public static final int NOTIF_THREAD_READ = 3;
+   public static final int NOTIF_TYPING = 4;
+   public static final int NOTIF_NOT_TYPING = 5;
+   public static final int NO_PRESENCE_SUPPORT = 6;
+   public static final int READ_ONLY_PRESENCE_SUPPORT = 7;
 
    public NotificationDataBlob() {
       this(-1, null);

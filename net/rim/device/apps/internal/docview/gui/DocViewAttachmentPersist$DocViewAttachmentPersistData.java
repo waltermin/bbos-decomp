@@ -19,9 +19,9 @@ import net.rim.vm.Persistable;
 final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Persistable, SyncObject, RestoreProvider {
    private IntHashtable _msgMap = (IntHashtable)(new Object(128));
    private Vector _lruQueue = (Vector)(new Object());
-   private static final long MESSAGE_EXPIRED;
-   private static final long PENDING_EXPIRED;
-   private static final int BACKUP_VERSIONID;
+   private static final long MESSAGE_EXPIRED = 86400000L;
+   private static final long PENDING_EXPIRED = 3600000L;
+   private static final int BACKUP_VERSIONID = 3;
 
    final AttachmentElementInfo getElementData(int messageID, int attachmentIndex, String archiveIndicator, int partID) {
       synchronized (this._msgMap) {

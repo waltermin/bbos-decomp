@@ -5,9 +5,9 @@ import net.rim.device.apps.api.framework.model.Recur$Modifier;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 
 final class RepeatRuleUtil {
-   static final int MONTH_IN_YEAR_SHAMT;
-   static final int DAY_IN_WEEK_SHAMT;
-   static final int WEEK_IN_MONTH_SHAMT;
+   static final int MONTH_IN_YEAR_SHAMT = 17;
+   static final int DAY_IN_WEEK_SHAMT = 10;
+   static final int WEEK_IN_MONTH_SHAMT = 0;
 
    static final int getRecurMonth(Recur recur) {
       int result = 0;

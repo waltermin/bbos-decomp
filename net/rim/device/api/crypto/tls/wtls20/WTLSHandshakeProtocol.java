@@ -61,8 +61,8 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    private WTLSAlertProtocol _alertProtocol;
    private byte[] _cipherSuites;
    private String _apn;
-   private static final boolean DEBUG;
-   private static final int MAX_RETRIES;
+   private static final boolean DEBUG = false;
+   private static final int MAX_RETRIES = 5;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(3628098008949486223L, "net.rim.device.internal.resource.crypto.WTLS");
 
    public WTLSHandshakeProtocol(WTLSRecordProtocol recordProtocol, String apn, int flags, int clientIdType, String clientIdValue) {
@@ -695,7 +695,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 027: aconst_null
       // 028: astore 4
       // 02a: bipush 0
-      // 02b: anewarray 1530
+      // 02b: anewarray 1534
       // 02e: astore 5
       // 030: aload 2
       // 031: invokevirtual java/io/ByteArrayInputStream.available ()I

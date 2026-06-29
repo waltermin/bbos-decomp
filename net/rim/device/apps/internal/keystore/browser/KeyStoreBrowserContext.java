@@ -7,15 +7,15 @@ import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachmentModelFactory;
 
 public interface KeyStoreBrowserContext {
-   int FILTER_MY_CERTS;
-   int FILTER_OTHERS_CERTS;
-   int FILTER_CA_CERTS;
-   int FILTER_ROOT_CERTS;
-   int FILTER_END_ENTITY_CERTS;
-   int FILTER_ALL_CERTS;
-   int RELOAD_KEYSTORE;
-   int RELOAD_CERTIFICATES;
-   int RELOAD_SCREEN;
+   int FILTER_MY_CERTS = 0;
+   int FILTER_OTHERS_CERTS = 1;
+   int FILTER_CA_CERTS = 2;
+   int FILTER_ROOT_CERTS = 3;
+   int FILTER_END_ENTITY_CERTS = 4;
+   int FILTER_ALL_CERTS = 5;
+   int RELOAD_KEYSTORE = 1;
+   int RELOAD_CERTIFICATES = 2;
+   int RELOAD_SCREEN = 3;
 
    long[] getVerbRepositoryTypes();
 

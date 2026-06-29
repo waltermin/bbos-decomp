@@ -9,13 +9,13 @@ import net.rim.device.api.util.IntHashtable;
 public final class SBApplicationData {
    private IntHashtable _applicationDataTable = (IntHashtable)(new Object());
    private int _serviceRecordID = -1;
-   public static final int TYPE_IPPP_DATA_SIZE;
-   public static final int TYPE_IPPP_TIMEOUT;
-   public static final int TYPE_MAXIMUM_CACHE_SIZE;
-   public static final int TYPE_MAXIMUM_QUEUE_SIZE;
-   public static final int TYPE_MAXIMUM_PENDING_SIZE;
-   public static final int TYPE_IPPP_TYPE;
-   public static final int TYPE_IPPP_CAPABILITIES;
+   public static final int TYPE_IPPP_DATA_SIZE = 1;
+   public static final int TYPE_IPPP_TIMEOUT = 2;
+   public static final int TYPE_MAXIMUM_CACHE_SIZE = 3;
+   public static final int TYPE_MAXIMUM_QUEUE_SIZE = 4;
+   public static final int TYPE_MAXIMUM_PENDING_SIZE = 5;
+   public static final int TYPE_IPPP_TYPE = 6;
+   public static final int TYPE_IPPP_CAPABILITIES = 7;
 
    public SBApplicationData(ServiceRecord rec) {
       this.readData(rec);

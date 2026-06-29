@@ -21,16 +21,16 @@ public final class KeyStoreBrowserVerb extends Verb {
    private KeyStoreBrowserData _browserData;
    private KeyStoreBrowserData[] _browserDatas;
    private KeyStoreData[] _keyStoreDatas;
-   public static final int CANCEL_HOLD_VERB;
-   public static final int CHANGE_LABEL_VERB;
-   public static final int DELETE_VERB;
-   public static final int REVOKE_VERB;
-   public static final int FETCH_STATUS_VERB;
-   public static final int FETCH_STATUS_CHAIN_VERB;
-   public static final int FETCH_CERT_UPDATE_VERB;
-   public static final int ASSOCIATE_ADDRESSES_VERB;
-   public static final int CONTINUE_VERB;
-   public static final int CHANGE_SECURITY_LEVEL_VERB;
+   public static final int CANCEL_HOLD_VERB = 0;
+   public static final int CHANGE_LABEL_VERB = 1;
+   public static final int DELETE_VERB = 2;
+   public static final int REVOKE_VERB = 3;
+   public static final int FETCH_STATUS_VERB = 4;
+   public static final int FETCH_STATUS_CHAIN_VERB = 5;
+   public static final int FETCH_CERT_UPDATE_VERB = 6;
+   public static final int ASSOCIATE_ADDRESSES_VERB = 7;
+   public static final int CONTINUE_VERB = 8;
+   public static final int CHANGE_SECURITY_LEVEL_VERB = 9;
 
    public KeyStoreBrowserVerb(int type, int menuOrdering) {
       super(menuOrdering);
@@ -395,7 +395,7 @@ public final class KeyStoreBrowserVerb extends Verb {
       // 2b: arraylength
       // 2c: istore 4
       // 2e: iload 4
-      // 30: anewarray 895
+      // 30: anewarray 915
       // 33: astore 5
       // 35: bipush 0
       // 36: istore 6
@@ -419,7 +419,7 @@ public final class KeyStoreBrowserVerb extends Verb {
       // 5b: sipush 6058
       // 5e: invokestatic net/rim/device/apps/internal/keystore/browser/KeyStoreBrowserResources.getString (I)Ljava/lang/String;
       // 61: bipush 1
-      // 62: anewarray 915
+      // 62: anewarray 935
       // 65: dup
       // 66: bipush 0
       // 67: aload 6

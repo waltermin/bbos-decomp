@@ -43,42 +43,42 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
    private int _retryCount;
    private int _threadPoolSize;
    private WAPPushSource$WAP20RunThread _wap2Thread;
-   public static final String WAP_PUSH_SERVICE_CID;
-   public static final int TYPE_SMS_CONNECTION;
-   public static final int TYPE_UDP_CONNECTION;
-   public static final int TYPE_TCPIP_CONNECTION;
-   public static final int TLS_VERSION_NONE;
-   public static final int TLS_VERSION_TLS_10;
-   private static final long TCP_PUSH_PORT_KEYS;
-   private static final byte VERSION;
-   private static final byte ENCODED_TYPE_TYPE;
-   private static final byte ENCODED_TYPE_OUT_PORT;
-   private static final byte ENCODED_TYPE_WTLS_MODE;
-   private static final byte ENCODED_TYPE_WTLS_CLIENT_ID_TYPE;
-   private static final byte ENCODED_TYPE_WTLS_CLIENT_ID_VALUE;
-   private static final byte ENCODED_TYPE_SL_FILTER_MODE;
-   private static final byte ENCODED_TYPE_SL_FILTER_VALUE;
-   private static final byte ENCODED_TYPE_SI_FILTER_MODE;
-   private static final byte ENCODED_TYPE_SI_FILTER_VALUE;
-   private static final byte ENCODED_TYPE_OTHER_FILTER_MODE;
-   private static final byte ENCODED_TYPE_OTHER_FILTER_VALUE;
-   private static final byte ENCODED_TYPE_SL_ACCEPT_MODE;
-   private static final byte ENCODED_TYPE_SI_ACCEPT_MODE;
-   private static final byte ENCODED_TYPE_OTHER_ACCEPT_MODE;
-   private static final byte ENCODED_TYPE_TLS_VERSION;
-   private static final byte ENCODED_TYPE_CLIENT_ID_TYPE;
-   public static final byte ENCODED_TYPE_PPG_ADDRESS;
-   private static final byte ENCODED_TYPE_RETRY_MODE;
-   private static final byte ENCODED_TYPE_RETRY_COUNT;
-   private static final byte ENCODED_TYPE_THREAD_POOL_SIZE;
-   private static final String CPI_TAG;
-   private static final String WAP_PUSH_STATUS;
-   private static final int CPI_VALUES_ACCEPT;
-   private static final int CPI_VALUES_ACCEPT_CHARSET;
-   private static final int CPI_VALUES_ACCEPT_LANGUAGE;
-   private static final int CPI_VALUES_ACCEPT_APPID;
-   private static final int CPI_VALUES_ACCEPT_MSG_SIZE;
-   private static final int CPI_VALUES_ACCEPT_MAX_REQ;
+   public static final String WAP_PUSH_SERVICE_CID = "WAPPushConfig";
+   public static final int TYPE_SMS_CONNECTION = 6;
+   public static final int TYPE_UDP_CONNECTION = 7;
+   public static final int TYPE_TCPIP_CONNECTION = 8;
+   public static final int TLS_VERSION_NONE = 0;
+   public static final int TLS_VERSION_TLS_10 = 1;
+   private static final long TCP_PUSH_PORT_KEYS = -477495422972569712L;
+   private static final byte VERSION = 1;
+   private static final byte ENCODED_TYPE_TYPE = 1;
+   private static final byte ENCODED_TYPE_OUT_PORT = 2;
+   private static final byte ENCODED_TYPE_WTLS_MODE = 3;
+   private static final byte ENCODED_TYPE_WTLS_CLIENT_ID_TYPE = 4;
+   private static final byte ENCODED_TYPE_WTLS_CLIENT_ID_VALUE = 5;
+   private static final byte ENCODED_TYPE_SL_FILTER_MODE = 6;
+   private static final byte ENCODED_TYPE_SL_FILTER_VALUE = 7;
+   private static final byte ENCODED_TYPE_SI_FILTER_MODE = 8;
+   private static final byte ENCODED_TYPE_SI_FILTER_VALUE = 9;
+   private static final byte ENCODED_TYPE_OTHER_FILTER_MODE = 10;
+   private static final byte ENCODED_TYPE_OTHER_FILTER_VALUE = 11;
+   private static final byte ENCODED_TYPE_SL_ACCEPT_MODE = 12;
+   private static final byte ENCODED_TYPE_SI_ACCEPT_MODE = 13;
+   private static final byte ENCODED_TYPE_OTHER_ACCEPT_MODE = 14;
+   private static final byte ENCODED_TYPE_TLS_VERSION = 15;
+   private static final byte ENCODED_TYPE_CLIENT_ID_TYPE = 16;
+   public static final byte ENCODED_TYPE_PPG_ADDRESS = 17;
+   private static final byte ENCODED_TYPE_RETRY_MODE = 18;
+   private static final byte ENCODED_TYPE_RETRY_COUNT = 19;
+   private static final byte ENCODED_TYPE_THREAD_POOL_SIZE = 20;
+   private static final String CPI_TAG = "X-Wap-CPITag";
+   private static final String WAP_PUSH_STATUS = "X-Wap-Push-Status";
+   private static final int CPI_VALUES_ACCEPT = 0;
+   private static final int CPI_VALUES_ACCEPT_CHARSET = 1;
+   private static final int CPI_VALUES_ACCEPT_LANGUAGE = 2;
+   private static final int CPI_VALUES_ACCEPT_APPID = 3;
+   private static final int CPI_VALUES_ACCEPT_MSG_SIZE = 4;
+   private static final int CPI_VALUES_ACCEPT_MAX_REQ = 5;
    private static final String[] CPI_VALUES = new String[]{
       "X-Wap-Push-Accept",
       "X-Wap-Push-Accept-Charset",
@@ -87,9 +87,9 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
       "X-Wap-Push-MsgSize",
       "X-Wap-Push-Accept-MaxPushReq"
    };
-   private static final int FIVE_MINUTES;
-   public static final int RETRY_MODE_COUNT;
-   public static final int RETRY_MODE_BACKOFF;
+   private static final int FIVE_MINUTES = 300000;
+   public static final int RETRY_MODE_COUNT = 1;
+   public static final int RETRY_MODE_BACKOFF = 2;
 
    WAPPushSource(
       int port,

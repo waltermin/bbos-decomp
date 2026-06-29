@@ -20,7 +20,7 @@ public final class ActiveScreenMyNumberField extends Field implements GlobalEven
    private boolean _directConnectCall;
    private int _lineHeight;
    private int _callId = -1;
-   static final long SHOW_UNKNOWN_DEVICE_NUMBER;
+   static final long SHOW_UNKNOWN_DEVICE_NUMBER = 1039979742518454189L;
    private static Font _defaultFont;
 
    public ActiveScreenMyNumberField() {

@@ -12,8 +12,8 @@ final class DocViewSoundDisplayField$DocViewInputOutputByteStream extends InputS
    private final int _totalLength;
    private Object[] _rawDataChunks;
    private final DocViewSoundDisplayField this$0;
-   private static final int THRESHOLD_SIZE;
-   private static final long WAIT_TIMEOUT;
+   private static final int THRESHOLD_SIZE = 65536;
+   private static final long WAIT_TIMEOUT = 120000L;
 
    DocViewSoundDisplayField$DocViewInputOutputByteStream(DocViewSoundDisplayField _1, byte[] initialData, int totalLength) {
       this.this$0 = _1;

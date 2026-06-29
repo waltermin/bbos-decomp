@@ -4,10 +4,10 @@ import net.rim.device.internal.system.CoverageInfoInternal;
 import net.rim.device.internal.system.EventDispatchManager;
 
 public class CoverageInfo {
-   public static final int COVERAGE_NONE;
-   public static final int COVERAGE_CARRIER;
-   public static final int COVERAGE_MDS;
-   public static final int COVERAGE_BIS_B;
+   public static final int COVERAGE_NONE = 0;
+   public static final int COVERAGE_CARRIER = 1;
+   public static final int COVERAGE_MDS = 2;
+   public static final int COVERAGE_BIS_B = 4;
 
    private CoverageInfo() {
    }

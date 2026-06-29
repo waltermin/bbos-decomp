@@ -20,10 +20,10 @@ import net.rim.device.internal.ui.UiSettings;
 final class DeviceOptionsSyncItem extends SyncItem implements SyncCollectionStatusProvider, SyncEventListener {
    private boolean _inSerialSync = false;
    private boolean _deferredRemove = false;
-   static final int DATA_VERSION_MIN;
-   static final int DATA_VERSION_MAX;
-   static final int DATA_SIZE;
-   private static final int USER_NAME_OFFSET;
+   static final int DATA_VERSION_MIN = 1;
+   static final int DATA_VERSION_MAX = 2;
+   static final int DATA_SIZE = 290;
+   private static final int USER_NAME_OFFSET = 117;
 
    final void getUserInfo(DataBuffer buffer) {
       fillZero(buffer, 117);

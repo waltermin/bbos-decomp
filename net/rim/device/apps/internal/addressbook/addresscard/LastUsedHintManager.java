@@ -7,11 +7,11 @@ import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.IntIntHashtable;
 
 public final class LastUsedHintManager {
-   private static final long UID_MASK;
-   private static final long KEY_MASK;
-   private static final long ADDRESSBOOK_LAST_USED_HINTS;
+   private static final long UID_MASK = -4294967296L;
+   private static final long KEY_MASK = -256L;
+   private static final long ADDRESSBOOK_LAST_USED_HINTS = -894877559931875652L;
    private static BigLongVector _hints;
-   private static final long ADDRESSBOOK_LAST_USED_HINT_TYPE;
+   private static final long ADDRESSBOOK_LAST_USED_HINT_TYPE = -3259947950905852759L;
    private static IntIntHashtable _lastHintType;
 
    private LastUsedHintManager() {

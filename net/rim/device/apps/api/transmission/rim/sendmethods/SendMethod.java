@@ -4,11 +4,11 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 public interface SendMethod {
-   int FLAG_WARN_USER;
-   int FLAG_SECURE_METHOD;
-   int FLAG_INCLUDE_SECURE_ENCODING_TYPE_IN_DESCRIPTION;
-   int FLAG_OVERRIDING_DEFAULT;
-   int FLAG_ALWAYS_DISPLAY;
+   int FLAG_WARN_USER = 1;
+   int FLAG_SECURE_METHOD = 2;
+   int FLAG_INCLUDE_SECURE_ENCODING_TYPE_IN_DESCRIPTION = 4;
+   int FLAG_OVERRIDING_DEFAULT = 8;
+   int FLAG_ALWAYS_DISPLAY = 16;
 
    boolean send(RIMModel var1, Object var2);
 

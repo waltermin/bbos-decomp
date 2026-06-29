@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.bis.ApplicationResources;
 
 public final class FilterLabelField extends LabelField {
    private NotificationMenuItemListener _listener;
-   public static final int INSTANCE_FILTER_FIELD_SELECTED;
+   public static final int INSTANCE_FILTER_FIELD_SELECTED = 65538;
 
    public FilterLabelField() {
    }

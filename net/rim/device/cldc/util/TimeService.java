@@ -25,14 +25,14 @@ public final class TimeService {
    private PersistentObject _persistableBitfieldSettings;
    private int _timeServiceSettings;
    private int TIME_SERVICE_SETTINGS_AUTO_ADJUST_FOR_DST = 1;
-   private static final long DEFAULT_TIMEZONE;
-   private static final long AUTO_ADJUST_CLOCK_FOR_DST_SETTING;
-   private static final long TIMEZONEDATA;
-   private static final int TIME_ZONE_SHORT_NAME;
-   private static final int TIME_ZONE_LONG_NAME;
-   private static final int TIME_ZONE_DEFAULT_NAME;
+   private static final long DEFAULT_TIMEZONE = 2989539104253779367L;
+   private static final long AUTO_ADJUST_CLOCK_FOR_DST_SETTING = 987576202591045751L;
+   private static final long TIMEZONEDATA = 6330365711713234846L;
+   private static final int TIME_ZONE_SHORT_NAME = 0;
+   private static final int TIME_ZONE_LONG_NAME = 1;
+   private static final int TIME_ZONE_DEFAULT_NAME = 2;
    private static TimeService _instance;
-   private static final long REGISTRY_KEY;
+   private static final long REGISTRY_KEY = 2569363511892233325L;
 
    private TimeService() {
       this.intializeTimeZones();

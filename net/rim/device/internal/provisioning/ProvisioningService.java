@@ -21,12 +21,12 @@ public final class ProvisioningService extends Thread implements GlobalEventList
    private int _srId;
    private boolean _kick;
    private Vector _handlers;
-   public static final long GUID;
-   public static final int MAJOR_VERSION;
-   public static final int MINOR_VERSION;
-   public static final int VERSION;
-   private static final String PROV_SB_NAME;
-   private static final String PROV_SB_CID;
+   public static final long GUID = 2028567949942654338L;
+   public static final int MAJOR_VERSION = 16;
+   public static final int MINOR_VERSION = 0;
+   public static final int VERSION = 16;
+   private static final String PROV_SB_NAME = "Provisioning";
+   private static final String PROV_SB_CID = "PROVISIONING";
 
    public static final void ProvisioningServiceMain(String[] args) {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();

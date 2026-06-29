@@ -17,10 +17,10 @@ import net.rim.tid.itie.EventHandler;
 
 public class EditModeLookup extends Screen implements TextInputDialog, LookupIf {
    private LookupManager _manager;
-   private static final int PADDING_LEFT;
-   private static final int PADDING_RIGHT;
-   private static final int PADDING_TOP;
-   private static final int PADDING_BOTTOM;
+   private static final int PADDING_LEFT = 2;
+   private static final int PADDING_RIGHT = 2;
+   private static final int PADDING_TOP = 2;
+   private static final int PADDING_BOTTOM = 2;
 
    public void removeVariant(Object aVariant) {
       this._manager.removeVariant(aVariant);

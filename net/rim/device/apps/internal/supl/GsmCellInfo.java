@@ -13,14 +13,14 @@ final class GsmCellInfo extends CellInformation {
    private NmrElement[] nmr;
    private short ta;
    private byte optionals;
-   static final byte CELL_INFO_OPT_NMR;
-   static final byte CELL_INFO_OPT_TA;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte MNC_MCC_NUM_BITS;
-   static final byte LAC_CI_NUM_BITS;
-   static final byte TA_NUM_BITS;
-   static final byte MIN_NUM_NMR_ELEMENTS;
-   static final byte NUM_NMR_ELEMENTS_BITS;
+   static final byte CELL_INFO_OPT_NMR = 2;
+   static final byte CELL_INFO_OPT_TA = 1;
+   static final byte NUM_OPT_ELEMENTS = 2;
+   static final byte MNC_MCC_NUM_BITS = 10;
+   static final byte LAC_CI_NUM_BITS = 16;
+   static final byte TA_NUM_BITS = 8;
+   static final byte MIN_NUM_NMR_ELEMENTS = 1;
+   static final byte NUM_NMR_ELEMENTS_BITS = 4;
 
    GsmCellInfo() {
       GPRSInfo$GPRSCellInfo cellInfo = GPRSInfo.getCellInfo();

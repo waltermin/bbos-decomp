@@ -7,11 +7,11 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 
 public final class SimplePhoneNumberFilter extends TextFilter {
    private int _flags;
-   public static final int ACCEPTS_STAR;
-   public static final int ACCEPTS_POUND;
-   public static final int ACCEPTS_PAUSE_AND_WAIT;
-   public static final int ACCEPTS_STAR_POUND_PAUSE_AND_WAIT;
-   public static final int NO_PLUS_SIGN;
+   public static final int ACCEPTS_STAR = 2;
+   public static final int ACCEPTS_POUND = 4;
+   public static final int ACCEPTS_PAUSE_AND_WAIT = 8;
+   public static final int ACCEPTS_STAR_POUND_PAUSE_AND_WAIT = 14;
+   public static final int NO_PLUS_SIGN = 16;
 
    public SimplePhoneNumberFilter() {
       this(0);

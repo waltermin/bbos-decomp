@@ -37,7 +37,7 @@ public final class DocViewSheetData implements ArznSheetData {
    private final boolean _notifyCaller;
    private final DocViewSheetData$SheetCacheInfo _cacheInfo = new DocViewSheetData$SheetCacheInfo(null);
    boolean _hasEmbeddedObjects;
-   private static final int TEXTNOTIFY_SIZE;
+   private static final int TEXTNOTIFY_SIZE = 562;
 
    public final void setID(int chunkIndex) {
       if (chunkIndex < 0) {

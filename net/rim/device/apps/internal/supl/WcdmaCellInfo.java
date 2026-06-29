@@ -9,15 +9,15 @@ final class WcdmaCellInfo extends CellInformation {
    private byte numMeasuredResultItems;
    private MeasuredResults[] results;
    private byte optionals;
-   static final byte CELL_INFO_OPT_FREQ_INFO;
-   static final byte CELL_INFO_OPT_PRI_SCR_CODE;
-   static final byte CELL_INFO_OPT_MEAS_RES_LIST;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte MCC_MNC_NUM_BITS;
-   static final byte UC_NUM_BITS;
-   static final byte PRI_SCR_CODE_NUM_BITS;
-   static final byte MIN_NUM_MEAS_RES_ITEMS;
-   static final byte NUM_MEAS_RES_ITEMS_NUM_BITS;
+   static final byte CELL_INFO_OPT_FREQ_INFO = 4;
+   static final byte CELL_INFO_OPT_PRI_SCR_CODE = 2;
+   static final byte CELL_INFO_OPT_MEAS_RES_LIST = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final byte MCC_MNC_NUM_BITS = 10;
+   static final byte UC_NUM_BITS = 28;
+   static final byte PRI_SCR_CODE_NUM_BITS = 9;
+   static final byte MIN_NUM_MEAS_RES_ITEMS = 1;
+   static final byte NUM_MEAS_RES_ITEMS_NUM_BITS = 3;
 
    @Override
    final void encode(Stuffer stuff) {

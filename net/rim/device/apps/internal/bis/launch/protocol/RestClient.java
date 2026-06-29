@@ -9,12 +9,12 @@ import net.rim.device.apps.internal.bis.launch.http.HttpClient;
 import net.rim.device.apps.internal.bis.launch.http.HttpResponse;
 
 public final class RestClient {
-   private static final String REST_RESPONSECODE_PROPERTY;
+   private static final String REST_RESPONSECODE_PROPERTY = "RESTResponseCode";
    private static final String[] REQUIRED_REST_RESPONSE_PROPERTIES = new String[]{"RESTResponseCode"};
-   private static final String DEFAULT_SCHEME;
-   private static final String CORE_STATUS_URL_PATTERN;
-   private static final String CORE_STATUS_URL_PATTERN2;
-   private static final String WAP_CID;
+   private static final String DEFAULT_SCHEME = "https";
+   private static final String CORE_STATUS_URL_PATTERN = "{0}://{1}/{2}/clientApp/{3}/core/status";
+   private static final String CORE_STATUS_URL_PATTERN2 = "{0}://{1}/{2}/updates";
+   private static final String WAP_CID = "WAP";
 
    public static final String createAppStatusPayload() {
       String deviceName = DeviceInfo.getDeviceName();

@@ -26,13 +26,13 @@ public final class AGInfo implements Persistable {
    private Hashtable _versions;
    private long _agID;
    private static String AG_COMPACT_MSG_URL = "/CompactListener";
-   private static final byte ENCODED_TYPE_AG_REG_URL;
-   private static final byte ENCODED_TYPE_AG_MSG_URL;
-   private static final byte ENCODED_TYPE_TRANSPORT_SERV_UID;
-   private static final byte ENCODED_TYPE_AG_FRIENDLY_NAME;
-   private static final byte ENCODED_TYPE_BES_GROUPS;
-   private static final byte ENCODED_TYPE_GENERATION_COUNT;
-   private static final byte ENCODED_TYPE_SP_LIST;
+   private static final byte ENCODED_TYPE_AG_REG_URL = 1;
+   private static final byte ENCODED_TYPE_AG_MSG_URL = 2;
+   private static final byte ENCODED_TYPE_TRANSPORT_SERV_UID = 3;
+   private static final byte ENCODED_TYPE_AG_FRIENDLY_NAME = 4;
+   private static final byte ENCODED_TYPE_BES_GROUPS = 5;
+   private static final byte ENCODED_TYPE_GENERATION_COUNT = 6;
+   private static final byte ENCODED_TYPE_SP_LIST = 7;
 
    public AGInfo() {
    }

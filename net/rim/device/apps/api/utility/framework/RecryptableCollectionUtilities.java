@@ -9,12 +9,12 @@ import net.rim.device.apps.api.framework.model.EncryptableProvider;
 import net.rim.vm.Process;
 
 public final class RecryptableCollectionUtilities {
-   private static final int MIN_IDLE_TIME_SEC;
-   private static final int MIN_IDLE_TIME_MSEC;
-   private static final long ID;
-   private static final int COMPLETE;
-   private static final int WAIT_FOR_IDLE;
-   private static final int WAIT_FOR_UNLOCK;
+   private static final int MIN_IDLE_TIME_SEC = 5;
+   private static final int MIN_IDLE_TIME_MSEC = 5000;
+   private static final long ID = 2843204529516853295L;
+   private static final int COMPLETE = 0;
+   private static final int WAIT_FOR_IDLE = 1;
+   private static final int WAIT_FOR_UNLOCK = 2;
    private static SyncManager _syncManager = SyncManager.getInstance();
 
    private RecryptableCollectionUtilities() {

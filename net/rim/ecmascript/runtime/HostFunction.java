@@ -12,7 +12,7 @@ public class HostFunction extends ESFunction {
    private int _expectedNumParms;
    private String _class;
    boolean _okToRecurse;
-   static final byte Properties;
+   static final byte Properties = 2;
 
    Object startRecurse() {
       HostFunction$State s = new HostFunction$State();

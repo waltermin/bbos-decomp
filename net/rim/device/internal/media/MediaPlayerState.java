@@ -7,7 +7,7 @@ import net.rim.device.api.util.Arrays;
 public class MediaPlayerState {
    private WeakReference[] _players = new WeakReference[0];
    private WeakReference _mediaPlayer;
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = -4927398290786462096L;
 
    public static void setMediaPlayer(MediaPlayerStateInstance player) {
       MediaPlayerState instance = getInstance();

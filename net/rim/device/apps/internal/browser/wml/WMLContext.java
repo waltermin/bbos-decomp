@@ -14,8 +14,8 @@ import net.rim.device.apps.internal.browser.util.BrowserIdEncryptor;
 public final class WMLContext implements IBrowserContext, Persistable {
    private Hashtable _nameToValue;
    private int _timer;
-   public static final String RIM_ID_NAME;
-   private static final int VERSION;
+   public static final String RIM_ID_NAME = "XXX_RIM_ID";
+   private static final int VERSION = 1;
 
    public WMLContext() {
       this._nameToValue = (Hashtable)(new Object());

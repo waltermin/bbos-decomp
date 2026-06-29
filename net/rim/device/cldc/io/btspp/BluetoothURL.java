@@ -17,7 +17,7 @@ public class BluetoothURL {
    private int _transmitMTU = 48;
    private boolean _requestedTransmitMTU;
    private boolean _requestedReceiveMTU;
-   public static final int MAX_L2CAP_MTU;
+   public static final int MAX_L2CAP_MTU = 1024;
 
    public BluetoothURL(String scheme, String schemeSpecificPart) {
       this._scheme = scheme;

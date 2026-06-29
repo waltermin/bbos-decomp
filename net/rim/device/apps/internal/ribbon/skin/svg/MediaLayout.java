@@ -61,19 +61,19 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
    private SkinManager _skinManager;
    private SkinEventProvider _eventProvider;
    IntIntHashtable _keyMap = (IntIntHashtable)(new Object());
-   private static final long MEDIA_LAYOUT_LOCK_KEY;
-   public static final long PRIVATE_FLAGS_KEY;
-   public static final int NO_PAINTLOCK_FLAG;
-   public static final long DEFAULT_STYLE;
-   public static final int TYPE_ZEN;
-   public static final int TYPE_TODAY;
-   public static final int TYPE_FIVE;
-   private static final int STOPPED;
-   private static final int STARTING;
-   private static final int STARTED;
-   private static final int NO_UPDATE_WATERMARK;
+   private static final long MEDIA_LAYOUT_LOCK_KEY = 8255869323709840319L;
+   public static final long PRIVATE_FLAGS_KEY = 3089937493992571440L;
+   public static final int NO_PAINTLOCK_FLAG = 1;
+   public static final long DEFAULT_STYLE = 3476778963869630464L;
+   public static final int TYPE_ZEN = 1;
+   public static final int TYPE_TODAY = 2;
+   public static final int TYPE_FIVE = 4;
+   private static final int STOPPED = 0;
+   private static final int STARTING = 1;
+   private static final int STARTED = 2;
+   private static final int NO_UPDATE_WATERMARK = 5;
    public static final int TITLE_ID = "title".hashCode();
-   static final String PREFIX;
+   static final String PREFIX = "x-exec://";
 
    public void setStopIfNotVisible(boolean stopIfNotVisible) {
       throw new RuntimeException("cod2jar: stack: underflow");

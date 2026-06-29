@@ -32,7 +32,7 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
    private Field _addressTrustIndicatorField;
    private EmailHeaderEditField$TooltipFieldManager _tooltipField;
    private static final Bitmap UNTRUSTED_ADDRESS_BITMAP = Bitmap.getBitmapResource("net_rim_bb_framework_api", "untrustedaddress.png");
-   private static final int TOOLTIP_DURATION_MS;
+   private static final int TOOLTIP_DURATION_MS = 15000;
 
    EmailHeaderEditField(Object context) {
       super(1152921504606846976L);

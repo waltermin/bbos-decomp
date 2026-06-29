@@ -1,14 +1,14 @@
 package net.rim.plazmic.internal.mediaengine.model.smil;
 
 public interface Tags {
-   String HEAD;
-   String META;
-   String LAYOUT;
-   String ROOT_LAYOUT;
-   String REGION;
-   String BODY;
-   String SEQ;
-   String PAR;
-   String IMAGE;
-   String TEXT;
+   String HEAD = "head";
+   String META = "meta";
+   String LAYOUT = "layout";
+   String ROOT_LAYOUT = "root-layout";
+   String REGION = "region";
+   String BODY = "body";
+   String SEQ = "seq";
+   String PAR = "par";
+   String IMAGE = "img";
+   String TEXT = "text";
 }

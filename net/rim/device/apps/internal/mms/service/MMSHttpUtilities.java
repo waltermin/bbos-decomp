@@ -14,7 +14,7 @@ import net.rim.device.apps.internal.mms.options.MMSTransportServiceBook;
 import net.rim.vm.Array;
 
 final class MMSHttpUtilities {
-   private static final String PROFILE;
+   private static final String PROFILE = "profile";
    private static final String[] _rejectedTypes = new String[]{
       "application/java-archive",
       "application/java",

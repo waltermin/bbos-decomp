@@ -55,7 +55,7 @@ public class MessageListColumnPainter extends ColumnPainter {
    private static Tag TAG_LINE2 = Tag.create("messagelist-line2");
    private static Tag TAG_LINE1_LEVEL1 = Tag.create("messagelist-line1-level1");
    private static Tag TAG_LINE2_LEVEL1 = Tag.create("messagelist-line2-level1");
-   private static final int LINE_SEPARATOR_SPACE;
+   private static final int LINE_SEPARATOR_SPACE = 1;
 
    public static int getIconWidth(Font font) {
       return PriorityIcons.ICONS.getWidth(font);

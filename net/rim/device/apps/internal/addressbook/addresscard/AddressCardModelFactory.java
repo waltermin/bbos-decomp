@@ -28,7 +28,7 @@ final class AddressCardModelFactory extends RIMModelFactory {
    private WeakReference _dataBufferWR;
    private WeakReference _syncBufferWR;
    private SyncConverter _syncConverter;
-   public static final boolean USE_COMPRESSED_ADDRESS_CARDS;
+   public static final boolean USE_COMPRESSED_ADDRESS_CARDS = true;
 
    AddressCardModelFactory() {
       this._opaqueFactory = (RIMModelFactory)ApplicationRegistry.getApplicationRegistry().waitFor(-8058545440370075039L);

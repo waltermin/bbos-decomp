@@ -23,9 +23,9 @@ public final class HttpConnectionManager implements GlobalEventListener, Connect
    private IntHashtable _processTable;
    private Object _cleanupSync;
    private boolean _cleanupRunning;
-   private static final int TWO_MINUTES;
-   private static final int FIFTEEN_MINUTES;
-   private static final long APP_REGISTRY_KEY;
+   private static final int TWO_MINUTES = 120000;
+   private static final int FIFTEEN_MINUTES = 900000;
+   private static final long APP_REGISTRY_KEY = -1270498631466223615L;
 
    public final synchronized void setMaxNumberConnections(int value) {
       int pid = Process.currentProcess().getProcessId();

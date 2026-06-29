@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.qm.peer.common.Entry;
 
 final class PeerEntry extends Entry implements LowMemoryListener {
    private boolean _hold;
-   private static final String UID;
+   private static final String UID = "net_rim_bb_qm_peer.BlackBerryMessenger";
 
    public static final PeerEntry getInstance() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

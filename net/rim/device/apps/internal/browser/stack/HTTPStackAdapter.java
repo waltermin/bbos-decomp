@@ -25,9 +25,9 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
    private Object _syncObject = new Object();
    private boolean _successfulConnect;
    private StatsManager _statsManager;
-   private static final int TYPE_WAP;
-   private static final int TYPE_IPPP;
-   private static final int TYPE_TCP;
+   private static final int TYPE_WAP = 1;
+   private static final int TYPE_IPPP = 2;
+   private static final int TYPE_TCP = 3;
    private static String HEADER_LENGTH = "content-length";
    private static String CONTENT_TYPE = "content-type";
 
@@ -1038,7 +1038,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 971: astore 14
       // 973: goto 9ae
       // 976: bipush 1
-      // 977: anewarray 1766
+      // 977: anewarray 1772
       // 97a: dup
       // 97b: bipush 0
       // 97c: aload 16
@@ -1254,7 +1254,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // b9b: aload 13
       // b9d: ifnull bbe
       // ba0: bipush 1
-      // ba1: anewarray 2078
+      // ba1: anewarray 2084
       // ba4: dup
       // ba5: bipush 0
       // ba6: aload 13

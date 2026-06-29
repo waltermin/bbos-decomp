@@ -10,10 +10,10 @@ public final class DataSourceDatabaseTable implements Persistable, TLESerializab
    private int _id;
    private DataSourceDatabaseFields _schema;
    private int _flags;
-   private static final byte DEFAULT_FLAG;
-   private static final byte ID;
-   private static final byte SCHEMA;
-   private static final byte DEFAULT;
+   private static final byte DEFAULT_FLAG = 1;
+   private static final byte ID = 1;
+   private static final byte SCHEMA = 2;
+   private static final byte DEFAULT = 3;
 
    public final void setDefault(boolean value) {
       this._flags = Helper.setFlagValue(this._flags, value, 1);

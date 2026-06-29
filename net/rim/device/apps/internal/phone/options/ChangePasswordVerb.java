@@ -11,8 +11,8 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.component.SimpleInputDialog;
 
 final class ChangePasswordVerb extends Verb implements PhoneEventListener {
-   private static final int BARRING_PASSWORD_MIN_LENGTH;
-   private static final int BARRING_PASSWORD_MAX_LENGTH;
+   private static final int BARRING_PASSWORD_MIN_LENGTH = 4;
+   private static final int BARRING_PASSWORD_MAX_LENGTH = 4;
 
    ChangePasswordVerb() {
       super(20000, CommonResources.getResourceBundle(), 1780);

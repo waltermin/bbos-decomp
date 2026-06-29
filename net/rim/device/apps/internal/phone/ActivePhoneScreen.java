@@ -47,7 +47,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
    private Verb _newCallVerb = new ActivePhoneScreen$NewCallVerb(this);
    private Verb _showAddressBookVerb = (Verb)(new Object((Verb)(new Object(16777280)), null, 16777280));
    private boolean _pttKeyDownHappenedHere;
-   static final int CALL_DISCONNECTION_DELAY;
+   static final int CALL_DISCONNECTION_DELAY = 1500;
 
    ActivePhoneScreen(VoiceApp app, LiveCall initialCall) {
       super(app, null, 0);

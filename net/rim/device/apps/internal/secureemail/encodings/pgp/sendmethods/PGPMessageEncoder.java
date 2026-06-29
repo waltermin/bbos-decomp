@@ -33,9 +33,9 @@ import net.rim.device.internal.ui.component.PasswordDialog;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 
 public class PGPMessageEncoder extends SecureEmailMessageEncoder {
-   private static final int NUM_USER_OPTIONS;
-   private static final int OK;
-   private static final int VIEW_CERT;
+   private static final int NUM_USER_OPTIONS = 2;
+   private static final int OK = 0;
+   private static final int VIEW_CERT = 1;
 
    public PGPMessageEncoder(
       EmailMessageModel message,

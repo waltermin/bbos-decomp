@@ -17,9 +17,9 @@ import net.rim.device.internal.ui.component.PopupDialog;
 public final class ModalDisplayDlg extends PopupDialog {
    private ActiveRichTextField _textField;
    private int _bgColor;
-   public static final byte STYLE_LABELTITLE;
-   public static final byte STYLE_RICHTEXTTITLE;
-   public static final byte STYLE_SEPARATOR;
+   public static final byte STYLE_LABELTITLE = 0;
+   public static final byte STYLE_RICHTEXTTITLE = 1;
+   public static final byte STYLE_SEPARATOR = 16;
 
    public ModalDisplayDlg(
       Manager manager,

@@ -1,11 +1,11 @@
 package javax.microedition.io;
 
 public interface SocketConnection extends StreamConnection {
-   byte DELAY;
-   byte LINGER;
-   byte KEEPALIVE;
-   byte RCVBUF;
-   byte SNDBUF;
+   byte DELAY = 0;
+   byte LINGER = 1;
+   byte KEEPALIVE = 2;
+   byte RCVBUF = 3;
+   byte SNDBUF = 4;
 
    void setSocketOption(byte var1, int var2);
 

@@ -7,8 +7,8 @@ import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player.AnimatedBitma
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.ScalableBitmapField;
 
 public class ImageServiceProvider extends UIComponentServiceProvider {
-   private static final int NUM_SERVICES;
-   public static final int POLLING_INTERVAL;
+   private static final int NUM_SERVICES = 3;
+   public static final int POLLING_INTERVAL = 200;
 
    public ImageServiceProvider() {
       super(3);

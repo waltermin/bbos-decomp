@@ -13,12 +13,12 @@ final class CertificateRepository implements Persistable {
    private Object[] _certificates = new Object[0];
    private String[] _types = new Object[0];
    private int[] _sequences = new int[0];
-   private static final long CERTIFICATE_REPOSITORY;
-   private static final long IDLE_THRESHOLD;
-   private static final long IDLE_SLEEP;
+   private static final long CERTIFICATE_REPOSITORY = -775587297036677177L;
+   private static final long IDLE_THRESHOLD = 10L;
+   private static final long IDLE_SLEEP = 10000L;
    private static PersistentObject _persist;
    private static CertificateRepository _repository;
-   private static final long SINGLETON_ID;
+   private static final long SINGLETON_ID = 8427816956763268686L;
 
    public static final CertificateRepository getInstance() {
       if (_repository == null) {

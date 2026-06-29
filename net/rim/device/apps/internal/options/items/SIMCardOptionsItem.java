@@ -57,7 +57,7 @@ public final class SIMCardOptionsItem
    private boolean _updating;
    private static final ResourceBundle _srb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
    private static Vector _simCardItems;
-   private static final int INDENT_SIZE;
+   private static final int INDENT_SIZE = 10;
 
    public final boolean processMEPBackdoorCode(int backdoorChars, int backdoorKeys) {
       switch (backdoorChars) {

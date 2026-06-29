@@ -8,8 +8,8 @@ import net.rim.device.apps.internal.bis.data.Mailbox;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class DeleteFilterCommand implements DomainCommand {
-   public static final String PARAM_FILTER_ID;
-   public static final String PARAM_FILTER_NAME;
+   public static final String PARAM_FILTER_ID = "filterid";
+   public static final String PARAM_FILTER_NAME = "filtername";
 
    @Override
    public final DomainCommandResult run(Hashtable params) {

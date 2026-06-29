@@ -25,8 +25,8 @@ final class DayController$DayViewNavField extends Field {
    private final int _numChildCount;
    private String[] _dow;
    private final DayController this$0;
-   private static final int PREVIOUS_DAY_CONTROL;
-   private static final int NEXT_DAY_CONTROL;
+   private static final int PREVIOUS_DAY_CONTROL = -1;
+   private static final int NEXT_DAY_CONTROL = 7;
 
    DayController$DayViewNavField(DayController _1) {
       super(18014398509481984L);

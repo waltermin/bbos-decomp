@@ -95,7 +95,7 @@ public class MinimalInputMethod implements InputMethod {
    private int _keyboardID;
    private boolean _keyUpProcessOnly;
    private byte[] _IMProp;
-   public static final char KEYPAD_TYPE_DELIMITER;
+   public static final char KEYPAD_TYPE_DELIMITER = '|';
 
    protected String getKeyMapLibName() {
       return "net_rim_platform_im_resource";

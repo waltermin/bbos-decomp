@@ -18,19 +18,19 @@ public final class SyncDatagram extends SyncDatagramBase {
    private SyncCommandsPool _syncCommandsPool;
    private int _availableBytes;
    private int _numberOfCommandsProccessed;
-   public static final long POOL_GUID;
-   public static final int PAYLOAD_SIZE;
-   private static final int HEADER_VERFICATION_REQUEST;
-   private static final int HEADER_VERFICATION_RESPONSE;
-   private static final byte HEADER_END;
-   private static final byte HEADER_DEVICESESSION_ID;
-   private static final byte HEADER_SERVERSESSION_ID;
-   private static final byte HEADER_CURRENT_CHANGELIST_ID;
-   private static final byte HEADER_EXPECTED_CHANGELIST_ID;
-   private static final byte HEADER_CURRENT_SEQUENCE;
-   private static final byte HEADER_LAST_SEQUENCE;
-   private static final byte HEADER_VERFICATION;
-   private static final byte HEADER_SESSION_TIMEOUT;
+   public static final long POOL_GUID = 7926551755126522851L;
+   public static final int PAYLOAD_SIZE = 32768;
+   private static final int HEADER_VERFICATION_REQUEST = 1;
+   private static final int HEADER_VERFICATION_RESPONSE = 3;
+   private static final byte HEADER_END = 0;
+   private static final byte HEADER_DEVICESESSION_ID = 1;
+   private static final byte HEADER_SERVERSESSION_ID = 2;
+   private static final byte HEADER_CURRENT_CHANGELIST_ID = 3;
+   private static final byte HEADER_EXPECTED_CHANGELIST_ID = 4;
+   private static final byte HEADER_CURRENT_SEQUENCE = 5;
+   private static final byte HEADER_LAST_SEQUENCE = 6;
+   private static final byte HEADER_VERFICATION = 7;
+   private static final byte HEADER_SESSION_TIMEOUT = 8;
 
    public SyncDatagram() {
       this.reset();

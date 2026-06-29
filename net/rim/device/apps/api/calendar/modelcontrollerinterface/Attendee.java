@@ -3,11 +3,11 @@ package net.rim.device.apps.api.calendar.modelcontrollerinterface;
 import net.rim.device.api.util.Persistable;
 
 public interface Attendee extends Persistable {
-   int ORGANIZER;
-   int INVITED;
-   int ACCEPTED;
-   int DECLINED;
-   int TENTATIVE;
+   int ORGANIZER = 0;
+   int INVITED = 1;
+   int ACCEPTED = 2;
+   int DECLINED = 3;
+   int TENTATIVE = 4;
 
    int getType();
 

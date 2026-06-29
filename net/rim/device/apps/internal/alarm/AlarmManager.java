@@ -12,10 +12,10 @@ final class AlarmManager implements Factory, TestPoint {
    private int _alarmState;
    private WeakReference[] _alarmStateListeners = new Object[0];
    private long _savedAlarmTime = 0;
-   static final int STATE_NONE;
-   static final int STATE_ALARM;
-   static final int STATE_SNOOZE;
-   private static final long GUID;
+   static final int STATE_NONE = 0;
+   static final int STATE_ALARM = 1;
+   static final int STATE_SNOOZE = 2;
+   private static final long GUID = -7118281301835656932L;
 
    final int getAlarmState() {
       return this._alarmState;

@@ -8,10 +8,10 @@ import net.rim.device.api.util.Arrays;
 public class ExplorerRegistry {
    private Hashtable _aliasMap = (Hashtable)(new Object());
    private AliasFileEntry[][][] _globalAlias = new AliasFileEntry[7][][];
-   protected static final long REGKEY;
+   protected static final long REGKEY = -999583750915911489L;
    private static ExplorerRegistry _registry;
    private static ExplorerRegistry$AliasEntryComparator _comparator = new ExplorerRegistry$AliasEntryComparator(null);
-   private static final int MAX_MEDIA_TYPES;
+   private static final int MAX_MEDIA_TYPES = 7;
 
    private ExplorerRegistry() {
       for (int i = 0; i < 7; i++) {

@@ -2,8 +2,8 @@ package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 
 public class ModelInteractorImpl$RootsHandles {
    private int[] _roots = new int[2];
-   private static final int VISUAL_ROOT_IDX;
-   private static final int BEHAVIORS_ROOT_IDX;
+   private static final int VISUAL_ROOT_IDX = 0;
+   private static final int BEHAVIORS_ROOT_IDX = 1;
 
    public int getVisualRootHandle() {
       return this._roots[0];

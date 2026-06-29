@@ -34,9 +34,9 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
    private PersistentObject _persistentFilterObject;
    private FilteredByCategoriesTitleField _titleField;
    private long _lastBackspaceTime;
-   private static final long PERSISTED_TASK_FILTER;
+   private static final long PERSISTED_TASK_FILTER = -4985420032647039156L;
    static Verb[] _verbHolder = new Object[0];
-   private static final long BACKSPACE_DELETE_GUARD;
+   private static final long BACKSPACE_DELETE_GUARD = 300L;
 
    private TaskList(ReadableList taskCollection, KeywordFilterList keyList) {
       super(null, keyList, null);

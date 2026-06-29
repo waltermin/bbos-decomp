@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 
 class ChangePhoneNumberTypeVerb extends Verb {
    PopupScreen _dialog;
-   private static final int _id;
+   private static final int _id = 414;
    private static ResourceBundle _resources = ResourceBundle.getBundle(2699923441625099942L, "net.rim.device.apps.internal.resource.Phone");
 
    ChangePhoneNumberTypeVerb() {

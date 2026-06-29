@@ -5,7 +5,7 @@ import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.internal.qm.peer.common.QmComposeVerb;
 
 public final class PeerComposeVerb extends QmComposeVerb {
-   private static final long PEER_COMPOSE_VERB;
+   private static final long PEER_COMPOSE_VERB = 2085988894834128019L;
    private static PeerComposeVerb _instance;
 
    PeerComposeVerb(int ordering) {

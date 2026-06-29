@@ -15,7 +15,7 @@ final class SignalLevelField extends StringRibbonComponent implements RibbonComp
    private SignalComponentFactory _signalComponentFactory;
    private IconCollection _signalIcons;
    private RibbonComponent$RibbonComponentChangeListener _listener;
-   private static final int ICON_COUNT;
+   private static final int ICON_COUNT = 9;
 
    private SignalLevelField() {
    }

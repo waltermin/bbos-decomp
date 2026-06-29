@@ -14,15 +14,15 @@ public final class BreakIterator {
    private int _dataType = -1;
    private int _iterType = -1;
    private int _currentPos = 0;
-   private static final int UNDEFINED;
-   private static final int STR;
-   private static final int STRB;
-   private static final int STRBG;
-   private static final int CHARARR;
-   public static final int ECharacter;
-   public static final int EWord;
-   public static final int ELine;
-   public static final int DONE;
+   private static final int UNDEFINED = -1;
+   private static final int STR = 0;
+   private static final int STRB = 1;
+   private static final int STRBG = 2;
+   private static final int CHARARR = 3;
+   public static final int ECharacter = 0;
+   public static final int EWord = 1;
+   public static final int ELine = 2;
+   public static final int DONE = Integer.MAX_VALUE;
 
    public static final BreakIterator getInstance(int aType, Locale aLocale) {
       return new BreakIterator(aType, aLocale);

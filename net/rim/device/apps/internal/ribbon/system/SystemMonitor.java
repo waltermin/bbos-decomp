@@ -75,24 +75,24 @@ public final class SystemMonitor
    private byte[] _simBuffer = new byte[256];
    private int[] _spdiList;
    private SystemMonitor$WLANMonitor _wlanMonitor = new SystemMonitor$WLANMonitor(this);
-   private static final int WORLD_PHONE_WAFS;
+   private static final int WORLD_PHONE_WAFS = 3;
    private static final int SUPPORTED_WAFS = RadioInfo.getSupportedWAFs();
    private static final boolean CDMA_GSM_WORLD_PHONE = (SUPPORTED_WAFS & 3) == 3;
-   private static final int SIM_STATUS_NULL;
-   private static final int NET_STATUS_NULL;
-   private static final int CSS_RADIO_OFF;
-   private static final int CSS_SEARCHING;
-   private static final int CSS_NET_FOUND;
-   private static final int CSS_OUT_OF_COVERAGE;
-   private static final int EVENT_SIGNAL_LEVEL;
-   private static final int EVENT_RADIO_OFF;
-   private static final int EVENT_NETWORK_FOUND;
-   private static final int EVENT_TIMEOUT;
-   private static final int SEARCHING_TIMEOUT;
-   public static final int ONS_RENDER_UNASSIGNED;
-   public static final int ONS_RENDER_DEFAULT;
-   public static final int ONS_RENDER_SPN_1;
-   public static final int ONS_RENDER_SPN_SPDI;
+   private static final int SIM_STATUS_NULL = -1;
+   private static final int NET_STATUS_NULL = -1;
+   private static final int CSS_RADIO_OFF = 0;
+   private static final int CSS_SEARCHING = 1;
+   private static final int CSS_NET_FOUND = 2;
+   private static final int CSS_OUT_OF_COVERAGE = 3;
+   private static final int EVENT_SIGNAL_LEVEL = 0;
+   private static final int EVENT_RADIO_OFF = 1;
+   private static final int EVENT_NETWORK_FOUND = 2;
+   private static final int EVENT_TIMEOUT = 3;
+   private static final int SEARCHING_TIMEOUT = 120000;
+   public static final int ONS_RENDER_UNASSIGNED = -1;
+   public static final int ONS_RENDER_DEFAULT = 0;
+   public static final int ONS_RENDER_SPN_1 = 1;
+   public static final int ONS_RENDER_SPN_SPDI = 2;
    private static byte[] UST_TO_COMMON_ST_INDEX = new byte[]{
       0,
       1,

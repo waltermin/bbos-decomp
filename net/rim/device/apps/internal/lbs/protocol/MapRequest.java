@@ -23,13 +23,13 @@ public final class MapRequest extends Request {
    Timing _timer;
    MapRect _rect = new MapRect();
    int _zoom;
-   public static final int SUCCESS;
-   public static final int INVALID_REQUEST;
-   public static final int SERVER_INTERNAL_ERROR;
-   public static final int NO_DATA;
-   public static final int CLIENT_DOWNLOAD_LOC_NOT_INCLUDED;
-   public static final int CLIENT_DOWNLOAD_LOC_INCLUDED;
-   public static final byte DEFAULT_MAPLET_VERSION;
+   public static final int SUCCESS = 0;
+   public static final int INVALID_REQUEST = 1;
+   public static final int SERVER_INTERNAL_ERROR = 2;
+   public static final int NO_DATA = 3;
+   public static final int CLIENT_DOWNLOAD_LOC_NOT_INCLUDED = 4;
+   public static final int CLIENT_DOWNLOAD_LOC_INCLUDED = 5;
+   public static final byte DEFAULT_MAPLET_VERSION = 1;
    static LayerDictionary _layerDictionary = LayerDictionary.getInstance();
 
    @Override

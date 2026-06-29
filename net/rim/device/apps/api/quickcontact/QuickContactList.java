@@ -50,17 +50,17 @@ public final class QuickContactList
    private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
    private SyncCollectionSchema _schema;
    private QuickContactItem[] _rejectedOTASyncObjects = null;
-   private static final long GUID;
-   static final int ADDRESS_BOOK_RESET;
-   static final int ADDRESS_BOOK_ADD;
-   static final int ADDRESS_BOOK_REMOVE;
-   static final int ADDRESS_BOOK_UPDATE;
+   private static final long GUID = 6813875849369102919L;
+   static final int ADDRESS_BOOK_RESET = 0;
+   static final int ADDRESS_BOOK_ADD = 1;
+   static final int ADDRESS_BOOK_REMOVE = 2;
+   static final int ADDRESS_BOOK_UPDATE = 3;
    private static boolean _fullQwertyMode = QuickContactUtil.fullQWERTYSupport();
-   private static final long PERSISTENCE_GUID;
+   private static final long PERSISTENCE_GUID = 8530379325447020315L;
    private static final int DEFAULT_NUM_KEYS = QuickContactUtil.getValidKeys().length();
    private static QuickContactList _instance;
    private static final int[] KEY_FIELD_IDS = new int[]{2, -805044223, 3, -805044219};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    private QuickContactList() {
       AddressBook ab = AddressBookServices.getAddressBook(true);

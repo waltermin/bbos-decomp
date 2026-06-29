@@ -24,7 +24,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
    private String _displayName;
    private CertificateServerInfo _serverInfo;
    private static String NAME = "name";
-   public static final String STRING_BASE64;
+   public static final String STRING_BASE64 = "base64";
    private static String CONTENT_DISPOSITION = "Content-Disposition: attachment;\r\n\tfilename=";
    private static final ResourceBundle _rb = ResourceBundle.getBundle(
       -3843310740975580338L, "net.rim.device.internal.resource.crypto.CertificateServersOptions"

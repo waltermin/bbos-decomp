@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.Process;
 
 public final class TcpProcess extends Application {
-   private static final long GUID;
+   private static final long GUID = -5773373294466765091L;
 
    public static final void libMain(String[] args) {
       getInstance().enterEventDispatcher();

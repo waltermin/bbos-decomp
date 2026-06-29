@@ -14,11 +14,11 @@ import net.rim.device.apps.internal.mms.api.MMSMessageModel;
 import net.rim.device.apps.internal.mms.resources.MMSResources;
 
 public final class MMSStorage {
-   private static final long MMS_HIERARCHY_ID;
-   private static final long MMS_FAMILY;
-   public static final long MMS_FOLDER_INBOX;
-   public static final long MMS_FOLDER_OUTBOX;
-   public static final long MMS_FOLDER_ORPHANED_SAVED;
+   private static final long MMS_HIERARCHY_ID = -5085817815977500958L;
+   private static final long MMS_FAMILY = 3704547669295631919L;
+   public static final long MMS_FOLDER_INBOX = 8244211460627721111L;
+   public static final long MMS_FOLDER_OUTBOX = 949632297110531729L;
+   public static final long MMS_FOLDER_ORPHANED_SAVED = -7297051376619864492L;
 
    private MMSStorage() {
    }

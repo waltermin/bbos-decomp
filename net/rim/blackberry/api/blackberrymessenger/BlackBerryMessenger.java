@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.ControlledAccess;
 
 public class BlackBerryMessenger {
-   private static final long GUID;
+   private static final long GUID = 4927202520515498096L;
 
    protected BlackBerryMessenger() {
       ControlledAccess.assertRRISignatures(true);

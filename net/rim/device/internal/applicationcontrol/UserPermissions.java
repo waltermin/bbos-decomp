@@ -19,10 +19,10 @@ final class UserPermissions {
    private UserSetting _backedUpDefaults;
    private UserSetting _defaults;
    private UserSettingsSync _sync;
-   private static final long STORAGE_KEY;
-   private static final int DEFAULTS_HANDLE;
-   private static final int BACKUP_DEFAULTS_HANDLE;
-   private static final long USER_SETTINGS_SYNC_KEY;
+   private static final long STORAGE_KEY = 3147043076836770146L;
+   private static final int DEFAULTS_HANDLE = 0;
+   private static final int BACKUP_DEFAULTS_HANDLE = -1;
+   private static final long USER_SETTINGS_SYNC_KEY = -8759977085745458596L;
 
    UserPermissions() {
       if ((this._sync = (UserSettingsSync)ApplicationRegistry.getApplicationRegistry().getOrWaitFor(-8759977085745458596L)) == null) {

@@ -4,10 +4,10 @@ import net.rim.device.api.util.Arrays;
 
 final class Fqdn implements SlpAddress {
    String domainName;
-   static final byte FQDN_CHARSET_BIT_SIZE;
-   static final short FQDN_MIN_LENGTH;
-   static final short FQDN_MAX_LENGTH;
-   static final byte FQDN_LENGTH_BIT_SIZE;
+   static final byte FQDN_CHARSET_BIT_SIZE = 6;
+   static final short FQDN_MIN_LENGTH = 1;
+   static final short FQDN_MAX_LENGTH = 255;
+   static final byte FQDN_LENGTH_BIT_SIZE = 8;
    static final char[] FQDN_ALPHABET = new char[]{
       '-',
       '.',

@@ -74,17 +74,17 @@ public final class RIMPhone
    private char _previousRepeatedKey = 0;
    private int _previousRepeatTime = 0;
    long _cachedId = -1;
-   public static final long GUID;
-   private static final long DTMF_ECHO_TIMEOUT;
-   private static final int INCOMING_CALL_NOTIFICATION_PAUSE_LENGTH;
-   private static final int WAITING_CALL_NOTIFICATION_PAUSE_LENGTH;
-   private static final int INVALID_NOTIFICATION_TIMER_ID;
-   private static final int MAX_INCOMING_CALL_REPEATS;
-   private static final int HOLSTER_IN_OUT_THRESHOLD;
-   private static final int CALL_WAITING_TUNE_VOLUME;
-   private static final int DEBUG_INCOMING_CALL_ID_INVALID;
-   private static final int DEBUG_HOOKSWITCH_DOWN;
-   private static final int DEBUG_HOOKSWITCH_UP;
+   public static final long GUID = -7141493357986385054L;
+   private static final long DTMF_ECHO_TIMEOUT = 2000L;
+   private static final int INCOMING_CALL_NOTIFICATION_PAUSE_LENGTH = 3000;
+   private static final int WAITING_CALL_NOTIFICATION_PAUSE_LENGTH = 7500;
+   private static final int INVALID_NOTIFICATION_TIMER_ID = -1;
+   private static final int MAX_INCOMING_CALL_REPEATS = 10;
+   private static final int HOLSTER_IN_OUT_THRESHOLD = 1500;
+   private static final int CALL_WAITING_TUNE_VOLUME = 50;
+   private static final int DEBUG_INCOMING_CALL_ID_INVALID = 30001;
+   private static final int DEBUG_HOOKSWITCH_DOWN = 30002;
+   private static final int DEBUG_HOOKSWITCH_UP = 30003;
    private static RIMPhone _instance;
 
    public final UiApplication getApplication() {

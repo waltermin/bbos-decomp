@@ -6,9 +6,9 @@ import net.rim.tools.compiler.vm.Constants;
 public final class TypeItem implements Constants {
    private int _bits;
    private ClassDef _classDef;
-   private static final int ID_SHIFT;
-   private static final int NEST_SHIFT;
-   private static final int BASEID_SHIFT;
+   private static final int ID_SHIFT = 24;
+   private static final int NEST_SHIFT = 16;
+   private static final int BASEID_SHIFT = 8;
    private static TypeItem[] _cache = new TypeItem[]{
       null,
       new TypeItem(1),

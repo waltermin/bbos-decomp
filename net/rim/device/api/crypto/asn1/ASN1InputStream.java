@@ -14,10 +14,10 @@ public class ASN1InputStream {
    private SharedInputStream _sharedStream;
    private ASN1Field _lastFieldRead;
    private ASN1Field _creator;
-   private static final int _arraySizeLimit;
-   private static final int _timeSizeLimit;
-   private static final int _asn1SizeLimit;
-   private static final int RECURSIVE_LIMIT;
+   private static final int _arraySizeLimit = 8192;
+   private static final int _timeSizeLimit = 64;
+   private static final int _asn1SizeLimit = 1024;
+   private static final int RECURSIVE_LIMIT = 32;
 
    public ASN1InputStream(InputStream inputStream) {
       if (inputStream == null) {

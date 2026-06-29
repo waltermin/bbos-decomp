@@ -23,10 +23,10 @@ public final class HostedSecretQuestionScreen extends UserSettingsScreen {
    private BasicEditField _secretAnswer;
    private int _customEditPosition = -1;
    private int _customLabelPosition = -1;
-   public static final String PARAM_QUESTION;
-   public static final String PARAM_QUESTION_ID;
-   public static final String PARAM_ANSWER;
-   public static final String PARAM_NO_CANCEL;
+   public static final String PARAM_QUESTION = "question";
+   public static final String PARAM_QUESTION_ID = "questionId";
+   public static final String PARAM_ANSWER = "answer";
+   public static final String PARAM_NO_CANCEL = "secretQuestionNoCancel";
 
    public HostedSecretQuestionScreen() {
       super(31);

@@ -19,7 +19,7 @@ public final class ChooseVariantDialog extends PopupScreen {
    private XYRect _anchorRect;
    private boolean _changingVisibility;
    private boolean _isVisible;
-   static final int MAX_VISIBLE;
+   static final int MAX_VISIBLE = 4;
 
    public ChooseVariantDialog(SpellCheckInputMethodVariant spellChecker) {
       super(new ChooseVariantManager(spellChecker), 65536);

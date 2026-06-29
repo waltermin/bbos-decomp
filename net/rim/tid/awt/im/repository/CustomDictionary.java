@@ -7,11 +7,11 @@ import net.rim.device.api.collection.util.CollectionListenerManager;
 
 public class CustomDictionary implements ReadableSet, CollectionEventSource {
    protected CollectionListenerManager _listeners = new CollectionListenerManager();
-   public static final byte NEW_WORDS;
-   public static final byte FREQUENCY_WORDS;
-   public static final byte URL_EMAIL_WORDS;
-   public static final byte EXTRACTED_WORDS;
-   public static final byte REJECTED_WORDS;
+   public static final byte NEW_WORDS = 1;
+   public static final byte FREQUENCY_WORDS = 2;
+   public static final byte URL_EMAIL_WORDS = 4;
+   public static final byte EXTRACTED_WORDS = 5;
+   public static final byte REJECTED_WORDS = 6;
 
    public Object add(Object newEntry) {
       this._listeners.fireElementAdded(this, newEntry);

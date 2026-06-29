@@ -10,15 +10,15 @@ class PeerRequest implements Request {
    Object _body;
    private boolean _read;
    IntHashtable _persistentData;
-   static final int TYPE_KEY;
-   static final int TYPE_NEW_CONTACT_REQUEST;
-   static final int TYPE_WRONG_PASSCODE_REQUEST;
-   static final int TYPE_NAME;
-   static final int TYPE_BODY;
-   static final int TYPE_INVITE;
-   static final int TYPE_ID;
-   static final int TYPE_VERSION;
-   static final String VERSION;
+   static final int TYPE_KEY = 1;
+   static final int TYPE_NEW_CONTACT_REQUEST = 2;
+   static final int TYPE_WRONG_PASSCODE_REQUEST = 3;
+   static final int TYPE_NAME = 5;
+   static final int TYPE_BODY = 6;
+   static final int TYPE_INVITE = 7;
+   static final int TYPE_ID = 8;
+   static final int TYPE_VERSION = 9;
+   static final String VERSION = "1.1.0";
 
    PeerRequest(int type, String replyTo, String body, IntHashtable inviteData) {
       this._hashId = replyTo.toUpperCase().hashCode();

@@ -17,7 +17,7 @@ import net.rim.device.apps.internal.blackberryemail.email.ProxyModel;
 import net.rim.vm.WeakReference;
 
 final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore implements Persistable {
-   public static final long PROXY_MODEL_STORE_ID;
+   public static final long PROXY_MODEL_STORE_ID = -7104206253406502952L;
 
    public static final MailApiPersistentProxyModelStore getInstance() {
       PersistentObject po = RIMPersistentStore.getPersistentObject(-7104206253406502952L);

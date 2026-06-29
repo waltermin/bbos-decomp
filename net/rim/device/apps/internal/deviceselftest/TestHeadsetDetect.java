@@ -7,10 +7,10 @@ import net.rim.device.api.ui.Keypad;
 
 final class TestHeadsetDetect extends TestTaskBase implements AudioHeadsetListener {
    TestHeadsetDetectScreen taskScreen;
-   static final int INTO;
-   static final int OUTOF;
-   static final int CLICK;
-   static final int UNCLICK;
+   static final int INTO = 1;
+   static final int OUTOF = 2;
+   static final int CLICK = 3;
+   static final int UNCLICK = 4;
 
    TestHeadsetDetect() {
       super.app = (DeviceSelfTest)Application.getApplication();

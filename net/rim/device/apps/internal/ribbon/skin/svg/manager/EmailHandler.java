@@ -23,7 +23,7 @@ class EmailHandler extends Handler implements GlobalEventListener, VerbFactory {
    ModelColumnPainter[] _painter = new ModelColumnPainter[this.MaxEntries];
    DeleteSingleItemVerb _deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
    Verb[] _verbArray = new Object[]{this._deleteVerb};
-   private static final int NUM_ENTRIES_PER_LOG;
+   private static final int NUM_ENTRIES_PER_LOG = 3;
 
    protected boolean isItemValid(Object item) {
       return this._includeSMSMMS || item instanceof Object || item instanceof Object || item instanceof Object;

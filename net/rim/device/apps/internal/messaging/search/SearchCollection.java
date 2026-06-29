@@ -17,7 +17,7 @@ public final class SearchCollection extends SimplePersistentEncryptedSyncCollect
    private SyncCollectionSchema _schema;
    private static SyncConverter _syncConverter;
    private static final int[] KEY_FIELD_IDS = new int[]{1, -804651003, 5, 4};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    SearchCollection(MessageSearchImpl search) {
       super(new FilterComparator(), 7820085525428081380L);

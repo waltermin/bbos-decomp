@@ -27,8 +27,8 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
    private Log _log;
    private LogManager _logManager;
    private SetupWizardOptions _options;
-   private static final long LAST_VIEWED_PAGE_INDEX;
-   private static final int CATEGORY_MODE;
+   private static final long LAST_VIEWED_PAGE_INDEX = -4908619151704813594L;
+   private static final int CATEGORY_MODE = 1;
 
    SetupWizardScreen(boolean isAutoRun, LogManager logManager) {
       super(299067162755072L);

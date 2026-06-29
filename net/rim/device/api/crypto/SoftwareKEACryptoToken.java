@@ -7,7 +7,7 @@ import net.rim.device.api.util.Persistable;
 final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable {
    private static SoftwareKEACryptoToken _instance = new SoftwareKEACryptoToken();
    private static final byte[] KEA_PAD = new byte[]{114, -15, -88, 126, -110, -126, 65, -104, -85, 11};
-   private static final long ID_TEST_KEA_KEY_AGREEMENT;
+   private static final long ID_TEST_KEA_KEY_AGREEMENT = 1905910533143246511L;
 
    static final SoftwareKEACryptoToken getInstance() {
       return _instance;
@@ -25,7 +25,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       //
       // Bytecode:
       // 00: bipush 2
-      // 02: anewarray 39
+      // 02: anewarray 42
       // 05: dup
       // 06: bipush 0
       // 07: new net/rim/device/api/crypto/KEACryptoSystem

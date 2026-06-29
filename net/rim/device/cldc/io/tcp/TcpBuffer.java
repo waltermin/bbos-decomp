@@ -12,7 +12,7 @@ final class TcpBuffer implements TcpConstants {
    private int _startSeqNumber;
    protected boolean _freshnessSealed = true;
    protected Object _startSeqNumberLock = new Object();
-   private static final int TCP_MAX_WINDOW_SIZE;
+   private static final int TCP_MAX_WINDOW_SIZE = 65536;
 
    TcpBuffer() {
       this(7200);

@@ -11,7 +11,7 @@ final class DecimalFormat {
    private int fmtidx;
    private int count;
    private boolean firstPlain;
-   private static final char ESCAPE;
+   private static final char ESCAPE = '%';
 
    public DecimalFormat(String s) {
       int i = s.length();

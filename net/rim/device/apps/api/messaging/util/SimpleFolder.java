@@ -28,8 +28,8 @@ public class SimpleFolder implements Folder, Persistable {
    protected SimpleFolder _parentFolder;
    protected PersistentObject _persistentObject;
    protected int _flags;
-   protected static final long FOLDER_PERSISTENT_STORE_NAME;
-   public static final int ENABLE_SEARCH;
+   protected static final long FOLDER_PERSISTENT_STORE_NAME = 4848635152656490553L;
+   public static final int ENABLE_SEARCH = 1;
    protected static LongKeyProviderAdaptor _longKeyProviderAdaptor = new DateSortKeyProviderIndirection();
 
    public void initializeOnSystemStart() {

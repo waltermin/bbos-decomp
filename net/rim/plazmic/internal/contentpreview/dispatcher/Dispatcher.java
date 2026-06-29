@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.contentpreview.dispatcher;
 
 public interface Dispatcher {
-   String rcsid;
+   String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/dispatcher/Dispatcher.java#1 $";
 
    String getSession(int var1);
 

@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 final class TcpConnectionDatabase {
    private Vector _tcpConnectionDatabase = (Vector)(new Object());
-   private static final long ID;
+   private static final long ID = 1968615385372882942L;
    private static TcpConnectionDatabase _db;
 
    private TcpConnectionDatabase() {

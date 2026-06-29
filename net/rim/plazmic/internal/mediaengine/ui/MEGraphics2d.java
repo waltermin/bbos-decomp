@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.ui;
 
 public interface MEGraphics2d {
-   int DRAWSTYLE_ANTIALIAS;
+   int DRAWSTYLE_ANTIALIAS = 1;
 
    void getCurrentTransformation(int[] var1, int var2);
 

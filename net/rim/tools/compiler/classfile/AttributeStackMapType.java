@@ -8,16 +8,16 @@ public final class AttributeStackMapType {
    private int _newOffset;
    private ConstantPool _constantPool;
    private ConstantPoolClass _constantPoolClass;
-   public static final int ITEM_Bogus;
-   public static final int ITEM_Integer;
-   public static final int ITEM_Float;
-   public static final int ITEM_Double;
-   public static final int ITEM_Long;
-   public static final int ITEM_Null;
-   public static final int ITEM_InitObject;
-   public static final int ITEM_Object;
-   public static final int ITEM_NewObject;
-   private static final int CACHE_SIZE;
+   public static final int ITEM_Bogus = 0;
+   public static final int ITEM_Integer = 1;
+   public static final int ITEM_Float = 2;
+   public static final int ITEM_Double = 3;
+   public static final int ITEM_Long = 4;
+   public static final int ITEM_Null = 5;
+   public static final int ITEM_InitObject = 6;
+   public static final int ITEM_Object = 7;
+   public static final int ITEM_NewObject = 8;
+   private static final int CACHE_SIZE = 7;
    private static AttributeStackMapType[] _cache = new AttributeStackMapType[7];
 
    private AttributeStackMapType(int type) {

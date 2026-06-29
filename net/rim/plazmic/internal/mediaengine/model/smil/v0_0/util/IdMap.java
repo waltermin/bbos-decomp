@@ -6,8 +6,8 @@ public class IdMap {
    private Hashtable _map = (Hashtable)(new Object());
    private int _nextId;
    private String _elementIdPrefix;
-   public static final int DEFAULT_STARTING_VALUE;
-   public static final String DEFAULT_ELEMENT_ID_PREFIX;
+   public static final int DEFAULT_STARTING_VALUE = 0;
+   public static final String DEFAULT_ELEMENT_ID_PREFIX = "_unknown_element";
 
    public IdMap() {
       this(0, "_unknown_element");

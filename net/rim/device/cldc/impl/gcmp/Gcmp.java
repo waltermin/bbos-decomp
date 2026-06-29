@@ -20,8 +20,8 @@ import net.rim.device.internal.system.NvStore;
 public final class Gcmp implements GcmpEvents, NativeListener {
    private DatagramConnection _udpConn;
    private GcmpSession[] _sessions;
-   public static final long ID;
-   private static final String STR;
+   public static final long ID = -1673931206114386243L;
+   private static final String STR = "net.rim.gcmp";
 
    public static final Gcmp getInstance() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

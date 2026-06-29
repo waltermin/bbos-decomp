@@ -46,15 +46,15 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
    private AuthScheme _currentScheme;
    private AuthScheme _proxyCurrentScheme;
    private Object _syncObject = new Object();
-   private static final long APP_REGISTRY_KEY;
-   private static final int HTTP_STATUS_BAD_REQUEST;
-   private static final int HTTP_STATUS_AUTHORIZATION_REQUIRED;
-   private static final int HTTP_STATUS_PROXY_AUTHORIZATION_REQUIRED;
-   private static final String WWW_AUTHENTICATE_HEADER;
-   private static final String PROXY_AUTHENTICATE_HEADER;
-   private static final String AUTHORIZATION_HEADER;
-   private static final String PROXY_AUTHORIZATION_HEADER;
-   private static final String DOMAIN_VALUE;
+   private static final long APP_REGISTRY_KEY = -7621055828466010426L;
+   private static final int HTTP_STATUS_BAD_REQUEST = 400;
+   private static final int HTTP_STATUS_AUTHORIZATION_REQUIRED = 401;
+   private static final int HTTP_STATUS_PROXY_AUTHORIZATION_REQUIRED = 407;
+   private static final String WWW_AUTHENTICATE_HEADER = "www-authenticate";
+   private static final String PROXY_AUTHENTICATE_HEADER = "proxy-authenticate";
+   private static final String AUTHORIZATION_HEADER = "authorization";
+   private static final String PROXY_AUTHORIZATION_HEADER = "proxy-authorization";
+   private static final String DOMAIN_VALUE = "domain=";
 
    @Override
    public final void browserStateChanged(int newState) {

@@ -31,13 +31,13 @@ public final class GeneralSettingsEditScreen extends UserSettingsScreen {
    private PasswordEditField _passwordEdit;
    private EmailAddressEditField _autoBCCEdit;
    private CheckboxField _synchronizeDeletesCheckbox;
-   private static final String PARAM_DESCRIPTION;
-   private static final String PARAM_REPLYTO;
-   private static final String PARAM_FRIENDLYNAME;
-   private static final String PARAM_PASSWORD;
-   private static final String PARAM_SIGNATURE;
-   private static final String PARAM_AUTOBCC;
-   private static final String PARAM_DELETESYNC;
+   private static final String PARAM_DESCRIPTION = "description";
+   private static final String PARAM_REPLYTO = "replyTo";
+   private static final String PARAM_FRIENDLYNAME = "friendlyName";
+   private static final String PARAM_PASSWORD = "password";
+   private static final String PARAM_SIGNATURE = "signature";
+   private static final String PARAM_AUTOBCC = "autoBCC";
+   private static final String PARAM_DELETESYNC = "deleteSync";
 
    public GeneralSettingsEditScreen() {
       super(31);

@@ -23,11 +23,11 @@ public final class AddExchangeEmail extends UserSettingsScreen {
    private PasswordEditField _passwordEdit;
    private EmailAddressEditField _emailAddressEdit;
    private BasicEditField _mailboxNameEdit;
-   private static final String PARAM_EMAIL;
-   private static final String PARAM_SERVER;
-   private static final String PARAM_DESCRIPTION;
-   private static final String PARAM_OWA_USERNAME;
-   private static final String PARAM_OWA_PASSWORD;
+   private static final String PARAM_EMAIL = "email";
+   private static final String PARAM_SERVER = "server";
+   private static final String PARAM_DESCRIPTION = "description";
+   private static final String PARAM_OWA_USERNAME = "userName";
+   private static final String PARAM_OWA_PASSWORD = "password";
 
    public AddExchangeEmail() {
       super(31);

@@ -6,20 +6,20 @@ import net.rim.device.api.system.DirectConnect;
 import net.rim.vm.Array;
 
 final class AutoTextMacro {
-   private static final char MACRO_SYM;
-   private static final char SHORT_DATE_CHAR;
-   private static final char LONG_DATE_CHAR;
-   private static final char SHORT_TIME_CHAR;
-   private static final char LONG_TIME_CHAR;
-   private static final char OWNER_NAME_CHAR;
-   private static final char OWNER_INFO_CHAR;
-   private static final char BACKSPACE_CHAR;
-   private static final char DELETE_CHAR;
-   private static final char PHONE_NUMBER_CHAR;
-   private static final char DEVICE_UFMI_CHAR;
-   private static final char DEVICE_PIN_CHAR;
-   private static final char PERCENT_CHAR;
-   private static final char VERSION_CHAR;
+   private static final char MACRO_SYM = '%';
+   private static final char SHORT_DATE_CHAR = 'd';
+   private static final char LONG_DATE_CHAR = 'D';
+   private static final char SHORT_TIME_CHAR = 't';
+   private static final char LONG_TIME_CHAR = 'T';
+   private static final char OWNER_NAME_CHAR = 'o';
+   private static final char OWNER_INFO_CHAR = 'O';
+   private static final char BACKSPACE_CHAR = 'b';
+   private static final char DELETE_CHAR = 'B';
+   private static final char PHONE_NUMBER_CHAR = 'p';
+   private static final char DEVICE_UFMI_CHAR = 'U';
+   private static final char DEVICE_PIN_CHAR = 'P';
+   private static final char PERCENT_CHAR = '%';
+   private static final char VERSION_CHAR = 'V';
    private static final char[] MACRO_CHARS = new char[]{
       'd', 'D', 't', 'T', 'o', 'O', 'p', (char)(DirectConnect.isSupported() ? 'U' : '\u0000'), 'P', 'b', 'B', '%', 'V'
    };

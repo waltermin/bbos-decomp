@@ -16,15 +16,15 @@ import net.rim.device.apps.internal.browser.stack.HeaderParser;
 import net.rim.device.internal.browser.util.Pipe;
 
 final class BrowserChannelConverter extends BaseConverter {
-   private static final String PUSH_CHANNEL_ID_KEY;
-   private static final String CONTENT_LOCATION_KEY;
-   private static final String PUSH_DELETE_URL_KEY;
-   private static final String PUSH_READ_ICON_URL_KEY;
-   private static final String PUSH_UNREAD_ICON_URL_KEY;
-   private static final String PUSH_TITLE_KEY;
-   private static final String PUSH_RIBBON_POSITION_KEY;
-   private static final String PUSH_DESCRIPTION_KEY;
-   private static final String PUSH_PRIORITY_KEY;
+   private static final String PUSH_CHANNEL_ID_KEY = "X-Rim-Push-Channel-Id";
+   private static final String CONTENT_LOCATION_KEY = "Content-Location";
+   private static final String PUSH_DELETE_URL_KEY = "X-Rim-Push-Delete-Url";
+   private static final String PUSH_READ_ICON_URL_KEY = "X-Rim-Push-Read-Icon-Url";
+   private static final String PUSH_UNREAD_ICON_URL_KEY = "X-Rim-Push-Unread-Icon-Url";
+   private static final String PUSH_TITLE_KEY = "X-Rim-Push-Title";
+   private static final String PUSH_RIBBON_POSITION_KEY = "X-Rim-Push-Ribbon-Position";
+   private static final String PUSH_DESCRIPTION_KEY = "X-Rim-Push-Description";
+   private static final String PUSH_PRIORITY_KEY = "X-Rim-Push-Priority";
 
    @Override
    public final boolean canConvert(Object parameters) {

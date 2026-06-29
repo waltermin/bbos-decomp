@@ -6,11 +6,11 @@ import net.rim.ecmascript.runtime.Value;
 
 final class ESPopupScreen extends ESObject {
    private WicaAppContext _context;
-   private static final String TypeOk;
-   private static final String TypeYesNo;
-   private static final String ButtonOk;
-   private static final String ButtonYes;
-   private static final String ButtonNo;
+   private static final String TypeOk = "OK";
+   private static final String TypeYesNo = "YES_NO";
+   private static final String ButtonOk = "OK_BUTTON";
+   private static final String ButtonYes = "YES_BUTTON";
+   private static final String ButtonNo = "NO_BUTTON";
    private static final String[] Types = new String[]{"OK", "YES_NO", "OK_BUTTON", "YES_BUTTON", "NO_BUTTON"};
    private static final int[] TypeValues = new int[]{
       -1,

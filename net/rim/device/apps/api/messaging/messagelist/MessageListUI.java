@@ -99,13 +99,13 @@ public final class MessageListUI
    private int _addressCardUID;
    private static final Tag STRIPED_MESSAGE_LIST_TAG = Tag.create("messagelist");
    private static final Tag PLAIN_MESSAGE_LIST_TAG = Tag.create("messagelist-plain");
-   static final boolean STICKY_DATE_SEPARATOR;
-   public static final long MESSAGE_LIST_FACTORY_REPOSITORY_GUID;
+   static final boolean STICKY_DATE_SEPARATOR = false;
+   public static final long MESSAGE_LIST_FACTORY_REPOSITORY_GUID = 2729258854446987021L;
    private static boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
-   public static final int EXIT_POP;
-   public static final int EXIT_TO_BACKGROUND;
-   public static final int EXIT_SEARCH;
-   public static final int EXIT_TO_RIBBON_AFTER_SEARCH;
+   public static final int EXIT_POP = 1;
+   public static final int EXIT_TO_BACKGROUND = 2;
+   public static final int EXIT_SEARCH = 3;
+   public static final int EXIT_TO_RIBBON_AFTER_SEARCH = 4;
    private static LongKeyProviderAdaptor _longKeyProviderAdaptor = new DateSortKeyProviderIndirection();
 
    public final void setAddressCardUID(int addressCardUID) {

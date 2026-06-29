@@ -7,20 +7,20 @@ import net.rim.device.internal.system.InternalServices;
 
 final class WizardCustomResourceLoader {
    private static Hashtable _imageBrandingReplacements = buildImageReplacementHash();
-   private static final String IMAGE_MODULE_xBEAR;
-   private static final String IMAGE_MODULE_xRAY;
-   private static final String IMAGE_MODULE_POSITRON;
-   static final String CORE_IMAGE_ALT_KEY;
-   static final String CORE_IMAGE_DEL_KEY;
-   static final String CORE_IMAGE_ENTER_KEY;
-   static final String CORE_IMAGE_LSHIFT_KEY;
-   static final String CORE_IMAGE_RSHIFT_KEY;
-   static final String CORE_IMAGE_SHIFT_KEY;
-   static final String CORE_IMAGE_SYM_KEY;
-   static final String CORE_IMAGE_ESC_KEY;
-   static final String CORE_IMAGE_MENU_KEY;
-   static final String CORE_IMAGE_SEND_KEY;
-   static final String CORE_IMAGE_END_KEY;
+   private static final String IMAGE_MODULE_xBEAR = "net_rim_bb_help_wizard_images_8300";
+   private static final String IMAGE_MODULE_xRAY = "net_rim_bb_help_wizard_images_8800";
+   private static final String IMAGE_MODULE_POSITRON = "net_rim_bb_help_wizard_images_8100";
+   static final String CORE_IMAGE_ALT_KEY = "alt.gif";
+   static final String CORE_IMAGE_DEL_KEY = "del.gif";
+   static final String CORE_IMAGE_ENTER_KEY = "enter.gif";
+   static final String CORE_IMAGE_LSHIFT_KEY = "lshift.gif";
+   static final String CORE_IMAGE_RSHIFT_KEY = "rshift.gif";
+   static final String CORE_IMAGE_SHIFT_KEY = "shift.gif";
+   static final String CORE_IMAGE_SYM_KEY = "sym.gif";
+   static final String CORE_IMAGE_ESC_KEY = "escape.gif";
+   static final String CORE_IMAGE_MENU_KEY = "menu.gif";
+   static final String CORE_IMAGE_SEND_KEY = "send.gif";
+   static final String CORE_IMAGE_END_KEY = "end.gif";
 
    static final String getCustomizedResource(String resource) {
       if (isImage(resource)) {

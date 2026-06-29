@@ -1,12 +1,12 @@
 package net.rim.ecmascript.runtime;
 
 class ESMath extends ESObject {
-   private static final double pi;
-   private static final double pibysix;
-   private static final double pibyfour;
-   private static final double pibytwo;
-   private static final double tan15;
-   private static final double sqrt3;
+   private static final double pi = Math.PI;
+   private static final double pibysix = Math.PI / 6;
+   private static final double pibyfour = Math.PI / 4;
+   private static final double pibytwo = Math.PI / 2;
+   private static final double tan15 = 0.2679491924311227;
+   private static final double sqrt3 = 1.7320508075688772;
    private static final double[] atanPoly = new double[]{
       (double)4586558024442191043L,
       (double)-4634035982931263455L,

@@ -5,9 +5,9 @@ class NumberPattern {
    private boolean _rejectPattern;
    private boolean _prefixPattern;
    private boolean _unknownNumber;
-   static final int REJECT;
-   static final int UNDECIDED;
-   static final int ACCEPT;
+   static final int REJECT = -1;
+   static final int UNDECIDED = 0;
+   static final int ACCEPT = 1;
 
    NumberPattern(String pattern) {
       this._pattern = pattern;

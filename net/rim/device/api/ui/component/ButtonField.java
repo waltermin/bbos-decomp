@@ -50,13 +50,13 @@ public class ButtonField extends Field implements DrawStyle, FieldLabelProvider 
    private ThemeAttributeSet _attrDisabledFocus;
    private TextRect _text;
    private static Tag TAG = Tag.create("button");
-   public static final int BARE;
-   public static final long CONSUME_CLICK;
-   public static final long NEVER_DIRTY;
-   private static final int H_INSIDE_SPACE;
-   private static final int V_INSIDE_SPACE;
-   private static final int H_OUTSIDE_SPACE;
-   private static final int V_OUTSIDE_SPACE;
+   public static final int BARE = 1024;
+   public static final long CONSUME_CLICK = 65536L;
+   public static final long NEVER_DIRTY = 32768L;
+   private static final int H_INSIDE_SPACE = 4;
+   private static final int V_INSIDE_SPACE = 2;
+   private static final int H_OUTSIDE_SPACE = 4;
+   private static final int V_OUTSIDE_SPACE = 2;
 
    TextRect getTextRect() {
       return this._text;

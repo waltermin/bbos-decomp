@@ -1,20 +1,20 @@
 package net.rim.device.apps.api.framework.model;
 
 public interface Recur {
-   int MAX_RECURRENCE_PERIOD_DAILY;
-   int MAX_RECURRENCE_PERIOD_WEEKLY;
-   int MAX_RECURRENCE_PERIOD_MONTHLY;
-   int MAX_RECURRENCE_PERIOD_YEARLY;
-   byte RECUR_NONE;
-   byte RECUR_DAILY;
-   byte RECUR_WEEKLY;
-   byte RECUR_MONTHLY;
-   byte RECUR_YEARLY;
-   int MODIFIER_BYDOW;
-   int MODIFIER_BYMONTH;
-   int MODIFIER_BYMONTHBYDAY;
-   int FIRST_MODIFIER;
-   int LAST_MODIFIER;
+   int MAX_RECURRENCE_PERIOD_DAILY = 999;
+   int MAX_RECURRENCE_PERIOD_WEEKLY = 99;
+   int MAX_RECURRENCE_PERIOD_MONTHLY = 99;
+   int MAX_RECURRENCE_PERIOD_YEARLY = 1;
+   byte RECUR_NONE = 0;
+   byte RECUR_DAILY = 1;
+   byte RECUR_WEEKLY = 2;
+   byte RECUR_MONTHLY = 3;
+   byte RECUR_YEARLY = 4;
+   int MODIFIER_BYDOW = 1;
+   int MODIFIER_BYMONTH = 2;
+   int MODIFIER_BYMONTHBYDAY = 3;
+   int FIRST_MODIFIER = 1;
+   int LAST_MODIFIER = 3;
 
    void setFirstDayOfWeek(int var1);
 

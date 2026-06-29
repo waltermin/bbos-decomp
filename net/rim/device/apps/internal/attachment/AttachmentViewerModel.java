@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.blackberryemail.unknown.UnknownMimePartModel
 
 public class AttachmentViewerModel extends UnknownMimePartModel implements PersistableRIMModel, ConversionProvider, FieldProvider, MorePartModel {
    public byte[][][] _conversionsAvailable;
-   public static final long ATTACHMENT_VIEWER_MODEL;
+   public static final long ATTACHMENT_VIEWER_MODEL = -811824568997914181L;
 
    public AttachmentViewerModel(Object initialData) {
       super(initialData);

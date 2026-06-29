@@ -5,10 +5,10 @@ import java.util.Vector;
 import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 
 public final class PhoneCallLog extends CallLog {
-   public static final int TYPE_RECEIVED_CALL;
-   public static final int TYPE_PLACED_CALL;
-   public static final int TYPE_MISSED_CALL_UNOPENED;
-   public static final int TYPE_MISSED_CALL_OPENED;
+   public static final int TYPE_RECEIVED_CALL = 0;
+   public static final int TYPE_PLACED_CALL = 1;
+   public static final int TYPE_MISSED_CALL_UNOPENED = 2;
+   public static final int TYPE_MISSED_CALL_OPENED = 3;
 
    public PhoneCallLog(Date date, int callType, int callDuration, int callStatus, PhoneCallLogID participant, String notes) {
       super(date, callType, callDuration, callStatus, (Vector)(new Object()), notes);

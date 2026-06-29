@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class BaltimoreRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = 2493354022834903927L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] BALTIMORE_GTE_CYBERTRUST_ROOT_X509_CERT = new byte[]{
       48,
       -126,

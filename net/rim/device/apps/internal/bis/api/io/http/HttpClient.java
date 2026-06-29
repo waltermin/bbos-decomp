@@ -17,10 +17,10 @@ public final class HttpClient {
    private HttpListener _listener;
    private int _readBlockPercent;
    private boolean _useWapGateway;
-   private static final String SET_COOKIE;
-   private static final String XML_ACCEPT;
-   private static final String XML_CONTENT_TYPE;
-   private static final int MOP_UNAUTHORIZED_STATUS;
+   private static final String SET_COOKIE = "Set-Cookie";
+   private static final String XML_ACCEPT = "text/xml, text/*";
+   private static final String XML_CONTENT_TYPE = "text/xml; charset=utf-8";
+   private static final int MOP_UNAUTHORIZED_STATUS = 401;
    private static Hashtable _defaultRequestProperties = (Hashtable)(new Object());
 
    public HttpClient() {

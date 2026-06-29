@@ -6,13 +6,13 @@ final class PGPDashEscapedOutputStream extends OutputStream {
    private int _currentState;
    private OutputStream _output;
    private byte[] _writeBuffer;
-   private static final int STATE_LINE_START;
-   private static final int STATE_LINE_MIDDLE;
-   private static final int STATE_CR_READ;
-   private static final byte CR;
-   private static final byte LF;
-   private static final byte DASH;
-   private static final byte SPACE;
+   private static final int STATE_LINE_START = 0;
+   private static final int STATE_LINE_MIDDLE = 1;
+   private static final int STATE_CR_READ = 2;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
+   private static final byte DASH = 45;
+   private static final byte SPACE = 32;
 
    public PGPDashEscapedOutputStream(OutputStream output) {
       if (output == null) {

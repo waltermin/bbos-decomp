@@ -5,22 +5,22 @@ import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.cldc.io.utility.URIEncoder;
 
 public final class HighScoreAccessor {
-   private static final boolean RELEASE;
-   private static final boolean SENDVERSION;
-   private static final String INTERNAL_SERVER;
+   private static final boolean RELEASE = true;
+   private static final boolean SENDVERSION = true;
+   private static final String INTERNAL_SERVER = "http://highscores.rim.net";
    private static String SERVER = "http://blackberrycanbefun.plazmic.com";
    private static String DEFAULT_SERVER = "http://blackberrycanbefun.plazmic.com";
-   private static final String VERSION;
-   public static final int WRONG_PASSWORD;
-   public static final int GAME_NOT_SUPPORTED;
-   public static final int SCORE_SUBMITTED;
-   public static final int SCORE_NOT_SUBMITTED;
-   public static final int USERNAME_REJECTED;
-   public static final int USERNAME_INVALID;
-   public static final int PASSWORD_INVALID;
-   public static final int USER_NOT_ADDED;
-   public static final int GAME_EXISTS;
-   public static final int GAME_NOT_EXISTS;
+   private static final String VERSION = "01";
+   public static final int WRONG_PASSWORD = 2;
+   public static final int GAME_NOT_SUPPORTED = 3;
+   public static final int SCORE_SUBMITTED = 4;
+   public static final int SCORE_NOT_SUBMITTED = 5;
+   public static final int USERNAME_REJECTED = 6;
+   public static final int USERNAME_INVALID = 8;
+   public static final int PASSWORD_INVALID = 9;
+   public static final int USER_NOT_ADDED = 11;
+   public static final int GAME_EXISTS = 12;
+   public static final int GAME_NOT_EXISTS = 13;
    private static final byte[] laLlave;
 
    private static final String getServer() {

@@ -20,10 +20,10 @@ final class Paddle {
    private final int HEIGHT = this.PADDLE.getHeight() / 3;
    public int HALF_HEIGHT;
    public final int PADDLE_Y = Board.HEIGHT - this.HEIGHT;
-   public static final int DEFAULT;
-   public static final int LONG;
-   public static final int LASER;
-   public static final int GUN;
+   public static final int DEFAULT = 0;
+   public static final int LONG = 1;
+   public static final int LASER = 2;
+   public static final int GUN = 3;
 
    Paddle(Board board) {
       this.init();

@@ -22,13 +22,13 @@ import net.rim.wica.runtime.util.LongVector;
 class ESControl extends RedirectedObject {
    private WicaAppContext _context;
    private UIComponent _model;
-   public static final String VisibleProperty;
-   private static final String Mapping;
-   private static final String Selected;
-   private static final String SelectedValue;
-   private static final String Contents;
-   private static final String Enabled;
-   private static final String Mandatory;
+   public static final String VisibleProperty = "visible";
+   private static final String Mapping = "mapping";
+   private static final String Selected = "selected";
+   private static final String SelectedValue = "selectedValue";
+   private static final String Contents = "value";
+   private static final String Enabled = "enabled";
+   private static final String Mandatory = "mandatory";
 
    ESControl(UIComponent model, WicaAppContext context) {
       this("MDSControlElement", model, context, context.getControlPrototype());

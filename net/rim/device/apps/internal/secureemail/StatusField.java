@@ -16,11 +16,11 @@ public class StatusField extends CursorProviderVerticalIndentFieldManager implem
    private boolean _showShortForm;
    private Application _displayApp;
    private SecureEmailMessageManager _secureEmailMessageManager;
-   public static final int HORIZONTAL_SPACER_PIXEL_WIDTH;
-   public static final int LARGE_IMAGE_PIXEL_WIDTH;
-   public static final int LARGE_IMAGE_PIXEL_HEIGHT;
-   public static final int SMALL_IMAGE_PIXEL_WIDTH;
-   public static final int SMALL_IMAGE_PIXEL_HEIGHT;
+   public static final int HORIZONTAL_SPACER_PIXEL_WIDTH = 3;
+   public static final int LARGE_IMAGE_PIXEL_WIDTH = 26;
+   public static final int LARGE_IMAGE_PIXEL_HEIGHT = 20;
+   public static final int SMALL_IMAGE_PIXEL_WIDTH = 20;
+   public static final int SMALL_IMAGE_PIXEL_HEIGHT = 15;
 
    protected Image getImage() {
       throw null;

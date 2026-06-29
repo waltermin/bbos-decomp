@@ -3,7 +3,7 @@ package java.io;
 public class Writer {
    private char[] writeBuffer;
    protected Object lock;
-   private static final int writeBufferSize;
+   private static final int writeBufferSize = 1024;
 
    protected Writer() {
       this.lock = this;

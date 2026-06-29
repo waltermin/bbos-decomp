@@ -11,8 +11,8 @@ public final class MailboxList extends VerticalFieldManager {
    private NotificationMenuItemListener _menuItemListener;
    private ThemeAttributeSet _themeAttributesHeader;
    private int _themeGeneration;
-   public static final int INSTANCE_MAILBOX_SELECTED;
-   private static final String PARAM_MAILBOX_DESC;
+   public static final int INSTANCE_MAILBOX_SELECTED = 65538;
+   private static final String PARAM_MAILBOX_DESC = "description";
    private static final Tag TAG_HEADER = Tag.create("header");
 
    public MailboxList(String title, Mailbox[] mailboxes) {

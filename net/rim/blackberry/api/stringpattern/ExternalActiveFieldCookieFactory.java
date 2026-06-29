@@ -12,7 +12,7 @@ import net.rim.device.api.util.LongHashtable;
 final class ExternalActiveFieldCookieFactory implements Factory {
    private LongHashtable _cookies = (LongHashtable)(new Object());
    private int _scope = UIDGenerator.getUniqueScopingValue();
-   static final long ID;
+   static final long ID = 2591848032186709274L;
    private static ExternalActiveFieldCookieFactory _factory;
 
    final long getNewID() {

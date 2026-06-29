@@ -5,7 +5,7 @@ import net.rim.device.api.util.LongHashtable;
 
 public class CalendarSyncManager {
    private LongHashtable _syncCollections;
-   private static final long ID;
+   private static final long ID = -4758987708072567859L;
    private static CalendarSyncManager _instance;
 
    private CalendarSyncManager() {

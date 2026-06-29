@@ -14,15 +14,15 @@ public class ConversionEvent extends Event {
    private byte _lookupOpenStyle;
    private boolean _kbType;
    private char[] _tempBuf = new char[2];
-   public static final int COMPOSED_TEXT_NOT_CHANGED;
-   public static final int COMPOSED_TEXT_CHANGED;
-   public static final int CARET_POSITION_CHANGED;
-   public static final int LOOKUP_POSITION_CHANGED;
-   public static final boolean KEYBOARD_TYPE_FULL;
-   public static final boolean KEYBOARD_TYPE_REDUCED;
-   public static final byte LOOKUP_OPEN_DEFAULT;
-   public static final byte LOOKUP_OPEN_DELAYED;
-   public static final byte LOOKUP_OPEN_IMMEDIATE;
+   public static final int COMPOSED_TEXT_NOT_CHANGED = 0;
+   public static final int COMPOSED_TEXT_CHANGED = 1;
+   public static final int CARET_POSITION_CHANGED = 2;
+   public static final int LOOKUP_POSITION_CHANGED = 3;
+   public static final boolean KEYBOARD_TYPE_FULL = false;
+   public static final boolean KEYBOARD_TYPE_REDUCED = true;
+   public static final byte LOOKUP_OPEN_DEFAULT = 0;
+   public static final byte LOOKUP_OPEN_DELAYED = 1;
+   public static final byte LOOKUP_OPEN_IMMEDIATE = 2;
 
    public ConversionEvent(KeyEvent initialEvent, StringBuffer keyChars, int keyCode, IComponent src, boolean kbType) {
       super(src, 0, 0);

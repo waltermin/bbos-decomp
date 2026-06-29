@@ -3,14 +3,14 @@ package net.rim.device.apps.api.ribbon;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class RibbonLauncher {
-   protected static final long GUID;
-   public static final long GUID_HOMESCREEN_LAYOUT;
-   public static final long GUID_RIBBON_INITIALIZED;
-   public static final long RIBBON_BAR_MENU_VERB_FACTORY_REPOSITORY;
-   public static final int BACKGROUND_IMAGE_SCALE_X_FP;
-   public static final int BACKGROUND_IMAGE_ROTATION;
-   public static final int BACKGROUND_IMAGE_TOP_X;
-   public static final int BACKGROUND_IMAGE_TOP_Y;
+   protected static final long GUID = -8849441768144918583L;
+   public static final long GUID_HOMESCREEN_LAYOUT = 7112795868593646517L;
+   public static final long GUID_RIBBON_INITIALIZED = -863209076745204846L;
+   public static final long RIBBON_BAR_MENU_VERB_FACTORY_REPOSITORY = -4612983506188396850L;
+   public static final int BACKGROUND_IMAGE_SCALE_X_FP = 0;
+   public static final int BACKGROUND_IMAGE_ROTATION = 1;
+   public static final int BACKGROUND_IMAGE_TOP_X = 2;
+   public static final int BACKGROUND_IMAGE_TOP_Y = 3;
 
    public static RibbonLauncher getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

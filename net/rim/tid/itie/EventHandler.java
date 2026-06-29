@@ -25,9 +25,9 @@ public final class EventHandler {
    private String[] _focusHistoryComponent = new String[3];
    private boolean[] _focusHistoryEvent = new boolean[3];
    private int _focusHistoryLastAppId = -1;
-   public static final int EH_CLOSE_CURRENCY_KEY_DIALOG;
-   public static final int EVENT_COMMITTED_MASK;
-   private static final int MAX_FOCUS_HISTORY_COUNT;
+   public static final int EH_CLOSE_CURRENCY_KEY_DIALOG = 1;
+   public static final int EVENT_COMMITTED_MASK = 65536;
+   private static final int MAX_FOCUS_HISTORY_COUNT = 3;
 
    EventHandler() {
    }

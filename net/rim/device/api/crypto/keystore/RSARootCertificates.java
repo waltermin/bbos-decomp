@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class RSARootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -1964665300399053248L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] RSA_ROOT_CA = new byte[]{
       48,
       -126,

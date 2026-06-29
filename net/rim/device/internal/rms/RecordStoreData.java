@@ -16,10 +16,10 @@ public class RecordStoreData implements Persistable {
    private int _memoryUsed;
    private IntHashtable _records;
    private int _authMode;
-   private static final int MAXIMUM_RECORDSTORE_SIZE;
-   private static final int OVERHEAD_PER_RECORD;
-   private static final int OVERHEAD_PER_RECORDSTORE;
-   static final int MIDP_2_0_INITIAL_VERSION_NUMBER;
+   private static final int MAXIMUM_RECORDSTORE_SIZE = 65536;
+   private static final int OVERHEAD_PER_RECORD = 8;
+   private static final int OVERHEAD_PER_RECORDSTORE = 8;
+   static final int MIDP_2_0_INITIAL_VERSION_NUMBER = 16777216;
 
    public RecordStoreData(String name) {
       this._name = name;

@@ -2,7 +2,7 @@ package com.fourthpass.wmls;
 
 public final class StringValue extends Value {
    private String _value;
-   private static final int MAX_STRING_LENGTH;
+   private static final int MAX_STRING_LENGTH = 32768;
    static final StringValue EMPTY_STRING = new StringValue("");
 
    public StringValue(String s) {

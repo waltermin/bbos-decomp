@@ -20,7 +20,7 @@ import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class EmailMessageUtilities {
-   public static final byte CMIME_ATTACHMENT_DATA;
+   public static final byte CMIME_ATTACHMENT_DATA = 1;
    private static ContextObject _immediateContext = (ContextObject)(new Object());
    private static ContextObject _immediateContextForLevel1 = ContextObject.clone(_immediateContext);
    private static Proxy _proxy = Proxy.getInstance();

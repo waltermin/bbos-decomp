@@ -4,9 +4,9 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.apps.api.framework.model.ContextObject;
 
 public final class OptionsContext {
-   private static final long CONTEXT_OBJECT_GUID;
-   public static final long OPTIONS_CONTEXT_KEY;
-   public static final long OPTIONS_CONTEXT_CHANGE;
+   private static final long CONTEXT_OBJECT_GUID = -1925593203060784091L;
+   public static final long OPTIONS_CONTEXT_KEY = -1925593203060784091L;
+   public static final long OPTIONS_CONTEXT_CHANGE = -1925593203060784091L;
    private static ContextObject _contextObject;
 
    public static final ContextObject getContextObject() {

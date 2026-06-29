@@ -32,8 +32,8 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
    AddressBook _theAddressBook;
    private boolean _syncInProgress;
    private Vector _itemsToProcess;
-   private static final long ADDRESSINJECTOR;
-   private static final long ADDRESSINJECTOR_LOCK;
+   private static final long ADDRESSINJECTOR = 3765149499855602226L;
+   private static final long ADDRESSINJECTOR_LOCK = 4442458046397864247L;
 
    public static final KeyStoreAddressInjector getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

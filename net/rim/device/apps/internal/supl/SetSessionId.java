@@ -5,8 +5,8 @@ import net.rim.device.api.system.SIMCardInfo;
 final class SetSessionId {
    int sessionId;
    SetId setId;
-   static final byte SUPL_SET_SESSION_ID_BIT_SIZE;
-   static final boolean SET_ID_USE_IMSI;
+   static final byte SUPL_SET_SESSION_ID_BIT_SIZE = 16;
+   static final boolean SET_ID_USE_IMSI = true;
 
    SetSessionId() {
    }

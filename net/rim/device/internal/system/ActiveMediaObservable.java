@@ -7,7 +7,7 @@ import net.rim.vm.WeakReference;
 public final class ActiveMediaObservable {
    private ActiveMedia _user;
    private Object[] _listeners;
-   private static final long ACTIVEMEDIAOBSERVABLE_GUID;
+   private static final long ACTIVEMEDIAOBSERVABLE_GUID = -5866557420524450530L;
 
    private ActiveMediaObservable() {
    }

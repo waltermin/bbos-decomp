@@ -6,12 +6,12 @@ import net.rim.device.internal.ui.Image;
 import net.rim.device.internal.ui.component.ImageField;
 
 public final class CryptoIndicatorImages {
-   public static final int ICON_HOUR_GLASS;
-   public static final int ICON_VALID;
-   public static final int ICON_UNKNOWN;
-   public static final int ICON_INVALID;
-   public static final int ICON_PRIVATE_KEY;
-   private static final int ICON_COUNT;
+   public static final int ICON_HOUR_GLASS = 0;
+   public static final int ICON_VALID = 1;
+   public static final int ICON_UNKNOWN = 2;
+   public static final int ICON_INVALID = 3;
+   public static final int ICON_PRIVATE_KEY = 4;
+   private static final int ICON_COUNT = 5;
    private static IconCollection _icons = IconCollection.get("net_rim_crypto_indicator", 5);
 
    public static final IconCollection getIcons() {

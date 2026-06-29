@@ -21,9 +21,9 @@ public final class Status extends PopupScreen {
    private int _priority;
    private RichTextField _label;
    private DialogFieldManager _dfm;
-   static final int DEFAULT_TIME;
-   public static final long GLOBAL_STATUS;
-   private static final int MIN_DISMISS_TIME;
+   static final int DEFAULT_TIME = 2000;
+   public static final long GLOBAL_STATUS = 33554432L;
+   private static final int MIN_DISMISS_TIME = 500;
 
    private Status(String message, Bitmap bitmap, long style, boolean allowDismiss, boolean block, int priority) {
       this(message, ImageBitmap.create(bitmap), style, allowDismiss, block, priority);

@@ -16,8 +16,8 @@ final class ShortTermCache extends Hashtable implements Persistable {
    private Vector _streamingItems;
    private int _totalSize;
    private int _maxSize;
-   private static final boolean DEBUG;
-   private static final int NUM_BUCKETS;
+   private static final boolean DEBUG = false;
+   private static final int NUM_BUCKETS = 21;
 
    public ShortTermCache(int size) {
       this.resetBuckets();

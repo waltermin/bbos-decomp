@@ -5,8 +5,8 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.utility.general.Copyable;
 
 public final class TaskVerbs {
-   public static final int VERB_OPEN_TASK;
-   public static final int VERB_NEW_TASK;
+   public static final int VERB_OPEN_TASK = 1;
+   public static final int VERB_NEW_TASK = 2;
 
    private TaskVerbs() {
    }

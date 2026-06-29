@@ -7,9 +7,9 @@ public final class GPRSInfo {
    private byte[] _imeisv;
    private int _gprsState;
    private String _zoneName;
-   public static final int GPRS_STATE_IDLE;
-   public static final int GPRS_STATE_STANDBY;
-   public static final int GPRS_STATE_READY;
+   public static final int GPRS_STATE_IDLE = 0;
+   public static final int GPRS_STATE_STANDBY = 1;
+   public static final int GPRS_STATE_READY = 2;
    private static GPRSInfo _info;
 
    private GPRSInfo() {

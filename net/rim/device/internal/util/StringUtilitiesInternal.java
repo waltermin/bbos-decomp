@@ -5,7 +5,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 public final class StringUtilitiesInternal {
-   private static final long SCRATCH_KEY;
+   private static final long SCRATCH_KEY = -307649977564900118L;
    private static WeakReference _scratchBufferWR;
 
    private StringUtilitiesInternal() {

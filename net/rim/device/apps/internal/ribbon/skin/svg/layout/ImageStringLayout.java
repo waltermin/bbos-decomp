@@ -23,7 +23,7 @@ class ImageStringLayout extends HorizontalLayout {
    private int _fontWeight;
    private int _fontStyle;
    private String _fontFamily;
-   private static final int ELLIPSIS_LENGTH;
+   private static final int ELLIPSIS_LENGTH = 1;
    private static TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
    private static DrawTextParam _textParams = (DrawTextParam)(new Object());
    private static TextMetrics _textMetrics = (TextMetrics)(new Object());

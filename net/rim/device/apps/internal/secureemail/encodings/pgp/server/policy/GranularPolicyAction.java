@@ -14,19 +14,19 @@ public class GranularPolicyAction extends GranularPolicyElement {
    private String _keyNotFound;
    private String _encodingFormat;
    private String _chainName;
-   private static final int UNKNOWN;
-   public static final int OPERATION_SEND;
-   public static final int OPERATION_BOUNCE;
-   public static final int OPERATION_VERIFY;
-   public static final int OPERATION_SEND_WEB_MESSENGER;
-   public static final int OPERATION_SEND_CLEAR;
-   public static final int OPERATION_GO_TO_CHAIN;
-   public static final int OPERATION_ADD_TO_DICTIONARY;
-   public static final int OPERATION_SEND_COPY;
-   public static final int OPERATION_SCAN_FOR_VIRUSES;
-   public static final int OPERATION_DROP;
-   public static final int OPERATION_EXPAND_TO_LIST;
-   public static final int OPERATION_DELIVER_MESSAGE;
+   private static final int UNKNOWN = -1;
+   public static final int OPERATION_SEND = 0;
+   public static final int OPERATION_BOUNCE = 1;
+   public static final int OPERATION_VERIFY = 2;
+   public static final int OPERATION_SEND_WEB_MESSENGER = 3;
+   public static final int OPERATION_SEND_CLEAR = 4;
+   public static final int OPERATION_GO_TO_CHAIN = 5;
+   public static final int OPERATION_ADD_TO_DICTIONARY = 6;
+   public static final int OPERATION_SEND_COPY = 7;
+   public static final int OPERATION_SCAN_FOR_VIRUSES = 8;
+   public static final int OPERATION_DROP = 9;
+   public static final int OPERATION_EXPAND_TO_LIST = 10;
+   public static final int OPERATION_DELIVER_MESSAGE = 11;
 
    GranularPolicyAction(String xmlTag, Attributes attributes, GranularPolicyElement parentElement) {
       super(xmlTag, parentElement);

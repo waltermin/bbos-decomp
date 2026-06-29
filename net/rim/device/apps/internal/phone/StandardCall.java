@@ -18,7 +18,7 @@ class StandardCall extends LiveCall implements NotesContainer {
    protected BodyModel _notesModel;
    private AfterDialToneHandler _afterDialToneHandler;
    private boolean _updatedCallMeters;
-   private static final int MAX_AFTER_DIAL_DELAY;
+   private static final int MAX_AFTER_DIAL_DELAY = 5000;
 
    void addedToConference() {
       this.setFlag(16);

@@ -1,25 +1,25 @@
 package net.rim.plazmic.internal.math;
 
 public final class Fixed32 {
-   public static final int MAX_VALUE;
-   public static final int MIN_VALUE;
-   public static final int PI;
-   public static final int E;
-   public static final short NUM_FRACTION_BITS;
-   public static final int FP090;
-   public static final int FP180;
-   public static final int FP270;
-   public static final int FP360;
-   public static final int RAD2DEG;
-   private static final int C9;
-   private static final int C7;
-   private static final int C5;
-   private static final int C3;
-   private static final int C1;
-   private static final int ONE;
-   private static final int HALF;
-   private static final int TEN_THOU;
-   private static final int FIVE_THOU;
+   public static final int MAX_VALUE = Integer.MAX_VALUE;
+   public static final int MIN_VALUE = Integer.MIN_VALUE;
+   public static final int PI = 205887;
+   public static final int E = 178145;
+   public static final short NUM_FRACTION_BITS = 16;
+   public static final int FP090 = 5898240;
+   public static final int FP180 = 11796480;
+   public static final int FP270 = 17694720;
+   public static final int FP360 = 23592960;
+   public static final int RAD2DEG = 3754936;
+   private static final int C9 = 1365;
+   private static final int C7 = -5579;
+   private static final int C5 = 11806;
+   private static final int C3 = -21646;
+   private static final int C1 = 65527;
+   private static final int ONE = 65536;
+   private static final int HALF = 32768;
+   private static final int TEN_THOU = 10000;
+   private static final int FIVE_THOU = 5000;
    private static final short[] A = new short[]{
       18300,
       18295,

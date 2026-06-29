@@ -8,10 +8,10 @@ final class TaskCollectionImpl$MirroredCollectionAction implements Runnable {
    private Object _newObject;
    private Object _oldObject;
    private final TaskCollectionImpl this$0;
-   public static final int RELOAD;
-   public static final int ADD;
-   public static final int UPDATE;
-   public static final int REMOVE;
+   public static final int RELOAD = 1;
+   public static final int ADD = 2;
+   public static final int UPDATE = 3;
+   public static final int REMOVE = 4;
 
    public TaskCollectionImpl$MirroredCollectionAction(TaskCollectionImpl _1, int action, Collection collection, Object newObject, Object oldObject) {
       this.this$0 = _1;

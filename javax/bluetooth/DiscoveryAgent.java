@@ -10,11 +10,11 @@ import net.rim.device.internal.bluetooth.BluetoothME;
 public class DiscoveryAgent {
    private BluetoothDeviceManagerImpl _btManager;
    private int _sdpTransactionID;
-   public static final int NOT_DISCOVERABLE;
-   public static final int GIAC;
-   public static final int LIAC;
-   public static final int CACHED;
-   public static final int PREKNOWN;
+   public static final int NOT_DISCOVERABLE = 0;
+   public static final int GIAC = 10390323;
+   public static final int LIAC = 10390272;
+   public static final int CACHED = 0;
+   public static final int PREKNOWN = 1;
    private static final int[] DEFAULT_ATTRIBUTE_IDS = new int[]{
       0, 1, 2, 3, 4, -804651002, 0, 1, 2, 3, 4, 256, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643
    };

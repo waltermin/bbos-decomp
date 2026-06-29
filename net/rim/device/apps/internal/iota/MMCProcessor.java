@@ -37,8 +37,8 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
    private Object _tunnelSync = new Object();
    private Object _phoneSync = new Object();
    private IOTATimerThread _timer;
-   public static final String CONTENT_TYPE_MMC_XML;
-   public static final String CONTENT_TYPE_MULTIPART;
+   public static final String CONTENT_TYPE_MMC_XML = "application/vnd.phonecom.mmc-xml";
+   public static final String CONTENT_TYPE_MULTIPART = "multipart/related";
    private static byte[] _is683Result;
    private static Object _is683Sync = new Object();
    private static ResourceBundle _resources = ResourceBundle.getBundle(1200788073156220994L, "net.rim.device.apps.internal.resource.IOTA");

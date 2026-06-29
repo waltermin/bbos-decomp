@@ -43,11 +43,11 @@ public final class EmailPayloadModelImpl
    private int _CMIMEReferenceIdentifier;
    private int _packedInfo;
    long _timestamp;
-   private static final int PACKEDINFO_RECIPIENT_TYPE;
-   private static final int PACKEDINFO_INBOUND;
-   private static final int PACKEDINFO_COPY_INSTEAD_OF_REFERENCE;
-   private static final int PACKEDINFO_NNE;
-   private static final int PACKEDINFO_ENCODING_CODE;
+   private static final int PACKEDINFO_RECIPIENT_TYPE = 255;
+   private static final int PACKEDINFO_INBOUND = 256;
+   private static final int PACKEDINFO_COPY_INSTEAD_OF_REFERENCE = 512;
+   private static final int PACKEDINFO_NNE = 1024;
+   private static final int PACKEDINFO_ENCODING_CODE = 16711680;
 
    @Override
    public final int getCMIMEReferenceIdentifier() {

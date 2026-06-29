@@ -5,7 +5,7 @@ import net.rim.device.internal.proxy.Proxy;
 class WordSyncCollection$Cleaner implements Runnable {
    private int _id;
    private final WordSyncCollection this$0;
-   public static final int TIMEOUT;
+   public static final int TIMEOUT = 1800000;
 
    WordSyncCollection$Cleaner(WordSyncCollection _1) {
       this.this$0 = _1;

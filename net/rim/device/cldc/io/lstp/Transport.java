@@ -20,16 +20,16 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    private DataBuffer _txBuffer;
    private NativeLayer _activeNativeLayer;
    private NativeLayer _primaryNativeLayer;
-   protected static final long ID;
-   private static final String LSTP_STR;
-   private static final int WAIT_FOR_ACK_TIMEOUT;
-   private static final int MAX_RETRIES;
-   private static final int STATUS_NONE;
-   private static final int STATUS_ACKED;
-   private static final int STATUS_NON_FATAL;
-   private static final int STATUS_NOT_ROUTABLE;
-   private static final int STATUS_CANCELLED;
-   private static final int STATUS_FATAL;
+   protected static final long ID = -754053862978797267L;
+   private static final String LSTP_STR = "net.rim.lstp";
+   private static final int WAIT_FOR_ACK_TIMEOUT = 5000;
+   private static final int MAX_RETRIES = 3;
+   private static final int STATUS_NONE = 0;
+   private static final int STATUS_ACKED = 1;
+   private static final int STATUS_NON_FATAL = 2;
+   private static final int STATUS_NOT_ROUTABLE = 3;
+   private static final int STATUS_CANCELLED = 4;
+   private static final int STATUS_FATAL = 5;
 
    public Transport() {
       super.GUID = -754053862978797267L;

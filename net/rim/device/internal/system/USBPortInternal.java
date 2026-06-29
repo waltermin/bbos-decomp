@@ -7,7 +7,7 @@ import net.rim.vm.Process;
 public final class USBPortInternal extends IOPort {
    private int _channel;
    private Runnable _cleanupRunnable;
-   private static final String PORT_NOT_OPEN;
+   private static final String PORT_NOT_OPEN = "Port not open";
 
    private USBPortInternal() {
    }

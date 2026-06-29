@@ -5,10 +5,10 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.vm.PersistentInteger;
 
 class CFU {
-   private static final int CFU_MODE_UNKNOWN;
-   private static final int CFU_MODE_ON;
-   private static final int CFU_MODE_OFF;
-   private static final long CFU_MODE_GUID;
+   private static final int CFU_MODE_UNKNOWN = 0;
+   private static final int CFU_MODE_ON = 1;
+   private static final int CFU_MODE_OFF = 2;
+   private static final long CFU_MODE_GUID = 7592775292583405001L;
    private static int _id = PersistentInteger.getId(7592775292583405001L, 0);
    private static boolean _cffAvailable;
 

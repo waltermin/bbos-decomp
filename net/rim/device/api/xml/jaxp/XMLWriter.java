@@ -16,9 +16,9 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
    private EntityResolver _resolver;
    private boolean _expandingEntities = false;
    private RIMExtendedAttributes _noExtendedAttributes = new XMLWriter$1(this);
-   private static final int PRETTY_PRINT;
-   private static final int COMPRESSED;
-   private static final int PRESERVE;
+   private static final int PRETTY_PRINT = 0;
+   private static final int COMPRESSED = 1;
+   private static final int PRESERVE = 2;
 
    public XMLWriter(OutputStream out) {
       this._out = out;

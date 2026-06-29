@@ -5,7 +5,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 public final class PushFile extends Model {
    private String _sessionName;
    private String _fileName;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/PushFile.java#1 $";
 
    public PushFile(String sessionName, String fileName) {
       this._sessionName = sessionName;

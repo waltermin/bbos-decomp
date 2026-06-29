@@ -7,14 +7,14 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.DataBuffer;
 
 class MMSOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final long MMS_OPTIONS_SYNCITEM_GUID;
+   private static final long MMS_OPTIONS_SYNCITEM_GUID = -750633336941733904L;
    private static MMSOptionsSyncItem _instance;
-   private static final String DATABASE_NAME;
-   public static final int CURRENT_VERSION;
-   private static final int RECEPTION_MODE_TAG;
-   private static final int RETRIEVAL_MODE_TAG;
-   private static final int RETRIEVAL_LIMIT_TAG;
-   private static final int FLAGS_TAG;
+   private static final String DATABASE_NAME = "MMS Options";
+   public static final int CURRENT_VERSION = 1;
+   private static final int RECEPTION_MODE_TAG = 1;
+   private static final int RETRIEVAL_MODE_TAG = 2;
+   private static final int RETRIEVAL_LIMIT_TAG = 3;
+   private static final int FLAGS_TAG = 4;
 
    private MMSOptionsSyncItem() {
    }

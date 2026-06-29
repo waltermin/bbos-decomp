@@ -30,11 +30,11 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
    private IntHashtable _uidHashtable = (IntHashtable)(new Object());
    private IntHashtable _overridesToValidate;
    private CollectionListenerManager _collectionListenerManager;
-   private static final long OVERRIDES_ID;
-   private static final long OVERRIDES_PERSISTENT_ID;
-   static final int INVALID_EXISTING_ADDRESS_CARD_UID;
-   private static final int MIN_IDLE_TIME_SEC;
-   private static final int MIN_IDLE_TIME_MSEC;
+   private static final long OVERRIDES_ID = -6786592476105735731L;
+   private static final long OVERRIDES_PERSISTENT_ID = -1745202328598837165L;
+   static final int INVALID_EXISTING_ADDRESS_CARD_UID = 0;
+   private static final int MIN_IDLE_TIME_SEC = 5;
+   private static final int MIN_IDLE_TIME_MSEC = 1000;
 
    final Override createNewOverride(String name) {
       return this.createNewOverride(name, UIDGenerator.getUID());

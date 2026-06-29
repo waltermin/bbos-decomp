@@ -63,11 +63,11 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
    protected KeyStore _preferredKeyStore;
    protected boolean _isPINMessage;
    protected static final ResourceBundle _rb = ResourceBundle.getBundle(-6165272894895379810L, "net.rim.device.apps.internal.resource.secureemail.SecureEmail");
-   private static final int DONT_SEND;
-   private static final int SEND_ANYWAY;
-   private static final int VIEW_CERT;
-   private static final int DONT_ASK;
-   private static final int NUM_USER_OPTIONS;
+   private static final int DONT_SEND = 0;
+   private static final int SEND_ANYWAY = 1;
+   private static final int VIEW_CERT = 2;
+   private static final int DONT_ASK = 3;
+   private static final int NUM_USER_OPTIONS = 4;
 
    public boolean isAttachmentPresent(EmailMessageModel message) {
       int numMessageModels = message.size();

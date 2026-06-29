@@ -7,9 +7,9 @@ import net.rim.device.api.util.DataBuffer;
 
 class SmartCardOptions$SmartCardOptionsSyncItem extends OTASyncCapableSyncItem {
    private final SmartCardOptions this$0;
-   private static final int ALLOW_LOCK_ON_CARD_REMOVAL;
-   private static final int ALLOW_PIN_CACHING;
-   private static final int ENABLE_LED_FLASHING_ON_OPEN_SESSION;
+   private static final int ALLOW_LOCK_ON_CARD_REMOVAL = 1;
+   private static final int ALLOW_PIN_CACHING = 2;
+   private static final int ENABLE_LED_FLASHING_ON_OPEN_SESSION = 3;
 
    SmartCardOptions$SmartCardOptionsSyncItem(SmartCardOptions _1) {
       this.this$0 = _1;

@@ -12,7 +12,7 @@ final class ASN1Field {
    private int _endPosition;
    private int _maxPosition;
    private boolean _isExplicit;
-   private static final int RECURSIVE_LIMIT;
+   private static final int RECURSIVE_LIMIT = 32;
 
    ASN1Field(ASN1Field field, SharedInputStream input) {
       this(field, input, -1);

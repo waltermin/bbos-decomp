@@ -14,7 +14,7 @@ public class PropertyField extends Field implements FieldLabelProvider {
    private TextRect _text = new TextRect(this);
    private static Tag TAG = Tag.create("property");
    private static Tag TAG_LABEL = Tag.create("label");
-   private static final int PADDING;
+   private static final int PADDING = 2;
 
    public void setValue(Object value) {
       this._value = value;

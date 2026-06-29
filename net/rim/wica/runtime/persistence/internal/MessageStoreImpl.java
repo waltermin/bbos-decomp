@@ -9,9 +9,9 @@ import net.rim.wica.runtime.persistence.MessageStore;
 public class MessageStoreImpl implements MessageStore {
    private LongSubstore _inMsgSubstore = new LongSubstore(4535419555376299188L);
    private LongSubstore _outMsgSubstore = new LongSubstore(7843219391424628215L);
-   private static final long KEY_IN_REQUEST_QUEUE;
-   private static final long KEY_INMSG;
-   private static final long KEY_OUTMSG;
+   private static final long KEY_IN_REQUEST_QUEUE = -6071652197342507152L;
+   private static final long KEY_INMSG = 4535419555376299188L;
+   private static final long KEY_OUTMSG = 7843219391424628215L;
 
    MessageStoreImpl() {
    }

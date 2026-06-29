@@ -14,7 +14,7 @@ final class TaskUICollection extends BigSortedReadableList implements TaskCollec
    TaskCollection _taskCollection;
    int _statusToHide = -1;
    boolean _supressAction;
-   static final int SHOW_ALL_STATUSES;
+   static final int SHOW_ALL_STATUSES = -1;
 
    TaskUICollection(TaskCollection taskCollection) {
       super((Comparator)FactoryUtil.createInstance(-5646701879688313636L, null));

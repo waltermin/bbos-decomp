@@ -20,10 +20,10 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
    private String _currentPath;
    private FileSelector _fileSelector;
    private ButtonField _dirButton;
-   public static final long DISABLE_SMART_EXTENSION_MODE;
-   private static final int MAX_NAME_LENGTH;
+   public static final long DISABLE_SMART_EXTENSION_MODE = 32768L;
+   private static final int MAX_NAME_LENGTH = 256;
    private static ResourceBundle _rb = ResourceBundle.getBundle(349501092522026426L, "net.rim.device.apps.internal.resource.Explorer");
-   public static final long SAVE;
+   public static final long SAVE = 134217728L;
 
    public String getFilename() {
       if (this._editField == null) {

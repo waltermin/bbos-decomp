@@ -4,9 +4,9 @@ final class CellMeasuredResults {
    private int cellId;
    private ModeSpecificInfo info;
    private byte optionals;
-   static final byte CELL_MEAS_RES_OPT_CELL_ID;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte CELL_ID_BIT_SIZE;
+   static final byte CELL_MEAS_RES_OPT_CELL_ID = 1;
+   static final byte NUM_OPT_ELEMENTS = 1;
+   static final byte CELL_ID_BIT_SIZE = 28;
 
    final void encode(Stuffer stuff) {
       stuff.putBits(this.optionals, 1);

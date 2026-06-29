@@ -40,7 +40,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
    protected int _splitSize = 50;
    protected char _defaultFrequency = '耀';
    protected int _maxSplitNestingLevel = 2;
-   protected static final int MAX_BUFFER_SIZE;
+   protected static final int MAX_BUFFER_SIZE = 50;
    protected static boolean _debugOutputEnabled;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

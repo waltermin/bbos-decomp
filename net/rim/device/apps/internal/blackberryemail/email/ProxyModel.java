@@ -12,9 +12,9 @@ import net.rim.device.apps.api.framework.verb.Verb;
 public final class ProxyModel implements PersistableRIMModel, FieldProvider, VerbProvider, ConversionProvider, ActionProvider {
    private long _root;
    private int _objecthandle;
-   public static final long PROXY_MODEL_ID;
-   public static final long PROXY_MODEL_ROOTID;
-   public static final long PROXY_MODEL_OBJECTHANDLE;
+   public static final long PROXY_MODEL_ID = 5983802064804519487L;
+   public static final long PROXY_MODEL_ROOTID = 1480271510226910726L;
+   public static final long PROXY_MODEL_OBJECTHANDLE = -4673191042266301337L;
 
    public final void set(long rootId, int objecthandle) {
       this._root = rootId;

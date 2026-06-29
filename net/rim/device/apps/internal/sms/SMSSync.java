@@ -35,7 +35,7 @@ final class SMSSync
    private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
    private ContextObject _syncContextObject = (ContextObject)(new Object(19));
    private static String SYNC_COLLECTION_NAME = "SMS Messages";
-   private static final long SMS_MESSAGES_BACKUP_MERGE_ID;
+   private static final long SMS_MESSAGES_BACKUP_MERGE_ID = 642795440399165430L;
 
    SMSSync() {
       this.listenForChangesToFolder(1393133342214151287L);

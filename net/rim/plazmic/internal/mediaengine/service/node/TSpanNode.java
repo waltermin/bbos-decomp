@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface TSpanNode extends VisualNode, TextAttrNode {
-   int TYPE;
+   int TYPE = 32;
 
    int getStringStart();
 

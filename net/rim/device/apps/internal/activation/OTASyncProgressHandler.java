@@ -46,7 +46,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    private int[] _activationEventValueQueue = new int[0];
    private Object[] _activationEventDataObjectQueue = new Object[0];
    private String[] _titleFormattingString = new Object[1];
-   private static final long ID;
+   private static final long ID = 4874767306658954404L;
 
    final void setSyncStatus(long serviceId, int state) {
       if (this._serviceProgress.containsKey(serviceId)) {

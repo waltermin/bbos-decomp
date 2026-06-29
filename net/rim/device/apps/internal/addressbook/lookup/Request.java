@@ -33,14 +33,14 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
    RIMModel _selectedItemSubModel;
    private long _service;
    private Object _context;
-   public static final int DEFAULT_NUMBER_OF_MATCHES;
-   public static final int MAX_SEARCH_STRING_LENGTH;
-   public static final int NO_APPROPRIATE_ADDRESS;
-   public static final int CANCELLED;
-   public static final int ERROR;
-   public static final int PENDING;
-   public static final int PENDING_MORE;
-   public static final int RECEIVED;
+   public static final int DEFAULT_NUMBER_OF_MATCHES = 20;
+   public static final int MAX_SEARCH_STRING_LENGTH = 256;
+   public static final int NO_APPROPRIATE_ADDRESS = -3;
+   public static final int CANCELLED = -2;
+   public static final int ERROR = -1;
+   public static final int PENDING = 0;
+   public static final int PENDING_MORE = 1;
+   public static final int RECEIVED = 2;
 
    @Override
    public final int paint(Graphics graphics, int x, int y, int width, int height, Object context) {

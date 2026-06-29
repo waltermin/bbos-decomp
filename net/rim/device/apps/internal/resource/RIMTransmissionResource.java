@@ -1,16 +1,16 @@
 package net.rim.device.apps.internal.resource;
 
 public interface RIMTransmissionResource {
-   long BUNDLE_ID;
-   String BUNDLE_NAME;
-   int REGISTRATION_BODY;
-   int SR_SELECTOR_NAME;
-   int SB;
-   int NO_REGISTERED_APPS;
-   int REGISTRATION_FROM;
-   int HRT;
-   int DEFAULT_SERVICES;
-   int REGISTRATION_SUBJECT;
-   int DEFAULT_ENCODING;
-   int MESSAGE_SERVICES;
+   long BUNDLE_ID = -6786735338084768790L;
+   String BUNDLE_NAME = "net.rim.device.apps.internal.resource.RIMTransmission";
+   int REGISTRATION_BODY = 7;
+   int SR_SELECTOR_NAME = 1;
+   int SB = 3;
+   int NO_REGISTERED_APPS = 5;
+   int REGISTRATION_FROM = 9;
+   int HRT = 2;
+   int DEFAULT_SERVICES = 10;
+   int REGISTRATION_SUBJECT = 8;
+   int DEFAULT_ENCODING = 6;
+   int MESSAGE_SERVICES = 4;
 }

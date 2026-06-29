@@ -11,15 +11,15 @@ final class UserSetting implements Persistable, SyncObject {
    private long _dontPrompt;
    private long _isSet;
    private int _uid;
-   private static final long USER_PERMS_KEY;
-   static final int VERSION;
-   static final int HASH;
-   static final int PERMS;
-   static final int DONTPROMPT;
-   static final int ISSET;
-   static final int L_PERMS;
-   static final int L_DONTPROMPT;
-   static final int L_ISSET;
+   private static final long USER_PERMS_KEY = 1903692481843231563L;
+   static final int VERSION = -1;
+   static final int HASH = 0;
+   static final int PERMS = 1;
+   static final int DONTPROMPT = 2;
+   static final int ISSET = 3;
+   static final int L_PERMS = 4;
+   static final int L_DONTPROMPT = 5;
+   static final int L_ISSET = 6;
 
    final void setPermissions(UserSetting us) {
       this.setPermissions(us._permissions, us._dontPrompt, us._isSet);

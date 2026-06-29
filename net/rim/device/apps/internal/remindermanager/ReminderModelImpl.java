@@ -18,7 +18,7 @@ class ReminderModelImpl implements ReminderModel, LongProp, Copyable, Reconcilab
    long _reminderTime = -1;
    long _reminderFiredFor = Long.MIN_VALUE;
    int _state = 1;
-   private static final int ORDER;
+   private static final int ORDER = 1000;
    private static final IconCollection STATUS_ICONS = IconCollection.get("net_rim_Reminder_Status", 1);
    private static ContextObject _checksumContext = (ContextObject)(new Object(60));
 

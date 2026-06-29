@@ -9,7 +9,7 @@ import net.rim.device.api.ui.UiApplication;
 public final class HintPollingThread extends Thread {
    private int _previous;
    private UiApplication _app = UiApplication.getUiApplication();
-   private static final int HINT_DELAY;
+   private static final int HINT_DELAY = 1;
    private static HintPollingThread _instance;
 
    private static final synchronized HintPollingThread getInstance() {

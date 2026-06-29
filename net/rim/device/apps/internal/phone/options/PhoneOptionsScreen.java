@@ -21,9 +21,9 @@ public class PhoneOptionsScreen extends MainScreen implements ListFieldCallback 
    private ListField _listField;
    private Object[] _phoneOptionsList;
    private boolean _ssRequestInProgress;
-   private static final int MAX_NUMBER_OF_OPTIONS;
+   private static final int MAX_NUMBER_OF_OPTIONS = 13;
    private static PhoneOptionsScreen _instance;
-   private static final long REGISTERED_PHONE_OPTIONS_LIST;
+   private static final long REGISTERED_PHONE_OPTIONS_LIST = 120495896240967438L;
 
    public PhoneOptionsScreen(Object context) {
       ApplicationRegistry appReg = ApplicationRegistry.getApplicationRegistry();

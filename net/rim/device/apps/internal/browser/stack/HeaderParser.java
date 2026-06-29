@@ -23,8 +23,8 @@ public final class HeaderParser implements RIMHeaderConstants {
    public static String CACHE_DIRECTIVE_PROXY_REVALIDATE = "proxy-revalidate";
    public static String CACHE_DIRECTIVE_MAX_AGE = "max-age";
    public static String CACHE_DIRECTIVE_S_MAXAGE = "s-maxage";
-   public static final String TRUE;
-   public static final String FALSE;
+   public static final String TRUE = "true";
+   public static final String FALSE = "false";
 
    public static final boolean containsDirective(HttpHeaders responseHeaders, String directive) {
       if (responseHeaders == null) {

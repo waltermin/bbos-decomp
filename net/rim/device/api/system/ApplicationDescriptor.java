@@ -28,15 +28,15 @@ public final class ApplicationDescriptor {
    private long _absoluteTime = Long.MAX_VALUE;
    private boolean _absolute;
    private int _powerOnBehavior = 0;
-   public static final int DO_NOT_POWER_ON;
-   public static final int POWER_ON;
-   public static final int POWER_ON_FOR_AUTO_ON;
-   public static final int POWER_ON_ALWAYS;
-   public static final byte FLAG_RUN_ON_STARTUP;
-   public static final byte FLAG_SYSTEM;
-   public static final byte FLAG_AUTO_RESTART;
-   static final int NUM_TIERS;
-   static final int TIERS_SHIFT;
+   public static final int DO_NOT_POWER_ON = 0;
+   public static final int POWER_ON = 1;
+   public static final int POWER_ON_FOR_AUTO_ON = 2;
+   public static final int POWER_ON_ALWAYS = 3;
+   public static final byte FLAG_RUN_ON_STARTUP = 1;
+   public static final byte FLAG_SYSTEM = 2;
+   public static final byte FLAG_AUTO_RESTART = 4;
+   static final int NUM_TIERS = 8;
+   static final int TIERS_SHIFT = 5;
 
    private ApplicationDescriptor() {
    }

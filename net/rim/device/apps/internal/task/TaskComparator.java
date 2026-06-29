@@ -6,10 +6,10 @@ import net.rim.device.internal.i18n.CollatorImpl;
 final class TaskComparator implements Comparator {
    private CollatorImpl _collator = (CollatorImpl)(new Object());
    int _defaultSort = -1;
-   static final int SUBJECT_SORT;
-   static final int PRIORITY_SORT;
-   static final int DUE_SORT;
-   static final int STATUS_SORT;
+   static final int SUBJECT_SORT = 0;
+   static final int PRIORITY_SORT = 1;
+   static final int DUE_SORT = 2;
+   static final int STATUS_SORT = 3;
 
    public final int secondaryCompare(int index, TaskModelImpl o1, TaskModelImpl o2) {
       if (index == 1) {

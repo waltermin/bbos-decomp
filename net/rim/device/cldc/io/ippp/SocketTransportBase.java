@@ -24,17 +24,17 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
    private IntHashtable _notifierConnections;
    private IntHashtable _establishedConnections;
    private int _nextConnectionId;
-   private static final int EVENT_LOG_NO_UID;
-   private static final int MAXIMUM_CACHE_SIZE;
-   private static final int MAXIMUM_QUEUE_SIZE;
-   private static final int MAXIMUM_PENDING_SIZE;
-   private static final long IPPP_TIMEOUT;
-   private static final int IPPP_DATA_SIZE;
-   private static final String STRING_ConnectionUID;
-   private static final String STRING_ConnectionType;
-   public static final int IPPP_TYPE_CORPORATE;
-   public static final int IPPP_TYPE_PUBLIC;
-   public static final int IPPP_TYPE_PROVISIONING;
+   private static final int EVENT_LOG_NO_UID = 86347381;
+   private static final int MAXIMUM_CACHE_SIZE = 100;
+   private static final int MAXIMUM_QUEUE_SIZE = 100;
+   private static final int MAXIMUM_PENDING_SIZE = 10;
+   private static final long IPPP_TIMEOUT = 130000L;
+   private static final int IPPP_DATA_SIZE = 1024;
+   private static final String STRING_ConnectionUID = "ConnectionUID";
+   private static final String STRING_ConnectionType = "ConnectionType";
+   public static final int IPPP_TYPE_CORPORATE = 0;
+   public static final int IPPP_TYPE_PUBLIC = 1;
+   public static final int IPPP_TYPE_PROVISIONING = 2;
 
    public SocketTransportBase() {
       for (ServiceRecord rec : ServiceBook.getSB().findRecordsByCid("IPPP")) {

@@ -16,8 +16,8 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 public final class ForgotHostedPasswordScreen extends UserSettingsScreen {
    private BasicEditField _answerEdit;
    private Hashtable _pendingParams;
-   public static final String PARAM_ANSWER;
-   public static final String PARAM_ATTEMPT;
+   public static final String PARAM_ANSWER = "answer";
+   public static final String PARAM_ATTEMPT = "validationAttempt";
 
    public ForgotHostedPasswordScreen() {
       super(31);

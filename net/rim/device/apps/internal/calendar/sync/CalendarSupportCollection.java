@@ -25,11 +25,11 @@ public final class CalendarSupportCollection implements SyncCollection, SyncColl
    private int _mode = 0;
    int _daysPrior = 365;
    int _daysFuture = 365;
-   public static final int SIMPLE_MODE;
-   public static final int DETAILED_MODE;
+   public static final int SIMPLE_MODE = 0;
+   public static final int DETAILED_MODE = 1;
    private static String SYNC_NAME = "Calendar Report";
-   private static final int SYNC_VER;
-   private static final long ID;
+   private static final int SYNC_VER = 1;
+   private static final long ID = 2077469850642138444L;
    static TimeZone _deviceTimeZone;
 
    public final synchronized void enableReportGeneration(boolean enable) {

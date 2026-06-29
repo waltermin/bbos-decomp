@@ -25,9 +25,9 @@ public class UsernamePasswordDialog extends PopupDialog implements FieldChangeLi
    private String _domain;
    private String _password;
    private boolean _remember;
-   public static final int LDAP_MODE;
-   public static final int BROWSER_MODE;
-   public static final int JUST_USERNAME_AND_PASSWORD_MODE;
+   public static final int LDAP_MODE = 1;
+   public static final int BROWSER_MODE = 2;
+   public static final int JUST_USERNAME_AND_PASSWORD_MODE = 3;
 
    public UsernamePasswordDialog(int mode) {
       this(null, mode);

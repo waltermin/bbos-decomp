@@ -16,10 +16,10 @@ import net.rim.vm.Memory;
 import net.rim.vm.OTAUpgrade;
 
 public class WipeablePolicyCryptoBlock {
-   private static final long ID;
+   private static final long ID = 7837055873320154475L;
    private static PersistentObject _persistentWLANLock = RIMPersistentStore.getPersistentObject(7837055873320154475L);
    private static byte[][][] _wlanKey;
-   private static final long ID_WIPEABLE_POLICY_CRYPTOBLOCK;
+   private static final long ID_WIPEABLE_POLICY_CRYPTOBLOCK = 8672312002842651356L;
 
    private WipeablePolicyCryptoBlock() {
    }

@@ -13,16 +13,16 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
    private byte[] _salt;
    private long _creationTime;
    private int _uid;
-   private static final int SALT_LENGTH;
-   public static final int TITLE;
-   public static final int USERNAME;
-   public static final int PASSWORD;
-   public static final int WEBSITE;
-   public static final int NOTES;
-   public static final int USERNAME_LABEL;
-   public static final int PASSWORD_LABEL;
-   public static final int WEBSITE_LABEL;
-   public static final int NOTES_LABEL;
+   private static final int SALT_LENGTH = 8;
+   public static final int TITLE = 0;
+   public static final int USERNAME = 1;
+   public static final int PASSWORD = 2;
+   public static final int WEBSITE = 3;
+   public static final int NOTES = 4;
+   public static final int USERNAME_LABEL = 0;
+   public static final int PASSWORD_LABEL = 1;
+   public static final int WEBSITE_LABEL = 2;
+   public static final int NOTES_LABEL = 3;
 
    public final String getField(int offset) {
       return PasswordKeeperManager.getInstance().decrypt((byte[])this._fields[offset], this._salt);

@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class Equifax {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = 7461514341272995717L;
+   private static final long CERTSTATUSTIME = 1158007107581L;
    private static final byte[] EQUIFAX_SECURE_GLOBAL_EBUSINESS_CA_1 = new byte[]{
       48,
       -126,

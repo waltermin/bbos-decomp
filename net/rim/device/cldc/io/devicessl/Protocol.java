@@ -6,14 +6,14 @@ import net.rim.device.cldc.io.utility.URL;
 
 public final class Protocol implements ConnectionBaseInterface {
    private static String CONNECTION_SETUP = "ConnectionSetup";
-   private static final String APN;
-   private static final String CONNECTION_UID;
-   private static final String DEVICE_SIDE;
-   private static final String INTERFACE;
-   private static final String LOCAL_PORT;
-   private static final String RETRY_NO_CONTEXT;
-   private static final String TUNNEL_AUTH_USERNAME;
-   private static final String TUNNEL_AUTH_PASSWORD;
+   private static final String APN = "apn";
+   private static final String CONNECTION_UID = "connectionuid";
+   private static final String DEVICE_SIDE = "deviceside";
+   private static final String INTERFACE = "interface";
+   private static final String LOCAL_PORT = "localport";
+   private static final String RETRY_NO_CONTEXT = "retrynocontext";
+   private static final String TUNNEL_AUTH_USERNAME = "tunnelauthusername";
+   private static final String TUNNEL_AUTH_PASSWORD = "tunnelauthpassword";
 
    @Override
    public final int getProperties(String name) {

@@ -15,20 +15,20 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.io.file.FileUtilities;
 
 public class ExplorerServices {
-   public static final int VIEW_EXPLORE_ALL;
-   public static final int VIEW_EXPLORE_PICTURES;
-   public static final int VIEW_EXPLORE_RINGTONES;
-   public static final int VIEW_EXPLORE_VIDEOS;
-   public static final int VIEW_EXPLORE_MUSIC;
-   public static final int VIEW_EXPLORE_VOICE_NOTES;
-   private static final int TOTAL_VIEW_EXPLORE;
-   private static final int VIEW_MEDIA_OFFSET;
-   public static final int VIEW_MEDIA_PICTURES;
-   public static final int VIEW_MEDIA_RINGTONES;
-   public static final int VIEW_MEDIA_VIDEOS;
-   public static final int VIEW_MEDIA_MUSIC;
-   public static final int VIEW_MEDIA_VOICE_NOTES;
-   private static final int TOTAL_VIEW_MEDIA;
+   public static final int VIEW_EXPLORE_ALL = 0;
+   public static final int VIEW_EXPLORE_PICTURES = 1;
+   public static final int VIEW_EXPLORE_RINGTONES = 2;
+   public static final int VIEW_EXPLORE_VIDEOS = 3;
+   public static final int VIEW_EXPLORE_MUSIC = 4;
+   public static final int VIEW_EXPLORE_VOICE_NOTES = 5;
+   private static final int TOTAL_VIEW_EXPLORE = 6;
+   private static final int VIEW_MEDIA_OFFSET = 128;
+   public static final int VIEW_MEDIA_PICTURES = 128;
+   public static final int VIEW_MEDIA_RINGTONES = 129;
+   public static final int VIEW_MEDIA_VIDEOS = 130;
+   public static final int VIEW_MEDIA_MUSIC = 131;
+   public static final int VIEW_MEDIA_VOICE_NOTES = 132;
+   private static final int TOTAL_VIEW_MEDIA = 5;
    private static String[] _lastUsedFolder = new Object[8];
 
    private ExplorerServices() {

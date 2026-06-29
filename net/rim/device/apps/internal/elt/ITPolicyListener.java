@@ -8,12 +8,12 @@ import net.rim.device.internal.proxy.Proxy;
 
 final class ITPolicyListener implements GlobalEventListener {
    private boolean _hasITPolicyChanged;
-   public static final int IT_POLICY_GROUP;
-   public static final int DISABLE_BLACKBERRY_MAPS;
-   public static final int ENABLE_ENTERPRISE_TRACKING;
-   public static final int ELT_ITPOLICY_USER_MESSAGE;
-   public static final int REPORTING_INTERVAL;
-   private static final long GUID;
+   public static final int IT_POLICY_GROUP = 48;
+   public static final int DISABLE_BLACKBERRY_MAPS = 1;
+   public static final int ENABLE_ENTERPRISE_TRACKING = 2;
+   public static final int ELT_ITPOLICY_USER_MESSAGE = 3;
+   public static final int REPORTING_INTERVAL = 4;
+   private static final long GUID = -4382460237972221749L;
    private static ITPolicyListener INSTANCE;
 
    private ITPolicyListener() {

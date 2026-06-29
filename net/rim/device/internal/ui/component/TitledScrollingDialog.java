@@ -19,7 +19,7 @@ public class TitledScrollingDialog extends PopupDialog implements FieldChangeLis
    protected VerticalFieldManager _nonScrollingRegion;
    protected SeparatorField _nonScrollingSeparator;
    protected VerticalIndentFieldManager _scrollingRegion;
-   private static final int INDENT_PIXEL_WIDTH;
+   private static final int INDENT_PIXEL_WIDTH = 12;
 
    protected void setTitle(String dialogTitle) {
       LabelField dialogTitleField = new LabelField(dialogTitle, 64);

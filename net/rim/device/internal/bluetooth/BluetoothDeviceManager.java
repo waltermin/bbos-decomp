@@ -8,7 +8,7 @@ import net.rim.device.internal.system.ITPolicyInternal;
 import net.rim.device.internal.system.InternalServices;
 
 public class BluetoothDeviceManager extends Application {
-   protected static final long GUID;
+   protected static final long GUID = -4148425341967320934L;
 
    public static BluetoothDeviceManager getInstance() {
       return (BluetoothDeviceManager)ApplicationRegistry.getApplicationRegistry().waitForStartup(-4148425341967320934L);

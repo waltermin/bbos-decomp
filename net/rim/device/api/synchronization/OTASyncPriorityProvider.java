@@ -1,9 +1,9 @@
 package net.rim.device.api.synchronization;
 
 public interface OTASyncPriorityProvider {
-   int MAX_PRIORITY;
-   int MIN_PRIORITY;
-   int DEFAULT_PRIORITY;
+   int MAX_PRIORITY = 1;
+   int MIN_PRIORITY = 10;
+   int DEFAULT_PRIORITY = 5;
 
    int getSyncPriority();
 }

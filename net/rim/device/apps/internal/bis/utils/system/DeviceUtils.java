@@ -14,8 +14,8 @@ import net.rim.device.apps.internal.bis.BISEventLogger;
 import net.rim.device.apps.internal.blackberryemail.otasync.OTAFMConfigurationManagerImpl;
 
 public final class DeviceUtils {
-   private static final char ESN_SEPARATOR;
-   private static final int ESN_SEPARATOR_INDEX;
+   private static final char ESN_SEPARATOR = '/';
+   private static final int ESN_SEPARATOR_INDEX = 3;
 
    public static final boolean isDeleteSyncEnabled(String serviceRecordName) {
       boolean available = false;

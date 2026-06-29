@@ -9,7 +9,7 @@ public class ChineseJNI_gate {
    private byte[][][] _wordlist;
    private int[] _indexes = new int[0];
    private boolean _isNativeSupportBuilt = true;
-   private static final long CH_JNI_GATE_REGISTRY_NAME;
+   private static final long CH_JNI_GATE_REGISTRY_NAME = 637717017681252726L;
    private static ChineseJNI_gate _this;
 
    public static ChineseJNI_gate getChineseJNIGate() {

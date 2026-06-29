@@ -3,7 +3,7 @@ package net.rim.device.api.io;
 public class DatagramAddressBase {
    protected String _address;
    protected int _key;
-   public static final int NONE;
+   public static final int NONE = -1;
    private static final byte[] DIGITS = new byte[]{48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102};
 
    public DatagramAddressBase() {

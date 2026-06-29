@@ -42,13 +42,13 @@ public class TextFieldLookup extends Lookup implements ISLVariantsObserver, Text
    private VerticalFieldManager _vfm;
    private TextFieldLookup$Invoker _viewUpdateInvoker = new TextFieldLookup$Invoker(this);
    private boolean _delay;
-   public static final int MAX_LINES_VISIBLE;
-   public static final int TEXT_LOOKUP_GAP;
+   public static final int MAX_LINES_VISIBLE = 3;
+   public static final int TEXT_LOOKUP_GAP = 2;
    private static final Tag TAG = Tag.create("input-method-popup");
-   private static final int SCROLL_INDICATOR_WIDTH;
+   private static final int SCROLL_INDICATOR_WIDTH = 5;
    private static int _minFont = Ui.convertSize(8, 3, 0);
    private static int _maxFont = Ui.convertSize(11, 3, 0);
-   private static final String JAPANESE_FONT;
+   private static final String JAPANESE_FONT = "BBJapanese";
    private static FontFamily _japaneseFontFamily = null;
 
    public int getPrefferedHeight() {

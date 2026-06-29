@@ -7,8 +7,8 @@ import net.rim.device.internal.system.RadioInternal;
 
 public final class SuplSessionManager {
    private int _sessionType;
-   private static final int SET;
-   private static final int NETWORK;
+   private static final int SET = 0;
+   private static final int NETWORK = 1;
    private static final int[] MAX_SUPL_CONN = new int[]{4, 1, -805044223, 35, -804913088, 3014701, 3211312, 3342386};
    private static CyclicQueue _queue = (CyclicQueue)(new Object());
    private static Vector _active = (Vector)(new Object());

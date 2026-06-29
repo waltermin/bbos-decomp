@@ -15,9 +15,9 @@ final class FolderTable implements Persistable {
    private int _dead;
    private int _empty;
    private Object[] _indexes = new Object[1];
-   public static final int ROOT;
-   private static final int INDEX_CHILD;
-   private static final int INDEX_COUNT;
+   public static final int ROOT = 0;
+   private static final int INDEX_CHILD = 0;
+   private static final int INDEX_COUNT = 1;
 
    FolderTable() {
       this._rows = new FolderImpl[1];

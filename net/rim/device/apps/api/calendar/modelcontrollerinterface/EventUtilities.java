@@ -42,7 +42,7 @@ import net.rim.device.cldc.util.TimeService;
 import net.rim.vm.Array;
 
 public class EventUtilities {
-   private static final long EXTERNAL_ACTION_VERBS;
+   private static final long EXTERNAL_ACTION_VERBS = -8609276785593847844L;
    private static AttendeeUtilities$EmailAddressComparator _emailAddressComparator = new AttendeeUtilities$EmailAddressComparator();
    private static OTACalendarSyncDataManager _otaSyncDataManager = OTACalendarSyncDataManager.getInstance();
    private static DataBuffer _scratchBuffer = (DataBuffer)(new Object(true));
@@ -51,7 +51,7 @@ public class EventUtilities {
    private static Calendar _gmtCalendar = Calendar.getInstance(_gmtTimeZone);
    private static int[] _dateTimeFields1 = new int[7];
    private static Object _moveEventsLockObject;
-   private static final long CALENDAR_MOVE_EVENTS_LOCK_OBJECT_LUID;
+   private static final long CALENDAR_MOVE_EVENTS_LOCK_OBJECT_LUID = -6052896484446833044L;
    static int[] _recurModifiers = new int[4];
    static LongHashtable _externalActionVerbs = null;
 

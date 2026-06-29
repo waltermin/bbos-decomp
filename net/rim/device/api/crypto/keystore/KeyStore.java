@@ -11,10 +11,10 @@ import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
 
 public interface KeyStore extends Collection, CollectionEventSource {
-   int SECURITY_LEVEL_HIGH;
-   int SECURITY_LEVEL_LOW;
-   int SECURITY_LEVEL_MEDIUM;
-   int SECURITY_LEVEL_NOT_APPLICABLE;
+   int SECURITY_LEVEL_HIGH = 2;
+   int SECURITY_LEVEL_LOW = 1;
+   int SECURITY_LEVEL_MEDIUM = 3;
+   int SECURITY_LEVEL_NOT_APPLICABLE = 0;
 
    KeyStoreData set(AssociatedData[] var1, String var2, PrivateKey var3, String var4, int var5, KeyStoreTicket var6);
 

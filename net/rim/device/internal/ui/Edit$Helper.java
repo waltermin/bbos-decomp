@@ -7,7 +7,7 @@ public class Edit$Helper {
    public byte[] _lengths = new byte[256];
    public short[] _pixelLengths = new short[256];
    public short[] _heights = new short[256];
-   private static final int CHUNK_SIZE;
+   private static final int CHUNK_SIZE = 256;
 
    Edit$Helper() {
    }

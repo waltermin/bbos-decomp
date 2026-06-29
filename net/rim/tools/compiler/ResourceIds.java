@@ -30,12 +30,12 @@ public class ResourceIds {
    static String[] ams = new String[]{
       "RIM-COD-URL", "RIM-COD-Size", "RIM-COD-Creation-Time", "RIM-COD-Module-Name", "RIM-COD-Module-Dependencies", "RIM-COD-SHA1"
    };
-   static final int ORDINAL_TYPE_BYTE;
-   static final int ORDINAL_TYPE_SHORT;
-   static final int ORDINAL_TYPE_INT;
-   static final int ORDINAL_TYPE_LONG;
-   static final int ORDINAL_TYPE_OBJECT;
-   static final int ORDINAL_TYPE_STRING;
+   static final int ORDINAL_TYPE_BYTE = 0;
+   static final int ORDINAL_TYPE_SHORT = 1;
+   static final int ORDINAL_TYPE_INT = 2;
+   static final int ORDINAL_TYPE_LONG = 3;
+   static final int ORDINAL_TYPE_OBJECT = 4;
+   static final int ORDINAL_TYPE_STRING = 5;
    static int[] ordinalTypes = new int[]{
       4,
       0,
@@ -62,19 +62,19 @@ public class ResourceIds {
       1866688627,
       220226916
    };
-   static final int MIDLET_REQUIRED_VERSION;
-   static final int JAD_REQUIRED_JARSIZE;
-   static final int AMS_COD_URL;
-   static final int AMS_COD_SIZE;
-   static final int AMS_COD_TIME;
-   static final int AMS_COD_NAME;
-   static final int AMS_COD_DEPS;
-   static final int AMS_COD_SHA1;
-   static final String MIDletPermissionsTag;
-   static final String MIDletOptionalPermissionsTag;
-   static final String MIDletSignatureTag;
-   static final String MIDletCertPrefix;
-   static final String MIDletProfileSecurity;
+   static final int MIDLET_REQUIRED_VERSION = 1;
+   static final int JAD_REQUIRED_JARSIZE = 1;
+   static final int AMS_COD_URL = 0;
+   static final int AMS_COD_SIZE = 1;
+   static final int AMS_COD_TIME = 2;
+   static final int AMS_COD_NAME = 3;
+   static final int AMS_COD_DEPS = 4;
+   static final int AMS_COD_SHA1 = 5;
+   static final String MIDletPermissionsTag = "MIDlet-Permissions";
+   static final String MIDletOptionalPermissionsTag = "MIDlet-Permissions-Opt";
+   static final String MIDletSignatureTag = "MIDlet-Jar-RSA-SHA1";
+   static final String MIDletCertPrefix = "MIDlet-Certificate-";
+   static final String MIDletProfileSecurity = "MIDP-2.0";
 
    public static String getId(String tag) {
       return (String)_resourceIds.get(tag);

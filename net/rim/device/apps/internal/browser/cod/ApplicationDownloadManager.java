@@ -45,9 +45,9 @@ final class ApplicationDownloadManager extends DownloadManager {
    private BrowserConfigRecord _browserConfigRecord;
    private ApplicationPermissions _applicationPermissions;
    private boolean _allowUnsigned;
-   static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR;
-   private static final String MODULE_UPGRADE_FLAG;
-   private static final String MODULE_DELETE_FLAG;
+   static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR = 131072;
+   private static final String MODULE_UPGRADE_FLAG = "upgrade";
+   private static final String MODULE_DELETE_FLAG = "delete";
 
    public ApplicationDownloadManager(
       RenderingApplication app, ApplicationDownloadListener listener, JADAttributeParser jad, InputStream jarStream, String configUid

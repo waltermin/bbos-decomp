@@ -20,7 +20,7 @@ import net.rim.device.apps.internal.blackberryemail.email.recipientcache.Recipie
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 
 public class ServiceRecordSelector {
-   private static final long ID;
+   private static final long ID = 2499056756025585853L;
    private static ServiceRecordSelector _instance;
 
    private ServiceRecordSelector() {

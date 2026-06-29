@@ -9,15 +9,15 @@ import net.rim.device.api.xml.parsers.SAXParserFactory;
 
 final class UpdateStatusHandler extends XMLToObjectHandler {
    private SAXParser _parser;
-   public static final String RESOURCE_STATUS;
-   public static final String RESOURCE_STATUS_UPTODATE;
-   public static final String RESOURCE_STATUS_CURRENTVERSION;
-   public static final String RESOURCE_STATUS_DOWNLOADS;
-   public static final String RESOURCE_STATUS_DOWNLOAD;
-   public static final String RESOURCE_STATUS_DOWNLOADURL;
-   public static final String RESOURCE_STATUS_MANDATORY;
-   public static final String RESOURCE_STATUS_DIGEST;
-   public static final String RESOURCE_STATUS_SIZE;
+   public static final String RESOURCE_STATUS = "status";
+   public static final String RESOURCE_STATUS_UPTODATE = "upToDate";
+   public static final String RESOURCE_STATUS_CURRENTVERSION = "currentVersion";
+   public static final String RESOURCE_STATUS_DOWNLOADS = "downloads";
+   public static final String RESOURCE_STATUS_DOWNLOAD = "download";
+   public static final String RESOURCE_STATUS_DOWNLOADURL = "downloadUrl";
+   public static final String RESOURCE_STATUS_MANDATORY = "mandatory";
+   public static final String RESOURCE_STATUS_DIGEST = "digest";
+   public static final String RESOURCE_STATUS_SIZE = "size";
    private static final String[] REQUIRED_ELEMENTS = new String[]{"upToDate"};
 
    public UpdateStatusHandler() {

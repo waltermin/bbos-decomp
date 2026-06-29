@@ -14,8 +14,8 @@ public class PKCS10CertificateRequest {
    private Vector _extensions;
    private byte[] _encoding;
    private boolean _changed = true;
-   private static final String _header;
-   private static final String _tail;
+   private static final String _header = "-----BEGIN NEW CERTIFICATE REQUEST-----\r\n";
+   private static final String _tail = "-----END NEW CERTIFICATE REQUEST-----\r\n";
 
    public PKCS10CertificateRequest(PublicKey publicKey, X509DistinguishedName name, SignatureSigner signer) {
       if (publicKey != null && name != null && signer != null) {

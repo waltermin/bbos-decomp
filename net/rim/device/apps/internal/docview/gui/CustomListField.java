@@ -34,13 +34,13 @@ public class CustomListField extends ListField implements ListFieldCallback {
    private boolean _inHighlightRegion;
    protected boolean _useOriginalFont;
    protected int _fontStyle;
-   public static final short STYLE_SCROLLOVERHORZ;
-   public static final short STYLE_SCROLLOVERVERT;
-   public static final short STYLE_DISPLAYHEADER;
-   public static final short STYLE_OUTLINECELLS;
-   private static final short SIZE_HEADERWIDTH;
-   public static final byte LOOK_3D;
-   public static final byte LOOK_BLUE;
+   public static final short STYLE_SCROLLOVERHORZ = 1;
+   public static final short STYLE_SCROLLOVERVERT = 16;
+   public static final short STYLE_DISPLAYHEADER = 256;
+   public static final short STYLE_OUTLINECELLS = 4096;
+   private static final short SIZE_HEADERWIDTH = 32;
+   public static final byte LOOK_3D = 1;
+   public static final byte LOOK_BLUE = 2;
 
    public void initFocus() {
       this._startVisibleCol = 0;

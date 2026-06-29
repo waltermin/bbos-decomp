@@ -14,7 +14,7 @@ public final class GhostMessageData implements Persistable {
    private int[] _ghostMessageTags = new int[0];
    private int[] _ghostMessageInfo = new int[0];
    private int _messageListId;
-   public static final int MAXIMUM_GHOST_MESSAGE_COUNT;
+   public static final int MAXIMUM_GHOST_MESSAGE_COUNT = 500;
 
    GhostMessageData() {
    }

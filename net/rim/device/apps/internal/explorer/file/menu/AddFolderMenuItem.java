@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.explorer.file.resource.ExplorerResources;
 
 public final class AddFolderMenuItem extends MenuItem {
    private FileItemField _currentFolder;
-   private static final int MAX_FOLDERNAME_CHARS;
+   private static final int MAX_FOLDERNAME_CHARS = 20;
 
    public AddFolderMenuItem(FileItemField folder) {
       super(ExplorerResources.getResourceBundleFamily(), 14, 589904, 200);

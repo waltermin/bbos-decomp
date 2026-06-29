@@ -3,9 +3,9 @@ package net.rim.device.cldc.impl.softtoken;
 public final class SoftTokenDialogImpl$GaugeUpdateThread extends Thread {
    public boolean _run;
    private final SoftTokenDialogImpl this$0;
-   private static final int MAX_SECONDS;
-   private static final int SEC_DIVISOR;
-   public static final int MAX_GAUGE_VALUE;
+   private static final int MAX_SECONDS = 60;
+   private static final int SEC_DIVISOR = 6;
+   public static final int MAX_GAUGE_VALUE = 9;
 
    public SoftTokenDialogImpl$GaugeUpdateThread(SoftTokenDialogImpl _1) {
       this.this$0 = _1;

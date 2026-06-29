@@ -14,15 +14,15 @@ public class Graphics {
    private int[] _xPts3 = new int[3];
    private int[] _yPts3 = new int[3];
    private Image _image;
-   public static final int HCENTER;
-   public static final int VCENTER;
-   public static final int LEFT;
-   public static final int RIGHT;
-   public static final int TOP;
-   public static final int BOTTOM;
-   public static final int BASELINE;
-   public static final int SOLID;
-   public static final int DOTTED;
+   public static final int HCENTER = 1;
+   public static final int VCENTER = 2;
+   public static final int LEFT = 4;
+   public static final int RIGHT = 8;
+   public static final int TOP = 16;
+   public static final int BOTTOM = 32;
+   public static final int BASELINE = 64;
+   public static final int SOLID = 0;
+   public static final int DOTTED = 1;
    static final int[] DUX = new int[]{
       1,
       1,

@@ -17,9 +17,9 @@ public final class MessageEntryPoint extends Action {
    boolean _isForeground;
    Object _extraInfo;
    private static Bitmap _icon = Bitmap.getBitmapResource("MessagingIcon28.gif");
-   private static final String MESSAGING_MODULE_NAME;
+   private static final String MESSAGING_MODULE_NAME = "net_rim_bb_messaging_app";
    static Hashtable _entries;
-   private static final long ENTRIES_UID;
+   private static final long ENTRIES_UID = 1654139945643910585L;
 
    public static final MessageEntryPoint register(String name, String argument, int descriptionId, Theme currentTheme) {
       MessageEntryPoint entry = new MessageEntryPoint(name, argument, descriptionId);

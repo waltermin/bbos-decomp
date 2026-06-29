@@ -16,7 +16,7 @@ final class DocViewDisplayScreen$MoreParsingThread extends Thread {
    private byte[] _ucs;
    private Screen _displayScreen;
    private final DocViewDisplayScreen this$0;
-   private static final long WAIT_TIMEOUT;
+   private static final long WAIT_TIMEOUT = 20000L;
 
    DocViewDisplayScreen$MoreParsingThread(DocViewDisplayScreen _1, ServerResponse response, byte[] ucsData, int totalRetrievedBlocks, Screen displayScreen) {
       this.this$0 = _1;

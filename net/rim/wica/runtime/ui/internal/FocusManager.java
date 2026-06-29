@@ -9,7 +9,7 @@ public final class FocusManager extends VerticalFieldManager {
    private FocusManager$VerticalScrollManager _manager;
    private FocusHolder _focusHolder = new FocusHolder();
    public static final int DEVICE_SCREEN_HEIGHT = Graphics.getScreenHeight();
-   public static final int SCROLL_HEIGHT;
+   public static final int SCROLL_HEIGHT = 20;
 
    FocusManager() {
       this._manager = new FocusManager$VerticalScrollManager(this);

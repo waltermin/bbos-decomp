@@ -12,14 +12,14 @@ public class CertificateSummaryDataSyncModel implements PersistableRIMModel, Con
    private int _hashCode;
    private byte[] _certificateHash;
    private byte[] _certificateEncoding;
-   protected static final int TAG_CERT_HASH;
-   protected static final int TAG_CERT_ENCODING;
-   protected static final int TAG_ISSUER;
-   protected static final int TAG_SERIAL_NUMBER;
-   protected static final int TAG_SUBJECT_KEY_ID;
-   protected static final int TAG_FLAGS;
-   protected static final int TAG_PGP_KEY_IDS;
-   protected static final int TAG_RECORD_TYPE;
+   protected static final int TAG_CERT_HASH = 1;
+   protected static final int TAG_CERT_ENCODING = 2;
+   protected static final int TAG_ISSUER = 3;
+   protected static final int TAG_SERIAL_NUMBER = 4;
+   protected static final int TAG_SUBJECT_KEY_ID = 5;
+   protected static final int TAG_FLAGS = 6;
+   protected static final int TAG_PGP_KEY_IDS = 7;
+   protected static final int TAG_RECORD_TYPE = 127;
    protected static final byte[] RECORD_TYPE = new byte[]{88};
 
    public CertificateSummaryDataSyncModel(Certificate certificate, boolean isPrivateKeySet) {

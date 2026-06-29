@@ -7,16 +7,16 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class AGInfoSerializer extends AbstractSerializer {
    private static AGInfoSerializer _instance;
-   private static final byte AG_REG_URL;
-   private static final byte AG_COMPACT_MSG_URL;
-   private static final byte AG_ID;
-   private static final byte SERVICE_RECORD_ID;
-   private static final byte CID;
-   private static final byte IPPP_UID;
-   private static final byte UID;
-   private static final byte AG_FRIENDLY_NAME;
-   private static final byte BES_GROUPS;
-   private static final byte GENERATION_COUNT;
+   private static final byte AG_REG_URL = 0;
+   private static final byte AG_COMPACT_MSG_URL = 1;
+   private static final byte AG_ID = 2;
+   private static final byte SERVICE_RECORD_ID = 4;
+   private static final byte CID = 5;
+   private static final byte IPPP_UID = 6;
+   private static final byte UID = 7;
+   private static final byte AG_FRIENDLY_NAME = 8;
+   private static final byte BES_GROUPS = 9;
+   private static final byte GENERATION_COUNT = 10;
 
    static final AGInfoSerializer getInstance() {
       if (_instance == null) {

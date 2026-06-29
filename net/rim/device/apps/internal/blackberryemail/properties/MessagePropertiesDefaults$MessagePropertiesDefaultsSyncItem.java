@@ -7,9 +7,9 @@ import net.rim.device.api.util.DataBuffer;
 
 class MessagePropertiesDefaults$MessagePropertiesDefaultsSyncItem extends OTASyncCapableSyncItem {
    private final MessagePropertiesDefaults this$0;
-   private static final int ENCODING_UID;
-   private static final int ENCODING_ACTION;
-   private static final int MESSAGE_CLASSIFICATION;
+   private static final int ENCODING_UID = 1;
+   private static final int ENCODING_ACTION = 2;
+   private static final int MESSAGE_CLASSIFICATION = 3;
 
    private MessagePropertiesDefaults$MessagePropertiesDefaultsSyncItem(MessagePropertiesDefaults _1) {
       this.this$0 = _1;

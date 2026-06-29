@@ -24,12 +24,12 @@ final class MeetingResponseVerb extends Verb {
    private CICALMeetingAttachmentModel _attachment;
    private RIMModel _message;
    private CalendarServiceManager _calendarServiceManager;
-   public static final int ACCEPT;
-   public static final int ACCEPT_WITH_COMMENTS;
-   public static final int TENTATIVE;
-   public static final int TENTATIVE_WITH_COMMENTS;
-   public static final int DECLINE;
-   public static final int DECLINE_WITH_COMMENTS;
+   public static final int ACCEPT = 0;
+   public static final int ACCEPT_WITH_COMMENTS = 1;
+   public static final int TENTATIVE = 2;
+   public static final int TENTATIVE_WITH_COMMENTS = 3;
+   public static final int DECLINE = 4;
+   public static final int DECLINE_WITH_COMMENTS = 5;
    private static OTACalendarSyncDataManager _otaSyncDataManager = OTACalendarSyncDataManager.getInstance();
 
    MeetingResponseVerb(int type, CICALMeetingAttachmentModel attachment, RIMModel message) {

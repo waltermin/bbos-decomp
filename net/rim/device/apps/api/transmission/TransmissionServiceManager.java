@@ -4,13 +4,13 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.io.TrafficLogger;
 
 public final class TransmissionServiceManager {
-   public static final long RIM_MESSAGING_SERVICE;
-   public static final long RIM_CALENDAR_SERVICE;
-   public static final long RIM_GLOBAL_ADDRESS_SERVICE;
-   public static final long RIM_OTA_ITADMIN;
-   public static final long RIM_OTA_KEYGEN;
-   public static final long RIM_OTA_APPLICATION_DELIVERY;
-   public static final long RIM_OTASL_UPGRADE;
+   public static final long RIM_MESSAGING_SERVICE = 8399767144006445082L;
+   public static final long RIM_CALENDAR_SERVICE = -8987817959472095554L;
+   public static final long RIM_GLOBAL_ADDRESS_SERVICE = -8892319056465090102L;
+   public static final long RIM_OTA_ITADMIN = 7017126881385937825L;
+   public static final long RIM_OTA_KEYGEN = -7467774798685319400L;
+   public static final long RIM_OTA_APPLICATION_DELIVERY = -4198074063353182686L;
+   public static final long RIM_OTASL_UPGRADE = 3755227675241238327L;
 
    public static final TransmissionService get(long factoryIdentifierLong) {
       return (TransmissionService)ApplicationRegistry.getApplicationRegistry().waitFor(factoryIdentifierLong);

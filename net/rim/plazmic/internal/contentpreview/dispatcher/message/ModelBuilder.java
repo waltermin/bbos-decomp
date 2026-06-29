@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class ModelBuilder implements DispatcherEventHandler {
    private Model _model;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/ModelBuilder.java#1 $";
 
    public final Model getModel() {
       return this._model;

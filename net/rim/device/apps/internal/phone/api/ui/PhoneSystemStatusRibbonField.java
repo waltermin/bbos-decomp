@@ -21,15 +21,15 @@ public final class PhoneSystemStatusRibbonField extends Manager implements Ribbo
    private int _indicatorX2;
    private int _indicatorY2;
    private static Tag TAG = Tag.create("title");
-   public static final int TIME_AND_DATE;
-   public static final int TIME_ONLY;
-   static final int SEPARATOR;
-   static final int DATE_TIME;
-   static final int SIGNAL_INDICATOR;
-   static final int OPERATOR_NAME;
-   static final int GPS_MODE;
-   static final int NUM_FIELDS;
-   static final int OPERATOR_NAME_TOP_SPACE;
+   public static final int TIME_AND_DATE = 2;
+   public static final int TIME_ONLY = 4;
+   static final int SEPARATOR = 0;
+   static final int DATE_TIME = 1;
+   static final int SIGNAL_INDICATOR = 2;
+   static final int OPERATOR_NAME = 3;
+   static final int GPS_MODE = 4;
+   static final int NUM_FIELDS = 5;
+   static final int OPERATOR_NAME_TOP_SPACE = 2;
 
    public PhoneSystemStatusRibbonField(FieldProvider ribbonFieldProvider, int flags) {
       super(0);

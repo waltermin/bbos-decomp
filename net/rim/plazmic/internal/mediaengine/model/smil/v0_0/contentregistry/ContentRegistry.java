@@ -8,14 +8,14 @@ import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.io.http.HttpHeaders;
 
 public class ContentRegistry {
-   private static final String TEXT_SERVICE_PROVIDER;
-   private static final String IMAGE_SERVICE_PROVIDER;
-   private static final String AUDIO_SERVICE_PROVIDER;
-   private static final String VIDEO_SERVICE_PROVIDER;
-   private static final String TEXT_TYPE_PREFIX;
-   private static final String IMAGE_TYPE_PREFIX;
-   private static final String AUDIO_TYPE_PREFIX;
-   private static final String VIDEO_TYPE_PREFIX;
+   private static final String TEXT_SERVICE_PROVIDER = "net.rim.plazmic.internal.mediaengine.model.smil.v0_0.contentregistry.serviceprovider.PlainTextServiceProvider";
+   private static final String IMAGE_SERVICE_PROVIDER = "net.rim.plazmic.internal.mediaengine.model.smil.v0_0.contentregistry.serviceprovider.ImageServiceProvider";
+   private static final String AUDIO_SERVICE_PROVIDER = "net.rim.plazmic.internal.mediaengine.model.smil.v0_0.contentregistry.serviceprovider.AudioServiceProvider";
+   private static final String VIDEO_SERVICE_PROVIDER = "net.rim.plazmic.internal.mediaengine.model.smil.v0_0.contentregistry.serviceprovider.VideoServiceProvider";
+   private static final String TEXT_TYPE_PREFIX = "text/";
+   private static final String IMAGE_TYPE_PREFIX = "image/";
+   private static final String AUDIO_TYPE_PREFIX = "audio/";
+   private static final String VIDEO_TYPE_PREFIX = "video/";
    public static BrowserContent _browserContent;
 
    public static ServiceProvider getServiceProvider(String uri, String type) {

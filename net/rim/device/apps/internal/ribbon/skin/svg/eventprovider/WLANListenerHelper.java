@@ -6,9 +6,9 @@ import net.rim.device.apps.internal.ribbon.components.WeakReferenceCollectionUpd
 class WLANListenerHelper extends WeakReferenceCollectionUpdater implements WLANListenerInternal {
    private int _eventType;
    private boolean _started;
-   private static final int TYPE_RADIO_STATUS;
-   private static final int TYPE_INTERFACE_SUCCESS;
-   private static final int TYPE_INTERFACE_FAIL;
+   private static final int TYPE_RADIO_STATUS = 0;
+   private static final int TYPE_INTERFACE_SUCCESS = 1;
+   private static final int TYPE_INTERFACE_FAIL = 2;
 
    @Override
    protected void updateComponent(Object component) {

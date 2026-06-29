@@ -10,8 +10,8 @@ final class SystemMonitor$ServiceProviderDisplayInfo implements SIMCardEfTask {
    public int[] _spdiList;
    private byte[] _buffer;
    private final SystemMonitor this$0;
-   private static final int STATE_GEN_FAILURE;
-   private static final int STATE_SUCCESS;
+   private static final int STATE_GEN_FAILURE = 1001;
+   private static final int STATE_SUCCESS = 1000;
 
    public SystemMonitor$ServiceProviderDisplayInfo(SystemMonitor _1) {
       this.this$0 = _1;

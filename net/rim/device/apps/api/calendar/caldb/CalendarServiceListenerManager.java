@@ -5,7 +5,7 @@ import net.rim.device.api.util.ListenerUtilities;
 
 public class CalendarServiceListenerManager {
    private Object[] _listeners;
-   private static final long ID;
+   private static final long ID = -5746713630489719022L;
    private static CalendarServiceListenerManager _instance;
 
    private CalendarServiceListenerManager() {

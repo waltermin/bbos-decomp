@@ -11,10 +11,10 @@ import net.rim.device.api.util.DataBuffer;
 final class AutoTextDataVersion extends OTASyncCapableSyncItem {
    private PersistentObject _store = RIMPersistentStore.getPersistentObject(5042818100109773249L);
    private int _version;
-   public static final long REGISTRY_ID;
-   public static final long PERSISTENCE_ID;
+   public static final long REGISTRY_ID = -1064388854033361755L;
+   public static final long PERSISTENCE_ID = 5042818100109773249L;
    private static AutoTextDataVersion _instance;
-   private static final int DB_VERSION;
+   private static final int DB_VERSION = 0;
 
    private AutoTextDataVersion() {
       synchronized (this._store) {

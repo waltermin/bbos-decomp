@@ -8,12 +8,12 @@ import net.rim.device.internal.deviceoptions.OptionsProviderChangeListener;
 import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 
 final class FontOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int SIZE_TAG;
-   private static final int STYLE_TAG;
-   private static final int FAMILY_TAG;
-   private static final int ANTIALIAS_TAG;
-   private static final int POST430_TAG;
+   private static final int UID = -1789532810;
+   private static final int SIZE_TAG = 1;
+   private static final int STYLE_TAG = 2;
+   private static final int FAMILY_TAG = 3;
+   private static final int ANTIALIAS_TAG = 4;
+   private static final int POST430_TAG = 5;
 
    FontOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

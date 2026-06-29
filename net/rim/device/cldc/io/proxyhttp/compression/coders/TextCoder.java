@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.util.StringUtilitiesInternal;
 
 public final class TextCoder implements Coder {
-   private static final long ID;
+   private static final long ID = -4701931071511368799L;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

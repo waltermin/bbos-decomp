@@ -5,10 +5,10 @@ final class HorAndVerUncert extends Velocity {
    private short verSpeed;
    private short horUncertSpeed;
    private short verUncertSpeed;
-   static final byte VER_DIRECT_BIT_SIZE;
-   static final byte VER_SPEED_BIT_SIZE;
-   static final byte HOR_UNCERT_SPEED_BIT_SIZE;
-   static final byte VER_UNCERT_SPEED_BIT_SIZE;
+   static final byte VER_DIRECT_BIT_SIZE = 1;
+   static final byte VER_SPEED_BIT_SIZE = 8;
+   static final byte HOR_UNCERT_SPEED_BIT_SIZE = 8;
+   static final byte VER_UNCERT_SPEED_BIT_SIZE = 8;
 
    @Override
    final void decode(Nibbler nib) {

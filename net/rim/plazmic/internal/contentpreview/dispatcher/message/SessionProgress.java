@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class SessionProgress extends Model {
    private int _progress;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/dispatcher/message/SessionProgress.java#1 $";
 
    public SessionProgress(int progress) {
       this._progress = progress;

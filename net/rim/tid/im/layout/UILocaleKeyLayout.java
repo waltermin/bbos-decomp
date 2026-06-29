@@ -11,7 +11,7 @@ public class UILocaleKeyLayout implements GlobalEventListener {
    private String[] MAP_LOCATIONS = new String[]{"net_rim_platform_im_resource", "net_rim_tid"};
    private SLKeyLayout _layout;
    private Locale _lastLocaleUsed;
-   private static final long REGISTRY_NAME;
+   private static final long REGISTRY_NAME = -6971246574359176995L;
    private static UILocaleKeyLayout _instance;
 
    private UILocaleKeyLayout() {

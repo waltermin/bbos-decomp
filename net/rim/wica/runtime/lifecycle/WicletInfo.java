@@ -30,10 +30,10 @@ public final class WicletInfo implements Persistable {
    private String[] _languages;
    private int _langIndex;
    private int _state;
-   public static final int INSTALLED_STATE;
-   public static final int INSTALLING_STATE;
-   public static final int UNINSTALLED_STATE;
-   public static final int QUARANTINED_STATE;
+   public static final int INSTALLED_STATE = 0;
+   public static final int INSTALLING_STATE = 1;
+   public static final int UNINSTALLED_STATE = 2;
+   public static final int QUARANTINED_STATE = 4;
 
    public final int getState() {
       return this._state;

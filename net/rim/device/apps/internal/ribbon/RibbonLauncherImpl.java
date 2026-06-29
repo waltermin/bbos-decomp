@@ -116,14 +116,14 @@ final class RibbonLauncherImpl
    private RibbonLauncherImpl$AppsUpdater _appsUpdater = new RibbonLauncherImpl$AppsUpdater(this, true);
    private RibbonLauncherImpl$AppsUpdater _iconUpdater = new RibbonLauncherImpl$AppsUpdater(this, false);
    static RibbonLauncherImpl _instanceImpl;
-   public static final int CANCEL;
-   private static final long MIN_TIME_BETWEEN_LAUNCHES;
-   private static final int NORMAL_BANNERS_SCREEN_HEIGHT;
+   public static final int CANCEL = -1;
+   private static final long MIN_TIME_BETWEEN_LAUNCHES = 200L;
+   private static final int NORMAL_BANNERS_SCREEN_HEIGHT = 160;
    private static boolean _showDateConfirmation;
-   private static final int KEY_CHAR;
-   private static final int KEY_DOWN;
-   private static final int KEY_UP;
-   private static final int KEY_REPEAT;
+   private static final int KEY_CHAR = 0;
+   private static final int KEY_DOWN = 1;
+   private static final int KEY_UP = 2;
+   private static final int KEY_REPEAT = 3;
 
    final Screen getLayoutScreen() {
       Field layout = this.getLayout();

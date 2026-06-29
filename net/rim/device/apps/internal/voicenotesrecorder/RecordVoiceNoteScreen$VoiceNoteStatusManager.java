@@ -6,8 +6,8 @@ import net.rim.device.api.ui.Manager;
 
 final class RecordVoiceNoteScreen$VoiceNoteStatusManager extends Manager {
    private final RecordVoiceNoteScreen this$0;
-   private static final int IMAGE;
-   private static final int LABEL;
+   private static final int IMAGE = 0;
+   private static final int LABEL = 1;
 
    RecordVoiceNoteScreen$VoiceNoteStatusManager(RecordVoiceNoteScreen _1) {
       super(0);

@@ -12,10 +12,10 @@ import net.rim.device.internal.i18n.CommonResource;
 
 public class MenuItemPrefab extends MenuItem implements FieldChangeListener {
    private int _id;
-   private static final int RSRC_ID_OFFSET;
-   private static final int ORDINAL_OFFSET;
-   private static final int PRIORITY_OFFSET;
-   private static final int DATA_WIDTH;
+   private static final int RSRC_ID_OFFSET = 0;
+   private static final int ORDINAL_OFFSET = 1;
+   private static final int PRIORITY_OFFSET = 2;
+   private static final int DATA_WIDTH = 3;
    private static final int[] DATA = new int[]{
       1,
       196640,

@@ -6,7 +6,7 @@ public final class AttribRunList {
    public int[] iOffsets;
    public int[] iAttributes;
    public int iOffsetNo;
-   private static final int OFFSETS_ARRAY_GROWTH_SIZE;
+   private static final int OFFSETS_ARRAY_GROWTH_SIZE = 10;
    private static AttribRunList iTempList = new AttribRunList(2);
 
    public AttribRunList() {

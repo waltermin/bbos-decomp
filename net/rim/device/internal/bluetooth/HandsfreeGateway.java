@@ -5,15 +5,15 @@ import net.rim.device.api.system.Application;
 import net.rim.device.internal.system.EventDispatchManager;
 
 public final class HandsfreeGateway {
-   public static final int INDICATOR_CALL;
-   public static final int INDICATOR_SERVICE;
-   public static final int INDICATOR_CALL_SETUP;
-   public static final int INDICATOR_BATTERY_LEVEL;
-   public static final int INDICATOR_RSSI;
-   public static final int INDICATOR_LOW_BATTERY;
-   public static final int INDICATOR_CHARGING;
-   public static final int INDICATOR_CALL_HELD;
-   public static final int INDICATOR_ROAMING;
+   public static final int INDICATOR_CALL = 2;
+   public static final int INDICATOR_SERVICE = 1;
+   public static final int INDICATOR_CALL_SETUP = 3;
+   public static final int INDICATOR_BATTERY_LEVEL = 4;
+   public static final int INDICATOR_RSSI = 5;
+   public static final int INDICATOR_LOW_BATTERY = 6;
+   public static final int INDICATOR_CHARGING = 7;
+   public static final int INDICATOR_CALL_HELD = 8;
+   public static final int INDICATOR_ROAMING = 9;
 
    public static final boolean isEnabled() {
       return !ITPolicy.getBoolean(34, 4, false);

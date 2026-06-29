@@ -4,9 +4,9 @@ final class NmrElement {
    private short arfcn;
    private byte bsic;
    private byte rxLev;
-   static final byte ARFCN_BIT_SIZE;
-   static final byte BSIC_BIT_SIZE;
-   static final byte RXLEV_BIT_SIZE;
+   static final byte ARFCN_BIT_SIZE = 10;
+   static final byte BSIC_BIT_SIZE = 6;
+   static final byte RXLEV_BIT_SIZE = 6;
 
    final void encode(Stuffer stuff) {
       stuff.putBit(false);

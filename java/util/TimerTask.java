@@ -5,10 +5,10 @@ public class TimerTask implements Runnable {
    int state = 0;
    long nextExecutionTime;
    long period = 0;
-   static final int VIRGIN;
-   static final int SCHEDULED;
-   static final int EXECUTED;
-   static final int CANCELLED;
+   static final int VIRGIN = 0;
+   static final int SCHEDULED = 1;
+   static final int EXECUTED = 2;
+   static final int CANCELLED = 3;
 
    public long scheduledExecutionTime() {
       synchronized (this.lock) {

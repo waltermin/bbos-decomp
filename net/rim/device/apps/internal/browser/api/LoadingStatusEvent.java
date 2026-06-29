@@ -5,11 +5,11 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class LoadingStatusEvent extends Event {
    private int _status;
-   public static final int STATUS_LOADING;
-   public static final int STATUS_REQUESTING_SCRIPT;
-   public static final int STATUS_EXECUTING_SCRIPT;
-   public static final int STATUS_REQUESTING_STYLE_SHEET;
-   public static final int STATUS_PROCESSING_STYLE_SHEET;
+   public static final int STATUS_LOADING = 0;
+   public static final int STATUS_REQUESTING_SCRIPT = 1;
+   public static final int STATUS_EXECUTING_SCRIPT = 2;
+   public static final int STATUS_REQUESTING_STYLE_SHEET = 3;
+   public static final int STATUS_PROCESSING_STYLE_SHEET = 4;
 
    public LoadingStatusEvent(int status, Object src) {
       super(3, src);

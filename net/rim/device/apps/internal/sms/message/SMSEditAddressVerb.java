@@ -14,9 +14,9 @@ class SMSEditAddressVerb extends Verb {
    private SMSModel _SMSModel;
    private RIMModel _selectedAddress;
    private int _type;
-   static final int ADD;
-   static final int CHANGE;
-   static final int DELETE;
+   static final int ADD = 0;
+   static final int CHANGE = 1;
+   static final int DELETE = 2;
 
    SMSEditAddressVerb(SMSEditorScreen editScreen, int type, RIMModel selectedAddress) {
       this((SMSModel)editScreen.getModel(), type, selectedAddress);

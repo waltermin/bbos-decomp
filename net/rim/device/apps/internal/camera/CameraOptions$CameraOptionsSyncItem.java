@@ -6,17 +6,17 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class CameraOptions$CameraOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int TAG_IMAGE_SIZE_INDEX;
-   private static final int TAG_IMAGE_QUALITY_INDEX;
-   private static final int TAG_MEMORY_TYPE;
-   private static final int TAG_DESTINATION_FOLDER;
-   private static final int TAG_ZOOM_MODE;
-   private static final int TAG_FLASH_MODE_INDEX;
-   private static final int TAG_WHITE_BALANCE_INDEX;
-   private static final int TAG_VIEWFINDER_MODE;
-   private static final int TAG_COLOUR_EFFECT_INDEX;
-   private static final int TAG_FREQ_SELECT_INDEX;
-   private static final int DB_VERSION;
+   private static final int TAG_IMAGE_SIZE_INDEX = 1;
+   private static final int TAG_IMAGE_QUALITY_INDEX = 2;
+   private static final int TAG_MEMORY_TYPE = 3;
+   private static final int TAG_DESTINATION_FOLDER = 4;
+   private static final int TAG_ZOOM_MODE = 5;
+   private static final int TAG_FLASH_MODE_INDEX = 6;
+   private static final int TAG_WHITE_BALANCE_INDEX = 7;
+   private static final int TAG_VIEWFINDER_MODE = 8;
+   private static final int TAG_COLOUR_EFFECT_INDEX = 9;
+   private static final int TAG_FREQ_SELECT_INDEX = 10;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

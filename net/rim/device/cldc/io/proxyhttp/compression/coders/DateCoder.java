@@ -12,7 +12,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class DateCoder implements Coder {
    private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776)));
-   private static final long ID;
+   private static final long ID = -325877882800875996L;
 
    public static final DateCoder getInstance() {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();

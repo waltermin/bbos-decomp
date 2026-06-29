@@ -37,7 +37,7 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
    private ContextObject _context = (ContextObject)(new Object());
    private Proxy _proxy;
    private Vector _globalScreenQueue = (Vector)(new Object());
-   private static final long REMINDER_DISPLAY_MANAGER_KEY;
+   private static final long REMINDER_DISPLAY_MANAGER_KEY = -1132927491084502231L;
 
    final void init(ReminderApplication app, ReminderManager reminderManager) {
       this._app = app;

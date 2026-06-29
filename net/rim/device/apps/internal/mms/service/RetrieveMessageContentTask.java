@@ -23,10 +23,10 @@ final class RetrieveMessageContentTask implements MMSTask {
    private Runnable _onSuccess;
    private Runnable _onFailure;
    private int _attempts;
-   private static final int MAX_ATTEMPTS;
-   private static final int FIRST_RETRY_DELAY;
-   private static final int LAST_RETRY_DELAY;
-   private static final int RETRY_SCALE_FACTOR;
+   private static final int MAX_ATTEMPTS = 10;
+   private static final int FIRST_RETRY_DELAY = 10;
+   private static final int LAST_RETRY_DELAY = 600;
+   private static final int RETRY_SCALE_FACTOR = 8;
 
    RetrieveMessageContentTask(MMSMessageModel message, boolean autoDownload, Runnable onSuccess, Runnable onFailure, boolean retry) {
       this._message = message;

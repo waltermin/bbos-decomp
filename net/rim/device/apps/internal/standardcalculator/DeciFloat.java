@@ -5,14 +5,14 @@ import net.rim.device.api.util.Persistable;
 public final class DeciFloat implements Persistable {
    private int _man;
    private int _exp;
-   private static final int MANTISSA_MAX;
-   private static final int MANTISSA_MIN;
-   private static final int NUM_DIGITS;
-   private static final int DISPLAY_DIGITS;
-   private static final int EXPONENT_ZERO;
-   private static final int ERROR_MANTISSA;
-   private static final int INVALID_MANTISSA;
-   private static final int SPECIAL_EXPONENT;
+   private static final int MANTISSA_MAX = 999999999;
+   private static final int MANTISSA_MIN = 100000000;
+   private static final int NUM_DIGITS = 9;
+   private static final int DISPLAY_DIGITS = 8;
+   private static final int EXPONENT_ZERO = -8;
+   private static final int ERROR_MANTISSA = -99999999;
+   private static final int INVALID_MANTISSA = -1;
+   private static final int SPECIAL_EXPONENT = 99999999;
    private static final int[] PowerOf10 = new int[]{
       1,
       10,

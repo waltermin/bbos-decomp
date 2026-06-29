@@ -6,13 +6,13 @@ final class Fdd extends ModeSpecificInfo {
    private byte cpichRscp;
    private byte pathLoss;
    private byte optionals;
-   static final byte FDD_OPT_CPICH_EC_N0;
-   static final byte FDD_OPT_CPICH_RSCP;
-   static final byte FDD_OPT_PATH_LOSS;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte PRIMARY_CPICH_INFO_BIT_SIZE;
-   static final byte CPICH_EC_N0_BIT_SIZE;
-   static final byte CPICH_RSCP_BIT_SIZE;
+   static final byte FDD_OPT_CPICH_EC_N0 = 4;
+   static final byte FDD_OPT_CPICH_RSCP = 2;
+   static final byte FDD_OPT_PATH_LOSS = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final byte PRIMARY_CPICH_INFO_BIT_SIZE = 9;
+   static final byte CPICH_EC_N0_BIT_SIZE = 6;
+   static final byte CPICH_RSCP_BIT_SIZE = 7;
 
    @Override
    final void encode(Stuffer stuff) {

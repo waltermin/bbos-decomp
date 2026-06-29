@@ -11,7 +11,7 @@ final class HRTRequestThread$ConnInfo implements TunnelListener {
    public int connId = -1;
    public Tunnel tunnel;
    private boolean _apnIdValid;
-   public static final int NULL;
+   public static final int NULL = -1;
 
    public HRTRequestThread$ConnInfo() {
    }

@@ -26,11 +26,11 @@ final class RequestThread extends Thread implements GlobalEventListener {
    private static RequestThread _instance = new RequestThread();
    private static boolean _mapReqRadioChecked = false;
    private static long _503ErrorTimer = -1;
-   private static final byte CLIENT_VERSION;
-   private static final int TYPE_IPPP_TYPE;
-   private static final int IPPP_TYPE_CORPORATE;
-   private static final int IPPP_TYPE_PUBLIC;
-   private static final int IPPP_TYPE_PROVISIONING;
+   private static final byte CLIENT_VERSION = 20;
+   private static final int TYPE_IPPP_TYPE = 6;
+   private static final int IPPP_TYPE_CORPORATE = 0;
+   private static final int IPPP_TYPE_PUBLIC = 1;
+   private static final int IPPP_TYPE_PROVISIONING = 2;
 
    RequestThread() {
       this.setPriority(3);

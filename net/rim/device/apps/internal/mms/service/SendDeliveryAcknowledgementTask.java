@@ -12,10 +12,10 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
    private String _url;
    private String _transactionID;
    private int _attempts;
-   private static final int MAX_ATTEMPTS;
-   private static final int FIRST_RETRY_DELAY;
-   private static final int LAST_RETRY_DELAY;
-   private static final int RETRY_SCALE_FACTOR;
+   private static final int MAX_ATTEMPTS = 5;
+   private static final int FIRST_RETRY_DELAY = 10;
+   private static final int LAST_RETRY_DELAY = 300;
+   private static final int RETRY_SCALE_FACTOR = 24;
 
    SendDeliveryAcknowledgementTask(String url, String transactionID) {
       this._url = url;

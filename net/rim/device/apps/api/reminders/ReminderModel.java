@@ -3,10 +3,10 @@ package net.rim.device.apps.api.reminders;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 
 public interface ReminderModel extends PersistableRIMModel {
-   long ID;
-   long NO_REMINDER;
-   byte RELATIVE;
-   byte ABSOLUTE;
+   long ID = 6784165211264038547L;
+   long NO_REMINDER = -1L;
+   byte RELATIVE = 1;
+   byte ABSOLUTE = 2;
 
    boolean hasReminder();
 

@@ -1,13 +1,13 @@
 package net.rim.device.api.system;
 
 public interface ExtendedRadioStatusListener extends RadioStatusListener {
-   int NET_SELECT_FAIL;
-   int NET_SELECT_BUSY;
-   int NET_SELECT_REFUSED;
-   int NET_SELECT_NO_CONTROL;
-   int NET_SELECT_INVALID;
-   int NET_SCAN_STALL;
-   int NET_SCAN_RESTART;
+   int NET_SELECT_FAIL = 1;
+   int NET_SELECT_BUSY = 2;
+   int NET_SELECT_REFUSED = 3;
+   int NET_SELECT_NO_CONTROL = 4;
+   int NET_SELECT_INVALID = 5;
+   int NET_SCAN_STALL = 0;
+   int NET_SCAN_RESTART = 1;
 
    void networkSelectionFailed(int var1, int var2);
 

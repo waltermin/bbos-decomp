@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements Persistable {
    private static SoftwareTripleDESCryptoToken _instance = new SoftwareTripleDESCryptoToken();
-   private static final long ID_TEST_TRIPLEDES;
+   private static final long ID_TEST_TRIPLEDES = -2106424517409732943L;
 
    static final SoftwareTripleDESCryptoToken getInstance() {
       return _instance;

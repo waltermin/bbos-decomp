@@ -9,12 +9,12 @@ import net.rim.device.api.util.Persistable;
 
 public final class LDAPBrowserOptionStore implements Persistable {
    private Hashtable _optionData = (Hashtable)(new Object());
-   private static final long KEY;
-   private static final long SYNC_ID;
+   private static final long KEY = -6129006259646707626L;
+   private static final long SYNC_ID = 7515256977697666692L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(-6129006259646707626L);
-   public static final int YES;
-   public static final int NO;
-   public static final int PROMPT;
+   public static final int YES = 0;
+   public static final int NO = 1;
+   public static final int PROMPT = 2;
 
    private LDAPBrowserOptionStore() {
       LDAPBrowserOptionStore$LDAPOptionsSyncItem ldapOptionsSyncItem = this.getLDAPOptionsSyncItem();

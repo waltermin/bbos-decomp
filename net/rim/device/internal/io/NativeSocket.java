@@ -4,18 +4,18 @@ public final class NativeSocket {
    private int _socketId;
    private Object _operationLock;
    private int _operationResult;
-   private static final int SOC_ERROR_TIMEOUT;
-   public static final int SOC_PENDING;
-   public static final int SOC_OK;
-   public static final int SOCK_STREAM;
-   public static final int SOCK_DGRAM;
-   public static final int SOCK_RAW;
-   public static final int IPPROTO_IP;
-   public static final int IPPROTO_ICMP;
-   public static final int IPPROTO_TCP;
-   public static final int IPPROTO_UDP;
-   private static final long LOW_DWORD;
-   private static final int TIMEOUT;
+   private static final int SOC_ERROR_TIMEOUT = -100;
+   public static final int SOC_PENDING = 0;
+   public static final int SOC_OK = 1;
+   public static final int SOCK_STREAM = 1;
+   public static final int SOCK_DGRAM = 2;
+   public static final int SOCK_RAW = 3;
+   public static final int IPPROTO_IP = 0;
+   public static final int IPPROTO_ICMP = 1;
+   public static final int IPPROTO_TCP = 6;
+   public static final int IPPROTO_UDP = 17;
+   private static final long LOW_DWORD = 4294967295L;
+   private static final int TIMEOUT = 120000;
 
    public NativeSocket() {
       this._socketId = -1;

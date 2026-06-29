@@ -9,15 +9,15 @@ public class CustomItem extends Item {
    private VerticalFieldManager _container;
    private CustomLabelField _label;
    private CustomField _field;
-   protected static final int TRAVERSE_HORIZONTAL;
-   protected static final int TRAVERSE_VERTICAL;
-   protected static final int KEY_PRESS;
-   protected static final int KEY_RELEASE;
-   protected static final int KEY_REPEAT;
-   protected static final int POINTER_PRESS;
-   protected static final int POINTER_RELEASE;
-   protected static final int POINTER_DRAG;
-   protected static final int NONE;
+   protected static final int TRAVERSE_HORIZONTAL = 1;
+   protected static final int TRAVERSE_VERTICAL = 2;
+   protected static final int KEY_PRESS = 4;
+   protected static final int KEY_RELEASE = 8;
+   protected static final int KEY_REPEAT = 16;
+   protected static final int POINTER_PRESS = 32;
+   protected static final int POINTER_RELEASE = 64;
+   protected static final int POINTER_DRAG = 128;
+   protected static final int NONE = 0;
 
    protected CustomItem(String label) {
       synchronized (Application.getEventLock()) {

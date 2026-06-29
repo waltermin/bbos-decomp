@@ -8,9 +8,9 @@ final class ApplicationControlScreen$ItemField extends BoldObjectChoiceField {
    int _type;
    int _allowFlag;
    int _promptFlag;
-   static final int GROUP;
-   static final int BINARY;
-   static final int TERNARY;
+   static final int GROUP = 1;
+   static final int BINARY = 2;
+   static final int TERNARY = 3;
 
    public ApplicationControlScreen$ItemField(String label, String[] choices) {
       super(label, choices, new boolean[choices.length], 0, 0);

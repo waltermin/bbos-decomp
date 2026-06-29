@@ -41,7 +41,7 @@ final class GeneralProperty$GeneralPropertyData {
    WeakReference _emulationModeStringWR = (WeakReference)(new Object(null));
    int _showFullScreenHandle;
    final Object _persistentSync = new Object();
-   static final long KEY;
+   static final long KEY = 4417702636629415150L;
 
    public GeneralProperty$GeneralPropertyData() {
       int minFontSize = 6;

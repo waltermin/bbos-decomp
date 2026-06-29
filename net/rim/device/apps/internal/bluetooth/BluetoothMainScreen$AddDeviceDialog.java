@@ -22,10 +22,10 @@ final class BluetoothMainScreen$AddDeviceDialog extends PopupScreen implements R
    private int _deviceCount;
    private boolean _inquiry;
    private final BluetoothMainScreen this$0;
-   private static final int INQUIRY_LENGTH;
-   private static final int INQUIRY_INTERVAL;
-   private static final int TIMEOUT_LENGTH;
-   private static final int TIMEOUT_INTERVAL;
+   private static final int INQUIRY_LENGTH = 90;
+   private static final int INQUIRY_INTERVAL = 100;
+   private static final int TIMEOUT_LENGTH = 120;
+   private static final int TIMEOUT_INTERVAL = 1000;
 
    final void start() {
       if (!this.this$0._isPowerOn) {

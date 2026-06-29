@@ -5,10 +5,10 @@ import net.rim.ecmascript.runtime.GlobalObject;
 import net.rim.ecmascript.runtime.Value;
 
 final class ESLogger extends ESObject {
-   private static final String LevelDebug;
-   private static final String LevelError;
-   private static final String LevelInformation;
-   private static final String LevelWarning;
+   private static final String LevelDebug = "DEBUG";
+   private static final String LevelError = "ERROR";
+   private static final String LevelInformation = "INFORMATION";
+   private static final String LevelWarning = "WARNING";
    private static final String[] Levels = new String[]{"DEBUG", "ERROR", "INFORMATION", "WARNING"};
 
    ESLogger() {

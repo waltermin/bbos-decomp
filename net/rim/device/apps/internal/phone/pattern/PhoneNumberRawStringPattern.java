@@ -25,14 +25,14 @@ public final class PhoneNumberRawStringPattern extends StringPattern implements 
    private boolean _allowSpaces;
    private int _endIndex;
    private boolean _isSearchOnCursor;
-   private static final int MINIMUM_PATTERN_DIGIT_COUNT;
-   private static final int MIN_CURSOR_DIGITCOUNT;
-   private static final int MAX_CURSOR_DIGITCOUNT;
-   private static final int SCAN_BUFFER_SIZE;
-   private static final int SAVED_INCREMENT;
-   private static final int SAVED_CHUNK_SIZE;
-   private static final int MAX_EXT_DIGITS;
-   private static final String EXTENSION_KEY;
+   private static final int MINIMUM_PATTERN_DIGIT_COUNT = 6;
+   private static final int MIN_CURSOR_DIGITCOUNT = 3;
+   private static final int MAX_CURSOR_DIGITCOUNT = 20;
+   private static final int SCAN_BUFFER_SIZE = 32;
+   private static final int SAVED_INCREMENT = 16;
+   private static final int SAVED_CHUNK_SIZE = 5;
+   private static final int MAX_EXT_DIGITS = 16;
+   private static final String EXTENSION_KEY = "ext";
 
    public PhoneNumberRawStringPattern() {
       this._scanbufferWR = (WeakReference)(new Object(null));

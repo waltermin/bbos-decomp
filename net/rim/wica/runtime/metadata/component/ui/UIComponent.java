@@ -1,13 +1,13 @@
 package net.rim.wica.runtime.metadata.component.ui;
 
 public interface UIComponent {
-   int INIT_EVENT;
-   int SHOW_EVENT;
-   int FOCUS_OUT_EVENT;
-   int CHANGE_EVENT;
-   int CLICK_EVENT;
-   int FETCH_MORE_EVENT;
-   int _EVENT_COUNT;
+   int INIT_EVENT = Integer.MAX_VALUE;
+   int SHOW_EVENT = 2147483646;
+   int FOCUS_OUT_EVENT = 0;
+   int CHANGE_EVENT = 1;
+   int CLICK_EVENT = 2;
+   int FETCH_MORE_EVENT = 3;
+   int _EVENT_COUNT = 4;
 
    int getId();
 

@@ -26,7 +26,7 @@ final class WicletRepetitionManager extends VerticalFieldManager implements View
    private int _screenContentHeightMinusScrollHeight;
    private int _maxRowHeight;
    private static Tag TAG = Tag.create("list");
-   private static final int BORDER_SIZE;
+   private static final int BORDER_SIZE = 3;
 
    public final void updateModel() {
       this._model.setSelectedIndex(this._paging.getSelected(), true);

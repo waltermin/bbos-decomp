@@ -5,10 +5,10 @@ public final class FileSystemJournalEntry {
    private String _oldPath;
    private int _event;
    private long _usn;
-   public static final int FILE_ADDED;
-   public static final int FILE_DELETED;
-   public static final int FILE_CHANGED;
-   public static final int FILE_RENAMED;
+   public static final int FILE_ADDED = 0;
+   public static final int FILE_DELETED = 1;
+   public static final int FILE_CHANGED = 2;
+   public static final int FILE_RENAMED = 3;
 
    private FileSystemJournalEntry() {
    }

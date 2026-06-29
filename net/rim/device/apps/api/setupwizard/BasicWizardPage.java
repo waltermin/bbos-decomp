@@ -49,13 +49,13 @@ public class BasicWizardPage implements WizardPage, KeyListener, FieldChangeList
    private boolean _closeConfirmed;
    protected boolean _warnOnCloseOrHotKey;
    protected Object _context;
-   public static final int DEFAULT_WIZARD_FLAGS;
-   public static final int HIDE_BUTTON_BAR;
-   public static final int HIDE_PROGRESS;
-   public static final int HIDE_PAGE;
-   public static final int NO_SAVE_PROMPT;
-   public static final int NO_SCROLLING_CONTENT;
-   public static final long DEFAULT_CONTENT_STYLE;
+   public static final int DEFAULT_WIZARD_FLAGS = 0;
+   public static final int HIDE_BUTTON_BAR = 1;
+   public static final int HIDE_PROGRESS = 2;
+   public static final int HIDE_PAGE = 4;
+   public static final int NO_SAVE_PROMPT = 8;
+   public static final int NO_SCROLLING_CONTENT = 16;
+   public static final long DEFAULT_CONTENT_STYLE = 1152921504606846976L;
 
    protected WizardButtonBar getButtonBar() {
       return this._buttonBar;

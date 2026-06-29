@@ -5,12 +5,12 @@ class CallInfo {
    boolean _outgoing;
    int _status;
    String _number;
-   static final int CALL_STATUS_ACTIVE;
-   static final int CALL_STATUS_HELD;
-   static final int CALL_STATUS_DIALING;
-   static final int CALL_STATUS_ALERTING;
-   static final int CALL_STATUS_INCOMING;
-   static final int CALL_STATUS_WAITING;
+   static final int CALL_STATUS_ACTIVE = 1;
+   static final int CALL_STATUS_HELD = 2;
+   static final int CALL_STATUS_DIALING = 4;
+   static final int CALL_STATUS_ALERTING = 8;
+   static final int CALL_STATUS_INCOMING = 16;
+   static final int CALL_STATUS_WAITING = 32;
 
    CallInfo(int callID) {
       this._callID = callID;

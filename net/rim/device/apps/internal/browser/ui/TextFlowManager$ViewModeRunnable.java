@@ -6,7 +6,7 @@ final class TextFlowManager$ViewModeRunnable implements Runnable {
    private TextFlowManager _manager;
    private int _invokeLaterId = -1;
    private static TextFlowManager$ViewModeRunnable _instance = new TextFlowManager$ViewModeRunnable();
-   private static final int VIEW_MODE_TOGGLE_DELAY;
+   private static final int VIEW_MODE_TOGGLE_DELAY = 500;
 
    final boolean cancel() {
       if (this._invokeLaterId != -1) {

@@ -12,13 +12,13 @@ import net.rim.device.api.util.DataBuffer;
 public final class IMSwitcherOption extends OTASyncCapableSyncItem {
    private byte _state = 1;
    private PersistentObject _store = RIMPersistentStore.getPersistentObject(-9055322099094090145L);
-   public static final byte SHOW_ALWAYS;
-   public static final byte DONT_SHOW;
-   public static final byte DISABLED;
-   public static final long REGISTRY_ID;
-   public static final long PERSISTENCE_ID;
+   public static final byte SHOW_ALWAYS = 1;
+   public static final byte DONT_SHOW = 2;
+   public static final byte DISABLED = 3;
+   public static final long REGISTRY_ID = -8427367214306252346L;
+   public static final long PERSISTENCE_ID = -9055322099094090145L;
    private static IMSwitcherOption _instance;
-   private static final int DB_VERSION;
+   private static final int DB_VERSION = 0;
 
    public static final IMSwitcherOption getInstance() {
       return _instance;

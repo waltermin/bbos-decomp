@@ -6,7 +6,7 @@ import net.rim.device.cldc.io.utility.SessionStats;
 import net.rim.device.internal.browser.util.Pipe;
 
 public interface WAPRequest extends HttpConnection {
-   long WAP_CONNECTION_CLOSED;
+   long WAP_CONNECTION_CLOSED = 3729075673904713354L;
 
    WAPConnectionParams getParameters();
 

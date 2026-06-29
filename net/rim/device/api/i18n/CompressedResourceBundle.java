@@ -11,15 +11,15 @@ public class CompressedResourceBundle extends ResourceBundle {
    private int _moduleNumber;
    private String _name;
    private WeakReference _bundleReference = new WeakReference(null);
-   private static final boolean DEBUG;
-   private static final int HEADER_SIZE;
-   private static final int MIN_SIZE;
-   private static final int MAX_SIZE;
-   private static final int MIN_RESOURCE_ENTRIES;
-   private static final int MAX_RESOURCE_ENTRIES;
+   private static final boolean DEBUG = false;
+   private static final int HEADER_SIZE = 10;
+   private static final int MIN_SIZE = 1;
+   private static final int MAX_SIZE = 32768;
+   private static final int MIN_RESOURCE_ENTRIES = 0;
+   private static final int MAX_RESOURCE_ENTRIES = 2048;
    private static Hashtable _bundleHash;
-   static final int COMPRESSED_RESOURCES;
-   static final int UNCOMPRESSED_RESOURCES;
+   static final int COMPRESSED_RESOURCES = 1;
+   static final int UNCOMPRESSED_RESOURCES = 2;
 
    private CompressedResourceBundle(String name, int moduleNumber, Locale loc) {
       super(loc);

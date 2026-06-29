@@ -16,16 +16,16 @@ public final class HostRoutingTable implements Persistable, GlobalEventListener 
    private HostRoutingInfo _wifiHRI;
    public int _regTTL;
    public long _regTTLExpiry;
-   public static final int NULL_ACTIVE_INDEX;
-   private static final int NO_ACTIVE_INDEX;
-   public static final long GUID_DEVICE_REGISTERED;
-   public static final long GUID_HRT_EVENT_NO_ACTIVE_HRI;
-   public static final long GUID_HRT_EVENT_NULL_NPC_RECEIVED;
-   public static final long GUID_HRT_EVENT_NEW_ACTIVE_HRI;
-   public static final long GUID_HRT_EVENT_ACTIVE_HRI_MODIFIED;
-   public static final long GUID_HRT_EVENT_NEW_WIFI_HRI;
-   public static final long GUID_HRT_EVENT_WIFI_HRI_MODIFIED;
-   public static final long GUID_HRT_EVENT_WIFI_HRI_REMOVED;
+   public static final int NULL_ACTIVE_INDEX = -1;
+   private static final int NO_ACTIVE_INDEX = -2;
+   public static final long GUID_DEVICE_REGISTERED = -8927980184023446756L;
+   public static final long GUID_HRT_EVENT_NO_ACTIVE_HRI = -3864212166794284297L;
+   public static final long GUID_HRT_EVENT_NULL_NPC_RECEIVED = -2686242019764477137L;
+   public static final long GUID_HRT_EVENT_NEW_ACTIVE_HRI = -6531073315810526672L;
+   public static final long GUID_HRT_EVENT_ACTIVE_HRI_MODIFIED = 2200641410611652722L;
+   public static final long GUID_HRT_EVENT_NEW_WIFI_HRI = -2283956412806126038L;
+   public static final long GUID_HRT_EVENT_WIFI_HRI_MODIFIED = 8951540267497860657L;
+   public static final long GUID_HRT_EVENT_WIFI_HRI_REMOVED = 6830133996698118599L;
 
    public final void init() {
       this._activeIndex = -1;

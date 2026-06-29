@@ -83,29 +83,29 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
    private CalendarExtensions _calendar;
    private SimpleDateFormat _dateFormat;
    private String _modelName;
-   private static final int PICTURE_COUNTER_MAX;
+   private static final int PICTURE_COUNTER_MAX = 99999;
    private static final int PICTURE_COUNTER_STRING_LENGTH = Integer.toString(99999).length();
-   private static final long CAMERA_DATA_KEY;
-   private static final long FILE_HEADROOM;
-   private static final int PICTURES_LEFT_THRESHOLD;
-   private static final int PICTURES_LEFT_STRING_LENGTH;
-   private static final String PICTURES_LEFT_THRESHOLD_STRING;
-   private static final String FILENAME_PREFIX;
-   private static final String FILENAME_SUFFIX;
+   private static final long CAMERA_DATA_KEY = 1361391055686298208L;
+   private static final long FILE_HEADROOM = 256000L;
+   private static final int PICTURES_LEFT_THRESHOLD = 200;
+   private static final int PICTURES_LEFT_STRING_LENGTH = 3;
+   private static final String PICTURES_LEFT_THRESHOLD_STRING = "200+";
+   private static final String FILENAME_PREFIX = "IMG";
+   private static final String FILENAME_SUFFIX = ".jpg";
    private static final String[] FLASH_EVENT = new String[]{"flashOff", "flashOn", "flashAuto"};
    private static final String[] NIGHTMODE_EVENT = new String[]{"nightmodeOff", "nightmodeOn"};
-   private static final String PICSLEFT;
-   private static final String TAKEPICTURE;
-   private static final String ZOOM;
-   private static final int DEFAULT_MI_PRIORITY;
-   private static final long EVENTLOG_GUID;
-   private static final int ZOOM_COUNTER_THRESHOLD;
+   private static final String PICSLEFT = "picsleft";
+   private static final String TAKEPICTURE = "takepicture";
+   private static final String ZOOM = "zoom";
+   private static final int DEFAULT_MI_PRIORITY = Integer.MAX_VALUE;
+   private static final long EVENTLOG_GUID = -2562843282228934904L;
+   private static final int ZOOM_COUNTER_THRESHOLD = 2;
    private static CameraScreen _instance;
-   private static final int TOGGLE_VIEWFINDER_MODE;
-   private static final int PERCENTAGE_SCALING_FACTOR;
-   private static final int AVG_FILTER_COEFFICIENT;
-   private static final String TIMESTAMP_FORMAT;
-   private static final int BACKLIGHT_TIMEOUT;
+   private static final int TOGGLE_VIEWFINDER_MODE = -1;
+   private static final int PERCENTAGE_SCALING_FACTOR = 1000;
+   private static final int AVG_FILTER_COEFFICIENT = 4;
+   private static final String TIMESTAMP_FORMAT = "yyyy:MM:dd HH:mm:ss";
+   private static final int BACKLIGHT_TIMEOUT = 30;
 
    public final void suspendViewfinder(boolean state) {
       if (state) {

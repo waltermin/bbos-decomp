@@ -4,7 +4,7 @@ class ResizableIndexArray {
    private boolean isBig = false;
    private Object _array = new char[0];
    protected int _sectionSize = ArrayResize.getSectionSize((char[])this._array);
-   public static final int NO_HANDLE;
+   public static final int NO_HANDLE = 0;
 
    ResizableIndexArray() {
       this._array = ArrayResize.charArrayResize((char[])this._array, this._sectionSize);

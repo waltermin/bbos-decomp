@@ -9,21 +9,21 @@ import net.rim.vm.WeakReference;
 public final class DTMFStringPattern extends StringPattern {
    private WeakReference _scanbufferWR = (WeakReference)(new Object(null));
    private boolean _enabled;
-   private static final int SCAN_BUFFER_SIZE;
-   private static final int STATE_INIT;
-   private static final int STATE_W;
-   private static final int STATE_WT;
-   private static final int STATE_WTA;
-   private static final int STATE_WTAI;
-   private static final int STATE_WTAI_;
-   private static final int STATE_WTAI__;
-   private static final int STATE_WTAI___;
-   private static final int STATE_WTAI___W;
-   private static final int STATE_WTAI___WP;
-   private static final int STATE_WTAI___WP_;
-   private static final int STATE_WTAI___WP_S;
-   private static final int STATE_WTAI___WP_SD;
-   private static final int STATE_WTAI___WP_SD_;
+   private static final int SCAN_BUFFER_SIZE = 64;
+   private static final int STATE_INIT = 0;
+   private static final int STATE_W = 10;
+   private static final int STATE_WT = 11;
+   private static final int STATE_WTA = 12;
+   private static final int STATE_WTAI = 13;
+   private static final int STATE_WTAI_ = 14;
+   private static final int STATE_WTAI__ = 15;
+   private static final int STATE_WTAI___ = 16;
+   private static final int STATE_WTAI___W = 17;
+   private static final int STATE_WTAI___WP = 18;
+   private static final int STATE_WTAI___WP_ = 19;
+   private static final int STATE_WTAI___WP_S = 20;
+   private static final int STATE_WTAI___WP_SD = 21;
+   private static final int STATE_WTAI___WP_SD_ = 22;
 
    @Override
    public final long getPatternTypeIdentifier() {

@@ -33,9 +33,9 @@ public final class FolderEntryPointDescriptor
    private InternalApplicationFolder _folder;
    private String _launchURL;
    private static ResourceBundleFamily _resources = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
-   private static final String ROOT_FOLDER_IMAGE;
-   public static final String FOLDER_IMAGE;
-   public static final String COMMON_FOLDER_LOCATION_URL;
+   private static final String ROOT_FOLDER_IMAGE = "up_folder";
+   public static final String FOLDER_IMAGE = "folder";
+   public static final String COMMON_FOLDER_LOCATION_URL = "file:///store/samples/folder icons/";
 
    public final void resetIcon() {
       String propertiesName = this.get(9, "");

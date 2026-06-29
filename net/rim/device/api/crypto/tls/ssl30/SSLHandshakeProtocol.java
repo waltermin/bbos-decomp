@@ -69,9 +69,9 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
    protected AlertProtocolMethods _alertProtocol;
    protected ChangeCipherSpecProtocol _changeCipherSpecProtocol;
    private SSLConnectionOptions _overrideConnectionOptions;
-   protected static final boolean DEBUG;
-   public static final int EXPORT_LENGTH;
-   public static final int ECC_EXPORT_LENGTH;
+   protected static final boolean DEBUG = false;
+   public static final int EXPORT_LENGTH = 1024;
+   public static final int ECC_EXPORT_LENGTH = 163;
    public static final byte[] SENDER_CLIENT = new byte[]{67, 76, 78, 84};
    public static final byte[] SENDER_SERVER = new byte[]{83, 82, 86, 82};
    protected static final ResourceBundle _rb = ResourceBundle.getBundle(5710659227867441061L, "net.rim.device.internal.resource.crypto.SSL");
@@ -553,7 +553,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 4f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;
       // 52: invokestatic net/rim/device/api/crypto/tls/ssl30/SSLHandshakeUtilities.verifyCertificateCapabilities (Lnet/rim/device/api/crypto/certificate/x509/X509Certificate;Lnet/rim/device/cldc/io/ssl/SSLConnectionOptions;Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;)V
       // 55: bipush 0
-      // 56: anewarray 1314
+      // 56: anewarray 1320
       // 59: astore 6
       // 5b: aload 1
       // 5c: invokevirtual net/rim/device/api/util/DataBuffer.eof ()Z
@@ -1666,16 +1666,16 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 192: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.elements (J)Ljava/util/Enumeration; 3
       // 197: astore 12
       // 199: bipush 0
-      // 19a: anewarray 3936
+      // 19a: anewarray 3942
       // 19d: astore 13
       // 19f: bipush 0
-      // 1a0: anewarray 3938
+      // 1a0: anewarray 3944
       // 1a3: astore 14
       // 1a5: bipush 0
-      // 1a6: anewarray 3940
+      // 1a6: anewarray 3946
       // 1a9: astore 15
       // 1ab: bipush 0
-      // 1ac: multianewarray 3942 1
+      // 1ac: multianewarray 3948 1
       // 1b0: astore 16
       // 1b2: bipush 0
       // 1b3: istore 17
@@ -1842,7 +1842,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 316: bipush 22
       // 318: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 31b: bipush 1
-      // 31c: anewarray 4162
+      // 31c: anewarray 4168
       // 31f: dup
       // 320: bipush 0
       // 321: aload 0
@@ -1874,7 +1874,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 35e: bipush 22
       // 360: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 363: bipush 1
-      // 364: anewarray 4224
+      // 364: anewarray 4230
       // 367: dup
       // 368: bipush 0
       // 369: aload 0

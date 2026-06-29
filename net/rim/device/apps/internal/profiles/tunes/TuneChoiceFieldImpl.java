@@ -26,12 +26,12 @@ public final class TuneChoiceFieldImpl extends TuneChoiceField implements FieldC
    private int _volume = AlertConsequence.getLowVolume(0);
    private int _outputDevice = 0;
    private String _defaultTuneName;
-   static final int SKIP_BROWSE;
+   static final int SKIP_BROWSE = Integer.MAX_VALUE;
    private static String _muteTuneDisplayName;
    private static String _selectTuneDisplayName;
    private static String _selectedTune;
    private static int SELECT_TUNE_INDEX = 0;
-   private static final int MUTE_INDEX;
+   private static final int MUTE_INDEX = 1;
 
    public TuneChoiceFieldImpl(String label, String selectedTuneName, String defaultTuneName, boolean addMute) {
       this._defaultTuneName = defaultTuneName;

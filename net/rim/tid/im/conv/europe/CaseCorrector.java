@@ -24,11 +24,11 @@ public class CaseCorrector {
    private Locale _locale;
    private ExtendedCurrentVariant _correctionVariant = (ExtendedCurrentVariant)(new Object());
    private WeakReference _tempCharBuffer = (WeakReference)(new Object(null));
-   public static final byte LOWER_CASE;
-   public static final byte UPPER_CASE;
-   public static final byte CAPITALIZED;
-   public static final byte MIXED_CAPITALIZED;
-   public static final byte MIXED_CASE;
+   public static final byte LOWER_CASE = 0;
+   public static final byte UPPER_CASE = 1;
+   public static final byte CAPITALIZED = 2;
+   public static final byte MIXED_CAPITALIZED = 3;
+   public static final byte MIXED_CASE = 4;
    private static WeakReference iTempBufferWR = (WeakReference)(new Object(null));
 
    public CaseCorrector(Locale aLocale, int aLongestWordLength) {

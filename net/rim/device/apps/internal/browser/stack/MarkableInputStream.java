@@ -17,7 +17,7 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    private boolean _saveContent;
    private byte[] _tmpArray;
    private int _tmpArraySize;
-   private static final int TMP_ARRAY_SIZE_INCREMENT;
+   private static final int TMP_ARRAY_SIZE_INCREMENT = 200;
 
    public final synchronized void save() {
       this._saveContent = !this._saveContent;

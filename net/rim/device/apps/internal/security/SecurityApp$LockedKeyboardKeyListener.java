@@ -11,7 +11,7 @@ final class SecurityApp$LockedKeyboardKeyListener implements KeyListener {
    private Phone _phone;
    private StringBuffer _buffer;
    private final SecurityApp this$0;
-   private static final int MAX_EMERGENCY_NUMBER_LENGTH;
+   private static final int MAX_EMERGENCY_NUMBER_LENGTH = 6;
 
    SecurityApp$LockedKeyboardKeyListener(SecurityApp _1) {
       this.this$0 = _1;

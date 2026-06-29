@@ -4,8 +4,8 @@ import java.io.IOException;
 
 public final class SocketBaseIOException extends IOException {
    private int exceptionCode;
-   public static final int GENERAL_EXCEPTION;
-   public static final int EXTERNAL_TIMEOUT_EXCEPTION;
+   public static final int GENERAL_EXCEPTION = 127;
+   public static final int EXTERNAL_TIMEOUT_EXCEPTION = 130;
 
    public SocketBaseIOException() {
    }

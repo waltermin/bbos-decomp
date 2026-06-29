@@ -6,9 +6,9 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class DiagOptions$DiagOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int PIN_RECPT_TAG;
-   private static final int EMAIL_RECPT_TAG;
-   private static final int DB_VERSION;
+   private static final int PIN_RECPT_TAG = 0;
+   private static final int EMAIL_RECPT_TAG = 1;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

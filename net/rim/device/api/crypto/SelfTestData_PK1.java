@@ -1,7 +1,7 @@
 package net.rim.device.api.crypto;
 
 interface SelfTestData_PK1 {
-   int RSA_MODULUS_BIT_LENGTH;
+   int RSA_MODULUS_BIT_LENGTH = 1024;
    byte[] RSA_E;
    byte[] RSA_D;
    byte[] RSA_N;

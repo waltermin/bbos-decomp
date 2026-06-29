@@ -27,8 +27,8 @@ final class WeekField$WeekFieldDayContents {
    private int _emphasizedEventEntryIndex;
    private boolean _appointmentsConflict;
    private final WeekField this$0;
-   private static final int FOCUS_DURATION;
-   private static final int GROW_SIZE;
+   private static final int FOCUS_DURATION = 1800000;
+   private static final int GROW_SIZE = 5;
 
    WeekField$WeekFieldDayContents(WeekField _1) {
       this.this$0 = _1;

@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.LabelField;
 
 public final class InputHintLabelField extends LabelField {
-   private static final int FONT_SIZE_PT;
+   private static final int FONT_SIZE_PT = 5;
 
    public InputHintLabelField() {
    }

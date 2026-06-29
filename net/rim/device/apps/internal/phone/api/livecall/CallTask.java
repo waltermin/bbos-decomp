@@ -7,7 +7,7 @@ class CallTask extends Thread implements PhoneEventListener {
    private long _startTime;
    private static Object _callTaskLock = new Object();
    private static Object _currentTask;
-   private static final long TIMEOUT;
+   private static final long TIMEOUT = 10000L;
 
    public CallTask() {
       VoiceServices.addPhoneEventListener(this);

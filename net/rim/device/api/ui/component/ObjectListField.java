@@ -11,7 +11,7 @@ public class ObjectListField extends ListField implements DrawStyle, ListFieldCa
    private int _prefWidth;
    private CollatorImpl _collator = new CollatorImpl();
    private static String EMPTY_ROW = "";
-   private static final int ATTRIBUTES_MASK;
+   private static final int ATTRIBUTES_MASK = 71;
 
    public void set(Object[] list) {
       if (list == null) {

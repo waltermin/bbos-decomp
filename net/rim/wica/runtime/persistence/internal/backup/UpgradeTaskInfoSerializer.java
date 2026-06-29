@@ -8,10 +8,10 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class UpgradeTaskInfoSerializer extends AbstractSerializer {
    private static UpgradeTaskInfoSerializer _instance;
-   private static final byte DEPLOYMENT_DESCRIPTOR;
-   private static final byte ACTION;
-   private static final byte EXPIRY_DATE;
-   private static final byte SHOWN_DIALOG;
+   private static final byte DEPLOYMENT_DESCRIPTOR = 0;
+   private static final byte ACTION = 1;
+   private static final byte EXPIRY_DATE = 2;
+   private static final byte SHOWN_DIALOG = 3;
 
    static final UpgradeTaskInfoSerializer getInstance() {
       if (_instance == null) {

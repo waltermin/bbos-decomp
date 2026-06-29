@@ -90,21 +90,21 @@ public final class BrowserConfigProperty extends BrowserProperty {
    private ObjectChoiceField _provisionedBookmarksExpandFolderField;
    private NumericChoiceField _interactivePingPacketTimer;
    private boolean _itPolicyChanged;
-   private static final int HOME_PAGE_OVERRIDDEN;
-   private static final int SHOW_IMAGES_OVERRIDDEN;
-   private static final int SHOW_IMAGE_PLACEHOLDERS_OVERRIDDEN;
-   private static final int CONTENT_MODE_OVERRIDDEN;
-   private static final int EMULATION_MODE_OVERRIDDEN;
-   private static final int JAVASCRIPT_ENABLED_OVERRIDDEN;
-   private static final int JAVASCRIPT_POPUPS_ALLOWED_OVERRIDDEN;
-   private static final int BACKGROUND_IMAGES_OVERRIDDEN;
-   private static final int HTML_TABLES_ENABLED_OVERRIDDEN;
-   private static final int CSS_ENABLED_OVERRIDDEN;
-   private static final int EMBEDDED_MEDIA_ENABLED_OVERRIDDEN;
-   private static final int FOREGROUND_BACKGROUND_COLORS_OVERRIDDEN;
-   private static final int BSM_ENABLED_OVERRIDDEN;
-   private static final int CONFIG_VALUES_EDITABLE_OVERRIDDEN;
-   private static final int STARTUP_PAGE_OVERRIDDEN;
+   private static final int HOME_PAGE_OVERRIDDEN = 0;
+   private static final int SHOW_IMAGES_OVERRIDDEN = 1;
+   private static final int SHOW_IMAGE_PLACEHOLDERS_OVERRIDDEN = 2;
+   private static final int CONTENT_MODE_OVERRIDDEN = 3;
+   private static final int EMULATION_MODE_OVERRIDDEN = 4;
+   private static final int JAVASCRIPT_ENABLED_OVERRIDDEN = 5;
+   private static final int JAVASCRIPT_POPUPS_ALLOWED_OVERRIDDEN = 6;
+   private static final int BACKGROUND_IMAGES_OVERRIDDEN = 7;
+   private static final int HTML_TABLES_ENABLED_OVERRIDDEN = 8;
+   private static final int CSS_ENABLED_OVERRIDDEN = 9;
+   private static final int EMBEDDED_MEDIA_ENABLED_OVERRIDDEN = 10;
+   private static final int FOREGROUND_BACKGROUND_COLORS_OVERRIDDEN = 11;
+   private static final int BSM_ENABLED_OVERRIDDEN = 12;
+   private static final int CONFIG_VALUES_EDITABLE_OVERRIDDEN = 13;
+   private static final int STARTUP_PAGE_OVERRIDDEN = 14;
 
    @Override
    public final String getLabel() {

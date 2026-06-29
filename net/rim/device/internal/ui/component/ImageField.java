@@ -17,7 +17,7 @@ public class ImageField extends Field implements DrawStyle {
    private int _height;
    private int _hSpace;
    private int _vSpace;
-   public static final long STYLE_FONT_HEIGHT;
+   public static final long STYLE_FONT_HEIGHT = 65536L;
    private static final Tag TAG = Tag.create("image");
 
    public ImageField() {

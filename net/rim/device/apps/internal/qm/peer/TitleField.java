@@ -43,9 +43,9 @@ class TitleField extends Field implements RibbonComponent$RibbonComponentChangeL
    private static Hashtable _indicatorParameters = (Hashtable)(new Object());
    private static Hashtable _signalParameters = (Hashtable)(new Object());
    private static ThemeAttributeSet _signalAttributes;
-   private static final int COMPONENT_GAP;
+   private static final int COMPONENT_GAP = 2;
    static EmoticonStringPattern _smileyFacility = Smileys.getSmileyFacility();
-   private static final char PLACEHOLDER;
+   private static final char PLACEHOLDER = '￼';
 
    int drawIcon(Graphics graphics, int x, int y) {
       return 0;

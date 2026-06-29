@@ -17,9 +17,9 @@ class HorizontalIndicatorField extends TextRibbonComponent implements RibbonComp
    private boolean _reportUsed;
    private int _widthUsed;
    private int _heightUsed;
-   private static final int PREFERRED_HORIZONTAL_GAP;
-   protected static final int MINIMUM_HORIZONTAL_GAP;
-   private static final int MAXIMUM_INDICATORS;
+   private static final int PREFERRED_HORIZONTAL_GAP = 4;
+   protected static final int MINIMUM_HORIZONTAL_GAP = 1;
+   private static final int MAXIMUM_INDICATORS = 20;
 
    public HorizontalIndicatorField(IndicatorManagerImpl indicatorManagerImpl) {
       this._indicatorManagerImpl = indicatorManagerImpl;

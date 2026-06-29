@@ -2,10 +2,10 @@ package net.rim.device.api.system;
 
 public class EventInjector$TrackwheelEvent extends EventInjector$Event {
    private boolean _isThumbRollUp;
-   public static final int THUMB_CLICK;
-   public static final int THUMB_UNCLICK;
-   public static final int THUMB_ROLL_UP;
-   public static final int THUMB_ROLL_DOWN;
+   public static final int THUMB_CLICK = 516;
+   public static final int THUMB_UNCLICK = 517;
+   public static final int THUMB_ROLL_UP = 518;
+   public static final int THUMB_ROLL_DOWN = 519;
 
    public EventInjector$TrackwheelEvent(int event, int amount, int status) {
       super(2, event == 518 ? 519 : event, event == 518 ? -amount : amount, status, 0, null, null);

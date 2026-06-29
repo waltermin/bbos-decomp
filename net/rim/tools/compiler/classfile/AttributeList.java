@@ -6,10 +6,10 @@ import net.rim.tools.compiler.io.StructuredInputStream;
 
 public final class AttributeList {
    private Hashtable _table;
-   static final int LIST_CLASSFILE;
-   static final int LIST_FIELD;
-   static final int LIST_METHOD;
-   static final int LIST_CODE;
+   static final int LIST_CLASSFILE = 1;
+   static final int LIST_FIELD = 2;
+   static final int LIST_METHOD = 3;
+   static final int LIST_CODE = 4;
    public static String NAME_CODE = CharacterHelper.intern("Code");
    public static String NAME_DEPRECATED = CharacterHelper.intern("Deprecated");
    public static String NAME_EXCEPTIONS = CharacterHelper.intern("Exceptions");

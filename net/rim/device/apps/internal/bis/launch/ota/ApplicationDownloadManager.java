@@ -14,11 +14,11 @@ public final class ApplicationDownloadManager implements Runnable {
    private ApplicationDownloadListener _downloadListener;
    private HttpListener _httpListener;
    private boolean _aborted;
-   private static final String COD_MIME_TYPE;
-   public static final int DL_STATUS_FAILED;
-   public static final int DL_STATUS_SUCCESS;
-   public static final int DL_STATUS_ABORTED;
-   private static final int DOWNLOAD_PROGRESS_PERCENT;
+   private static final String COD_MIME_TYPE = "application/vnd.rim.cod";
+   public static final int DL_STATUS_FAILED = 0;
+   public static final int DL_STATUS_SUCCESS = 1;
+   public static final int DL_STATUS_ABORTED = 2;
+   private static final int DOWNLOAD_PROGRESS_PERCENT = 1;
    public static int _transactionStatus;
 
    public final synchronized void abort() {

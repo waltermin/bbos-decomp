@@ -38,24 +38,24 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    private KeyStoreTicket _rksTicket;
    private LDAPBrowserOptionStore _optionStore;
    private ApplicationDescriptor _ribbonApplicationDescriptor;
-   private static final long LAST_SERVER;
-   private static final String CONTEXT;
-   private static final String USER_CERT_BINARY;
-   private static final String USER_CERT;
-   private static final String CA_CERT;
-   private static final String CA_CERT_BINARY;
-   private static final String CN;
-   private static final String MAIL;
-   private static final String GIVENNAME;
-   private static final String SN;
-   private static final String OBJECTCLASS;
-   private static final String CA_CERT_PAIR;
-   private static final String CA_CERT_PAIR_BINARY;
-   private static final String HASHED_PREFIX;
-   private static final String HASHED_USER_CERT;
-   private static final String HASHED_USER_CERT_BINARY;
-   private static final String HASHED_CA_CERT;
-   private static final String HASHED_CA_CERT_BINARY;
+   private static final long LAST_SERVER = -2428937988060367461L;
+   private static final String CONTEXT = "X509";
+   private static final String USER_CERT_BINARY = "usercertificate;binary";
+   private static final String USER_CERT = "usercertificate";
+   private static final String CA_CERT = "cacertificate";
+   private static final String CA_CERT_BINARY = "cacertificate;binary";
+   private static final String CN = "cn";
+   private static final String MAIL = "mail";
+   private static final String GIVENNAME = "givenname";
+   private static final String SN = "sn";
+   private static final String OBJECTCLASS = "objectclass";
+   private static final String CA_CERT_PAIR = "crosscertificatepair";
+   private static final String CA_CERT_PAIR_BINARY = "crosscertificatepair;binary";
+   private static final String HASHED_PREFIX = "SHA1-";
+   private static final String HASHED_USER_CERT = "SHA1-usercertificate";
+   private static final String HASHED_USER_CERT_BINARY = "SHA1-usercertificate;binary";
+   private static final String HASHED_CA_CERT = "SHA1-cacertificate";
+   private static final String HASHED_CA_CERT_BINARY = "SHA1-cacertificate;binary";
 
    public X509LDAPBrowserContext() {
       this._ks.addIndex((KeyStoreIndex)(new Object()));
@@ -163,7 +163,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 12: iload 2
       // 13: if_icmpge 87
       // 16: bipush 0
-      // 17: anewarray 386
+      // 17: anewarray 440
       // 1a: astore 4
       // 1c: aload 0
       // 1d: aload 1
@@ -574,7 +574,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 010: new java/lang/Object
       // 013: dup
       // 014: bipush 1
-      // 015: anewarray 2145
+      // 015: anewarray 2199
       // 018: dup
       // 019: bipush 0
       // 01a: aload 2
@@ -611,7 +611,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 050: bipush 8
       // 052: invokestatic net/rim/device/apps/internal/api/crypto/CryptoCommonResources.getString (I)Ljava/lang/String;
       // 055: bipush 1
-      // 056: anewarray 2201
+      // 056: anewarray 2255
       // 059: dup
       // 05a: bipush 0
       // 05b: aload 2
@@ -659,7 +659,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 0b7: iload 4
       // 0b9: ifeq 124
       // 0bc: bipush 0
-      // 0bd: anewarray 2299
+      // 0bd: anewarray 2353
       // 0c0: astore 8
       // 0c2: aload 0
       // 0c3: aload 1

@@ -83,16 +83,16 @@ public class GlobalObject extends RedirectedObject implements Debugger {
    private SimpleDateFormat _dateTimeFormat;
    static long _hash = NativeHash.NativeHash;
    static boolean noLiveConnect;
-   public static final int V_1_0;
-   public static final int V_1_1;
-   public static final int V_1_2;
-   public static final int V_1_3;
-   public static final int V_1_4;
-   public static final int V_1_5;
-   public static final int V_DEFAULT;
-   private static final int InitialOpStackSize;
-   private static final int OpStackIncrement;
-   private static final int MaxOpStack;
+   public static final int V_1_0 = 100;
+   public static final int V_1_1 = 110;
+   public static final int V_1_2 = 120;
+   public static final int V_1_3 = 130;
+   public static final int V_1_4 = 140;
+   public static final int V_1_5 = 150;
+   public static final int V_DEFAULT = 0;
+   private static final int InitialOpStackSize = 100;
+   private static final int OpStackIncrement = 30;
+   private static final int MaxOpStack = 16384;
 
    String dateFormat(long time) {
       if (this._dateFormat == null) {

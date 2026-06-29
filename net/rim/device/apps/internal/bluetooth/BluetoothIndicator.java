@@ -9,8 +9,8 @@ import net.rim.device.internal.ui.IconCollection;
 final class BluetoothIndicator implements Indicator, TestPoint {
    private IconCollection _icons = IconCollection.get("net_rim_bluetooth_banner", 1);
    private BluetoothDeviceManagerImpl _btManager;
-   private static final int INDEX_ON;
-   private static final int INDEX_CONNECTED;
+   private static final int INDEX_ON = 0;
+   private static final int INDEX_CONNECTED = 1;
 
    BluetoothIndicator(BluetoothDeviceManagerImpl btManager) {
       this._btManager = btManager;

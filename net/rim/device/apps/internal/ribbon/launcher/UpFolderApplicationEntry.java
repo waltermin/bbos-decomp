@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.ribbon.launcher;
 import net.rim.device.apps.api.ribbon.ApplicationProperties;
 
 final class UpFolderApplicationEntry extends ApplicationEntry {
-   public static final String BUNDLE_NAME;
+   public static final String BUNDLE_NAME = "net.rim.device.apps.internal.ribbon.launcher.UpFolderApplicationEntry";
    private static FolderEntryPointDescriptor _descriptor;
 
    public static final ApplicationEntry createUpFolder(String parentURL) {

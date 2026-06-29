@@ -19,8 +19,8 @@ import net.rim.device.internal.proxy.Proxy;
 public final class TaskReminderProvider implements ReminderProvider, CollectionListener {
    ReminderManager _reminderManager;
    TaskCollection _taskCollection;
-   public static final long TASK_REMINDER_PROVIDER_ID;
-   private static final int REMINDER_TIME_RADIUS;
+   public static final long TASK_REMINDER_PROVIDER_ID = 3036768504489783563L;
+   private static final int REMINDER_TIME_RADIUS = 30000;
 
    TaskReminderProvider(ReminderManager reminderManager, TaskCollection taskCollection) {
       this._reminderManager = reminderManager;

@@ -24,30 +24,30 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
    private boolean _anyIncomingCerts;
    private boolean _anyPrivateKeysUploaded;
    private String MSCAPI_STRING = "MSCAPI";
-   private static final long KEY_STORE_SYNC_CONVERTER;
-   private static final int LABEL;
-   private static final int CERTIFICATE_TYPE;
-   private static final int CERTIFICATE;
-   private static final int CERT_STATUS;
-   private static final int PRODUCED_AT;
-   private static final int THIS_UPDATE;
-   private static final int NEXT_UPDATE;
-   private static final int REVOCATION_DATE;
-   private static final int REVOCATION_REASON;
-   private static final int PUBLIC_KEY_ENCODING;
-   private static final int PUBLIC_KEY;
-   private static final int PRIVATE_KEY_ENCODING;
-   private static final int PRIVATE_KEY;
-   private static final int SALT;
-   private static final int HASH;
-   private static final int SECURITY_LEVEL;
-   private static final int INDEX;
-   private static final int PRIVATE_KEY_EXISTS;
-   private static final int SYMMETRIC_KEY;
-   private static final int SYMMETRIC_KEY_ENCODING;
-   private static final int PROTOCOL_VERSION;
-   private static final int PASSWORD_VERSION;
-   private static final int CURRENT_PROTOCOL_VERSION;
+   private static final long KEY_STORE_SYNC_CONVERTER = 6494662778746938349L;
+   private static final int LABEL = 1;
+   private static final int CERTIFICATE_TYPE = 4;
+   private static final int CERTIFICATE = 5;
+   private static final int CERT_STATUS = 6;
+   private static final int PRODUCED_AT = 7;
+   private static final int THIS_UPDATE = 8;
+   private static final int NEXT_UPDATE = 9;
+   private static final int REVOCATION_DATE = 10;
+   private static final int REVOCATION_REASON = 11;
+   private static final int PUBLIC_KEY_ENCODING = 12;
+   private static final int PUBLIC_KEY = 13;
+   private static final int PRIVATE_KEY_ENCODING = 18;
+   private static final int PRIVATE_KEY = 19;
+   private static final int SALT = 20;
+   private static final int HASH = 21;
+   private static final int SECURITY_LEVEL = 22;
+   private static final int INDEX = 23;
+   private static final int PRIVATE_KEY_EXISTS = 24;
+   private static final int SYMMETRIC_KEY = 25;
+   private static final int SYMMETRIC_KEY_ENCODING = 26;
+   private static final int PROTOCOL_VERSION = 27;
+   private static final int PASSWORD_VERSION = 29;
+   private static final int CURRENT_PROTOCOL_VERSION = 1;
 
    public KeyStoreSync(String name, SyncableRIMKeyStore keyStore) {
       this._name = name;
@@ -700,7 +700,7 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
       // 0c5: bipush 0
       // 0c6: istore 41
       // 0c8: bipush 0
-      // 0c9: multianewarray 1810 1
+      // 0c9: multianewarray 1859 1
       // 0cd: astore 42
       // 0cf: aload 1
       // 0d0: iload 40
@@ -721,7 +721,7 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
       // 0f0: aload 13
       // 0f2: ifnonnull 0fb
       // 0f5: bipush 0
-      // 0f6: anewarray 1830
+      // 0f6: anewarray 1879
       // 0f9: astore 13
       // 0fb: aload 13
       // 0fd: arraylength
@@ -732,7 +732,7 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
       // 106: iadd
       // 107: invokestatic net/rim/vm/Array.resize (Ljava/lang/Object;I)V
       // 10a: iload 41
-      // 10c: anewarray 1838
+      // 10c: anewarray 1887
       // 10f: astore 44
       // 111: bipush 0
       // 112: istore 45

@@ -13,7 +13,7 @@ public final class VADParameters implements Persistable {
    public int _language = 1;
    public int _location = 2;
    public int _extension = 1;
-   public static final int VAD_PARAM_AUTO;
-   public static final int VAD_PARAM_ON;
-   public static final int VAD_PARAM_OFF;
+   public static final int VAD_PARAM_AUTO = 0;
+   public static final int VAD_PARAM_ON = 1;
+   public static final int VAD_PARAM_OFF = 2;
 }

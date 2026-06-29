@@ -17,7 +17,7 @@ import net.rim.device.internal.ui.container.VerticalIndentFieldManager;
 import net.rim.vm.TraceBack;
 
 public class VendorModuleStackDialog extends PopupDialog {
-   private static final int INDENT_PIXEL_WIDTH;
+   private static final int INDENT_PIXEL_WIDTH = 12;
 
    public VendorModuleStackDialog(Manager manager) {
       this(manager, 0);

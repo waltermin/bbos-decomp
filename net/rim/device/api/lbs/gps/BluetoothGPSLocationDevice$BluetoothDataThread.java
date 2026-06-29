@@ -15,7 +15,7 @@ class BluetoothGPSLocationDevice$BluetoothDataThread extends Thread implements B
    long _parseTime;
    NmeaStream _nmeaStream;
    private final BluetoothGPSLocationDevice this$0;
-   private static final boolean DEBUG_TIMING;
+   private static final boolean DEBUG_TIMING = false;
 
    void appendIncomingData(int length) {
       this._nmeaStream.appendData(this._port, length);

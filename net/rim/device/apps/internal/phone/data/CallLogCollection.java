@@ -17,9 +17,9 @@ public final class CallLogCollection implements PhoneListItems, CollectionListen
    private boolean _outOfSyncWithAddressBook;
    private boolean _initializationBlockedByContentProtection;
    private Object[] _listeners;
-   private static final long GUID;
-   static final int MAX_SIZE;
-   static final int MAX_SIZE_DURING_INIT;
+   private static final long GUID = 5830044475876896627L;
+   static final int MAX_SIZE = 20;
+   static final int MAX_SIZE_DURING_INIT = 30;
    private static CallLogCollection _instance;
    private static CallLogItem _comparisonCallLogItem;
 

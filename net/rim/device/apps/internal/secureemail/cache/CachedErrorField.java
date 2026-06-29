@@ -8,7 +8,7 @@ import net.rim.device.api.ui.container.VerticalFieldManager;
 public class CachedErrorField extends CachedField {
    private String _errorString;
    private boolean _inlineField;
-   private static final int INLINE_SPACER_HEIGHT;
+   private static final int INLINE_SPACER_HEIGHT = 4;
 
    public CachedErrorField(String errorString) {
       this._errorString = errorString;

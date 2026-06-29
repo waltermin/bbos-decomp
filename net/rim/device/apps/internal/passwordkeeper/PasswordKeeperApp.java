@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.UiApplication;
 
 public final class PasswordKeeperApp extends UiApplication {
-   private static final long ID;
+   private static final long ID = -8494186572112499737L;
 
    private PasswordKeeperApp() {
       PasswordKeeper.getInstance();

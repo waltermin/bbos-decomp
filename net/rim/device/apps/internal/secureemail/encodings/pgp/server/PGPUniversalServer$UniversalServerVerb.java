@@ -8,10 +8,10 @@ final class PGPUniversalServer$UniversalServerVerb extends Verb {
    private int _verbType;
    private String _authenticationCookie;
    private final PGPUniversalServer this$0;
-   public static final int TYPE_ENROLL;
-   public static final int TYPE_AUTHENTICATE;
-   public static final int TYPE_DOWNLOAD_KEYS;
-   public static final int TYPE_CLEAR_CACHE;
+   public static final int TYPE_ENROLL = 0;
+   public static final int TYPE_AUTHENTICATE = 1;
+   public static final int TYPE_DOWNLOAD_KEYS = 2;
+   public static final int TYPE_CLEAR_CACHE = 3;
 
    public PGPUniversalServer$UniversalServerVerb(
       PGPUniversalServer _1, int verbType, int menuOrdering, ResourceBundleFamily rb, int rbKey, String authenticationCookie

@@ -11,7 +11,7 @@ class FontPersist implements Persistable {
    public int _fontEffects;
    public int _fontAntialiasing;
    public int[] _fontTransform;
-   private static final long DEFAULT_FONT_KEY;
+   private static final long DEFAULT_FONT_KEY = 3057605627993471691L;
 
    public FontPersist(Font aFont) {
       this._fontFamily = aFont.getFontFamily().getName();

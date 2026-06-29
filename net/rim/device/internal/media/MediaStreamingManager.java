@@ -5,9 +5,9 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.util.RingBuffer;
 
 public class MediaStreamingManager {
-   static final long GUID;
-   public static final int NO_SESSION;
-   public static final int CODEC_VIDEO;
+   static final long GUID = 8461041122205944746L;
+   public static final int NO_SESSION = -1;
+   public static final int CODEC_VIDEO = 1000;
 
    MediaStreamingManager() {
    }

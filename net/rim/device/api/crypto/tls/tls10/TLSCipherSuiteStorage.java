@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class TLSCipherSuiteStorage implements Persistable {
    private int[] _items = TLSCipherSuites.getDefaultCipherSuites();
-   private static final long ID;
+   private static final long ID = -464406423737186631L;
    private static PersistentObject _persist;
 
    private TLSCipherSuiteStorage() {

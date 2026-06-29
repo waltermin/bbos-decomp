@@ -28,11 +28,11 @@ final class PhoneListManager extends VerticalFieldManager implements GlobalEvent
    private LabelField _hintField = (LabelField)(new Object(PhoneResources.getString(6300), 1152921504606846980L));
    private LabelField _emptyAddressField = (LabelField)(new Object(PhoneResources.getString(6306), 1152921504606846980L));
    private Field _currentList;
-   static final int NO_VIEW;
-   static final int PHONE_LIST_VIEW;
-   static final int PHONE_ADDRESS_VIEW;
-   static final int EMPTY_ADDRESS_VIEW;
-   static final int HINT_VIEW;
+   static final int NO_VIEW = 0;
+   static final int PHONE_LIST_VIEW = 1;
+   static final int PHONE_ADDRESS_VIEW = 2;
+   static final int EMPTY_ADDRESS_VIEW = 3;
+   static final int HINT_VIEW = 4;
 
    PhoneListManager(PhoneAppScreen phoneAppScreen, KeywordFilteredListFinder finder, Field source, UiApplication app) {
       super(0);

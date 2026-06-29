@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.transmission.TransmissionService;
 
 public class OTASlowSyncListener extends OTABaseListener {
-   private static final long ID;
+   private static final long ID = -6969422378309320280L;
    private static OTASlowSyncListener _instance;
 
    private OTASlowSyncListener() {

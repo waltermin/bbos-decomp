@@ -33,17 +33,17 @@ final class GlobalScreenManager implements GlobalEventListener {
    private UiEngineImpl _foregroundEngine;
    private Stack _backingStoreStack = new Stack();
    private Stack _transparentBackingStoreStack = new Stack();
-   public static final long GUID_GLOBAL_SCREEN;
-   static final long GUID_LOCAL_WRAPPED_SCREEN;
-   static final long GUID_LOCAL_WRAPPED_SCREENS_SET;
-   public static final int EVENT_DISPLAYED;
-   public static final int EVENT_DISMISSED;
-   public static final int EVENT_REPAINT;
-   private static final long REGISTRY_NAME;
+   public static final long GUID_GLOBAL_SCREEN = 5961289116197897667L;
+   static final long GUID_LOCAL_WRAPPED_SCREEN = 1286649819098130486L;
+   static final long GUID_LOCAL_WRAPPED_SCREENS_SET = 3160755958169834551L;
+   public static final int EVENT_DISPLAYED = 1;
+   public static final int EVENT_DISMISSED = 2;
+   public static final int EVENT_REPAINT = 3;
+   private static final long REGISTRY_NAME = -6693207255987483125L;
    private static GlobalScreenManager _statusManager;
-   private static final int PAINT_CONTROL_FOREGROUND;
-   private static final int PAINT_CONTROL_QUEUE;
-   private static final int PAINT_CONTROL_DISMISS;
+   private static final int PAINT_CONTROL_FOREGROUND = 0;
+   private static final int PAINT_CONTROL_QUEUE = 1;
+   private static final int PAINT_CONTROL_DISMISS = 2;
 
    private GlobalScreenManager() {
       this._statusQueue = new Vector();

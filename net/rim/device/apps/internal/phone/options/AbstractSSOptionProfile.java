@@ -6,8 +6,8 @@ import net.rim.device.apps.api.ui.CommonResources;
 
 class AbstractSSOptionProfile implements SSOptionProfile {
    protected String _profileName;
-   protected static final int PROFILE_NAME_PAINT_OFFSET;
-   protected static final int HSPACE;
+   protected static final int PROFILE_NAME_PAINT_OFFSET = 0;
+   protected static final int HSPACE = 3;
 
    protected AbstractSSOptionProfile(String profileName) {
       this._profileName = profileName;

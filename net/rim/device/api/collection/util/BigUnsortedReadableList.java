@@ -14,7 +14,7 @@ public class BigUnsortedReadableList implements ChainableCollection, LoadableCol
    protected Object _lastInsertedUpdated;
    protected int _lastInsertedUpdatedIndex;
    protected CollectionListenerManager _listenerManager = new CollectionListenerManager();
-   private static final int MINIMUM_CAPACITY;
+   private static final int MINIMUM_CAPACITY = 64;
 
    @Override
    public void loadFrom(Object collection) {

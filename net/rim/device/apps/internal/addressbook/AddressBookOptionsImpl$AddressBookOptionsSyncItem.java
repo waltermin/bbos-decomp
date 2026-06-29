@@ -6,9 +6,9 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.util.DataBuffer;
 
 final class AddressBookOptionsImpl$AddressBookOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int DATA_LENGTH;
-   private static final int DB_VERSION;
+   private static final int MIN_DATA_LENGTH = 6;
+   private static final int DATA_LENGTH = 11;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

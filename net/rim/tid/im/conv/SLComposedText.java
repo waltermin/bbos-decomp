@@ -29,9 +29,9 @@ public class SLComposedText {
    private SLVariants _editModeVariant;
    private int _editModeCaretPos = -1;
    private byte _lookupStyle;
-   public static final byte TYPE_GENERAL;
-   public static final byte TYPE_CHINESE;
-   public static final byte TYPE_JAPANESE;
+   public static final byte TYPE_GENERAL = 1;
+   public static final byte TYPE_CHINESE = 2;
+   public static final byte TYPE_JAPANESE = 3;
 
    public SLComposedText(int hCount, int vCount, int type) {
       this._type = type;

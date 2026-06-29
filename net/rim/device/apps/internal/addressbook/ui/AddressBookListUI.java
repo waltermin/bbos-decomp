@@ -65,12 +65,12 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
    private PersistentObject _persistentFilterObject;
    private FilteredByCategoriesTitleField _titleField;
    private long _lastBackspaceTime;
-   private static final int APPLICATION_MODE;
-   private static final int SELECTION_MODE;
-   private static final long LAST_ADDRESS_USED;
-   private static final long PERSISTED_ADDRESS_BOOK_FILTER;
-   static final long OPEN_GAL_RESULTS_GUID;
-   private static final long BACKSPACE_DELETE_GUARD;
+   private static final int APPLICATION_MODE = 0;
+   private static final int SELECTION_MODE = 1;
+   private static final long LAST_ADDRESS_USED = 6628691903329633640L;
+   private static final long PERSISTED_ADDRESS_BOOK_FILTER = 1739655200517691992L;
+   static final long OPEN_GAL_RESULTS_GUID = -6376745458772725637L;
+   private static final long BACKSPACE_DELETE_GUARD = 300L;
 
    AddressBookListUI(String title, Verb[] useOnceVerbs, Object initialContext) {
       super(

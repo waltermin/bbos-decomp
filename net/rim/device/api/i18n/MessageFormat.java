@@ -13,7 +13,7 @@ public class MessageFormat extends Format {
    private int maxOffset = -1;
    private static final String[] typeList = new String[]{"", "number", "date", "time", "choice"};
    private static final String[] dateModifierList = new String[]{"", "short", "medium", "long", "full"};
-   private static final int MAX_ARGUMENTS;
+   private static final int MAX_ARGUMENTS = 15;
 
    public MessageFormat(String pattern) {
       this.applyPattern(pattern);

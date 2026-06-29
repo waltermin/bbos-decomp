@@ -23,7 +23,7 @@ public final class ServiceRouting {
    private Object[] _listeners;
    private Proxy _proxy = Proxy.getInstance();
    private ServiceRouting$RFServiceTracker _rfServiceTracker = new ServiceRouting$RFServiceTracker(null);
-   private static final long GUID;
+   private static final long GUID = -4262592966653162609L;
    private static ServiceRouting _instance;
 
    private ServiceRouting() {

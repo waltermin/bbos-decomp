@@ -28,9 +28,9 @@ class MIDletMain extends MIDletApplication implements MIDletInterface, CommonRes
    private boolean _foregroundable = false;
    private Hashtable _workerThreadMap = new Hashtable();
    private Vector _alarmThreadCache = new Vector();
-   private static final long MIDLETSUITEMAP_ID;
+   private static final long MIDLETSUITEMAP_ID = -1258284814843904180L;
    private static ResourceBundle _resources = ResourceBundle.getBundle(-6812884907508133143L, "net.rim.device.internal.resource.Common");
-   private static final long MIDLET_ID_MASK;
+   private static final long MIDLET_ID_MASK = 6179825861491949568L;
    private static final Object dummy = new Long(8205425079589422083L);
 
    private static MIDletMain getInstance(String midletName, boolean create) {

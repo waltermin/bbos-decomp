@@ -28,9 +28,9 @@ import net.rim.device.internal.ui.Edit$BidiLineRuns;
 import net.rim.device.internal.ui.RichText;
 
 final class AttachmentViewerFactory {
-   static final int MIN_ASSGFONTSIZE;
-   static final int MIN_FONT_SIZE_UTYPE;
-   private static final byte FONTSIZE_REGIONS;
+   static final int MIN_ASSGFONTSIZE = 7;
+   static final int MIN_FONT_SIZE_UTYPE = 3;
+   private static final byte FONTSIZE_REGIONS = 6;
    private static final int SCALED_HEIGHT_PORTRAIT = (int)(DocViewGUIInternalConstants.SCREEN_WIDTH * 4622382067542392832L / 4620974692658839552L);
    private static IntHashtable _paramsHash;
    private static final int[] AUDIO_CODECS = new int[]{11, 3, 7, -805044219, 1718183726, 10, -804651007, 51, -805043264, 944130375, 942393, 16187408};

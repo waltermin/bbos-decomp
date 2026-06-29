@@ -11,8 +11,8 @@ public class AnimationSampler implements MediaService, MediaListener {
    protected EventEngine _engine;
    protected AnimationModel _media;
    protected MediaServices _services;
-   public static final String ID;
-   protected static final int SAMPLE_EVENT;
+   public static final String ID = "Sampler";
+   protected static final int SAMPLE_EVENT = 112035382;
 
    protected boolean sampleAndSchedule() {
       boolean uiUpdate = this.sample();

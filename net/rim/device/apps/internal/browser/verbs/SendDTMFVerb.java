@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class SendDTMFVerb extends BrowserVerb {
    private byte[] _tone;
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 622;
 
    public SendDTMFVerb(byte[] tone) {
       super(341248);

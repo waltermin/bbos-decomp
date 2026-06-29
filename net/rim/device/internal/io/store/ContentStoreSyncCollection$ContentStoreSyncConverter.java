@@ -17,12 +17,12 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
    ContentStoreImpl _store;
    ContentStoreDatabase _database;
    private final ContentStoreSyncCollection this$0;
-   private static final int FIELD_FILENAME;
-   private static final int FIELD_FOLDER;
-   private static final int FIELD_ATTRIBUTES;
-   private static final int FIELD_CONTENT_TYPE;
-   private static final int FIELD_EXT_ATTRIBUTES;
-   private static final int FIELD_CONTENT;
+   private static final int FIELD_FILENAME = 1;
+   private static final int FIELD_FOLDER = 2;
+   private static final int FIELD_ATTRIBUTES = 3;
+   private static final int FIELD_CONTENT_TYPE = 5;
+   private static final int FIELD_EXT_ATTRIBUTES = 6;
+   private static final int FIELD_CONTENT = 7;
 
    ContentStoreSyncCollection$ContentStoreSyncConverter(ContentStoreSyncCollection _1) {
       this.this$0 = _1;

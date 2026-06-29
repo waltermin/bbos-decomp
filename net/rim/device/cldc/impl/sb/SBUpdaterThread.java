@@ -19,10 +19,10 @@ final class SBUpdaterThread extends Thread {
    private Datagram _dg;
    private ServiceRecord[] _serviceRecordOverride = null;
    private ServiceRecord _defaultServiceRecord = null;
-   private static final String SERVICE_BOOK_CID;
-   private static final int DUP_SECURE_SERVICE;
-   private static final int ERROR_UNABLE_OPEN_REPLY_CONNECTION;
-   private static final int RECEIVED_SECURE_SERVICE_BOOK_PACKET;
+   private static final String SERVICE_BOOK_CID = "SERVICE_BOOK";
+   private static final int DUP_SECURE_SERVICE = 1146311525;
+   private static final int ERROR_UNABLE_OPEN_REPLY_CONNECTION = 1163220050;
+   private static final int RECEIVED_SECURE_SERVICE_BOOK_PACKET = 1381192528;
 
    public SBUpdaterThread() {
       this._defaultServiceRecord = (ServiceRecord)(new Object(3));

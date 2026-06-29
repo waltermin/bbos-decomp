@@ -5,12 +5,12 @@ import net.rim.blackberry.api.mail.Message;
 public class MessageEvent extends MailEvent {
    private Message _msg;
    private int _type;
-   public static final int UPDATED;
-   public static final int OPENED;
-   public static final int CLOSED;
-   public static final int NEW;
-   public static final int FORWARD;
-   public static final int REPLY;
+   public static final int UPDATED = 1;
+   public static final int OPENED = 2;
+   public static final int CLOSED = 3;
+   public static final int NEW = 4;
+   public static final int FORWARD = 5;
+   public static final int REPLY = 6;
 
    public MessageEvent(int type, Message msg) {
       super(msg);

@@ -5,9 +5,9 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.utility.general.Copyable;
 
 public class MemoVerbs {
-   public static final int VERB_NEW_MEMO;
-   public static final int VERB_EDIT_MEMO;
-   public static final int VERB_VIEW_MEMO;
+   public static final int VERB_NEW_MEMO = 0;
+   public static final int VERB_EDIT_MEMO = 1;
+   public static final int VERB_VIEW_MEMO = 2;
 
    MemoVerbs() {
    }

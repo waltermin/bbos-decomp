@@ -24,15 +24,15 @@ import net.rim.vm.Array;
 public class MessageSearchable implements Searchable {
    private MessageSearchableSubItem[] _messageSearchableSubItems;
    private MessageSearchResultCollection _results;
-   static final long ID;
-   static final long EMAIL;
-   static final long PIN;
-   static final long SMS;
-   static final long PHONE;
-   static final long VOICEMAIL;
-   static final long MMS;
-   static final long DIRECT_CONNECT;
-   private static final long APPREG_ID;
+   static final long ID = -6766254879837386275L;
+   static final long EMAIL = 4210919951396674101L;
+   static final long PIN = 8088495187596132904L;
+   static final long SMS = 7776309681094264201L;
+   static final long PHONE = 5783489986899586136L;
+   static final long VOICEMAIL = -2814112899726160614L;
+   static final long MMS = 8374061216902157526L;
+   static final long DIRECT_CONNECT = -6816112214670730480L;
+   private static final long APPREG_ID = -2407626174746969601L;
    private static MessageSearchable _instance;
 
    public synchronized void addSubItem(MessageSearchableSubItem subItem) {

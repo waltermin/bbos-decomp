@@ -49,7 +49,7 @@ final class MemoModelImpl
    private PersistableRIMModel _subjectModel;
    private Object[] _fields = new Object[0];
    int _uid;
-   private static final int MAX_MEMO_NOTES_LENGTH;
+   private static final int MAX_MEMO_NOTES_LENGTH = 8192;
    private static ContextObjectWR _memoSyncContextWR = (ContextObjectWR)(new Object(8, 35, 19));
    private static final byte[] MEMO_ID = new byte[]{109};
    private static Recognizer _titleModelRecognizer = RecognizerRepository.getRecognizers(-4904857078378172834L);

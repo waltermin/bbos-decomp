@@ -3,7 +3,7 @@ package net.rim.device.api.streaming;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class StreamingFactory {
-   private static final long ID;
+   private static final long ID = -7849240269607795087L;
 
    private StreamingFactory() {
    }

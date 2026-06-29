@@ -11,7 +11,7 @@ public class DatagramBase extends DataBuffer implements Datagram, IOProperties {
    protected int _validFlags;
    protected int _datagramId;
    protected DatagramStatusListener _listener;
-   public static final int DG_NULL_ID;
+   public static final int DG_NULL_ID = 0;
 
    public void copy(DatagramBase dgram) {
       this.setData(dgram.getData(), dgram.getOffset(), dgram.getLength());

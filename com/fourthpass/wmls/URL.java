@@ -7,12 +7,12 @@ public final class URL {
    public String _anchor;
    public int _port = 80;
    public int _hashCode = -1;
-   private static final int NO_STATE;
-   private static final int PROTOCOL;
-   private static final int HOST;
-   private static final int PORT;
-   private static final int FILE;
-   private static final int ANCHOR;
+   private static final int NO_STATE = 0;
+   private static final int PROTOCOL = 1;
+   private static final int HOST = 2;
+   private static final int PORT = 3;
+   private static final int FILE = 4;
+   private static final int ANCHOR = 5;
 
    public URL(String protocol, String host, String file, String anchor) {
       this();

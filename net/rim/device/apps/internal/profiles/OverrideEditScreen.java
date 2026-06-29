@@ -29,7 +29,7 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
    private Verb _saveVerb;
    private ContextObject _context;
    private Verb _closeVerb = (Verb)(new Object(0, this));
-   static final int ACTIVE_PROFILE_UID;
+   static final int ACTIVE_PROFILE_UID = -1;
 
    OverrideEditScreen(Override override, boolean newOverride) {
       super(0);

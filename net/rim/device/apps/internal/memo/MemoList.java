@@ -30,8 +30,8 @@ final class MemoList extends KeywordFilteredScreen implements ListFieldCallback 
    private FilteredByCategoriesTitleField _titleField;
    private Object _cachedContext;
    private long _lastBackspaceTime;
-   private static final long PERSISTED_MEMO_FILTER;
-   private static final long BACKSPACE_DELETE_GUARD;
+   private static final long PERSISTED_MEMO_FILTER = 3876048698248748016L;
+   private static final long BACKSPACE_DELETE_GUARD = 300L;
 
    MemoList() {
       super(null, null, null);

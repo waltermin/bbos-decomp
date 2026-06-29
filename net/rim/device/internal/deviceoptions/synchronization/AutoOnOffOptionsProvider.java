@@ -7,13 +7,13 @@ import net.rim.device.internal.deviceoptions.OptionsProviderChangeListener;
 import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 
 final class AutoOnOffOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int WEEKDAY_ON_TAG;
-   private static final int WEEKDAY_OFF_TAG;
-   private static final int WEEKDAY_ENABLE_TAG;
-   private static final int WEEKEND_ON_TAG;
-   private static final int WEEKEND_OFF_TAG;
-   private static final int WEEKEND_ENABLE_TAG;
+   private static final int UID = -1243804307;
+   private static final int WEEKDAY_ON_TAG = 1;
+   private static final int WEEKDAY_OFF_TAG = 2;
+   private static final int WEEKDAY_ENABLE_TAG = 3;
+   private static final int WEEKEND_ON_TAG = 4;
+   private static final int WEEKEND_OFF_TAG = 5;
+   private static final int WEEKEND_ENABLE_TAG = 6;
 
    AutoOnOffOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

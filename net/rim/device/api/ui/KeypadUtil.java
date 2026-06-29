@@ -6,8 +6,8 @@ import net.rim.tid.im.layout.SLKeyLayout;
 import net.rim.tid.im.layout.UILocaleKeyLayout;
 
 public class KeypadUtil {
-   public static final int MODE_UI_CURRENT_LOCALE;
-   public static final int MODE_EN_LOCALE;
+   public static final int MODE_UI_CURRENT_LOCALE = 0;
+   public static final int MODE_EN_LOCALE = 1;
 
    private KeypadUtil() {
    }

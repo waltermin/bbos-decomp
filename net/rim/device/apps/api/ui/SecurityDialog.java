@@ -32,7 +32,7 @@ import net.rim.tid.util.Utils;
 import net.rim.vm.Array;
 
 public final class SecurityDialog {
-   private static final int PASSWORD_INVALID;
+   private static final int PASSWORD_INVALID = -1;
    private static Security _security = Security.getInstance();
    private static SimplePasswordDialog _passwordDialog = (SimplePasswordDialog)(new Object(null, 1, 32, false, 0));
    private static UserAuthenticatorPasswordDialog _userAuthenticatorPasswordDialog;

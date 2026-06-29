@@ -29,12 +29,12 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
    private Hashtable _playerListeners = (Hashtable)(new Object());
    private Application _app;
    private static Integer NO_FONT = (Integer)(new Object(-1));
-   public static final long ME_EVENTLOGGER_APPLICATION_REGISTRY_KEY;
-   public static final long ME_LAUNCHER_APPLICATION_REGISTRY_KEY;
-   private static final int LOW_VOLUME;
-   private static final int MEDIUM_VOLUME;
-   private static final int POLY_LOW_VOLUME;
-   private static final int POLY_MEDIUM_VOLUME;
+   public static final long ME_EVENTLOGGER_APPLICATION_REGISTRY_KEY = -6921419827463678505L;
+   public static final long ME_LAUNCHER_APPLICATION_REGISTRY_KEY = -9101880657807833196L;
+   private static final int LOW_VOLUME = 33;
+   private static final int MEDIUM_VOLUME = 66;
+   private static final int POLY_LOW_VOLUME = 65;
+   private static final int POLY_MEDIUM_VOLUME = 85;
    private static boolean _isMIDISupported = Alert.isMIDISupported();
    private static String UTF_16 = "UTF-16";
    private static String UTF_16BE = "UTF-16BE";

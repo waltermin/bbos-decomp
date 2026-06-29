@@ -24,7 +24,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
    private boolean _shutdown;
    private boolean _started;
    private long _lastPacketTime;
-   private static final int MAX_SEND_QUEUE_SIZE;
+   private static final int MAX_SEND_QUEUE_SIZE = 7;
 
    public final long getLastPacketTime() {
       return this._lastPacketTime;

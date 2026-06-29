@@ -19,8 +19,8 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
    private int FILE_NAME = 1;
    private int FILE_LAST_MODIFIED = 2;
    private int END_METADATA = 3;
-   public static final long ID;
-   public static final String BASE_DIR;
+   public static final long ID = -4900565683240895068L;
+   public static final String BASE_DIR = "file:///SDCard/blackberry/certificates/";
 
    private FileSystemContentTypeRegistry() {
       Proxy p = Proxy.getInstance();

@@ -28,9 +28,9 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
    private int _timer;
    private SrpConnectionManager _connectionManager;
    private Transport$SrpConnectionThread _eventThread;
-   static final long ID;
-   private static final String SRP_STR;
-   private static final long TRANS_ID;
+   static final long ID = 5159979649545707334L;
+   private static final String SRP_STR = "net.rim.srp";
+   private static final long TRANS_ID = -3101332663697609619L;
 
    final DatagramConnectionBase getSubConnection() {
       return super._subConnection;

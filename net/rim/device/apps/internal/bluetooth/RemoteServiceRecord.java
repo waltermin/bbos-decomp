@@ -10,7 +10,7 @@ import net.rim.vm.Persistable;
 public final class RemoteServiceRecord extends ServiceRecordImpl implements Persistable {
    private boolean _attributesUpdated;
    private int _handle;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public RemoteServiceRecord(byte[] address, byte[] attributeListData) {
       super._address = address;

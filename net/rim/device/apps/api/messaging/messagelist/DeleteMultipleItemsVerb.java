@@ -18,16 +18,16 @@ public final class DeleteMultipleItemsVerb extends Verb {
    private RIMModel[] _selectedItems;
    private Object _target;
    private Object _context;
-   public static final int DELETE_MULTISELECTION;
-   public static final int DELETE_PRIOR;
-   private static final int ALL;
-   private static final int ALL_SAVED;
-   private static final int ALL_SAVED_TOO;
+   public static final int DELETE_MULTISELECTION = 0;
+   public static final int DELETE_PRIOR = 1;
+   private static final int ALL = 0;
+   private static final int ALL_SAVED = 1;
+   private static final int ALL_SAVED_TOO = 2;
    private static final int[][][] PROMPT_TABLE = new int[][][]{
       (int[][])({3001, 3006, 3009, -804651005, 3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338}),
       (int[][])({3002, 3007, 3010, 1866989824, 727916, -1569758719, 1929445476, 996951338, 1929445514, 996951338, 7618954, -1910540799})
    };
-   private static final int SELECTED_ITEM_DELETE_OPTIMIZATION_THRESHOLD;
+   private static final int SELECTED_ITEM_DELETE_OPTIMIZATION_THRESHOLD = 64;
 
    public DeleteMultipleItemsVerb(int ordering, int type, int menuResId) {
       super(ordering, CommonResources.getResourceBundle(), menuResId);

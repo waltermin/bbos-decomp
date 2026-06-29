@@ -12,7 +12,7 @@ public final class UrlEntryField extends ComboField {
    private VisitedURLStore _urlStore;
    private int[] _indices = new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, -804651007, 5, -804651005, 5, 6, 7};
    private String _firstEntryText;
-   public static final int FIELD_CHANGE_ACTION;
+   public static final int FIELD_CHANGE_ACTION = 132388;
 
    public UrlEntryField(Font font) {
       ListField listField = (ListField)(new Object());

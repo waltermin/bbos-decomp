@@ -1,7 +1,7 @@
 package net.rim.device.api.crypto;
 
 final class TestEngine implements SymmetricKeyEncryptorEngine, SymmetricKeyDecryptorEngine {
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public TestEngine() {
    }

@@ -17,7 +17,7 @@ public final class Universal_Writer extends StreamWriter {
    private int[] _conversionDataOffset;
    private boolean _noConversionData;
    private int _boundaryChar;
-   private static final int BUF_SIZE;
+   private static final int BUF_SIZE = 1024;
 
    @Override
    public final Writer open(OutputStream out, String enc) {

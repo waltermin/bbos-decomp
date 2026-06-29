@@ -12,7 +12,7 @@ public class UiApplication extends Application implements UiEngine {
    private int _style;
    private int _stylusX = -1;
    private int _stylusY = -1;
-   public static final int STYLE_NO_SCREEN_CAPABLE;
+   public static final int STYLE_NO_SCREEN_CAPABLE = 1;
 
    public final void publicProcessMessage(Message message) {
       this._uiEngine.processMessage(this.getAppEventLock(), message, false);

@@ -12,18 +12,18 @@ import net.rim.tid.util.Utils;
 import net.rim.vm.WeakReference;
 
 public class BasicEditField extends TextField {
-   public static final long FILTER_DEFAULT;
-   public static final long FILTER_EMAIL;
-   public static final long FILTER_NUMERIC;
-   public static final long FILTER_REAL_NUMERIC;
-   public static final long FILTER_UPPERCASE;
-   public static final long FILTER_LOWERCASE;
-   public static final long FILTER_HEXADECIMAL;
-   public static final long FILTER_INTEGER;
-   public static final long FILTER_PHONE;
-   public static final long FILTER_URL;
-   public static final long FILTER_PIN_ADDRESS;
-   public static final long FILTER_FILENAME;
+   public static final long FILTER_DEFAULT = 0L;
+   public static final long FILTER_EMAIL = 134217728L;
+   public static final long FILTER_NUMERIC = 16777216L;
+   public static final long FILTER_REAL_NUMERIC = 251658240L;
+   public static final long FILTER_UPPERCASE = 33554432L;
+   public static final long FILTER_LOWERCASE = 50331648L;
+   public static final long FILTER_HEXADECIMAL = 67108864L;
+   public static final long FILTER_INTEGER = 83886080L;
+   public static final long FILTER_PHONE = 100663296L;
+   public static final long FILTER_URL = 117440512L;
+   public static final long FILTER_PIN_ADDRESS = 150994944L;
+   public static final long FILTER_FILENAME = 268435456L;
    private static WeakReference _changeInputLanguageItem = new WeakReference(null);
 
    public BasicEditField() {

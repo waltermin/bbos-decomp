@@ -3,9 +3,9 @@ package javax.microedition.media.protocol;
 import javax.microedition.media.Controllable;
 
 public interface SourceStream extends Controllable {
-   int NOT_SEEKABLE;
-   int SEEKABLE_TO_START;
-   int RANDOM_ACCESSIBLE;
+   int NOT_SEEKABLE = 0;
+   int SEEKABLE_TO_START = 1;
+   int RANDOM_ACCESSIBLE = 2;
 
    ContentDescriptor getContentDescriptor();
 

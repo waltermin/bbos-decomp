@@ -4,9 +4,9 @@ import net.rim.blackberry.api.pdap.BlackBerryMemo;
 
 public final class MemoArguments extends ApplicationArguments {
    private BlackBerryMemo _memo;
-   public static final String ARG_NEW;
-   public static final String ARG_VIEW;
-   public static final String ARG_EDIT;
+   public static final String ARG_NEW = "new";
+   public static final String ARG_VIEW = "view";
+   public static final String ARG_EDIT = "edit";
 
    public MemoArguments() {
    }

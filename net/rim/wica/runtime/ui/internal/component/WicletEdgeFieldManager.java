@@ -12,7 +12,7 @@ final class WicletEdgeFieldManager extends Manager implements View {
    private ScreenContext _context;
    private UIContainer _model;
    private byte _visibility;
-   private static final int PADDING;
+   private static final int PADDING = 1;
 
    WicletEdgeFieldManager(ScreenContext context, UIContainer model, int row, long style) {
       super(1155173304420532224L);

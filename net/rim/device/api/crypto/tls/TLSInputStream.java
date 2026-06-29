@@ -7,8 +7,8 @@ public final class TLSInputStream extends InputStream {
    private RecordProtocol _recordProtocol;
    private DataBuffer _buffer;
    private boolean _isClosed;
-   private static final byte ALERT;
-   private static final byte APPLICATION_DATA;
+   private static final byte ALERT = 21;
+   private static final byte APPLICATION_DATA = 23;
 
    public TLSInputStream(RecordProtocol recordProtocol) {
       if (recordProtocol == null) {

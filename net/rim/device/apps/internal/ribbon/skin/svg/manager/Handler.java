@@ -27,18 +27,18 @@ class Handler {
    protected char[] BLANK = new char[0];
    SimpleDateFormat _sameDateFormat;
    SimpleDateFormat _laterDateFormat;
-   private static final String TIME_FORMAT_RESOURCE_ID;
-   private static final String PARAMETER_ID;
-   private static final String PARAMETER_SHOW_NAME;
-   static final String PARAMETER_TYPE;
-   private static final String PARAMETER_ONLY_NEW;
-   private static final String ENTRY_DESCRIPTION;
-   private static final String ROUND_BRACKETS;
-   protected static final String PHONE;
-   protected static final String CALENDAR;
-   protected static final String EMAIL;
-   protected static final String SMS;
-   protected static final String HOTSPOT;
+   private static final String TIME_FORMAT_RESOURCE_ID = "TimeFormatResourceId";
+   private static final String PARAMETER_ID = "id";
+   private static final String PARAMETER_SHOW_NAME = "showname";
+   static final String PARAMETER_TYPE = "type";
+   private static final String PARAMETER_ONLY_NEW = "onlyNew";
+   private static final String ENTRY_DESCRIPTION = "EntryDescription";
+   private static final String ROUND_BRACKETS = "roundBrackets";
+   protected static final String PHONE = "missedcall";
+   protected static final String CALENDAR = "calendar";
+   protected static final String EMAIL = "messages";
+   protected static final String SMS = "sms";
+   protected static final String HOTSPOT = "hotspot";
 
    public void update(boolean _1) {
       throw null;

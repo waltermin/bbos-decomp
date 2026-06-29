@@ -1,10 +1,10 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface PathNode extends VisualNode {
-   int END_POINT;
-   int QUADRATIC_CONTROL_POINT;
-   int CUBIC_CONTROL_POINT;
-   int TYPE;
+   int END_POINT = 0;
+   int QUADRATIC_CONTROL_POINT = 1;
+   int CUBIC_CONTROL_POINT = 2;
+   int TYPE = 40;
 
    int[] getXCoordinates();
 

@@ -33,9 +33,9 @@ public class SortedCollection
    protected boolean _useBigVector = false;
    protected BigVector _messagesAsBigVector;
    protected Object[] _messagesAsArray;
-   private static final boolean CHECK_ORDER_ON_INIT;
-   protected static final int THRESHOLD_AT_WHICH_TO_PROMOTE_TO_BIG_VECTOR;
-   protected static final int THRESHOLD_AT_WHICH_TO_DEMOTE_TO_OBJECT_ARRAY;
+   private static final boolean CHECK_ORDER_ON_INIT = true;
+   protected static final int THRESHOLD_AT_WHICH_TO_PROMOTE_TO_BIG_VECTOR = 64;
+   protected static final int THRESHOLD_AT_WHICH_TO_DEMOTE_TO_OBJECT_ARRAY = 56;
 
    @Override
    public boolean initialize(long applicationFamily, long folderId, LongKeyProviderAdaptor longKeyProviderAdaptor, Object context) {

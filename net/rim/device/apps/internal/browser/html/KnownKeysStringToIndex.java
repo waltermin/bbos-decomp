@@ -9,15 +9,15 @@ class KnownKeysStringToIndex {
    private Vector _v = (Vector)(new Object());
    private int _index = 512;
    private ToIntHashtable _h = (ToIntHashtable)(new Object());
-   static final int ID_INDEX;
-   static final int NAME_INDEX;
-   public static final int EMPTY_STR;
-   private static final int NULLINDEX;
-   private static final int TAGS_INDEX_START;
-   private static final int TAGS_INDEX_END;
-   public static final int ATTRIBUTES_INDEX_START;
-   public static final int ATTRIBUTES_INDEX_END;
-   private static final int VALUES_START;
+   static final int ID_INDEX = -4;
+   static final int NAME_INDEX = -3;
+   public static final int EMPTY_STR = -2;
+   private static final int NULLINDEX = -1;
+   private static final int TAGS_INDEX_START = 0;
+   private static final int TAGS_INDEX_END = 255;
+   public static final int ATTRIBUTES_INDEX_START = 256;
+   public static final int ATTRIBUTES_INDEX_END = 511;
+   private static final int VALUES_START = 512;
    static String NAME_STR = "NAME";
    static String ID_STR = "ID";
 

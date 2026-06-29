@@ -10,7 +10,7 @@ public final class CMSCompressedDataOutputStream extends CMSOutputStream {
    private ByteArrayOutputStream _bufferOut = (ByteArrayOutputStream)(new Object());
    private OutputStream _compressedOut;
    private OID _compressionType;
-   public static final int ZLIB_COMPRESSION;
+   public static final int ZLIB_COMPRESSION = 1;
 
    public CMSCompressedDataOutputStream(OutputStream out, int contentType, boolean outer) {
       this(out, contentType, 1, outer);

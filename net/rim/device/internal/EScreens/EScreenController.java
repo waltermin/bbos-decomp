@@ -24,9 +24,9 @@ public class EScreenController implements EngineeringDataListener, Runnable, Sys
    private boolean _processEngUpdates = true;
    private int _msgsPerQuanta;
    private EScreenSessionManager _sessionManager;
-   private static final boolean DEBUG_QUANTA;
-   private static final int QUANTA_LENGTH;
-   private static final int QUANTA_MSG_HWM;
+   private static final boolean DEBUG_QUANTA = false;
+   private static final int QUANTA_LENGTH = 1500;
+   private static final int QUANTA_MSG_HWM = 5;
 
    public void doAction(int actionId, int idCookie, byte[] userData) {
       if ((actionId & -65536) == 0) {

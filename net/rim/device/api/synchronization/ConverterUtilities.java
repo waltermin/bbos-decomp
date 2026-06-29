@@ -21,10 +21,10 @@ import net.rim.vm.TraceBack;
 import net.rim.vm.WeakReference;
 
 public final class ConverterUtilities {
-   public static final int CONSUMED_FIELD;
-   private static final int STRING_CVT_NEWLINES;
-   private static final int STRING_CHK_COMPATIBILITY;
-   private static final int TEMP_BUFF_SIZE;
+   public static final int CONSUMED_FIELD = 255;
+   private static final int STRING_CVT_NEWLINES = 1;
+   private static final int STRING_CHK_COMPATIBILITY = 2;
+   private static final int TEMP_BUFF_SIZE = 64;
    private static WeakReference _tempBytesWR = new WeakReference(null);
    private static WeakReference _tempCharsWR = new WeakReference(null);
    private static Object _calendarInitializer = new Object();

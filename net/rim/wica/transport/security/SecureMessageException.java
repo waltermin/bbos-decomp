@@ -4,16 +4,16 @@ public class SecureMessageException extends Exception {
    private int _errorCode;
    private Throwable _primaryCause;
    private Throwable _secondaryCause;
-   public static final int FORMAT_ERROR;
-   public static final int KEY_RETREIVAL_FAILED;
-   public static final int SEQUENCE_VERIFICATION_FAILED;
-   public static final int SIGNATURE_VERIFICATION_FAILED;
-   public static final int DECRYPTION_FAILED;
-   public static final int UNSECURE_EXPECTED_SIGNED;
-   public static final int UNEXPECTED_VERSION;
-   public static final int SIGNATURE_FAILED;
-   public static final int ENCRYPTION_FAILED;
-   public static final int SEQUENCE_GENERATION_FAILED;
+   public static final int FORMAT_ERROR = 0;
+   public static final int KEY_RETREIVAL_FAILED = 1;
+   public static final int SEQUENCE_VERIFICATION_FAILED = 100;
+   public static final int SIGNATURE_VERIFICATION_FAILED = 101;
+   public static final int DECRYPTION_FAILED = 102;
+   public static final int UNSECURE_EXPECTED_SIGNED = 103;
+   public static final int UNEXPECTED_VERSION = 104;
+   public static final int SIGNATURE_FAILED = 200;
+   public static final int ENCRYPTION_FAILED = 201;
+   public static final int SEQUENCE_GENERATION_FAILED = 202;
 
    SecureMessageException(String s) {
    }

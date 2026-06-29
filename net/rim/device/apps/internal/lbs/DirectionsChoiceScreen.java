@@ -56,11 +56,11 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
    private Object _addressModel;
    private MailingAddressModelImpl _address;
    private String _addressLoc;
-   public static final int SEARCH_HISTORYLIST;
-   public static final int SEARCH_ENTEREDADDRESS;
-   public static final int SEARCH_ADDRESSBOOK;
-   public static final int SEARCH_UPDATEFROMHERE;
-   public static final int SEARCH_REVERSDIRECTION;
+   public static final int SEARCH_HISTORYLIST = 0;
+   public static final int SEARCH_ENTEREDADDRESS = 1;
+   public static final int SEARCH_ADDRESSBOOK = 2;
+   public static final int SEARCH_UPDATEFROMHERE = 3;
+   public static final int SEARCH_REVERSDIRECTION = 4;
 
    public final void callbackSelect(Location location) {
       if (location == null) {

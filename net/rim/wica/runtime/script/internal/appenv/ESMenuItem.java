@@ -8,7 +8,7 @@ import net.rim.wica.runtime.script.internal.WicaAppContext;
 
 final class ESMenuItem extends RedirectedObject {
    private MenuItemModel _model;
-   private static final String VisibleProperty;
+   private static final String VisibleProperty = "visible";
 
    ESMenuItem(MenuItemModel model, WicaAppContext context) {
       super("MDSMenuItemElement", context.getMenuItemPrototype());

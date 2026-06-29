@@ -11,9 +11,9 @@ public class ExtendedCurrentVariant extends SLCurrentVariant {
    public int _compoundRelationsMatrix;
    public int _lastCompoundLen;
    public Object _userObject;
-   private static final byte VW_WORD;
-   private static final byte VW_PREFIX;
-   private static final byte VW_UNSET;
+   private static final byte VW_WORD = 0;
+   private static final byte VW_PREFIX = 1;
+   private static final byte VW_UNSET = 2;
 
    public ExtendedCurrentVariant() {
    }

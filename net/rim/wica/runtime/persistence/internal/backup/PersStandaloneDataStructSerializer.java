@@ -7,9 +7,9 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class PersStandaloneDataStructSerializer extends AbstractSerializer {
    private static PersStandaloneDataStructSerializer _instance;
-   private static final byte DATA_FIELDS;
-   private static final byte LONG_DATA;
-   private static final byte REF_OBJECTS;
+   private static final byte DATA_FIELDS = 0;
+   private static final byte LONG_DATA = 1;
+   private static final byte REF_OBJECTS = 2;
 
    static final PersStandaloneDataStructSerializer getInstance() {
       if (_instance == null) {

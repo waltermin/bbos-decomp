@@ -9,15 +9,15 @@ final class FileScanner extends Thread {
    private String _dequeuedName;
    private FileScanner$ScanQueue _queue;
    private FileScanner$ScanQueue _lowPriorityQueue;
-   private static final int ADD_FOLDER_PATH;
-   private static final int ADD_FILE_PATH;
-   private static final int REMOVE_FOLDER_PATH;
-   private static final int REMOVE_FILE_PATH;
-   private static final int SCAN_COMPLETE;
-   private static final int RESCAN;
-   private static final int FILE_ADDED_JOURNAL;
-   private static final int FILE_CHANGED_JOURNAL;
-   private static final int MIN_LOW_PRIORITY_IDLE_SECONDS;
+   private static final int ADD_FOLDER_PATH = 1;
+   private static final int ADD_FILE_PATH = 2;
+   private static final int REMOVE_FOLDER_PATH = 3;
+   private static final int REMOVE_FILE_PATH = 4;
+   private static final int SCAN_COMPLETE = 5;
+   private static final int RESCAN = 6;
+   private static final int FILE_ADDED_JOURNAL = 7;
+   private static final int FILE_CHANGED_JOURNAL = 8;
+   private static final int MIN_LOW_PRIORITY_IDLE_SECONDS = 60;
    private static String FILE_COLON_SLASH_SLASH = "file://";
 
    FileScanner(FileIndexServiceImpl service) {

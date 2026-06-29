@@ -14,7 +14,7 @@ final class USBTransport extends CommLinkTransport implements USBPortListener {
    private Object _receiveLock;
    private Object _sendLock;
    private byte[] _sendBuffer;
-   private static final String CHANNEL_NAME;
+   private static final String CHANNEL_NAME = "RIM Desktop";
 
    USBTransport(Transport transport, ProfileString profile) {
       this._transport = transport;

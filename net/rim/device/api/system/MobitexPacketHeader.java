@@ -1,22 +1,22 @@
 package net.rim.device.api.system;
 
 public final class MobitexPacketHeader implements RadioPacketHeader {
-   public static final int TS_MESSAGE_OK;
-   public static final int TS_MESSAGE_FROM_MAILBOX;
-   public static final int TS_MESSAGE_IN_MAILBOX;
-   public static final int TS_CANNOT_BE_REACHED;
-   public static final int TS_ILLEGAL_MESSAGE;
-   public static final int TS_NETWORK_CONGESTED;
-   public static final int TS_TECHNICAL_ERROR;
-   public static final int TS_DESTINATION_BUSY;
-   public static final int PACKET_TYPE_TEXT;
-   public static final int PACKET_TYPE_DATA;
-   public static final int PACKET_TYPE_STATUS;
-   public static final int PACKET_TYPE_HPDATA;
-   public static final int FLAG_MAILBOX;
-   public static final int FLAG_POSACK;
-   public static final int FLAG_SENDLIST;
-   public static final int FLAG_UNKNOWN;
+   public static final int TS_MESSAGE_OK = 0;
+   public static final int TS_MESSAGE_FROM_MAILBOX = 1;
+   public static final int TS_MESSAGE_IN_MAILBOX = 2;
+   public static final int TS_CANNOT_BE_REACHED = 3;
+   public static final int TS_ILLEGAL_MESSAGE = 4;
+   public static final int TS_NETWORK_CONGESTED = 5;
+   public static final int TS_TECHNICAL_ERROR = 6;
+   public static final int TS_DESTINATION_BUSY = 7;
+   public static final int PACKET_TYPE_TEXT = 1;
+   public static final int PACKET_TYPE_DATA = 2;
+   public static final int PACKET_TYPE_STATUS = 3;
+   public static final int PACKET_TYPE_HPDATA = 4;
+   public static final int FLAG_MAILBOX = 1;
+   public static final int FLAG_POSACK = 2;
+   public static final int FLAG_SENDLIST = 4;
+   public static final int FLAG_UNKNOWN = 8;
 
    public MobitexPacketHeader() {
       throw new UnsupportedOperationException();

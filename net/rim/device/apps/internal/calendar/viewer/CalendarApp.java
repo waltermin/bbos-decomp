@@ -19,7 +19,7 @@ import net.rim.device.internal.system.InternalServices;
 final class CalendarApp extends UiApplication implements GlobalEventListener {
    boolean _externallyCloseable;
    OrganizingCalendarDialog _organizingCalendarDialog;
-   private static final long CALENDAR_SEARCHABLE_ID;
+   private static final long CALENDAR_SEARCHABLE_ID = -2560306609227180038L;
    static ResourceBundle _rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
    private static long ALLOW_CLOSEABLE = 3873302428969980664L;
    private static String CALENDAR_MODULE_NAME = "net_rim_bb_calendar_app";

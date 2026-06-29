@@ -1,9 +1,9 @@
 package net.rim.plazmic.internal.mediaengine.service;
 
 public interface FocusInteractor {
-   String ID;
-   int NAVIGATE_FORWARD;
-   int NAVIGATE_BACKWARDS;
+   String ID = "FocusInteractor";
+   int NAVIGATE_FORWARD = 1;
+   int NAVIGATE_BACKWARDS = -1;
 
    boolean hasFocus();
 

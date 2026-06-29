@@ -45,8 +45,8 @@ public class MIMEInputStream extends InputStream {
    private static byte[] BASE64_BYTES = new byte[]{98, 97, 115, 101, 54, 52};
    private static String QUOTED_PRINTABLE = "quoted-printable";
    private static byte[] QUOTED_PRINTABLE_BYTES = new byte[]{113, 117, 111, 116, 101, 100, 45, 112, 114, 105, 110, 116, 97, 98, 108, 101};
-   private static final byte CR;
-   private static final byte LF;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
 
    public MIMEInputStream(InputStream input) {
       this(input, null, false, null);

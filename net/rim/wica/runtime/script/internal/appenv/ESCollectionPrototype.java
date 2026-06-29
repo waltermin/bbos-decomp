@@ -14,11 +14,11 @@ import net.rim.wica.runtime.script.internal.WicaAppContext;
 
 public final class ESCollectionPrototype extends ESObject {
    private WicaAppContext _context;
-   private static final String All;
-   private static final String Create;
-   private static final String Find;
-   private static final String FindWhere;
-   private static final String RemoveAll;
+   private static final String All = "all";
+   private static final String Create = "create";
+   private static final String Find = "find";
+   private static final String FindWhere = "findWhere";
+   private static final String RemoveAll = "removeAll";
 
    public ESCollectionPrototype(WicaAppContext context) {
       this._context = context;

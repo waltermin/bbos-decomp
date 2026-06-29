@@ -6,9 +6,9 @@ import net.rim.device.api.collection.WritableSet;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 public interface GroupAddressCardModel extends AddressCardElement, ReadableList, WritableSet, WritableList, MemberComparator {
-   byte EMAIL;
-   byte PIN;
-   byte PHONE;
+   byte EMAIL = 0;
+   byte PIN = 1;
+   byte PHONE = 2;
 
    String getName();
 

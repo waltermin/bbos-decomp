@@ -11,7 +11,7 @@ import net.rim.tid.io.ContinuousInputStream;
 import net.rim.tid.io.RMSOutputStream;
 
 public class ResourceSpec implements IResourceSpec {
-   private static final String protocol;
+   private static final String protocol = "file:";
 
    protected int findID(RecordStore rs, byte[] header, String name, boolean createIfNeed) {
       ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(header));

@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.browser.stack.CacheResult;
 import net.rim.device.internal.browser.util.Pipe;
 
 final class BrowserContentConverter extends BaseConverter {
-   private static final String CONTENT_LOCATION_KEY;
+   private static final String CONTENT_LOCATION_KEY = "Content-Location";
 
    @Override
    public final boolean canConvert(Object parameters) {

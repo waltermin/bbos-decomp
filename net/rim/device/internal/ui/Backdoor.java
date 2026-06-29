@@ -9,14 +9,14 @@ import net.rim.device.api.ui.component.Menu;
 
 public class Backdoor implements Runnable {
    private Menu _menu;
-   private static final int DUMP_SCREEN;
-   private static final int KEYSTROKE_TIMING;
-   private static final int REPAINT;
-   private static final int TIME_REPAINT;
-   private static final int CACHE_STATS;
-   private static final int CLEAR_CACHE_STATS;
-   public static final int REPEAT_COUNT;
-   private static final String ui_package;
+   private static final int DUMP_SCREEN = 1;
+   private static final int KEYSTROKE_TIMING = 2;
+   private static final int REPAINT = 3;
+   private static final int TIME_REPAINT = 4;
+   private static final int CACHE_STATS = 5;
+   private static final int CLEAR_CACHE_STATS = 6;
+   public static final int REPEAT_COUNT = 100;
+   private static final String ui_package = "net.rim.device.api.ui.";
    private static String[] CACHE_STAT_NAMES = new String[]{
       "Hits: ", "Misses: ", "Cur Num Cached: ", "Flush Count: ", "Avg Bm Size: ", "Avg Bm Count when flushed: ", "Bms Added: ", "Cache size: ", "Free: "
    };

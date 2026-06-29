@@ -21,19 +21,19 @@ public class MarkupInputStream extends InputStream {
    private Object _unconsumedData;
    private boolean _setReader = true;
    private InputStream _pipeInput = this._pipe.getInputStream();
-   private static final int READ_BUFFER_SIZE;
-   private static final int MARKUP_BEFORE;
-   private static final int MARKUP_AFTER;
-   public static final int CONFIG_DATA_JAVASCRIPT_ENABLED_INDEX;
-   public static final int CONFIG_DATA_CSS_ENABLED_INDEX;
-   public static final int CONFIG_DATA_SIZE;
-   private static final int UNKNOWN;
-   private static final int HTML;
-   private static final int TEXT;
-   private static final int WML_1x_TEXT;
-   private static final int WBXML;
-   static final int SINGLE_UNIT;
-   static final int UTF8;
+   private static final int READ_BUFFER_SIZE = 1024;
+   private static final int MARKUP_BEFORE = 1114465378;
+   private static final int MARKUP_AFTER = 1114465377;
+   public static final int CONFIG_DATA_JAVASCRIPT_ENABLED_INDEX = 0;
+   public static final int CONFIG_DATA_CSS_ENABLED_INDEX = 1;
+   public static final int CONFIG_DATA_SIZE = 2;
+   private static final int UNKNOWN = 0;
+   private static final int HTML = 1;
+   private static final int TEXT = 2;
+   private static final int WML_1x_TEXT = 3;
+   private static final int WBXML = 4;
+   static final int SINGLE_UNIT = 1;
+   static final int UTF8 = 2;
 
    public static MarkupInputStream getConvertedInputStream(
       String type,

@@ -7,9 +7,9 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.IntHashtable;
 
 public final class ProfileManager {
-   public static final int PROFILE_ELEMENT;
-   public static final int PROFILE_TIMER;
-   public static final int PROFILE_VARIABLE;
+   public static final int PROFILE_ELEMENT = 0;
+   public static final int PROFILE_TIMER = 1;
+   public static final int PROFILE_VARIABLE = 2;
    public static boolean _enabled = true;
    static Hashtable _elements;
    static IntHashtable _symbolMap;

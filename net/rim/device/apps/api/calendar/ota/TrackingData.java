@@ -12,12 +12,12 @@ public class TrackingData implements Persistable, EncryptableProvider {
    public int _failCount = 0;
    public int _uid = -1;
    public int _packetType = 0;
-   public static final int UNSENT;
-   public static final int SENT;
-   public static final int SENDING;
-   public static final int ERROR;
-   public static final int QUEUED;
-   public static final int NO_TRACKING_DATA;
+   public static final int UNSENT = 0;
+   public static final int SENT = 1;
+   public static final int SENDING = 2;
+   public static final int ERROR = 3;
+   public static final int QUEUED = 4;
+   public static final int NO_TRACKING_DATA = -1;
 
    public TrackingData(byte[] data) {
       this._statusCode = 0;

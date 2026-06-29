@@ -7,17 +7,17 @@ import net.rim.device.api.media.MetaDataObject;
 public final class MP4Info {
    private long _duration = -1;
    private MetaDataControlImpl _metaData;
-   private static final int ATOM_MOOV;
-   private static final int ATOM_UDTA;
-   private static final int ATOM_META;
-   private static final int ATOM_ILST;
-   private static final int ATOM_DATA;
-   private static final int ATOM_MVHD;
-   private static final int DATA_TYPE_INTEGERS;
-   private static final int DATA_TYPE_TEXT;
-   private static final int DATA_TYPE_JPEG_IMAGE;
-   private static final int DATA_TYPE_PNG_IMAGE;
-   private static final int MAX_BYTES;
+   private static final int ATOM_MOOV = 1836019574;
+   private static final int ATOM_UDTA = 1969517665;
+   private static final int ATOM_META = 1835365473;
+   private static final int ATOM_ILST = 1768715124;
+   private static final int ATOM_DATA = 1684108385;
+   private static final int ATOM_MVHD = 1836476516;
+   private static final int DATA_TYPE_INTEGERS = 0;
+   private static final int DATA_TYPE_TEXT = 1;
+   private static final int DATA_TYPE_JPEG_IMAGE = 13;
+   private static final int DATA_TYPE_PNG_IMAGE = 14;
+   private static final int MAX_BYTES = Integer.MAX_VALUE;
 
    public MP4Info(InputStream inputStream) {
       this.read(inputStream);

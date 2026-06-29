@@ -52,8 +52,8 @@ public final class DialogAddBookmark extends PopupScreen implements FieldChangeL
    private ButtonField _buttonAdd;
    private ButtonField _buttonCancel;
    private boolean _cancelled;
-   static final String STRING_HTTP;
-   static final String STRING_HTTPS;
+   static final String STRING_HTTP = "http://";
+   static final String STRING_HTTPS = "https://";
 
    public DialogAddBookmark(Page page) {
       this(page, null, null, null, false, null);

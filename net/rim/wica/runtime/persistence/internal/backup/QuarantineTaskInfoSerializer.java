@@ -7,8 +7,8 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class QuarantineTaskInfoSerializer extends AbstractSerializer {
    private static QuarantineTaskInfoSerializer _instance;
-   private static final byte ACTION;
-   private static final byte REASON;
+   private static final byte ACTION = 0;
+   private static final byte REASON = 1;
 
    static final QuarantineTaskInfoSerializer getInstance() {
       if (_instance == null) {

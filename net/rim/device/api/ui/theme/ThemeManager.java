@@ -49,14 +49,14 @@ public class ThemeManager {
    private Hashtable _defaultImageDescriptors = new Hashtable(200);
    private final Comparator _comparatorFactoryFactory = new ThemeManager$1(this);
    private final Comparator _comparatorStringFactory = new ThemeManager$2(this);
-   public static final long GUID_THEME_CHANGED;
-   public static final long GUID_THEME_ADDED;
-   public static final long GUID_THEME_RESET;
-   public static final int THEME_CHANGED_FROM_ACTION;
-   public static final int THEME_CHANGED_FROM_RESTORE;
+   public static final long GUID_THEME_CHANGED = 2573494863350550132L;
+   public static final long GUID_THEME_ADDED = 9057101852544553212L;
+   public static final long GUID_THEME_RESET = -4645495483836102462L;
+   public static final int THEME_CHANGED_FROM_ACTION = 1;
+   public static final int THEME_CHANGED_FROM_RESTORE = 2;
    public static final Tag ATTRIBUTE_INHERIT = new Tag(null, 0);
    private static final Tag ATTRIBUTE_ROOT = new Tag("", 1);
-   private static final long GUID;
+   private static final long GUID = -6338698576635425001L;
    private static ThemeManager _instance;
 
    protected ThemeManager() {

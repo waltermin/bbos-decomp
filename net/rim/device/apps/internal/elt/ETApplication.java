@@ -9,7 +9,7 @@ import net.rim.device.apps.api.location.LocationServicesOptionsProvider;
 
 public final class ETApplication extends Application {
    private ETManager _etManager = null;
-   static final long UID;
+   static final long UID = 7659638648801846908L;
    static Class class$net$rim$device$apps$internal$elt$ETApplication;
 
    private ETApplication() {

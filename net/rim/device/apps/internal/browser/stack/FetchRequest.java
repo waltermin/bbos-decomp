@@ -29,16 +29,16 @@ public final class FetchRequest {
    private long _timeStarted;
    private int _flags;
    private Event _event;
-   public static final int FLAG_ABORTED;
-   public static final int FLAG_SAVED_REQUEST;
-   public static final int FLAG_ADD_TO_LONG_TERM_CACHE;
-   public static final int FLAG_DIRTY_CACHE_HANDLING;
-   public static final int FLAG_PROGRAMMATIC;
-   public static final int FLAG_ESCAPE_EVENT;
-   public static final int FLAG_SAVE_ALLOWED;
-   public static final int FLAG_HISTORY_REQUEST;
-   public static final int FLAG_SHORT_TIMEOUT;
-   public static final int FLAG_RETURN_ORIGINAL_RESPONSE_CODE;
+   public static final int FLAG_ABORTED = 1;
+   public static final int FLAG_SAVED_REQUEST = 4;
+   public static final int FLAG_ADD_TO_LONG_TERM_CACHE = 8;
+   public static final int FLAG_DIRTY_CACHE_HANDLING = 16;
+   public static final int FLAG_PROGRAMMATIC = 32;
+   public static final int FLAG_ESCAPE_EVENT = 64;
+   public static final int FLAG_SAVE_ALLOWED = 512;
+   public static final int FLAG_HISTORY_REQUEST = 1024;
+   public static final int FLAG_SHORT_TIMEOUT = 2048;
+   public static final int FLAG_RETURN_ORIGINAL_RESPONSE_CODE = 4096;
 
    public FetchRequest(ModelResult modelResult, int flags) {
       this._modelResult = modelResult;

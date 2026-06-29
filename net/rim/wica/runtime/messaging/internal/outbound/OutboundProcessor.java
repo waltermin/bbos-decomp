@@ -54,8 +54,8 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
    private Vector _bundle;
    private long _deviceId;
    private long _defaultAg;
-   private static final int _INTERMEDIARY_Q;
-   private static final int _MAX_ATTEMPTS;
+   private static final int _INTERMEDIARY_Q = 0;
+   private static final int _MAX_ATTEMPTS = 72;
    static Class class$net$rim$wica$runtime$messaging$MessagingService;
    static Class class$net$rim$wica$runtime$comm$CommunicationService;
    static Class class$net$rim$wica$runtime$messaging$internal$PersistenceHelper;

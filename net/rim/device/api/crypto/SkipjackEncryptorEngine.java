@@ -3,7 +3,7 @@ package net.rim.device.api.crypto;
 public final class SkipjackEncryptorEngine implements SymmetricKeyEncryptorEngine {
    private SkipjackCryptoToken _cryptoToken;
    private CryptoTokenCipherContext _context;
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public SkipjackEncryptorEngine(SkipjackKey key) {
       if (key == null) {

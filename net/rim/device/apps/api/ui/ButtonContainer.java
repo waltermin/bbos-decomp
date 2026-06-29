@@ -11,10 +11,10 @@ import net.rim.device.api.ui.theme.Theme;
 public class ButtonContainer extends FlowFieldManager {
    private Manager _buttonManager;
    private Font _buttonFont;
-   public static final int HORIZONTAL_LAYOUT;
-   public static final int VERTICAL_LAYOUT;
-   public static final int FLOW_LAYOUT;
-   private static final long DEFAULT_STYLE;
+   public static final int HORIZONTAL_LAYOUT = 0;
+   public static final int VERTICAL_LAYOUT = 1;
+   public static final int FLOW_LAYOUT = 2;
+   private static final long DEFAULT_STYLE = 12884901888L;
 
    public ButtonContainer() {
       this(1, 12884901888L, null);

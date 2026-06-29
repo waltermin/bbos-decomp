@@ -51,9 +51,9 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    private SeparatorField _sep1;
    private SeparatorField _sep2;
    private Recur$RecurCapabilities _capabilities;
-   public static final long RECUR_TIMEZONE;
-   public static final long EVENT_DURATION;
-   public static final long ALL_DAY_EVENT;
+   public static final long RECUR_TIMEZONE = 853966984731399007L;
+   public static final long EVENT_DURATION = -6289930384059412695L;
+   public static final long ALL_DAY_EVENT = -479237175265400126L;
    private static TimeZone _gmtTimeZone = TimeZone.getTimeZone(DateTimeUtilities.GMT);
    private static DateFormat _dateFormat = DateFormat.getInstance(40);
 

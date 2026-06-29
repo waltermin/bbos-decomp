@@ -6,8 +6,8 @@ public final class MediaQueue {
    private int _size;
    private int _growthRate;
    private int _dataPtr;
-   private static final int DEFAULT_SIZE;
-   private static final int DEFAULT_GROWTH;
+   private static final int DEFAULT_SIZE = 20;
+   private static final int DEFAULT_GROWTH = 10;
 
    public MediaQueue(int size, int growthRate) {
       this._dataArray = new int[size];

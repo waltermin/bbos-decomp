@@ -9,15 +9,15 @@ import net.rim.device.apps.api.reminders.ReminderModel;
 import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
 
 public interface TaskModel extends ReadableList, WritableSet, PersistableRIMModel {
-   int STATUS_NOT_STARTED;
-   int STATUS_IN_PROGRESS;
-   int STATUS_COMPLETED;
-   int STATUS_WAITING;
-   int STATUS_DEFERRED;
-   int PRIORITY_HIGH;
-   int PRIORITY_NORMAL;
-   int PRIORITY_LOW;
-   long INVALID_DATE;
+   int STATUS_NOT_STARTED = 0;
+   int STATUS_IN_PROGRESS = 1;
+   int STATUS_COMPLETED = 2;
+   int STATUS_WAITING = 3;
+   int STATUS_DEFERRED = 4;
+   int PRIORITY_HIGH = 0;
+   int PRIORITY_NORMAL = 1;
+   int PRIORITY_LOW = 2;
+   long INVALID_DATE = Long.MIN_VALUE;
 
    int getPriority();
 

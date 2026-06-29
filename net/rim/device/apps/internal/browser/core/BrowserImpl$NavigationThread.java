@@ -6,18 +6,18 @@ import net.rim.device.apps.internal.browser.util.RunnableThread;
 
 final class BrowserImpl$NavigationThread extends RunnableThread {
    private final BrowserImpl this$0;
-   static final int MENU_SHOW_REQUEST;
-   static final int FOLLOW_LINK_UNDER_CURSOR_REQUEST;
-   static final int CLOSE_BROWSER_REQUEST;
-   static final int FETCH_REQUEST;
-   static final int ABORT_REQUEST;
-   static final int HOT_KEY;
-   static final int SHOW_DEBUG_SCREEN;
-   static final int ESCAPE_REQUEST;
-   static final int PERFORM_DEFAULT_ACTION;
-   static final int UPDATE_BROWSER_STATE;
-   static final int ACTIVATE_BROWSER_REQUEST;
-   static final int RUNNABLE;
+   static final int MENU_SHOW_REQUEST = 1;
+   static final int FOLLOW_LINK_UNDER_CURSOR_REQUEST = 2;
+   static final int CLOSE_BROWSER_REQUEST = 3;
+   static final int FETCH_REQUEST = 4;
+   static final int ABORT_REQUEST = 5;
+   static final int HOT_KEY = 6;
+   static final int SHOW_DEBUG_SCREEN = 7;
+   static final int ESCAPE_REQUEST = 8;
+   static final int PERFORM_DEFAULT_ACTION = 9;
+   static final int UPDATE_BROWSER_STATE = 10;
+   static final int ACTIVATE_BROWSER_REQUEST = 11;
+   static final int RUNNABLE = 12;
 
    BrowserImpl$NavigationThread(BrowserImpl _1) {
       this.this$0 = _1;

@@ -5,7 +5,7 @@ import net.rim.device.api.system.DeviceInfo;
 class FlushBuffersThread extends Thread {
    private OTAMessageSync _syncInstance;
    private boolean _checkForWork;
-   private static final long MINIMUM_IDLE_TIME;
+   private static final long MINIMUM_IDLE_TIME = 5L;
 
    FlushBuffersThread(OTAMessageSync syncInstance) {
       this._syncInstance = syncInstance;

@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class RaiseWindow extends Model {
    private String _sessionName;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/RaiseWindow.java#1 $";
 
    public RaiseWindow(String sessionName) {
       this._sessionName = sessionName;

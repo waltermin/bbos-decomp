@@ -17,8 +17,8 @@ public final class PasswordKeeperPasswordDialog extends PopupDialog implements F
    private ButtonField _okButton;
    private ButtonField _cancelButton;
    private ButtonField _deleteButton;
-   public static final int DEFAULT_MAXCHARS;
-   public static final int DELETE_ENTRY;
+   public static final int DEFAULT_MAXCHARS = 32;
+   public static final int DELETE_ENTRY = 2;
 
    public final String getText() {
       return this._inputField.getText();

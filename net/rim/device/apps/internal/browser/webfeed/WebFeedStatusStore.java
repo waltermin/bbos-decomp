@@ -8,7 +8,7 @@ public final class WebFeedStatusStore {
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(-3617339743333193477L);
    private WebFeedStatusStore$WebFeedStore _store;
    private static WebFeedStatusStore _instance;
-   private static final long STORE_KEY;
+   private static final long STORE_KEY = -3617339743333193477L;
 
    private WebFeedStatusStore() {
       Object contents = this._persistentObject.getContents();

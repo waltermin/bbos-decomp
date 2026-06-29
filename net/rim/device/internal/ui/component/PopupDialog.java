@@ -13,10 +13,10 @@ public class PopupDialog extends PopupScreen {
    private int _statusPriority = 50;
    private boolean _open;
    private boolean _cancelAllowed = true;
-   public static final int GLOBAL_STATUS;
-   public static final int PUSHED_GLOBAL_SCREEN;
-   public static final int CANCEL;
-   public static final int CLOSE;
+   public static final int GLOBAL_STATUS = 33554432;
+   public static final int PUSHED_GLOBAL_SCREEN = 134217728;
+   public static final int CANCEL = -1;
+   public static final int CLOSE = 0;
 
    public PopupDialog(Manager manager) {
       this(manager, 0);

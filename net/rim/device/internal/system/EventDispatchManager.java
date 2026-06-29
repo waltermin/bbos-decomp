@@ -5,7 +5,7 @@ import net.rim.vm.Message;
 
 public final class EventDispatchManager {
    private EventDispatcher[] _dispatchers = new EventDispatcher[59];
-   private static final long GUID;
+   private static final long GUID = -7708749290975591471L;
 
    public static final EventDispatchManager getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

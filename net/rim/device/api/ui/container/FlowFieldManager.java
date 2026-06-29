@@ -6,7 +6,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.XYRect;
 
 public class FlowFieldManager extends Manager {
-   private static final int MAX_HEIGHT;
+   private static final int MAX_HEIGHT = 1073741823;
 
    public FlowFieldManager() {
       super(1153202979583557632L);

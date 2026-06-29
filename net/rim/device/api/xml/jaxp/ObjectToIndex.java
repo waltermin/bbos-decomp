@@ -9,7 +9,7 @@ class ObjectToIndex {
    private int _added = 0;
    private int _sizeAdded = 0;
    private ToIntHashtable _h = (ToIntHashtable)(new Object());
-   private static final int NULLINDEX;
+   private static final int NULLINDEX = 65535;
 
    Object get(int index) {
       return index == 65535 ? null : this._v.elementAt(index);

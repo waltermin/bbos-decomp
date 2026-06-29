@@ -18,10 +18,10 @@ public final class DataRecoveryWLAN extends DataRecovery implements GlobalEventL
    private int _lastNetwork = -1;
    private int[] _errorLevels = new int[5];
    private long _timeOnTheNetwork;
-   private static final int THRESHOLD_RECOVERY_WIFI;
-   private static final int START_RECOVERY_BACKOFF_WIFI;
-   private static final int MAX_RECOVERY_BACKOFF_WIFI;
-   private static final int MIN_RECOVERY_WIFI;
+   private static final int THRESHOLD_RECOVERY_WIFI = 4;
+   private static final int START_RECOVERY_BACKOFF_WIFI = 600000;
+   private static final int MAX_RECOVERY_BACKOFF_WIFI = 3600000;
+   private static final int MIN_RECOVERY_WIFI = 300000;
 
    public DataRecoveryWLAN(int linkType, long guid) {
       super(linkType, guid);

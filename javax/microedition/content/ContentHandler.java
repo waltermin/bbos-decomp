@@ -1,17 +1,17 @@
 package javax.microedition.content;
 
 public interface ContentHandler {
-   String ACTION_EDIT;
-   String ACTION_EXECUTE;
-   String ACTION_INSTALL;
-   String ACTION_NEW;
-   String ACTION_OPEN;
-   String ACTION_PRINT;
-   String ACTION_SAVE;
-   String ACTION_SELECT;
-   String ACTION_SEND;
-   String ACTION_STOP;
-   String UNIVERSAL_TYPE;
+   String ACTION_EDIT = "edit";
+   String ACTION_EXECUTE = "execute";
+   String ACTION_INSTALL = "install";
+   String ACTION_NEW = "new";
+   String ACTION_OPEN = "open";
+   String ACTION_PRINT = "print";
+   String ACTION_SAVE = "save";
+   String ACTION_SELECT = "select";
+   String ACTION_SEND = "send";
+   String ACTION_STOP = "stop";
+   String UNIVERSAL_TYPE = "*";
 
    String getID();
 

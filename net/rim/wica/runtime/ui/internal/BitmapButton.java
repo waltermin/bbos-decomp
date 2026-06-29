@@ -8,7 +8,7 @@ import net.rim.device.api.ui.component.BitmapField;
 public class BitmapButton extends BitmapField {
    private Bitmap _focusBitmap;
    private EncodedImage _focusImage;
-   public static final long CONSUME_CLICK;
+   public static final long CONSUME_CLICK = 65536L;
 
    public BitmapButton(Bitmap bitmap, Bitmap focusBitmap) {
       super(bitmap, 22518049676460032L);

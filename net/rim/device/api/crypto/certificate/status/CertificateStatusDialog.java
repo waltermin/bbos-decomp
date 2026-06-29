@@ -32,9 +32,9 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
    private ButtonField _okButton;
    private ButtonField _detailsButton;
    private Font[] _fontFormats;
-   private static final char BOLD_FLAG;
-   private static final byte FONT_REGULAR;
-   private static final byte FONT_BOLD;
+   private static final char BOLD_FLAG = '*';
+   private static final byte FONT_REGULAR = 0;
+   private static final byte FONT_BOLD = 1;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
 
    public CertificateStatusDialog(CertificateStatusQuery query, KeyStore keyStore, boolean allowDetails) {

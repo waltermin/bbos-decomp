@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiEngine;
 
 public class UiInternalListener {
-   public static final int DEPRECATED_VERSION;
+   public static final int DEPRECATED_VERSION = 1073741824;
 
    protected UiInternalListener() {
    }

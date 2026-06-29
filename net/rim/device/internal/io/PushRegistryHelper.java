@@ -21,12 +21,12 @@ public class PushRegistryHelper {
    public Hashtable _filterMap = new Hashtable();
    public Hashtable _connectionMap = new Hashtable();
    public Hashtable _alarmMap = new Hashtable();
-   private static final long ID;
+   private static final long ID = 8840121830482700777L;
    public static String APPLICATION_DESCRIPTOR_NAME_PUSH_REGISTRY_WORK = "ApplicationDescriptor-Pushregistrystartup";
    public static String APPLICATION_DESCRIPTOR_ARG_PUSH_REGISTRY_WORK = "dostaticuppushregistrywork";
    public static String APPLICATION_DESCRIPTOR_ARG_DYNAMIC_PUSH_REGISTRY_WORK = "dodynamicuppushregistrywork";
    public static String APPLICATION_DESCRIPTOR_ARG_SHUTDOWN_PUSH_REGISTRY_WORK = "doshutdownpushregistrywork";
-   public static final String MIDLET_NAME;
+   public static final String MIDLET_NAME = "MIDlet-Name";
    public static String MIDLET_PUSH_PROPERTY_NAME_PREFIX = "MIDlet-Push-";
    public static String MIDLET_PROPERTY_NAME_PREFIX = "MIDlet-";
    private static final String[] PUSH_TRANSPORTS = new String[]{"http", "socket", "sms", "datagram"};

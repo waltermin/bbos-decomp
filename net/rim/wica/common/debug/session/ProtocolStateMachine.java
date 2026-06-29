@@ -2,12 +2,12 @@ package net.rim.wica.common.debug.session;
 
 public final class ProtocolStateMachine {
    private int _curState = 0;
-   public static final int STATE_ERROR;
-   public static final int STATE_INITIALIZED;
-   public static final int STATE_CONNECTED;
-   public static final int STATE_HANDSHAKE_SUCCESSFUL;
-   public static final int STATE_SESSION_INITIALIZED;
-   public static final int STATE_DETACHED;
+   public static final int STATE_ERROR = -1;
+   public static final int STATE_INITIALIZED = 0;
+   public static final int STATE_CONNECTED = 1;
+   public static final int STATE_HANDSHAKE_SUCCESSFUL = 2;
+   public static final int STATE_SESSION_INITIALIZED = 3;
+   public static final int STATE_DETACHED = 4;
 
    public final void init() {
       this._curState = 0;

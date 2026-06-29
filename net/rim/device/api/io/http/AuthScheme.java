@@ -5,11 +5,11 @@ import net.rim.device.api.util.StringUtilities;
 
 public class AuthScheme {
    protected Hashtable _parms;
-   public static final int BASIC;
-   public static final int DIGEST;
-   protected static final String BASIC_SCHEME;
-   protected static final String DIGEST_SCHEME;
-   protected static final String NEGOTIATE_SCHEME;
+   public static final int BASIC = 0;
+   public static final int DIGEST = 1;
+   protected static final String BASIC_SCHEME = "basic";
+   protected static final String DIGEST_SCHEME = "digest";
+   protected static final String NEGOTIATE_SCHEME = "negotiate";
 
    public AuthScheme(Hashtable parms) {
       this._parms = parms;

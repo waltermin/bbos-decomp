@@ -5,9 +5,9 @@ import net.rim.device.api.math.Fixed32;
 public final class GIFEncodedImage extends EncodedImage {
    private GIFEncodedImage$GIFImageInfo _gifInfo;
    private GIFEncodedImage$GIFFrameInfo[] _gifFrameInfo;
-   public static final int TRANSITION_DEFAULT;
-   public static final int TRANSITION_COMBINE;
-   public static final int TRANSITION_REPLACE;
+   public static final int TRANSITION_DEFAULT = 0;
+   public static final int TRANSITION_COMBINE = 1;
+   public static final int TRANSITION_REPLACE = 2;
 
    GIFEncodedImage(byte[] data, int offset, int length) {
       super._data = data;

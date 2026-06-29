@@ -12,7 +12,7 @@ final class EditScreen extends Screen {
    private Field _source;
    private Field _editor;
    private XYRect _rect;
-   public static final long ALT_DISMISS;
+   public static final long ALT_DISMISS = 1L;
    private static final int MAX_WIDTH = Display.getWidth();
    private static final int MAX_HEIGHT = Display.getHeight();
    private static final Tag TAG = Tag.create("inplace");

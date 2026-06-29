@@ -9,9 +9,9 @@ public class ProfileTimer extends ProfileElement {
    private int _countSaved;
    private long _durationSaved;
    private int _resetCount;
-   static final int TIMING_STOPPED;
-   static final int TIMING_STARTED;
-   static final int TIMING_ARMED;
+   static final int TIMING_STOPPED = 0;
+   static final int TIMING_STARTED = 1;
+   static final int TIMING_ARMED = 2;
 
    ProfileTimer(String name) {
       super(name);

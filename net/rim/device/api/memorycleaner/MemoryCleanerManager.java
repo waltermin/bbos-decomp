@@ -35,11 +35,11 @@ public final class MemoryCleanerManager implements HolsterListener, RealtimeCloc
    private boolean _otaSyncOperationStopped;
    private MemoryCleanerManager$MemoryCleanerSyncItem _syncItem;
    private MemoryCleanerManager$ClipboardMemoryCleaner _clipboardMemoryCleaner;
-   private static final long MINIMUM_TIMEOUT_SECONDS;
-   private static final long PERSISTENT_STORE_KEY;
-   private static final long SINGLETON_ID;
-   private static final long LOGGER_GUID;
-   public static final long SHOW_APP_ON_RIBBON_CHANGED;
+   private static final long MINIMUM_TIMEOUT_SECONDS = 60L;
+   private static final long PERSISTENT_STORE_KEY = -8102403034661658129L;
+   private static final long SINGLETON_ID = -63698109761663168L;
+   private static final long LOGGER_GUID = -3818033069674138067L;
+   public static final long SHOW_APP_ON_RIBBON_CHANGED = 5924166216341050021L;
    private static final int[] EVENT_LOGGER_CODES = new int[]{
       1231964268,
       1231311981,

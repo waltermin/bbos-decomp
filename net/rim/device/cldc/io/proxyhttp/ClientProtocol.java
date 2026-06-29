@@ -34,8 +34,8 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
    private boolean _usePipe;
    private boolean _ykEncoded;
    private boolean _ykMixedEncoded;
-   private static final String MSG_Connection_is_closed;
-   private static final String HEADER_X_RIM_CONTINUE_TIME;
+   private static final String MSG_Connection_is_closed = "Connection is closed";
+   private static final String HEADER_X_RIM_CONTINUE_TIME = "x-rim-conttime";
 
    public ClientProtocol(URL url, StreamConnection streamConnection, boolean redirectHttps, boolean trustAll, boolean compress, String uid) {
       super(url);

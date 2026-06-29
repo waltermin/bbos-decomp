@@ -17,12 +17,12 @@ public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvi
    long _timeStamp;
    int _elapsedTime;
    byte _type = 0;
-   public static final int TIMESTAMP_INDEX;
-   public static final int DURATION_INDEX;
-   public static final int MEMO_INDEX;
-   public static final int CALLER_ID_INDEX;
-   private static final int MIN_SUBMEMBERS;
-   private static final int NON_RIMMODEL_SUBMEMBER_COUNT;
+   public static final int TIMESTAMP_INDEX = 0;
+   public static final int DURATION_INDEX = 1;
+   public static final int MEMO_INDEX = 2;
+   public static final int CALLER_ID_INDEX = 3;
+   private static final int MIN_SUBMEMBERS = 2;
+   private static final int NON_RIMMODEL_SUBMEMBER_COUNT = 2;
    private static TimeModel _timeStampModel = new TimeModel();
    private static TimeModel _durationModel = new TimeModel();
 

@@ -98,10 +98,10 @@ public class AnswerToReset implements Persistable {
       1488,
       16
    };
-   public static final int PROTOCOL_T0;
-   public static final int PROTOCOL_T1;
-   public static final int EDC_LRC;
-   public static final int EDC_CRC;
+   public static final int PROTOCOL_T0 = 1;
+   public static final int PROTOCOL_T1 = 2;
+   public static final int EDC_LRC = 1;
+   public static final int EDC_CRC = 2;
 
    public byte[] getBytes() {
       return Arrays.copy(this._atr);

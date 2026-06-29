@@ -35,8 +35,8 @@ final class SecurityMonitor$SecurityMonitorImpl implements SystemListener, Globa
    private long _nextTick;
    private PersistentObject _persistentObject;
    private SecurityMonitor$SecurityMonitorImpl$Data _data;
-   private static final long ONE_MINUTE;
-   private static final long ONE_HOUR;
+   private static final long ONE_MINUTE = 60000L;
+   private static final long ONE_HOUR = 3600000L;
 
    private final void checkTimers(String timerName, String randomString) {
       if (timerName != null && this._randomString.equals(randomString)) {

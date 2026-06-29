@@ -7,7 +7,7 @@ import net.rim.vm.Array;
 import net.rim.vm.Memory;
 
 public final class CryptoUtilities {
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    private CryptoUtilities() {
    }

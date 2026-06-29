@@ -8,14 +8,14 @@ final class PositionEstimate {
    private byte confidence;
    private AltitudeInfo altitudeInfo;
    private byte optionals;
-   static final byte POS_EST_OPT_UNCERTAINTY;
-   static final byte POS_EST_OPT_CONFIDENCE;
-   static final byte POS_EST_OPT_ALT_INFO;
-   static final byte NUM_OPT_ELEMENTS;
-   static final int LONGITUDE_BASE_VALUE;
-   static final byte LATITUDE_BIT_SIZE;
-   static final byte LONGITUDE_BIT_SIZE;
-   static final byte CONFIDENCE_BIT_SIZE;
+   static final byte POS_EST_OPT_UNCERTAINTY = 4;
+   static final byte POS_EST_OPT_CONFIDENCE = 2;
+   static final byte POS_EST_OPT_ALT_INFO = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final int LONGITUDE_BASE_VALUE = -8388608;
+   static final byte LATITUDE_BIT_SIZE = 23;
+   static final byte LONGITUDE_BIT_SIZE = 24;
+   static final byte CONFIDENCE_BIT_SIZE = 7;
 
    final void decode(Nibbler nib) {
       nib.getBit();

@@ -5,12 +5,12 @@ final class SuplEnd extends UlpMessage {
    private StatusCode statusCode;
    private char[] ver = new char[8];
    byte optionals;
-   static final byte SUPL_END_OPT_POSITION;
-   static final byte SUPL_END_OPT_STATUSCODE;
-   static final byte SUPL_END_OPT_VER;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte MAX_VER_SIZE;
-   static final byte MAX_VER_BIT_SIZE;
+   static final byte SUPL_END_OPT_POSITION = 4;
+   static final byte SUPL_END_OPT_STATUSCODE = 2;
+   static final byte SUPL_END_OPT_VER = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final byte MAX_VER_SIZE = 8;
+   static final byte MAX_VER_BIT_SIZE = 64;
 
    SuplEnd() {
       this.optionals = 0;

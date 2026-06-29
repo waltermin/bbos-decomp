@@ -3,8 +3,8 @@ package net.rim.device.apps.api.browser;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class BrowserServices {
-   public static final String WLAN_ACTIVATION_BROWSERCONFIG_UID;
-   public static final String WLAN_HOTSPOT_LOGIN_URL;
+   public static final String WLAN_ACTIVATION_BROWSERCONFIG_UID = "S TCP-WBC";
+   public static final String WLAN_HOTSPOT_LOGIN_URL = "http://www.blackberry.com/select/wifiloginsuccess/";
 
    private BrowserServices() {
    }

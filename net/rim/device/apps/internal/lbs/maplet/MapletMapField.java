@@ -32,7 +32,7 @@ public final class MapletMapField extends MapField implements Request$Listener, 
    private int _renderPID = -1;
    private MapletMapField$Timer _renderTimer = new MapletMapField$Timer(this, 250, 10000);
    private boolean _stageOne = true;
-   private static final boolean DRAW_OFFSCREEN;
+   private static final boolean DRAW_OFFSCREEN = true;
    private static int _requestCnt = 0;
 
    public final void doRenderComplete(boolean dataMissing) {

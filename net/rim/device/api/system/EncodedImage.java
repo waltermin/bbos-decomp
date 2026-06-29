@@ -26,19 +26,19 @@ public class EncodedImage {
    int _cacheScaleY;
    int _decodeSteps = Integer.MAX_VALUE;
    private static ToIntHashtable _mimeTypes;
-   public static final int DECODE_ALPHA;
-   public static final int DECODE_NATIVE;
-   public static final int DECODE_READONLY;
-   public static final int DECODE_NO_DITHER;
-   private static final int IMAGE_TYPE_UNKNOWN;
-   public static final int IMAGE_TYPE_GIF;
-   public static final int IMAGE_TYPE_PNG;
-   public static final int IMAGE_TYPE_JPEG;
-   public static final int IMAGE_TYPE_WBMP;
-   public static final int IMAGE_TYPE_BMP;
-   public static final int IMAGE_TYPE_TIFF;
-   public static final int IMAGE_TYPE_RWI;
-   public static final int IMAGE_TYPE_RGI;
+   public static final int DECODE_ALPHA = 1;
+   public static final int DECODE_NATIVE = 2;
+   public static final int DECODE_READONLY = 4;
+   public static final int DECODE_NO_DITHER = 8;
+   private static final int IMAGE_TYPE_UNKNOWN = 0;
+   public static final int IMAGE_TYPE_GIF = 1;
+   public static final int IMAGE_TYPE_PNG = 2;
+   public static final int IMAGE_TYPE_JPEG = 3;
+   public static final int IMAGE_TYPE_WBMP = 4;
+   public static final int IMAGE_TYPE_BMP = 5;
+   public static final int IMAGE_TYPE_TIFF = 6;
+   public static final int IMAGE_TYPE_RWI = 7;
+   public static final int IMAGE_TYPE_RGI = 8;
 
    EncodedImage() {
       this._decodeMode = 1;

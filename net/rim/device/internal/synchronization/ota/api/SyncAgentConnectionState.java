@@ -18,10 +18,10 @@ final class SyncAgentConnectionState implements Persistable {
    private Vector _changesList;
    private byte _flags;
    private byte _contextualRetryCount;
-   private static final long GUID;
-   private static final byte INITIALIZED_STATE;
-   private static final byte SUSPENDED_STATE;
-   private static final byte DISABLED_STATE;
+   private static final long GUID = -5303286210729691565L;
+   private static final byte INITIALIZED_STATE = 1;
+   private static final byte SUSPENDED_STATE = 2;
+   private static final byte DISABLED_STATE = 3;
    private static IntHashtable _states;
 
    private static final void loadStates() {

@@ -8,8 +8,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class DiagOptions extends OptionsBase {
    private RecipientDepot persistedOptions = (RecipientDepot)this.getPersistentObject().getContents();
-   private static final long DIAG_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_DIAG_OPTIONS;
+   private static final long DIAG_OPTIONS_SYNC_ITEM = -7659755219736269004L;
+   private static final long PERSISTED_DIAG_OPTIONS = 6230820399280227102L;
    private static DiagOptions _options;
 
    public static final DiagOptions getOptions() {

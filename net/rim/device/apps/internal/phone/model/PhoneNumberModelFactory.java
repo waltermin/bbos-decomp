@@ -13,7 +13,7 @@ import net.rim.device.apps.api.phone.PhoneNumberTypes;
 public class PhoneNumberModelFactory extends RIMModelFactory {
    private int _typeIndex;
    private int _ordering;
-   public static final long PHONE_NUMBER_MODEL_FACTORY_GUID;
+   public static final long PHONE_NUMBER_MODEL_FACTORY_GUID = 4493747836632402768L;
 
    public PhoneNumberModelFactory(long objectType) {
       this._typeIndex = this.mapObjectTypeToIndex(objectType);

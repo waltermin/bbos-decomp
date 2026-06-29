@@ -27,8 +27,8 @@ final class PhoneStatusField extends ObjectChoiceField implements RadioStatusLis
    private int[] _lineIds;
    private int _oldIndex;
    private boolean _setDeviceNumberOnUnfocus = false;
-   private static final int PHONE_STATUS_FONT_SIZE;
-   private static final String PHONE_STATUS_FONT;
+   private static final int PHONE_STATUS_FONT_SIZE = 8;
+   private static final String PHONE_STATUS_FONT = "BBMillbank";
 
    final void setDevicePhoneNumber(int lineId) {
       if (this.isFocus()) {

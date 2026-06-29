@@ -13,12 +13,12 @@ class MMSClientServiceBookRecord {
    private ServiceRecord _sr;
    private IntIntHashtable _integerTable;
    private IntHashtable _stringTable;
-   private static final String MMSCLIENTSB_NAME;
-   private static final String MMSCLIENTSB_CID;
-   private static final String MMSCLIENTSB_UID;
-   public static final int INTEGER_START;
-   public static final int STRING_START;
-   public static final int RESERVED_START;
+   private static final String MMSCLIENTSB_NAME = "MMS Client";
+   private static final String MMSCLIENTSB_CID = "MMS";
+   private static final String MMSCLIENTSB_UID = "MMS0001";
+   public static final int INTEGER_START = 0;
+   public static final int STRING_START = 32;
+   public static final int RESERVED_START = 64;
 
    public static MMSClientServiceBookRecord getInstance() {
       return getInstance(true);

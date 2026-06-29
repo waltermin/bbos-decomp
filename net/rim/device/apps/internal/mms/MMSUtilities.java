@@ -36,9 +36,9 @@ import net.rim.device.internal.system.DataServices;
 import net.rim.device.internal.util.StringUtilitiesInternal;
 
 public final class MMSUtilities {
-   public static final String MMS_SERVICE_CID;
-   private static final String TEMP_FILE_PATH;
-   private static final String EMAIL_SPECIAL_CHARS;
+   public static final String MMS_SERVICE_CID = "MMS";
+   private static final String TEMP_FILE_PATH = "file:///store/samples/mms/";
+   private static final String EMAIL_SPECIAL_CHARS = "()<>[]:;@,.\\\"";
    private static IntHashtable _mimeTypes;
 
    public static final int parseInt(String str, int defaultValue) {

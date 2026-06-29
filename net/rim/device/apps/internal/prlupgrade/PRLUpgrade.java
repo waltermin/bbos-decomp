@@ -11,8 +11,8 @@ import net.rim.device.resources.Resource;
 final class PRLUpgrade implements EngineeringDataListener {
    private boolean _fastResetNeeded;
    private Object _syncObject = new Object();
-   private static final String SPRINT_PRL_FILE;
-   private static final String SPRINT_LEGACY_PRL_FILE;
+   private static final String SPRINT_PRL_FILE = "Sprint_Saturn_ONLY_evdo_prl.bin";
+   private static final String SPRINT_LEGACY_PRL_FILE = "Sprint_evdo_prl.bin";
 
    private PRLUpgrade(byte[] prl) {
       if (prl != null) {

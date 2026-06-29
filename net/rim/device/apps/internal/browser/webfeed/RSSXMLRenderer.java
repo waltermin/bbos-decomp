@@ -23,15 +23,15 @@ final class RSSXMLRenderer extends Renderer {
    private ContentReadEvent _contentRead;
    private PipeContext _pipePosition;
    private boolean _append;
-   private static final int CHANNEL;
-   private static final int ITEM;
-   private static final int TITLE;
-   private static final int LINK;
-   private static final int DESCRIPTION;
-   private static final int PUB_DATE;
-   private static final int DATE;
-   private static final int GUID;
-   private static final int ENCLOSURE;
+   private static final int CHANNEL = 0;
+   private static final int ITEM = 1;
+   private static final int TITLE = 2;
+   private static final int LINK = 3;
+   private static final int DESCRIPTION = 4;
+   private static final int PUB_DATE = 5;
+   private static final int DATE = 6;
+   private static final int GUID = 7;
+   private static final int ENCLOSURE = 8;
    private static String[] TAGS = new String[]{"channel", "item", "title", "link", "description", "pubDate", "date", "guid", "enclosure"};
 
    public RSSXMLRenderer(HttpConnection connection, RenderingSession renderingSession, RenderingApplication renderingApplication, String referrer, int flags) {

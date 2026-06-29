@@ -19,7 +19,7 @@ import net.rim.device.apps.internal.mms.model.MMSAttachmentImpl;
 public class MMSSendVCalVerb extends MMSComposeVerb implements UniqueIDProvider, DefaultProvider {
    private int _callingProcessId;
    private MMSPresentationModel _presentation;
-   private static final long UNIQUE_KEY;
+   private static final long UNIQUE_KEY = 1270373357196762926L;
 
    public MMSSendVCalVerb() {
       this(1267024, 48);

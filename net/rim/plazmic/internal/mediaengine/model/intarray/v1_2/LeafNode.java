@@ -17,7 +17,7 @@ class LeafNode {
    AnimationModel _model;
    PME12Graphics _meGraphic;
    LeafNode _nextLeaf;
-   private static final int BBOX_CHANGE_BITS;
+   private static final int BBOX_CHANGE_BITS = -1912602624;
    static XYRect _dirtyRect = (XYRect)(new Object(0, 0, 0, 0));
    static XYRect _clippedBox = (XYRect)(new Object(0, 0, 0, 0));
    static boolean _bufferEnabled = false;

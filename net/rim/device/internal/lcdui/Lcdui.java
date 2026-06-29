@@ -27,18 +27,18 @@ public final class Lcdui {
    private boolean _suppressKeyEvents;
    private int _currentKeyStates;
    private int _keyDownHistory;
-   public static final long MIDLET_NOTIFICATION_GUID;
+   public static final long MIDLET_NOTIFICATION_GUID = 5013398281934186015L;
    private static Lcdui _impl = new Lcdui();
-   private static final int NONE;
-   public static final int KEYDOWN;
-   public static final int KEYREPEAT;
-   public static final int KEYUP;
-   public static final int KEYDOWNUP;
-   private static final int COMMANDACTION;
-   private static final int INVOKELATER;
-   public static final int USER_INVOKELATER;
-   private static final int FRESH;
-   private static final int STALE;
+   private static final int NONE = 0;
+   public static final int KEYDOWN = 2;
+   public static final int KEYREPEAT = 3;
+   public static final int KEYUP = 4;
+   public static final int KEYDOWNUP = 5;
+   private static final int COMMANDACTION = 6;
+   private static final int INVOKELATER = 7;
+   public static final int USER_INVOKELATER = 1;
+   private static final int FRESH = 0;
+   private static final int STALE = 1;
    private static final Object _eventDeliveryLock = new Object();
 
    public static final void init() {

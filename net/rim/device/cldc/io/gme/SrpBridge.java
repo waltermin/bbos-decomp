@@ -20,7 +20,7 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
    private int _connectionType = -1;
    private static String SNTP = "_GME_SNTP_";
    private static String SCHEME = "srp:";
-   private static final int CAPABILITIES;
+   private static final int CAPABILITIES = 3;
 
    protected SrpBridge(Transport transport, boolean wifiLink) {
       super(

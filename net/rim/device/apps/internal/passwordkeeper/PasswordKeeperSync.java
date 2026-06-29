@@ -16,20 +16,20 @@ public final class PasswordKeeperSync implements SyncCollection, SyncConverter, 
    private PasswordKeeperList _source;
    private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
    private SyncCollectionSchema _schema;
-   private static final int TITLE;
-   private static final int USERNAME;
-   private static final int PASSWORD;
-   private static final int NOTES;
-   private static final int SALT;
-   private static final int WEBSITE;
-   private static final int CREATION_TIME;
-   private static final int USERNAME_LABEL;
-   private static final int PASSWORD_LABEL;
-   private static final int WEBSITE_LABEL;
-   private static final int NOTES_LABEL;
+   private static final int TITLE = 1;
+   private static final int USERNAME = 2;
+   private static final int PASSWORD = 3;
+   private static final int NOTES = 4;
+   private static final int SALT = 5;
+   private static final int WEBSITE = 6;
+   private static final int CREATION_TIME = 7;
+   private static final int USERNAME_LABEL = 8;
+   private static final int PASSWORD_LABEL = 9;
+   private static final int WEBSITE_LABEL = 10;
+   private static final int NOTES_LABEL = 11;
    private static final byte[] EMPTY = new byte[0];
    private static final int[] KEY_FIELD_IDS = new int[]{7, -805044219, 1718183726, 10};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    public final void updateOTASync(boolean enable) {
       SyncManager.getInstance().allowOTASync(this, enable);

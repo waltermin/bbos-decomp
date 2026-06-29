@@ -1,7 +1,7 @@
 package net.rim.device.api.util;
 
 public final class CRC16 {
-   public static final int INITIAL_VALUE;
+   public static final int INITIAL_VALUE = 65535;
 
    private CRC16() {
    }

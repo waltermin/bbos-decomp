@@ -16,27 +16,27 @@ import net.rim.device.internal.io.file.RootRegister;
 
 public final class FileSystemEncryption {
    public static String KEY_FILE = "/blackberry/system/info.mkf";
-   private static final int DEFAULT_KEY_LENGTH;
-   private static final int CURRENT_VERSION;
+   private static final int DEFAULT_KEY_LENGTH = 32;
+   private static final int CURRENT_VERSION = 1;
    private static final byte[] DEFAULT_ENCRYPTION_KEY = new byte[]{
       82, 23, 56, 121, 1, 5, 98, -93, 49, -76, -14, -16, -111, 54, -61, -18, -97, 81, -116, 67, 121, 32, 67, -38, -38, 20, 83, -121, -74, 56, 116, -100
    };
-   static final long FILE_EVENT_LOGGER_GUID;
-   private static final String FILE_EVENT_LOGGER_TITLE;
-   private static final int FILE_SYSTEM_LOCKED;
-   private static final int FILE_SYSTEM_NULL_USER_KEY;
-   private static final int FILE_SYSTEM_BAD_LOCK_MODE;
-   private static final int FILE_SYSTEM_MASTER_KEY_FROM_CACHE;
-   private static final int FILE_SYSTEM_CIPHER_NOT_FOUND;
-   private static final int FILE_SYSTEM_HASH_NOT_FOUND;
-   private static final int FILE_SYSTEM_SALT_NOT_FOUND;
-   static final int FILE_SYSTEM_LOCKED_TO_WRONG_DEVICE;
-   private static final int FILE_SYSTEM_CREATING_NEW_KEY;
-   private static final int FILE_SYSTEM_CHANGING_KEYING_PASSWORD;
-   private static final int FILE_SYSTEM_CHANGING_LOCK_TYPE;
-   private static final int FILE_SYSTEM_ERROR_CHANGING_LOCK_TYPE;
-   private static final int FILE_SYSTEM_ERROR_CHANGING_LOCK_TYPE_IOE;
-   private static final int FILE_SYSTEM_SKIPPING_CHANGING_LOCK_TYPE;
+   static final long FILE_EVENT_LOGGER_GUID = 4782370668738403183L;
+   private static final String FILE_EVENT_LOGGER_TITLE = "net.rim.file";
+   private static final int FILE_SYSTEM_LOCKED = 1718840420;
+   private static final int FILE_SYSTEM_NULL_USER_KEY = 1718840939;
+   private static final int FILE_SYSTEM_BAD_LOCK_MODE = 1651272557;
+   private static final int FILE_SYSTEM_MASTER_KEY_FROM_CACHE = 1835755107;
+   private static final int FILE_SYSTEM_CIPHER_NOT_FOUND = 1668116070;
+   private static final int FILE_SYSTEM_HASH_NOT_FOUND = 1752002150;
+   private static final int FILE_SYSTEM_SALT_NOT_FOUND = 1936551526;
+   static final int FILE_SYSTEM_LOCKED_TO_WRONG_DEVICE = 1819764580;
+   private static final int FILE_SYSTEM_CREATING_NEW_KEY = 1717792363;
+   private static final int FILE_SYSTEM_CHANGING_KEYING_PASSWORD = 1667788919;
+   private static final int FILE_SYSTEM_CHANGING_LOCK_TYPE = 1667787892;
+   private static final int FILE_SYSTEM_ERROR_CHANGING_LOCK_TYPE = 1667786092;
+   private static final int FILE_SYSTEM_ERROR_CHANGING_LOCK_TYPE_IOE = 1667787881;
+   private static final int FILE_SYSTEM_SKIPPING_CHANGING_LOCK_TYPE = 1667789676;
 
    private FileSystemEncryption() {
    }

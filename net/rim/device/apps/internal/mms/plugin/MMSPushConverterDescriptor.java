@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.mms.MMSPolicy;
 import net.rim.device.apps.internal.mms.MMSPolicy$ChangeListener;
 
 final class MMSPushConverterDescriptor implements ConverterDescriptor, MMSPolicy$ChangeListener {
-   public static final String DEFAULT_CONTEXT;
+   public static final String DEFAULT_CONTEXT = "net.rim.device.apps.internal.browser.wappush";
 
    public final void startListening() {
       MMSPolicy.addListener(this);

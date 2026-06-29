@@ -5,7 +5,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.LongHashtable;
 
 public class VerbFactoryRepository {
-   private static final long VERB_FACTORIES_REPOSITORY_ID;
+   private static final long VERB_FACTORIES_REPOSITORY_ID = -4466860719023034319L;
    private static LongHashtable _verbFactories = ApplicationRegistry.getApplicationRegistry().getLongHashtable(-4466860719023034319L);
 
    private VerbFactoryRepository() {

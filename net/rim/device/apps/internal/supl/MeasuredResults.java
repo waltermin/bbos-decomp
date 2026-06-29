@@ -6,12 +6,12 @@ final class MeasuredResults {
    private byte numCellMeasuredResultListItems;
    private CellMeasuredResults[] cellMeasuredResults;
    private byte optionals;
-   static final byte MEAS_RES_OPT_FREQ_INFO;
-   static final byte MEAS_RES_OPT_UTRA_CARRIER_RSSI;
-   static final byte MEAS_RES_OPT_CELL_MEAS_RESULTS;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte UTRA_CARRIER_RSSI_BIT_SIZE;
-   static final byte CELL_MEAS_RES_NUM_ITEMS_BIT_SIZE;
+   static final byte MEAS_RES_OPT_FREQ_INFO = 4;
+   static final byte MEAS_RES_OPT_UTRA_CARRIER_RSSI = 2;
+   static final byte MEAS_RES_OPT_CELL_MEAS_RESULTS = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final byte UTRA_CARRIER_RSSI_BIT_SIZE = 7;
+   static final byte CELL_MEAS_RES_NUM_ITEMS_BIT_SIZE = 5;
 
    final void encode(Stuffer stuff) {
       stuff.putBits(this.optionals, 3);

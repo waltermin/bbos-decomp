@@ -8,7 +8,7 @@ public final class LoopingThreadService implements Service {
    private boolean _enabled = false;
    private boolean _running = false;
    private boolean _next = false;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/service/LoopingThreadService.java#1 $";
 
    public LoopingThreadService(Runnable task, boolean wait) {
       this._task = task;

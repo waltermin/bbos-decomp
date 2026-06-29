@@ -6,7 +6,7 @@ import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 
 public final class SignedReceiptCache {
-   private static final long ID;
+   private static final long ID = 8463082725501068133L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(8463082725501068133L);
    private static Vector _receipts;
 

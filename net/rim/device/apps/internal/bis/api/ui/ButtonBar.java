@@ -6,10 +6,10 @@ import net.rim.device.api.ui.container.HorizontalFieldManager;
 
 final class ButtonBar extends HorizontalFieldManager {
    private Button _firstFocusButton;
-   public static final int CLOSE_BUTTON;
-   public static final int BACK_BUTTON;
-   public static final int NEXT_BUTTON;
-   private static final int BUTTON_FONT_SIZE_PT;
+   public static final int CLOSE_BUTTON = 1;
+   public static final int BACK_BUTTON = 2;
+   public static final int NEXT_BUTTON = 4;
+   private static final int BUTTON_FONT_SIZE_PT = 5;
 
    public ButtonBar() {
       super(12884901888L);

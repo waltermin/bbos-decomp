@@ -23,20 +23,20 @@ public class KeywordPrefixManager implements Persistable {
    private boolean _sortedLong;
    private int _maxId;
    private boolean _haltSearch;
-   private static final int MASK_BIT_COUNT;
-   private static final long MASK_BIT_COUNT_LONG;
-   private static final int PREFIX_SHIFT;
-   private static final int PREFIX_MASK_1;
-   private static final long PREFIX_MASK_1_LONG;
-   private static final int PREFIX_MASK_2;
-   private static final long PREFIX_MASK_2_LONG;
-   private static final int PREFIX_MASK_3;
-   private static final long PREFIX_MASK_3_LONG;
-   private static final int PREFIX_MASK;
-   private static final long PREFIX_MASK_LONG;
-   private static final int FIRST_WORD_MASK;
-   private static final int ID_MASK;
-   private static final int PREFIX_LENGTH;
+   private static final int MASK_BIT_COUNT = 5;
+   private static final long MASK_BIT_COUNT_LONG = 16L;
+   private static final int PREFIX_SHIFT = 16;
+   private static final int PREFIX_MASK_1 = 2080374784;
+   private static final long PREFIX_MASK_1_LONG = -281474976710656L;
+   private static final int PREFIX_MASK_2 = 65011712;
+   private static final long PREFIX_MASK_2_LONG = 281470681743360L;
+   private static final int PREFIX_MASK_3 = 2031616;
+   private static final long PREFIX_MASK_3_LONG = 4294901760L;
+   private static final int PREFIX_MASK = 2147418112;
+   private static final long PREFIX_MASK_LONG = -65536L;
+   private static final int FIRST_WORD_MASK = 32768;
+   private static final int ID_MASK = 32767;
+   private static final int PREFIX_LENGTH = 3;
    private static final byte[] charUnifier = new byte[]{
       0,
       31,

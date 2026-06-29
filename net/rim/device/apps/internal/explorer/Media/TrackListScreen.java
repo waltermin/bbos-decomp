@@ -92,10 +92,10 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
    private AliasFileEntry _videoCameraAlias = null;
    private int _movingCurIndex;
    private int _movedItemIndex;
-   private static final String UTF8;
-   private static final int DESIRED_ALBUM_WIDTH;
-   private static final int DESIRED_ALBUM_HEIGHT;
-   private static final int ALBUM_CHAR_LIMIT;
+   private static final String UTF8 = "UTF-8";
+   private static final int DESIRED_ALBUM_WIDTH = 90;
+   private static final int DESIRED_ALBUM_HEIGHT = 90;
+   private static final int ALBUM_CHAR_LIMIT = 50;
    private static EncodedImage NO_ART = null;
 
    protected final void setText(String text) {

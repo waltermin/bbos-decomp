@@ -13,8 +13,8 @@ public class PGPPasswordTicket implements Persistable {
    private int _promptType;
    private String[] _promptParameters;
    private byte[] _password;
-   public static final int PROMPT_TYPE_DECRYPT_PRIVATE_KEY;
-   public static final int PROMPT_TYPE_DECRYPT_MESSAGE;
+   public static final int PROMPT_TYPE_DECRYPT_PRIVATE_KEY = 0;
+   public static final int PROMPT_TYPE_DECRYPT_MESSAGE = 1;
 
    public PGPPasswordTicket(int promptType) {
       this(promptType, null);

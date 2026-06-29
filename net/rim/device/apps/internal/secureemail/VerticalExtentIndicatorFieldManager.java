@@ -5,8 +5,8 @@ import net.rim.device.api.ui.Graphics;
 
 public class VerticalExtentIndicatorFieldManager extends SecureEmailMessageBlockManager {
    private int _extentIndicatorColourRGB;
-   private static final int EXTENT_INDICATOR_WIDTH;
-   private static final int EXTENT_INDICATOR_WIDTH_PLUS_SPACE;
+   private static final int EXTENT_INDICATOR_WIDTH = 3;
+   private static final int EXTENT_INDICATOR_WIDTH_PLUS_SPACE = 5;
 
    public VerticalExtentIndicatorFieldManager(int extentIndicatorColourRGB, long style) {
       super(style);

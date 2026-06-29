@@ -6,11 +6,11 @@ import net.rim.blackberry.api.mail.Message;
 public class FolderEvent extends MailEvent {
    private Message _message;
    private int _type;
-   public static final int MESSAGE_ADDED;
-   public static final int MESSAGE_REMOVED;
-   public static final int FOLDER_CREATED;
-   public static final int FOLDER_DELETED;
-   public static final int FOLDER_UPDATED;
+   public static final int MESSAGE_ADDED = 1;
+   public static final int MESSAGE_REMOVED = 2;
+   public static final int FOLDER_CREATED = 3;
+   public static final int FOLDER_DELETED = 4;
+   public static final int FOLDER_UPDATED = 5;
 
    public FolderEvent(Folder folder, int type, Message m) {
       super(folder);

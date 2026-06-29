@@ -3,9 +3,9 @@ package net.rim.device.apps.internal.explorer.MediaLibrary;
 import net.rim.device.api.collection.util.KeywordPrefixManager;
 
 public final class FilterConstants {
-   static final char ARTIST_PREFIX;
-   static final char ALBUM_PREFIX;
-   static final char GENRE_PREFIX;
+   static final char ARTIST_PREFIX = 'ￊ';
+   static final char ALBUM_PREFIX = 'ￋ';
+   static final char GENRE_PREFIX = 'ￌ';
    public static final String PRELOADED_PREFIX = generateKey('ￍ', Math.abs("preloaded".hashCode()));
    public static final String USERLOADED_PREFIX = generateKey('ￎ', Math.abs("userloaded".hashCode()));
    public static final String PLAYLIST_PREFIX = generateKey('ￏ', Math.abs("playlist".hashCode()));

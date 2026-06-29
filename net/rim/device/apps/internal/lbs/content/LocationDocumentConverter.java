@@ -9,11 +9,11 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class LocationDocumentConverter extends DefaultHandler {
-   public static final int PATHTYPE_LINE;
-   public static final int PATHTYPE_POINTS;
-   public static final int PROFILETYPE_TIME;
-   public static final int PROFILETYPE_ALTITUDE;
-   public static final int PROFILETYPE_HEARTRATE;
+   public static final int PATHTYPE_LINE = 1;
+   public static final int PATHTYPE_POINTS = 2;
+   public static final int PROFILETYPE_TIME = 1;
+   public static final int PROFILETYPE_ALTITUDE = 2;
+   public static final int PROFILETYPE_HEARTRATE = 3;
 
    public static int readCompressedSignedInt(DataBuffer db) {
       int i = 0;

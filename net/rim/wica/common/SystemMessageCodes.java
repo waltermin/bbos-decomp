@@ -1,30 +1,30 @@
 package net.rim.wica.common;
 
 public final class SystemMessageCodes {
-   public static final int ERROR;
-   public static final int HEARTBEAT;
-   public static final int FLOW_CONTROL;
-   public static final int RE_STATUS_REQUEST;
-   public static final int RE_STATUS;
-   public static final int POLICIES;
-   public static final int RE_UPGRADE_AVAILABLE;
-   public static final int RE_UPGRADE_REQUIRED;
-   public static final int RE_UPGRADE_STATUS;
-   public static final int RE_KEY_REFRESH;
-   public static final int WICLET_UPGRADE;
-   public static final int DESTROY_WICLET;
-   public static final int QUARANTINE_WICLET;
-   public static final int DELIVER_SCRIPT;
-   public static final int LIFECYCLE_STATUS;
-   public static final int INSTALL_WICLET;
-   public static final int SUBSCRIBE_REFRESH_KEY;
-   public static final int SUBSCRIBE_RE_STATUS;
-   public static final int SUBSCRIBE_DESTROY_WICLET;
-   public static final int SUBSCRIBE_QUARANTINE_WICLET;
-   public static final int SUBSCRIBE_UPGRADE_WICLET;
-   public static final int AUTHENTICATION_REQUEST;
-   public static final int AUTHENTICATION_RESPONSE;
-   public static final int CANCEL_AUTHENTICATION;
+   public static final int ERROR = 0;
+   public static final int HEARTBEAT = 1;
+   public static final int FLOW_CONTROL = 2;
+   public static final int RE_STATUS_REQUEST = 3;
+   public static final int RE_STATUS = 4;
+   public static final int POLICIES = 5;
+   public static final int RE_UPGRADE_AVAILABLE = 6;
+   public static final int RE_UPGRADE_REQUIRED = 7;
+   public static final int RE_UPGRADE_STATUS = 8;
+   public static final int RE_KEY_REFRESH = 9;
+   public static final int WICLET_UPGRADE = 128;
+   public static final int DESTROY_WICLET = 129;
+   public static final int QUARANTINE_WICLET = 130;
+   public static final int DELIVER_SCRIPT = 131;
+   public static final int LIFECYCLE_STATUS = 132;
+   public static final int INSTALL_WICLET = 133;
+   public static final int SUBSCRIBE_REFRESH_KEY = 256;
+   public static final int SUBSCRIBE_RE_STATUS = 257;
+   public static final int SUBSCRIBE_DESTROY_WICLET = 258;
+   public static final int SUBSCRIBE_QUARANTINE_WICLET = 259;
+   public static final int SUBSCRIBE_UPGRADE_WICLET = 260;
+   public static final int AUTHENTICATION_REQUEST = 512;
+   public static final int AUTHENTICATION_RESPONSE = 513;
+   public static final int CANCEL_AUTHENTICATION = 514;
 
    public static final String toString(int msgCode) {
       switch (msgCode) {

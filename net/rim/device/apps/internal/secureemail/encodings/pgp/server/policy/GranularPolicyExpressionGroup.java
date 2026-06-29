@@ -8,11 +8,11 @@ import org.xml.sax.Attributes;
 
 class GranularPolicyExpressionGroup extends GranularPolicyElement implements GranularPolicyEvaluateProvider {
    private int _groupOperator;
-   public static final int UNKNOWN;
-   public static final int GROUP_OPERATOR_ALL;
-   public static final int GROUP_OPERATOR_ANY;
-   public static final int GROUP_OPERATOR_NOT;
-   public static final int GROUP_OPERATOR_TRUE;
+   public static final int UNKNOWN = -1;
+   public static final int GROUP_OPERATOR_ALL = 0;
+   public static final int GROUP_OPERATOR_ANY = 1;
+   public static final int GROUP_OPERATOR_NOT = 2;
+   public static final int GROUP_OPERATOR_TRUE = 3;
 
    public GranularPolicyExpressionGroup(String xmlTag, Attributes attributes, GranularPolicyElement parentElement) {
       super(xmlTag, parentElement);

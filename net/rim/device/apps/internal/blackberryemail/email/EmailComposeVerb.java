@@ -14,7 +14,7 @@ import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public final class EmailComposeVerb extends ShowMessageAppVerb {
-   public static final long GUID_SEND_AS_EMAIL;
+   public static final long GUID_SEND_AS_EMAIL = -532296207860186005L;
 
    public static final EmailComposeVerb getSendAsVerb() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

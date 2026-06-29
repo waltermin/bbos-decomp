@@ -27,8 +27,8 @@ public class RadioButtonField extends Field implements FieldLabelProvider {
    private TextRect _text = new TextRect(this);
    private XYRect _focus = new XYRect();
    private static Tag TAG = Tag.create("radiobutton");
-   private static final int PADDING;
-   public static final long NO_USE_ALL_WIDTH;
+   private static final int PADDING = 2;
+   public static final long NO_USE_ALL_WIDTH = 2147483648L;
    private static MenuItem _changeOptionsItem = new RadioButtonField$ChangeOptionMenuItem();
 
    public void setSelected(boolean selected) {

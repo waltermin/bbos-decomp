@@ -14,9 +14,9 @@ import net.rim.vm.Array;
 public class PolicySyncCollection implements SyncCollection, SyncConverter, AlwaysSyncCollection, NoProtectedContentInCollection {
    private PersistentObject _persist = RIMPersistentStore.getPersistentObject(6362811050397941699L);
    private Object[] _records = (Object[])this._persist.getContents();
-   private static final long KEY;
-   private static final String SYNC_NAME;
-   private static final int SYNC_VERSION;
+   private static final long KEY = 6362811050397941699L;
+   private static final String SYNC_NAME = "Policy";
+   private static final int SYNC_VERSION = 0;
 
    PolicySyncCollection() {
       if (this._records == null) {

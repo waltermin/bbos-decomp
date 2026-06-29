@@ -27,8 +27,8 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
    private String _state;
    private boolean _canHide = true;
    private String _descriptionOverride;
-   private static final long PROPERTIES_OVERRIDE_ID_KEY;
-   public static final long APP_DESCRIPTOR;
+   private static final long PROPERTIES_OVERRIDE_ID_KEY = 800229957454453956L;
+   public static final long APP_DESCRIPTOR = -8880124975077471920L;
 
    public final ApplicationDescriptor getApplicationDescriptor() {
       return this._applicationDescriptor;

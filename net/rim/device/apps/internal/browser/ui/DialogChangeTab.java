@@ -15,8 +15,8 @@ import net.rim.device.internal.ui.Image;
 import net.rim.device.internal.ui.component.ImageField;
 
 public final class DialogChangeTab extends PopupScreen {
-   private static final int ICON_WIDTH;
-   private static final int ICON_HEIGHT;
+   private static final int ICON_WIDTH = 16;
+   private static final int ICON_HEIGHT = 16;
 
    public DialogChangeTab() {
       super((Manager)(new Object()), 0);

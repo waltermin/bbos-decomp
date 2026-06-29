@@ -4,11 +4,11 @@ import net.rim.device.api.util.ToIntHashtable;
 
 class MessagesEventProvider extends CountEventProvider {
    boolean _registeredForNewEmail;
-   static final String NEW_EMAIL;
-   static final String NO_NEW_EMAIL;
-   static final String NEW_EMAIL_VISIBLE;
-   static final String NO_NEW_EMAIL_VISIBLE;
-   private static final int EVENT_TYPE_NEW_EMAIL;
+   static final String NEW_EMAIL = "new_email";
+   static final String NO_NEW_EMAIL = "no_new_email";
+   static final String NEW_EMAIL_VISIBLE = "new_email_visible";
+   static final String NO_NEW_EMAIL_VISIBLE = "no_new_email_visible";
+   private static final int EVENT_TYPE_NEW_EMAIL = 0;
    private static UnreadCountListenerHelper _ucHelper;
    private static ToIntHashtable _events;
 

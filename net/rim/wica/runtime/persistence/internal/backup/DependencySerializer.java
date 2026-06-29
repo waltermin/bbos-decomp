@@ -7,9 +7,9 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class DependencySerializer extends AbstractArraySerializer {
    private static DependencySerializer _instance;
-   private static final byte TYPE;
-   private static final byte NAME;
-   private static final byte VERSION;
+   private static final byte TYPE = 0;
+   private static final byte NAME = 1;
+   private static final byte VERSION = 2;
 
    static final DependencySerializer getInstance() {
       if (_instance == null) {

@@ -7,18 +7,18 @@ public class ViewportManager {
    private int _height;
    private int _style;
    protected MediaViewport _viewport;
-   public static final int ALIGN_NONE;
-   public static final int ALIGN_TOP;
-   public static final int ALIGN_BOTTOM;
-   public static final int ALIGN_LEFT;
-   public static final int ALIGN_RIGHT;
-   public static final int ALIGN_V_CENTER;
-   public static final int ALIGN_H_CENTER;
-   public static final int UP;
-   public static final int DOWN;
-   public static final int RIGHT;
-   public static final int LEFT;
-   private static final int SCROLL_DELTA;
+   public static final int ALIGN_NONE = 0;
+   public static final int ALIGN_TOP = 1;
+   public static final int ALIGN_BOTTOM = 2;
+   public static final int ALIGN_LEFT = 4;
+   public static final int ALIGN_RIGHT = 8;
+   public static final int ALIGN_V_CENTER = 3;
+   public static final int ALIGN_H_CENTER = 12;
+   public static final int UP = 1;
+   public static final int DOWN = 2;
+   public static final int RIGHT = 3;
+   public static final int LEFT = 4;
+   private static final int SCROLL_DELTA = 6;
 
    public ViewportManager(int style) {
       this._style = style;

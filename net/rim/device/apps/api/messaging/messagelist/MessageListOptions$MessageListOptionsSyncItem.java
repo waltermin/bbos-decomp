@@ -7,26 +7,26 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class MessageListOptions$MessageListOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int MIN_VERSION;
-   private static final int MAX_VERSION;
-   private static final int DB_VERSION;
-   private static final int END_OF_TAGGED_DATA;
-   private static final int SERVICE_RECORD_NAME_TAG;
-   private static final int SERVICE_RECORD_UID_TAG;
-   private static final int DELETE_ON_LOCATION_TAG;
-   private static final int SPELL_CHECK_BEFORE_SEND_TAG;
-   private static final int KEEP_MESSAGES_DURATION_TAG;
-   private static final int HIDE_SENT_TAG;
-   private static final int DISPLAY_MESSAGE_COUNT_TAG;
-   private static final int DISPLAY_NEW_MESSAGE_INDICTAOR_TAG;
-   private static final int DSN_SETTINGS_TAG;
-   private static final int MESSAGE_LIST_LINE_MODE;
-   private static final int SMS_EMAIL_INBOX_TAG;
-   private static final int AUTO_DOWNLOAD_ATTACHMENT_TAG;
-   private static final int AUTO_DOWNLOAD_ATTACHMENT_HIGH_SPEED_ONLY_TAG;
-   private static final int LIST_SEPARATOR_APPEARANCE;
-   private static final int CONFIRM_MARK_PRIOR_OPENED_TAG;
+   private static final int MIN_DATA_LENGTH = 10;
+   private static final int MIN_VERSION = 0;
+   private static final int MAX_VERSION = 1;
+   private static final int DB_VERSION = 1;
+   private static final int END_OF_TAGGED_DATA = 0;
+   private static final int SERVICE_RECORD_NAME_TAG = 1;
+   private static final int SERVICE_RECORD_UID_TAG = 2;
+   private static final int DELETE_ON_LOCATION_TAG = 3;
+   private static final int SPELL_CHECK_BEFORE_SEND_TAG = 4;
+   private static final int KEEP_MESSAGES_DURATION_TAG = 5;
+   private static final int HIDE_SENT_TAG = 6;
+   private static final int DISPLAY_MESSAGE_COUNT_TAG = 8;
+   private static final int DISPLAY_NEW_MESSAGE_INDICTAOR_TAG = 9;
+   private static final int DSN_SETTINGS_TAG = 10;
+   private static final int MESSAGE_LIST_LINE_MODE = 11;
+   private static final int SMS_EMAIL_INBOX_TAG = 12;
+   private static final int AUTO_DOWNLOAD_ATTACHMENT_TAG = 13;
+   private static final int AUTO_DOWNLOAD_ATTACHMENT_HIGH_SPEED_ONLY_TAG = 14;
+   private static final int LIST_SEPARATOR_APPEARANCE = 15;
+   private static final int CONFIRM_MARK_PRIOR_OPENED_TAG = 16;
 
    @Override
    public final String getSyncName() {

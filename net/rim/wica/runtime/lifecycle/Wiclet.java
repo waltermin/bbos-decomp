@@ -5,15 +5,15 @@ import net.rim.wica.runtime.metadata.WicletContext;
 import net.rim.wica.runtime.provisioning.DeploymentDescriptor;
 
 public interface Wiclet extends WicletContext {
-   int INSTALLED_STATE;
-   int INSTALLING_STATE;
-   int UNINSTALLED_STATE;
-   int QUARANTINED_STATE;
-   int STOPPED_STATE;
-   int STARTING_STATE;
-   int ACTIVE_STATE;
-   int STOPPING_STATE;
-   int UPDATING_STATE;
+   int INSTALLED_STATE = 0;
+   int INSTALLING_STATE = 1;
+   int UNINSTALLED_STATE = 2;
+   int QUARANTINED_STATE = 4;
+   int STOPPED_STATE = 0;
+   int STARTING_STATE = 1;
+   int ACTIVE_STATE = 2;
+   int STOPPING_STATE = 4;
+   int UPDATING_STATE = 8;
 
    int getState();
 

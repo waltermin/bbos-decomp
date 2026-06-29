@@ -13,7 +13,7 @@ public class SkinEventProvider implements MediaService, MediaListener {
    private WlanEventProvider _wlanEventProvider = new WlanEventProvider(this);
    private ModelInteractorImpl _model;
    private EventEngine _engine;
-   public static final String ID;
+   public static final String ID = "SkinEventProvider";
 
    void dispatchEvent(String eventId) {
       if (this._engine != null && this._engine.isRunning()) {

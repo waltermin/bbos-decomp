@@ -3,11 +3,11 @@ package net.rim.device.internal.system;
 import net.rim.device.api.itpolicy.ITPolicy;
 
 public final class FIPSPolicy {
-   public static final boolean PASSWORD_REQUIRED_FIPS_DEFAULT;
-   public static final int PASSWORD_MIN_LENGTH_FIPS_DEFAULT;
-   public static final boolean SUPPRESS_PASSWORD_ECHO_FIPS_DEFAULT;
-   public static final boolean TLS_RESTRICT_FIPS_CIPHERS_FIPS_DEFAULT;
-   public static final boolean WTLS_RESTRICT_FIPS_CIPHERS_FIPS_DEFAULT;
+   public static final boolean PASSWORD_REQUIRED_FIPS_DEFAULT = true;
+   public static final int PASSWORD_MIN_LENGTH_FIPS_DEFAULT = 5;
+   public static final boolean SUPPRESS_PASSWORD_ECHO_FIPS_DEFAULT = true;
+   public static final boolean TLS_RESTRICT_FIPS_CIPHERS_FIPS_DEFAULT = true;
+   public static final boolean WTLS_RESTRICT_FIPS_CIPHERS_FIPS_DEFAULT = true;
 
    public static final boolean getBoolean(int id, boolean defaultValue, boolean fipsDefaultValue) {
       return getFIPSLevel() >= 2 ? fipsDefaultValue : ITPolicy.getBoolean(id, defaultValue);

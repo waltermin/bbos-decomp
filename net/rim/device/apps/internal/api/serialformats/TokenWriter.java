@@ -10,10 +10,10 @@ class TokenWriter {
    private int _length;
    private String _encoding;
    private boolean _isUTF8;
-   private static final int TAB;
-   private static final int SPACE;
-   private static final int CR;
-   private static final int LF;
+   private static final int TAB = 9;
+   private static final int SPACE = 32;
+   private static final int CR = 13;
+   private static final int LF = 10;
    private static final byte[] CRLF = new byte[]{13, 10};
    private static int LINE_FOLDING_LIMIT = 75;
 

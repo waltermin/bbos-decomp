@@ -4,7 +4,7 @@ public final class ShortVector {
    private int _rawSize = 10;
    private short[] _array = new short[this._rawSize];
    private int _numElements;
-   private static final int SIZE_INCREMENT;
+   private static final int SIZE_INCREMENT = 10;
 
    public final void addElement(short value) {
       if (this._numElements == this._rawSize) {

@@ -4,17 +4,17 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.util.DataBuffer;
 
 final class ContentHandlerConverter {
-   private static final int HANDLER_ID;
-   private static final int HANDLER_TYPES;
-   private static final int HANDLER_SUFFIXES;
-   private static final int HANDLER_ACTIONS;
-   private static final int HANDLER_ACTION_NAMES;
-   private static final int HANDLER_APP_NAME;
-   private static final int HANDLER_VERSION;
-   private static final int HANDLER_AUTHORITY;
-   private static final int HANDLER_CLASSNAME;
-   private static final int HANDLER_ACCESS_ALLOWED;
-   private static final int HANDLER_REGISTRATION;
+   private static final int HANDLER_ID = 0;
+   private static final int HANDLER_TYPES = 1;
+   private static final int HANDLER_SUFFIXES = 2;
+   private static final int HANDLER_ACTIONS = 3;
+   private static final int HANDLER_ACTION_NAMES = 4;
+   private static final int HANDLER_APP_NAME = 5;
+   private static final int HANDLER_VERSION = 6;
+   private static final int HANDLER_AUTHORITY = 7;
+   private static final int HANDLER_CLASSNAME = 8;
+   private static final int HANDLER_ACCESS_ALLOWED = 9;
+   private static final int HANDLER_REGISTRATION = 10;
 
    private ContentHandlerConverter() {
    }

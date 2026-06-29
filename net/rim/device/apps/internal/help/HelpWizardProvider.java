@@ -59,8 +59,8 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
    private int _navigationMode;
    protected boolean _warnOnCloseOrHotKeys;
    private int _wizardFlags;
-   public static final int NO_TITLE_BAR;
-   public static final int FULL_MENU;
+   public static final int NO_TITLE_BAR = 131072;
+   public static final int FULL_MENU = 262144;
    protected static String[] WIZARD_INTRO_TOPICS = new String[]{"intro1.rhtml", "intro2.rhtml", "intro3.rhtml"};
    protected static String[] WIZARD_INTRO_TOPICS_POSITRON = new String[]{"intro2.rhtml", "intro3.rhtml"};
    protected static String[] WIZARD_SHORTCUTS_TOPICS = new String[]{"tipstricks3.rhtml"};

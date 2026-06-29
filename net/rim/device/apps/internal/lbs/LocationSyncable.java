@@ -7,9 +7,9 @@ import net.rim.device.apps.api.framework.model.KeyProvider;
 import net.rim.device.apps.api.messaging.util.SimpleFolder;
 
 public interface LocationSyncable extends Persistable, SyncObject, KeyProvider {
-   int TYPE_LOCATION;
-   int TYPE_ROUTE;
-   int TYPE_HISTORY;
+   int TYPE_LOCATION = 1;
+   int TYPE_ROUTE = 2;
+   int TYPE_HISTORY = 3;
 
    void setData(String var1, byte[] var2);
 

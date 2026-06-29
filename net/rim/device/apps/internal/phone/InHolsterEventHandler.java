@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.profiles.ProfileQuickToggle;
 final class InHolsterEventHandler implements KeyListener, TrackwheelListener {
    private InHolsterEventListener _listener;
    private int _lastEscClickTime;
-   private static final int ESC_DBL_CLICK_THRESHOLD;
+   private static final int ESC_DBL_CLICK_THRESHOLD = 500;
 
    private InHolsterEventHandler(InHolsterEventListener listener) {
       this._listener = listener;

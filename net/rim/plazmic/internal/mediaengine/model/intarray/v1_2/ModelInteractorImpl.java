@@ -23,7 +23,7 @@ public final class ModelInteractorImpl extends AnimationModel implements ModelIn
    private Object _eventResolver;
    private Object _behaviorManager;
    private Node[] _nodeInstances;
-   public static final int AVERAGE_NODE_CAPACITY;
+   public static final int AVERAGE_NODE_CAPACITY = 50;
 
    public final int deleteNodeHandle(boolean keepChildren, int nodeToDelete) {
       return NodeImpl.deleteNodeHandle(keepChildren, nodeToDelete, this);

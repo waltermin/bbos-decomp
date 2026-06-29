@@ -11,7 +11,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherServiceExcep
 import net.rim.plazmic.internal.contentpreview.dispatcher.NoSuchSessionException;
 
 public final class BootstrapApplication extends Application implements HolsterListener {
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/apps/BootstrapApplication.java#1 $";
 
    public BootstrapApplication() {
       this.addHolsterListener(this);

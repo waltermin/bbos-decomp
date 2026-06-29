@@ -15,8 +15,8 @@ public class Base64InputStream extends InputStream {
    private IOException _lastException;
    private boolean _treatErrorAsEOF;
    private boolean _exceptionThrown;
-   private static final int INPUT_BUFFER_LENGTH;
-   private static final int OUTPUT_BUFFER_LENGTH;
+   private static final int INPUT_BUFFER_LENGTH = 2048;
+   private static final int OUTPUT_BUFFER_LENGTH = 1536;
 
    public Base64InputStream(InputStream inputStream) {
       this(inputStream, false);

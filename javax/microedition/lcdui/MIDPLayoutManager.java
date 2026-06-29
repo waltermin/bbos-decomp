@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.container.FlowFieldManager;
 
 class MIDPLayoutManager extends FlowFieldManager {
-   private static final int MAX_HEIGHT;
+   private static final int MAX_HEIGHT = 1073741823;
 
    public MIDPLayoutManager() {
       super(1153220571769602048L);

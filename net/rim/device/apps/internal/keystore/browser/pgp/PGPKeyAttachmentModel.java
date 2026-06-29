@@ -19,9 +19,9 @@ import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachment
 import net.rim.vm.Persistable;
 
 public class PGPKeyAttachmentModel extends CertificateAttachmentModel implements Persistable {
-   public static final String ASCII_ARMOUR_EXTENSION;
-   public static final String TYPE_APPLICATION_PGP_KEYS;
-   public static final String STRING_7BIT;
+   public static final String ASCII_ARMOUR_EXTENSION = ".asc";
+   public static final String TYPE_APPLICATION_PGP_KEYS = "application/pgp-keys";
+   public static final String STRING_7BIT = "7bit";
    public static String VERSION_RIM_10 = "Research In Motion 1.0";
 
    public PGPKeyAttachmentModel(Object initialData) {

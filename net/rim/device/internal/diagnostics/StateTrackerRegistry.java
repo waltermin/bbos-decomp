@@ -3,7 +3,7 @@ package net.rim.device.internal.diagnostics;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class StateTrackerRegistry {
-   private static final long ID;
+   private static final long ID = -5485257615414184727L;
    private static StateTracker _instance = null;
 
    private StateTrackerRegistry() {

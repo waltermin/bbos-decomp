@@ -6,14 +6,14 @@ import net.rim.device.api.ui.component.RichTextField;
 public final class FormattedTextField extends RichTextField {
    private int[] offsets;
    private int[] boldStartingPos;
-   private static final String HTML_TAG_PARAGRAPH_START;
-   private static final String HTML_TAG_PARAGRAPH_END;
-   private static final String HTML_TAG_BREAK;
-   private static final String HTML_TAG_BOLD_START;
-   private static final String HTML_TAG_BOLD_END;
-   private static final int NORMAL_FONT_INDEX;
-   private static final int BOLD_FONT_INDEX;
-   private static final int MINIMUM_OFFSETS_LIST_LENGTH;
+   private static final String HTML_TAG_PARAGRAPH_START = "<p>";
+   private static final String HTML_TAG_PARAGRAPH_END = "</p>";
+   private static final String HTML_TAG_BREAK = "<br>";
+   private static final String HTML_TAG_BOLD_START = "<b>";
+   private static final String HTML_TAG_BOLD_END = "</b>";
+   private static final int NORMAL_FONT_INDEX = 0;
+   private static final int BOLD_FONT_INDEX = 1;
+   private static final int MINIMUM_OFFSETS_LIST_LENGTH = 2;
    private static final Font DEFAULT_FONT = null;
 
    public FormattedTextField(String text, long style, Font font) {

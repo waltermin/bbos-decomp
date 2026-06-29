@@ -21,9 +21,9 @@ final class CategoriesScreen extends SaveableMainScreenOptionsListItem implement
    private byte _mode;
    private boolean _changesSaved;
    private UiApplication _uiApp;
-   static final byte VIEW;
-   static final byte SELECT;
-   static final byte FILTER;
+   static final byte VIEW = 0;
+   static final byte SELECT = 1;
+   static final byte FILTER = 2;
 
    CategoriesScreen(int[] selectedCategoryIds, byte mode) {
       super(null);

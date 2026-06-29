@@ -30,13 +30,13 @@ public final class HostedAccountEditScreen extends UserSettingsScreen {
    private RadioButtonGroup _autoForwardRadioGroup;
    private RadioButtonField _allMessagesField;
    private RadioButtonField _onlyMessagesField;
-   private static final String PARAM_DESCRIPTION;
-   private static final String PARAM_REPLYTO;
-   private static final String PARAM_FRIENDLY_NAME;
-   private static final String PARAM_SIGNATURE;
-   private static final String PARAM_AUTOBCC;
-   private static final String PARAM_AUTOFORWARD;
-   private static final String PARAM_AUTOFORWARDALL;
+   private static final String PARAM_DESCRIPTION = "description";
+   private static final String PARAM_REPLYTO = "replyTo";
+   private static final String PARAM_FRIENDLY_NAME = "friendlyName";
+   private static final String PARAM_SIGNATURE = "signature";
+   private static final String PARAM_AUTOBCC = "autoBCC";
+   private static final String PARAM_AUTOFORWARD = "autoForward";
+   private static final String PARAM_AUTOFORWARDALL = "autoForwardAll";
 
    public HostedAccountEditScreen() {
       super(31);

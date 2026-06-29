@@ -15,8 +15,8 @@ public class ApplicationProperties implements Persistable {
    private String _customImageName = null;
    private String _customFocusImageName = null;
    private String _alias = null;
-   public static final int DEFAULT_POSITION;
-   public static final int UNDEFINED_POSITION;
+   public static final int DEFAULT_POSITION = 200;
+   public static final int UNDEFINED_POSITION = -1;
 
    protected ApplicationProperties() {
    }

@@ -12,7 +12,7 @@ import net.rim.vm.TraceBack;
 
 public class MIDletDatagram extends DatagramBase {
    private boolean initcomplete = true;
-   private static final String DATAGRAMSCHEME;
+   private static final String DATAGRAMSCHEME = "datagram:";
 
    MIDletDatagram(byte[] buffer, int offset, int length, String address) {
       super(buffer, offset, length, address);

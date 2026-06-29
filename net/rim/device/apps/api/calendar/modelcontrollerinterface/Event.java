@@ -24,9 +24,9 @@ public interface Event
    TimeBasedObject,
    ServiceObject,
    Reminder {
-   long ID;
-   int LOCAL_STORE;
-   int REMOTE_STORE;
+   long ID = -1986287563994289176L;
+   int LOCAL_STORE = 267390960;
+   int REMOTE_STORE = -1;
 
    CalendarKey getCalendarKey();
 

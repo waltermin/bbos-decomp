@@ -20,13 +20,13 @@ public class BBMediaConnector implements Connector {
    private HttpConnection _previousConnection;
    protected static String USER_AGENT = "User-Agent";
    protected static String MEUSER_AGENT = "MediaEngine/1.6.1";
-   public static final boolean STORE_ENABLED;
-   public static final String STORE_PROTOCOL;
-   public static final boolean SDCARD_ENABLED;
-   public static final String SDCARD_PROTOCOL;
-   public static final String JAR_PROTOCOL;
-   protected static final boolean JAR_ENABLED;
-   private static final String UAPROF_NAME;
+   public static final boolean STORE_ENABLED = true;
+   public static final String STORE_PROTOCOL = "store:/";
+   public static final boolean SDCARD_ENABLED = true;
+   public static final String SDCARD_PROTOCOL = "file:/";
+   public static final String JAR_PROTOCOL = "jar://";
+   protected static final boolean JAR_ENABLED = true;
+   private static final String UAPROF_NAME = "profile";
    private static final String UAPROF_VALUE = ((StringBuffer)(new Object("http://www.blackberry.net/go/mobile/profiles/uaprof/")))
       .append(DeviceInfo.getDeviceName())
       .append('/')
@@ -34,8 +34,8 @@ public class BBMediaConnector implements Connector {
       .append(".rdf")
       .toString();
    private static String CONNECTION_TIMEOUT = ";ConnectionTimeout=";
-   protected static final boolean COD_ENABLED;
-   public static final String COD_PROTOCOL;
+   protected static final boolean COD_ENABLED = true;
+   public static final String COD_PROTOCOL = "cod://";
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

@@ -10,7 +10,7 @@ import net.rim.device.api.util.Arrays;
 
 public class X509PublicKeyHashKeyStoreIndex implements KeyStoreIndex {
    private Digest _digest;
-   public static final long ID;
+   public static final long ID = 751537200683994917L;
 
    public X509PublicKeyHashKeyStoreIndex() {
       this._digest = (Digest)(new Object());

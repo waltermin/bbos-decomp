@@ -84,9 +84,9 @@ class StreamingMediaPlayer
    private Object _lock = new Object();
    private boolean _usingBluetoothAMRHack = false;
    private int _sinkBeforeHackedForBluetoothAMR = -1;
-   private static final String BIG_SESSION_KEY;
-   private static final String AUDIO;
-   private static final String VIDEO;
+   private static final String BIG_SESSION_KEY = "big_session";
+   private static final String AUDIO = "audio";
+   private static final String VIDEO = "video";
    private static String PCM_TYPE = "audio/basic";
    private static String WAVE_TYPE = "audio/x-wav";
    private static String MP3_TYPE = "audio/mpeg";
@@ -99,7 +99,7 @@ class StreamingMediaPlayer
    private static String WMA_TYPE = "audio/x-ms-wma";
    private static String QCELP_TYPE = "audio/qcelp";
    private static String RTSP_TYPE = "application/rtsp";
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public StreamingMediaPlayer() {
       this._streamingManager = MediaStreamingManager.getInstance();

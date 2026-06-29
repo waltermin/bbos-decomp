@@ -11,11 +11,11 @@ final class TransactionRecord implements Persistable {
    Object _payload;
    int _status;
    int _retryCount;
-   static final int PENDING;
-   static final int SENT;
-   static final int ERROR;
-   static final int DELIVERED;
-   static final int RETRY_REQUIRED;
+   static final int PENDING = 0;
+   static final int SENT = 1;
+   static final int ERROR = 2;
+   static final int DELIVERED = 3;
+   static final int RETRY_REQUIRED = 4;
 
    TransactionRecord(ServiceRecord serviceRecord, Object payload) {
       this._serviceRecord = serviceRecord;

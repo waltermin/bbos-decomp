@@ -14,7 +14,7 @@ final class SecurityApp$SendForEmergencyCallDialog extends PopupDialog implement
    private SecurityApp _securityApp;
    private boolean _visible;
    private final SecurityApp this$0;
-   private static final long DIALOG_TIMEOUT;
+   private static final long DIALOG_TIMEOUT = 20000L;
 
    SecurityApp$SendForEmergencyCallDialog(SecurityApp _1) {
       super((Manager)(new Object()), 33554432);

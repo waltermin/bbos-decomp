@@ -8,7 +8,7 @@ import net.rim.vm.TraceBack;
 
 public final class StringPatternRepository {
    private StringPatternContainer _container = new StringPatternContainer(new StringPattern[0]);
-   private static final long NAME_OF_OBJECT;
+   private static final long NAME_OF_OBJECT = 175320883679689398L;
    private static StringPatternRepository _patternRepository;
 
    private static final void assertPermission() {

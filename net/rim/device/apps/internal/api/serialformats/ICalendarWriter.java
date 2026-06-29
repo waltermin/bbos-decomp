@@ -10,7 +10,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
    private ICalendarProvider _iCalendar;
    private String _version;
    StringBuffer _rrulePropertyTag = null;
-   private static final char VCAL_COUNT_START;
+   private static final char VCAL_COUNT_START = '#';
 
    private static final String getCalendarComponent(int type) {
       switch (type) {

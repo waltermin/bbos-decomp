@@ -14,7 +14,7 @@ public final class OptionsScreen extends MainScreen {
    EditField _email;
    EditField _pin;
    private MenuItem _saveMenuItem;
-   private static final int MENU_SAVE;
+   private static final int MENU_SAVE = 0;
 
    OptionsScreen(Diag manager) {
       this.setupMenuItems();

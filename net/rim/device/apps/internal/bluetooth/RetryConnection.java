@@ -6,8 +6,8 @@ final class RetryConnection implements Runnable {
    private BluetoothDeviceManagerImpl _bluetoothDeviceManagerImpl;
    private int _retryConnectionCount;
    private int _retryConnectionInvokeLaterId;
-   public static final int RETRY_CONNECTION_RETRIES;
-   public static final int RETRY_CONNECTION_INTERVAL;
+   public static final int RETRY_CONNECTION_RETRIES = 2;
+   public static final int RETRY_CONNECTION_INTERVAL = 10;
 
    public RetryConnection(BluetoothDeviceManagerImpl bluetoothDeviceManagerImpl) {
       this._bluetoothDeviceManagerImpl = bluetoothDeviceManagerImpl;

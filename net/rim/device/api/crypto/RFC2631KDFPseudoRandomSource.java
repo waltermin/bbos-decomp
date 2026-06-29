@@ -16,9 +16,9 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
    private byte[] _otherInfo;
    private int _outputOffset;
    private int _outputLength;
-   private static final int SEQUENCE_TAG;
-   private static final int OID_TAG;
-   private static final int OCTET_STRING_TAG;
+   private static final int SEQUENCE_TAG = 48;
+   private static final int OID_TAG = 6;
+   private static final int OCTET_STRING_TAG = 4;
 
    public RFC2631KDFPseudoRandomSource(byte[] sharedSecret, OID algorithm, byte[] partyAInfo, int derivedKeyLength) {
       this(sharedSecret, 0, sharedSecret == null ? 0 : sharedSecret.length, algorithm, partyAInfo, derivedKeyLength);

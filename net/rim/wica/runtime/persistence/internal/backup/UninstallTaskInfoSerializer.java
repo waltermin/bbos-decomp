@@ -7,9 +7,9 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class UninstallTaskInfoSerializer extends AbstractSerializer {
    private static UninstallTaskInfoSerializer _instance;
-   private static final byte GRACEFUL;
-   private static final byte EXPIRY_DATE;
-   private static final byte SILENT;
+   private static final byte GRACEFUL = 0;
+   private static final byte EXPIRY_DATE = 1;
+   private static final byte SILENT = 2;
 
    static final UninstallTaskInfoSerializer getInstance() {
       if (_instance == null) {

@@ -35,12 +35,12 @@ public final class DisplayPictureVerb extends Verb {
    private int _type;
    private FileSelector _fileSelector;
    private AddressCardModel _addressCard;
-   static final int ADD_PICTURE_VERB;
-   static final int REPLACE_PICTURE_VERB;
-   static final int SAVE_PICTURE_VERB;
-   static final int SET_PICTURE_VERB;
-   static final int SET_AS_PICTURE_VERB;
-   static final int DELETE_PICTURE_VERB;
+   static final int ADD_PICTURE_VERB = 0;
+   static final int REPLACE_PICTURE_VERB = 1;
+   static final int SAVE_PICTURE_VERB = 2;
+   static final int SET_PICTURE_VERB = 3;
+   static final int SET_AS_PICTURE_VERB = 4;
+   static final int DELETE_PICTURE_VERB = 5;
    private static String _lastUsedFolder = "/store/home/user/pictures/";
 
    public DisplayPictureVerb(int type, int menuOrdering) {

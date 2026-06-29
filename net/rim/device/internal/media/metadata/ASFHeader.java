@@ -6,21 +6,21 @@ import net.rim.device.api.media.MetaDataObject;
 public final class ASFHeader {
    private MetaDataControl _metaDataControl;
    private long _duration = -1;
-   private static final int GUID_SIZE;
-   private static final int SIZE_SIZE;
-   public static final int BYTES_TO_DETERMINE_HEADER_SIZE;
-   private static final int MIN_OBJECT_SIZE;
-   private static final int MAX_IMAGE_SIZE;
-   private static final int FILE_PROPERTIES_OBJECT;
-   private static final int CONTENT_DESCRIPTION_OBJECT;
-   private static final int EXTENDED_CONTENT_DESCRIPTION_OBJECT;
-   private static final int UNKNOWN_OBJECT;
-   private static final int TYPE_STRING;
-   private static final int TYPE_BYTE_ARRAY;
-   private static final int TYPE_BOOL;
-   private static final int TYPE_DWORD;
-   private static final int TYPE_QWORD;
-   private static final int TYPE_WORD;
+   private static final int GUID_SIZE = 16;
+   private static final int SIZE_SIZE = 8;
+   public static final int BYTES_TO_DETERMINE_HEADER_SIZE = 24;
+   private static final int MIN_OBJECT_SIZE = 24;
+   private static final int MAX_IMAGE_SIZE = 512000;
+   private static final int FILE_PROPERTIES_OBJECT = 1;
+   private static final int CONTENT_DESCRIPTION_OBJECT = 2;
+   private static final int EXTENDED_CONTENT_DESCRIPTION_OBJECT = 3;
+   private static final int UNKNOWN_OBJECT = -1;
+   private static final int TYPE_STRING = 0;
+   private static final int TYPE_BYTE_ARRAY = 1;
+   private static final int TYPE_BOOL = 2;
+   private static final int TYPE_DWORD = 3;
+   private static final int TYPE_QWORD = 4;
+   private static final int TYPE_WORD = 5;
 
    public ASFHeader(byte[] asfHeader) {
       this.parseHeader(asfHeader);

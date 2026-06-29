@@ -13,7 +13,7 @@ public final class PGPCompressedOutputStream extends PGPOutputStream {
    private SharedOutputStream _sharedInternal;
    private int _compressionAlgorithm;
    private int _compressedLengthWritten;
-   private static final int LENGTH_OF_ALGORITHM_SPECIFIER;
+   private static final int LENGTH_OF_ALGORITHM_SPECIFIER = 1;
 
    public PGPCompressedOutputStream(OutputStream output) {
       this(output, 1, 4);

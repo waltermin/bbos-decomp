@@ -3,11 +3,11 @@ package net.rim.vm;
 import java.io.PrintStream;
 
 public final class TraceBack {
-   public static final long GUID;
-   public static final int IMMEDIATE;
-   public static final int OUTSIDE_MODULE;
-   public static final int OUTSIDE_SIBLINGS;
-   public static final int FIRST_3RD_PARTY;
+   public static final long GUID = -7188635411275533160L;
+   public static final int IMMEDIATE = 0;
+   public static final int OUTSIDE_MODULE = 1;
+   public static final int OUTSIDE_SIBLINGS = 2;
+   public static final int FIRST_3RD_PARTY = 3;
 
    private TraceBack() {
    }

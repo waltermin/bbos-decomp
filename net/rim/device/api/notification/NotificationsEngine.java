@@ -1,7 +1,7 @@
 package net.rim.device.api.notification;
 
 public interface NotificationsEngine extends NotificationsConstants {
-   long NOTIFICATIONS_ENGINE_GUID;
+   long NOTIFICATIONS_ENGINE_GUID = 6720217471165517311L;
 
    void triggerImmediateEvent(long var1, Object var3, int var4, long var5, Object var7, Object var8);
 

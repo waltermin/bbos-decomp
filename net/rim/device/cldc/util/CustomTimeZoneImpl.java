@@ -8,9 +8,9 @@ final class CustomTimeZoneImpl extends TimeZone {
    private int _minutes;
    private String _ID;
    private int _rawOffset;
-   private static final int ONE_MINUTE;
-   private static final int ONE_HOUR;
-   private static final int millisPerDay;
+   private static final int ONE_MINUTE = 60000;
+   private static final int ONE_HOUR = 3600000;
+   private static final int millisPerDay = 86400000;
    private static final byte[] staticMonthLength = new byte[]{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
    CustomTimeZoneImpl(char sign, int hours, int minutes) {

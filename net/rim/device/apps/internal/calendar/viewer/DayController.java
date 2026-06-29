@@ -19,10 +19,10 @@ final class DayController extends CalendarViewController {
    private DayTimeOfDayField _tod = new DayTimeOfDayField();
    private DayController$DayViewNavField _navField = new DayController$DayViewNavField(this);
    private CalendarOptions _calendarOptions = CalendarOptions.getOptions();
-   private static final int FIRST_CONTROL_START;
-   private static final int FIRST_CONTROL_END;
-   private static final int SECOND_CONTROL_START;
-   private static final int SECOND_CONTROL_END;
+   private static final int FIRST_CONTROL_START = 0;
+   private static final int FIRST_CONTROL_END = 31;
+   private static final int SECOND_CONTROL_START = 127;
+   private static final int SECOND_CONTROL_END = 159;
    private static final Tag DAY_INDICATOR_SELECTED_TAG = Tag.create("day-indicator-selected");
    private static final Tag DAY_INDICATOR_TAG = Tag.create("day-indicator");
    private static final Tag DAY_FOCUS_HILIGHT_TAG = Tag.create("day-focus-hilight");

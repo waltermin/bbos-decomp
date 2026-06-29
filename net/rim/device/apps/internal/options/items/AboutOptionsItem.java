@@ -30,16 +30,16 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
    private AboutOptionsItem$AboutNextScreenMenuItem _nextScreenMenuItem = new AboutOptionsItem$AboutNextScreenMenuItem(this);
    private AboutOptionsItem$CopyToClipBoardMenuItem _copyContentsMenuItem = new AboutOptionsItem$CopyToClipBoardMenuItem(this);
    private static AboutOptionsItem$AboutScreen[] _screens;
-   private static final String BB_COLOUR_IMAGE;
-   private static final String BB_LOGO_COLOUR_IMAGE;
-   private static final String BB_MONO_IMAGE;
-   private static final String JAVA_COLOUR_IMAGE;
-   private static final String JAVA_MONO_IMAGE;
-   private static final String VOICESIGNAL_IMAGE;
-   private static final int BITMAP_HSPACE;
-   private static final int BITMAP_VSPACE;
-   private static final String EMPTY_STRING;
-   private static final String N_A;
+   private static final String BB_COLOUR_IMAGE = "About_BBImageColour.png";
+   private static final String BB_LOGO_COLOUR_IMAGE = "BlackBerry_Logo_Vertical_Color.png";
+   private static final String BB_MONO_IMAGE = "About_BBImageMono.png";
+   private static final String JAVA_COLOUR_IMAGE = "About_JavaImageColour.png";
+   private static final String JAVA_MONO_IMAGE = "About_JavaImageMono.gif";
+   private static final String VOICESIGNAL_IMAGE = "voicesignal.png";
+   private static final int BITMAP_HSPACE = 0;
+   private static final int BITMAP_VSPACE = 5;
+   private static final String EMPTY_STRING = "";
+   private static final String N_A = "N/A";
 
    public AboutOptionsItem() {
       super(OptionsResources.getString(100));

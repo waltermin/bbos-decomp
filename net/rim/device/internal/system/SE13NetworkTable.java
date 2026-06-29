@@ -1,7 +1,7 @@
 package net.rim.device.internal.system;
 
 public interface SE13NetworkTable {
-   long SE13_GUID;
+   long SE13_GUID = -7927117593081548760L;
 
    NetworkInfo[] getPredefinedNetworkTable();
 

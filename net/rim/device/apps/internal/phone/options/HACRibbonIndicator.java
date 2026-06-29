@@ -17,7 +17,7 @@ public final class HACRibbonIndicator implements Indicator, AudioTTYListener, Te
    private boolean _indicatorOn;
    private StringBuffer _strBuffer = (StringBuffer)(new Object(PhoneResources.getString(6297)));
    static HACRibbonIndicator _instance;
-   public static final long HAC_RIBBON_INDICATOR;
+   public static final long HAC_RIBBON_INDICATOR = 8209130174428269783L;
 
    public static final void initialize() {
       if (_instance == null) {

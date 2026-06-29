@@ -9,7 +9,7 @@ import net.rim.device.api.util.IntEnumeration;
 import net.rim.device.api.util.IntHashtable;
 
 public class CodeUpgrade {
-   private static final long MESSAGE_GUID;
+   private static final long MESSAGE_GUID = -4292848197358216020L;
 
    private static IntHashtable getMessages() {
       ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();

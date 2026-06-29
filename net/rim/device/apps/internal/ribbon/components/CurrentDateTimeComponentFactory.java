@@ -29,10 +29,10 @@ final class CurrentDateTimeComponentFactory implements Factory, GlobalEventListe
    private StringBuffer _lastDateTime = (StringBuffer)(new Object());
    private Calendar _cachedCal;
    private CalendarExtensions _cachedCalEx;
-   static final int INVALID_TYPE;
-   static final int DATE_TIME_TYPE;
-   static final int DATE_TYPE;
-   static final int TIME_TYPE;
+   static final int INVALID_TYPE = 0;
+   static final int DATE_TIME_TYPE = 1;
+   static final int DATE_TYPE = 2;
+   static final int TIME_TYPE = 3;
 
    final void init() {
       Application app = Application.getApplication();

@@ -37,10 +37,10 @@ public final class SoapMessageDecoder extends DefaultHandler {
    private boolean _matched;
    private boolean _compress;
    private SoapWbxmlCodebook _codebook;
-   private static final int DECODE_SIMPLE_STATE;
-   private static final int DECODE_COMPLEX_STATE;
-   private static final int ERROR_STATE;
-   private static final int FAULT_DETAIL_INDEX;
+   private static final int DECODE_SIMPLE_STATE = 1;
+   private static final int DECODE_COMPLEX_STATE = 2;
+   private static final int ERROR_STATE = 4;
+   private static final int FAULT_DETAIL_INDEX = 3;
    private static final Object NIL = new Object();
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

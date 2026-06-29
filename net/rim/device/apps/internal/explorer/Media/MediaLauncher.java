@@ -8,9 +8,9 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.vm.Process;
 
 public final class MediaLauncher {
-   private static final long GUID_LAUNCH_PLAYER;
-   private static final long GUID_STOP_PLAYER;
-   private static final long GUID_SHOW_PLAYER;
+   private static final long GUID_LAUNCH_PLAYER = -2364922203810937362L;
+   private static final long GUID_STOP_PLAYER = 7880603250674304426L;
+   private static final long GUID_SHOW_PLAYER = 110711286572786542L;
 
    private MediaLauncher() {
       ApplicationProcess applicationProcess = (ApplicationProcess)Process.currentProcess();

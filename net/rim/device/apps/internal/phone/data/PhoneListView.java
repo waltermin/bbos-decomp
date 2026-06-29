@@ -33,9 +33,9 @@ public class PhoneListView extends PhoneListFieldManager implements ListFieldCal
    protected boolean _resetCache = true;
    private boolean _pendingUpdate;
    public PhoneListView$DeleteItemVerb _deleteVerb = new PhoneListView$DeleteItemVerb(this);
-   public static final int PHONE_LIST_VIEW_TYPE_CALL_LOG;
-   public static final int PHONE_LIST_VIEW_TYPE_HOTLIST;
-   protected static final int ITEMS_IN_REVERSE_ORDER;
+   public static final int PHONE_LIST_VIEW_TYPE_CALL_LOG = 0;
+   public static final int PHONE_LIST_VIEW_TYPE_HOTLIST = 1;
+   protected static final int ITEMS_IN_REVERSE_ORDER = 2;
 
    protected String getDeletePrompt(boolean _1) {
       throw null;

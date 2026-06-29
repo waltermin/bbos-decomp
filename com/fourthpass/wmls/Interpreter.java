@@ -13,9 +13,9 @@ public final class Interpreter {
    private boolean _exited;
    private Interpreter$Engine _engine;
    private RenderingApplication _renderingApplication;
-   private static final int MAX_CALL_STACK_SIZE;
-   private static final String CONTENT_TYPE_WMLSC;
-   private static final String HEADER_CONTENT_TYPE;
+   private static final int MAX_CALL_STACK_SIZE = 200;
+   private static final String CONTENT_TYPE_WMLSC = "application/vnd.wap.wmlscriptc";
+   private static final String HEADER_CONTENT_TYPE = "Content-Type";
 
    public Interpreter(IBrowser browser, IDialog dialog, RenderingApplication renderingApplication) {
       this._browser = browser;

@@ -9,7 +9,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 public final class ShowVoiceNotesRecorderApp {
    private ApplicationDescriptor _voiceNotesRecorderAppDescriptor;
    private ContextObject _obj;
-   private static final long SHOW_VOICENOTESRECORDER_APP_ID;
+   private static final long SHOW_VOICENOTESRECORDER_APP_ID = 1432492449967531212L;
 
    private ShowVoiceNotesRecorderApp(ApplicationDescriptor applicationDescriptor) {
       this._voiceNotesRecorderAppDescriptor = applicationDescriptor;

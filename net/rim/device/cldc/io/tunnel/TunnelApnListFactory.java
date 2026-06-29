@@ -3,7 +3,7 @@ package net.rim.device.cldc.io.tunnel;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class TunnelApnListFactory {
-   public static final long ID;
+   public static final long ID = -977265756801572775L;
    private static TunnelApnListFactory _theInstance;
 
    public static TunnelApnListFactory getTunnelApnListFactory() {

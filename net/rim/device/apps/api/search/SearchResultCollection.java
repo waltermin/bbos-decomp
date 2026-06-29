@@ -49,14 +49,14 @@ public class SearchResultCollection
    private Object _searchLockObject = new Object();
    private Object _progressListener;
    private boolean _filteringHaltedAndCleanedUp = false;
-   private static final byte NULL_NOTIFICATION;
-   private static final byte ADD_NOTIFICATION;
-   private static final byte REMOVE_NOTIFICATION;
-   private static final byte UPDATE_NOTIFICATION;
-   private static final int NUM_TO_VISIT_BEFORE_DISPLAY;
-   private static final int MAX_TO_VISIT_BEFORE_DISPLAY;
-   private static final int NUM_TO_VISIT_BEFORE_PROGRESS;
-   private static final String LOG_TITLE;
+   private static final byte NULL_NOTIFICATION = 0;
+   private static final byte ADD_NOTIFICATION = 1;
+   private static final byte REMOVE_NOTIFICATION = 2;
+   private static final byte UPDATE_NOTIFICATION = 3;
+   private static final int NUM_TO_VISIT_BEFORE_DISPLAY = 32;
+   private static final int MAX_TO_VISIT_BEFORE_DISPLAY = 512;
+   private static final int NUM_TO_VISIT_BEFORE_PROGRESS = 32;
+   private static final String LOG_TITLE = "SRC Assertion";
 
    @Override
    public void loadFrom(Object collection) {

@@ -22,15 +22,15 @@ final class CallBarringOption extends VoiceOptionsListItem implements QuerySSOpt
    private boolean _ssTestingHackEnabled;
    private int[] _incomingStatusFlags = new int[2];
    private int[] _outgoingStatusFlags = new int[3];
-   static final int ALL_INCOMING;
-   static final int INCOMING_ROAM;
-   static final int ALL_OUTGOING;
-   static final int OUTGOING_INTL;
-   static final int OUTGOING_INTL_PLMN;
-   static final int NUM_TYPES;
-   static final int INVALID_TYPE;
-   static final int NUM_INCOMING_TYPES;
-   static final int NUM_OUTGOING_TYPES;
+   static final int ALL_INCOMING = 0;
+   static final int INCOMING_ROAM = 1;
+   static final int ALL_OUTGOING = 2;
+   static final int OUTGOING_INTL = 3;
+   static final int OUTGOING_INTL_PLMN = 4;
+   static final int NUM_TYPES = 5;
+   static final int INVALID_TYPE = -1;
+   static final int NUM_INCOMING_TYPES = 2;
+   static final int NUM_OUTGOING_TYPES = 3;
    static final int[] INCOMING_TYPES = new int[]{0, 1, -804651003, 0, 1, 2, 3, 4};
    static final int[] OUTGOING_TYPES = new int[]{2, 3, 4, -804651007, 3, -804651006, 3, 20, -804651006, 3, 28, -804651004};
    static final int[] ALL_TYPES = new int[]{0, 1, 2, 3, 4, -804651005, 1, 2, 3, -804651005, 2, 3, 4, -804651007, 3, -804651006, 3, 20, -804651006, 3};
@@ -59,10 +59,10 @@ final class CallBarringOption extends VoiceOptionsListItem implements QuerySSOpt
    static final int[] CSP_TYPES_MAP = new int[]{
       16, 8, 128, 64, 32, -804651004, 33, 41, 42, 43, 51, -804651005, 58, 17, 106, -804651007, 64, -804651007, 65, -804782078
    };
-   public static final int BARRING_PASSWORD_MIN_LENGTH;
-   public static final int BARRING_PASSWORD_MAX_LENGTH;
-   public static final int INCOMING;
-   public static final int OUTGOING;
+   public static final int BARRING_PASSWORD_MIN_LENGTH = 4;
+   public static final int BARRING_PASSWORD_MAX_LENGTH = 4;
+   public static final int INCOMING = 0;
+   public static final int OUTGOING = 1;
    private static EnableSSOptionProfileVerb _enableProfileVerb = new EnableSSOptionProfileVerb();
    private static ChangePasswordVerb _changePasswordVerb = new ChangePasswordVerb();
 

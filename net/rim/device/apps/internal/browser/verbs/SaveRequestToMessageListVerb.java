@@ -5,7 +5,7 @@ import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class SaveRequestToMessageListVerb extends BrowserVerb {
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 112;
 
    public SaveRequestToMessageListVerb() {
       super(16987189);

@@ -4,10 +4,10 @@ import net.rim.device.api.system.RadioInfo;
 
 final class Status {
    private byte status;
-   static final byte STALE;
-   static final byte CURRENT;
-   static final byte UNKNOWN;
-   static final byte STATUS_NUM_BITS;
+   static final byte STALE = 0;
+   static final byte CURRENT = 1;
+   static final byte UNKNOWN = 2;
+   static final byte STATUS_NUM_BITS = 2;
 
    Status() {
       int networkService = RadioInfo.getNetworkService();

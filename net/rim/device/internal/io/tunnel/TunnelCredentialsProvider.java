@@ -10,7 +10,7 @@ import net.rim.device.internal.proxy.Proxy;
 public final class TunnelCredentialsProvider implements GlobalEventListener {
    private TunnelCredentials _tunnelCredentials;
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(1004147189966295995L);
-   private static final long GUID;
+   private static final long GUID = 1004147189966295995L;
 
    public static final TunnelCredentialsProvider getInstance() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

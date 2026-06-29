@@ -1,31 +1,31 @@
 package net.rim.device.internal.crypto;
 
 public final class EncryptionUtilities {
-   public static final int ECC_160_R1;
-   public static final int ECC_256_R1;
-   public static final int ECC_521_R1;
-   public static final int ECC_283_K1;
-   public static final int ECC_571_K1;
-   private static final String ECC_160_R1_NAME;
-   private static final int ECC_160_R1_PUBLIC_KEY_LENGTH;
-   private static final int ECC_160_R1_PRIVATE_KEY_LENGTH;
-   private static final int ECC_160_R1_SHARED_SECRET_LENGTH;
-   private static final String ECC_256_R1_NAME;
-   private static final int ECC_256_R1_PUBLIC_KEY_LENGTH;
-   private static final int ECC_256_R1_PRIVATE_KEY_LENGTH;
-   private static final int ECC_256_R1_SHARED_SECRET_LENGTH;
-   private static final String ECC_521_R1_NAME;
-   private static final int ECC_521_R1_PUBLIC_KEY_LENGTH;
-   private static final int ECC_521_R1_PRIVATE_KEY_LENGTH;
-   private static final int ECC_521_R1_SHARED_SECRET_LENGTH;
-   private static final String ECC_283_K1_NAME;
-   private static final int ECC_283_K1_PUBLIC_KEY_LENGTH;
-   private static final int ECC_283_K1_PRIVATE_KEY_LENGTH;
-   private static final int ECC_283_K1_SHARED_SECRET_LENGTH;
-   private static final String ECC_571_K1_NAME;
-   private static final int ECC_571_K1_PUBLIC_KEY_LENGTH;
-   private static final int ECC_571_K1_PRIVATE_KEY_LENGTH;
-   private static final int ECC_571_K1_SHARED_SECRET_LENGTH;
+   public static final int ECC_160_R1 = 0;
+   public static final int ECC_256_R1 = 1;
+   public static final int ECC_521_R1 = 2;
+   public static final int ECC_283_K1 = 3;
+   public static final int ECC_571_K1 = 4;
+   private static final String ECC_160_R1_NAME = "EC160R1";
+   private static final int ECC_160_R1_PUBLIC_KEY_LENGTH = 21;
+   private static final int ECC_160_R1_PRIVATE_KEY_LENGTH = 21;
+   private static final int ECC_160_R1_SHARED_SECRET_LENGTH = 20;
+   private static final String ECC_256_R1_NAME = "EC256R1";
+   private static final int ECC_256_R1_PUBLIC_KEY_LENGTH = 33;
+   private static final int ECC_256_R1_PRIVATE_KEY_LENGTH = 32;
+   private static final int ECC_256_R1_SHARED_SECRET_LENGTH = 32;
+   private static final String ECC_521_R1_NAME = "EC521R1";
+   private static final int ECC_521_R1_PUBLIC_KEY_LENGTH = 67;
+   private static final int ECC_521_R1_PRIVATE_KEY_LENGTH = 66;
+   private static final int ECC_521_R1_SHARED_SECRET_LENGTH = 66;
+   private static final String ECC_283_K1_NAME = "EC283K1";
+   private static final int ECC_283_K1_PUBLIC_KEY_LENGTH = 37;
+   private static final int ECC_283_K1_PRIVATE_KEY_LENGTH = 36;
+   private static final int ECC_283_K1_SHARED_SECRET_LENGTH = 36;
+   private static final String ECC_571_K1_NAME = "EC571K1";
+   private static final int ECC_571_K1_PUBLIC_KEY_LENGTH = 73;
+   private static final int ECC_571_K1_PRIVATE_KEY_LENGTH = 72;
+   private static final int ECC_571_K1_SHARED_SECRET_LENGTH = 72;
 
    private EncryptionUtilities() {
    }

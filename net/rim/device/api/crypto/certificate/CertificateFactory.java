@@ -9,12 +9,12 @@ import net.rim.device.api.util.CRC32;
 import net.rim.device.internal.proxy.Proxy;
 
 public class CertificateFactory {
-   private static final int CACHE_RESIZE;
-   private static final long CACHE_CLEANUP_MILLIS;
-   private static final int CACHE_SIZE_LIMIT;
-   private static final int CERTIFICATE_SIZE_LIMIT;
-   private static final long HASHTABLE_ID;
-   private static final long CONTAINER_ID;
+   private static final int CACHE_RESIZE = 90;
+   private static final long CACHE_CLEANUP_MILLIS = 86400000L;
+   private static final int CACHE_SIZE_LIMIT = 256;
+   private static final int CERTIFICATE_SIZE_LIMIT = 2048;
+   private static final long HASHTABLE_ID = 6607158535140835391L;
+   private static final long CONTAINER_ID = 2872272587378049473L;
    private static Hashtable _hashtable;
    private static CertificateFactoryContainer _container;
 

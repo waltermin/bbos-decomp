@@ -60,11 +60,11 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
    private CheckboxField _isRestoredFromBackupField;
    private CheckboxField _isRestoreEnabledField;
    private CheckboxField _isRestoreDisabledField;
-   public static final int RET_CLOSE;
-   public static final int RET_SAVE;
-   private static final int HRI_USAGE_DEFAULT_INDEX;
-   private static final int HRI_USAGE_SPECIFIED_INDEX;
-   private static final int _encryptModesMask;
+   public static final int RET_CLOSE = 0;
+   public static final int RET_SAVE = 1;
+   private static final int HRI_USAGE_DEFAULT_INDEX = 0;
+   private static final int HRI_USAGE_SPECIFIED_INDEX = 1;
+   private static final int _encryptModesMask = 2;
 
    public SBAppEditRecordUI(ServiceBook sb, ServiceRecord theRec, boolean iNew) {
       this._sb = sb;

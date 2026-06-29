@@ -9,16 +9,16 @@ import net.rim.tid.im.layout.SLKeyLayout;
 public class PhoneTextFilter extends TextFilter {
    private boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
    private final int _style;
-   public static final int ACCEPT_PAUSE;
-   public static final int ACCEPT_WAIT;
-   public static final int ACCEPT_CONTROL;
-   public static final int ACCEPT_WILD_CARD;
-   public static final int ACCEPT_ALPHA;
-   public static final int ACCEPT_FORMATTING;
-   public static final int ACCEPT_EXTENSION;
-   public static final int ACCEPT_INTERNATIONAL;
-   public static final int INTERNATIONAL_MUST_BE_FIRST;
-   public static final int ACCEPT_EVERYTHING_EXCEPT_WILD_CARD;
+   public static final int ACCEPT_PAUSE = 1;
+   public static final int ACCEPT_WAIT = 2;
+   public static final int ACCEPT_CONTROL = 4;
+   public static final int ACCEPT_WILD_CARD = 8;
+   public static final int ACCEPT_ALPHA = 16;
+   public static final int ACCEPT_FORMATTING = 32;
+   public static final int ACCEPT_EXTENSION = 64;
+   public static final int ACCEPT_INTERNATIONAL = 128;
+   public static final int INTERNATIONAL_MUST_BE_FIRST = 256;
+   public static final int ACCEPT_EVERYTHING_EXCEPT_WILD_CARD = 247;
 
    public PhoneTextFilter() {
       this(247);

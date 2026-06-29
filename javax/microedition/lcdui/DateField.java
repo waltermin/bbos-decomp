@@ -13,10 +13,10 @@ public class DateField extends Item {
    private net.rim.device.api.ui.component.DateField _field;
    private int _mode;
    private Calendar _calendar;
-   private static final long MILLIS_IN_A_DAY;
-   public static final int DATE;
-   public static final int TIME;
-   public static final int DATE_TIME;
+   private static final long MILLIS_IN_A_DAY = 86400000L;
+   public static final int DATE = 1;
+   public static final int TIME = 2;
+   public static final int DATE_TIME = 3;
 
    private int toRimMode(int mode) {
       switch (mode) {

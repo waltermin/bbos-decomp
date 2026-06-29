@@ -42,17 +42,17 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    private long[] _pendingSlowSyncs = new long[0];
    private long _slowSyncInProgress;
    private CalendarServiceManager _calendarServiceManager;
-   static final long SLOW_SYNC_SESSION_ID_GUID;
-   static final int NO_SLOW_SYNC_SESSION;
-   static final long LAST_ACTIVITY_STORE_ID;
+   static final long SLOW_SYNC_SESSION_ID_GUID = -2725183197236608288L;
+   static final int NO_SLOW_SYNC_SESSION = -1;
+   static final long LAST_ACTIVITY_STORE_ID = -6523260229176026567L;
    static final PersistentObject _lastActivityStore = RIMPersistentStore.getPersistentObject(-6523260229176026567L);
-   static final int NO_SLOW_SYNC_ACTIVITY;
-   static final long LAST_SERVICE_STORE_ID;
+   static final int NO_SLOW_SYNC_ACTIVITY = -1;
+   static final long LAST_SERVICE_STORE_ID = 1883207937961135925L;
    static final PersistentObject _lastServiceStore = RIMPersistentStore.getPersistentObject(1883207937961135925L);
-   static final int NO_SLOW_SYNC_SERVICE;
-   static final int SLOW_SYNC_TIMEOUT;
-   private static final long SINGLETON_ID;
-   public static final int PACKET_EVENT_THRESHOLD;
+   static final int NO_SLOW_SYNC_SERVICE = -1;
+   static final int SLOW_SYNC_TIMEOUT = 3600000;
+   private static final long SINGLETON_ID = 2920655573871026586L;
+   public static final int PACKET_EVENT_THRESHOLD = 500;
    private static IntIntHashtable _previousSessions = (IntIntHashtable)(new Object());
    private static final byte[] SLOW_SYNC_COMPONENT_HEADER = new byte[]{16, 1, 1, 5};
 

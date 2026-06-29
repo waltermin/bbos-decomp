@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable {
    private static SoftwareAESCryptoToken _instance = new SoftwareAESCryptoToken();
-   private static final long ID_TEST_AES;
+   private static final long ID_TEST_AES = 8205009952453931715L;
 
    static final SoftwareAESCryptoToken getInstance() {
       return _instance;

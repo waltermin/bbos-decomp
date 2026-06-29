@@ -21,8 +21,8 @@ public final class TCPPacketHeader implements RadioPacketHeader {
    public int _controlDescription;
    public int _socketID;
    public boolean _isSimulTcpPacket;
-   private static final int MIN_IP_HEADER_SIZE;
-   private static final int MIN_TCP_HEADER_SIZE;
+   private static final int MIN_IP_HEADER_SIZE = 20;
+   private static final int MIN_TCP_HEADER_SIZE = 20;
    private static int MAX_TCP_PAYLOAD_SIZE = 1400;
 
    @Override

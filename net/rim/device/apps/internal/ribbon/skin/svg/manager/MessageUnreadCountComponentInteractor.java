@@ -16,8 +16,8 @@ class MessageUnreadCountComponentInteractor extends UnreadCountComponentInteract
    protected ModelInteractorImpl _modelInteractor;
    private static final String TYPE_NAME_MESSAGE_FILED = UnreadCount.getTypeName(1);
    private static final String TYPE_NAME_MESSAGE = UnreadCount.getTypeName(0);
-   public static final long NORMAL_MSGS_UNREAD_KEY;
-   public static final long NO_FILED_MSGS_UNREAD_KEY;
+   public static final long NORMAL_MSGS_UNREAD_KEY = -3230658477323968044L;
+   public static final long NO_FILED_MSGS_UNREAD_KEY = 7279758559317528089L;
    private static final UnreadCountComponent _normalMsgsUnread;
    private static final UnreadCountComponent _noFiledMsgsUnread;
 

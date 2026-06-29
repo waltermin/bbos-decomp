@@ -10,7 +10,7 @@ import net.rim.device.api.util.DateTimeUtilities;
 
 public class ASN1OutputStream {
    private OutputStream _outputStream;
-   private static final int MAX_LENGTH_ENCODING_BYTES;
+   private static final int MAX_LENGTH_ENCODING_BYTES = 4;
 
    public ASN1OutputStream() {
       this._outputStream = (OutputStream)(new Object());

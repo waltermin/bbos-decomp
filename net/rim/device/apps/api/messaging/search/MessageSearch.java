@@ -6,8 +6,8 @@ import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.api.utility.framework.SimplePersistentEncryptedSyncCollection;
 
 public class MessageSearch {
-   protected static final long SEARCH_SINGLETON;
-   public static final long FOLDER_SELECT_VERB_KEY;
+   protected static final long SEARCH_SINGLETON = 7241276700323413934L;
+   public static final long FOLDER_SELECT_VERB_KEY = 3746287353255662597L;
    private static MessageSearch _messageSearch;
 
    public EditorUsingRIMModelFactory getSearchEditScreen(Object _1, boolean _2) {

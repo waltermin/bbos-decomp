@@ -7,8 +7,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 public final class NonpersistedUtilityFolders {
-   private static final long NON_PERSISTED_UTILITY_FOLDERS;
-   public static final long SAVED_MESSAGES_DISPLAY_CACHE_FOLDER;
+   private static final long NON_PERSISTED_UTILITY_FOLDERS = -2509380403571927795L;
+   public static final long SAVED_MESSAGES_DISPLAY_CACHE_FOLDER = 7175316403005034194L;
 
    private NonpersistedUtilityFolders() {
    }

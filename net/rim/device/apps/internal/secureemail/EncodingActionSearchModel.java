@@ -12,8 +12,8 @@ import net.rim.device.apps.api.search.SearchCriterion;
 public class EncodingActionSearchModel implements PersistableRIMModel, SearchCriterion, FieldProvider, ConversionProvider {
    private Integer _allowedEncodingActions = (Integer)(new Object(3));
    private boolean _ticketPromtsAllowed = true;
-   static final int ENCRYPTED_MESSAGES_INCLUDED;
-   static final int ENCRYPTED_MESSAGES_EXCLUDED;
+   static final int ENCRYPTED_MESSAGES_INCLUDED = 3;
+   static final int ENCRYPTED_MESSAGES_EXCLUDED = 1;
 
    boolean ticketPromptsAllowed() {
       return this._ticketPromtsAllowed;

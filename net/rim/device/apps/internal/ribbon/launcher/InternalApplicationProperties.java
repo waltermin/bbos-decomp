@@ -6,13 +6,13 @@ import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.api.ribbon.ApplicationProperties;
 
 final class InternalApplicationProperties extends ApplicationProperties implements Persistable {
-   private static final byte END_OF_DATA;
-   private static final byte ICON_POSITION;
-   private static final byte ICON_VISIBLE;
-   private static final byte FOLDER_NAME;
-   private static final byte CUSTOM_IMAGE;
-   private static final byte CUSTOM_FOCUS_IMAGE;
-   private static final byte ALIAS;
+   private static final byte END_OF_DATA = 0;
+   private static final byte ICON_POSITION = 1;
+   private static final byte ICON_VISIBLE = 2;
+   private static final byte FOLDER_NAME = 3;
+   private static final byte CUSTOM_IMAGE = 4;
+   private static final byte CUSTOM_FOCUS_IMAGE = 5;
+   private static final byte ALIAS = 6;
 
    InternalApplicationProperties() {
    }

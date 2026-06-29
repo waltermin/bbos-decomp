@@ -6,7 +6,7 @@ import net.rim.device.apps.api.search.GlobalSearchRegistry;
 import net.rim.device.apps.internal.addressbook.ui.PackageManager;
 
 public final class AddressBookApp extends UiApplication {
-   private static final long ADDRESS_BOOK_SEARCHABLE_ID;
+   private static final long ADDRESS_BOOK_SEARCHABLE_ID = -992593092633980135L;
 
    private AddressBookApp(String arg) {
       this.invokeLater(new AddressBookApp$1(this, arg));

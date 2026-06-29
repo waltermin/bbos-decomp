@@ -14,7 +14,7 @@ import net.rim.device.apps.api.ribbon.indicators.IndicatorManager;
 public final class EmailMessageConverter implements SyncConverter {
    private int _ribbonSuspendCount;
    private IndicatorManager _indicatorManager;
-   public static final int VERSION_SUPPORTED;
+   public static final int VERSION_SUPPORTED = 3;
    private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(43, 19));
 
    final void endTransaction() {

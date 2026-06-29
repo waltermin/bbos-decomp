@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.mediaengine.event.EventEngine;
 import net.rim.plazmic.mediaengine.MediaListener;
 
 public interface EventResolver extends MediaListener {
-   String ID;
+   String ID = "EventResolver";
 
    void setEventLogic(Object var1);
 

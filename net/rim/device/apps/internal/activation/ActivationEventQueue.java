@@ -7,7 +7,7 @@ public final class ActivationEventQueue extends Thread {
    private boolean _run;
    private Vector _eventQueue;
    private boolean _queueIsEmpty;
-   private static final long APPLICATION_REG_GUID;
+   private static final long APPLICATION_REG_GUID = 33491840932755780L;
 
    public ActivationEventQueue() {
       ApplicationRegistry theApplicationRegistry = ApplicationRegistry.getApplicationRegistry();

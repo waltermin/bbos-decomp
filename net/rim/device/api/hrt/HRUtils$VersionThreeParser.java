@@ -11,11 +11,11 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
    private HostRoutingInfo _idenHri;
    private HostRoutingInfo _wifiHri;
    private HRUtils$ClonedHriInfo _cloneInfo;
-   public static final int ROUTING_INFO_FIELD;
-   public static final int CLONED_ROUTING_INFO_FIELD;
-   private static final int PRIMARY_NPC_FIELD;
-   private static final int CLONED_NPC_FIELD;
-   private static final int PRIMARY_ART_FIELD;
+   public static final int ROUTING_INFO_FIELD = 64;
+   public static final int CLONED_ROUTING_INFO_FIELD = 65;
+   private static final int PRIMARY_NPC_FIELD = 1;
+   private static final int CLONED_NPC_FIELD = 2;
+   private static final int PRIMARY_ART_FIELD = 3;
 
    public Object getResult(int waf) {
       switch (this._type) {

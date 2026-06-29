@@ -3,7 +3,7 @@ package net.rim.device.apps.api.messaging.util;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class OTAFMControl {
-   private static final long OTAFM_CONTROL_GUID;
+   private static final long OTAFM_CONTROL_GUID = 1323329749908372946L;
 
    protected OTAFMControl() {
    }

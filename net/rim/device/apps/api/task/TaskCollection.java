@@ -6,7 +6,7 @@ import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 
 public interface TaskCollection extends CollectionEventSource, ReadableList, WritableSet, CollectionWithVersion {
-   long TASK_TIMEBASED_OBJECT_PROVIDER_KEY;
+   long TASK_TIMEBASED_OBJECT_PROVIDER_KEY = -5718599435502913979L;
 
    void update(Object var1, Object var2);
 

@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.qm.peer;
 
 final class FileHandler implements MessageHandler {
-   private static final String IMAGE_TYPE;
-   private static final String AUDIO_TYPE;
+   private static final String IMAGE_TYPE = "image/*";
+   private static final String AUDIO_TYPE = "audio/*";
    private static final String[] TYPES = new String[]{"image/*", "audio/*"};
 
    static final void regsiter() {

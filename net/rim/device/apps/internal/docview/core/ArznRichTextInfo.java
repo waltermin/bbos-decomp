@@ -5,11 +5,11 @@ public final class ArznRichTextInfo {
    public final int _textForeColor;
    public final int _textBgColor;
    public final int _textSizeIndex;
-   public static final int FONTSTYLE_PLAIN;
-   public static final int FONTSTYLE_ITALIC;
-   public static final int FONTSTYLE_BOLD;
-   public static final int FONTSTYLE_UNDERLINE;
-   public static final int FONTSTYLE_STRIKETHROUGH;
+   public static final int FONTSTYLE_PLAIN = 0;
+   public static final int FONTSTYLE_ITALIC = 1;
+   public static final int FONTSTYLE_BOLD = 2;
+   public static final int FONTSTYLE_UNDERLINE = 4;
+   public static final int FONTSTYLE_STRIKETHROUGH = 8;
 
    ArznRichTextInfo(int fontStyle) {
       this(fontStyle, -1, -1, -1);

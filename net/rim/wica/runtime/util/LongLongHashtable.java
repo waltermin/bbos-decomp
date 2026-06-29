@@ -9,10 +9,10 @@ public class LongLongHashtable implements Persistable {
    private byte[] _occupied;
    private int _numberOfKeys;
    private int _threshold;
-   static final byte OCCUPIED_NO;
-   static final byte OCCUPIED_YES;
-   static final byte OCCUPIED_NIL;
-   private static final int _loadFactor;
+   static final byte OCCUPIED_NO = 0;
+   static final byte OCCUPIED_YES = 1;
+   static final byte OCCUPIED_NIL = 2;
+   private static final int _loadFactor = 75;
 
    public LongLongHashtable(int initialCapacity) {
       if (initialCapacity < 0) {

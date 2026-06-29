@@ -1,8 +1,8 @@
 package java.lang;
 
 public final class Math {
-   public static final double E;
-   public static final double PI;
+   public static final double E = E;
+   public static final double PI = PI;
    private static long negativeZeroFloatBits = Float.floatToIntBits((float)Integer.MIN_VALUE);
    private static long negativeZeroDoubleBits = Double.doubleToLongBits((double)Long.MIN_VALUE);
 

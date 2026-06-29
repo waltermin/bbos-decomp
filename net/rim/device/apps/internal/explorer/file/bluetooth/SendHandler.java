@@ -40,7 +40,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
    private int _resultCode;
    private DiscoveryAgent _discoveryAgent;
    private RemoteDevice _remoteDevice;
-   private static final int PACKET_SIZE;
+   private static final int PACKET_SIZE = 2048;
 
    public SendHandler(String file) {
       this._file = file;
@@ -206,7 +206,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 017: invokespecial net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler$3.<init> (Lnet/rim/device/apps/internal/explorer/file/bluetooth/SendHandler;)V
       // 01a: invokevirtual net/rim/device/api/system/Application.invokeLater (Ljava/lang/Runnable;)V
       // 01d: bipush 1
-      // 01e: anewarray 829
+      // 01e: anewarray 831
       // 021: astore 7
       // 023: aload 7
       // 025: bipush 0

@@ -8,7 +8,7 @@ import net.rim.device.api.util.IntHashtable;
 final class DatagramProtocol extends ConnectionBase {
    private DatagramStatusListener _datagramStatuslistener;
    private IntHashtable _sendingDatagrams = (IntHashtable)(new Object());
-   private static final byte TCP_PROTOCOL_BYTE;
+   private static final byte TCP_PROTOCOL_BYTE = 6;
 
    public DatagramProtocol(String name, boolean useTimeouts) {
       super(name, useTimeouts);

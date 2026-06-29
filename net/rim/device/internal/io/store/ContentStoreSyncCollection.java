@@ -25,10 +25,10 @@ final class ContentStoreSyncCollection implements SyncCollection, CollectionEven
    private static String SAMPLE_PICTURES = "/samples/pictures/";
    private static String USER_PICTURES = "/home/user/pictures/";
    private static String USER_RINGTONES = "/home/user/ringtones/";
-   public static final int SYNC_VERSION;
-   public static final int SYNC_VERSION_DESKTOP;
-   public static final int SYNC_VERSION_MIN;
-   public static final int SYNC_VERSION_MAX;
+   public static final int SYNC_VERSION = 1;
+   public static final int SYNC_VERSION_DESKTOP = 1;
+   public static final int SYNC_VERSION_MIN = 1;
+   public static final int SYNC_VERSION_MAX = 1;
 
    final void enableSynchronization() {
       SyncManager.getInstance().enableSynchronization(this);

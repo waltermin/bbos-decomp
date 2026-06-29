@@ -7,8 +7,8 @@ public class Hashtable {
    private Object _empty;
    private int _numberOfKeys;
    private int _threshold;
-   private static final int _loadFactorMul;
-   private static final int _loadFactorRShift;
+   private static final int _loadFactorMul = 3;
+   private static final int _loadFactorRShift = 2;
 
    public Hashtable(int initialCapacity) {
       if (initialCapacity < 0) {

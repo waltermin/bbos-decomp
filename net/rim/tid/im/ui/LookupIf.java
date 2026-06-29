@@ -6,8 +6,8 @@ import net.rim.tid.im.SLInputMethod;
 import net.rim.tid.im.conv.SLVariants;
 
 public interface LookupIf {
-   byte LS_VERTICAL;
-   byte LS_USE_TEXT_WIDTH;
+   byte LS_VERTICAL = 1;
+   byte LS_USE_TEXT_WIDTH = 2;
 
    boolean isVisible();
 

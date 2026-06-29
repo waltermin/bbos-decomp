@@ -15,7 +15,7 @@ public final class InputMaskTextFilter extends TextFilter {
    private int _literalPrefixEnd = -1;
    private BasicEditField _edit;
    private boolean _validationDisabled;
-   public static final String DEFAULT_FILTER;
+   public static final String DEFAULT_FILTER = "*M";
 
    public InputMaskTextFilter(BasicEditField edit, String format) {
       this.buildFormatArrays(format);

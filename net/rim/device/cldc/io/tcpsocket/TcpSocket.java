@@ -25,13 +25,13 @@ final class TcpSocket implements SocketConnection, BoundNativeSocketListener {
    private int _readBufferOffset;
    private Tunnel _tunnel;
    private TcpAddress _address;
-   private static final int STREAM_STATE_NOT_OPENED;
-   private static final int STREAM_STATE_OPENED;
-   private static final int STREAM_STATE_SHUTDOWN;
-   private static final int STREAM_STATE_CLOSED;
-   private static final int READ_BUFFER_SIZE;
-   private static final String STR_STREAM_IS_ALREADY_CLOSED;
-   private static final String STR_STREAM_IS_ALREADY_OPEN;
+   private static final int STREAM_STATE_NOT_OPENED = 0;
+   private static final int STREAM_STATE_OPENED = 1;
+   private static final int STREAM_STATE_SHUTDOWN = 2;
+   private static final int STREAM_STATE_CLOSED = 3;
+   private static final int READ_BUFFER_SIZE = 1500;
+   private static final String STR_STREAM_IS_ALREADY_CLOSED = "Stream already closed";
+   private static final String STR_STREAM_IS_ALREADY_OPEN = "Stream already open";
 
    @Override
    public final void close() {

@@ -28,9 +28,9 @@ public final class FinderHistory implements SyncConverter, ReadableList, Collect
    private Comparator _sorter = new FinderHistory$HistorySortComparator(null);
    private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
    private boolean _isSorted = false;
-   private static final int MAX_SEARCH_HISTORY;
-   private static final long GUID;
-   private static final long FINDER_HISTORY_UID;
+   private static final int MAX_SEARCH_HISTORY = 100;
+   private static final long GUID = -849624327864935062L;
+   private static final long FINDER_HISTORY_UID = 7225056447458250548L;
    private static FinderHistory INSTANCE;
    private static SingleLocationDocumentConverter _singleLocationDocumentConverter = SingleLocationDocumentConverter.getInstance();
 

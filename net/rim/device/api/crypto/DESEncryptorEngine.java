@@ -3,7 +3,7 @@ package net.rim.device.api.crypto;
 public final class DESEncryptorEngine implements SymmetricKeyEncryptorEngine {
    private DESCryptoToken _cryptoToken;
    private CryptoTokenCipherContext _context;
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public DESEncryptorEngine(DESKey key) {
       if (key == null) {

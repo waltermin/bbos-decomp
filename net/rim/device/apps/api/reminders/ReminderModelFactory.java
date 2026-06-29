@@ -3,7 +3,7 @@ package net.rim.device.apps.api.reminders;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
 public class ReminderModelFactory extends RIMModelFactory {
-   public static final long ID;
+   public static final long ID = 813899564474876953L;
 
    @Override
    public Object createInstance(Object initialData) {

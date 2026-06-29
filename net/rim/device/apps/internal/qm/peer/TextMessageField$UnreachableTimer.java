@@ -4,7 +4,7 @@ import net.rim.blackberry.api.blackberrymessenger.MessengerContact;
 
 final class TextMessageField$UnreachableTimer extends QMTimerTask {
    private final TextMessageField this$0;
-   private static final int UNREACHABLE_TIMEOUT;
+   private static final int UNREACHABLE_TIMEOUT = 60000;
 
    private TextMessageField$UnreachableTimer(TextMessageField _1) {
       this.this$0 = _1;

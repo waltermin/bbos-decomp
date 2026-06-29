@@ -8,11 +8,11 @@ import net.rim.device.apps.api.framework.verb.Verb;
 public class FileBrowser {
    private Verb _fileBrowserVerb;
    private ContextObject _ctx = (ContextObject)(new Object());
-   public static final int VIEW_MODE_THUMBNAIL;
-   public static final int VIEW_MODE_LIST;
-   public static final int VIEW_MODE_DETAILS;
-   public static final long KEY;
-   public static final long INTEGER_MENU_ITEM_INVOKE;
+   public static final int VIEW_MODE_THUMBNAIL = 0;
+   public static final int VIEW_MODE_LIST = 1;
+   public static final int VIEW_MODE_DETAILS = 2;
+   public static final long KEY = -7165719342027358947L;
+   public static final long INTEGER_MENU_ITEM_INVOKE = -8073278814961745892L;
 
    public FileBrowser(String defaultPath, int mediaType, VerbProvider verbProvider) {
       this(defaultPath, mediaType, 0, verbProvider);

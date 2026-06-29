@@ -8,7 +8,7 @@ import net.rim.device.internal.rms.RecordStoreUtil;
 
 class RecordStoreManager$RecordStoreManagerListener implements GlobalEventListener {
    private Hashtable _toDelete = new Hashtable();
-   private static final long TIMEOUT;
+   private static final long TIMEOUT = 10000L;
 
    public void deleteRecordStoresWithKey(String midletSuiteHashKey, Hashtable recordStores) {
       Hashtable midletSuiteStores = (Hashtable)recordStores.get(midletSuiteHashKey);

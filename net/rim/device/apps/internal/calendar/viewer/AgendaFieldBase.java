@@ -12,8 +12,8 @@ import net.rim.vm.Array;
 class AgendaFieldBase extends DayList {
    protected int _moreEvents;
    private static final IconCollection STATUS_ICONS = IconCollection.get("net_rim_Calendar_MeetingConflict", 1);
-   private static final long MIN_EVENT_TIME_THRESHOLD;
-   private static final long MAX_EVENT_TIME_THRESHOLD;
+   private static final long MIN_EVENT_TIME_THRESHOLD = 1209600000L;
+   private static final long MAX_EVENT_TIME_THRESHOLD = 1382400000L;
 
    protected AgendaFieldBase() {
       super(false);

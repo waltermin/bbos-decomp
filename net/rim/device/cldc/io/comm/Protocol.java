@@ -24,7 +24,7 @@ public final class Protocol implements StreamConnection, USBPortListener, Connec
    private Protocol$Semaphore _writeSemaphore = new Protocol$Semaphore();
    private IOException _exception;
    private int _channel;
-   static final int BUFFER_SIZE;
+   static final int BUFFER_SIZE = 1024;
 
    @Override
    public final void close() {

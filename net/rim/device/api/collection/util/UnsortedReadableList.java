@@ -13,7 +13,7 @@ public class UnsortedReadableList implements ChainableCollection, LoadableCollec
    private Object[] _elements = new Object[20];
    private int _count;
    private CollectionListenerManager _listenerManager = new CollectionListenerManager();
-   private static final int GROW_SIZE;
+   private static final int GROW_SIZE = 20;
 
    @Override
    public void loadFrom(Object collection) {

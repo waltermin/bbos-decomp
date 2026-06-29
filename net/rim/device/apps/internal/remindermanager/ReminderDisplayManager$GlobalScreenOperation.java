@@ -6,9 +6,9 @@ public final class ReminderDisplayManager$GlobalScreenOperation {
    private int _operation;
    private Dialog _dialog;
    private final ReminderDisplayManager this$0;
-   static final int NONE;
-   static final int PUSH;
-   static final int POP;
+   static final int NONE = 0;
+   static final int PUSH = 1;
+   static final int POP = 2;
 
    public ReminderDisplayManager$GlobalScreenOperation(ReminderDisplayManager _1, Dialog dialog, int operation) {
       this.this$0 = _1;

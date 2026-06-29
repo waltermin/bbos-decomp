@@ -6,8 +6,8 @@ public class RegistryImpl implements Registry {
    private Hashtable registry = (Hashtable)(new Object());
    private String[] supportedVersions = new Object[4];
    private int numSupportedVersion = 0;
-   private static final String APPLICATION_RIM_PME;
-   private static final int MAX_NUM_SUPPORT_VERSION;
+   private static final String APPLICATION_RIM_PME = "application/x-vnd.rim.pme";
+   private static final int MAX_NUM_SUPPORT_VERSION = 4;
 
    public String getMaxSupportedVersion() {
       String maxSupportedVersion = null;

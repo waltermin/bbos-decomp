@@ -28,10 +28,10 @@ public class DNSResolverIPv4 implements UDPPacketListener {
    private DNSResolverIPv4$DNSResolverIPv4Thread _thread;
    private DNSCache _cache;
    private int RECURSION_ENABLED;
-   private static final long GUID;
+   private static final long GUID = 1197736374800106759L;
    private static int _packetID;
-   private static final int DNS_HEADER_SIZE;
-   private static final int DNS_QUERY_UDP_PORT;
+   private static final int DNS_HEADER_SIZE = 12;
+   private static final int DNS_QUERY_UDP_PORT = 53;
    private static DNSResolverIPv4 _instance;
 
    public int getAddressByHostname(String hostname, DNSListener listener) {

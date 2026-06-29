@@ -19,10 +19,10 @@ import net.rim.device.internal.system.RadioInternal;
 import net.rim.vm.DebugSupport;
 
 public final class Registration {
-   private static final String BLACKBERRY_NET_APN;
-   private static final String EMPTY_APN;
-   private static final String SIMULATOR_APN;
-   private static final long HR_REQ_THREAD_STATE_GUID;
+   private static final String BLACKBERRY_NET_APN = "blackberry.net";
+   private static final String EMPTY_APN = "";
+   private static final String SIMULATOR_APN = "rim.net.gprs";
+   private static final long HR_REQ_THREAD_STATE_GUID = 967027728804687787L;
    private static final int SUPPORTED_WAFS = RadioInfo.getSupportedWAFs();
 
    public static final void HRTMain(String[] args) {

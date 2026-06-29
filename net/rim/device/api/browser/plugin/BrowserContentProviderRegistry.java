@@ -3,7 +3,7 @@ package net.rim.device.api.browser.plugin;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class BrowserContentProviderRegistry {
-   protected static final long APP_REGISTRY_KEY;
+   protected static final long APP_REGISTRY_KEY = -6036257933185941735L;
 
    protected BrowserContentProviderRegistry() {
    }

@@ -35,27 +35,27 @@ public final class Security {
    private boolean _isAutoOnRequired = false;
    private int _unlockCounter = 0;
    private int _lockCounter = 0;
-   private static final long REGISTRY_NAME;
-   private static final long PASSWORD_KEY;
-   private static final int DAY_IN_MILLISECONDS;
-   private static final int PASSWORD_ENABLED_TIMESTAMP;
+   private static final long REGISTRY_NAME = 9159244075162769423L;
+   private static final long PASSWORD_KEY = 5031265368654170436L;
+   private static final int DAY_IN_MILLISECONDS = 86400000;
+   private static final int PASSWORD_ENABLED_TIMESTAMP = 1;
    private static Security _instance;
-   public static final int MAX_PASSWORD_LENGTH;
-   public static final int PASSWORD_OK;
-   public static final int PASSWORD_TOO_SHORT;
-   public static final int PASSWORD_TOO_LONG;
-   public static final int PASSWORD_IS_SEQUENCE;
-   public static final int PASSWORD_REQ_ALPHA_NUMERIC;
-   public static final int PASSWORD_REQ_ALPHA_NUMERIC_SPECIAL;
-   public static final int PASSWORD_REQ_ALPHA_CASE_NUMERIC_SPECIAL;
-   public static final int PASSWORD_FORBIDDEN;
-   public static final int PASSWORD_PATTERN_MASK_ERROR;
-   public static final long GUID_PASSWORD_STATE_CHANGED;
-   public static final long GUID_SECURITY_OPTIONS_CHANGED;
-   public static final long SECURITY_SETTING_PASSWORD_GUID;
-   public static final long SECURITY_SETTING_CONTENT_PROTECTION_GUID;
-   public static final long SECURITY_SETTING_FILE_SYSTEM_ENCRYPTION_UID;
-   public static final long GUID_PASSWORD_ENTRY_CHANGED;
+   public static final int MAX_PASSWORD_LENGTH = 32;
+   public static final int PASSWORD_OK = 0;
+   public static final int PASSWORD_TOO_SHORT = 1;
+   public static final int PASSWORD_TOO_LONG = 2;
+   public static final int PASSWORD_IS_SEQUENCE = 3;
+   public static final int PASSWORD_REQ_ALPHA_NUMERIC = 4;
+   public static final int PASSWORD_REQ_ALPHA_NUMERIC_SPECIAL = 5;
+   public static final int PASSWORD_REQ_ALPHA_CASE_NUMERIC_SPECIAL = 6;
+   public static final int PASSWORD_FORBIDDEN = 7;
+   public static final int PASSWORD_PATTERN_MASK_ERROR = 8;
+   public static final long GUID_PASSWORD_STATE_CHANGED = -1789715216180579536L;
+   public static final long GUID_SECURITY_OPTIONS_CHANGED = 9206737719270818227L;
+   public static final long SECURITY_SETTING_PASSWORD_GUID = 5862813030521710644L;
+   public static final long SECURITY_SETTING_CONTENT_PROTECTION_GUID = -746144713976755387L;
+   public static final long SECURITY_SETTING_FILE_SYSTEM_ENCRYPTION_UID = -2975703265270751603L;
+   public static final long GUID_PASSWORD_ENTRY_CHANGED = 306123729322610706L;
 
    public static final Security getInstance() {
       if (_instance == null) {

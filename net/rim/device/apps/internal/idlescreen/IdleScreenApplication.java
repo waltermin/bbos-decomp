@@ -24,12 +24,12 @@ import net.rim.vm.DebugSupport;
 final class IdleScreenApplication extends UiApplication {
    private static IdleScreenApplication$GlobalData _globalData = (IdleScreenApplication$GlobalData)ApplicationRegistry.getApplicationRegistry()
       .get(5892374562583112875L);
-   private static final long CONTENT_STYLE;
-   private static final String _showArg;
-   static final String OLD_USER_FILENAME;
-   private static final String CONTENT_INJECTOR_FILENAME;
-   private static final String BRAND_FILE_PATH;
-   private static final long START_DELAY;
+   private static final long CONTENT_STYLE = 64424509440L;
+   private static final String _showArg = "show";
+   static final String OLD_USER_FILENAME = "/store/appdata/rim/idlescreen/user/idle";
+   private static final String CONTENT_INJECTOR_FILENAME = "/store/appdata/rim/idlescreen/carrier/idle";
+   private static final String BRAND_FILE_PATH = "/store/appdata/rim/idlescreen/carrier/brand";
+   private static final long START_DELAY = 500L;
    static IdleScreenApplication$ElevatePriority _elevatePriority = new IdleScreenApplication$ElevatePriority();
 
    public static final void main(String[] args) {

@@ -10,7 +10,7 @@ import net.rim.device.internal.proxy.Proxy;
 
 final class ReminderApplication extends UiApplication {
    private int _foregroundable;
-   private static final long TIME_AND_RUNNABLE_TABLE_KEY;
+   private static final long TIME_AND_RUNNABLE_TABLE_KEY = -8995044480416259562L;
 
    @Override
    protected final boolean acceptsForeground() {

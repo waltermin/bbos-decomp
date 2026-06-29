@@ -8,8 +8,8 @@ import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.blackberryemail.address.EmailAddressStringPattern;
 
 public final class InputValidationUtils {
-   private static final int NUM_DECIMAL_PIN_DIGITS;
-   private static final int NUM_HEX_PIN_DIGITS;
+   private static final int NUM_DECIMAL_PIN_DIGITS = 7;
+   private static final int NUM_HEX_PIN_DIGITS = 8;
 
    public static final boolean isValidEmailAddress(String emailAddress) {
       boolean result = false;

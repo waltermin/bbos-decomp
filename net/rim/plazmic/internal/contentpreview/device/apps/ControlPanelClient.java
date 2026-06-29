@@ -17,8 +17,8 @@ public final class ControlPanelClient implements PlaybackInfoHandler, Service {
    private final Vector _otherMessages;
    private final ByteArrayOutputStream _buffer;
    private final PlaybackInfoMessageWriter _writer;
-   public static final String rcsid;
-   private static final boolean DEBUG;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/apps/ControlPanelClient.java#1 $";
+   private static final boolean DEBUG = false;
 
    ControlPanelClient(DatagramConnection connection, String host, int serverPort, int clientPort) {
       if (connection == null) {

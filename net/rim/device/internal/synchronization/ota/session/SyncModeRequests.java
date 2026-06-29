@@ -4,8 +4,8 @@ import net.rim.device.internal.synchronization.ota.util.Helper;
 
 final class SyncModeRequests {
    private byte _flags;
-   static final byte ISSUE_PROGRESSIVE_SYNC;
-   static final byte ISSUE_BATCH_SYNC;
+   static final byte ISSUE_PROGRESSIVE_SYNC = 1;
+   static final byte ISSUE_BATCH_SYNC = 2;
 
    public final boolean inBatchMode() {
       boolean xIssueProgressiveSync = Helper.getFlagValue(this._flags, 1);

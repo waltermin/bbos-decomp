@@ -20,8 +20,8 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class SpeedDialItem extends QuickContactItem implements PersistableRIMModel, ConversionProvider {
    private CallerIDInfo _cidi;
-   public static final long FACTORY_GUID;
-   static final long SPEED_DIAL_ITEM_TYPE;
+   public static final long FACTORY_GUID = 4046126975918546978L;
+   static final long SPEED_DIAL_ITEM_TYPE = -7443913519806541253L;
 
    SpeedDialItem(int uid, char key, CallerIDInfo cidi) {
       super(uid, key);

@@ -13,15 +13,15 @@ public final class CSSBinaryParser implements CSSParser {
    private String _stringTable;
    private Vector _freeList = (Vector)(new Object());
    private int[][][] _currentSelector = new int[5][][];
-   public static final byte VERSION;
-   private static final byte IMPORT;
-   private static final byte SELECTOR;
-   private static final byte PROPERTY;
-   private static final byte TAG_MASK;
-   private static final int SIZE_SHIFT;
-   private static final int MAX_SIZE;
-   private static final byte SIZE_MASK;
-   private static final byte SIZE_BIT;
+   public static final byte VERSION = 1;
+   private static final byte IMPORT = 1;
+   private static final byte SELECTOR = 2;
+   private static final byte PROPERTY = 3;
+   private static final byte TAG_MASK = 7;
+   private static final int SIZE_SHIFT = 3;
+   private static final int MAX_SIZE = 15;
+   private static final byte SIZE_MASK = 120;
+   private static final byte SIZE_BIT = -128;
    private static final String[] DEFAULT_MEDIA_LIST = new Object[0];
 
    public CSSBinaryParser(DocumentHandler handler, String url) {

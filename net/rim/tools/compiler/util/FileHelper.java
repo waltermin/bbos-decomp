@@ -3,11 +3,11 @@ package net.rim.tools.compiler.util;
 import net.rim.tools.compiler.vm.Constants;
 
 public final class FileHelper implements Constants {
-   public static final char pathSeparatorChar;
-   public static final String pathSeparator;
-   public static final char separatorChar;
-   public static final String separator;
-   public static final long oldEnough;
+   public static final char pathSeparatorChar = ';';
+   public static final String pathSeparator = ";";
+   public static final char separatorChar = '\\';
+   public static final String separator = "\\";
+   public static final long oldEnough = 1800000L;
    public static String ext_cod = ".cod";
    public static String ext_tmp = ".tmp";
    public static String ext_jar = ".jar";

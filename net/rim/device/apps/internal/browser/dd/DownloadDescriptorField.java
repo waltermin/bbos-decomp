@@ -59,7 +59,7 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
    private boolean _downloadStarted;
    private boolean _statusReportStarted;
    private boolean _statusReportResponseHandled;
-   private static final int STATUS_REPORT_PROGRESS_SIZE;
+   private static final int STATUS_REPORT_PROGRESS_SIZE = 1000;
 
    public DownloadDescriptorField(String descriptorURL, long style) {
       super(style);

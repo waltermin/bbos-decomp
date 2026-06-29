@@ -17,16 +17,16 @@ final class OCSPResponse {
    private long _producedAt;
    private byte[] _nonce;
    private Vector _certInfo;
-   public static final int RESPONDER_BY_NAME;
-   public static final int RESPONDER_BY_KEY_HASH;
-   private static final int TAG_OCSP_VERSION_INFO;
-   private static final int TAG_OCSP_VERSION_1;
-   private static final int TAG_RESPONSE_EXTENSION;
-   private static final int TAG_STATUS_GOOD;
-   private static final int TAG_STATUS_REVOKED;
-   private static final int TAG_STATUS_UNKNOWN;
-   private static final int TAG_NEXT_UPDATE;
-   private static final int TAG_CRL_REASON;
+   public static final int RESPONDER_BY_NAME = 1;
+   public static final int RESPONDER_BY_KEY_HASH = 2;
+   private static final int TAG_OCSP_VERSION_INFO = 0;
+   private static final int TAG_OCSP_VERSION_1 = 0;
+   private static final int TAG_RESPONSE_EXTENSION = 1;
+   private static final int TAG_STATUS_GOOD = 0;
+   private static final int TAG_STATUS_REVOKED = 1;
+   private static final int TAG_STATUS_UNKNOWN = 2;
+   private static final int TAG_NEXT_UPDATE = 0;
+   private static final int TAG_CRL_REASON = 0;
 
    public OCSPResponse(byte[] tbsResponseBytes) {
       this._responseBytes = tbsResponseBytes;

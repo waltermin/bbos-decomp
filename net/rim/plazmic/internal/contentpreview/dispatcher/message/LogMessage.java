@@ -7,10 +7,10 @@ public final class LogMessage extends Model {
    private final int _type;
    private final String _message;
    private final String[] _data;
-   public static final String rcsid;
-   public static final int MESSAGE;
-   public static final int WARNING;
-   public static final int ERROR;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/LogMessage.java#1 $";
+   public static final int MESSAGE = 1;
+   public static final int WARNING = 2;
+   public static final int ERROR = 3;
 
    public LogMessage(String sessionName, int type, String message, String[] data) {
       this._sessionName = sessionName;

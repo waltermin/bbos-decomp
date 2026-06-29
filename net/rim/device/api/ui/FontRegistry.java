@@ -24,21 +24,21 @@ public final class FontRegistry {
    private boolean isShufle = false;
    private IntHashtable _fontInfo = new IntHashtable();
    private int _handle;
-   public static final int NO_FONT_DATA;
-   public static final int ALREADY_LOADED;
-   public static final int FONTS_ARRAY_FULL;
-   public static final int MISSING_TYPEFACE_NAME;
-   public static final int ILLEGAL_NUMBER_OF_FILES;
-   public static final int FAILED_TO_LOAD_FILE;
+   public static final int NO_FONT_DATA = -1;
+   public static final int ALREADY_LOADED = -2;
+   public static final int FONTS_ARRAY_FULL = -3;
+   public static final int MISSING_TYPEFACE_NAME = -4;
+   public static final int ILLEGAL_NUMBER_OF_FILES = -5;
+   public static final int FAILED_TO_LOAD_FILE = -6;
    public static String DEFAULT_FAMILY;
    public static final int DEFAULT_SIZE;
    public static final int DEFAULT_STYLE;
-   private static final long REGISTRY_NAME;
-   private static final int MAX_FONTS;
-   private static final int MAX_TYPEFACE_NAMES;
-   private static final int CBTF_FONT_SIGNATURE;
-   private static final int SFF4_FONT_SIGNATURE;
-   private static final int TTF_FONT_SIGNATURE;
+   private static final long REGISTRY_NAME = -2659295168329133511L;
+   private static final int MAX_FONTS = 125;
+   private static final int MAX_TYPEFACE_NAMES = 64;
+   private static final int CBTF_FONT_SIGNATURE = 1667396710;
+   private static final int SFF4_FONT_SIGNATURE = 1936090676;
+   private static final int TTF_FONT_SIGNATURE = 65536;
    private static FontRegistry _registry;
 
    public static final FontRegistry getInstance() {

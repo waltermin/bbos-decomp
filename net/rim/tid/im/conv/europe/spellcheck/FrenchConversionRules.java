@@ -10,11 +10,11 @@ public class FrenchConversionRules implements LocaleConversionRules {
    private char[] _tmpBuff = new char[50];
    private Word _convertedWord = (Word)(new Object());
    private boolean _inRules;
-   private static final char APOSTROPHE;
-   private static final String CONTRACTION_FOLLOWS;
-   private static final String CONTRACTION_CONSONANTS;
-   private static final char SPECIAL_CONTRACTION1;
-   private static final char SPECIAL_CONTRACTION2;
+   private static final char APOSTROPHE = '\'';
+   private static final String CONTRACTION_FOLLOWS = "aeiouh";
+   private static final String CONTRACTION_CONSONANTS = "cdjlmnst";
+   private static final char SPECIAL_CONTRACTION1 = 'q';
+   private static final char SPECIAL_CONTRACTION2 = 'u';
    private static final FrenchConversionRules$SimpleContractionConversion SIMP_CONTRACTION = new FrenchConversionRules$SimpleContractionConversion();
    private static final FrenchConversionRules$QUConversion QU_CONTRACTION = new FrenchConversionRules$QUConversion();
 

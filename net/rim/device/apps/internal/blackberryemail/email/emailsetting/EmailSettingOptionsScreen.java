@@ -32,7 +32,7 @@ public final class EmailSettingOptionsScreen extends SaveableMainScreenOptionsLi
    private ObjectChoiceField _service;
    MainScreen _mainScreen;
    private WeakReference _weakReference = (WeakReference)(new Object(this));
-   private static final long ID;
+   private static final long ID = 656705520964886472L;
 
    final Field addIMPlusOption(int contextFlag, EmailSettingOptionsScreen$ServiceInfo serviceInfo, int indentSize) {
       Factory factory = (Factory)ApplicationRegistry.getApplicationRegistry().get(2620647646956286337L);

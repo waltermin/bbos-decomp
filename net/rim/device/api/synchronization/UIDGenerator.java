@@ -7,9 +7,9 @@ import net.rim.vm.PersistentInteger;
 public class UIDGenerator {
    private int _handle = PersistentInteger.getId(-4724165278185536481L, 0);
    private int _nextUID = PersistentInteger.get(this._handle);
-   private static final long KEY;
+   private static final long KEY = -4724165278185536481L;
    private static UIDGenerator _generator;
-   private static final int BLOCK_SIZE;
+   private static final int BLOCK_SIZE = 1024;
 
    public static int getUniqueScopingValue() {
       int valToReturn;

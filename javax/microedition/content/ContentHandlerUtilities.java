@@ -10,8 +10,8 @@ import net.rim.device.resources.Resource;
 import net.rim.device.resources.Resource$Internal;
 
 final class ContentHandlerUtilities {
-   private static final String SLASH_SLASH;
-   private static final String DEVICE_SIDE;
+   private static final String SLASH_SLASH = "//";
+   private static final String DEVICE_SIDE = ";deviceside=";
 
    private ContentHandlerUtilities() {
    }

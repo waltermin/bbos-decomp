@@ -24,11 +24,11 @@ public class WordLearningReader extends LearningReader {
    private WordLearningReader$TimeStampTrimController _trimControllerForTrim;
    private WordLearningReader$TimeStampTrimController _trimControllerForSetSize;
    protected boolean _ignoreTimeStamps;
-   private static final byte SPLIT_EVENT;
-   protected static final byte TRIM_EVENT;
-   private static final byte PROMOTE_TS_EVENT;
-   public static final int FREQ_TYPE_SIZE;
-   public static final int LEARN_TYPE_SIZE;
+   private static final byte SPLIT_EVENT = 1;
+   protected static final byte TRIM_EVENT = 2;
+   private static final byte PROMOTE_TS_EVENT = 4;
+   public static final int FREQ_TYPE_SIZE = 7168;
+   public static final int LEARN_TYPE_SIZE = 5120;
 
    public void init(byte type) {
       super._type = type;

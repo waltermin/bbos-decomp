@@ -7,8 +7,8 @@ import net.rim.wica.runtime.metadata.component.ui.control.TableColumnModel;
 
 final class ESColumn extends RedirectedObject {
    private TableColumnModel _model;
-   private static final String TitleProperty;
-   private static final String FrozenProperty;
+   private static final String TitleProperty = "title";
+   private static final String FrozenProperty = "frozen";
 
    ESColumn(TableColumnModel model) {
       this._model = model;

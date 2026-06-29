@@ -17,12 +17,12 @@ final class RoamingComponentFactory implements Factory, GANStatusListener, Radio
    private int _iconIndex;
    private boolean _hasUMA;
    private int _level;
-   public static final int ROAMING_INDEX;
-   public static final int ROAMING_OFF_CAMPUS_INDEX;
-   public static final int ROAMING_NO_DATA_INDEX;
-   public static final int ROAMING_NO_DATA_OFF_CAMPUS_INDEX;
-   public static final int HOME_ZONE_INDEX;
-   public static final int UMA_FCZ_INDEX;
+   public static final int ROAMING_INDEX = 0;
+   public static final int ROAMING_OFF_CAMPUS_INDEX = 1;
+   public static final int ROAMING_NO_DATA_INDEX = 2;
+   public static final int ROAMING_NO_DATA_OFF_CAMPUS_INDEX = 3;
+   public static final int HOME_ZONE_INDEX = 4;
+   public static final int UMA_FCZ_INDEX = 5;
 
    public final int getIconIndex(boolean fczAlways) {
       return fczAlways && this._hasUMA ? 5 : this._iconIndex;

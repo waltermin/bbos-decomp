@@ -32,8 +32,8 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
    private Field _fieldToMove;
    private int _originalIndex;
    private int _currentIndex;
-   public static final int ABSOLUTE_MAX_MESSAGE_SIZE;
-   private static final int MAX_NAME_LENGTH;
+   public static final int ABSOLUTE_MAX_MESSAGE_SIZE = 1500000;
+   private static final int MAX_NAME_LENGTH = 98;
 
    final boolean isImmutable() {
       return this._immutablePresentation != null;

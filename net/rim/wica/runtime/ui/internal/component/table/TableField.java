@@ -39,7 +39,7 @@ public class TableField extends Field {
    private boolean _isLayoutWidthMin;
    private IntVector _gridX = (IntVector)(new Object());
    private IntVector _gridY = (IntVector)(new Object());
-   public static final int ROW_SELECTOR_WIDTH;
+   public static final int ROW_SELECTOR_WIDTH = 5;
    private static final TableField$LeftRightArrows _ARROWS = new TableField$LeftRightArrows(null);
    private static final TableField$ViewCellDialog _VIEW_CELL_DIALOG = new TableField$ViewCellDialog();
    private static MenuItem _VIEW_CELL = new TableField$ViewCellMenuItem();

@@ -8,10 +8,10 @@ import net.rim.device.api.util.ContentProtectedHashtable;
 public final class ClientPersistentState {
    protected ContentProtectedHashtable _content;
    private PersistentObject _store = PersistentStore.getPersistentObject(6644286283389573765L);
-   private static final long STATE_GUID;
-   private static final String KEY_LOCALE;
-   private static final String KEY_USERNAME;
-   private static final String KEY_PASSWORD;
+   private static final long STATE_GUID = 6644286283389573765L;
+   private static final String KEY_LOCALE = "locale";
+   private static final String KEY_USERNAME = "userName";
+   private static final String KEY_PASSWORD = "password";
    private static ClientPersistentState instance;
 
    private ClientPersistentState() {

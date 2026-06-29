@@ -21,8 +21,8 @@ import net.rim.vm.Array;
 public final class EmailMessageSync extends EmailMessageSyncBase implements SyncEventListener, OTASyncPriorityProvider {
    private boolean _removeAllEmailMessagesPerformed;
    private boolean _removeAllPINMessagesPerformed;
-   private static final String SYNC_COLLECTION_NAME;
-   private static final long EMAIL_MESSAGES_BACKUP_MERGE_ID;
+   private static final String SYNC_COLLECTION_NAME = "Messages";
+   private static final long EMAIL_MESSAGES_BACKUP_MERGE_ID = -5870816783098540986L;
    private static LongHashtable _folderCache;
 
    @Override

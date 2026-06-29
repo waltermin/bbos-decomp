@@ -54,11 +54,11 @@ public final class AnimationViewport implements MediaViewport, Pannable {
    private int visindent = 0;
    protected MediaServices _services;
    private MEGraphics2d _meGraphic;
-   public static final int DELTA_Y_OFFSET;
-   public static final int DELTA_WIDTH_OFFSET;
-   public static final int DELTA_HEIGHT_OFFSET;
-   public static final int DELTA_X_COORDS_OFFSET;
-   public static final int DELTA_Y_COORDS_OFFSET;
+   public static final int DELTA_Y_OFFSET = 1;
+   public static final int DELTA_WIDTH_OFFSET = 2;
+   public static final int DELTA_HEIGHT_OFFSET = 3;
+   public static final int DELTA_X_COORDS_OFFSET = 4;
+   public static final int DELTA_Y_COORDS_OFFSET = 5;
 
    protected final void findHiddenInterpolator(int index) {
    }

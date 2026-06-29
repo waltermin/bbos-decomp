@@ -4,10 +4,10 @@ final class Version {
    byte major = 1;
    private byte minor = 0;
    private byte servind = 0;
-   static final byte VERSION_ELEMENT_BIT_SIZE;
-   static final byte VER_SUPPORTED_MAJ;
-   static final byte VER_SUPPORTED_MIN;
-   static final byte VER_SUPPORTED_SERVIND;
+   static final byte VERSION_ELEMENT_BIT_SIZE = 8;
+   static final byte VER_SUPPORTED_MAJ = 1;
+   static final byte VER_SUPPORTED_MIN = 0;
+   static final byte VER_SUPPORTED_SERVIND = 0;
 
    final void decode(Nibbler nib) {
       this.major = nib.getByte();

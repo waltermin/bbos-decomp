@@ -30,7 +30,7 @@ class TwoStringLayout extends HorizontalLayout {
    private TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
    private DrawTextParam _textParams = (DrawTextParam)(new Object());
    private StringBuffer _textBuffer = (StringBuffer)(new Object());
-   private static final int ELLIPSIS_LENGTH;
+   private static final int ELLIPSIS_LENGTH = 1;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

@@ -13,7 +13,7 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 final class BlackBerryMessengerImpl extends BlackBerryMessenger {
    private PeerApplication _application;
    private ServiceRunnable[] _services = new ServiceRunnable[0];
-   private static final long GUID;
+   private static final long GUID = 4927202520515498096L;
    static final BlackBerryMessengerImpl$MyInfo _myInfo = new BlackBerryMessengerImpl$MyInfo();
 
    BlackBerryMessengerImpl(PeerApplication application) {

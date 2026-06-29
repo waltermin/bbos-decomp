@@ -30,15 +30,15 @@ public final class ProxySecureConnection implements SecureConnection {
    private OutputStream _output;
    private DataBuffer _buffer;
    private boolean _isClosed;
-   private static final boolean DEBUG;
-   public static final int INIT_BYTE;
-   public static final byte INIT_ADDRESS;
-   public static final byte CERT_NOT_TRUST_ALL;
-   public static final byte CERT_TRUST_ALL;
-   public static final int CONNECTION_HOSTNAME_NOT_VERIFIED;
-   public static final int CONNECTION_NOT_TRUSTED_BUT_ALLOWED;
-   public static final int CONNECTION_NOT_TRUSTED_AND_NOT_ALLOWED;
-   public static final int GENERIC_TLS_EXCEPTION;
+   private static final boolean DEBUG = false;
+   public static final int INIT_BYTE = 0;
+   public static final byte INIT_ADDRESS = 1;
+   public static final byte CERT_NOT_TRUST_ALL = 2;
+   public static final byte CERT_TRUST_ALL = 3;
+   public static final int CONNECTION_HOSTNAME_NOT_VERIFIED = 128;
+   public static final int CONNECTION_NOT_TRUSTED_BUT_ALLOWED = 126;
+   public static final int CONNECTION_NOT_TRUSTED_AND_NOT_ALLOWED = 125;
+   public static final int GENERIC_TLS_EXCEPTION = 124;
    private static ResourceBundle _rb = ResourceBundle.getBundle(-320500590281765934L, "net.rim.device.internal.resource.SSL");
 
    @Override

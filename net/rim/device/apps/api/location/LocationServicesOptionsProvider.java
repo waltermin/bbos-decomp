@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.container.MainScreen;
 
 public class LocationServicesOptionsProvider {
-   private static final long KEY;
+   private static final long KEY = 1019160237187605356L;
 
    public void populateMainScreen(MainScreen _1) {
       throw null;

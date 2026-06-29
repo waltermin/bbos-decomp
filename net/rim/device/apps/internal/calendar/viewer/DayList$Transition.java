@@ -25,19 +25,19 @@ public final class DayList$Transition implements EncryptableProvider {
    int _attributes;
    int _colour;
    private String _formattedSummaryText;
-   static final byte END_MASK;
-   static final byte TRANSITION_MASK;
-   static final byte NO_TRANSITION;
-   static final byte SEPARATOR;
-   static final byte ALL_DAY;
-   static final byte FREE_TIME_SEPARATOR;
-   static final byte BEGINNING;
-   static final byte MIDDLE_BEGINNING;
-   static final byte MIDDLE_END;
-   static final byte END;
-   static final byte BEGINNING_AND_END;
-   static final byte IN_THE_PAST;
-   static final byte CONFLICTS;
+   static final byte END_MASK = 2;
+   static final byte TRANSITION_MASK = 16;
+   static final byte NO_TRANSITION = 0;
+   static final byte SEPARATOR = 1;
+   static final byte ALL_DAY = 2;
+   static final byte FREE_TIME_SEPARATOR = 3;
+   static final byte BEGINNING = 16;
+   static final byte MIDDLE_BEGINNING = 17;
+   static final byte MIDDLE_END = 18;
+   static final byte END = 19;
+   static final byte BEGINNING_AND_END = 32;
+   static final byte IN_THE_PAST = 1;
+   static final byte CONFLICTS = 2;
 
    protected DayList$Transition() {
    }

@@ -25,8 +25,8 @@ final class WMLScriptBrowserContent implements Runnable {
    private RenderingOptions _renderingOptions;
    private RenderingApplication _renderingApplication;
    private boolean _aborted;
-   static final int ACTION_PREV;
-   static final int ACTION_GO;
+   static final int ACTION_PREV = 1;
+   static final int ACTION_GO = 2;
 
    final void halt() {
       if (!this._aborted) {

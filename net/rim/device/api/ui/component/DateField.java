@@ -80,12 +80,12 @@ public class DateField extends Field implements DrawStyle, FieldLabelProvider {
    boolean _first_focus = true;
    private static Tag TAG = Tag.create("date");
    private static Tag TAG_LABEL = Tag.create("label");
-   public static final int DATE;
-   public static final int TIME;
-   public static final int CHANGE_ON_VERTICAL_SCROLL;
-   public static final int FOCUS_MOVE_ON_HORIZONTAL_SCROLL;
-   public static final int DATE_TIME;
-   private static final int PADDING;
+   public static final int DATE = 16;
+   public static final int TIME = 32;
+   public static final int CHANGE_ON_VERTICAL_SCROLL = 64;
+   public static final int FOCUS_MOVE_ON_HORIZONTAL_SCROLL = 128;
+   public static final int DATE_TIME = 48;
+   private static final int PADDING = 5;
    private static MenuItem _changeOptionsItem = new DateField$1(CommonResource.getBundle(), 1, 30270, 10);
    private static XYRect _rect = new XYRect();
 

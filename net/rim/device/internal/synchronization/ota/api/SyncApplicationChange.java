@@ -11,10 +11,10 @@ public class SyncApplicationChange implements Persistable {
    private Object _parameters;
    private byte _flags;
    private byte[] _retryCounts;
-   private static final int FOR_SLOWSYNC;
-   private static final int SHOULD_BE_FILLED;
-   static final byte RETRY_COUNT_OPERATION;
-   static final byte RETRY_COUNT_SUSPENSION;
+   private static final int FOR_SLOWSYNC = 1;
+   private static final int SHOULD_BE_FILLED = 2;
+   static final byte RETRY_COUNT_OPERATION = 0;
+   static final byte RETRY_COUNT_SUSPENSION = 1;
 
    public SyncApplicationChange() {
       this.setRefId(ReferenceGenerator.getSingletonInstance().getPositiveRefID());

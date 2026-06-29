@@ -21,13 +21,13 @@ public class IPPPDatagramBase extends DatagramBase {
    protected String _errorMessage = "";
    protected short _flowControlTimeout = 0;
    protected byte[] _reserved = new byte[2];
-   public static final byte VERSION;
-   public static final byte FLAG_DATA;
-   public static final byte FLAG_CONNECT_REQUEST;
-   public static final byte FLAG_DISCONNECT_ORDER;
-   public static final byte FLAG_ERROR;
-   private static final int Min_FlowControlTimeout;
-   private static final int Max_FlowControlTimeout;
+   public static final byte VERSION = 16;
+   public static final byte FLAG_DATA = 0;
+   public static final byte FLAG_CONNECT_REQUEST = 1;
+   public static final byte FLAG_DISCONNECT_ORDER = 4;
+   public static final byte FLAG_ERROR = -128;
+   private static final int Min_FlowControlTimeout = 60;
+   private static final int Max_FlowControlTimeout = 1800;
 
    public IPPPDatagramBase() {
       this(null, 0, 0);

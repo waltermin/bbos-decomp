@@ -13,7 +13,7 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
    private int _reconnectAttempt;
    private int _reconnectThreadID = -1;
    private int _waitGPSDeviceID = -1;
-   private static final int MAX_RECONNECT_ATTEMPTS;
+   private static final int MAX_RECONNECT_ATTEMPTS = 10;
    private static final String[] NMEAdiscards = new String[]{"01", "02", "03", "05"};
    private static final String[] NMEAwanted = new String[]{"00", "04"};
 

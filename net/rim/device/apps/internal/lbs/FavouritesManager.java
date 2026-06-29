@@ -16,9 +16,9 @@ import net.rim.device.apps.internal.lbs.resources.LBSResources;
 
 public final class FavouritesManager implements CollectionListener {
    int _lastSelectedNode;
-   private static final String FOLDER_DELIMITER;
-   public static final long HIERACRCHY_ID;
-   private static final long GUID;
+   private static final String FOLDER_DELIMITER = "\u001f";
+   public static final long HIERACRCHY_ID = -4319711987384773568L;
+   private static final long GUID = 4428059215303450357L;
    private static FavouritesManager INSTANCE;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

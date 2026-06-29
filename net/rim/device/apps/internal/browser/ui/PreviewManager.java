@@ -30,8 +30,8 @@ final class PreviewManager extends Field {
    private XYRect _validBufferRect;
    private int _preZoomX;
    private int _preZoomY;
-   private static final int UPDATE_DELAY;
-   private static final int POINTER_OVERLAY_INDEX;
+   private static final int UPDATE_DELAY = 500;
+   private static final int POINTER_OVERLAY_INDEX = 4;
    private static final int MIN_SCALE = Fixed32.toFP(2);
    private static final int MAX_SCALE = Fixed32.toFP(8);
 

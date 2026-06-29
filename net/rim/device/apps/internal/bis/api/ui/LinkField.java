@@ -7,7 +7,7 @@ import net.rim.device.api.ui.component.LabelField;
 public final class LinkField extends LabelField {
    private int _textColour;
    private boolean _underline;
-   private static final int LINK_COLOR;
+   private static final int LINK_COLOR = 23776;
 
    public LinkField(String text) {
       this(text, 23776, true, 0);

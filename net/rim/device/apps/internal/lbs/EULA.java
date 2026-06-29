@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.lbs;
 import net.rim.device.api.system.DeviceInfo;
 
 public final class EULA {
-   private static final String NEW_APP_FLAG;
+   private static final String NEW_APP_FLAG = "\u0001";
 
    public final boolean confirmAgreement() {
       if (this.showEULA()) {

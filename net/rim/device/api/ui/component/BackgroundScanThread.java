@@ -6,7 +6,7 @@ class BackgroundScanThread extends Thread {
    private Runnable[] _list = new Runnable[8];
    private int _headIndex;
    private int _tailIndex;
-   private static final long MAX_IDLE_TIME;
+   private static final long MAX_IDLE_TIME = 60000L;
    private static BackgroundScanThread _scanThread;
 
    private BackgroundScanThread() {

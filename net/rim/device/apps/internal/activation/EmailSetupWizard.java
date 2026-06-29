@@ -12,10 +12,10 @@ import net.rim.device.apps.api.setupwizard.WizardController;
 public final class EmailSetupWizard extends WizardController {
    private int _setupMode = -1;
    private String _bisSetupUID;
-   private static final int MODE_UNSET;
-   private static final int MODE_NONE;
-   private static final int MODE_BIS;
-   private static final int MODE_BES;
+   private static final int MODE_UNSET = -1;
+   private static final int MODE_NONE = 0;
+   private static final int MODE_BIS = 1;
+   private static final int MODE_BES = 2;
    private static ResourceBundleFamily _resources = ResourceBundle.getBundle(6266320976869391490L, "net.rim.device.apps.internal.resource.Activation");
 
    static final void register() {

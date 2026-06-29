@@ -17,8 +17,8 @@ final class LowMemoryManagerImpl extends LowMemoryManager implements ExactLowMem
    private static int POLL_TYPE_EXPLICIT = 0;
    private static int POLL_TYPE_AUTOMATIC = 1;
    private static int POLL_TYPE_EXACT = 2;
-   private static final int PURGES_FROM_ONE_LISTENER;
-   private static final int FLASH_FROM_ONE_LISTENER;
+   private static final int PURGES_FROM_ONE_LISTENER = 8;
+   private static final int FLASH_FROM_ONE_LISTENER = 8192;
 
    @Override
    protected final synchronized void doAddLowMemoryListener(LowMemoryListener listener) {

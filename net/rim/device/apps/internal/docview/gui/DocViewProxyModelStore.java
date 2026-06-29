@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.internal.blackberryemail.email.PersistentProxyModelStore;
 
 final class DocViewProxyModelStore extends PersistentProxyModelStore implements Persistable {
-   private static final long ID;
+   private static final long ID = 330074175348706624L;
 
    private DocViewProxyModelStore(long rootId) {
       super(rootId, true);

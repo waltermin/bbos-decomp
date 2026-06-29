@@ -57,9 +57,9 @@ final class ApplicationManagerImpl extends ApplicationManager implements Applica
    String[] _schedulingLog;
    int _schedulingLogIndex = 0;
    private long _lastQuincy;
-   private static final boolean OUTPUT_APPLICATION_MESSAGES;
-   private static final int TIER_TIMEOUT;
-   private static final int MAX_TIMER_ID;
+   private static final boolean OUTPUT_APPLICATION_MESSAGES = true;
+   private static final int TIER_TIMEOUT = 300000;
+   private static final int MAX_TIMER_ID = -65536;
 
    final boolean postInternalGlobalEvent(int processId, long guid, int data0, int data1, Object object0, Object object1) {
       ApplicationProcess process = this.findProcess(processId);

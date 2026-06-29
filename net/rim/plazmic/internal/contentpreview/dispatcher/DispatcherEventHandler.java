@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.contentpreview.dispatcher;
 
 public interface DispatcherEventHandler {
-   String rcsid;
+   String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/DispatcherEventHandler.java#1 $";
 
    void openSession(String var1, boolean var2);
 

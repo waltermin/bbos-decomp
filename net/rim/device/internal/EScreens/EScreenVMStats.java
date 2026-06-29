@@ -12,14 +12,14 @@ public final class EScreenVMStats extends MainScreen {
    private static final String[] _titles = new String[]{
       "Processes", "RAM Usage", "Flash Usage", "Object Usage", "Code Modules", "Transient Objects in flash", "Persistent Objects in flash"
    };
-   private static final int Processes;
-   private static final int RAM;
-   private static final int Flash;
-   private static final int Object;
-   private static final int Code;
-   private static final int Transient;
-   private static final int Persistent;
-   private static final int NUM_STATS;
+   private static final int Processes = 0;
+   private static final int RAM = 1;
+   private static final int Flash = 2;
+   private static final int Object = 3;
+   private static final int Code = 4;
+   private static final int Transient = 5;
+   private static final int Persistent = 6;
+   private static final int NUM_STATS = 7;
 
    public EScreenVMStats(Font font) {
       this.setFont(font);

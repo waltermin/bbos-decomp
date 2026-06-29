@@ -6,7 +6,7 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
    private SkipjackCryptoToken _cryptoToken;
    private CryptoTokenSymmetricKeyData _cryptoTokenData;
    private int _hashCode;
-   public static final int LENGTH;
+   public static final int LENGTH = 10;
 
    public final CryptoTokenSymmetricKeyData getCryptoTokenData() {
       return this._cryptoTokenData;

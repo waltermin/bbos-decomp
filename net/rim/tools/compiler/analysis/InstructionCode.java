@@ -36,7 +36,7 @@ public final class InstructionCode implements Constants {
    private int _codeWeight;
    private int _byteCodeWeight;
    private ByteCodeInstructions _blocks;
-   private static final int PROLOG_IP;
+   private static final int PROLOG_IP = -8;
    private static JavaByteCodes _javaByteCodes = new JavaByteCodes();
    private static InstructionResolver _instructionResolver = new InstructionResolver();
    private static InstructionPopulater _instructionPopulater = new InstructionPopulater();

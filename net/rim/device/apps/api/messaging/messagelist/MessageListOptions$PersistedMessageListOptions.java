@@ -12,7 +12,7 @@ final class MessageListOptions$PersistedMessageListOptions implements Persistabl
    short _SMSEmailInbox = 0;
    short _autoDownloadAttachments = MessageListOptions.getAutoDownloadAttachmentsDefault();
    short _listSeparatorAppearance = 2;
-   private static final int DEFAULT_OFF;
+   private static final int DEFAULT_OFF = 664;
 
    MessageListOptions$PersistedMessageListOptions() {
       boolean highSpeedNetworkDefaultValue = MessageListOptions.getHighSpeedNetworkOnlyDefault();

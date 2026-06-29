@@ -9,9 +9,9 @@ public class CertificateImporterFactory$CertificateImporterContext {
    public int _trustCertificate = 2;
    public int _importEmbeddedCertificates = 2;
    private Hashtable _keyStoreTickets = (Hashtable)(new Object());
-   public static final int NO;
-   public static final int YES;
-   public static final int PROMPT;
+   public static final int NO = 0;
+   public static final int YES = 1;
+   public static final int PROMPT = 2;
 
    protected CertificateImporterFactory$CertificateImporterContext() {
    }

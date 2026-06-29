@@ -9,9 +9,9 @@ class HorizontalLayout extends AbstractForeignObject implements LayoutManager {
    protected ModelInteractorImpl _model;
    protected int _width;
    protected int _align = 1;
-   public static final int ALIGN_LEFT;
-   public static final int ALIGN_CENTER;
-   public static final int ALIGN_RIGHT;
+   public static final int ALIGN_LEFT = 0;
+   public static final int ALIGN_CENTER = 1;
+   public static final int ALIGN_RIGHT = 2;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

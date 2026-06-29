@@ -8,7 +8,7 @@ public final class URLEncodedFormData extends FormData implements Persistable {
    private String _charset;
    private Object _dataEncoding;
    private boolean _useWAPConventions;
-   public static final String DEFAULT_CHARSET;
+   public static final String DEFAULT_CHARSET = "iso-8859-1";
 
    public URLEncodedFormData(String charset, boolean useWAPConventions) {
       this._charset = charset;

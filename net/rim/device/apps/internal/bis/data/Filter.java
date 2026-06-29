@@ -9,12 +9,12 @@ public final class Filter {
    private boolean _headersOnly;
    private String _operator;
    private String _value;
-   public static final String FILTER_OPERATOR_NEW_MAIL;
-   public static final String FILTER_OPERATOR_PRIORITY_MAIL;
-   public static final String FILTER_OPERATOR_FROM;
-   public static final String FILTER_OPERATOR_SUBJECT;
-   public static final String FILTER_OPERATOR_TO;
-   public static final String FILTER_OPERATOR_CC;
+   public static final String FILTER_OPERATOR_NEW_MAIL = "newMail";
+   public static final String FILTER_OPERATOR_PRIORITY_MAIL = "priorityMail";
+   public static final String FILTER_OPERATOR_FROM = "From";
+   public static final String FILTER_OPERATOR_SUBJECT = "Subject";
+   public static final String FILTER_OPERATOR_TO = "To";
+   public static final String FILTER_OPERATOR_CC = "Cc";
 
    public final String getId() {
       return this._id;

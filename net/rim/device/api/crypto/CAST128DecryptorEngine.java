@@ -3,7 +3,7 @@ package net.rim.device.api.crypto;
 public final class CAST128DecryptorEngine implements SymmetricKeyDecryptorEngine {
    private CAST128CryptoToken _cryptoToken;
    private CryptoTokenCipherContext _context;
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public CAST128DecryptorEngine(CAST128Key key) {
       if (key == null) {

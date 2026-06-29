@@ -9,10 +9,10 @@ import net.rim.device.api.ui.component.Status;
 public class ProfileQuickToggle {
    private static int _keyDownEventTime;
    private static boolean _toggledProfile;
-   private static final int TWO_SECONDS;
-   private static final int ONE_SECOND;
-   private static final int ONE_QUARTER_SECOND;
-   private static final int AUDIO_VOLUME_LOW;
+   private static final int TWO_SECONDS = 2000;
+   private static final int ONE_SECOND = 1000;
+   private static final int ONE_QUARTER_SECOND = 250;
+   private static final int AUDIO_VOLUME_LOW = 50;
    private static final short[] MUTE_OFF_TUNE = new short[]{1800, 150, 1500, 150, 1, -12278, 51, 0};
 
    public static boolean handleKeyDown(int time) {

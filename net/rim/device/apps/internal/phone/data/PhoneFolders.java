@@ -24,17 +24,17 @@ import net.rim.device.apps.internal.phone.options.PhoneOptions;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class PhoneFolders {
-   public static final int MISSED_CALL_FOLDER;
-   public static final int DEFAULT_FOLDER;
-   public static final int DC_CALL_FOLDER;
-   public static final int DC_ALERT_FOLDER;
+   public static final int MISSED_CALL_FOLDER = 0;
+   public static final int DEFAULT_FOLDER = 1;
+   public static final int DC_CALL_FOLDER = 2;
+   public static final int DC_ALERT_FOLDER = 3;
    public static final int FOLDER_COUNT = PhoneUtilities.idenTypeNetwork() ? 4 : 2;
-   public static final long PHONE_HIERARCHY_ID;
-   public static final long MISSED_CALL_FOLDER_ID;
-   public static final long DEFAULT_FOLDER_ID;
-   public static final long DC_CALL_FOLDER_ID;
-   public static final long DC_ALERT_FOLDER_ID;
-   public static final long PHONE_FAMILY;
+   public static final long PHONE_HIERARCHY_ID = -6900425462863939467L;
+   public static final long MISSED_CALL_FOLDER_ID = 7042951934619290849L;
+   public static final long DEFAULT_FOLDER_ID = 5390902206192375236L;
+   public static final long DC_CALL_FOLDER_ID = -1859209320265783789L;
+   public static final long DC_ALERT_FOLDER_ID = -2025972805868361049L;
+   public static final long PHONE_FAMILY = 1212521839578244703L;
 
    public static final void initializePhoneFolderHierarchy() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();

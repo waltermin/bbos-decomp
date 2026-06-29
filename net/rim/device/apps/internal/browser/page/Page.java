@@ -105,8 +105,8 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    private Hashtable _activeFetchRequests = (Hashtable)(new Object());
    private long _lastClickID = -1;
    private UrlRequestedInternalEvent[] _pendingFrameEvents;
-   private static final int MAX_APN_ID;
-   private static final int MAX_FRIENDLY_NAME_LENGTH;
+   private static final int MAX_APN_ID = 7;
+   private static final int MAX_FRIENDLY_NAME_LENGTH = 40;
    public static boolean _richTextMarkup;
 
    public void setBrowserContent(BrowserContentImpl browserContent) {

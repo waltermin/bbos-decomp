@@ -1,13 +1,13 @@
 package net.rim.device.api.browser.plugin;
 
 public interface BrowserPageContext {
-   int STYLE_NO_VERTICAL_SCROLLBAR;
-   int STYLE_SHOW_IN_FULL_SCREEN;
-   int STYLE_OVERLAY_FOOTER;
-   int STYLE_SHOW_FOOTER_ALWAYS;
-   int STYLE_VERTICAL_SCROLL_ON_LEFT;
-   int STYLE_NO_HORIZONTAL_SCROLLBAR;
-   int DISPLAY_STYLE;
+   int STYLE_NO_VERTICAL_SCROLLBAR = 2;
+   int STYLE_SHOW_IN_FULL_SCREEN = 4;
+   int STYLE_OVERLAY_FOOTER = 8;
+   int STYLE_SHOW_FOOTER_ALWAYS = 16;
+   int STYLE_VERTICAL_SCROLL_ON_LEFT = 32;
+   int STYLE_NO_HORIZONTAL_SCROLLBAR = 64;
+   int DISPLAY_STYLE = 2;
 
    boolean getPropertyWithBooleanValue(int var1, boolean var2);
 

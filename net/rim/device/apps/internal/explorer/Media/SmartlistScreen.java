@@ -31,7 +31,7 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
    private VerticalFieldManager _albumsVfm = (VerticalFieldManager)(new Object());
    private VerticalFieldManager _genresVfm = (VerticalFieldManager)(new Object());
    private boolean _dirty;
-   private static final String UTF8;
+   private static final String UTF8 = "UTF-8";
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

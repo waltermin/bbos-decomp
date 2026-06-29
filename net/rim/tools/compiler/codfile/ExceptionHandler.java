@@ -7,7 +7,7 @@ public final class ExceptionHandler extends CodfileItemRelative {
    private CodfileLabel _end;
    private CodfileLabel _handler;
    private ClassDef _classDef;
-   public static final int EXCEPTION_TABLE_END;
+   public static final int EXCEPTION_TABLE_END = 65535;
 
    public ExceptionHandler(CodfileLabel start, CodfileLabel end, CodfileLabel handler, ClassDef classDef) {
       this._start = start;

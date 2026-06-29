@@ -28,10 +28,10 @@ public final class GPSMode extends AbstractMode {
       LBSResources.getString(193),
       LBSResources.getString(186)
    };
-   public static final int TYPE_GPS;
-   public static final int TYPE_STREET_ON;
-   public static final int TYPE_STREET_NEXT;
-   public static final int TYPE_STREET_INVALID;
+   public static final int TYPE_GPS = 0;
+   public static final int TYPE_STREET_ON = 1;
+   public static final int TYPE_STREET_NEXT = 2;
+   public static final int TYPE_STREET_INVALID = 3;
    private static final Bitmap SATELLITE = Bitmap.getBitmapResource("images/satellite.png");
    private static final Bitmap SATELLITE_NO_GPS = Bitmap.getBitmapResource("images/satellite_no_GPS.png");
 

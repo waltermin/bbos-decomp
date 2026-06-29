@@ -11,7 +11,7 @@ import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.EventLogger;
 
 public final class Dispatcher implements PushEventLogger {
-   private static final String CONTENT_TYPE_SIA;
+   private static final String CONTENT_TYPE_SIA = "application/vnd.wap.sia";
 
    public static final Object[] processRawData(boolean isConnectionless, byte[] rawData, int bearer, String source, WTPLayer wtpLayer, WTP_PDU wtpPDU) {
       EventLogger.logEvent(-1133226195824034738L, 1148215908, 5);

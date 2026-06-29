@@ -9,10 +9,10 @@ import net.rim.vm.Process;
 
 public class RIMProcessLauncher implements GlobalEventListener {
    private int _pid = 0;
-   public static final long GUID;
-   public static final int FLAG_START_APP;
-   public static final int FLAG_START_UI_APP;
-   public static final int FLAG_WAIT_FOR_TERMINATION;
+   public static final long GUID = -7293675776592666707L;
+   public static final int FLAG_START_APP = 1;
+   public static final int FLAG_START_UI_APP = 3;
+   public static final int FLAG_WAIT_FOR_TERMINATION = 4;
    private static Object _processTermination = new Object();
    private static RIMProcessLauncher _instance = new RIMProcessLauncher();
    private static RIMProcessLauncher$Data _data;

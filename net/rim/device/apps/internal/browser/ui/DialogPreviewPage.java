@@ -26,8 +26,8 @@ public final class DialogPreviewPage extends PopupScreen {
    private PreviewManager _previewMgr;
    private static Tag TAG = Tag.create("browser-preview");
    private static final boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
-   private static final int BORDER_WIDTH;
-   private static final int BORDER_HEIGHT;
+   private static final int BORDER_WIDTH = 2;
+   private static final int BORDER_HEIGHT = 2;
 
    public static final void showDialog() {
       try {

@@ -24,12 +24,12 @@ class SymbolScreen extends PopupScreen implements TextInputDialog {
    private int _pendingPageNumber = 0;
    private int _pageTimer = -1;
    private byte[] _properties;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
    private static SymbolScreen _screen;
-   public static final int ASCII_FULLWIDTH_SHIFT;
-   private static final int JA_ENCODING;
-   private static final int JA_CODE_MSB;
-   private static final int JA_CODE_LSB;
+   public static final int ASCII_FULLWIDTH_SHIFT = 65248;
+   private static final int JA_ENCODING = 2;
+   private static final int JA_CODE_MSB = 3;
+   private static final int JA_CODE_LSB = 4;
    private static final int DISPLAY_WIDTH_ALLOWED = Display.getWidth() * 84 / 100;
 
    protected SymbolScreen() {

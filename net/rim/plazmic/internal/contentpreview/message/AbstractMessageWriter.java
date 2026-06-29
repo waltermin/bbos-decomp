@@ -7,7 +7,7 @@ import net.rim.plazmic.internal.contentpreview.MishandleException;
 
 public class AbstractMessageWriter {
    private final DataOutputStream _dout;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/playback/AbstractMessageWriter.java#1 $";
 
    private final DataOutputStream getDataOutputStream() {
       return this._dout;

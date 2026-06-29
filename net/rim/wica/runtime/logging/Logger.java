@@ -3,12 +3,12 @@ package net.rim.wica.runtime.logging;
 import net.rim.device.api.system.EventLogger;
 
 public final class Logger {
-   public static final int ALWAYS_LOG;
-   public static final int ERROR;
-   public static final int WARNING;
-   public static final int INFORMATION;
-   public static final int DEBUG;
-   public static final int EVENT_ID_UNUSED;
+   public static final int ALWAYS_LOG = 0;
+   public static final int ERROR = 2;
+   public static final int WARNING = 3;
+   public static final int INFORMATION = 4;
+   public static final int DEBUG = 5;
+   public static final int EVENT_ID_UNUSED = -1;
    private static Logger _logger = new Logger();
 
    private Logger() {

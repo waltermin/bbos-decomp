@@ -7,9 +7,9 @@ import net.rim.wica.runtime.metadata.component.ui.StyleCollection;
 public class UIDefAccess implements ResourceCollection, StyleCollection {
    private ComponentDefStruct _uiDefs;
    private IntIntHashtable _idToDefIndex;
-   public static final int TRANSACTION_NONE;
-   public static final int TRANSACTION_COMMIT;
-   public static final int TRANSACTION_ROLLBACK;
+   public static final int TRANSACTION_NONE = 0;
+   public static final int TRANSACTION_COMMIT = 1;
+   public static final int TRANSACTION_ROLLBACK = 2;
 
    public boolean hasDefs() {
       return this._uiDefs._defs.length > 0;

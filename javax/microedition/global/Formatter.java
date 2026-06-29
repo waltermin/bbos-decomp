@@ -6,12 +6,12 @@ import net.rim.device.api.util.Arrays;
 
 public final class Formatter {
    private String _locale;
-   public static final int DATE_LONG;
-   public static final int DATE_SHORT;
-   public static final int DATETIME_LONG;
-   public static final int DATETIME_SHORT;
-   public static final int TIME_LONG;
-   public static final int TIME_SHORT;
+   public static final int DATE_LONG = 1;
+   public static final int DATE_SHORT = 0;
+   public static final int DATETIME_LONG = 5;
+   public static final int DATETIME_SHORT = 4;
+   public static final int TIME_LONG = 3;
+   public static final int TIME_SHORT = 2;
    private static String EMPTY = "";
    private static String EN_LOCALE = "en";
 

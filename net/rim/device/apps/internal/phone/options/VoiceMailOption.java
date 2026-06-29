@@ -25,9 +25,9 @@ final class VoiceMailOption extends VoiceOptionsListItem {
    private Field _voicemailNumberField;
    private Field _additionalTonesField;
    private String _originalVoiceMailNumber;
-   private static final int MAX_PHONE_NUMBER_LENGTH;
-   private static final int ACCESS_NUMBER_FILTER_FLAGS;
-   private static final int ADDITIONAL_NUMBERS_FILTER_FLAGS;
+   private static final int MAX_PHONE_NUMBER_LENGTH = 20;
+   private static final int ACCESS_NUMBER_FILTER_FLAGS = 6;
+   private static final int ADDITIONAL_NUMBERS_FILTER_FLAGS = 30;
 
    public VoiceMailOption(Object context) {
       super(PhoneResources.getResourceBundle(), 190, context);

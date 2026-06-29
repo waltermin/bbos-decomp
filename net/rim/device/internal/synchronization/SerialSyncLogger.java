@@ -6,8 +6,8 @@ import net.rim.device.internal.synchronization.ota.util.ReusableObjectPool;
 import net.rim.device.internal.synchronization.ota.util.ReusableStringBuffer;
 
 public final class SerialSyncLogger {
-   public static final long SERIALSYNC_EVENTLOGGER_GUID;
-   public static final String SERIALSYNC_EVENTLOGGER_DISPLAYNAME;
+   public static final long SERIALSYNC_EVENTLOGGER_GUID = 4907703648615910489L;
+   public static final String SERIALSYNC_EVENTLOGGER_DISPLAYNAME = "net.rim.serialsync";
 
    private static final void log(Object message, int logLevel) {
       if (message != null) {

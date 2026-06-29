@@ -3,7 +3,7 @@ package net.rim.tid.im.conv.europe.spellcheck;
 import net.rim.tid.im.conv.SLCurrentVariant;
 
 public interface IMetaphone {
-   char CONSONANT_KEY;
+   char CONSONANT_KEY = '\u0001';
 
    void getMetaphoneKey(SLCurrentVariant var1, SLCurrentVariant var2);
 

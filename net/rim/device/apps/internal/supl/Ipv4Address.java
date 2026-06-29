@@ -4,8 +4,8 @@ import net.rim.device.api.util.Arrays;
 
 final class Ipv4Address extends IpAddress {
    private short[] addr = new short[4];
-   static final byte IP_V4_ADDR_SIZE;
-   static final byte OCTET_BIT_SIZE;
+   static final byte IP_V4_ADDR_SIZE = 4;
+   static final byte OCTET_BIT_SIZE = 8;
 
    @Override
    public final void decode(Nibbler nib) {

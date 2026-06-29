@@ -5,7 +5,7 @@ import net.rim.device.apps.internal.browser.core.BrowserSession;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class HistoryBackVerb extends BrowserVerb {
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 105;
 
    public HistoryBackVerb() {
       super(1180416);

@@ -2,11 +2,11 @@ package com.fourthpass.wmls;
 
 public class Value {
    public static final Value INVALID = new Value();
-   public static final int INTEGER_TYPE;
-   public static final int FLOAT_TYPE;
-   public static final int STRING_TYPE;
-   public static final int BOOLEAN_TYPE;
-   public static final int INVALID_TYPE;
+   public static final int INTEGER_TYPE = 0;
+   public static final int FLOAT_TYPE = 1;
+   public static final int STRING_TYPE = 2;
+   public static final int BOOLEAN_TYPE = 3;
+   public static final int INVALID_TYPE = 4;
 
    public Value Add(Value value) {
       return INVALID;

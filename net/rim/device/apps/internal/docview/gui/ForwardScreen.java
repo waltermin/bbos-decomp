@@ -58,8 +58,8 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
    private UiApplication _appInstance;
    private int _selectedAttachment = -1;
    private boolean _executeAction;
-   private static final int TREEINDENT_WIDTH;
-   private static final int IDLE_PERIOD;
+   private static final int TREEINDENT_WIDTH = 8;
+   private static final int IDLE_PERIOD = 900000;
    private static final ResourceBundle _resources = ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView");
 
    final int loadTreeElementData(int iAttachmentsCount) {

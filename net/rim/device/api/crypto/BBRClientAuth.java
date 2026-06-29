@@ -8,9 +8,9 @@ public class BBRClientAuth {
    private byte[] _RB;
    private byte[] _rD = new byte[66];
    private byte[] _eB;
-   private static final String CRYPTO_SYSTEM;
-   private static final int COMPRESSED_PUBLIC_KEY_LENGTH;
-   private static final int PRIVATE_KEY_LENGTH;
+   private static final String CRYPTO_SYSTEM = "EC521R1";
+   private static final int COMPRESSED_PUBLIC_KEY_LENGTH = 67;
+   private static final int PRIVATE_KEY_LENGTH = 66;
 
    public BBRClientAuth(byte[] secret) {
       NativeEC.generateKeyPair("EC521R1", this._rD, this._RD);

@@ -13,8 +13,8 @@ public final class ICalendarReader implements ICalendarDefine {
    private String _version;
    private TokenParser _tokenParser;
    private PropertyParser _propertyParser;
-   private static final char VCAL_COUNT_START;
-   private static final String VCAL_LAST_DAY;
+   private static final char VCAL_COUNT_START = '#';
+   private static final String VCAL_LAST_DAY = "LD";
 
    public ICalendarReader(ICalendarProvider iCalendarProvider, InputStream in, String encoding) {
       this._tokenParser = new TokenParser(in, encoding);

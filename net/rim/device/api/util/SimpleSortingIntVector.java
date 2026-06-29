@@ -7,9 +7,9 @@ public class SimpleSortingIntVector extends IntVector {
    private short _sorted;
    private short _sortAsAdded;
    private boolean _uniqueComparator;
-   public static final short SORT_TYPE_NUMERIC;
-   public static final short SORT_TYPE_COMPARISON;
-   public static final short SORT_TYPE_NONE;
+   public static final short SORT_TYPE_NUMERIC = 1;
+   public static final short SORT_TYPE_COMPARISON = 2;
+   public static final short SORT_TYPE_NONE = 0;
 
    public short getSortState() {
       return this._sorted;

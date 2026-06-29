@@ -21,11 +21,11 @@ public class ChartField extends Field {
    private int _focusY;
    private Font _previousFont;
    private boolean _needsSpaceCalculations = true;
-   private static final int STATUS_MOVE_FOCUS_MASK;
-   public static final int AXIS_TOP;
-   public static final int AXIS_RIGHT;
-   public static final int AXIS_BOTTOM;
-   public static final int AXIS_LEFT;
+   private static final int STATUS_MOVE_FOCUS_MASK = 196608;
+   public static final int AXIS_TOP = 0;
+   public static final int AXIS_RIGHT = 1;
+   public static final int AXIS_BOTTOM = 2;
+   public static final int AXIS_LEFT = 3;
 
    public ChartField() {
       this(0);

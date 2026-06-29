@@ -12,7 +12,7 @@ public class NameAndType implements Constants {
    int _modifiers;
    int _offset;
    private Member[] _members;
-   public static final int OFFSET_UNKNOWN;
+   public static final int OFFSET_UNKNOWN = -1;
 
    public NameAndType(String name, Type type, ClassType classType, int modifiers, int offset) {
       this._name = name;

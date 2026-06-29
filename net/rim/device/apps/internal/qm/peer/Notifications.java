@@ -13,8 +13,8 @@ final class Notifications implements NotificationsEngineListener {
    private Notifications$OpenConversationRunnable _openConversationRunnable = new Notifications$OpenConversationRunnable();
    private Notifications$OpenNewRequestRunnable _openNewRequestRunnable = new Notifications$OpenNewRequestRunnable();
    private Notifications$CancelImmediateEvent _cancelImmediateEvent = new Notifications$CancelImmediateEvent();
-   private static final long CONTACT_AVAILABLE;
-   private static final long NEW_MESSAGE;
+   private static final long CONTACT_AVAILABLE = -3969704423467496048L;
+   private static final long NEW_MESSAGE = 4051365837710720090L;
 
    static final void setLastEvent() {
    }

@@ -25,8 +25,8 @@ public final class OfflineQueue {
       BrowserFolders.RIM_BROWSER_MESSAGES_HIERARCHY_ID, BrowserFolders.BROWSER_OFFLINE_QUEUES_FOLDER_ID
    );
    private Hashtable _queues;
-   public static final String QUEUE_SCHEME;
-   private static final long OFFLINE_QUEUE_KEY;
+   public static final String QUEUE_SCHEME = "queue:";
+   private static final long OFFLINE_QUEUE_KEY = 6623930195017231157L;
 
    public OfflineQueue() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(6623930195017231157L);

@@ -7,7 +7,7 @@ import net.rim.plazmic.internal.mediaengine.ResourceProvider;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 
 public class LayoutManagerProvider implements ResourceProvider {
-   public static final String EXTENSION_ID;
+   public static final String EXTENSION_ID = "x-object:/layout";
 
    @Override
    public Object createResource(String type, Object data, ResourceContext context, Object referrer) {

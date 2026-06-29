@@ -1,10 +1,10 @@
 package net.rim.wica.common.debug.protocol.messages;
 
 public interface IMessageEnvelope extends ISerializableMessage, ISerializableMessageHeader {
-   int MESSAGESET_REQUEST;
-   int MESSAGESET_RESPONSE;
-   int MESSAGESET_TARGET_EVENT;
-   int MESSAGESET_ENUM_LIMIT;
+   int MESSAGESET_REQUEST = 0;
+   int MESSAGESET_RESPONSE = 1;
+   int MESSAGESET_TARGET_EVENT = 2;
+   int MESSAGESET_ENUM_LIMIT = 3;
    String[] MESSAGE_SET_NAMES;
 
    int getMessageSet();

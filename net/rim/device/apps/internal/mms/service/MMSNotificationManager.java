@@ -11,7 +11,7 @@ import net.rim.vm.WeakReference;
 
 final class MMSNotificationManager implements NotificationsEngineListener {
    private WeakReference _messageRef;
-   private static final long PROFILE_OBJECT_TYPE;
+   private static final long PROFILE_OBJECT_TYPE = 8609386677418041260L;
 
    private MMSNotificationManager() {
    }

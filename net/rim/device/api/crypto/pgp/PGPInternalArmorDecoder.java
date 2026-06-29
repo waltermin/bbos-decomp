@@ -39,9 +39,9 @@ final class PGPInternalArmorDecoder extends InputStream {
    private int _initialStreamPosition;
    private static final byte[] CRLF = new byte[]{13, 10};
    private static final byte[] CRC_MARKER = new byte[]{61};
-   private static final int CRC_LENGTH;
-   private static final int DECODED_CRC_LENGTH;
-   private static final int TEMP_DATA_LENGTH;
+   private static final int CRC_LENGTH = 4;
+   private static final int DECODED_CRC_LENGTH = 3;
+   private static final int TEMP_DATA_LENGTH = 128;
 
    public PGPInternalArmorDecoder(SharedInputStream input) {
       this(input, null, true);

@@ -11,11 +11,11 @@ public class TimingObject {
    private int _state;
    private int _fill;
    private Interactor _interactor;
-   public static final int NOT_STARTED;
-   public static final int ACTIVE;
-   public static final int COMPLETE;
-   public static final int FILL_FREEZE;
-   public static final int FILL_REMOVE;
+   public static final int NOT_STARTED = 0;
+   public static final int ACTIVE = 1;
+   public static final int COMPLETE = 2;
+   public static final int FILL_FREEZE = 1;
+   public static final int FILL_REMOVE = 2;
 
    public TimingObject(int id, TimeContainer parent) {
       this._id = id;

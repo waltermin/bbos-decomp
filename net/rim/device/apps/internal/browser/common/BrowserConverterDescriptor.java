@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.browser.page.PageConverter;
 public class BrowserConverterDescriptor implements ConverterDescriptor, AcceptValueProvider {
    private Converter _converter;
    private String[] _acceptData;
-   public static final String BROWSER_CONTEXT;
+   public static final String BROWSER_CONTEXT = "net.rim.device.apps.internal.browser";
 
    public BrowserConverterDescriptor(Converter converter, String[] acceptData) {
       this._converter = converter;

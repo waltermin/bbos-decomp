@@ -17,7 +17,7 @@ public class RIMWTLSLayer implements IWapStackLayer, IPacketTransiver, WTLSDataT
    private WDPPacket _sendPacket;
    private WDPPacket _receivePacket;
    private WTLSLayerConnection _protocol;
-   private static final int MAX_BUFFER_SIZE;
+   private static final int MAX_BUFFER_SIZE = 1500;
 
    public void setSubmissionLayer(IWapStackLayer submissionLayer) {
       this._submissionLayer = submissionLayer;

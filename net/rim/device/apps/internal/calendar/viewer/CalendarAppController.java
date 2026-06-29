@@ -22,9 +22,9 @@ final class CalendarAppController implements CalendarActions, GlobalEventListene
    private int _currentViewId = -1;
    private TimeZone _currentTimeZone = TimeZone.getDefault();
    private CalendarAppController$EventViewerVerbQueueThread _verbQueueThread = new CalendarAppController$EventViewerVerbQueueThread(this);
-   static final long VIEW_CALENDAR;
-   private static final long LAST_VIEW_ID_KEY;
-   private static final String INVOKE_API_NEW_REQUEST;
+   static final long VIEW_CALENDAR = 6359528386020392909L;
+   private static final long LAST_VIEW_ID_KEY = -539080667505170584L;
+   private static final String INVOKE_API_NEW_REQUEST = "newappt";
    private static int _lastViewID;
 
    final void initialize(CalendarApp calendarApp, boolean displayInitialView) {

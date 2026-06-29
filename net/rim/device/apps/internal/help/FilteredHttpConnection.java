@@ -15,7 +15,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
    private ByteArrayInputStream _unfilteredByteStream;
    private byte[] _data;
    private byte[] _dataToInsert;
-   private static final int WML_SELECT;
+   private static final int WML_SELECT = 55;
 
    public FilteredHttpConnection(HttpConnection conn, byte[] dataToInsert) {
       if (conn != null && dataToInsert != null) {

@@ -7,16 +7,16 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.framework.profiles.TuneManager;
 
 final class AlarmOptions$AlarmOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int ALARM_TIME_TAG;
-   private static final int ALARM_ENABLED_TAG;
-   private static final int ALARM_WEEKEND_TAG;
-   private static final int ALARM_SNOOZE_TAG;
-   private static final int ALARM_ALERT_TAG;
-   private static final int ALARM_TUNE_TAG;
-   private static final int ALARM_VOLUME_TAG;
-   private static final int ALARM_NUMBER_OF_VIBRATES_TAG;
-   private static final int ALARM_TUNE_FQN_TAG;
-   private static final int DB_VERSION;
+   private static final int ALARM_TIME_TAG = 1;
+   private static final int ALARM_ENABLED_TAG = 2;
+   private static final int ALARM_WEEKEND_TAG = 3;
+   private static final int ALARM_SNOOZE_TAG = 4;
+   private static final int ALARM_ALERT_TAG = 5;
+   private static final int ALARM_TUNE_TAG = 6;
+   private static final int ALARM_VOLUME_TAG = 7;
+   private static final int ALARM_NUMBER_OF_VIBRATES_TAG = 8;
+   private static final int ALARM_TUNE_FQN_TAG = 9;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

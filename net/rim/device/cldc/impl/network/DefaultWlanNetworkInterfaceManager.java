@@ -12,11 +12,11 @@ final class DefaultWlanNetworkInterfaceManager extends NetworkInterfaceManager i
    private NetworkInterfaceManager _vpnManager;
    private boolean _wlanStatus;
    private boolean _vpnStatus;
-   private static final long GUID;
-   protected static final String NAME;
-   private static final int STALE_VPN_ENABLED_STATE;
-   private static final int STALE_WLAN_STATE;
-   private static final int STALE_VPN_STATE;
+   private static final long GUID = 7400008644286649816L;
+   protected static final String NAME = "default-wlan";
+   private static final int STALE_VPN_ENABLED_STATE = 1400133189;
+   private static final int STALE_WLAN_STATE = 1400133452;
+   private static final int STALE_VPN_STATE = 1400133200;
 
    protected static final void init() {
       NetworkInterfaceFactory.getInstance().registerManager(new DefaultWlanNetworkInterfaceManager());

@@ -8,9 +8,9 @@ class ServiceRecordEvent extends Event {
    private int _serviceGuid;
    private OTASyncDaemon _otaSyncDaemon;
    private byte _specialHandling;
-   public static final byte NO_SPECIAL_HANDLING;
-   public static final byte HANDLE_AS_REPLACEMENT;
-   public static final byte HANDLE_AS_ALREADY_INITIALIZED;
+   public static final byte NO_SPECIAL_HANDLING = 0;
+   public static final byte HANDLE_AS_REPLACEMENT = 1;
+   public static final byte HANDLE_AS_ALREADY_INITIALIZED = 2;
 
    ServiceRecordEvent(OTASyncDaemon otaSyncDaemon, long eventId, int data0) {
       this(otaSyncDaemon, eventId, data0, (byte)0);

@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.qm.peer;
 
 final class PeerContactRecognizer {
-   public static final int ALL_CONTACTS;
-   public static final int SENDABLE_CONTACTS;
-   public static final int PRESENCE_SUPPORT_CONTACTS;
+   public static final int ALL_CONTACTS = 0;
+   public static final int SENDABLE_CONTACTS = 1;
+   public static final int PRESENCE_SUPPORT_CONTACTS = 2;
 
    public static final boolean recognize(int id, PeerContact contact) {
       boolean result = false;

@@ -19,9 +19,9 @@ public class CertificateHarvester implements MessagePropertiesListener {
    private boolean _isPIN;
    protected CertificateHarvesterCompletionDialog _completionDialog;
    private boolean _completionDialogOnDisplay;
-   public static final int PRIORITY_KEY_STORE_LDAP;
-   public static final int PRIORITY_SECURE_EMAIL_SERVER;
-   private static final boolean DEBUG;
+   public static final int PRIORITY_KEY_STORE_LDAP = 0;
+   public static final int PRIORITY_SECURE_EMAIL_SERVER = 1;
+   private static final boolean DEBUG = false;
 
    public void setMessagePropertiesModel(TransitoryMessagePropertiesModel messagePropertiesModel) {
       this._messagePropertiesModel = messagePropertiesModel;

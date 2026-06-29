@@ -4,8 +4,8 @@ final class TypingTimer extends QMTimerTask {
    boolean _started;
    boolean _sent;
    private PeerConversation _conversation;
-   private static final int ON_KEY_DELAY;
-   private static final int DEFAULT_DELAY;
+   private static final int ON_KEY_DELAY = 5000;
+   private static final int DEFAULT_DELAY = 30000;
    private static QMTimer _timer = new QMTimer();
 
    TypingTimer(PeerConversation conversation) {

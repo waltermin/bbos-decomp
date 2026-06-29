@@ -9,20 +9,20 @@ class BluetoothProfileManager {
    protected int _state;
    private long _eventLogGUID;
    private String _eventLogTitle;
-   static final int PROFILE_MANAGER_ID_PHONE;
-   static final int PROFILE_MANAGER_ID_A2DP;
-   static final int PROFILE_MANAGER_ID_AVRCP;
-   static final int STATE_DISCONNECTED;
-   static final int STATE_CONNECTING;
-   static final int STATE_CONNECTED;
-   static final int STATE_DISCONNECTING;
-   static final int CONNECT_IN_PROGRESS;
-   static final int CONNECT_FAILED;
-   static final int CONNECT_FAILED_DISABLED_BY_IT_POLICY;
-   static final int CONNECT_FAILED_ALREADY_CONNECTED;
-   static final int CONNECT_FAILED_POWER_OFF;
-   private static final int LOG_STATE_CHANGE;
-   private static final int CLEANING_UP;
+   static final int PROFILE_MANAGER_ID_PHONE = 0;
+   static final int PROFILE_MANAGER_ID_A2DP = 1;
+   static final int PROFILE_MANAGER_ID_AVRCP = 2;
+   static final int STATE_DISCONNECTED = 0;
+   static final int STATE_CONNECTING = 1;
+   static final int STATE_CONNECTED = 2;
+   static final int STATE_DISCONNECTING = 3;
+   static final int CONNECT_IN_PROGRESS = 0;
+   static final int CONNECT_FAILED = 1;
+   static final int CONNECT_FAILED_DISABLED_BY_IT_POLICY = 2;
+   static final int CONNECT_FAILED_ALREADY_CONNECTED = 3;
+   static final int CONNECT_FAILED_POWER_OFF = 4;
+   private static final int LOG_STATE_CHANGE = 1396899840;
+   private static final int CLEANING_UP = 1129076048;
 
    BluetoothProfileManager(BluetoothDeviceManagerImpl btManager, long eventLogGUID, String eventLogTitle) {
       this._btManager = btManager;

@@ -15,14 +15,14 @@ public final class DataSourceDatabaseFields implements Persistable, TLESerializa
    private IntVector _orderedFields = (IntVector)(new Object());
    private int[] _keyFields = new int[0];
    private int _flags;
-   public static final byte FIELDTYPE_OPAQUE;
-   public static final byte FIELDTYPE_NULL_TERMINATED_STRING;
-   public static final byte FIELDTYPE_NULL_TERMINATED_STRING_UNICODE;
-   public static final byte FIELDTYPE_STRING;
-   public static final byte FIELDTYPE_STRING_UNICODE;
-   public static final byte FIELDTYPE_INT;
-   private static final int KEYFIELDBIT;
-   private static final int ALL_FIELDS_MAPPED;
+   public static final byte FIELDTYPE_OPAQUE = 0;
+   public static final byte FIELDTYPE_NULL_TERMINATED_STRING = 1;
+   public static final byte FIELDTYPE_NULL_TERMINATED_STRING_UNICODE = 2;
+   public static final byte FIELDTYPE_STRING = 3;
+   public static final byte FIELDTYPE_STRING_UNICODE = 4;
+   public static final byte FIELDTYPE_INT = 5;
+   private static final int KEYFIELDBIT = 128;
+   private static final int ALL_FIELDS_MAPPED = 1;
 
    public final void addField(int aUniqueTag, boolean keyField, int type, int toTag, byte[] xReplacmentTags) {
       this.addField(aUniqueTag, keyField, type, toTag, xReplacmentTags, 0);

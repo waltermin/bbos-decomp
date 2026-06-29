@@ -11,7 +11,7 @@ import net.rim.device.apps.api.utility.general.Copyable;
 import net.rim.device.cldc.io.utility.URIDecoder;
 
 public final class MIMEContentVerbRepository {
-   private static final long CONTENT_VERB_REPOSITORY_GUID;
+   private static final long CONTENT_VERB_REPOSITORY_GUID = 1464325677521852362L;
 
    private static final VerbRepository getVerbRepository() {
       return VerbRepository.getVerbRepository(1464325677521852362L);

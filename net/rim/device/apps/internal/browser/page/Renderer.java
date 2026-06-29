@@ -21,9 +21,9 @@ public class Renderer {
    protected String _postEncoding;
    protected int _flags;
    protected String _referrer;
-   private static final String UTF_8;
-   private static final String ISO_8859_1;
-   private static final String US_ASCII;
+   private static final String UTF_8 = "UTF-8";
+   private static final String ISO_8859_1 = "ISO-8859-1";
+   private static final String US_ASCII = "US-ASCII";
 
    public Renderer(InputConnection connection, RenderingSession renderingSession, RenderingApplication renderingApplication, String referrer, int flags) {
       if (connection != null && renderingSession != null) {

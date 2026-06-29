@@ -7,9 +7,9 @@ class OCSPQuery$ResponderCertContainer {
    private byte[] _hash;
    private X509Certificate _cert;
    private byte[] _keyHash;
-   private static final int SHA_LENGTH;
-   private static final int SHA_HALF_LENGTH;
-   private static final int SHA_QUARTER_LENGTH;
+   private static final int SHA_LENGTH = 20;
+   private static final int SHA_HALF_LENGTH = 10;
+   private static final int SHA_QUARTER_LENGTH = 5;
 
    public OCSPQuery$ResponderCertContainer(X509Certificate cert) {
       this._cert = cert;

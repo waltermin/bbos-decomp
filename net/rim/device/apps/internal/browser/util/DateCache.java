@@ -10,8 +10,8 @@ public final class DateCache implements MemoryCleanerListener {
    private String[] _cacheKey;
    private long[] _cacheValue = new long[10];
    private int _tail;
-   private static final long APP_REGISTRY_KEY;
-   private static final int CACHE_SIZE;
+   private static final long APP_REGISTRY_KEY = 1903262715808435584L;
+   private static final int CACHE_SIZE = 10;
 
    private DateCache() {
       this._cacheKey = new Object[10];

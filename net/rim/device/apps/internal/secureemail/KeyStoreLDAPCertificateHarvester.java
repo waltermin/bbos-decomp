@@ -26,7 +26,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
    private long[] _encodingUIDs;
    private CertificateStatusManagerTicket _autoStatusFetchTicket;
    private boolean _userCancelledAutoFetch;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public KeyStoreLDAPCertificateHarvester(SecureEmailFactory secureEmailFactory, boolean isPINMessage) {
       super(isPINMessage);

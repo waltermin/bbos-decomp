@@ -5,8 +5,8 @@ import net.rim.device.apps.internal.phone.api.ui.VolumeIndicator;
 
 final class StandardVolumeGaugePopup extends BaseVolumeGaugePopup {
    private VolumeIndicator _gauge = new VolumeIndicator(PhoneUtilities.smallScreen());
-   private static final int INDICATOR_FIELD;
-   private static final int INDICATOR_LABEL;
+   private static final int INDICATOR_FIELD = 0;
+   private static final int INDICATOR_LABEL = 1;
 
    public StandardVolumeGaugePopup() {
       super(new StandardGaugeFieldLayoutManager());

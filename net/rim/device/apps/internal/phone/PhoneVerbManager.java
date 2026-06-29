@@ -21,7 +21,7 @@ import net.rim.vm.Array;
 
 public final class PhoneVerbManager implements VerbFactory {
    private boolean _registered = false;
-   static final long GUID;
+   static final long GUID = -5742267290719053151L;
    private static PhoneVerbManager _instance;
 
    final void register() {

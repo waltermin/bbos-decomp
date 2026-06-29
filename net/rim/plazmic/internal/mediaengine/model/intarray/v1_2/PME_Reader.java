@@ -105,11 +105,11 @@ public class PME_Reader implements ResourceProvider {
    private int _durationMask;
    private int _numNodesOfTypeMask;
    private int _numNETOfTypeMask;
-   private static final int INCREMENT_CAPACITY;
-   private static final int INCREMENT_TEXT_ELEMENT_CAPACITY;
-   private static final int NODE;
-   private static final int TRIGGER;
-   private static final int KEY_VALUES;
+   private static final int INCREMENT_CAPACITY = 10;
+   private static final int INCREMENT_TEXT_ELEMENT_CAPACITY = 5;
+   private static final int NODE = 0;
+   private static final int TRIGGER = 1;
+   private static final int KEY_VALUES = 2;
 
    protected void readFontNode(int nodeIdx) {
       this._model._fontHandles[this._fontIndex++] = nodeIdx;

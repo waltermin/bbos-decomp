@@ -88,7 +88,7 @@ public class PhoneCallModelImpl
    protected int _uid = 0;
    private boolean _newFlag;
    private int _lineId = 1;
-   public static final long SUBCLASS_FACTORIES;
+   public static final long SUBCLASS_FACTORIES = 1796461360838668029L;
    private static final byte[] phoneCallRecordId = new byte[]{112};
    private static ContextObjectWR _phoneCallSyncContextWR = (ContextObjectWR)(new Object(20, 19));
    private static WeakReference _dateTimeBufferWR = (WeakReference)(new Object(null));
@@ -98,11 +98,11 @@ public class PhoneCallModelImpl
    private static SimpleDateFormat _dateTimeFormatShortDate;
    private static Calendar _dateFormatCal = Calendar.getInstance();
    private static CalendarExtensions _shortDateFormatCal = (CalendarExtensions)_dateFormatCal;
-   static final int DATE_OR_TIME;
-   static final int DATE_AND_TIME;
-   static final int DATE_AND_TIME_SHORT;
-   static final int DATE_ONLY;
-   static final int DATE_EXTRA_SHORT;
+   static final int DATE_OR_TIME = 2;
+   static final int DATE_AND_TIME = 4;
+   static final int DATE_AND_TIME_SHORT = 8;
+   static final int DATE_ONLY = 16;
+   static final int DATE_EXTRA_SHORT = 32;
    static int[] _hints = new int[0];
    private static WeakReference _emailBodyTextBufferWR = (WeakReference)(new Object(null));
 

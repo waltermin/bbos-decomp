@@ -5,8 +5,8 @@ import net.rim.plazmic.internal.mediaengine.util.ArrayList;
 
 public class EventLogicImpl implements EventLogic {
    private LongHashtable _eventMap = (LongHashtable)(new Object());
-   private static final int DEFAULT_EVENT_LIST_LENGTH;
-   private static final int DEFAULT_EVENT_LIST_INCREMENT;
+   private static final int DEFAULT_EVENT_LIST_LENGTH = 3;
+   private static final int DEFAULT_EVENT_LIST_INCREMENT = 3;
 
    protected long getKey(Event triggerEvent) {
       return (long)triggerEvent._eventParam << 32 | triggerEvent._event;

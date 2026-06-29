@@ -42,36 +42,36 @@ final class OCSPQuery {
    private ProviderResponseData _response;
    private byte[] _nonce;
    private static MultiMap _responderCerts;
-   private static final byte TAG_USER_RESPONDERS;
-   private static final byte TAG_RESPONDER_CERT_HASHES;
-   private static final byte TAG_NONCE_VALUE;
-   private static final byte TAG_CERT_ISSUER_NAME_HASH;
-   private static final byte TAG_CERT_ISSUER_KEY_HASH;
-   private static final byte TAG_CERT_SUBJECT_SN;
-   private static final byte TAG_CERT_ISSUER_NAME;
-   private static final byte TAG_CERT_CDP;
-   private static final byte TAG_CERT_RESPONSE_BYTES;
-   private static final byte TAG_CERT_SIG_ALGORITHM;
-   private static final byte TAG_CERT_SIGNATURE;
-   private static final byte TAG_RESPONDER_CERTS;
-   private static final int ASN1_TAG_ADDITIONAL_CERTS;
-   private static final int ASN1_TAG_URI;
+   private static final byte TAG_USER_RESPONDERS = 0;
+   private static final byte TAG_RESPONDER_CERT_HASHES = 1;
+   private static final byte TAG_NONCE_VALUE = 2;
+   private static final byte TAG_CERT_ISSUER_NAME_HASH = 0;
+   private static final byte TAG_CERT_ISSUER_KEY_HASH = 1;
+   private static final byte TAG_CERT_SUBJECT_SN = 2;
+   private static final byte TAG_CERT_ISSUER_NAME = 4;
+   private static final byte TAG_CERT_CDP = 5;
+   private static final byte TAG_CERT_RESPONSE_BYTES = 0;
+   private static final byte TAG_CERT_SIG_ALGORITHM = 1;
+   private static final byte TAG_CERT_SIGNATURE = 2;
+   private static final byte TAG_RESPONDER_CERTS = 1;
+   private static final int ASN1_TAG_ADDITIONAL_CERTS = 0;
+   private static final int ASN1_TAG_URI = 6;
    private static final ResourceBundle _rbCrypto = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
    private static final String[] POPUP_BUTTON_TEXT_1 = new Object[]{CommonResource.getString(10015), _rbCrypto.getString(34), CommonResource.getString(10005)};
    private static final String[] POPUP_BUTTON_TEXT_2 = new Object[]{CommonResource.getStringArray(10012)[1], CommonResource.getStringArray(10012)[0]};
    private static final String[] POPUP_BUTTON_TEXT_3 = new Object[]{
       CommonResource.getString(10015), CommonResource.getStringArray(10012)[1], CommonResource.getStringArray(10012)[0]
    };
-   private static final int BUTTON_VIEW;
-   private static final int BUTTON_TRUST;
-   private static final int BUTTON_CANCEL;
-   private static final int BUTTON_NO;
-   private static final int BUTTON_YES;
-   private static final int BUTTON_OK;
+   private static final int BUTTON_VIEW = 0;
+   private static final int BUTTON_TRUST = 1;
+   private static final int BUTTON_CANCEL = 2;
+   private static final int BUTTON_NO = 3;
+   private static final int BUTTON_YES = 4;
+   private static final int BUTTON_OK = 5;
    private static final int[] POPUP_BUTTON_CODES_1 = new int[]{0, 1, 2, -804651005, 0, 3, 4, -804651006, 3, 4, -805044216, -33606652};
    private static final int[] POPUP_BUTTON_CODES_2 = new int[]{3, 4, -805044216, -33606652, 232019217, -805044216, -992149756, 1607022049};
    private static final int[] POPUP_BUTTON_CODES_3 = new int[]{0, 3, 4, -804651006, 3, 4, -805044216, -33606652, 232019217, -805044216, -992149756, 1607022049};
-   private static final long RESPONDER_CERTS_GUID;
+   private static final long RESPONDER_CERTS_GUID = -8840675705458263554L;
 
    public OCSPQuery(Certificate[] certChain, boolean checkEntireChain, KeyStore keyStore, ProviderUiContext uiContext) {
       this._uiContext = uiContext;
@@ -455,7 +455,7 @@ final class OCSPQuery {
       // 007: astore 4
       // 009: aload 1
       // 00a: bipush 1
-      // 00b: anewarray 1418
+      // 00b: anewarray 1461
       // 00e: dup
       // 00f: bipush 0
       // 010: aload 2

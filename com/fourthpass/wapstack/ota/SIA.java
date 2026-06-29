@@ -17,7 +17,7 @@ import net.rim.device.internal.browser.wap.WAPServiceRecord;
 
 public final class SIA implements PushEventLogger {
    private InetAddress _wapServerAdd;
-   private static final boolean DEBUG_ENABLED;
+   private static final boolean DEBUG_ENABLED = false;
 
    public final void processSIAContent(byte[] siaContent) {
       EventLogger.logEvent(-1133226195824034738L, 1399415396, 5);

@@ -5,8 +5,8 @@ final class SuplStart extends UlpMessage {
    private LocationId locationId;
    private QOP qop;
    private byte optionals;
-   static final byte SUPL_START_OPT_QOP;
-   static final byte NUM_OPT_ELEMENTS;
+   static final byte SUPL_START_OPT_QOP = 1;
+   static final byte NUM_OPT_ELEMENTS = 1;
 
    SuplStart() {
       this.setCapabilities = new SetCapabilities();

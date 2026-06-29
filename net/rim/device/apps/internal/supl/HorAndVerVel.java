@@ -3,8 +3,8 @@ package net.rim.device.apps.internal.supl;
 final class HorAndVerVel extends Velocity {
    private byte verDirect;
    private short verSpeed;
-   static final byte VER_DIRECT_BIT_SIZE;
-   static final byte VER_SPEED_BIT_SIZE;
+   static final byte VER_DIRECT_BIT_SIZE = 1;
+   static final byte VER_SPEED_BIT_SIZE = 8;
 
    @Override
    final void decode(Nibbler nib) {

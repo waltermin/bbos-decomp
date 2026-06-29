@@ -90,18 +90,18 @@ public final class SecurityApp
    private SecurityApp$CloseDialogOnIdleThread _closeThread;
    private Screen _securityStatusScreen;
    private boolean _turnBacklightOff;
-   private static final long EVENT_LOGGER_GUID;
-   private static final int KEYPAD_LOCKED;
-   private static final int UNLOCK_DEVICE;
-   private static final int PLACE_CALL;
-   private static final int MAKE_EMERGENCY_CALL;
-   private static final int CANCEL_LOCK_SCREEN;
-   private static final int PRESS_SEND_TO_UNLOCK;
-   private static final String EMPTY;
-   private static final char NULLCHAR;
+   private static final long EVENT_LOGGER_GUID = -1148210079122251014L;
+   private static final int KEYPAD_LOCKED = -1;
+   private static final int UNLOCK_DEVICE = 0;
+   private static final int PLACE_CALL = 1;
+   private static final int MAKE_EMERGENCY_CALL = 2;
+   private static final int CANCEL_LOCK_SCREEN = 3;
+   private static final int PRESS_SEND_TO_UNLOCK = 4;
+   private static final String EMPTY = "";
+   private static final char NULLCHAR = '\u0000';
    private static String _lockArg = "lock";
-   private static final int SECURITY_BACKLIGHT_TIMEOUT;
-   private static final int CHANGE_PASSWORD_TIMEOUT;
+   private static final int SECURITY_BACKLIGHT_TIMEOUT = 5;
+   private static final int CHANGE_PASSWORD_TIMEOUT = 30;
 
    public static final void main(String[] args) {
       EventLogger.register(-1148210079122251014L, "SecurityApp", 2);

@@ -10,8 +10,8 @@ final class TextMessage extends MessengerMessageImpl {
    private Object _text;
    private int _state;
    private MessengerContact _recipient;
-   static final int TEXT;
-   static final int STATE;
+   static final int TEXT = 4;
+   static final int STATE = 5;
    public static final String _buzzString = QmResources.getString(9);
 
    TextMessage(String text, MessengerContact recipient) {

@@ -24,8 +24,8 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
    private long _senderId;
    private long _receiverId;
    private byte[] _secureMsg;
-   private static final int _HMAC_SHA1_LENGTH;
-   private static final int _IV_LENGTH;
+   private static final int _HMAC_SHA1_LENGTH = 20;
+   private static final int _IV_LENGTH = 16;
 
    public SecureMessageV1_1(
       byte[] secureMsg, KeyProvider keyProvider, SecurityProvider securityProvider, SequenceProvider sequenceProvider, VersionProvider versionProvider

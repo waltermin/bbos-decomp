@@ -6,7 +6,7 @@ final class ETManager$GPSFixThread extends Thread {
    private boolean _stop;
    private boolean _isFinished;
    private Object _lock = new Object();
-   private static final int MAX_FIX_ATTEMPTS;
+   private static final int MAX_FIX_ATTEMPTS = 3;
 
    ETManager$GPSFixThread(ETManager mgr) {
       this._mgr = mgr;

@@ -28,7 +28,7 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
    public static String userName = Owner.getOwnerName();
    public static String password = "";
    public static boolean isServiceActive = false;
-   static final String NAME;
+   static final String NAME = "BrickBreakerOptions";
 
    Options() {
       this.restore();

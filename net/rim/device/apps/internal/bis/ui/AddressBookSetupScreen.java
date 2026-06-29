@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class AddressBookSetupScreen extends UserSettingsScreen {
    private RadioButtonGroup _synchAddressBookGroup;
-   private static final String PARAM_SYNCH_ADDRESS_BOOK;
+   private static final String PARAM_SYNCH_ADDRESS_BOOK = "synch_address_book";
 
    public AddressBookSetupScreen() {
       super(31);

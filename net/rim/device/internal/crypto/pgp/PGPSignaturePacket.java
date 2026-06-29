@@ -25,7 +25,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
    private Vector _signatureSubPackets;
    private boolean _containsX509Cert;
    private PGPSignatureSubPacket _x509CertPacket;
-   public static final int GENERIC_CERTIFICATION_OF_USERID_AND_PUB_KEY_PACKET;
+   public static final int GENERIC_CERTIFICATION_OF_USERID_AND_PUB_KEY_PACKET = 16;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

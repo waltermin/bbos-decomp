@@ -10,12 +10,12 @@ class Verifier {
    private int _globalSize;
    private int _index;
    private byte[] _code;
-   private static final byte BRANCHED_TO;
-   private static final byte IS_INSTRUCTION;
-   private static final byte STACK_DEPTH_SET;
-   private static final byte END_BLOCK;
-   private static final int START_STACK_DEPTH_MASK;
-   private static final int START_STACK_DEPTH_SHIFT;
+   private static final byte BRANCHED_TO = 1;
+   private static final byte IS_INSTRUCTION = 2;
+   private static final byte STACK_DEPTH_SET = 4;
+   private static final byte END_BLOCK = 8;
+   private static final int START_STACK_DEPTH_MASK = 240;
+   private static final int START_STACK_DEPTH_SHIFT = 4;
 
    Verifier(int globalSize) {
       this._globalSize = globalSize;

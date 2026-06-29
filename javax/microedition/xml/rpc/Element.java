@@ -11,7 +11,7 @@ public class Element extends Type {
    public final int maxOccurs;
    public final boolean isNillable;
    public final boolean isArray;
-   public static final int UNBOUNDED;
+   public static final int UNBOUNDED = -1;
 
    public Element(QName qname, Type type, int minOccurs, int maxOccurs, boolean nillable) {
       super(9);

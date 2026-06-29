@@ -25,12 +25,12 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
    private String[] _fileNames = new Object[0];
    private String _absolutePath;
    private URLParameters _urlParameters;
-   private static final int ATTR_EXISTS;
-   private static final int ATTR_READABLE;
-   private static final int ATTR_WRITEABLE;
-   private static final int ATTR_HIDDEN;
-   private static final int ATTR_DIRECTORY;
-   private static final int ATTR_FILE;
+   private static final int ATTR_EXISTS = 1;
+   private static final int ATTR_READABLE = 2;
+   private static final int ATTR_WRITEABLE = 4;
+   private static final int ATTR_HIDDEN = 8;
+   private static final int ATTR_DIRECTORY = 16;
+   private static final int ATTR_FILE = 32;
 
    SmbFileConnection(String smburl, StreamConnection conn) {
       this._conn = conn;

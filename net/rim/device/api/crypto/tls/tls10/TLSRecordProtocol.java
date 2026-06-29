@@ -11,7 +11,7 @@ import net.rim.device.api.crypto.tls.ssl30.SSLRecordProtocol;
 import net.rim.device.cldc.io.utility.URL;
 
 public class TLSRecordProtocol extends SSLRecordProtocol {
-   public static final int LOCAL_VERSION;
+   public static final int LOCAL_VERSION = 769;
 
    public TLSRecordProtocol(StreamConnection subConnection, String name, boolean client) {
       super._subConnection = subConnection;

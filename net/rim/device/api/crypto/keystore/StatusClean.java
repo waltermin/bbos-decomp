@@ -3,8 +3,8 @@ package net.rim.device.api.crypto.keystore;
 import net.rim.device.api.system.DeviceInfo;
 
 class StatusClean extends Thread {
-   private static final long IDLE_TIME;
-   private static final long SLEEP_TIME;
+   private static final long IDLE_TIME = 120L;
+   private static final long SLEEP_TIME = 120000L;
 
    public StatusClean() {
       this.setPriority(1);

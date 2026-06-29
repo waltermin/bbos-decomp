@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.model.CompoundRecognizer;
 import net.rim.device.apps.api.framework.model.Recognizer;
 
 public class RecognizerRepository {
-   private static final long RIM_RECOGNIZER_REPOSITORY_ID;
+   private static final long RIM_RECOGNIZER_REPOSITORY_ID = 4942770380214593225L;
    private static LongHashtable _recognizerRepository = ApplicationRegistry.getApplicationRegistry().getLongHashtable(4942770380214593225L);
 
    private RecognizerRepository() {

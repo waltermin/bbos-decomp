@@ -8,7 +8,7 @@ public class ResourceFile {
    protected String _relativeName;
    protected byte[] _data;
    protected boolean _slice;
-   public static final int MAX_RESOURCE_SIZE;
+   public static final int MAX_RESOURCE_SIZE = 61440;
 
    public ResourceFile() {
       this._relativeName = "";

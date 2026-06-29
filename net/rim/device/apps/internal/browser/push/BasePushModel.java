@@ -13,15 +13,15 @@ public class BasePushModel implements Persistable, Runnable {
    protected String _connectionSource;
    private boolean _foreground;
    protected Object _activateObject = new Object();
-   public static final int ALLOW_MESSAGE;
-   public static final int REJECT_DUPLICATE;
-   public static final int REJECT_ALL;
-   public static final int REJECT_FILTER;
-   public static final int REJECT_DENY_ALL;
-   public static final int REJECT_EXPIRED;
-   public static final int REJECT_INVALID_SECURITY;
-   public static final int REJECT_NO_SECURITY;
-   public static final int REJECT_NO_MAC;
+   public static final int ALLOW_MESSAGE = 0;
+   public static final int REJECT_DUPLICATE = 1;
+   public static final int REJECT_ALL = 2;
+   public static final int REJECT_FILTER = 3;
+   public static final int REJECT_DENY_ALL = 4;
+   public static final int REJECT_EXPIRED = 5;
+   public static final int REJECT_INVALID_SECURITY = 6;
+   public static final int REJECT_NO_SECURITY = 7;
+   public static final int REJECT_NO_MAC = 8;
 
    public boolean getBrowserForeground() {
       return this._foreground;

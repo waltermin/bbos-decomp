@@ -17,7 +17,7 @@ import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
 
 public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificateHarvester {
    private Hashtable _fetchedADKs = (Hashtable)(new Object());
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public PGPKeyStoreLDAPCertificateHarvester(SecureEmailFactory secureEmailFactory, boolean isPINMessage) {
       super(secureEmailFactory, isPINMessage);

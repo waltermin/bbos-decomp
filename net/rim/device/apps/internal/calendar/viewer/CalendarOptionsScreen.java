@@ -40,9 +40,9 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
    private CalendarOptions _calendarOptions = CalendarOptions.getOptions();
    private Calendar _cal;
    private static TimeZone _gmtTZ = TimeZone.getTimeZone(DateTimeUtilities.GMT);
-   private static final long THIRTY_MINUTES;
-   private static final long FIFTEEN_MINUTES;
-   private static final long DEFAULT_DEFAULT_REMINDER_MILLIS;
+   private static final long THIRTY_MINUTES = 1800000L;
+   private static final long FIFTEEN_MINUTES = 900000L;
+   private static final long DEFAULT_DEFAULT_REMINDER_MILLIS = 900000L;
    private static Tag OPTIONS_SECTION_AREA_TAG = Tag.create("options-section-area");
    private static Tag OPTIONS_SECTION_HEADER_TAG = Tag.create("options-section-header");
    private static final CalendarOptionsScreen$ViewChoice[] VIEWS = new CalendarOptionsScreen$ViewChoice[]{

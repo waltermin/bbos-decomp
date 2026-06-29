@@ -12,13 +12,13 @@ public final class DTMFEcho extends Thread {
    private long _toneStartTime;
    private long _toneStopTime;
    private long _audioTimeout;
-   private static final long GUID;
-   private static final int MIN_ECHO_TIME;
-   private static final int MAX_ECHO_TIME;
-   private static final int DEFAULT_ECHO_TIME;
-   private static final int DEFAULT_ECHO_GAP;
-   private static final int AUDIO_CHANNEL_TIMEOUT;
-   private static final int AUDIO_CHANNEL_WARMUP_TIME;
+   private static final long GUID = -6523280153139351520L;
+   private static final int MIN_ECHO_TIME = 120;
+   private static final int MAX_ECHO_TIME = 2000;
+   private static final int DEFAULT_ECHO_TIME = 120;
+   private static final int DEFAULT_ECHO_GAP = 50;
+   private static final int AUDIO_CHANNEL_TIMEOUT = 10000;
+   private static final int AUDIO_CHANNEL_WARMUP_TIME = 100;
 
    private static final DTMFEcho getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

@@ -5,7 +5,7 @@ import net.rim.device.api.system.ControlledAccess;
 import net.rim.vm.TraceBack;
 
 public class BugReportManager {
-   public static final long GUID;
+   public static final long GUID = -483760535199085048L;
    private static BugReportable _appReportable;
    private static String _reportLocation;
    private static boolean _screenshotAllowed = true;

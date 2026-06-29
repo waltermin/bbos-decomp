@@ -5,11 +5,11 @@ public class RedirectEvent extends Event {
    private Event _originalEvent;
    private int _type;
    private int _timerValue;
-   public static final int TYPE_300_REDIRECT;
-   public static final int TYPE_SINGLE_FRAME_REDIRECT;
-   public static final int TYPE_JAVASCRIPT;
-   public static final int TYPE_META;
-   public static final int TYPE_SDP;
+   public static final int TYPE_300_REDIRECT = 0;
+   public static final int TYPE_SINGLE_FRAME_REDIRECT = 1;
+   public static final int TYPE_JAVASCRIPT = 2;
+   public static final int TYPE_META = 3;
+   public static final int TYPE_SDP = 4;
 
    public RedirectEvent(Object src, String location, Event originalEvent, int type) {
       this(src, location, originalEvent, type, Integer.MAX_VALUE);

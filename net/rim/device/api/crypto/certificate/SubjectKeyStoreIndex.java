@@ -5,7 +5,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreDataMap;
 import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 
 public class SubjectKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = -1581141357654337861L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

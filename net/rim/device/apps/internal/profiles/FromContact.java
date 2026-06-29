@@ -10,9 +10,9 @@ class FromContact implements PersistableRIMModel, EncryptableProvider {
    private Object _nameEncoding;
    private Object _contactInfoEncoding;
    byte _contactInfoType;
-   static final byte TYPE_PIN;
-   static final byte TYPE_EMAIL;
-   static final byte TYPE_PHONENUMBER;
+   static final byte TYPE_PIN = 48;
+   static final byte TYPE_EMAIL = 32;
+   static final byte TYPE_PHONENUMBER = 16;
 
    FromContact(int addressCardUID, String name, String contactInfo, byte contactInfoType) {
       this._addressCardUID = addressCardUID;

@@ -26,10 +26,10 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    private boolean _deviceLocking;
    String _httpCookie;
    private final byte[] _buffer;
-   private static final long LOCK_CONNECTION_TIME_OUT;
-   private static final String VERSION;
-   private static final String CLIENT_VERSION;
-   private static final int BUFFER_LENGTH;
+   private static final long LOCK_CONNECTION_TIME_OUT = 60000L;
+   private static final String VERSION = "<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n";
+   private static final String CLIENT_VERSION = "<client-version>\n<major>9</major>\n<minor>0</minor>\n<subminor>0</subminor>\n<subsubminor>0</subsubminor>\n</client-version>\n";
+   private static final int BUFFER_LENGTH = 64;
 
    public PGPUniversalServerSOAPHandler(String param1, String[] param2) {
       // $VF: Couldn't be decompiled

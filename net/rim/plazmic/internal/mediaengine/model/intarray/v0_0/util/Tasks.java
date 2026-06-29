@@ -23,16 +23,16 @@ public final class Tasks {
    private int _bufferEventQueueEnd;
    private int _currentEventQueueEnd;
    private int _currentEventQueueHead;
-   private static final int HEAP_GROWTH;
-   private static final int QUEUE_GROWTH;
-   private static final int EVENTLIST_GROWTH;
-   private static final int STACK_SIZE;
-   private static final int INITIAL_HEAP_SIZE;
-   private static final int INITIAL_QUEUE_SIZE;
-   private static final int INITIAL_EVENTLIST_SIZE;
-   private static final int INITIAL_EVENTQUEUE_SIZE;
-   private static final int EVENTQUEUE_GROWTH;
-   public static final int QUEUE_ELEMENT_SIZE;
+   private static final int HEAP_GROWTH = 109;
+   private static final int QUEUE_GROWTH = 102;
+   private static final int EVENTLIST_GROWTH = 50;
+   private static final int STACK_SIZE = 50;
+   private static final int INITIAL_HEAP_SIZE = 200;
+   private static final int INITIAL_QUEUE_SIZE = 222;
+   private static final int INITIAL_EVENTLIST_SIZE = 100;
+   private static final int INITIAL_EVENTQUEUE_SIZE = 20;
+   private static final int EVENTQUEUE_GROWTH = 10;
+   public static final int QUEUE_ELEMENT_SIZE = 2;
 
    public Tasks() {
       this._bufferQueue = new int[222];

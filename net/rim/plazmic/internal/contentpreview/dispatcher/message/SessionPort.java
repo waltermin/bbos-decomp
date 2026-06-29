@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class SessionPort extends Model {
    private int _port;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/SessionPort.java#1 $";
 
    public SessionPort(int port) {
       this._port = port;

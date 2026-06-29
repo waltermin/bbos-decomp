@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.container.MainScreen;
 
 public class IdleScreenOptionsProvider {
-   private static final long KEY;
+   private static final long KEY = 4954117474933020986L;
 
    public static void register(IdleScreenOptionsProvider provider) {
       ApplicationRegistry.getApplicationRegistry().put(4954117474933020986L, provider);

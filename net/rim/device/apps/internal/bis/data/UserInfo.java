@@ -15,13 +15,13 @@ public final class UserInfo {
    private long _timestamp;
    private Locale _locale;
    private boolean _autoAuth;
-   private static final int USER_PERSONALIZATION_ENABLED;
-   private static final int HOSTED_MAILBOX_ENABLED;
-   private static final int AUTO_BCC_ENABLED;
-   private static final int CHANGE_REPLYTO_ENABLED;
-   private static final int BBMAIL_PLAN;
-   private static final int AUTO_FORWARD_ENABLED;
-   private static final int MARKETING_TEXT_ENABLED;
+   private static final int USER_PERSONALIZATION_ENABLED = 8388608;
+   private static final int HOSTED_MAILBOX_ENABLED = 33554432;
+   private static final int AUTO_BCC_ENABLED = 1073741824;
+   private static final int CHANGE_REPLYTO_ENABLED = 8;
+   private static final int BBMAIL_PLAN = 64;
+   private static final int AUTO_FORWARD_ENABLED = 128;
+   private static final int MARKETING_TEXT_ENABLED = 1024;
 
    public final Mailbox getMailbox(String description) {
       Mailbox mailbox = null;

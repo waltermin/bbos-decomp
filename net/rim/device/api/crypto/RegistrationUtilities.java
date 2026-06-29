@@ -3,8 +3,8 @@ package net.rim.device.api.crypto;
 import net.rim.device.api.util.Arrays;
 
 public final class RegistrationUtilities {
-   public static final int AES_256_KEY_LENGTH;
-   public static final int AES_BLOCK_LENGTH;
+   public static final int AES_256_KEY_LENGTH = 32;
+   public static final int AES_BLOCK_LENGTH = 16;
    public static final byte[] PUBLIC_KEY_E = new byte[]{1, 0, 1};
    public static final byte[] IV = new byte[]{-15, -51, -6, 34, 21, -117, 19, -46, -17, -85, -98, 86, 117, 48, 1, 37};
    public static final byte[] PUBLIC_KEY_N = new byte[]{

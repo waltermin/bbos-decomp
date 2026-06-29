@@ -4,7 +4,7 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 import net.rim.device.internal.i18n.CommonResource;
 
 public final class Device {
-   public static final long DEFAULT_DEVICE_TIME;
+   public static final long DEFAULT_DEVICE_TIME = 1141171200000L;
 
    private Device() {
    }

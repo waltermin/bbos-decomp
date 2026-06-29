@@ -8,18 +8,18 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.vm.PersistentInteger;
 
 public final class LocaleRemovalUtility {
-   private static final long GUID_LOCALE_REMOVAL_STATUS;
-   private static final long GUID_LOCALES_SCHEDULED_FOR_REMOVAL;
-   private static final long THREAD_GUID;
-   static final int REMOVAL_STATUS_INCOMPLETE;
-   static final int REMOVAL_STATUS_RESET_PENDING;
-   static final int REMOVAL_STATUS_COMPLETE;
-   static final int REMOVAL_STATUS_STARTED;
-   public static final int BUILD_TYPE_NON_MULTILANG;
-   public static final int BUILD_TYPE_MULTILANG_DISPLAY;
-   public static final int BUILD_TYPE_MULTILANG_INPUT;
-   public static final int BUILD_TYPE_MULTILANG_ALL;
-   public static final String LOCALE_REMOVAL_RESET_TEXT;
+   private static final long GUID_LOCALE_REMOVAL_STATUS = 2337153136350881996L;
+   private static final long GUID_LOCALES_SCHEDULED_FOR_REMOVAL = 8374008272057660071L;
+   private static final long THREAD_GUID = 3915939125099425057L;
+   static final int REMOVAL_STATUS_INCOMPLETE = 0;
+   static final int REMOVAL_STATUS_RESET_PENDING = 1;
+   static final int REMOVAL_STATUS_COMPLETE = 2;
+   static final int REMOVAL_STATUS_STARTED = 3;
+   public static final int BUILD_TYPE_NON_MULTILANG = 0;
+   public static final int BUILD_TYPE_MULTILANG_DISPLAY = 1;
+   public static final int BUILD_TYPE_MULTILANG_INPUT = 2;
+   public static final int BUILD_TYPE_MULTILANG_ALL = 3;
+   public static final String LOCALE_REMOVAL_RESET_TEXT = "SetupWizard - LocaleRemoval";
 
    public static final void removeLocales(String[] locales, String[] helpLocalesToKeep, LocaleRemovalStatusListener listener) {
       RemovalWorkerThread thread = getRunningThread();

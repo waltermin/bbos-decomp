@@ -6,10 +6,10 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.system.RIMPersistentStore;
 
 public final class Owner {
-   public static final long GUID_OWNER_OPTIONS_CHANGED;
-   public static final int OWNER_NAME_MAX_CHARS;
-   public static final int OWNER_INFO_MAX_CHARS;
-   private static final long OWNER_DATA_KEY;
+   public static final long GUID_OWNER_OPTIONS_CHANGED = -3297167379286550693L;
+   public static final int OWNER_NAME_MAX_CHARS = 39;
+   public static final int OWNER_INFO_MAX_CHARS = 127;
+   private static final long OWNER_DATA_KEY = 6182193625217474049L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(6182193625217474049L);
    private static Owner$OwnerData _ownerData;
 

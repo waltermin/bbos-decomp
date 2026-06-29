@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.mediaengine.ResourceContext;
 import net.rim.plazmic.internal.mediaengine.ResourceProvider;
 
 public class FontManagerProvider implements ResourceProvider {
-   public static final String EXTENSION_ID;
+   public static final String EXTENSION_ID = "x-object:/FontManager";
 
    @Override
    public Object createResource(String type, Object data, ResourceContext context, Object referrer) {

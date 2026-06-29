@@ -3,10 +3,10 @@ package net.rim.wica.runtime.messaging;
 import net.rim.wica.transport.Serializable;
 
 public interface Message extends Serializable {
-   int DESTINATION_SERVER;
-   int DESTINATION_WICLET_LOCAL;
-   int DESTINATION_SERVICE;
-   int DESTINATION_SYSTEM;
+   int DESTINATION_SERVER = 0;
+   int DESTINATION_WICLET_LOCAL = 1;
+   int DESTINATION_SERVICE = 2;
+   int DESTINATION_SYSTEM = 3;
 
    void setDestinationType(int var1);
 

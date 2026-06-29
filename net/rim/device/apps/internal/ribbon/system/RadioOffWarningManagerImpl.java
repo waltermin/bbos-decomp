@@ -15,8 +15,8 @@ final class RadioOffWarningManagerImpl extends RadioOffWarningManager implements
    Application _application;
    WeakReference[] _listeners = new Object[0];
    int _pendingInvoke = -1;
-   private static final int WAIT_TIMEOUT_WLAN;
-   private static final int WAIT_TIMEOUT_OTHER;
+   private static final int WAIT_TIMEOUT_WLAN = 2500;
+   private static final int WAIT_TIMEOUT_OTHER = 500;
    static RadioOffWarningManagerImpl _instance = (RadioOffWarningManagerImpl)RadioOffWarningManager.getInstance();
 
    public static final void init() {

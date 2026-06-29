@@ -40,22 +40,22 @@ final class BBXpHandler
    private Application _app;
    private int _invokeLaterId;
    private boolean _radioOnAtStart;
-   private static final int DEFAULT_VALUE;
-   private static final int STATE_DELAY;
-   private static final int STATE_START;
-   private static final int STATE_CHECK_BB_XP;
-   private static final int STATE_TURN_RADIO_OFF;
-   private static final int STATE_WAIT_FOR_RADIO_OFF;
-   private static final int STATE_TOGGLE_BB_XP;
-   private static final int STATE_VERIFY_BB_XP;
-   private static final int STATE_TURN_RADIO_ON;
-   private static final int STATE_RESTART;
-   private static final int STATE_IDLE;
-   private static final int MAX_TRIES;
-   private static final int DELAY_TIMEOUT;
-   private static final int RADIO_OFF_TIMEOUT;
-   private static final int MODE_BITMASK;
-   private static final String NOT_SUPPORTED_ERRROR_STRING;
+   private static final int DEFAULT_VALUE = 0;
+   private static final int STATE_DELAY = 0;
+   private static final int STATE_START = 1;
+   private static final int STATE_CHECK_BB_XP = 2;
+   private static final int STATE_TURN_RADIO_OFF = 3;
+   private static final int STATE_WAIT_FOR_RADIO_OFF = 4;
+   private static final int STATE_TOGGLE_BB_XP = 5;
+   private static final int STATE_VERIFY_BB_XP = 6;
+   private static final int STATE_TURN_RADIO_ON = 7;
+   private static final int STATE_RESTART = 8;
+   private static final int STATE_IDLE = 9;
+   private static final int MAX_TRIES = 5;
+   private static final int DELAY_TIMEOUT = 60000;
+   private static final int RADIO_OFF_TIMEOUT = 10000;
+   private static final int MODE_BITMASK = 17;
+   private static final String NOT_SUPPORTED_ERRROR_STRING = "BBXp bailing due to non-support on platform ";
 
    public final void mobilityManagementEvent(int eventCode, int cause) {
    }

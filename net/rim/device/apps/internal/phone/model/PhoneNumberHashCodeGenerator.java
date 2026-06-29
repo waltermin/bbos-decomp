@@ -9,7 +9,7 @@ final class PhoneNumberHashCodeGenerator {
    private StringBuffer _number = (StringBuffer)(new Object());
    private StringBuffer _dtmf = (StringBuffer)(new Object());
    private byte[] _bytes = new byte[0];
-   private static final long GENERATOR_KEY;
+   private static final long GENERATOR_KEY = -7650560901485287741L;
    private static WeakReference _generatorWR;
 
    private PhoneNumberHashCodeGenerator() {

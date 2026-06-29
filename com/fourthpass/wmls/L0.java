@@ -4,21 +4,21 @@ import java.util.Random;
 
 final class L0 extends Lib {
    private static Random _randomizer = (Random)(new Object());
-   public static final short ABS;
-   public static final short MIN;
-   public static final short MAX;
-   public static final short PARSE_INT;
-   public static final short PARSE_FLOAT;
-   public static final short IS_INT;
-   public static final short IS_FLOAT;
-   public static final short MAX_INT;
-   public static final short MIN_INT;
-   public static final short FLOAT;
-   public static final short EXIT;
-   public static final short HALT;
-   public static final short RANDOM;
-   public static final short SEED;
-   public static final short CHARACTERSET;
+   public static final short ABS = 0;
+   public static final short MIN = 1;
+   public static final short MAX = 2;
+   public static final short PARSE_INT = 3;
+   public static final short PARSE_FLOAT = 4;
+   public static final short IS_INT = 5;
+   public static final short IS_FLOAT = 6;
+   public static final short MAX_INT = 7;
+   public static final short MIN_INT = 8;
+   public static final short FLOAT = 9;
+   public static final short EXIT = 10;
+   public static final short HALT = 11;
+   public static final short RANDOM = 12;
+   public static final short SEED = 13;
+   public static final short CHARACTERSET = 14;
 
    @Override
    public final Value invoke(int func, Interpreter$Engine engine) {

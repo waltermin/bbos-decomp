@@ -7,11 +7,11 @@ public class MapView {
    private int _longitude;
    private int _zoom;
    private int _rotation;
-   public static final int MAX_ZOOM;
-   public static final long CONTEXT_LATITUDE;
-   public static final long CONTEXT_LONGITUDE;
-   public static final long CONTEXT_ZOOM;
-   public static final long CONTEXT_ROTATION;
+   public static final int MAX_ZOOM = 15;
+   public static final long CONTEXT_LATITUDE = -200747095229876690L;
+   public static final long CONTEXT_LONGITUDE = 6606581876924152793L;
+   public static final long CONTEXT_ZOOM = 581052036187634982L;
+   public static final long CONTEXT_ROTATION = 8035222542232379495L;
 
    public MapView() {
    }

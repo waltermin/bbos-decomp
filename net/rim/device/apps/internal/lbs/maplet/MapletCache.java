@@ -14,8 +14,8 @@ public final class MapletCache implements LowMemoryListener {
    private LRUCache _maplets;
    private MapletCacheSyncCollection _syncCollection;
    private static MapletCache _instance;
-   private static final long GUID;
-   private static final int EMPTY_KEY;
+   private static final long GUID = -7263572457632149725L;
+   private static final int EMPTY_KEY = 1;
 
    public static final void registerOnStartup() {
       getInstance();

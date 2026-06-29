@@ -7,16 +7,16 @@ class LDAPBrowser$LDAPBrowserVerb extends Verb {
    private int _type;
    private boolean _multiple;
    private final LDAPBrowser this$0;
-   static final int SEARCH;
-   static final int CERTVIEW;
-   static final int CERTADD;
-   static final int FETCHROOT;
-   static final int NEW_SERVER;
-   static final int VIEW_SERVER;
-   static final int CERT_STATUS;
-   static final int CROSS_CERT;
-   static final int OPTIONS;
-   static final int CLOSE;
+   static final int SEARCH = 1;
+   static final int CERTVIEW = 2;
+   static final int CERTADD = 3;
+   static final int FETCHROOT = 4;
+   static final int NEW_SERVER = 5;
+   static final int VIEW_SERVER = 6;
+   static final int CERT_STATUS = 7;
+   static final int CROSS_CERT = 8;
+   static final int OPTIONS = 9;
+   static final int CLOSE = 10;
 
    LDAPBrowser$LDAPBrowserVerb(LDAPBrowser _1, int type, int ordering) {
       super(ordering);

@@ -5,10 +5,10 @@ public class TableStyle {
    private FontStyleColor _headerStyle;
    private FontStyleColor _oddRowStyle;
    private FontStyleColor _evenRowStyle;
-   public static final int HEADER_INDEX;
+   public static final int HEADER_INDEX = -1;
    public static final FontStyleColor FROZEN_STYLE = new FontStyleColor();
-   public static final int GRID_COLOR;
-   public static final int SELECTABLE_COLUMN_EXISTANCE_INDICATOR_COLOR;
+   public static final int GRID_COLOR = 11119017;
+   public static final int SELECTABLE_COLUMN_EXISTANCE_INDICATOR_COLOR = 16711680;
 
    public void setSuperStyle(FontStyleColor superStyle) {
       this._superStyle = superStyle;

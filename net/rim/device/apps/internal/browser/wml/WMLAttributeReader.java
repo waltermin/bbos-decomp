@@ -8,7 +8,7 @@ public final class WMLAttributeReader {
    private byte[] _stringTable;
    private String _encoding;
    private String _postEncoding;
-   private static final int MAX_ENCODED_SIZE;
+   private static final int MAX_ENCODED_SIZE = 32768;
 
    public WMLAttributeReader(byte[] stringTable, String encoding, String postEncoding) {
       this._stringTable = stringTable;

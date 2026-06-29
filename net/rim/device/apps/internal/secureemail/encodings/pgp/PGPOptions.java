@@ -16,8 +16,8 @@ import net.rim.device.apps.internal.secureemail.SecureEmailUtilities;
 public final class PGPOptions extends SecureEmailOptions implements Persistable {
    private boolean _useConventionalEncryption;
    private byte[] _fingerprint;
-   private static final int CONTENT_CIPHER_BITFIELD_DEFAULT;
-   private static final boolean USE_CONVENTIONAL_ENCRYPTION_DEFAULT;
+   private static final int CONTENT_CIPHER_BITFIELD_DEFAULT = 47;
+   private static final boolean USE_CONVENTIONAL_ENCRYPTION_DEFAULT = false;
 
    public PGPOptions() {
       this.reset();

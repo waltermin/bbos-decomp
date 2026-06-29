@@ -1,9 +1,9 @@
 package net.rim.device.internal.diagnostics;
 
 public interface StateItemManager {
-   int INVALID_DISPLAY_MODE;
-   int BASIC_DISPLAY_MODE;
-   int ADVANCED_DISPLAY_MODE;
+   int INVALID_DISPLAY_MODE = -1;
+   int BASIC_DISPLAY_MODE = 0;
+   int ADVANCED_DISPLAY_MODE = 1;
 
    void addItem(long var1, long var3, int var5, int var6, String var7, int var8, int var9);
 

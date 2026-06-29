@@ -34,16 +34,16 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    private Dialog _exitDialog;
    private Dialog _langRemovalDialog;
    private Dialog _lowMemoryDialog;
-   private static final long LAUNCHED_FROM_DIALOG_KEY;
-   private static final long GUID_WIZARD_SCHEDULED_RUN_FAILED;
-   public static final int MODE_NORMAL;
-   public static final int MODE_AUTORUN;
-   public static final int MODE_DIALOG;
-   static final long DIALOG_KEY;
-   private static final int REMINDER_INTERVAL_MS;
-   private static final int REMINDER_IDLE_SECONDS;
+   private static final long LAUNCHED_FROM_DIALOG_KEY = 655214998864757855L;
+   private static final long GUID_WIZARD_SCHEDULED_RUN_FAILED = 4002776916212129330L;
+   public static final int MODE_NORMAL = 0;
+   public static final int MODE_AUTORUN = 1;
+   public static final int MODE_DIALOG = 2;
+   static final long DIALOG_KEY = 6098263789715893904L;
+   private static final int REMINDER_INTERVAL_MS = 86400000;
+   private static final int REMINDER_IDLE_SECONDS = 120;
    private static int _mode = 0;
-   private static final String SHOW_RESTART_DIALOG;
+   private static final String SHOW_RESTART_DIALOG = "show-restart-dialog";
 
    public static final void main(String[] args) {
       if (args != null && args.length > 0) {

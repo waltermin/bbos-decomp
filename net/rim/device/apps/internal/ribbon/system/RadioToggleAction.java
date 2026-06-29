@@ -18,8 +18,8 @@ final class RadioToggleAction extends Action {
    private static String RADIO_TOGGLE_ENTRY_NAME = "net_rim_Radio";
    private static String STATE_OFF = "off";
    private static String STATE_ON = "on";
-   private static final String RADIO_ON_BITMAP_NAME;
-   private static final String RADIO_OFF_BITMAP_NAME;
+   private static final String RADIO_ON_BITMAP_NAME = "radioon.gif";
+   private static final String RADIO_OFF_BITMAP_NAME = "radiooff.gif";
 
    RadioToggleAction(ApplicationDescriptor radioOnApplicationDescriptor, ApplicationDescriptor radioOffApplicationDescriptor, boolean userCanTurnRadioOn) {
       super(null, RADIO_TOGGLE_ENTRY_NAME, 240);

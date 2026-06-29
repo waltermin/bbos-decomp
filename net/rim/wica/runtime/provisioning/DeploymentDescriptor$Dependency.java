@@ -6,7 +6,7 @@ public final class DeploymentDescriptor$Dependency implements Persistable {
    public int _type;
    public String _name;
    public String _version;
-   public static final int RE_DEPENDENCY_TYPE;
+   public static final int RE_DEPENDENCY_TYPE = 1;
 
    public DeploymentDescriptor$Dependency() {
    }

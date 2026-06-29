@@ -11,7 +11,7 @@ class BehaviorHandler {
    protected EventEngine _engine;
    protected AnimationModel _data;
    protected ModelInteractor _model;
-   protected static final int EVALUATE_DELAY;
+   protected static final int EVALUATE_DELAY = 20;
 
    public BehaviorHandler(MediaServices services) {
       this._services = services;

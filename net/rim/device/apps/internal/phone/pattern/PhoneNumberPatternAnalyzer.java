@@ -17,7 +17,7 @@ final class PhoneNumberPatternAnalyzer {
    private int _hashPower;
    private int _hashVal;
    private int _digitCount;
-   private static final int MAX_DIGIT_COUNT;
+   private static final int MAX_DIGIT_COUNT = 40;
 
    public PhoneNumberPatternAnalyzer() {
       this(null);

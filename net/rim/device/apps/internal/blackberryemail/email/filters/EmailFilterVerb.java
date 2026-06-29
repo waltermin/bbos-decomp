@@ -11,9 +11,9 @@ import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public final class EmailFilterVerb extends Verb {
    private int _type;
-   public static final int DEFAULT;
-   public static final int FILTER_SENDER;
-   public static final int FILTER_SUBJECT;
+   public static final int DEFAULT = 0;
+   public static final int FILTER_SENDER = 1;
+   public static final int FILTER_SUBJECT = 2;
 
    @Override
    public final String toString() {

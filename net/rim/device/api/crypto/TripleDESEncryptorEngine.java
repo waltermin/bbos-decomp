@@ -3,7 +3,7 @@ package net.rim.device.api.crypto;
 public final class TripleDESEncryptorEngine implements SymmetricKeyEncryptorEngine {
    private TripleDESCryptoToken _cryptoToken;
    private CryptoTokenCipherContext _context;
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public TripleDESEncryptorEngine(TripleDESKey key) {
       if (key == null) {

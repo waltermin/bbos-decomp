@@ -29,14 +29,14 @@ public class EmailMoreVerb extends Verb {
    private byte[] _contentType;
    private byte _requestTarget;
    public MorePartModel _morePartModel;
-   private static final int MORE_REQUEST_SIZE;
-   public static final byte MORE;
-   public static final byte MORE_ALL;
-   public static final byte AUTO_MORE;
-   public static final byte AUTO_MORE_ALL;
-   public static final byte MORE_BODY_REQUEST;
-   public static final byte MORE_DOWNLOAD_REQUEST;
-   public static final byte MORE_ATTACHMENT_REQUEST;
+   private static final int MORE_REQUEST_SIZE = 3000;
+   public static final byte MORE = 1;
+   public static final byte MORE_ALL = 2;
+   public static final byte AUTO_MORE = 3;
+   public static final byte AUTO_MORE_ALL = 4;
+   public static final byte MORE_BODY_REQUEST = 1;
+   public static final byte MORE_DOWNLOAD_REQUEST = 2;
+   public static final byte MORE_ATTACHMENT_REQUEST = 3;
 
    public EmailMoreVerb(byte moreType) {
       super(moreType != 2 && moreType != 4 ? 344064 : 344069, EmailResources.getResourceBundle(), moreType != 2 && moreType != 4 ? 80 : 143);

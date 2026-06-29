@@ -19,8 +19,8 @@ public final class Transport extends StreamDatagramTransportBase implements TcpC
    private int _maxPacketSize;
    private TcpTimerThread _timerThread;
    Vector _tcpConnectionDatabase = (Vector)(new Object());
-   static final int TCP_PENDING_WORTHY_FLAGS;
-   static final int TCP_FLAGS_RESET_OR_ACK;
+   static final int TCP_PENDING_WORTHY_FLAGS = 23;
+   static final int TCP_FLAGS_RESET_OR_ACK = 20;
 
    public Transport() {
       this._maxPacketSize = TCPPacketHeader.getMaxPacketSize();

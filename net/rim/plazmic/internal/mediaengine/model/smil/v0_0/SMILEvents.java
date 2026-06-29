@@ -1,22 +1,22 @@
 package net.rim.plazmic.internal.mediaengine.model.smil.v0_0;
 
 public class SMILEvents {
-   public static final String BEGIN;
-   public static final String END;
-   public static final String REPEAT;
-   public static final String ANIMEND;
-   public static final String FOCUSIN;
-   public static final String FOCUSOUT;
-   public static final String ACTIVATE;
-   public static final int BEGIN_ID;
-   public static final int END_ID;
-   public static final int REPEAT_ID;
-   public static final int ANIMEND_ID;
-   public static final int FOCUSIN_ID;
-   public static final int FOCUSOUT_ID;
-   public static final int ACTIVATE_ID;
-   public static final int IMPLICIT_END_OF_MEDIA_ID;
-   public static final int UNDEFINED_ID;
+   public static final String BEGIN = "begin";
+   public static final String END = "end";
+   public static final String REPEAT = "repeat";
+   public static final String ANIMEND = "animend";
+   public static final String FOCUSIN = "focusin";
+   public static final String FOCUSOUT = "focusout";
+   public static final String ACTIVATE = "activate";
+   public static final int BEGIN_ID = 1;
+   public static final int END_ID = 2;
+   public static final int REPEAT_ID = 3;
+   public static final int ANIMEND_ID = 4;
+   public static final int FOCUSIN_ID = 11;
+   public static final int FOCUSOUT_ID = 12;
+   public static final int ACTIVATE_ID = 13;
+   public static final int IMPLICIT_END_OF_MEDIA_ID = 23;
+   public static final int UNDEFINED_ID = -1;
    private static final String[] NAMES = new String[]{"begin", "end", "repeat", "animend", "focusin", "focusout", "activate"};
    private static final int[] IDS = new int[]{
       1,

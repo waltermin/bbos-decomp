@@ -12,13 +12,13 @@ public final class ImageMap {
    private int _newHeight;
    private int _originalWidth;
    private int _originalHeight;
-   public static final int RECT;
-   public static final int CIRCLE;
-   public static final int POLY;
-   public static final int DEFAULT;
-   private static final int NOT_INITIALIZED;
-   private static final int ORIG_IMAGE_SIZE_SET;
-   private static final int AREAS_SCALED;
+   public static final int RECT = 0;
+   public static final int CIRCLE = 1;
+   public static final int POLY = 2;
+   public static final int DEFAULT = 3;
+   private static final int NOT_INITIALIZED = 0;
+   private static final int ORIG_IMAGE_SIZE_SET = 1;
+   private static final int AREAS_SCALED = 2;
 
    public ImageMap(String name) {
       this._name = name;

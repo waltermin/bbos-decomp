@@ -15,10 +15,10 @@ public class Result implements CollectionEventSource {
    int _availableMatches;
    int _errorCode;
    String _errorString;
-   private static final int FSM_ERROR_CODE;
-   private static final int FSM_ERROR_STRING;
-   private static final int FSM_NUMBER_AVAILABLE;
-   private static final int FSM_NULL;
+   private static final int FSM_ERROR_CODE = 1;
+   private static final int FSM_ERROR_STRING = 2;
+   private static final int FSM_NUMBER_AVAILABLE = 4;
+   private static final int FSM_NULL = 0;
 
    Result(int transactionId, int action) {
       this._transactionId = transactionId;

@@ -17,12 +17,12 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
    private int _mode;
    private boolean _modified;
    private boolean _isInList;
-   public static final int STATUS;
-   public static final int STATUS_NOT_STARTED;
-   public static final int STATUS_IN_PROGRESS;
-   public static final int STATUS_COMPLETED;
-   public static final int STATUS_WAITING;
-   public static final int STATUS_DEFERRED;
+   public static final int STATUS = 16777225;
+   public static final int STATUS_NOT_STARTED = 1;
+   public static final int STATUS_IN_PROGRESS = 2;
+   public static final int STATUS_COMPLETED = 3;
+   public static final int STATUS_WAITING = 4;
+   public static final int STATUS_DEFERRED = 5;
    private static Factory _taskModelFactory;
    private static Factory _titleModelFactory;
 

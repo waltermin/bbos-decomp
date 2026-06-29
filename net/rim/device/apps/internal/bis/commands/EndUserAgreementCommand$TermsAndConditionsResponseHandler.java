@@ -15,9 +15,9 @@ final class EndUserAgreementCommand$TermsAndConditionsResponseHandler extends De
    private boolean _foundTermsAndConditionsTag;
    private boolean _foundVersionTag;
    private final EndUserAgreementCommand this$0;
-   private static final String TAG_RETRY;
-   private static final String TAG_TERMS_AND_CONDITIONS;
-   private static final String TAG_VERSION;
+   private static final String TAG_RETRY = "retry";
+   private static final String TAG_TERMS_AND_CONDITIONS = "termsandconditions";
+   private static final String TAG_VERSION = "tcversion";
 
    public EndUserAgreementCommand$TermsAndConditionsResponseHandler(EndUserAgreementCommand _1) {
       this.this$0 = _1;

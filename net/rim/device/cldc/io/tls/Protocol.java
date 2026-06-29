@@ -11,12 +11,12 @@ import net.rim.device.internal.system.ITPolicyInternal;
 
 public final class Protocol implements ConnectionBaseInterface {
    private static ResourceBundle _rb = ResourceBundle.getBundle(-320500590281765934L, "net.rim.device.internal.resource.SSL");
-   public static final String END_TO_END_REQUIRED;
-   public static final String END_TO_END_DESIRED;
-   private static final String DEVICE_SIDE;
-   private static final String INTERFACE;
-   private static final String USE_PIPE;
-   private static final String CONNECTION_SETUP;
+   public static final String END_TO_END_REQUIRED = "EndToEndRequired";
+   public static final String END_TO_END_DESIRED = "EndToEndDesired";
+   private static final String DEVICE_SIDE = "DeviceSide";
+   private static final String INTERFACE = "interface";
+   private static final String USE_PIPE = "UsePipe";
+   private static final String CONNECTION_SETUP = "ConnectionSetup";
 
    @Override
    public final int getProperties(String name) {

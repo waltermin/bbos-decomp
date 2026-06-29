@@ -76,18 +76,18 @@ public final class TypeSearchModel implements PersistableRIMModel, SearchCriteri
       -4881048773110658218L,
       4902169033696235479L
    };
-   public static final int TYPE_INVALID;
-   public static final int TYPE_ALL;
-   public static final int TYPE_EMAIL;
-   public static final int TYPE_SMS;
-   public static final int TYPE_PHONE;
-   public static final int TYPE_DIRECT_CONNECT;
-   public static final int TYPE_VOICEMAIL;
-   public static final int TYPE_PAGE;
-   public static final int TYPE_MMS;
-   public static final int TYPE_PIN;
-   public static final int TYPE_EMAIL_WITH_ATTACHMENTS;
-   static final int NUM_SEARCH_TYPES;
+   public static final int TYPE_INVALID = -1;
+   public static final int TYPE_ALL = 0;
+   public static final int TYPE_EMAIL = 1;
+   public static final int TYPE_SMS = 2;
+   public static final int TYPE_PHONE = 3;
+   public static final int TYPE_DIRECT_CONNECT = 4;
+   public static final int TYPE_VOICEMAIL = 5;
+   public static final int TYPE_PAGE = 6;
+   public static final int TYPE_MMS = 7;
+   public static final int TYPE_PIN = 8;
+   public static final int TYPE_EMAIL_WITH_ATTACHMENTS = 9;
+   static final int NUM_SEARCH_TYPES = 10;
    static String _removedSubjectText;
    static FieldChangeListener _oldChangeListener;
    private static int[] _indexToResourceIdMap = new int[]{
@@ -133,7 +133,7 @@ public final class TypeSearchModel implements PersistableRIMModel, SearchCriteri
       -498503713
    };
    private static int[] _choiceFieldIndexToSearchTypeMap = new int[10];
-   private static final long TYPE_SEARCH_FIELD_CHANGE_LISTENER_SINGLETON;
+   private static final long TYPE_SEARCH_FIELD_CHANGE_LISTENER_SINGLETON = 5410879324383661698L;
 
    public final void setIndex(long objectType) {
       if (objectType == -6822293833372928884L) {

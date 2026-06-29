@@ -3,7 +3,7 @@ package net.rim.device.api.crypto.keystore;
 import net.rim.device.api.crypto.certificate.Certificate;
 
 public class PrivateKeysKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = -8376547269562148933L;
 
    public void addToIndex(KeyStoreData data, Certificate certificate, KeyStoreDataMap dataMap) {
       if (data.isPrivateKeySet() || data.isSymmetricKeySet()) {

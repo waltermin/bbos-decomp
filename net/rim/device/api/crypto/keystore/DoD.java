@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class DoD {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = 8206960665880315445L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
 
    private DoD() {
    }

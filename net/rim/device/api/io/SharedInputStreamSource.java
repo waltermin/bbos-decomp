@@ -7,7 +7,7 @@ import net.rim.vm.Array;
 final class SharedInputStreamSource {
    private byte[] _data;
    private InputStream _sourceStream;
-   private static final int RESIZE_DELTA;
+   private static final int RESIZE_DELTA = 1024;
 
    public SharedInputStreamSource(byte[] data) {
       if (data == null) {

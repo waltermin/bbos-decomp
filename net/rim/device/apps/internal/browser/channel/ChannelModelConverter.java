@@ -10,7 +10,7 @@ import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 final class ChannelModelConverter implements SyncConverter {
-   public static final int VERSION_SUPPORTED;
+   public static final int VERSION_SUPPORTED = 1;
    private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19, 71));
 
    @Override

@@ -1,13 +1,13 @@
 package net.rim.device.apps.internal.docview.core;
 
 final class ArznSimpleObject extends ArznObject {
-   private static final byte FONTEXMASK_SIZE;
-   private static final byte FONTEXMASK_STYLE;
-   private static final byte FONTEXMASK_NAME;
-   public static final byte FONTMASK_ITALIC;
-   public static final byte FONTMASK_BOLD;
-   public static final byte FONTMASK_UNDERLINE;
-   public static final byte FONTMASK_STRIKETHROUGH;
+   private static final byte FONTEXMASK_SIZE = 1;
+   private static final byte FONTEXMASK_STYLE = 2;
+   private static final byte FONTEXMASK_NAME = 4;
+   public static final byte FONTMASK_ITALIC = 1;
+   public static final byte FONTMASK_BOLD = 2;
+   public static final byte FONTMASK_UNDERLINE = 4;
+   public static final byte FONTMASK_STRIKETHROUGH = 1;
 
    @Override
    protected final int parseData(ArznParsingInfo parsingData) {

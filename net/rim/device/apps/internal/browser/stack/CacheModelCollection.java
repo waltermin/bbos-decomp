@@ -15,8 +15,8 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class CacheModelCollection implements SyncCollection, SyncCollectionStatistics {
    private SyncConverter _converter = new CacheModelConverter();
-   private static final String DATABASE_NAME;
-   private static final int SYNC_VERSION;
+   private static final String DATABASE_NAME = "Browser Data Cache";
+   private static final int SYNC_VERSION = 1;
 
    @Override
    public final boolean addSyncObject(SyncObject object) {

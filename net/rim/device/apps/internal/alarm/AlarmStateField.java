@@ -12,7 +12,7 @@ public final class AlarmStateField implements SimpleRibbonComponent, RibbonCompo
    private int _width;
    private int _height;
    private AlarmManager _alarmManager;
-   static final int ICON_ALARM;
+   static final int ICON_ALARM = 0;
 
    final synchronized void dataChanged() {
       if (this._listener != null) {

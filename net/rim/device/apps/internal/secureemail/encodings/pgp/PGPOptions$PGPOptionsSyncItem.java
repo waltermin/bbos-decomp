@@ -13,12 +13,12 @@ import net.rim.device.api.util.DataBuffer;
 
 class PGPOptions$PGPOptionsSyncItem extends OTASyncCapableSyncItem {
    private final PGPOptions this$0;
-   private static final int USE_CONVENTIONAL_ENCRYPTION;
-   private static final int FINGERPRINT;
-   private static final int CONTENT_CIPHER_BIT_FIELD;
-   private static final int ALWAYS_BCC;
-   private static final int SHOW_MESSAGE_DETAILS;
-   private static final int PROMPT_PROBLEM_PERSONAL_CERTS;
+   private static final int USE_CONVENTIONAL_ENCRYPTION = 1;
+   private static final int FINGERPRINT = 2;
+   private static final int CONTENT_CIPHER_BIT_FIELD = 3;
+   private static final int ALWAYS_BCC = 4;
+   private static final int SHOW_MESSAGE_DETAILS = 6;
+   private static final int PROMPT_PROBLEM_PERSONAL_CERTS = 7;
 
    PGPOptions$PGPOptionsSyncItem(PGPOptions _1) {
       this.this$0 = _1;

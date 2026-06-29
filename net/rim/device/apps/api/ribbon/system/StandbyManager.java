@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public class StandbyManager {
    protected static StandbyManager _cachedManager;
-   protected static final long GUID;
+   protected static final long GUID = -4691466650299662765L;
 
    public static StandbyManager getInstance() {
       if (_cachedManager != null) {

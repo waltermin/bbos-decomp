@@ -52,9 +52,9 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
    private boolean _autoPause = false;
    private boolean _missedCall = false;
    private Application _app = Application.getApplication();
-   protected static final long NEXT_FILENUM_KEY;
-   private static final int MAXTIME;
-   private static final String AMR_MIME_TYPE;
+   protected static final long NEXT_FILENUM_KEY = 6471394709640816166L;
+   private static final int MAXTIME = 3600000;
+   private static final String AMR_MIME_TYPE = "audio/amr";
 
    protected final char[] formatTime(long accumTime) {
       int time = (int)accumTime / 1000;

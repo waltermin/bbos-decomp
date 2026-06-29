@@ -11,7 +11,7 @@ public final class DEntry implements Persistable {
    public int[] _y;
    public int[] _startpoints;
    public int _type;
-   public static final boolean USE_COMPRESSED_HEADERS;
+   public static final boolean USE_COMPRESSED_HEADERS = false;
 
    public static final int getBLX(short[] header) {
       return header[0];

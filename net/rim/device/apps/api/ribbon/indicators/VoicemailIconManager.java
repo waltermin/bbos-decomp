@@ -17,9 +17,9 @@ public final class VoicemailIconManager {
    private IntIntHashtable _lineCountHashtable;
    private boolean _mwisEnabled;
    private byte _mwisRFUMask = -1;
-   public static final long VOICEMAIL_INDICATOR_UPDATED;
+   public static final long VOICEMAIL_INDICATOR_UPDATED = 6291453494459897456L;
    private static final boolean _isCDMA = RadioInfo.getNetworkType() == 4;
-   private static final long VOICE_MAIL_ICON_MANAGER;
+   private static final long VOICE_MAIL_ICON_MANAGER = -7196076389835624577L;
    private static VoicemailIconManager _instance;
    private static IconCollection _icons = IconCollection.get("net_rim_Voicemail", 1);
 

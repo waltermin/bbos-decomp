@@ -16,8 +16,8 @@ public final class DocViewTOCManager extends VerticalFieldManager {
    private DocViewTOCManager$DocViewMoreAvailableLine _morePreview;
    private VerbMenuItem _moreVerb;
    private short _savedMenuFlags;
-   static final byte DEFAULT_STYLE;
-   static final byte CUSTOM_STYLE;
+   static final byte DEFAULT_STYLE = 0;
+   static final byte CUSTOM_STYLE = 1;
 
    public DocViewTOCManager(DocViewDisplayField delegate, Font initialFont) {
       this(delegate, (byte)0, initialFont);

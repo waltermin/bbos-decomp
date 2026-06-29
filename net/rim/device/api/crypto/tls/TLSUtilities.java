@@ -9,7 +9,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.vm.Array;
 
 public final class TLSUtilities {
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public static final boolean domainNameMatches(String recordProtocolDomainName, String certificateDomainName) {
       if (certificateDomainName != null && certificateDomainName.length() != 0) {

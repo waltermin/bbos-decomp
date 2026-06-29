@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    private static SoftwareDHCryptoToken _instance = new SoftwareDHCryptoToken();
-   private static final long ID_DH_TEST;
+   private static final long ID_DH_TEST = 4582469495395029045L;
 
    static final SoftwareDHCryptoToken getInstance() {
       return _instance;
@@ -25,7 +25,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       //
       // Bytecode:
       // 00: bipush 1
-      // 01: anewarray 37
+      // 01: anewarray 40
       // 04: dup
       // 05: bipush 0
       // 06: new net/rim/device/api/crypto/DHCryptoSystem

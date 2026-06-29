@@ -7,7 +7,7 @@ import net.rim.device.apps.api.transmission.rim.RIMMessagingService;
 final class DefaultService$Helper implements TransmissionServiceListener {
    private RIMMessagingService _service;
    private boolean _receivedSB;
-   private static final String TYPE;
+   private static final String TYPE = "BBMAILAPI";
 
    public DefaultService$Helper(RIMMessagingService s) {
       this._service = s;

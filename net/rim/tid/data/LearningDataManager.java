@@ -15,22 +15,22 @@ public class LearningDataManager {
    private PersistentObject _stateStore;
    private Boolean _isDataEncoded;
    private Hashtable _learningDataTable = (Hashtable)(new Object());
-   public static final byte DEFAULT_TYPE;
-   public static final byte LEARNING_TYPE;
-   public static final byte IMOPTIONS_TYPE;
-   public static final byte FREQUENCY_TYPE;
-   public static final byte SPELL_CHECK_LEARNING_TYPE;
-   public static final byte SPELL_CHECK_PAIR_LEARNING_TYPE;
-   public static final String DEFAULT_TYPE_NAME;
-   public static final String LEARNING_TYPE_NAME;
-   public static final String IMOPTIONS_TYPE_NAME;
-   public static final String FREQUENCY_TYPE_NAME;
-   public static final String SPELL_CHECK_LEARNING_TYPE_NAME;
-   public static final String SPELL_CHECK_PAIR_LEARNING_TYPE_NAME;
-   public static final String SEPARATOR;
-   private static final long LEARNING_DATA_MANAGER_RECORD_STORE_ID;
-   private static final long LEARNING_DATA_MANAGER_STATE_STORE_ID;
-   private static final long REGISTRY_ID;
+   public static final byte DEFAULT_TYPE = 0;
+   public static final byte LEARNING_TYPE = 1;
+   public static final byte IMOPTIONS_TYPE = 2;
+   public static final byte FREQUENCY_TYPE = 3;
+   public static final byte SPELL_CHECK_LEARNING_TYPE = 5;
+   public static final byte SPELL_CHECK_PAIR_LEARNING_TYPE = 6;
+   public static final String DEFAULT_TYPE_NAME = "def";
+   public static final String LEARNING_TYPE_NAME = "lrn";
+   public static final String IMOPTIONS_TYPE_NAME = "opt";
+   public static final String FREQUENCY_TYPE_NAME = "frq";
+   public static final String SPELL_CHECK_LEARNING_TYPE_NAME = "spl";
+   public static final String SPELL_CHECK_PAIR_LEARNING_TYPE_NAME = "spp";
+   public static final String SEPARATOR = "__";
+   private static final long LEARNING_DATA_MANAGER_RECORD_STORE_ID = -8960920648966008846L;
+   private static final long LEARNING_DATA_MANAGER_STATE_STORE_ID = 1711008448817031823L;
+   private static final long REGISTRY_ID = 6388244635521793558L;
    private static LearningDataManager _instance;
 
    private LearningDataManager() {

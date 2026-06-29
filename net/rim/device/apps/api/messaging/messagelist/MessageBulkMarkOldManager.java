@@ -12,7 +12,7 @@ public class MessageBulkMarkOldManager implements RealtimeClockListener {
    private long _messageListLastSeenTimeStamp = System.currentTimeMillis();
    private MessageBulkMarkOldManager$Worker _worker = new MessageBulkMarkOldManager$Worker(null);
    private int _batchMaxSize;
-   private static final int DEFAULT_BATCH_SIZE;
+   private static final int DEFAULT_BATCH_SIZE = 12;
 
    public int getBatchMaxSize() {
       return this._batchMaxSize;

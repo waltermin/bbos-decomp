@@ -14,8 +14,8 @@ public final class ImageFetchJob implements Job {
    private BrowserContent _referrer;
    private Page _page;
    private int _requestState;
-   private static final int REQUEST_SUBMITTED;
-   private static final int REQUEST_RETURNED;
+   private static final int REQUEST_SUBMITTED = 1;
+   private static final int REQUEST_RETURNED = 2;
 
    public ImageFetchJob(RequestedResource resourceInfo, BrowserContent referrer, Page page) {
       this._resourceInfo = resourceInfo;

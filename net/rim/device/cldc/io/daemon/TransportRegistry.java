@@ -12,9 +12,9 @@ public final class TransportRegistry extends Thread {
    private Hashtable _instances = new Hashtable();
    private TransportRegistry$Request[] _requests = new TransportRegistry$Request[0];
    private TrafficLogger _tLogger;
-   private static final long ID;
-   public static final long REGISTER_NOW_RUNNABLE;
-   public static final long REGISTER_NOW_RESULT;
+   private static final long ID = -3443331856084987690L;
+   public static final long REGISTER_NOW_RUNNABLE = -258173064361783611L;
+   public static final long REGISTER_NOW_RESULT = -8887235436078834958L;
 
    private TransportRegistry() {
    }

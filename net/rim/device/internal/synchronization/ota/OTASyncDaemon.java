@@ -32,7 +32,7 @@ public final class OTASyncDaemon implements GlobalEventListener, SystemListener 
    private IntLongHashtable _syncServiceGuidToSidMap;
    private IntHashtable _syncServiceGuidToDataSourceIdMap;
    private EventHandler _eventHandler;
-   public static final long APP_REG_KEY;
+   public static final long APP_REG_KEY = -1106607207569943436L;
 
    public static final void initialize() {
       try {

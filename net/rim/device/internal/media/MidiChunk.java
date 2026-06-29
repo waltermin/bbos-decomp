@@ -5,8 +5,8 @@ class MidiChunk {
    int _id;
    int _length;
    byte[] _data;
-   public static final int CHUNK_HEADER;
-   public static final int CHUNK_TRACK;
+   public static final int CHUNK_HEADER = 1297377380;
+   public static final int CHUNK_TRACK = 1297379947;
 
    public MidiChunk(Sequence sequence, int id, int length, byte[] data) {
       this._sequence = sequence;

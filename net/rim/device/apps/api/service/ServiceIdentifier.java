@@ -12,10 +12,10 @@ public class ServiceIdentifier implements Persistable {
    long _expiredTime = -1;
    private boolean _defaultService = false;
    private boolean _systemDefault = false;
-   static final long DEFAULT_SERVICE_SET;
-   public static final long SERVICE_EVENT_ADDED;
-   public static final long SERVICE_EVENT_CHANGED;
-   public static final long SERVICE_EVENT_REMOVED;
+   static final long DEFAULT_SERVICE_SET = 158775118060600435L;
+   public static final long SERVICE_EVENT_ADDED = -860845403685493259L;
+   public static final long SERVICE_EVENT_CHANGED = 8478935834746748823L;
+   public static final long SERVICE_EVENT_REMOVED = -7853136852381124900L;
 
    ServiceIdentifier() {
    }

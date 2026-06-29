@@ -38,12 +38,12 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
    private Verb _closeVerb;
    private UiApplication _app = UiApplication.getUiApplication();
    private static String HTTP_STRING = "http://";
-   private static final int MENU_ORDERING_SAVE;
-   private static final int MENU_ORDERING_EDIT;
-   private static final int MENU_ORDERING_EDIT_LABEL;
-   private static final int MENU_ORDERING_DELETE;
-   private static final int MENU_ORDERING_RANDOM;
-   private static final int MENU_ORDERING_CLOSE;
+   private static final int MENU_ORDERING_SAVE = 16912384;
+   private static final int MENU_ORDERING_EDIT = 16916480;
+   private static final int MENU_ORDERING_EDIT_LABEL = 16917760;
+   private static final int MENU_ORDERING_DELETE = 16920576;
+   private static final int MENU_ORDERING_RANDOM = 16977920;
+   private static final int MENU_ORDERING_CLOSE = 268439552;
 
    public PasswordKeeperElementScreen(PasswordKeeperScreen screen, PasswordKeeperElement element) {
       super(0);

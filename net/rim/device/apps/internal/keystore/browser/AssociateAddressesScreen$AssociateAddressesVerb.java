@@ -13,10 +13,10 @@ class AssociateAddressesScreen$AssociateAddressesVerb extends Verb {
    private int _type;
    private int _index;
    private final AssociateAddressesScreen this$0;
-   public static final int ADD;
-   public static final int EDIT;
-   public static final int DELETE;
-   public static final int SAVE;
+   public static final int ADD = 1;
+   public static final int EDIT = 2;
+   public static final int DELETE = 3;
+   public static final int SAVE = 4;
 
    public AssociateAddressesScreen$AssociateAddressesVerb(AssociateAddressesScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

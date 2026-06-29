@@ -13,10 +13,10 @@ final class AudioPresentationElementField extends HorizontalFieldManager impleme
    private AudioPresentationElementField$AudioButtonField _buttonField;
    private int _flags;
    private boolean _isEditable;
-   public static final int FLAG_DISPLAY_CONTROLS;
-   public static final int FLAG_MOVE_MODE;
-   private static final int ACTION_STOP;
-   private static final int ACTION_PLAY;
+   public static final int FLAG_DISPLAY_CONTROLS = 1;
+   public static final int FLAG_MOVE_MODE = 2;
+   private static final int ACTION_STOP = 1;
+   private static final int ACTION_PLAY = 2;
 
    public AudioPresentationElementField(MMSAttachment param1, int param2, String param3, boolean param4) {
       // $VF: Couldn't be decompiled

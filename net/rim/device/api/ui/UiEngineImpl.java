@@ -47,8 +47,8 @@ final class UiEngineImpl implements GlobalEventListener, HolsterListener, Messag
    Graphics _fbGraphics = new Graphics();
    private int _stylusX = -1;
    private int _stylusY = -1;
-   static final boolean DEBUG_PAINT;
-   private static final int NO_PAINT_WATERMARK;
+   static final boolean DEBUG_PAINT = false;
+   private static final int NO_PAINT_WATERMARK = 5;
    static int _layoutGeneration;
    private static UiEngineImpl _uiEngine;
 

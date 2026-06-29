@@ -17,7 +17,7 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
    private HttpHeaders _offlineParameters;
    private HTMLCollectionImpl _elements = new HTMLCollectionImpl();
    private String _charset;
-   static final String DEFAULT_ENCODING;
+   static final String DEFAULT_ENCODING = "application/x-www-form-urlencoded";
 
    public final void setOfflineParameters(HttpHeaders defaultValues) {
       throw new RuntimeException("cod2jar: stack: underflow");

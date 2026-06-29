@@ -11,8 +11,8 @@ public class VerbRepository implements VerbRegistry, VerbFactory {
    private Verb[] _verbs = new Verb[5];
    private int _numVerbs;
    private static LongHashtable _factories = ApplicationRegistry.getApplicationRegistry().getLongHashtable(-8094929924439376137L);
-   private static final int GROW_SIZE;
-   private static final long RIM_VERB_REPOSITORY_ID;
+   private static final int GROW_SIZE = 5;
+   private static final long RIM_VERB_REPOSITORY_ID = -8094929924439376137L;
 
    public synchronized Verb[] getVerbs(long context) {
       Verb[] verbs = new Verb[0];

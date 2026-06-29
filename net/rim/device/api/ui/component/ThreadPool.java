@@ -8,8 +8,8 @@ class ThreadPool {
    private int _first;
    private long _lastTimeUsed = System.currentTimeMillis();
    private int _threadCount;
-   private static final long MAX_IDLE_TIME;
-   private static final int LIST_INCR;
+   private static final long MAX_IDLE_TIME = 60000L;
+   private static final int LIST_INCR = 8;
    private static ThreadPool _pool;
 
    private ThreadPool() {

@@ -18,7 +18,7 @@ public final class MoveMenuItem extends MenuItem implements CopyProgressCallback
    private String _destPath;
    private boolean _copy;
    private Screen _screenToClose;
-   private static final String FILE_PREFIX;
+   private static final String FILE_PREFIX = "file://";
    private static String _lastMovePath;
 
    public MoveMenuItem(FileItemField file, Integer rootView, boolean copy, Screen screenToClose) {

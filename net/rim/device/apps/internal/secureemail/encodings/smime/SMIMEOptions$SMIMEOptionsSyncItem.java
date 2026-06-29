@@ -11,17 +11,17 @@ import net.rim.device.api.util.DataBuffer;
 
 class SMIMEOptions$SMIMEOptionsSyncItem extends OTASyncCapableSyncItem {
    private final SMIMEOptions this$0;
-   private static final int INCLUDE_CERTIFICATES_FLAG;
-   private static final int REQUEST_SIGNED_RECEIPTS;
-   private static final int SIGNING_SERIAL_NUMBER;
-   private static final int SIGNING_ISSUER;
-   private static final int ENCRYPTION_SERIAL_NUMBER;
-   private static final int ENCRYPTION_ISSUER;
-   private static final int CONTENT_CIPHER_BIT_FIELD;
-   private static final int ALWAYS_BCC;
-   private static final int SHOW_MESSAGE_DETAILS;
-   private static final int EMS_EMAIL_ADDRESS;
-   private static final int PROMPT_PROBLEM_PERSONAL_CERTS;
+   private static final int INCLUDE_CERTIFICATES_FLAG = 1;
+   private static final int REQUEST_SIGNED_RECEIPTS = 2;
+   private static final int SIGNING_SERIAL_NUMBER = 3;
+   private static final int SIGNING_ISSUER = 4;
+   private static final int ENCRYPTION_SERIAL_NUMBER = 5;
+   private static final int ENCRYPTION_ISSUER = 6;
+   private static final int CONTENT_CIPHER_BIT_FIELD = 7;
+   private static final int ALWAYS_BCC = 8;
+   private static final int SHOW_MESSAGE_DETAILS = 10;
+   private static final int EMS_EMAIL_ADDRESS = 11;
+   private static final int PROMPT_PROBLEM_PERSONAL_CERTS = 12;
 
    SMIMEOptions$SMIMEOptionsSyncItem(SMIMEOptions _1) {
       this.this$0 = _1;

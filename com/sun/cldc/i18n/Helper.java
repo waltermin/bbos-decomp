@@ -28,7 +28,7 @@ public final class Helper {
    private static Object _lastReaderLock = new Object();
    private static WeakReference _universalReaderWR = new WeakReference(null);
    private static Helper$LocalStrongReferences _strongReferences = new Helper$LocalStrongReferences();
-   public static final long PERSISTENT_CONTENT_LISTENER_ID;
+   public static final long PERSISTENT_CONTENT_LISTENER_ID = 4119503239558518103L;
    private static String _lastWriterEncoding;
    private static WeakReference _lastWriterWR = new WeakReference(null);
    private static Object _lastWriterLock = new Object();

@@ -4,7 +4,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.internal.system.SIMCardEfHandler;
 
 public final class CellBroadcast {
-   private static final long CHANNEL_INFOS_GUID;
+   private static final long CHANNEL_INFOS_GUID = 757118313738273256L;
    private static final int[] langPrefTable = new int[]{
       0,
       1,

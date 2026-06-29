@@ -31,10 +31,10 @@ public class MediaManager implements ResourceProvider {
    protected Connector _defaultConnector;
    protected MediaManager$Downloader _downloader;
    private Platform _platform;
-   public static final String GATEWAY;
-   public static final String URL_BASE;
-   protected static final int DEFAULT_HEADER_LENGTH;
-   private static final int DATA_BUFFER_SIZE;
+   public static final String GATEWAY = "Gateway";
+   public static final String URL_BASE = "URI_BASE";
+   protected static final int DEFAULT_HEADER_LENGTH = 12;
+   private static final int DATA_BUFFER_SIZE = 2048;
 
    protected InputStream getInputStream(String uri, ConnectionInfo info) {
       return this._connector == null ? null : this._connector.getInputStream(uri, info);

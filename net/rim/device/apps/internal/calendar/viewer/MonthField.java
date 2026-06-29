@@ -62,18 +62,18 @@ final class MonthField extends Field {
    private static final Tag WEEKEND_TAG = Tag.create("month-weekend");
    private static final Tag PREVIOUS_DAY_TAG = Tag.create("month-previous-day");
    private static final Tag NEXT_DAY_TAG = Tag.create("month-next-day");
-   public static final byte EMPHASIZED_MASK;
-   private static final int MAX_ROWS;
-   private static final int DAYS_IN_WEEK;
-   private static final int ROUNDING;
-   private static final int BUSY_INDICATOR_PAD;
-   private static final int DATE_PAD;
-   private static final int _cellVerticalBorderWidth;
-   private static final int _cellHorizontalBorderHeight;
-   private static final int TITLE_OFFSET;
-   private static final char ZERO;
-   private static final int DASHED_LINE_STIPPLE;
-   private static final int SOLID_LINE_STIPPLE;
+   public static final byte EMPHASIZED_MASK = 1;
+   private static final int MAX_ROWS = 7;
+   private static final int DAYS_IN_WEEK = 7;
+   private static final int ROUNDING = 6;
+   private static final int BUSY_INDICATOR_PAD = 2;
+   private static final int DATE_PAD = 2;
+   private static final int _cellVerticalBorderWidth = 1;
+   private static final int _cellHorizontalBorderHeight = 1;
+   private static final int TITLE_OFFSET = 0;
+   private static final char ZERO = '0';
+   private static final int DASHED_LINE_STIPPLE = 1431655765;
+   private static final int SOLID_LINE_STIPPLE = -1;
 
    public MonthField(CalendarViewController callback) {
       super(3476778912330022912L);

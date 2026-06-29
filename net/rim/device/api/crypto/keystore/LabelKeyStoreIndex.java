@@ -1,7 +1,7 @@
 package net.rim.device.api.crypto.keystore;
 
 public class LabelKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = -2586671069390475682L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

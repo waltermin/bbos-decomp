@@ -29,7 +29,7 @@ final class WirelessTransportProfile implements MdpConstants, ConnEvent {
    private MFHRetransmissionConfiguration _config;
    long _lastMTHPacketTime;
    long _lastMFHPacketTime;
-   static final int EARLY_RECEIPT_CONFIRM_FLAG;
+   static final int EARLY_RECEIPT_CONFIRM_FLAG = 1;
    private static MFHRetransmissionConfiguration _defaultConfig;
 
    WirelessTransportProfile() {

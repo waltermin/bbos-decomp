@@ -55,7 +55,7 @@ final class SrpConfiguration {
    private final boolean _useDiagnostics;
    private boolean _diagnosticsInitialized;
    private boolean _generateActivityReport;
-   private static final long ID;
+   private static final long ID = -5942210742072776802L;
    private static StateTracker _tracker;
 
    SrpConfiguration(SrpConnectionManager manager, int linkType, int connectionType, int bearerConfig) {

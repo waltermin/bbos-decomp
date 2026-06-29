@@ -6,10 +6,10 @@ public class Edit$BidiLineRuns {
    public int[] _runs;
    public byte[] _bidiState;
    private boolean _ignoreState = true;
-   public static final int PARAGRAPH_DIR_LTR;
-   public static final int PARAGRAPH_DIR_RTL;
-   public static final int PARAGRAPH_DIR_FORCED_LTR;
-   public static final int PARAGRAPH_DIR_FORCED_RTL;
+   public static final int PARAGRAPH_DIR_LTR = 0;
+   public static final int PARAGRAPH_DIR_RTL = 1;
+   public static final int PARAGRAPH_DIR_FORCED_LTR = 2;
+   public static final int PARAGRAPH_DIR_FORCED_RTL = 3;
 
    Edit$BidiLineRuns() {
       this._runs = new int[0];

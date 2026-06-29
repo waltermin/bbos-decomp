@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface SVGNode extends ViewportNode, ContainerNode {
-   int TYPE;
+   int TYPE = 46;
 
    boolean isZoomAndPannable();
 

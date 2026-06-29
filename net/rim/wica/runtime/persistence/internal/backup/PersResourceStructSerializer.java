@@ -5,9 +5,9 @@ import net.rim.device.api.util.DataBuffer;
 
 final class PersResourceStructSerializer extends AbstractArraySerializer {
    private static PersResourceStructSerializer _instance;
-   private static final byte URL;
-   private static final byte BYTES;
-   private static final byte MIME_TYPE;
+   private static final byte URL = 0;
+   private static final byte BYTES = 1;
+   private static final byte MIME_TYPE = 2;
 
    static final PersResourceStructSerializer getInstance() {
       if (_instance == null) {

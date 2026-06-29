@@ -22,10 +22,10 @@ import net.rim.wica.runtime.metadata.internal.component.InnerDataVector;
 
 public class EventCollection extends StdCmpCollectionImpl implements InnerDataArrayFieldProvider {
    private CalDB _calendar = CalendarProxy.getInstance().getCalendarDatabase();
-   private static final long REMINDER_NONE;
+   private static final long REMINDER_NONE = -1L;
    private static Factory _eventFactory;
    private static Factory _reminderModelFactory;
-   private static final long NUM_OF_MILLISECONDS_IN_DAY;
+   private static final long NUM_OF_MILLISECONDS_IN_DAY = 86400000L;
 
    public EventCollection(WicletEx wiclet) {
       super(wiclet, EventCompDef.getInstance());

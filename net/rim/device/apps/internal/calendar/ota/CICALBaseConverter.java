@@ -44,8 +44,8 @@ class CICALBaseConverter extends BaseConverter {
    private int[] _dateTimeFields2 = new int[7];
    protected int[] _recurModifiers = new int[4];
    protected Hashtable _childListTable = (Hashtable)(new Object());
-   static final long EXCLUSION_LIST_OVERRIDE;
-   static final long RECUR_INSTANCE;
+   static final long EXCLUSION_LIST_OVERRIDE = -8188970212168295222L;
+   static final long RECUR_INSTANCE = -1184541483416107193L;
    protected static TimeZone _gmtTimeZone = TimeZone.getTimeZone(DateTimeUtilities.GMT);
    private static Calendar _calendar = Calendar.getInstance();
    private static Calendar _gmtCalendar = Calendar.getInstance(_gmtTimeZone);

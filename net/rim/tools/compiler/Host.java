@@ -5,11 +5,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public interface Host {
-   int PROGRESS_TICK;
-   int PROGRESS_LOADING;
-   int PROGRESS_LINKING;
-   int PROGRESS_SAVING;
-   int NUM_PROGRESS;
+   int PROGRESS_TICK = -1;
+   int PROGRESS_LOADING = 0;
+   int PROGRESS_LINKING = 1;
+   int PROGRESS_SAVING = 2;
+   int NUM_PROGRESS = 3;
 
    PrintStream openDiagnose();
 

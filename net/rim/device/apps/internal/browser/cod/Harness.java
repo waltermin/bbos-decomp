@@ -25,7 +25,7 @@ final class Harness implements Host, JARCompiler {
    private int _resultCode;
    private String _error;
    private byte[] _signerCertEncoding;
-   private static final boolean DEBUGCOD;
+   private static final boolean DEBUGCOD = false;
 
    public Harness() {
    }

@@ -7,18 +7,18 @@ public final class Font {
    private net.rim.device.api.ui.Font _font;
    private static Font _defaultFont;
    private static net.rim.device.api.ui.Font _rimDefaultFont;
-   public static final int STYLE_PLAIN;
-   public static final int STYLE_BOLD;
-   public static final int STYLE_ITALIC;
-   public static final int STYLE_UNDERLINED;
-   public static final int SIZE_SMALL;
-   public static final int SIZE_MEDIUM;
-   public static final int SIZE_LARGE;
-   public static final int FACE_SYSTEM;
-   public static final int FACE_MONOSPACE;
-   public static final int FACE_PROPORTIONAL;
-   public static final int FONT_STATIC_TEXT;
-   public static final int FONT_INPUT_TEXT;
+   public static final int STYLE_PLAIN = 0;
+   public static final int STYLE_BOLD = 1;
+   public static final int STYLE_ITALIC = 2;
+   public static final int STYLE_UNDERLINED = 4;
+   public static final int SIZE_SMALL = 8;
+   public static final int SIZE_MEDIUM = 0;
+   public static final int SIZE_LARGE = 16;
+   public static final int FACE_SYSTEM = 0;
+   public static final int FACE_MONOSPACE = 32;
+   public static final int FACE_PROPORTIONAL = 64;
+   public static final int FONT_STATIC_TEXT = 0;
+   public static final int FONT_INPUT_TEXT = 1;
 
    public static final Font getFont(int fontSpecifier) {
       switch (fontSpecifier) {

@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class NetworkInterfaceFactory {
    private Hashtable _managers = (Hashtable)(new Object());
-   private static final long GUID;
+   private static final long GUID = -3496055574688251758L;
 
    public static final NetworkInterfaceFactory getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

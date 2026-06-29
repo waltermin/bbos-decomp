@@ -21,9 +21,9 @@ final class CompressedSignalAndIndicatorsRibbonBannerField extends Field impleme
    private SimpleRibbonComponent _signalField;
    private RibbonComponent$RibbonComponentChangeListener _listener;
    private static Hashtable _parameters = (Hashtable)(new Object());
-   private static final int SMALL_COMPONENT_GAP;
-   private static final int LARGE_COMPONENT_GAP;
-   private static final int ARROW_AREA_WIDTH;
+   private static final int SMALL_COMPONENT_GAP = 1;
+   private static final int LARGE_COMPONENT_GAP = 3;
+   private static final int ARROW_AREA_WIDTH = 7;
 
    CompressedSignalAndIndicatorsRibbonBannerField(RibbonComponent$RibbonComponentChangeListener listener, String title) {
       this._listener = listener;

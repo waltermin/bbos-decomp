@@ -3,22 +3,22 @@ package net.rim.device.apps.api.messaging.implus;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 public interface IMPlusServiceModel {
-   String PHONE_PREFIX;
-   String FAX_PREFIX;
-   String ONE_WAY_PAGE_PREFIX;
-   String INTERACTIVE_HANDHELD_PREFIX;
-   long IMPLUS_CONTEXT_FLAG;
-   int IMPLUS_COMPOSE;
-   byte CONFIRM_DELIVERY_OPTION;
-   byte CONFIRM_READ_OPTION;
-   byte ALLOW_READ_CONFIRM_OPTION;
-   int OPTION_NO;
-   int OPTION_YES;
-   int OPTION_PROMPT;
-   byte PHONE;
-   byte FAX;
-   byte ONE_WAY_PAGE;
-   byte INTERACTIVE_HANDHELD;
+   String PHONE_PREFIX = "PHN:";
+   String FAX_PREFIX = "FAX:";
+   String ONE_WAY_PAGE_PREFIX = "TAP:";
+   String INTERACTIVE_HANDHELD_PREFIX = "IAP:";
+   long IMPLUS_CONTEXT_FLAG = -3859986508589425865L;
+   int IMPLUS_COMPOSE = 1;
+   byte CONFIRM_DELIVERY_OPTION = 0;
+   byte CONFIRM_READ_OPTION = 1;
+   byte ALLOW_READ_CONFIRM_OPTION = 2;
+   int OPTION_NO = 0;
+   int OPTION_YES = 1;
+   int OPTION_PROMPT = 2;
+   byte PHONE = 0;
+   byte FAX = 1;
+   byte ONE_WAY_PAGE = 2;
+   byte INTERACTIVE_HANDHELD = 3;
 
    boolean getOptionEnabled(int var1, byte var2);
 

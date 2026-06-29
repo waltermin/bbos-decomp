@@ -13,10 +13,10 @@ import net.rim.device.api.util.Persistable;
 
 public class EventContainer implements Persistable, SyncCollection, SyncConverter {
    private Hashtable _fieldsModels;
-   static final int EVENT_FIELDS_SYNC_VERSION;
-   static final int EVENT_FIELDS_SYNC_SIGNATURE;
-   private static final long EVENT_CONTAINER_STORE;
-   private static final byte FIELD_END_OF_DATA;
+   static final int EVENT_FIELDS_SYNC_VERSION = 1;
+   static final int EVENT_FIELDS_SYNC_SIGNATURE = -12975410;
+   private static final long EVENT_CONTAINER_STORE = -5426718932587642162L;
+   private static final byte FIELD_END_OF_DATA = 0;
 
    public void commit() {
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-5426718932587642162L);

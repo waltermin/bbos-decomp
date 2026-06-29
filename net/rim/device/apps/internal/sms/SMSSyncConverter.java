@@ -12,9 +12,9 @@ import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 public final class SMSSyncConverter implements SyncConverter {
-   public static final int CURRENT_VERSION;
-   public static final int FIRST_VERSION_SUPPORTED;
-   public static final int FAKE_DATAGRAM_ID;
+   public static final int CURRENT_VERSION = 5;
+   public static final int FIRST_VERSION_SUPPORTED = 1;
+   public static final int FAKE_DATAGRAM_ID = 1;
    private static final ContextObject INBOUND_CONTEXT = (ContextObject)(new Object(38));
    private static Factory _phoneNumberFactory;
    private static Factory _emailAddressFactory;

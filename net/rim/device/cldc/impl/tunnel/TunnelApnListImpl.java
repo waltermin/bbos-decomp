@@ -11,8 +11,8 @@ public final class TunnelApnListImpl implements TunnelApnList {
    private static String IIF_APN;
    private static int SUPPORTED_WAFS;
    private static int CDMA_AND_GPRS_MASK;
-   private static final String EMPTY_APN;
-   private static final String BLACKBERRY_NET;
+   private static final String EMPTY_APN = "";
+   private static final String BLACKBERRY_NET = "blackberry.net";
 
    @Override
    public final void removeFirst() {

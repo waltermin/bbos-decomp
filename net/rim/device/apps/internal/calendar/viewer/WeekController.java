@@ -25,7 +25,7 @@ final class WeekController extends CalendarViewController implements GlobalEvent
    private WeekController$LayoutLabelField _locationField = new WeekController$LayoutLabelField(null, 1152921504606847040L);
    private WeekController$LayoutLabelField _timeField = new WeekController$LayoutLabelField(null, 1152921504606847040L);
    private Vector _eventVector = (Vector)(new Object());
-   private static final int MIN_FONT_HEIGHT_PT;
+   private static final int MIN_FONT_HEIGHT_PT = 6;
 
    public WeekController(CalendarApp calendarUIApplication, CalendarActions calActions) {
       super(calendarUIApplication, calActions, new WeekVerbManager(calActions), true, true);

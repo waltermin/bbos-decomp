@@ -14,7 +14,7 @@ class MessageField extends HorizontalFieldManager implements HintPollingThread$H
    private static SimpleDateFormat _dowFormat = (SimpleDateFormat)(new Object("E"));
    private static SimpleDateFormat _timeFormat = (SimpleDateFormat)(new Object(7));
    private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object(56));
-   private static final int HINT_OVERLAP;
+   private static final int HINT_OVERLAP = 2;
 
    MessageField() {
       super(0);

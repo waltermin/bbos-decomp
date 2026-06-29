@@ -7,7 +7,7 @@ import net.rim.device.internal.ui.component.SimpleInputDialog;
 
 final class FindVerb extends Verb {
    TFMFindManager _findManager;
-   private static final int MAX_CHARS;
+   private static final int MAX_CHARS = 256;
 
    FindVerb(TFMFindManager findManager) {
       super(196624, CommonResources.getResourceBundle(), 9023);

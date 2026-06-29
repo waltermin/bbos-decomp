@@ -6,8 +6,8 @@ import net.rim.device.apps.api.utility.serialization.ConverterDescriptor;
 import net.rim.device.apps.api.utility.serialization.SerializationManager;
 
 public final class ImageViewConverterDescriptor implements ConverterDescriptor {
-   private static final String IMAGESCREEN_MESSAGE_VALUE;
-   private static final String IMAGEFIELD_CONTEXT;
+   private static final String IMAGESCREEN_MESSAGE_VALUE = "image-screen";
+   private static final String IMAGEFIELD_CONTEXT = "imgfield";
 
    public final void register() {
       try {

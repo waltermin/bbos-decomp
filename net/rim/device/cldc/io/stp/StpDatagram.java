@@ -8,17 +8,17 @@ public final class StpDatagram extends DatagramBase {
    private int _result;
    private int _acceptableVersion;
    private StpUtil$ServiceInfo[] _services;
-   public static final byte COMMAND_NONE;
-   public static final byte COMMAND_DATA;
-   public static final byte COMMAND_STATUS;
-   public static final byte COMMAND_CONNECT;
-   public static final byte COMMAND_STATE;
-   public static final byte COMMAND_CONFIG;
-   public static final int RESULT_NONE;
-   public static final int RESULT_DELIVERED;
-   public static final int RESULT_REFUSED;
-   public static final int RESULT_NOT_ROUTABLE;
-   public static final int RESULT_FAILED;
+   public static final byte COMMAND_NONE = 0;
+   public static final byte COMMAND_DATA = 8;
+   public static final byte COMMAND_STATUS = 4;
+   public static final byte COMMAND_CONNECT = 2;
+   public static final byte COMMAND_STATE = 6;
+   public static final byte COMMAND_CONFIG = -14;
+   public static final int RESULT_NONE = 0;
+   public static final int RESULT_DELIVERED = 1;
+   public static final int RESULT_REFUSED = 2;
+   public static final int RESULT_NOT_ROUTABLE = 7;
+   public static final int RESULT_FAILED = 8;
 
    @Override
    public final void reset() {

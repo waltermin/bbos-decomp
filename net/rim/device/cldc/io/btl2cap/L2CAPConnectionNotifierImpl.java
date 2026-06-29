@@ -16,8 +16,8 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
    private L2CAPConnectionImpl _connection;
    private boolean _closed;
    private boolean _connectionInUse;
-   private static final String PORT_NOT_OPEN;
-   private static final boolean DEBUG;
+   private static final String PORT_NOT_OPEN = "Port not open";
+   private static final boolean DEBUG = false;
 
    @Override
    public void close() {

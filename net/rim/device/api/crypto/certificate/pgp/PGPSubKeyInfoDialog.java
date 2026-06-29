@@ -16,7 +16,7 @@ public class PGPSubKeyInfoDialog extends TitledScrollingDialog {
    private PGPCertificate _certificate;
    private byte[] _subKeyID;
    private CryptoSystemProperties _cryptoSystemProperties;
-   private static final int MAX_NUM_WARNINGS;
+   private static final int MAX_NUM_WARNINGS = 2;
 
    public PGPSubKeyInfoDialog(PGPCertificate certificate, byte[] subKeyID, CryptoSystemProperties cryptoSystemProperties, long style) {
       super(style);

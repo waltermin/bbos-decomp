@@ -7,7 +7,7 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.util.MathUtilities;
 
 public class HorizontalFieldManager extends Manager {
-   private static final int MAX_EXTENT;
+   private static final int MAX_EXTENT = 1073741823;
 
    public HorizontalFieldManager() {
       this(0);

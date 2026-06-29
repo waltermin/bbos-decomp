@@ -53,17 +53,17 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
    private int _updateLogState;
    private int _updateLogNode;
    private int _paintLock;
-   private static final int MIN_ZOOM_AMOUNT;
-   private static final int MAX_ZOOM_AMOUNT;
-   private static final int DEFAULT_ZOOM_FACTOR;
-   private static final int DIRTY_ZOOM;
-   private static final int DIRTY_ZOOM_ORIGIN_X;
-   private static final int DIRTY_ZOOM_ORIGIN_Y;
-   private static final int DIRTY_ALIGN_X;
-   private static final int DIRTY_ALIGN_Y;
-   private static final int DIRTY_PAN_X;
-   private static final int DIRTY_PAN_Y;
-   private static final int DIRTY_ALL;
+   private static final int MIN_ZOOM_AMOUNT = 16;
+   private static final int MAX_ZOOM_AMOUNT = 3276800;
+   private static final int DEFAULT_ZOOM_FACTOR = 65536;
+   private static final int DIRTY_ZOOM = 1;
+   private static final int DIRTY_ZOOM_ORIGIN_X = 2;
+   private static final int DIRTY_ZOOM_ORIGIN_Y = 4;
+   private static final int DIRTY_ALIGN_X = 8;
+   private static final int DIRTY_ALIGN_Y = 16;
+   private static final int DIRTY_PAN_X = 32;
+   private static final int DIRTY_PAN_Y = 64;
+   private static final int DIRTY_ALL = 128;
 
    public PMEGraphicsViewport() {
       this._alignmentMatrix = new int[9];

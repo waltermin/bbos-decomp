@@ -4,9 +4,9 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class IdleScreenManager {
-   private static final long KEY;
-   public static final long GUID_IDLESCREEN_DISPLAYED;
-   public static final long GUID_IDLESCREEN_UNDISPLAYED;
+   private static final long KEY = -8431154864071828033L;
+   public static final long GUID_IDLESCREEN_DISPLAYED = -8246942408779309615L;
+   public static final long GUID_IDLESCREEN_UNDISPLAYED = 6946990846586544061L;
 
    public static void register(IdleScreenManager manager) {
       ApplicationRegistry.getApplicationRegistry().put(-8431154864071828033L, manager);

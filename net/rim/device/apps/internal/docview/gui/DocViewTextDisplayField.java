@@ -65,11 +65,11 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    DocViewTextDisplayField$CacheTextOffsetInfo _cacheOffsetInfo;
    private final boolean _isPresentation;
    private final boolean _isSpecificBgDisplay;
-   private static final int MAXCONTROLCHARS;
-   private static final int RIGHTTHRESHOLD;
-   private static final int LEFTTHRESHOLD;
-   private static final byte DISPLAYMODE_BOTH;
-   private static final byte DISPLAYMODE_TEXT;
+   private static final int MAXCONTROLCHARS = 2000;
+   private static final int RIGHTTHRESHOLD = 500;
+   private static final int LEFTTHRESHOLD = 50;
+   private static final byte DISPLAYMODE_BOTH = 0;
+   private static final byte DISPLAYMODE_TEXT = 1;
 
    DocViewTextDisplayField(
       DocViewDataProvider dataProvider,

@@ -34,14 +34,14 @@ public class SelectField extends Field {
    private Font _optionFont;
    private Font _optgroupFont;
    private int _lineHeight;
-   private static final int BORDER_WIDTH;
-   public static final int CONTEXT_CHANGE_OPTION;
-   public static final int CHANGE_MENU_ITEM_ORDERING;
-   public static final int FLAG_SELECTED_BY_USER;
-   public static final int FLAG_SELECTED_BY_DEFAULT;
-   public static final int FLAG_OPTGROUP;
-   public static final int FLAG_WITHIN_OPTGROUP;
-   private static final int INDENT_FOR_GROUPED_OPTION;
+   private static final int BORDER_WIDTH = 3;
+   public static final int CONTEXT_CHANGE_OPTION = 2;
+   public static final int CHANGE_MENU_ITEM_ORDERING = 30270;
+   public static final int FLAG_SELECTED_BY_USER = 0;
+   public static final int FLAG_SELECTED_BY_DEFAULT = 1;
+   public static final int FLAG_OPTGROUP = 2;
+   public static final int FLAG_WITHIN_OPTGROUP = 3;
+   private static final int INDENT_FOR_GROUPED_OPTION = 10;
    private static MenuItem _changeMenuItem = new SelectField$1(CommonResource.getBundle(), 1, 30270, 10);
 
    public SelectField(int size, boolean multiple, long style) {

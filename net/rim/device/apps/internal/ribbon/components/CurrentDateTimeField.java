@@ -20,8 +20,8 @@ final class CurrentDateTimeField extends StringBufferRibbonComponent implements 
    private int _clockType = 1;
    private int _ampmSize = Integer.MAX_VALUE;
    private Font _ampmFont;
-   private static final int DEFAULT_WIDTH;
-   private static final int DEFAULT_SIZE;
+   private static final int DEFAULT_WIDTH = 70;
+   private static final int DEFAULT_SIZE = Integer.MAX_VALUE;
    private static FontMetrics _fontMetrics = (FontMetrics)(new Object());
    private static TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
    private static DrawTextParam _textParams = (DrawTextParam)(new Object());

@@ -8,11 +8,11 @@ import net.rim.device.api.system.WLAN;
 import net.rim.device.internal.bluetooth.BluetoothME;
 
 public final class SerialNumber {
-   public static final int MAC_ADDRESS_WLAN;
-   public static final int MAC_ADDRESS_BLUETOOTH;
-   private static final int HEAD_LEN;
-   private static final int MIDDLE_LEN;
-   private static final int TAIL_LEN;
+   public static final int MAC_ADDRESS_WLAN = 0;
+   public static final int MAC_ADDRESS_BLUETOOTH = 1;
+   private static final int HEAD_LEN = 3;
+   private static final int MIDDLE_LEN = 2;
+   private static final int TAIL_LEN = 6;
 
    private SerialNumber() {
    }

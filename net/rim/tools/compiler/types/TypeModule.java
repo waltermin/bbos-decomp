@@ -29,7 +29,7 @@ public final class TypeModule implements Constants {
    private Module[] _modules;
    private int _ordinal;
    private int _count;
-   private static final String UNDF;
+   private static final String UNDF = ".UNDF";
 
    public TypeModule(String name, String version, int timeStamp, Codfile codfile) {
       this._name = name;

@@ -5,17 +5,17 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.system.LEDEngine;
 
 public final class LED {
-   public static final int STATE_OFF;
-   public static final int STATE_ON;
-   public static final int STATE_BLINKING;
-   public static final int STATE_PATTERN;
-   public static final int STATE_AUDIO_SYNC;
-   public static final int BRIGHTNESS_12;
-   public static final int BRIGHTNESS_25;
-   public static final int BRIGHTNESS_50;
-   public static final int BRIGHTNESS_100;
-   public static final int LED_TYPE_STATUS;
-   public static final int LED_TYPE_TRACKBALL;
+   public static final int STATE_OFF = 0;
+   public static final int STATE_ON = 1;
+   public static final int STATE_BLINKING = 2;
+   public static final int STATE_PATTERN = 3;
+   public static final int STATE_AUDIO_SYNC = 4;
+   public static final int BRIGHTNESS_12 = 0;
+   public static final int BRIGHTNESS_25 = 1;
+   public static final int BRIGHTNESS_50 = 2;
+   public static final int BRIGHTNESS_100 = 3;
+   public static final int LED_TYPE_STATUS = 0;
+   public static final int LED_TYPE_TRACKBALL = 1;
    private static LEDEngine _ledEngine = LEDEngine.getInstance();
 
    private LED() {

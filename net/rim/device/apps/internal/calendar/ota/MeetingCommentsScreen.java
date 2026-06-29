@@ -11,8 +11,8 @@ import net.rim.device.apps.api.ui.SystemEnabledMenu;
 class MeetingCommentsScreen extends AppsMainScreen {
    private EditField _commentField = (EditField)(new Object());
    private boolean _sendSelected;
-   private static final int MENU_ID_SEND;
-   private static final int MENU_ID_CANCEL;
+   private static final int MENU_ID_SEND = 100;
+   private static final int MENU_ID_CANCEL = 101;
 
    private MeetingCommentsScreen(String title) {
       super(17592186044416L);

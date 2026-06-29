@@ -23,22 +23,22 @@ import net.rim.device.internal.system.InternalServices;
 public final class AlertConfiguration implements PersistableRIMModel, SyncObject, FieldChangeListener, FieldProvider, Copyable {
    private byte[] _settings = new byte[15];
    private String[] _tuneNames = new Object[2];
-   public static final int NUMBER_OF_SETTINGS_PER_HOLSTER_STATE;
-   public static final int NUMBER_OF_SETTING_INDEPENDENT_OF_HOLSTER_STATE;
-   public static final int TOTAL_NUMBER_OF_SETTINGS;
-   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_30;
-   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_31;
-   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_38;
-   public static final int ALERT_CHOICE;
-   public static final int TUNE_CHOICE;
-   public static final int VOLUME_CHOICE;
-   public static final int NUMBER_OF_BEEPS_CHOICE;
-   public static final int REPEAT_NOTIFICATION_CHOICE;
-   public static final int LEVEL_1_NOTIFY_ONLY_CHOICE;
-   public static final int DO_NOT_DISTURB_CHOICE;
-   public static final int NOTIFY_DURING_VOICE_CALL_CHOICE;
-   public static final int ENABLE_BACKLIGHT;
-   public static final int NUMBER_OF_VIBRATIONS_CHOICE;
+   public static final int NUMBER_OF_SETTINGS_PER_HOLSTER_STATE = 5;
+   public static final int NUMBER_OF_SETTING_INDEPENDENT_OF_HOLSTER_STATE = 5;
+   public static final int TOTAL_NUMBER_OF_SETTINGS = 15;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_30 = 14;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_31 = 12;
+   public static final int TOTAL_NUMBER_OF_SETTINGS_JAVAAPPS_38 = 13;
+   public static final int ALERT_CHOICE = 0;
+   public static final int TUNE_CHOICE = 1;
+   public static final int VOLUME_CHOICE = 2;
+   public static final int NUMBER_OF_BEEPS_CHOICE = 3;
+   public static final int REPEAT_NOTIFICATION_CHOICE = 4;
+   public static final int LEVEL_1_NOTIFY_ONLY_CHOICE = 10;
+   public static final int DO_NOT_DISTURB_CHOICE = 11;
+   public static final int NOTIFY_DURING_VOICE_CALL_CHOICE = 11;
+   public static final int ENABLE_BACKLIGHT = 12;
+   public static final int NUMBER_OF_VIBRATIONS_CHOICE = 13;
 
    public final String getTuneName(boolean inHolsterBoolean) {
       return inHolsterBoolean ? this._tuneNames[1] : this._tuneNames[0];

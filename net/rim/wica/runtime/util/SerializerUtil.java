@@ -6,10 +6,10 @@ import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.util.DataBuffer;
 
 public final class SerializerUtil {
-   private static final short BYTES_IN_BYTE;
-   private static final short BYTES_IN_BOOLEAN;
-   private static final short BYTES_IN_LONG;
-   private static final short BYTES_IN_DOUBLE;
+   private static final short BYTES_IN_BYTE = 1;
+   private static final short BYTES_IN_BOOLEAN = 1;
+   private static final short BYTES_IN_LONG = 8;
+   private static final short BYTES_IN_DOUBLE = 8;
 
    public static final void writeString(DataBuffer buffer, byte type, String s) {
       if (s != null) {

@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.ButtonField;
 
 public final class Button extends ButtonField {
-   private static final int BUTTON_FONT_SIZE_PT;
+   private static final int BUTTON_FONT_SIZE_PT = 5;
 
    public Button(String label) {
       super(12884967424L);

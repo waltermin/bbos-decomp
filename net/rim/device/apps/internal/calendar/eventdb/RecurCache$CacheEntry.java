@@ -10,5 +10,5 @@ final class RecurCache$CacheEntry {
    long[] _startTimes = new long[14];
    long[] _endTimes = new long[14];
    int _numOccurrences;
-   static final int MAX_EXPAND;
+   static final int MAX_EXPAND = 14;
 }

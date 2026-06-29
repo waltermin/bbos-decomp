@@ -15,7 +15,7 @@ import net.rim.device.apps.internal.bis.event.LinkEvent;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class ServicesMainScreen extends UserSettingsScreen {
-   private static final String PARAM_MAILBOX_DESC;
+   private static final String PARAM_MAILBOX_DESC = "description";
 
    public ServicesMainScreen() {
       super(30);

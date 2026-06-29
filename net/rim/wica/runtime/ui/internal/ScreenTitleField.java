@@ -36,8 +36,8 @@ final class ScreenTitleField extends Field implements RibbonComponent$RibbonComp
    private static Hashtable _signalParameters = (Hashtable)(new Object());
    private static Hashtable _indicatorParameters = (Hashtable)(new Object());
    private static ThemeAttributeSet _signalAttributes;
-   private static final int SEPARATOR_HEIGHT;
-   private static final int COMPONENT_GAP;
+   private static final int SEPARATOR_HEIGHT = 1;
+   private static final int COMPONENT_GAP = 2;
 
    ScreenTitleField() {
       this._app = UiApplication.getUiApplication();

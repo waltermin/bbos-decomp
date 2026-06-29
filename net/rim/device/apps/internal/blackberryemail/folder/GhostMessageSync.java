@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.blackberryemail.EmailSyncState;
 import net.rim.vm.Array;
 
 final class GhostMessageSync extends EmailSyncState implements SyncCollection, SyncConverter, StateInfoListener {
-   private static final int SYNC_VERSION;
+   private static final int SYNC_VERSION = 0;
    private static String SYNC_NAME = "Purged Messages";
 
    @Override

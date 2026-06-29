@@ -11,17 +11,17 @@ import net.rim.vm.Array;
 
 public final class ContentStoreEncryption {
    private static final byte[] EMPTY = new byte[0];
-   private static final int DRM_KEY_BLOCK_TYPE;
-   private static final int DRM_KEY_ALG_TYPE;
-   private static final int DRM_KEY_ALG_ENCRYPTIONUTILTIES;
-   private static final int DRM_CRC_TYPE;
-   private static final int DRM_CRC_LENGTH;
-   private static final int DRM_SIM_KEY_TYPE;
-   private static final int DRM_DEVICE_KEY_TYPE;
-   private static final int DRM_DATA_BLOCK_TYPE;
-   private static final int DRM_KEY_SIZE;
+   private static final int DRM_KEY_BLOCK_TYPE = 1;
+   private static final int DRM_KEY_ALG_TYPE = 2;
+   private static final int DRM_KEY_ALG_ENCRYPTIONUTILTIES = 1;
+   private static final int DRM_CRC_TYPE = 5;
+   private static final int DRM_CRC_LENGTH = 4;
+   private static final int DRM_SIM_KEY_TYPE = 3;
+   private static final int DRM_DEVICE_KEY_TYPE = 4;
+   private static final int DRM_DATA_BLOCK_TYPE = 6;
+   private static final int DRM_KEY_SIZE = 16;
    private static String DRM_HEADER = "DRM";
-   private static final byte DRM_VERSION;
+   private static final byte DRM_VERSION = 1;
 
    public static final byte[] encrypt(InputStream input) {
       DataBuffer db = (DataBuffer)createEncryptionResult(input, false, -1);

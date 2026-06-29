@@ -31,13 +31,13 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
    private int _lastRecorded;
    private KeyPair _keyPair;
    private LongHashtable _publicAGKeys;
-   private static final int ACTIVE_INDEX_PRIMARY_REG_KEY;
-   private static final int ACTIVE_INDEX_SECONDARY_REG_KEY;
-   private static final int ACTIVE_INDEX_RESET_KEY;
-   private static final int RECOVERY_INDEX_PENDING_REG_KEY;
-   private static final int RECOVERY_INDEX_PENDING_RESET_KEY;
-   private static final int RECOVERY_INDEX_RESET_KEY;
-   static final int RECOVERY_INFO_MAX_SIZE;
+   private static final int ACTIVE_INDEX_PRIMARY_REG_KEY = 0;
+   private static final int ACTIVE_INDEX_SECONDARY_REG_KEY = 1;
+   private static final int ACTIVE_INDEX_RESET_KEY = 2;
+   private static final int RECOVERY_INDEX_PENDING_REG_KEY = 0;
+   private static final int RECOVERY_INDEX_PENDING_RESET_KEY = 1;
+   private static final int RECOVERY_INDEX_RESET_KEY = 2;
+   static final int RECOVERY_INFO_MAX_SIZE = 10;
 
    final synchronized void setSecurityInfo(long agId, int securityVersion, Key[] keys, boolean reset) {
       if (securityVersion == 1) {

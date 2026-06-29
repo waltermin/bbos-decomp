@@ -24,9 +24,9 @@ public final class Perl5Matcher implements PatternMatcher {
    private Stack __stack = (Stack)(new Object());
    private Perl5MatchResult __lastMatchResult = null;
    private int __lastMatchInputEndOffset = -100;
-   private static final char __EOS;
-   private static final int __INITIAL_NUM_OFFSETS;
-   private static final int __DEFAULT_LAST_MATCH_END_OFFSET;
+   private static final char __EOS = '\uffff';
+   private static final int __INITIAL_NUM_OFFSETS = 20;
+   private static final int __DEFAULT_LAST_MATCH_END_OFFSET = -100;
 
    private static final boolean __compare(char[] s1, int s1Offs, char[] s2, int s2Offs, int n) {
       int cnt = 0;

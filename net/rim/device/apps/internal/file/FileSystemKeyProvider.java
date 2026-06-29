@@ -13,8 +13,8 @@ import net.rim.vm.Memory;
 
 public final class FileSystemKeyProvider implements KeyProvider, DevicePasswordListener {
    private byte[] _password;
-   private static final int DEVICE_KEY_LENGTH;
-   private static final int USER_KEY_LENGTH;
+   private static final int DEVICE_KEY_LENGTH = 32;
+   private static final int USER_KEY_LENGTH = 32;
 
    public FileSystemKeyProvider() {
       if (FileSystem.isFileSystemSupported(1)) {

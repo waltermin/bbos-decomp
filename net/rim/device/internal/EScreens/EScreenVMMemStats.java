@@ -10,14 +10,14 @@ class EScreenVMMemStats extends MainScreen {
    protected MemoryStats _stats;
    private ObjectListField _list;
    EScreenMemStatsRefresher _refresher;
-   private static final int STAT_ALLOC;
-   private static final int STAT_FREE;
-   private static final int STAT_OBJECTS;
-   private static final int STAT_OBJECT_SIZE;
-   private static final int NUM_STATS;
-   private static final int MENU_QUICK_GC;
-   private static final int MENU_FULL_GC;
-   private static final int MENU_THOROUGH_GC;
+   private static final int STAT_ALLOC = 0;
+   private static final int STAT_FREE = 1;
+   private static final int STAT_OBJECTS = 2;
+   private static final int STAT_OBJECT_SIZE = 3;
+   private static final int NUM_STATS = 4;
+   private static final int MENU_QUICK_GC = 1;
+   private static final int MENU_FULL_GC = 2;
+   private static final int MENU_THOROUGH_GC = 3;
 
    public EScreenVMMemStats(String title, EScreenMemStatsRefresher refresher, Font font) {
       this.setFont(font);

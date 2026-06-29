@@ -1,11 +1,11 @@
 package net.rim.device.api.streaming;
 
 public interface Streaming {
-   int OK;
-   int ERROR_OUT_OF_SESSIONS;
-   int ERROR_OUT_OF_MEMORY;
-   int ERROR_UNDEFINED;
-   int ERROR_SESSION_NOT_OPENED;
+   int OK = 0;
+   int ERROR_OUT_OF_SESSIONS = -1;
+   int ERROR_OUT_OF_MEMORY = -2;
+   int ERROR_UNDEFINED = -4;
+   int ERROR_SESSION_NOT_OPENED = -3;
 
    boolean isSupported();
 

@@ -14,7 +14,7 @@ class ModuleInfo implements Persistable {
    private int[] _sequencesReceived;
    private IntHashtable _cachedSequences;
    private byte[] _moduleHash;
-   private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR;
+   private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR = 131072;
 
    ModuleInfo(int moduleSize, byte[] moduleHash) {
       this._moduleSize = moduleSize;

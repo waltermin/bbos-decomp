@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class AttachmentHandlerManager {
    private Vector _handlers = (Vector)(new Object(5));
-   private static final long ATTACHMENT_HANDLER_MANAGER_ID;
+   private static final long ATTACHMENT_HANDLER_MANAGER_ID = -7872671635551831164L;
 
    private AttachmentHandlerManager() {
       new MailApiAttachmentViewerModelConverter();

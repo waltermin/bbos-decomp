@@ -58,7 +58,7 @@ public final class FilterModel
    protected ShortCutKeyModel _shortCutKey;
    protected TitleModelImpl _titleModel;
    protected Object[] _criteria = new Object[0];
-   private static final long CONTROLLER_ID;
+   private static final long CONTROLLER_ID = -106390034967358858L;
    private static ContextObjectWR _filterSyncContextWR = (ContextObjectWR)(new Object(22, 19));
    static final byte[] _filterIdData = new byte[]{102};
 

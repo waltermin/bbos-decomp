@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class CalOptionCache {
    private static CalOptionCache$OptionCacheData _options;
-   private static final long ID;
+   private static final long ID = 1991608958394134113L;
 
    private CalOptionCache() {
    }

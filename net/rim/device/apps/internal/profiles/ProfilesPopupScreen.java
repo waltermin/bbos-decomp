@@ -36,7 +36,7 @@ public class ProfilesPopupScreen extends PopupScreen implements ListFieldCallbac
    private Font _selectedFont;
    private static Tag TAG_PROFILES_MENU = Tag.create("profiles-menu");
    private static Tag TAG_PROFILES_MENU_SELECTED = Tag.create("profiles-menu-selected");
-   private static final String PROFILE_MODULE_NAME;
+   private static final String PROFILE_MODULE_NAME = "net_rim_bb_profiles_app";
    private static String _advancedText;
    private static String _activeText;
    private static ProfilesPopupScreen$ProfilesPopupScreenCache _cache;

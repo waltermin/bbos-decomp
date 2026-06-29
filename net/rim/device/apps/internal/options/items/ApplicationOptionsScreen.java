@@ -13,7 +13,7 @@ import net.rim.vm.Array;
 final class ApplicationOptionsScreen extends KeywordFilteredScreen {
    private ApplicationList _appList;
    private boolean _showAll;
-   private static final int PROPERTIES;
+   private static final int PROPERTIES = 4;
 
    ApplicationOptionsScreen() {
       this(null, true);

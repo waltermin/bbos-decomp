@@ -17,8 +17,8 @@ public final class WSPHeaderEncoder {
    private int _tempBufLen;
    private byte[] _nextTempBuffer;
    private int _nextTempBufLen;
-   private static final int DEFAULT_BUFFER_INCR;
-   private static final int DEFAULT_TEMP_BUF_SIZE;
+   private static final int DEFAULT_BUFFER_INCR = 64;
+   private static final int DEFAULT_TEMP_BUF_SIZE = 64;
 
    public final void encode(String name, String value) {
       if (name != null && value != null) {

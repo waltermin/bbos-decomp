@@ -39,10 +39,10 @@ final class GlobalSearchResultsScreen extends AppsMainScreen implements Collecti
    private boolean _displayIcons;
    private static ResourceBundle _rb = ResourceBundle.getBundle(1181520400124563677L, "net.rim.device.apps.internal.resource.GlobalSearch");
    private static StringBuffer _sb = (StringBuffer)(new Object());
-   private static final int SEARCH_INITIALIZING;
-   private static final int SEARCH_IN_PROGRESS;
-   private static final int SEARCH_FINISHED;
-   private static final int SEARCH_CANCELLED;
+   private static final int SEARCH_INITIALIZING = 0;
+   private static final int SEARCH_IN_PROGRESS = 1;
+   private static final int SEARCH_FINISHED = 2;
+   private static final int SEARCH_CANCELLED = 3;
 
    GlobalSearchResultsScreen(boolean displayIcons) {
       super(65536);

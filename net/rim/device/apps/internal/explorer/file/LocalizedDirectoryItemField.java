@@ -9,7 +9,7 @@ public final class LocalizedDirectoryItemField implements RootItem, FileConnecti
    private FileItemField[] _availablePaths = new FileItemField[0];
    private FileItemField[] _allPaths = new FileItemField[0];
    private String _displayName;
-   private static final String MMS_FOLDER;
+   private static final String MMS_FOLDER = "/store/samples/mms/";
 
    public LocalizedDirectoryItemField(int localizedDirectoryKey, boolean isSelectWriteable) {
       if (localizedDirectoryKey != -1) {

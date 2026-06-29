@@ -33,16 +33,16 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    private int _packet;
    private int _offset;
    private int _length;
-   private static final long DEFAULT_EXPIRY;
-   private static final int CACHE_RESULT_VERSION;
-   private static final int CACHE_DATA_VERSION;
-   private static final int FLAG_POST_METHOD;
-   private static final int FLAG_SECURED;
-   private static final int FLAG_DIRTY;
-   private static final int FLAG_LOCAL_CONTENT;
-   private static final int FLAG_MULTIPART_ROOT_NODE;
-   private static final int FLAG_VERIFIED_CHILD_REF;
-   private static final int FLAG_CACHED;
+   private static final long DEFAULT_EXPIRY = 43200000L;
+   private static final int CACHE_RESULT_VERSION = 1;
+   private static final int CACHE_DATA_VERSION = 1;
+   private static final int FLAG_POST_METHOD = 1;
+   private static final int FLAG_SECURED = 2;
+   private static final int FLAG_DIRTY = 4;
+   private static final int FLAG_LOCAL_CONTENT = 8;
+   private static final int FLAG_MULTIPART_ROOT_NODE = 16;
+   private static final int FLAG_VERIFIED_CHILD_REF = 32;
+   private static final int FLAG_CACHED = 64;
 
    public CacheResult(String urlWithoutFragment, byte[] data, HttpHeaders responseHeaders, int status) {
       this(urlWithoutFragment, data, responseHeaders, status, true);

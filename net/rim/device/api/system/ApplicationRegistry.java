@@ -15,13 +15,13 @@ public final class ApplicationRegistry {
    private ApplicationRegistryHashtable _registry = new ApplicationRegistryHashtable(1223);
    private LongHashtable _monitors = new LongHashtable();
    private boolean _startupComplete;
-   public static final int MAX_WAIT_MILLIS;
-   private static final int TYPE_HASHTABLE;
-   private static final int TYPE_LONG_HASHTABLE;
-   private static final int TYPE_INT_HASHTABLE;
-   private static final int TYPE_VECTOR;
-   private static final int TYPE_INT_VECTOR;
-   private static final int TYPE_OBJECT;
+   public static final int MAX_WAIT_MILLIS = 120000;
+   private static final int TYPE_HASHTABLE = 1;
+   private static final int TYPE_LONG_HASHTABLE = 2;
+   private static final int TYPE_INT_HASHTABLE = 3;
+   private static final int TYPE_VECTOR = 4;
+   private static final int TYPE_INT_VECTOR = 5;
+   private static final int TYPE_OBJECT = 6;
 
    ApplicationRegistry() {
       Process.registerAppRegistry(this);

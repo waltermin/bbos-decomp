@@ -12,9 +12,9 @@ import net.rim.device.apps.internal.blackberryemail.email.api.EmailSendUtility;
 import net.rim.device.apps.internal.blackberryemail.folder.EmailHierarchy;
 
 final class EmailInvitationUtilities {
-   public static final String EMAIL_START_BOUNDARY;
-   public static final String EMAIL_BOUNDARY;
-   public static final String BACKWARDS_COMPATIBLE_BOUNDARY;
+   public static final String EMAIL_START_BOUNDARY = "-----￼----\n";
+   public static final String EMAIL_BOUNDARY = "-------o-------";
+   public static final String BACKWARDS_COMPATIBLE_BOUNDARY = "-------AM-------";
 
    private EmailInvitationUtilities() {
    }

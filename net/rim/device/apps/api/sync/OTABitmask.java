@@ -4,7 +4,7 @@ import net.rim.vm.Persistable;
 
 public class OTABitmask implements Persistable {
    private short _bitmask;
-   public static final long ID;
+   public static final long ID = -2053159172728646859L;
 
    public OTABitmask(short value) {
       this._bitmask = value;

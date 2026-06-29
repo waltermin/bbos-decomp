@@ -21,7 +21,7 @@ final class BitmapPresentationElementField extends MIMEContentAnimatedBitmapFiel
    private MMSAttachment _attachment;
    private EncodedImage _image;
    private boolean _moveMode;
-   private static final int MAX_ITERATIONS;
+   private static final int MAX_ITERATIONS = 5;
 
    private BitmapPresentationElementField(EncodedImage image, boolean isProtected, MMSAttachment attachment, boolean isEditable) {
       super(image, 5, getFlags(isEditable));

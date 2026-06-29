@@ -15,7 +15,7 @@ public final class Tooltip {
    private final Tooltip$PopScreenRunnable _popScreenRunnable = new Tooltip$PopScreenRunnable(this);
    private final Tooltip$TooltipScreen _screen = new Tooltip$TooltipScreen(this);
    private static final Tag TAG = Tag.create("tooltip");
-   private static final int DEFAULT_TIP_DURATION;
+   private static final int DEFAULT_TIP_DURATION = 2000;
    private static Tooltip _tooltip = new Tooltip();
 
    private Tooltip() {

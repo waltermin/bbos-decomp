@@ -27,7 +27,7 @@ public class Digester extends DefaultHandler {
    protected PeekableStack _stack;
    private Rule _invokeParentChildRule;
    private Rule _setAttributesRule;
-   protected static final int DEBUG;
+   protected static final int DEBUG = 0;
    protected static SAXParserFactory factory = null;
 
    public Digester() {

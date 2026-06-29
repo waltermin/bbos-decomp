@@ -4,16 +4,16 @@ import java.util.Vector;
 
 public class CommonFeatureVersion {
    protected String _name;
-   public static final String DISCOVERY_VERSION;
-   public static final String PROVISIONING_VERSION;
-   public static final String CONTROL_CENTER_VERSION;
-   public static final String SYSTEM_MSG_VERSION;
-   public static final String TRANSPORT_VERSION;
-   public static final String SECURITY_VERSION;
-   public static final int NUM_VERSIONED_FEATURES;
-   public static final String VERSION_SEPARATOR;
-   public static final String VERSION_RANGE_SEPARATOR;
-   public static final String NAME_VERSION_SEPARATOR;
+   public static final String DISCOVERY_VERSION = "Discovery";
+   public static final String PROVISIONING_VERSION = "Provisioning";
+   public static final String CONTROL_CENTER_VERSION = "ControlCenter";
+   public static final String SYSTEM_MSG_VERSION = "System";
+   public static final String TRANSPORT_VERSION = "Transport";
+   public static final String SECURITY_VERSION = "Security";
+   public static final int NUM_VERSIONED_FEATURES = 4;
+   public static final String VERSION_SEPARATOR = ";";
+   public static final String VERSION_RANGE_SEPARATOR = ":";
+   public static final String NAME_VERSION_SEPARATOR = "=";
 
    public String getFeatureName() {
       return this._name;

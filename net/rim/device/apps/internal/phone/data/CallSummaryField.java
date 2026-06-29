@@ -21,9 +21,9 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
    private int _phoneNumberCount;
    private ListField _listField;
    private int _numLines;
-   static final int VERTICAL_SPACER_FIELD_HEIGHT;
-   static final int VERTICAL_PADDING;
-   private static final int NUM_LIST_FIELD_ROWS;
+   static final int VERTICAL_SPACER_FIELD_HEIGHT = 2;
+   static final int VERTICAL_PADDING = 4;
+   private static final int NUM_LIST_FIELD_ROWS = 3;
 
    CallSummaryField(CallSummaryInfo summaryInfo, PhoneCallModelImpl callLog) {
       this._summaryInfo = summaryInfo;

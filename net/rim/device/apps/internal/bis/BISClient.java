@@ -20,12 +20,12 @@ public final class BISClient extends UiApplication {
    private Screen _startupScreen;
    private int _uiMode;
    private Vector _shutdownListeners = (Vector)(new Object());
-   public static final int RIBBON_UI_MODE;
-   public static final int WIZARD_UI_MODE;
-   private static final String WAP_CID;
-   private static final int AUTOSTART_TIME_DELAY;
-   static final long APP_GUID;
-   static final String BIS_CLIENT_MODULE_NAME;
+   public static final int RIBBON_UI_MODE = 0;
+   public static final int WIZARD_UI_MODE = 1;
+   private static final String WAP_CID = "WAP";
+   private static final int AUTOSTART_TIME_DELAY = 5000;
+   static final long APP_GUID = -6302558530025407697L;
+   static final String BIS_CLIENT_MODULE_NAME = "net_rim_bis_client";
    static String _version;
 
    public final void registerShutdownListeners(Vector shutdownListeners) {

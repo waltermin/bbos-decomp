@@ -1,13 +1,13 @@
 package net.rim.plazmic.internal.mediaengine.service;
 
 public interface MediaViewport extends MediaService {
-   String ID;
-   String PME_ID;
-   int TRANSPARENT;
-   int OPTIMIZE_STATIC_BUFFER;
-   int OPTIMIZE_VOLATILE_BUFFER;
-   int OPTIMIZE_PAN;
-   int OPTIMIZE_ZOOM;
+   String ID = "Viewport";
+   String PME_ID = "PMEViewport";
+   int TRANSPARENT = 1;
+   int OPTIMIZE_STATIC_BUFFER = 2;
+   int OPTIMIZE_VOLATILE_BUFFER = 4;
+   int OPTIMIZE_PAN = 8;
+   int OPTIMIZE_ZOOM = 16;
 
    void setStyle(int var1);
 

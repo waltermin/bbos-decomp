@@ -9,8 +9,8 @@ final class SearchPOIHistoryDataHandler {
    private SearchPOIHistoryItem[] _pastSearchesUnsort;
    private PersistentObject _historyPersistence;
    private boolean _sort = false;
-   private static final int MAX_SEARCH_HISTORY;
-   private static final long GUID;
+   private static final int MAX_SEARCH_HISTORY = 15;
+   private static final long GUID = 2672241508818280041L;
    private static SearchPOIHistoryDataHandler _instance;
 
    private SearchPOIHistoryDataHandler() {

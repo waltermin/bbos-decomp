@@ -38,8 +38,8 @@ public class CertificateSummaryDataSyncCollection
    private ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19));
    private KeyStore[] _keyStoresToSync;
    protected CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
-   private static final int COLLECTION_VERSION;
-   private static final long INSTANCE_ID;
+   private static final int COLLECTION_VERSION = 0;
+   private static final long INSTANCE_ID = -5204122086742082501L;
    private static CertificateSummaryDataSyncCollection _instance;
 
    public static CertificateSummaryDataSyncCollection getInstance() {

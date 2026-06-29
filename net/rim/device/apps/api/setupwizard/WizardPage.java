@@ -1,14 +1,14 @@
 package net.rim.device.apps.api.setupwizard;
 
 public interface WizardPage {
-   int CANCEL;
-   int BACK;
-   int NEXT;
-   int FINISH;
-   int ESCAPE;
-   int EXPLICIT_COMMAND;
-   int AUTORUN_FROM_DIALOG;
-   int FIRST_RUN;
+   int CANCEL = 0;
+   int BACK = 1;
+   int NEXT = 2;
+   int FINISH = 3;
+   int ESCAPE = 4;
+   int EXPLICIT_COMMAND = 1;
+   int AUTORUN_FROM_DIALOG = 2;
+   int FIRST_RUN = 4;
 
    String getTitle();
 

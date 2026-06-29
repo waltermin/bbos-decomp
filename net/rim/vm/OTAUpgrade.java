@@ -7,8 +7,8 @@ import net.rim.device.api.system.Radio;
 import net.rim.device.internal.system.RadioInternal;
 
 public final class OTAUpgrade {
-   public static final long DEFER_AUTO_OFF_GUID;
-   private static final long OTASL_ONLY_COLLECTIONS_GUID;
+   public static final long DEFER_AUTO_OFF_GUID = 2108775066620843828L;
+   private static final long OTASL_ONLY_COLLECTIONS_GUID = 3338648511322103566L;
    private static boolean _considerState = true;
 
    private OTAUpgrade() {

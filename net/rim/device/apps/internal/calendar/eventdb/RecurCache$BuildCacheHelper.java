@@ -6,8 +6,8 @@ import net.rim.device.apps.api.calendar.controller.DurationParts;
 import net.rim.device.apps.api.framework.model.RIMModel;
 
 final class RecurCache$BuildCacheHelper {
-   private static final long LOOK_BACK_ADJUSTMENT;
-   private static final long LOOK_FORWARD_ADJUSTMENT;
+   private static final long LOOK_BACK_ADJUSTMENT = 1209600000L;
+   private static final long LOOK_FORWARD_ADJUSTMENT = 6048000000L;
 
    public RecurCache$BuildCacheHelper() {
    }

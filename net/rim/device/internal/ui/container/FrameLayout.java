@@ -7,11 +7,11 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.util.MathUtilities;
 
 public class FrameLayout extends Manager implements FocusChangeListener {
-   private static final int BORDER_WIDTH;
-   private static final int DOUBLE_BORDER_WIDTH;
-   private static final int SUB_BORDER_PADDING;
-   private static final int DOUBLE_SUB_BORDER_PADDING;
-   public static final long USE_ROUNDED_CORNERS;
+   private static final int BORDER_WIDTH = 2;
+   private static final int DOUBLE_BORDER_WIDTH = 4;
+   private static final int SUB_BORDER_PADDING = 1;
+   private static final int DOUBLE_SUB_BORDER_PADDING = 2;
+   public static final long USE_ROUNDED_CORNERS = 1L;
 
    public FrameLayout() {
       this(0);

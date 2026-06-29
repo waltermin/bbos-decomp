@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
 public final class FilterNameSearchModelFactory extends RIMModelFactory {
-   public static final long REGKEY;
+   public static final long REGKEY = -4993125662867338663L;
    private static FilterNameSearchModelFactory _factory;
 
    public static final FilterNameSearchModelFactory getInstance() {

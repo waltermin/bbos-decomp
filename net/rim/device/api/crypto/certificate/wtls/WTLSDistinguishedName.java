@@ -26,11 +26,11 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
    private int _identifierOffset;
    private int _identifierEnd;
    private static final OID _commonNameOID = OIDs.getOID(-1253056853);
-   private static final int STATE_READ_CHAR;
-   private static final int STATE_READ_TERMINATOR;
-   private static final String CA_ATTRIBUTE;
-   private static final String CA_VALUE;
-   private static final String SN_ATTRIBUTE;
+   private static final int STATE_READ_CHAR = 0;
+   private static final int STATE_READ_TERMINATOR = 1;
+   private static final String CA_ATTRIBUTE = "T";
+   private static final String CA_VALUE = "ca";
+   private static final String SN_ATTRIBUTE = "SN";
 
    public final byte[] getSerialNumber() {
       return this._serialNumber == null ? null : Arrays.copy(this._serialNumber);

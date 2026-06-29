@@ -104,16 +104,16 @@ public class MapField extends Manager {
    private LBSMenuItem[] _menuItems = new LBSMenuItem[0];
    private RRoute _recordingRoute;
    protected static long UID = -1037010874164756539L;
-   public static final int MOVE_UP;
-   public static final int MOVE_RIGHT;
-   public static final int MOVE_DOWN;
-   public static final int MOVE_LEFT;
-   protected static final int HINT_NEXT_PREVIOUS;
-   protected static final int HINT_NEXT;
-   protected static final int HINT_PREVIOUS;
-   static final int _miToFt;
-   static final float _mToFt;
-   static final double RADS;
+   public static final int MOVE_UP = 90;
+   public static final int MOVE_RIGHT = 0;
+   public static final int MOVE_DOWN = 270;
+   public static final int MOVE_LEFT = 180;
+   protected static final int HINT_NEXT_PREVIOUS = 0;
+   protected static final int HINT_NEXT = 1;
+   protected static final int HINT_PREVIOUS = -1;
+   static final int _miToFt = 5280;
+   static final float _mToFt = 3.28F;
+   static final double RADS = Math.PI / 180.0;
    static final int[] _kmValues = new int[]{
       50,
       100,
@@ -259,8 +259,8 @@ public class MapField extends Manager {
    private static final NorthArrow _northArrow = new NorthArrow();
    static int accuX = 0;
    static int accuY = 0;
-   private static final int PAN_INCREMENT;
-   private static final int KEY_PAN_INCREMENT;
+   private static final int PAN_INCREMENT = 16;
+   private static final int KEY_PAN_INCREMENT = 32;
 
    protected void showHintLabel(String hint) {
       this._genericHint.show(hint);

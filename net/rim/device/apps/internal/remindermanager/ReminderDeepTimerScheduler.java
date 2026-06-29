@@ -7,10 +7,10 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.Array;
 
 public final class ReminderDeepTimerScheduler {
-   private static final int MIN_NUMBER_DEEP_TIMERS;
-   private static final long KEY;
+   private static final int MIN_NUMBER_DEEP_TIMERS = 5;
+   private static final long KEY = -8995044480416259562L;
    private static String DEEPTIMER_MODULE_NAME = "net_rim_bb_remindermanager";
-   public static final long TIME_ADJUSTMENT;
+   public static final long TIME_ADJUSTMENT = 30000L;
 
    private ReminderDeepTimerScheduler() {
    }

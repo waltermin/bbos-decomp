@@ -9,10 +9,10 @@ import net.rim.device.cldc.util.CalendarExtensions;
 final class CalendarSearchResultField$SearchResultsVerb extends CalendarViewerVerb {
    private int _type;
    private final CalendarSearchResultField this$0;
-   public static final int GOTO_PREV;
-   public static final int GOTO_TODAY;
-   public static final int GOTO_NEXT;
-   public static final int GOTO_PICK;
+   public static final int GOTO_PREV = 0;
+   public static final int GOTO_TODAY = 1;
+   public static final int GOTO_NEXT = 2;
+   public static final int GOTO_PICK = 3;
 
    CalendarSearchResultField$SearchResultsVerb(CalendarSearchResultField _1, int displayStringId, int order, int hotkeyResourceId, int type) {
       super(displayStringId, order, hotkeyResourceId);

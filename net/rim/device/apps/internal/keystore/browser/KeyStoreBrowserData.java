@@ -28,8 +28,8 @@ public final class KeyStoreBrowserData implements MatchProvider {
    private long _bestCertificateChainProperties;
    private String _label;
    private int _statusIcon;
-   private static final int VERISIGN_WAP_WTLS_HASH_CODE;
-   private static final String VERISIGN_WAP_WTLS_THUMBPRINT;
+   private static final int VERISIGN_WAP_WTLS_HASH_CODE = 2107895108;
+   private static final String VERISIGN_WAP_WTLS_THUMBPRINT = "967C 1CC9 A2A0 2974 740F 7500 1FEA C6D6 C86D 9795";
 
    public final synchronized boolean loadDataIfNeeded() {
       if (this._isDataLoaded) {

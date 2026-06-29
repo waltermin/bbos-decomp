@@ -17,17 +17,17 @@ public final class MimeMultipartParser {
    private boolean _base64decode;
    private int _boundaryState = 2;
    private boolean _delimiterHadCR = true;
-   private static final int BEFORE_CRLF_DASH_BOUNDARY;
-   private static final int BEFORE_LF_DASH_BOUNDARY;
-   private static final int BEFORE_DASH_BOUNDARY;
-   private static final int BEFORE_HYPHEN_BOUNDARY;
-   private static final int READING_BOUNDARY;
-   private static final int AFTER_BOUNDARY;
-   private static final int AFTER_BOUNDARY_HYPHEN;
-   private static final int READING_TO_END_OF_BOUNDARY_LINE;
-   private static final byte CR;
-   private static final byte LF;
-   private static final byte HYPHEN;
+   private static final int BEFORE_CRLF_DASH_BOUNDARY = 0;
+   private static final int BEFORE_LF_DASH_BOUNDARY = 1;
+   private static final int BEFORE_DASH_BOUNDARY = 2;
+   private static final int BEFORE_HYPHEN_BOUNDARY = 3;
+   private static final int READING_BOUNDARY = 4;
+   private static final int AFTER_BOUNDARY = 5;
+   private static final int AFTER_BOUNDARY_HYPHEN = 6;
+   private static final int READING_TO_END_OF_BOUNDARY_LINE = 7;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
+   private static final byte HYPHEN = 45;
 
    public MimeMultipartParser(InputStream inputStream, String contentType) {
       if (contentType != null) {

@@ -47,8 +47,8 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
       -333485820,
       526976000
    };
-   private static final String MSG_Connection_Broken;
-   private static final int MAX_DATAGRAM_SIZE;
+   private static final String MSG_Connection_Broken = "Connection broken";
+   private static final int MAX_DATAGRAM_SIZE = 62000;
    private static final byte[] zeroByteArray = new byte[0];
 
    @Override

@@ -7,5 +7,5 @@ final class BrowserSession$ActiveConfigs {
    int _activeSessionId = -1;
    final Object _syncLock = new Object();
    Hashtable _lastHistoryTable;
-   static final long KEY;
+   static final long KEY = 6353203939814877006L;
 }

@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.browser.core.BrowserSession;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 
 public final class OTAStatusReportSender implements OTAStatusReportService, Persistable {
-   private static final String CALLING_LINE_ID_HEADER;
+   private static final String CALLING_LINE_ID_HEADER = "x-up-calling-line-id";
    private static OTAStatusReportSender$OTAData _otaData;
    private static PersistentObject _persist = PersistentStore.getPersistentObject(1718628937688454370L);
    private static OTAStatusReportSender _instance;

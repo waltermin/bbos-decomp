@@ -10,11 +10,11 @@ import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.cldc.util.CalendarExtensions;
 
 public final class AutoOnOff {
-   public static final long GUID_AUTOONOFF_OPTIONS_CHANGED;
-   public static final int IMMEDIATE_AUTO_OFF;
-   public static final int AUTO_OFF_WHEN_IDLE;
-   public static final int ABORT_AUTO_OFF;
-   private static final long AUTOONOFF_DATA_KEY;
+   public static final long GUID_AUTOONOFF_OPTIONS_CHANGED = -2918606221006897090L;
+   public static final int IMMEDIATE_AUTO_OFF = 0;
+   public static final int AUTO_OFF_WHEN_IDLE = 1;
+   public static final int ABORT_AUTO_OFF = 2;
+   private static final long AUTOONOFF_DATA_KEY = 4271995000954929308L;
    private static PersistentObject _persistentAutoOnOffData = RIMPersistentStore.getPersistentObject(4271995000954929308L);
    private static AutoOnOff$AutoOnOffData _autoOnOffData;
 

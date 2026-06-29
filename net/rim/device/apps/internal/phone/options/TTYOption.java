@@ -14,9 +14,9 @@ import net.rim.device.internal.system.TTY;
 
 public final class TTYOption extends VoiceOptionsListItem {
    private ObjectChoiceField _ttyChoiceField;
-   private static final long TTY_CHANGE_ALLOWED_GUID;
-   private static final int NO;
-   private static final int YES;
+   private static final long TTY_CHANGE_ALLOWED_GUID = 8978995195591215860L;
+   private static final int NO = 0;
+   private static final int YES = 1;
 
    TTYOption(Object context) {
       super(PhoneResources.getString(6023), context);

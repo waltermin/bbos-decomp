@@ -5,22 +5,22 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Persistable;
 
 class PeerDataBlob implements Persistable {
-   static final int TYPE_SIMPLE_MSG;
-   static final int TYPE_NOTIFICATION;
-   static final int TYPE_PIN_UPDATE;
-   static final int TYPE_INVITE_ACCEPTED;
-   static final int TYPE_USER_INFO;
-   static final int TYPE_READ_RECEIPT;
-   static final int TYPE_CONV_INVITE;
-   static final int TYPE_CONV_ACCEPT;
-   static final int TYPE_CONV_JOIN;
-   static final int TYPE_CONV_REM;
-   static final int TYPE_CHG_INFO;
-   static final int TYPE_DELETE_CONTACT;
-   static final int TYPE_PASSWORD_KEY;
-   static final int TYPE_FILE_TRANSFER;
-   static final int TYPE_VERIFY_HASH;
-   static final int TYPE_SESSION;
+   static final int TYPE_SIMPLE_MSG = 1;
+   static final int TYPE_NOTIFICATION = 2;
+   static final int TYPE_PIN_UPDATE = 5;
+   static final int TYPE_INVITE_ACCEPTED = 6;
+   static final int TYPE_USER_INFO = 7;
+   static final int TYPE_READ_RECEIPT = 8;
+   static final int TYPE_CONV_INVITE = 9;
+   static final int TYPE_CONV_ACCEPT = 16;
+   static final int TYPE_CONV_JOIN = 17;
+   static final int TYPE_CONV_REM = 18;
+   static final int TYPE_CHG_INFO = 19;
+   static final int TYPE_DELETE_CONTACT = 20;
+   static final int TYPE_PASSWORD_KEY = 21;
+   static final int TYPE_FILE_TRANSFER = 22;
+   static final int TYPE_VERIFY_HASH = 23;
+   static final int TYPE_SESSION = 24;
 
    int getType() {
       throw null;

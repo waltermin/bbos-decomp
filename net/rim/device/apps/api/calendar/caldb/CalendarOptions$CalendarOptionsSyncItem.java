@@ -10,16 +10,16 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.service.ServiceIdentifier;
 
 final class CalendarOptions$CalendarOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int DATA_LENGTH;
-   private static final int DB_VERSION;
-   private static final int SCALING_FACTOR;
-   private static final int END_OF_TAGGED_DATA;
-   private static final int SERVICE_ID;
-   private static final int END_SERVICE_PROPERTIES;
-   private static final int WIRELESS_SYNC;
-   private static final int COLOUR;
-   private static final int DISPLAY_REMINDERS;
+   private static final int MIN_DATA_LENGTH = 16;
+   private static final int DATA_LENGTH = 44;
+   private static final int DB_VERSION = 0;
+   private static final int SCALING_FACTOR = 60000;
+   private static final int END_OF_TAGGED_DATA = 0;
+   private static final int SERVICE_ID = 1;
+   private static final int END_SERVICE_PROPERTIES = 2;
+   private static final int WIRELESS_SYNC = 3;
+   private static final int COLOUR = 4;
+   private static final int DISPLAY_REMINDERS = 5;
 
    @Override
    public final String getSyncName() {

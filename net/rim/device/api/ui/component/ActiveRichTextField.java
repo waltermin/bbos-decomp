@@ -31,11 +31,11 @@ public class ActiveRichTextField extends RichTextField implements CookieProvider
    protected long[] _cookieID;
    protected IntHashtable _cookieIDs;
    private SmileySupport _smileySupport;
-   static final int MAX_IDLE_TIMEOUT;
-   public static final int SCANFLAG_DISABLE_ALL_THREADING;
-   public static final int SCANFLAG_THREAD_ON_CREATE;
+   static final int MAX_IDLE_TIMEOUT = 1000;
+   public static final int SCANFLAG_DISABLE_ALL_THREADING = 0;
+   public static final int SCANFLAG_THREAD_ON_CREATE = 1;
    private static int _scanFlags = 1;
-   protected static final long INVALID_COOKIE_ID;
+   protected static final long INVALID_COOKIE_ID = 0L;
 
    protected void executeBackgroundScan() {
       BackgroundScanThread.post(new ActiveRichTextField$StringPatternScanner(this, null));

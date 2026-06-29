@@ -6,9 +6,9 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.container.PopupScreen;
 
 final class BaseCallDisplayPopup extends PopupScreen {
-   private static final int _SCALE_FACTOR;
-   private static final int _OUTSIDE_SPACE;
-   private static final int _INSIDE_SPACE;
+   private static final int _SCALE_FACTOR = 9;
+   private static final int _OUTSIDE_SPACE = 1;
+   private static final int _INSIDE_SPACE = 3;
 
    public BaseCallDisplayPopup() {
       super((Manager)(new Object()), 0);

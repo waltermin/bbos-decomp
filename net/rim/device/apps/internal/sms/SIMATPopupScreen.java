@@ -33,20 +33,20 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
    private SIMToolkit _stk;
    protected boolean _immediateResponse;
    private int _inputMessageCoding;
-   protected static final int DIALOG_DISPLAY_TEXT;
-   private static final int DIALOG_GET_INKEY;
-   private static final int DIALOG_GET_INPUT;
-   private static final int DIALOG_SELECT_ITEM;
-   private static final int DIALOG_SELECT_MENU;
-   private static final int DIALOG_PLAY_TONE;
-   private static final int DIALOG_LAUNCH_BROWSER;
-   private static final int DIALOG_DISPLAY_ALPHA_ID;
-   protected static final int OK_BUTTON;
-   protected static final int BACK_BUTTON;
-   protected static final int CANCEL_BUTTON;
-   private static final int HELP_BUTTON;
-   private static final int YES_BUTTON;
-   private static final int NO_BUTTON;
+   protected static final int DIALOG_DISPLAY_TEXT = 1;
+   private static final int DIALOG_GET_INKEY = 2;
+   private static final int DIALOG_GET_INPUT = 3;
+   private static final int DIALOG_SELECT_ITEM = 4;
+   private static final int DIALOG_SELECT_MENU = 5;
+   private static final int DIALOG_PLAY_TONE = 6;
+   private static final int DIALOG_LAUNCH_BROWSER = 7;
+   private static final int DIALOG_DISPLAY_ALPHA_ID = 8;
+   protected static final int OK_BUTTON = 1;
+   protected static final int BACK_BUTTON = 2;
+   protected static final int CANCEL_BUTTON = 4;
+   private static final int HELP_BUTTON = 8;
+   private static final int YES_BUTTON = 16;
+   private static final int NO_BUTTON = 32;
 
    void getInkey(int allowedKeys, boolean helpAvailable, int inputMessageCoding) {
       this.getInput(2, null, allowedKeys, 1, 2, true, helpAvailable, inputMessageCoding);

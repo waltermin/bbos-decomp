@@ -10,10 +10,10 @@ public final class RoutineLocal extends Routine {
    private Code _code;
    private CodfileArray _exceptionHandlers;
    private int _byteCodeWeight;
-   public static final int HEADER_SIZE;
-   public static final int NEW_HEADER_SIZE;
-   private static final int HEADER_CODESIZE_OFFSET;
-   private static final int NEW_HEADER_CODESIZE_OFFSET;
+   public static final int HEADER_SIZE = 14;
+   public static final int NEW_HEADER_SIZE = 9;
+   private static final int HEADER_CODESIZE_OFFSET = 6;
+   private static final int NEW_HEADER_CODESIZE_OFFSET = 4;
 
    private final void init() {
       this._code = new Code();

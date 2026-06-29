@@ -7,12 +7,12 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.system.InternalServices;
 
 public final class Display {
-   public static final int DISPLAY_PROPERTY_NO_SUBPIXELS;
-   public static final int DISPLAY_PROPERTY_REQUIRES_BACKLIGHT;
-   public static final int ORIENTATION_SQUARE;
-   public static final int ORIENTATION_LANDSCAPE;
-   public static final int ORIENTATION_PORTRAIT;
-   public static final long SIZE_CHANGE_EVENT;
+   public static final int DISPLAY_PROPERTY_NO_SUBPIXELS = 32768;
+   public static final int DISPLAY_PROPERTY_REQUIRES_BACKLIGHT = 16384;
+   public static final int ORIENTATION_SQUARE = 0;
+   public static final int ORIENTATION_LANDSCAPE = 1;
+   public static final int ORIENTATION_PORTRAIT = 2;
+   public static final long SIZE_CHANGE_EVENT = -2650018024822507413L;
    private static int _width;
    private static int _height;
    private static int _horizontalResolution;

@@ -33,9 +33,9 @@ final class TaskCollectionImpl
    private int _currentOrder;
    private boolean _dirty;
    private TaskCollectionImpl$MirroredTaskCollection _mirroredCollection;
-   private static final int TASK_INITIAL_SIZE;
-   private static final long TASK_DATA_NAME;
-   private static final long TASKCOLLECTION_ID;
+   private static final int TASK_INITIAL_SIZE = 16;
+   private static final long TASK_DATA_NAME = -2395935032978087656L;
+   private static final long TASKCOLLECTION_ID = 2054667582385114214L;
    private static RIMModelSyncConverter _syncConverter;
 
    final synchronized int getCurrentOrderIndex() {

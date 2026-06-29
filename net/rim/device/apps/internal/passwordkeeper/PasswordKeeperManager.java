@@ -20,7 +20,7 @@ import net.rim.vm.Array;
 public final class PasswordKeeperManager {
    private byte[] _password;
    private PasswordKeeperApp _app;
-   private static final long MANAGER;
+   private static final long MANAGER = -1789407596704811166L;
 
    private PasswordKeeperManager() {
    }

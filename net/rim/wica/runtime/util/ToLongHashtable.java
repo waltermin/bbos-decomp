@@ -7,7 +7,7 @@ public class ToLongHashtable {
    private Object _empty;
    private int _numberOfKeys;
    private int _threshold;
-   private static final int _loadFactor;
+   private static final int _loadFactor = 75;
 
    public ToLongHashtable(int initialCapacity) {
       if (initialCapacity < 0) {

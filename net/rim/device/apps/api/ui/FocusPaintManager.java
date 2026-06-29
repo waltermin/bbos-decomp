@@ -5,12 +5,12 @@ import net.rim.device.api.ui.XYRect;
 
 public final class FocusPaintManager {
    private int _focusStyle = 0;
-   public static final int FOCUS_STYLE_DEFAULT;
-   public static final int FOCUS_STYLE_SOLIDOUTLINE;
-   public static final int FOCUS_STYLE_DOTTEDOUTLINE;
-   public static final int FOCUS_STYLE_TRANSPARENT;
-   private static final int DOTTED_LINE_STIPPLE;
-   private static final int SOLID_LINE_STIPPLE;
+   public static final int FOCUS_STYLE_DEFAULT = 0;
+   public static final int FOCUS_STYLE_SOLIDOUTLINE = 1;
+   public static final int FOCUS_STYLE_DOTTEDOUTLINE = 2;
+   public static final int FOCUS_STYLE_TRANSPARENT = 3;
+   private static final int DOTTED_LINE_STIPPLE = -252645136;
+   private static final int SOLID_LINE_STIPPLE = -1;
 
    public final boolean setFocusStyle(int newStyle) {
       if (newStyle != this._focusStyle) {

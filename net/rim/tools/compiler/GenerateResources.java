@@ -45,15 +45,15 @@ public class GenerateResources implements Constants {
    private ByteCodeInstructions _block;
    private static String INIT_NAME = "<init>";
    private static String CLINIT_NAME = "<clinit>";
-   private static final int METHOD_MAX_STACK;
-   private static final int METHOD_MAX_LOCALS;
-   private static final int INIT_MAX_STACK;
-   private static final int INIT_MAX_LOCALS;
-   private static final int CLINIT_MAX_LOCALS;
-   private static final int CLINIT_MAX_STACK;
-   private static final int POPULATE_MAX_LOCALS;
-   private static final int POPULATE_MAX_STACK;
-   private static final int MAX_RESOURCE_SLICE;
+   private static final int METHOD_MAX_STACK = 3;
+   private static final int METHOD_MAX_LOCALS = 2;
+   private static final int INIT_MAX_STACK = 4;
+   private static final int INIT_MAX_LOCALS = 1;
+   private static final int CLINIT_MAX_LOCALS = 0;
+   private static final int CLINIT_MAX_STACK = 3;
+   private static final int POPULATE_MAX_LOCALS = 1;
+   private static final int POPULATE_MAX_STACK = 4;
+   private static final int MAX_RESOURCE_SLICE = 8192;
 
    public GenerateResources(Compiler compiler, String moduleName, JadSupport jad, Vector resourceBinaries) {
       this._compiler = compiler;

@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 public final class CallForwardRibbonIndicator implements Indicator, TestPoint {
    private int _lineIndicator;
    static CallForwardRibbonIndicator _instance;
-   public static final long CALL_FORWARD_RIBBON_INDICATOR;
+   public static final long CALL_FORWARD_RIBBON_INDICATOR = 5948557681649763178L;
 
    public static final void initialize() {
       if (_instance == null) {

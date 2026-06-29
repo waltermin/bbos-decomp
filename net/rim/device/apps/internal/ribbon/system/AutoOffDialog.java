@@ -33,14 +33,14 @@ final class AutoOffDialog extends PopupDialog implements Runnable, PopupDialogCl
    private long _onTimeLong;
    private int _type;
    private UiApplication _app;
-   static final int BATTERY_DRAINED_DIALOG;
-   static final int AUTO_OFF_DIALOG_WITH_CANCEL;
-   static final int POWER_OFF_DIALOG_WITH_OPTIONS;
-   static final int POWER_OFF_DIALOG_WITH_CANCEL;
-   static final int NO_AUTO_ON_TIME_DIALOG;
-   private static final long USER_REQUESTED_OFF_PROMPT_TIME;
-   private static final long AUTO_OFF_PROMPT_TIME;
-   private static final long BATTERY_DEAD_OFF_PROMPT_TIME;
+   static final int BATTERY_DRAINED_DIALOG = 0;
+   static final int AUTO_OFF_DIALOG_WITH_CANCEL = 1;
+   static final int POWER_OFF_DIALOG_WITH_OPTIONS = 2;
+   static final int POWER_OFF_DIALOG_WITH_CANCEL = 3;
+   static final int NO_AUTO_ON_TIME_DIALOG = 4;
+   private static final long USER_REQUESTED_OFF_PROMPT_TIME = 2000L;
+   private static final long AUTO_OFF_PROMPT_TIME = 5000L;
+   private static final long BATTERY_DEAD_OFF_PROMPT_TIME = 5000L;
 
    AutoOffDialog(UiApplication app, int type) {
       super((Manager)(new Object()), 33554432);

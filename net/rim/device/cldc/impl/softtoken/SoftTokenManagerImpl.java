@@ -25,17 +25,17 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
    private Object[] _listeners;
    EnterpriseConfig _enterpriseConfig;
    private static ResourceBundle _rb = ResourceBundle.getBundle(390461180289309471L, "net.rim.device.internal.resource.SoftTokenResources");
-   private static final long SOFT_TOKEN_STORE_ID;
-   private static final int ERROR_CONTROLLED_ACCESS_EXCEPTION;
-   private static final byte VERSION;
-   private static final byte TOKEN_TAG;
-   private static final byte SERIAL_NUM_TAG;
-   private static final byte PASSPHRASE_TAG;
-   private static final byte PIN_TAG;
-   private static final byte PIN_CACHE_TIMEOUT_TAG;
-   private static final byte PIN_CACHE_MILLIS_TAG;
-   private static final byte READ_ONLY_TAG;
-   private static final byte ENTERPRISE_CONFIG_ID_TAG;
+   private static final long SOFT_TOKEN_STORE_ID = 5330586314080255177L;
+   private static final int ERROR_CONTROLLED_ACCESS_EXCEPTION = 1162035525;
+   private static final byte VERSION = 0;
+   private static final byte TOKEN_TAG = 1;
+   private static final byte SERIAL_NUM_TAG = 2;
+   private static final byte PASSPHRASE_TAG = 3;
+   private static final byte PIN_TAG = 4;
+   private static final byte PIN_CACHE_TIMEOUT_TAG = 5;
+   private static final byte PIN_CACHE_MILLIS_TAG = 6;
+   private static final byte READ_ONLY_TAG = 7;
+   private static final byte ENTERPRISE_CONFIG_ID_TAG = 8;
 
    public final boolean saveSecrets() {
       DataBuffer buffer = (DataBuffer)(new Object());

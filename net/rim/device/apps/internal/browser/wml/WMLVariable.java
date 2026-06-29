@@ -13,9 +13,9 @@ final class WMLVariable {
    private byte[] _data;
    private WMLAttributeReader _reader;
    private String _encoding;
-   static final String ESC;
-   static final String UNESC;
-   static final String NOESC;
+   static final String ESC = "Esc";
+   static final String UNESC = "UnEsc";
+   static final String NOESC = "NoEsc";
 
    WMLVariable(byte[] data, WMLAttributeReader reader, WMLContextManager wmlContextManager) {
       this(wmlContextManager, "NoEsc", reader.getEncoding());

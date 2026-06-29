@@ -42,8 +42,8 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 public final class AddressUtilities {
-   public static final long SOURCE_ADDRESS_CARD;
-   private static final int MESSAGE_ADDRESS_DATA_SIZE;
+   public static final long SOURCE_ADDRESS_CARD = -570873356703084835L;
+   private static final int MESSAGE_ADDRESS_DATA_SIZE = 8;
    private static ContextObjectWR _friendlyContextWR = (ContextObjectWR)(new Object(10));
    private static String[] _nameStrings = new Object[2];
    private static WeakReference _smsAddressDataBufferWR = (WeakReference)(new Object(null));

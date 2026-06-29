@@ -8,9 +8,9 @@ import net.rim.device.apps.api.messaging.implus.IMPlusServiceModel;
 
 final class IMPlusRequestOptionModelFactory extends RIMModelFactory {
    private byte _type;
-   public static final byte DEFAULT_TYPE;
-   public static final byte DELIVERY_TYPE;
-   public static final byte READ_TYPE;
+   public static final byte DEFAULT_TYPE = 0;
+   public static final byte DELIVERY_TYPE = 1;
+   public static final byte READ_TYPE = 2;
 
    public IMPlusRequestOptionModelFactory(byte type) {
       this._type = type;

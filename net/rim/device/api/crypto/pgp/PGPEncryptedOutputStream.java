@@ -29,11 +29,11 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
    private NoCopyByteArrayOutputStream _dataOut;
    private SharedOutputStream _sharedInternal;
    private int _sessionKeyAlgorithm;
-   private static final byte PUBLIC_KEY_PACKET_VERSION;
-   private static final byte SYMMETRIC_KEY_PACKET_VERSION;
-   private static final byte SALTED_S2K;
-   private static final byte SALTED_ITERATED_S2K;
-   private static final byte IV_SIZE;
+   private static final byte PUBLIC_KEY_PACKET_VERSION = 3;
+   private static final byte SYMMETRIC_KEY_PACKET_VERSION = 4;
+   private static final byte SALTED_S2K = 1;
+   private static final byte SALTED_ITERATED_S2K = 3;
+   private static final byte IV_SIZE = 8;
 
    public PGPEncryptedOutputStream(OutputStream out) {
       this(out, 2, null, 4);

@@ -38,7 +38,7 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
    private int _expandAddressRunnableId = -1;
    private Field _source;
    private Runnable _expandAddressRunnable = new PhoneNumberKeywordList$1(this);
-   private static final int EXPANSION_DELAY;
+   private static final int EXPANSION_DELAY = 400;
 
    public PhoneNumberKeywordList(PhoneAppScreen phoneAppScreen, Field source) {
       super(null, null, 8);

@@ -6,8 +6,8 @@ import net.rim.device.api.util.IntEnumeration;
 import net.rim.device.api.util.IntHashtable;
 
 final class DocViewPreviewFieldManager {
-   private static final long EMAILPREVIEWFIELD_OBJECT;
-   private static final int MAX_ENTRIESCOUNT;
+   private static final long EMAILPREVIEWFIELD_OBJECT = 2289128795965653843L;
+   private static final int MAX_ENTRIESCOUNT = 4;
    private static DocViewPreviewFieldManager _instance;
 
    public static final DocViewPreviewFieldManager getInstance() {

@@ -7,9 +7,9 @@ import net.rim.device.api.util.IntIntHashtable;
 public class NewMessageEventManager {
    private IntIntHashtable _unreadEventFlags = (IntIntHashtable)(new Object());
    private NewMessageEventListener[] _newMessageEventListeners;
-   public static final int NEW_MESSAGE;
-   public static final int MISSED_CALL;
-   private static final long NEW_MESSAGE_EVENT_MANAGER;
+   public static final int NEW_MESSAGE = 1;
+   public static final int MISSED_CALL = 2;
+   private static final long NEW_MESSAGE_EVENT_MANAGER = -7306523617215506685L;
    private static NewMessageEventManager _newMessageEventManager;
 
    private NewMessageEventManager() {

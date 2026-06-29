@@ -7,7 +7,7 @@ import net.rim.device.internal.synchronization.ota.util.Event;
 class ServiceManagerEvent extends Event {
    private int _eventId;
    private OTASyncDaemon _otaSyncDaemon;
-   public static final int LOAD_SERVICES_EVENT;
+   public static final int LOAD_SERVICES_EVENT = 1;
 
    public int getEventId() {
       return this._eventId;

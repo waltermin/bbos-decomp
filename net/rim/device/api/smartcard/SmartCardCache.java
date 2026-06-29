@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 final class SmartCardCache implements ReaderStatusListener {
    private Hashtable _hashtable = (Hashtable)(new Object());
    private SmartCardCache$Data _emptyData = new SmartCardCache$Data(null);
-   private static final long ID;
+   private static final long ID = -5307011363447012213L;
    private static SmartCardCache _instance;
 
    final void setATR(SmartCardReader reader, AnswerToReset atr) {

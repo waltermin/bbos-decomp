@@ -10,7 +10,7 @@ import net.rim.device.api.ui.theme.ThemeAttributeSet;
 public class RigidManager extends Manager {
    private int _width;
    private int _height;
-   private static final int HEIGHT_FACTOR;
+   private static final int HEIGHT_FACTOR = 20;
 
    public RigidManager(int x, int y, long style) {
       super(style);

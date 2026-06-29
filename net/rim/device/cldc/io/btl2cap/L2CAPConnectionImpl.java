@@ -32,7 +32,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    private Runnable _cleanupRunnable;
    private Object _readSemaphore;
    private Object _writeSemaphore;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    @Override
    public void close() {

@@ -1,9 +1,9 @@
 package net.rim.wica.common;
 
 public class MessageDeliveryModes {
-   public static final int DELIVERY_MODE_STANDARD;
-   public static final int DELIVERY_MODE_RELIABLE;
-   public static final int DELIVERY_MODE_BEST_EFFORT;
+   public static final int DELIVERY_MODE_STANDARD = 0;
+   public static final int DELIVERY_MODE_RELIABLE = 1;
+   public static final int DELIVERY_MODE_BEST_EFFORT = 2;
 
    public static String toString(int deliveryMode) {
       switch (deliveryMode) {

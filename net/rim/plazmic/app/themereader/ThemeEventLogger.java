@@ -5,8 +5,8 @@ import net.rim.device.api.system.EventLogger;
 
 public class ThemeEventLogger {
    private long _appGuid;
-   private static final long THEME_READER_GUID;
-   private static final String THEME_READER_NAME;
+   private static final long THEME_READER_GUID = 8451140947859979436L;
+   private static final String THEME_READER_NAME = "ThemeReader";
    private static ThemeEventLogger _logger;
 
    private ThemeEventLogger(long appGuid) {

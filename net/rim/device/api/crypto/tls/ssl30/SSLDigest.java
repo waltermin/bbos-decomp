@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.SHA1Digest;
 public class SSLDigest extends AbstractDigest implements Digest {
    private MD5Digest _md5;
    private SHA1Digest _sha;
-   public static final int DIGEST_LENGTH;
+   public static final int DIGEST_LENGTH = 36;
 
    public SSLDigest() {
       this._md5 = (MD5Digest)(new Object());

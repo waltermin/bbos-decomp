@@ -39,10 +39,10 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
    private Verb[] _verbCache = new Object[0];
    private DefaultProvider _defaultVerbProvider;
    private Object _model;
-   private static final int DATE_TIME_INDEX;
-   private static final int CALL_TYPE_INDEX;
-   private static final int CALL_STATUS_INDEX;
-   private static final int CALL_LINE_ID_INDEX;
+   private static final int DATE_TIME_INDEX = 0;
+   private static final int CALL_TYPE_INDEX = 1;
+   private static final int CALL_STATUS_INDEX = 2;
+   private static final int CALL_LINE_ID_INDEX = 3;
    private static final int NUM_CALL_INFO_FIELD_ENTRIES = PhoneUtilities.getAllLineIds().length > 1 ? 4 : 3;
 
    public CallLogViewerScreen(String title, Object context) {

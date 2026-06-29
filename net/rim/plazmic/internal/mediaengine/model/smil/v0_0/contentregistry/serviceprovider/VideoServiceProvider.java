@@ -14,7 +14,7 @@ import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.VideoField;
 public class VideoServiceProvider extends UIComponentServiceProvider {
    private Player _player;
    private VideoControl _videoControl;
-   private static final int NUM_SERVICES;
+   private static final int NUM_SERVICES = 3;
 
    public VideoServiceProvider() {
       super(3);

@@ -27,15 +27,15 @@ public class EventEngine {
    private Event _processEvent;
    private SafeArray _eventPool;
    private EventSubscriptionHelper _subscription;
-   public static final int ENGINE_START_EVENT;
-   public static final int ENGINE_STOP_EVENT;
-   public static final int ENGINE_NEW_TIME_EVENT;
-   public static final int ENGINE_BEFORE_PROCESSING;
-   public static final int ENGINE_AFTER_PROCESSING;
-   public static final int NO_EVENTS_SENT;
-   public static final int ASAP_TIME;
-   private static final int ENGINE_DISPATCH_EVENT;
-   private static final int INVOKE_ASAP_THRESHOLD;
+   public static final int ENGINE_START_EVENT = 868433339;
+   public static final int ENGINE_STOP_EVENT = -1717674305;
+   public static final int ENGINE_NEW_TIME_EVENT = -1391809431;
+   public static final int ENGINE_BEFORE_PROCESSING = -979165487;
+   public static final int ENGINE_AFTER_PROCESSING = -1206114632;
+   public static final int NO_EVENTS_SENT = 239239;
+   public static final int ASAP_TIME = Integer.MIN_VALUE;
+   private static final int ENGINE_DISPATCH_EVENT = -704554377;
+   private static final int INVOKE_ASAP_THRESHOLD = 500;
 
    public EventEngine() {
       this._freezeTimeWhenStopped = true;

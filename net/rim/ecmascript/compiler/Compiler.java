@@ -25,20 +25,20 @@ public class Compiler {
    private Vector _labels = (Vector)(new Object());
    private CompiledScript _globalCompiledCode;
    private static int _versionMajor = 0;
-   private static final int VERSION_MINOR;
+   private static final int VERSION_MINOR = 8;
    private static int _versionMinor = 8;
-   public static final int PRINT_COMPACT_SOURCE;
-   public static final int DISCARD_GLOBAL_RETURN;
-   public static final int OMIT_COMPILED_SOURCE;
-   public static final int OMIT_COMPILED_SOURCE_AND_LINE_NUMBERS;
-   public static final int DEBUG_TOKENS;
-   public static final int DEBUG_LONG_TOKENS;
-   public static final int DEBUG_PARSER;
-   public static final int DEBUG_DUMP_IR;
-   public static final int DEBUG_DUMP_LST;
-   public static final int FOR_EVAL;
-   public static final int FOR_FUNCTION_CONSTRUCTOR;
-   public static final int FOR_DEBUG;
+   public static final int PRINT_COMPACT_SOURCE = 1;
+   public static final int DISCARD_GLOBAL_RETURN = 2;
+   public static final int OMIT_COMPILED_SOURCE = 4;
+   public static final int OMIT_COMPILED_SOURCE_AND_LINE_NUMBERS = 8;
+   public static final int DEBUG_TOKENS = Integer.MIN_VALUE;
+   public static final int DEBUG_LONG_TOKENS = 1073741824;
+   public static final int DEBUG_PARSER = 536870912;
+   public static final int DEBUG_DUMP_IR = 268435456;
+   public static final int DEBUG_DUMP_LST = 134217728;
+   public static final int FOR_EVAL = 67108864;
+   public static final int FOR_FUNCTION_CONSTRUCTOR = 33554432;
+   public static final int FOR_DEBUG = 16777216;
 
    public Compiler(String source) {
       this(source, 0);

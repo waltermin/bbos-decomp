@@ -18,13 +18,13 @@ public final class SessionResumption implements SIMCardSecurityListener {
    private Object _wtlsSyncObject = new Object();
    private int _simResult;
    private PersistentObject _persist = RIMPersistentStore.getPersistentObject(-7807228486018716511L);
-   public static final int PERSIST_TYPE_NONE;
-   public static final int PERSIST_TYPE_FLASH;
-   public static final int PERSIST_TYPE_NVRAM;
-   public static final int PERSIST_TYPE_NO_DELETE;
-   public static final int PERSIST_TYPE_SIM;
-   private static final int VERSION_2;
-   private static final long ID;
+   public static final int PERSIST_TYPE_NONE = 0;
+   public static final int PERSIST_TYPE_FLASH = 1;
+   public static final int PERSIST_TYPE_NVRAM = 2;
+   public static final int PERSIST_TYPE_NO_DELETE = 4;
+   public static final int PERSIST_TYPE_SIM = 8;
+   private static final int VERSION_2 = 2;
+   private static final long ID = -7807228486018716511L;
 
    public SessionResumption() {
       synchronized (this._persist) {

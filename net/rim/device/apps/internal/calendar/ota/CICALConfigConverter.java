@@ -16,7 +16,7 @@ import net.rim.device.internal.proxy.Proxy;
 
 public class CICALConfigConverter extends CICALBaseConverter implements GlobalEventListener {
    ContextObject _otaConfigContext = (ContextObject)(new Object());
-   private static final long SINGLETON_ID;
+   private static final long SINGLETON_ID = -3049572849057432930L;
    private static final byte[] CONFIG_COMPONENT_HEADER = new byte[]{16, 1, 1, 4};
 
    CICALConfigConverter() {

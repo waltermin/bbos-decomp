@@ -8,7 +8,7 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
    private CryptoTokenSymmetricKeyData _cryptoTokenData;
    private int _hashCode;
    private boolean _twoKey;
-   public static final int LENGTH;
+   public static final int LENGTH = 24;
 
    public final CryptoTokenSymmetricKeyData getCryptoTokenData() {
       return this._cryptoTokenData;

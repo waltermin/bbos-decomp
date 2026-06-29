@@ -10,13 +10,13 @@ public class JapaneseCustomWord implements Persistable, SyncObject {
    private Object _reading;
    private Object _candidate;
    private int _partOfSpeech;
-   private static final int READING_ID;
-   private static final int CANDIDATE_ID;
-   private static final int POS_ID;
-   public static final int AWNN_POS_MEISI;
-   public static final int AWNN_POS_JINMEI;
-   public static final int AWNN_POS_CHIMEI;
-   public static final int AWNN_POS_KIGOU;
+   private static final int READING_ID = 1;
+   private static final int CANDIDATE_ID = 2;
+   private static final int POS_ID = 3;
+   public static final int AWNN_POS_MEISI = 0;
+   public static final int AWNN_POS_JINMEI = 1;
+   public static final int AWNN_POS_CHIMEI = 2;
+   public static final int AWNN_POS_KIGOU = 3;
 
    public String getCandidate() {
       return PersistentContent.decodeString(this._candidate);

@@ -10,9 +10,9 @@ public final class TableCell extends VerticalIndentFieldManager {
    private int _colSpan;
    private int _drawGeneration;
    private boolean _containsNestedTable;
-   public static final int ALIGN_LEFT;
-   public static final int ALIGN_HCENTER;
-   public static final int ALIGN_RIGHT;
+   public static final int ALIGN_LEFT = 0;
+   public static final int ALIGN_HCENTER = 1;
+   public static final int ALIGN_RIGHT = 2;
    private static final long[] ALIGNMENT_TRANSLATOR = new long[]{
       4294967296L,
       12884901888L,

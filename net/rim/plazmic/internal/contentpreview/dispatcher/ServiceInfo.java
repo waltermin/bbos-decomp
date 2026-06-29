@@ -4,7 +4,7 @@ public final class ServiceInfo {
    private String _host;
    private int _port;
    private int _version;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/ServiceInfo.java#1 $";
    private static final ServiceInfo DEFAULT_SERVICE_INFO;
 
    private ServiceInfo(String host, int port, int version) {

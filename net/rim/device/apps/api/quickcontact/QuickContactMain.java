@@ -5,7 +5,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.framework.registration.RIMModelFactoryRepository;
 
 final class QuickContactMain {
-   static final long EVENT_LOG_GUID;
+   static final long EVENT_LOG_GUID = 5258489903148434177L;
 
    public static final void libMain(String[] args) {
       SyncManager syncManager = SyncManager.getInstance();

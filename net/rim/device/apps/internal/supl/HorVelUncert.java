@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.supl;
 
 final class HorVelUncert extends Velocity {
    private short uncertSpeed;
-   static final byte UNCERT_SPEED_BIT_SIZE;
+   static final byte UNCERT_SPEED_BIT_SIZE = 8;
 
    @Override
    final void decode(Nibbler nib) {

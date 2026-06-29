@@ -67,10 +67,10 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
    private LabelField _wifiStatus;
    private LabelField _bluetoothStatus;
    private boolean _updatePending;
-   private static final int STATE_NORMAL;
-   private static final int STATE_OFF_RESTORE;
-   private static final int STATE_OFF;
-   private static final String MC_ID;
+   private static final int STATE_NORMAL = 0;
+   private static final int STATE_OFF_RESTORE = 1;
+   private static final int STATE_OFF = 2;
+   private static final String MC_ID = "manage-connections";
    private static final Tag STATUS_TAG = Tag.create("status");
    private static int _restoreStateHandle;
 

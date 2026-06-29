@@ -18,14 +18,14 @@ final class OTASyncServiceProgress {
    private int _percentComplete = 100;
    private long _serviceId;
    private static long GUID_PERSISTED_STATES = 6390965641451050308L;
-   static final int SYNC_STATE_ENABLED;
-   static final int SYNC_STATE_CANCELED;
-   static final int SYNC_STATE_DISABLED;
-   static final int SYNC_STATE_CONFIG_PENDING;
-   static final int SYNC_STATE_NOT_AVAILABLE;
-   static final int SYNC_STATE_PENDING_ENABLED;
-   static final int SYNC_STATE_PENDING_DISABLE;
-   static final int SYNC_STATE_PENDING_CANCEL;
+   static final int SYNC_STATE_ENABLED = 0;
+   static final int SYNC_STATE_CANCELED = 1;
+   static final int SYNC_STATE_DISABLED = 2;
+   static final int SYNC_STATE_CONFIG_PENDING = 3;
+   static final int SYNC_STATE_NOT_AVAILABLE = 4;
+   static final int SYNC_STATE_PENDING_ENABLED = 5;
+   static final int SYNC_STATE_PENDING_DISABLE = 6;
+   static final int SYNC_STATE_PENDING_CANCEL = 7;
 
    static final LongHashtable loadServicesProgressFromPersistence() {
       ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();

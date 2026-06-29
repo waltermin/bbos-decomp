@@ -13,7 +13,7 @@ import net.rim.device.apps.internal.bis.utils.InputValidationUtils;
 
 public final class ForgotPasswordScreen extends BasicScreen {
    private BasicEditField _userNameEdit;
-   private static final String PARAM_USERNAME;
+   private static final String PARAM_USERNAME = "userName";
 
    @Override
    public final void refresh(Hashtable screenParams) {

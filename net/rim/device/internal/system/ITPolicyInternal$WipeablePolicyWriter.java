@@ -12,7 +12,7 @@ class ITPolicyInternal$WipeablePolicyWriter extends Thread implements GlobalEven
    private boolean _completionEventPosted = false;
    private boolean _writingComplete = false;
    private boolean _isThisThreadTheWriter = false;
-   private static final long ENCODING_ID;
+   private static final long ENCODING_ID = -4882009274413714329L;
 
    public ITPolicyInternal$WipeablePolicyWriter(byte[] data) {
       this._data = data;

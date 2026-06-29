@@ -7,9 +7,9 @@ import net.rim.device.apps.api.ribbon.EntryPointDescriptor;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 public final class LDAPBrowserContextFactory {
-   private static final long ID;
+   private static final long ID = 5563981518107675018L;
    private static Hashtable _registeredContexts;
-   private static final String RIBBON_ID_PREFIX;
+   private static final String RIBBON_ID_PREFIX = "net.rim.blackberry.ldapbrowser.";
 
    public static final void register(String name, LDAPBrowserContext context) {
       if (name == null || name.length() == 0 || context == null) {

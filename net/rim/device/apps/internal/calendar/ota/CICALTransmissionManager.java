@@ -26,13 +26,13 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
    private IntHashtable _trackingStore;
    private boolean _connectionStateGood;
    private int[] _tagIds;
-   private static final long STORE_ID;
-   private static final long MAX_ERROR_RETRIES;
-   private static final long GOOD_SEND_REMOVE_TIME;
-   private static final long ANY_ELEMENT_REMOVE_TIME;
-   private static final long UNSENT_REQUIRED_ELAPSED_TIME;
-   private static final long ERROR_REQUIRED_ELAPSED_TIME;
-   private static final long RESEND_FROM_QUEUED_STATE_ELAPSED_TIME;
+   private static final long STORE_ID = -6581519639896522540L;
+   private static final long MAX_ERROR_RETRIES = 3L;
+   private static final long GOOD_SEND_REMOVE_TIME = 172800000L;
+   private static final long ANY_ELEMENT_REMOVE_TIME = 2592000000L;
+   private static final long UNSENT_REQUIRED_ELAPSED_TIME = 240000L;
+   private static final long ERROR_REQUIRED_ELAPSED_TIME = 1200000L;
+   private static final long RESEND_FROM_QUEUED_STATE_ELAPSED_TIME = 43200000L;
 
    int allocateTagId() {
       return UIDGenerator.getUID();

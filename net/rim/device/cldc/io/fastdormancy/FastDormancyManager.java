@@ -8,8 +8,8 @@ import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 public final class FastDormancyManager implements RealtimeClockListener, GlobalEventListener {
    private boolean _fastDormancy = true;
    private long _lastTimeSet;
-   private static final long ID;
-   private static final int FAST_DORMANCY_FALSE_TIMEOUT;
+   private static final long ID = 9030476570863075412L;
+   private static final int FAST_DORMANCY_FALSE_TIMEOUT = 300000;
 
    public static final void FastDormancyMain(String[] args) {
       ApplicationRegistry.getApplicationRegistry().put(9030476570863075412L, new FastDormancyManager());

@@ -26,10 +26,10 @@ final class AGMainScreen extends MainScreen {
    private Manager _statusManager;
    private ServiceRecord[] _records;
    private ObjectChoiceField _transportChoiceField;
-   private static final String DEFAULT_URL_SCHEME;
-   private static final String DEFAULT_URL_SCHEME_SECURE;
-   private static final String DEFAULT_URL_PORT;
-   private static final String DEFAULT_URL_PATH;
+   private static final String DEFAULT_URL_SCHEME = "http://";
+   private static final String DEFAULT_URL_SCHEME_SECURE = "https://";
+   private static final String DEFAULT_URL_PORT = "7080";
+   private static final String DEFAULT_URL_PATH = "/mds";
 
    AGMainScreen(ActivationServiceImpl activationService) {
       super(196608);

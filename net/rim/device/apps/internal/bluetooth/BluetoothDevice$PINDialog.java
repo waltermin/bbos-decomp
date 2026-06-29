@@ -12,13 +12,13 @@ final class BluetoothDevice$PINDialog extends SimplePasswordDialog {
    private boolean _numeric;
    private boolean _isSmartcardReader;
    private final BluetoothDevice this$0;
-   private static final int BDS_DISCONNECTED;
-   private static final int BDS_OUT_CON;
-   private static final int BDS_IN_CON;
-   private static final int BDS_CONNECTED;
-   private static final int BDS_OUT_DISC;
-   private static final int BDS_OUT_DISC2;
-   private static final int BDS_OUT_CON2;
+   private static final int BDS_DISCONNECTED = 0;
+   private static final int BDS_OUT_CON = 1;
+   private static final int BDS_IN_CON = 2;
+   private static final int BDS_CONNECTED = 3;
+   private static final int BDS_OUT_DISC = 4;
+   private static final int BDS_OUT_DISC2 = 5;
+   private static final int BDS_OUT_CON2 = 6;
 
    BluetoothDevice$PINDialog(BluetoothDevice _1) {
       super(null, 1, 16, true, 33554432);

@@ -9,10 +9,10 @@ public class Criteria {
    private boolean _isAllowedToCost = true;
    private boolean _isAltitudeRequired;
    private boolean _isSpeedAndCourseRequired;
-   public static final int NO_REQUIREMENT;
-   public static final int POWER_USAGE_LOW;
-   public static final int POWER_USAGE_MEDIUM;
-   public static final int POWER_USAGE_HIGH;
+   public static final int NO_REQUIREMENT = 0;
+   public static final int POWER_USAGE_LOW = 1;
+   public static final int POWER_USAGE_MEDIUM = 2;
+   public static final int POWER_USAGE_HIGH = 3;
 
    public int getPreferredPowerConsumption() {
       return this._preferredPowerConsumption;

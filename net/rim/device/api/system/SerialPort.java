@@ -1,10 +1,10 @@
 package net.rim.device.api.system;
 
 public final class SerialPort extends IOPort {
-   public static final int PARITY_NONE;
-   public static final int PARITY_EVEN;
-   public static final int PARITY_ODD;
-   public static final int DEFAULT_PORT;
+   public static final int PARITY_NONE = 0;
+   public static final int PARITY_EVEN = 1;
+   public static final int PARITY_ODD = 2;
+   public static final int DEFAULT_PORT = 1;
 
    private SerialPort() {
    }

@@ -19,10 +19,10 @@ final class CallForwardingOption extends OptionsListItem implements PhoneOptions
       128, 64, 32, 16, -804782076, 6554259, 8192880, -804651003, 154, 155, 146, 147, 148, -804782058, 21824438, 21824888
    };
    static final int[] SS_TYPES_MAP = new int[]{33, 41, 42, 43, 51, -804651005, 58, 17, 106, -804651007, 64, -804651007, 65, -804782078, 19661400, -804782066};
-   private static final int NONE;
-   private static final int GSM;
-   private static final int CDMA;
-   private static final int IDEN;
+   private static final int NONE = 0;
+   private static final int GSM = 1;
+   private static final int CDMA = 2;
+   private static final int IDEN = 3;
    private static final int[][][] MIN_MAX_FWDING_NUMBER_LENGTHS = new int[][][]{
       (int[][])({0, 0, -804651006, 0, 1, -804651003, 0, 1}),
       (int[][])({3, 28, -804651004, 3, 58, 4, 17, -804651007}),

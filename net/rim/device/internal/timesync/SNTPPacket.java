@@ -8,13 +8,13 @@ public final class SNTPPacket {
    private long _timestamp = System.currentTimeMillis();
    private int _transactionId;
    private DataBuffer _requestData;
-   private static final int SNTP_PACKET_SIZE;
-   private static final byte SNTP_VERSION;
-   private static final byte SNTP_MODE_CLIENT;
-   private static final byte SNTP_MODE_SERVER;
-   private static final byte SNTP_PRECISION;
-   private static final long SNTP_TO_UNIX;
-   private static final int SNTP_EXPIRY_TMO;
+   private static final int SNTP_PACKET_SIZE = 48;
+   private static final byte SNTP_VERSION = 4;
+   private static final byte SNTP_MODE_CLIENT = 3;
+   private static final byte SNTP_MODE_SERVER = 4;
+   private static final byte SNTP_PRECISION = -20;
+   private static final long SNTP_TO_UNIX = 2085978496L;
+   private static final int SNTP_EXPIRY_TMO = 120000;
 
    public SNTPPacket(int transactionId) {
       this._transactionId = transactionId;

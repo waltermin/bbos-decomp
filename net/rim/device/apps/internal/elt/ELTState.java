@@ -6,7 +6,7 @@ final class ELTState implements Persistable {
    private boolean _enabledByITPolicy = false;
    private boolean _enabledByUser = false;
    private int _interval = 60;
-   static final int DEFAULT_TRACKING_INTERVAL;
+   static final int DEFAULT_TRACKING_INTERVAL = 60;
 
    final boolean isEnabledByITPolicy() {
       return this._enabledByITPolicy;

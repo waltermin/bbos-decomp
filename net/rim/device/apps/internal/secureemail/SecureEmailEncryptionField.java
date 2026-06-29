@@ -21,12 +21,12 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
    protected Certificate _recipientCertificate;
    protected VerbMenuItem _displayRecipientCertificateMenuItem;
    protected VerbMenuItem _displayWeakEncryptionReasonMenuItem;
-   private static final long STATUS_TYPE_ENCRYPTION;
-   protected static final int WEAKLY_ENCRYPTED;
-   protected static final int STRONGLY_ENCRYPTED;
-   protected static final int PASSWORD_ENCRYPTED;
-   protected static final int BES_ENCRYPTED;
-   protected static final int BES_WEAK_RECIPIENT;
+   private static final long STATUS_TYPE_ENCRYPTION = 356383575838032505L;
+   protected static final int WEAKLY_ENCRYPTED = 0;
+   protected static final int STRONGLY_ENCRYPTED = 1;
+   protected static final int PASSWORD_ENCRYPTED = 2;
+   protected static final int BES_ENCRYPTED = 3;
+   protected static final int BES_WEAK_RECIPIENT = 4;
 
    public SecureEmailEncryptionField(SecureEmailFactory secureEmailFactory, int besEncryptionState, int besWeakRecipientState, Object context) {
       super(Application.getApplication());
@@ -112,7 +112,7 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
       // 07a: getfield net/rim/device/apps/internal/secureemail/SecureEmailEncryptionField._recipientCertificate Lnet/rim/device/api/crypto/certificate/Certificate;
       // 07d: ifnull 0c8
       // 080: bipush 1
-      // 081: anewarray 237
+      // 081: anewarray 250
       // 084: dup
       // 085: bipush 0
       // 086: aload 0

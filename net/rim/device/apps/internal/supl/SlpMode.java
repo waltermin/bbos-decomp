@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.supl;
 
 final class SlpMode {
    boolean mode;
-   static final boolean PROXY;
-   static final boolean NON_PROXY;
+   static final boolean PROXY = false;
+   static final boolean NON_PROXY = true;
 
    final void decode(Nibbler nib) {
       this.mode = nib.getBit();

@@ -10,9 +10,9 @@ final class FocusGroup {
    int _index;
    int _direction;
    FocusVector _vector = new FocusVector();
-   static final int DIRECTION_OMNI;
-   static final int DIRECTION_HORIZONTAL;
-   static final int DIRECTION_VERTICAL;
+   static final int DIRECTION_OMNI = 0;
+   static final int DIRECTION_HORIZONTAL = 1;
+   static final int DIRECTION_VERTICAL = 2;
 
    FocusGroup(Attributes attributes) {
       String sDirection = attributes.getValue("direction");

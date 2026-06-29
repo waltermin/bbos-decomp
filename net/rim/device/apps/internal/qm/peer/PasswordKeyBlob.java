@@ -5,7 +5,7 @@ import net.rim.device.api.util.DataBuffer;
 
 final class PasswordKeyBlob extends PeerDataBlob {
    private String _key;
-   private static final int KEY;
+   private static final int KEY = 1;
 
    public PasswordKeyBlob() {
    }

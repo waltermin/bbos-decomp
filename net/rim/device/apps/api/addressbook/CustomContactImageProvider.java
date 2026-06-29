@@ -5,7 +5,7 @@ import net.rim.device.api.system.Bitmap;
 
 public class CustomContactImageProvider {
    CustomContactImageProvider$ContactImageListener _listener;
-   protected static final long APPLICATION_REGISTRY_NAME;
+   protected static final long APPLICATION_REGISTRY_NAME = -1567470371864338835L;
    private static CustomContactImageProvider _instance;
 
    private CustomContactImageProvider() {

@@ -7,8 +7,8 @@ import net.rim.device.api.util.StringPatternRepository;
 import net.rim.device.internal.applicationcontrol.ApplicationControl;
 
 public final class PatternRepository {
-   public static final int PATTERN_TYPE_EXACT_MATCH;
-   public static final int PATTERN_TYPE_REGULAR_EXPRESSION;
+   public static final int PATTERN_TYPE_EXACT_MATCH = 0;
+   public static final int PATTERN_TYPE_REGULAR_EXPRESSION = 1;
 
    private PatternRepository() {
    }

@@ -20,26 +20,26 @@ import net.rim.device.api.util.Arrays;
 import net.rim.vm.Array;
 
 public class DatakeyCryptoSmartCardSession extends CryptoSmartCardSession implements DatakeyPKCS11Constants {
-   private static final byte CLASS_80;
-   private static final byte CLASS_00;
-   private static final byte INS_RSA_SIGN;
-   private static final byte INS_RSA_DECRYPT;
-   private static final byte RSA_SIGN_PKCS1_v1_0;
-   private static final byte RSA_SIGN_PKCS1_v1_5;
-   private static final byte RSA_SIGN_RAW;
-   private static final byte RSA_DECRYPT_PKCS1_v1_0;
-   private static final byte RSA_DECRYPT_PKCS1_v2_0;
-   private static final byte RSA_DECRYPT_RAW;
-   private static final byte RSA_DECRYPT_WRAPPED_KEY;
-   private static final byte PIN_TYPE_USER;
-   private static final byte PIN_TYPE_SO;
-   private static final byte ZERO_BYTE;
-   private static final byte COMMAND_COMPLETE;
-   private static final int PWD_LENGTH;
-   private static final int MAX_RANDOM_BYTES;
-   private static final boolean DEBUG;
+   private static final byte CLASS_80 = -128;
+   private static final byte CLASS_00 = 0;
+   private static final byte INS_RSA_SIGN = 90;
+   private static final byte INS_RSA_DECRYPT = 84;
+   private static final byte RSA_SIGN_PKCS1_v1_0 = 0;
+   private static final byte RSA_SIGN_PKCS1_v1_5 = 1;
+   private static final byte RSA_SIGN_RAW = 2;
+   private static final byte RSA_DECRYPT_PKCS1_v1_0 = 0;
+   private static final byte RSA_DECRYPT_PKCS1_v2_0 = 1;
+   private static final byte RSA_DECRYPT_RAW = 2;
+   private static final byte RSA_DECRYPT_WRAPPED_KEY = 3;
+   private static final byte PIN_TYPE_USER = 1;
+   private static final byte PIN_TYPE_SO = 2;
+   private static final byte ZERO_BYTE = 0;
+   private static final byte COMMAND_COMPLETE = -112;
+   private static final int PWD_LENGTH = 20;
+   private static final int MAX_RANDOM_BYTES = 1524;
+   private static final boolean DEBUG = false;
    private static ResourceBundle _rb = ResourceBundle.getBundle(-2744454300651253428L, "net.rim.device.apps.internal.resource.crypto.SmartCard");
-   private static final long UID_INFO_ID;
+   private static final long UID_INFO_ID = 785380077437529605L;
    static DatakeyCryptoSmartCardSession$UIDInfo _uidInfo;
 
    protected DatakeyCryptoSmartCardSession(SmartCard smartCard, SmartCardReaderSession readerSession) {
@@ -243,7 +243,7 @@ public class DatakeyCryptoSmartCardSession extends CryptoSmartCardSession implem
       //
       // Bytecode:
       // 000: bipush 0
-      // 001: anewarray 745
+      // 001: anewarray 784
       // 004: astore 1
       // 005: aload 0
       // 006: getstatic net/rim/device/apps/internal/smartcard/datakey/DatakeyCryptoSmartCardSession._rb Lnet/rim/device/api/i18n/ResourceBundle;
@@ -374,7 +374,7 @@ public class DatakeyCryptoSmartCardSession extends CryptoSmartCardSession implem
       // 12f: ifnonnull 135
       // 132: goto 059
       // 135: bipush 0
-      // 136: anewarray 919
+      // 136: anewarray 958
       // 139: astore 14
       // 13b: aload 12
       // 13d: ifnull 160

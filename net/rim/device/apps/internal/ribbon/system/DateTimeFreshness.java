@@ -19,14 +19,14 @@ public final class DateTimeFreshness implements Runnable, RealtimeClockListener,
    private int _refMinutes = this.getReferenceMinutes();
    private int _elapsedMinutes = this.getElapsedMinutes();
    private boolean _gotDateEvent;
-   private static final long RESET_DATE_UPDATED_FLAG;
-   public static final long VALIDATE_DATE_TIME_GUID;
-   private static final long BASE_TIME;
-   private static final long CLOCK_TICKER;
-   private static final int BITS_TO_STORE_ONE_MINUTE;
-   private static final long HALF_MINUTE;
-   private static final int ELAPSED_MINUTES_MAX;
-   private static final long DEFAULT_TIME;
+   private static final long RESET_DATE_UPDATED_FLAG = 6486915521057235885L;
+   public static final long VALIDATE_DATE_TIME_GUID = 4169543157268029527L;
+   private static final long BASE_TIME = -1652972997206671730L;
+   private static final long CLOCK_TICKER = -7343770044348515223L;
+   private static final int BITS_TO_STORE_ONE_MINUTE = 16;
+   private static final long HALF_MINUTE = 32768L;
+   private static final int ELAPSED_MINUTES_MAX = 32;
+   private static final long DEFAULT_TIME = 1141171200000L;
 
    public final void update() {
       long curTime = System.currentTimeMillis();

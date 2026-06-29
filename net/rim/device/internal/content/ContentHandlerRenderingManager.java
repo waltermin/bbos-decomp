@@ -3,7 +3,7 @@ package net.rim.device.internal.content;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class ContentHandlerRenderingManager {
-   protected static final long APP_REGISTRY_KEY;
+   protected static final long APP_REGISTRY_KEY = 972161364679736566L;
 
    protected ContentHandlerRenderingManager() {
    }

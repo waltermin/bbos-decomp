@@ -4,5 +4,5 @@ class IconFetcher$IconParameters {
    int _version;
    int _width;
    int _height;
-   static final char DELIMITER;
+   static final char DELIMITER = '-';
 }

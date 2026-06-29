@@ -15,8 +15,8 @@ public final class PlaybackCommandServer implements Service {
    private final Datagram _packet;
    private PlaybackCommandHandler _handler = null;
    private boolean _closed = false;
-   public static final String rcsid;
-   private static final boolean DEBUG;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/apps/PlaybackCommandServer.java#1 $";
+   private static final boolean DEBUG = false;
 
    PlaybackCommandServer(int port) {
       this._port = port;

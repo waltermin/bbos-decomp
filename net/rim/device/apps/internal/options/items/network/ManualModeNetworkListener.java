@@ -15,13 +15,13 @@ import net.rim.vm.PersistentInteger;
 
 public final class ManualModeNetworkListener implements RadioStatusListener, DialogClosedListener {
    private boolean _active;
-   public static final int SELECT_AUTOMATIC_MODE_WHEN_MANUAL_SELECTED_NETWORK_UNVAILABLE_FLAG;
-   public static final int DONT_PROMPT_USER_FLAG;
-   private static final long MANUAL_MODE_LISTENER_STORE_ID;
+   public static final int SELECT_AUTOMATIC_MODE_WHEN_MANUAL_SELECTED_NETWORK_UNVAILABLE_FLAG = 1;
+   public static final int DONT_PROMPT_USER_FLAG = 2;
+   private static final long MANUAL_MODE_LISTENER_STORE_ID = 5218202731973538809L;
    private static int _persistentStoreId = PersistentInteger.getId(5218202731973538809L, 0);
-   public static final long GUID;
-   private static final int SWITCH_TO_AUTOMATIC_BY_PROMPT_LOG;
-   private static final int SWITCH_TO_AUTOMATIC_AUTOMATICALLY_LOG;
+   public static final long GUID = 6080671377848507991L;
+   private static final int SWITCH_TO_AUTOMATIC_BY_PROMPT_LOG = 1396790608;
+   private static final int SWITCH_TO_AUTOMATIC_AUTOMATICALLY_LOG = 1396790593;
    private static ManualModeNetworkListener _instance;
 
    public ManualModeNetworkListener() {

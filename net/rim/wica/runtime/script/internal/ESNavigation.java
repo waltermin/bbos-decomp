@@ -4,7 +4,7 @@ import net.rim.ecmascript.runtime.RedirectedObject;
 
 final class ESNavigation extends RedirectedObject {
    private WicaAppContext _context;
-   private static final String ActiveScreen;
+   private static final String ActiveScreen = "activeScreen";
 
    ESNavigation(WicaAppContext context) {
       this._context = context;

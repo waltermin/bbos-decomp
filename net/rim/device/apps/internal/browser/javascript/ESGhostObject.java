@@ -13,10 +13,10 @@ public class ESGhostObject extends RedirectedObject {
    private IntHashtable _fieldsByIndex = (IntHashtable)(new Object());
    private int _type;
    private Frame _frame;
-   static final int WINDOW;
-   static final int DOCUMENT;
-   static final int LOCATION;
-   static final int FRAMES;
+   static final int WINDOW = 0;
+   static final int DOCUMENT = 1;
+   static final int LOCATION = 2;
+   static final int FRAMES = 3;
    static final Long UNDEFINED = (Long)(new Object(Value.UNDEFINED));
 
    public ESGhostObject(Frame f, int type) {

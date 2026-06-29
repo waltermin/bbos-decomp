@@ -9,8 +9,8 @@ public class ScientificNumberTextFilter extends TextFilter {
    private final int _style;
    private String _text = "";
    private int _curPos = 0;
-   public static final int ALLOW_NEGATIVE;
-   public static final int ALLOW_DECIMAL;
+   public static final int ALLOW_NEGATIVE = 1;
+   public static final int ALLOW_DECIMAL = 2;
 
    public ScientificNumberTextFilter() {
       this._style = 3;

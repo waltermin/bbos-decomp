@@ -14,9 +14,9 @@ public final class VoiceRecordController {
    private ByteArrayOutputStream _oStream;
    private PlayerListener _listener;
    private int _state = 0;
-   private static final int STATE_STOPPED;
-   private static final int STATE_RECORDING;
-   private static final int STATE_PAUSED;
+   private static final int STATE_STOPPED = 0;
+   private static final int STATE_RECORDING = 1;
+   private static final int STATE_PAUSED = 2;
 
    VoiceRecordController(int maxRecordSize, int maxRecordTime) {
       this._maxRecordSize = maxRecordSize;

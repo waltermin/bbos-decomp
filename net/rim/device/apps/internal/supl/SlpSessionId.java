@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.supl;
 final class SlpSessionId {
    int sessionId;
    SlpAddress slpAddress;
-   static final byte SLP_SESSION_ID_BIT_SIZE;
+   static final byte SLP_SESSION_ID_BIT_SIZE = 32;
 
    final void decode(Nibbler nib) {
       this.sessionId = nib.getBitsLarge(32);

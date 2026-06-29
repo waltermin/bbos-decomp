@@ -3,12 +3,12 @@ package net.rim.wica.common.builtindata.componentEnums;
 import net.rim.device.api.util.ToIntHashtable;
 
 public final class EmailFolderEnumDef extends EnumDefinition {
-   public static final int NUM_ENUM_VALUES;
-   private static final String INBOX;
-   private static final String SENT;
-   public static final int INBOX_VALUE;
-   public static final int SENT_VALUE;
-   public static final String FOLDER_ENUM_NAME;
+   public static final int NUM_ENUM_VALUES = 2;
+   private static final String INBOX = "INBOX";
+   private static final String SENT = "SENT";
+   public static final int INBOX_VALUE = 0;
+   public static final int SENT_VALUE = 1;
+   public static final String FOLDER_ENUM_NAME = "FOLDER";
 
    public EmailFolderEnumDef() {
       super._enumNames = new Object[2];

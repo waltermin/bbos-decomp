@@ -12,17 +12,17 @@ import net.rim.vm.TraceBack;
 
 public final class NotificationsManager implements NotificationsConstants {
    private static Hashtable _sourcesByObject;
-   private static final long SOURCES_BY_OBJECT;
+   private static final long SOURCES_BY_OBJECT = -4056382830017962026L;
    private static LongHashtable _sourcesById;
-   private static final long SOURCES_BY_ID;
+   private static final long SOURCES_BY_ID = -8981944619630607405L;
    private static LongHashtable _consequences;
-   private static final long CONSEQUENCES;
+   private static final long CONSEQUENCES = 957977102827493287L;
    private static NotificationsEngine _engine;
    private static LongHashtable _listenersById;
-   private static final long LISTENERS_BY_ID;
+   private static final long LISTENERS_BY_ID = 2741810622403670030L;
    private static Vector _sourceListeners = new Vector();
-   private static final long SOURCE_LISTENERS;
-   private static final long INVALID_VALUE;
+   private static final long SOURCE_LISTENERS = 2160240915005830592L;
+   private static final long INVALID_VALUE = 0L;
 
    private NotificationsManager() {
    }

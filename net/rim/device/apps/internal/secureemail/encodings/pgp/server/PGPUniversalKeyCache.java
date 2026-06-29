@@ -21,10 +21,10 @@ import net.rim.device.apps.internal.secureemail.KeyUsageEmailAddressKeyStoreInde
 class PGPUniversalKeyCache extends RIMKeyStore {
    private ToIntHashtable _cachedKeyProperties;
    private SimpleSortingVector _cachedKeyExpiryData;
-   public static final int CACHED_KEY_INVALID;
-   public static final int CACHED_KEY_NO_ENCRYPTION;
-   private static final long DEFAULT_KEY_CACHE_TIME;
-   private static final boolean DEBUG;
+   public static final int CACHED_KEY_INVALID = 1;
+   public static final int CACHED_KEY_NO_ENCRYPTION = 2;
+   private static final long DEFAULT_KEY_CACHE_TIME = 86400000L;
+   private static final boolean DEBUG = false;
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

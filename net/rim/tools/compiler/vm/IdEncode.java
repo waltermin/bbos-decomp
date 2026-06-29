@@ -3,8 +3,8 @@ package net.rim.tools.compiler.vm;
 import net.rim.vm.ClassInfo;
 
 public final class IdEncode {
-   static final int SIZE;
-   static final char ESC;
+   static final int SIZE = 256;
+   static final char ESC = 'ÿ';
    private static char[] _chars = new char[8];
    private static byte[] _bytes = new byte[8];
 

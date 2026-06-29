@@ -12,8 +12,8 @@ public final class DeviceOptions implements GlobalEventListener {
    private Vector _providers = new Vector();
    private OptionsProviderChangeListener _listener;
    private LongHashtable _globalEventListeners = new LongHashtable(9);
-   private static final long ID;
-   private static final int INITIAL_GLOBAL_EVENT_LISTENER_COUNT;
+   private static final long ID = 4606403601136413534L;
+   private static final int INITIAL_GLOBAL_EVENT_LISTENER_COUNT = 9;
    private static DeviceOptions _instance;
 
    private DeviceOptions() {

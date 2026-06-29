@@ -7,7 +7,7 @@ import net.rim.wica.runtime.ui.View;
 
 final class ScreenMenuItem extends MenuItem implements View {
    private MenuItemModel _menuItemModel;
-   private static final String SEPARATOR_STRING;
+   private static final String SEPARATOR_STRING = "-";
 
    ScreenMenuItem(MenuItemModel menuItemModel, int priority) {
       super(validateText(menuItemModel.getLabel()), 0, priority);

@@ -11,9 +11,9 @@ final class VoiceRecordController {
    private RecordControl _recordControl;
    private ByteArrayOutputStream _oStream;
    private int _state = 0;
-   private static final int STATE_STOPPED;
-   private static final int STATE_RECORDING;
-   private static final int STATE_PAUSED;
+   private static final int STATE_STOPPED = 0;
+   private static final int STATE_RECORDING = 1;
+   private static final int STATE_PAUSED = 2;
 
    public static final boolean isSupported() {
       // $VF: Couldn't be decompiled

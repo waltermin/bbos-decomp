@@ -15,7 +15,7 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
    private boolean _version15;
    private int _encodedMessageOffset;
    private byte[] _encodedMessage;
-   private static final long ID_TEST_VERIFIER_PKCS1;
+   private static final long ID_TEST_VERIFIER_PKCS1 = 4084400956603387565L;
 
    public PKCS1SignatureVerifier(RSAPublicKey key, byte[] signature, int signatureOffset) {
       this(key, (Digest)(new Object()), signature, signatureOffset);

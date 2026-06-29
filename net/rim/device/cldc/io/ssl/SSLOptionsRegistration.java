@@ -7,7 +7,7 @@ import net.rim.device.cldc.io.ippp.SocketTransportBase;
 import net.rim.device.cldc.io.utility.URLParameters;
 
 public final class SSLOptionsRegistration {
-   public static final long ID;
+   public static final long ID = 1021895513728250690L;
 
    private SSLOptionsRegistration() {
    }

@@ -16,12 +16,12 @@ public final class EScreenSessionManager extends MainScreen implements ListField
    private Hashtable _registeredTypes;
    private ListField _listField;
    private StringBuffer _strBuf;
-   private static final String MY_TITLE;
-   private static final int MENU_REFRESH;
-   private static final int MENU_KILL_SESSION;
-   private static final int MENU_DELETE_SESSION;
-   private static final int MENU_NEW_SESSION;
-   private static final int MENU_DETAILS;
+   private static final String MY_TITLE = "Session Manager";
+   private static final int MENU_REFRESH = 1;
+   private static final int MENU_KILL_SESSION = 2;
+   private static final int MENU_DELETE_SESSION = 3;
+   private static final int MENU_NEW_SESSION = 4;
+   private static final int MENU_DETAILS = 5;
 
    public final void registerSession(String name, String className) {
       try {

@@ -12,8 +12,8 @@ import net.rim.device.apps.internal.blackberryemail.email.MorePartModel;
 import net.rim.device.apps.internal.blackberryemail.email.ProxyModel;
 
 final class DocViewMessageListener implements CollectionListener {
-   private static final byte MAX_PREFETCH_COUNT;
-   private static final byte MAX_ARCHIVE_PREFETCH_REQUESTS;
+   private static final byte MAX_PREFETCH_COUNT = 5;
+   private static final byte MAX_ARCHIVE_PREFETCH_REQUESTS = 2;
 
    @Override
    public final void reset(Collection collection) {

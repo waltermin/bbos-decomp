@@ -31,16 +31,16 @@ public final class CallManager implements PhoneEventListener {
    private boolean _handledAnswerDropCurrent;
    private int _lastFailedCallId = 0;
    private int _lastDisconnectedCallId = 0;
-   private static final long GUID;
-   public static final long CURRENT_CALLS_REGISTRY_KEY;
-   private static final int MAX_CONNECTED_CALLS;
+   private static final long GUID = -3601742633092761704L;
+   public static final long CURRENT_CALLS_REGISTRY_KEY = 7483929956539024843L;
+   private static final int MAX_CONNECTED_CALLS = 2;
    private static CallManager _instance;
-   private static final int CALL_FAILURE_TIMER_DELAY;
-   private static final int SPECIAL_CALL_FAILURE_TIMER_DELAY;
-   private static final int CALL_SUCCESS_TIMER_DELAY;
-   private static final int ENDED_BY_USER_TIMER_DELAY;
-   private static final int CONFERENCE_CALL_INDEX;
-   private static final int NON_CONFERENCE_CALL_INDEX;
+   private static final int CALL_FAILURE_TIMER_DELAY = 6000;
+   private static final int SPECIAL_CALL_FAILURE_TIMER_DELAY = 10000;
+   private static final int CALL_SUCCESS_TIMER_DELAY = 3500;
+   private static final int ENDED_BY_USER_TIMER_DELAY = 1700;
+   private static final int CONFERENCE_CALL_INDEX = 0;
+   private static final int NON_CONFERENCE_CALL_INDEX = 1;
 
    public CallManager() {
       this._currentCall = null;

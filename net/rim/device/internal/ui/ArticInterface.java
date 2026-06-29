@@ -5,15 +5,15 @@ import net.rim.tid.text.AttributedString;
 import net.rim.tid.text.TextHitInfo;
 
 public class ArticInterface {
-   public static final int ALLOW_LINE_BREAK_ON_NON_BREAK_SPACE;
-   public static final int LINE_BREAK_CJK_AS_ALPHABETIC;
-   public static final int FORBID_ILLEGAL_LINE_BREAK;
-   private static final int KMoveNext;
-   private static final int KMovePrev;
-   private static final int KMoveRight;
-   private static final int KMoveLeft;
-   private static final int KMoveDown;
-   private static final int KMoveUp;
+   public static final int ALLOW_LINE_BREAK_ON_NON_BREAK_SPACE = 1;
+   public static final int LINE_BREAK_CJK_AS_ALPHABETIC = 2;
+   public static final int FORBID_ILLEGAL_LINE_BREAK = 4;
+   private static final int KMoveNext = 0;
+   private static final int KMovePrev = 1;
+   private static final int KMoveRight = 2;
+   private static final int KMoveLeft = 3;
+   private static final int KMoveDown = 4;
+   private static final int KMoveUp = 5;
    public static ArticInterface$Layout _layout = new ArticInterface$Layout();
 
    private ArticInterface() {

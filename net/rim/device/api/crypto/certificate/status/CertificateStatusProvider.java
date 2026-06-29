@@ -13,13 +13,13 @@ public class CertificateStatusProvider {
    private long _providerId;
    private static LongHashtable _providers;
    private static MultiMap _queriesInProgress;
-   public static final int REQUEST_START;
-   public static final int REQUEST_COMPLETE;
-   public static final int REQUEST_DISMISS;
-   public static final int REQUEST_CANCEL;
-   public static final int REQUEST_ERROR;
-   private static final long PROVIDERS_ID;
-   private static final long QUERIES_IN_PROGRESS_ID;
+   public static final int REQUEST_START = 0;
+   public static final int REQUEST_COMPLETE = 1;
+   public static final int REQUEST_DISMISS = 2;
+   public static final int REQUEST_CANCEL = 3;
+   public static final int REQUEST_ERROR = 4;
+   private static final long PROVIDERS_ID = -2347883093695494417L;
+   private static final long QUERIES_IN_PROGRESS_ID = 5422056262400636262L;
 
    protected CertificateStatusProvider(long providerId) {
       this._providerId = providerId;

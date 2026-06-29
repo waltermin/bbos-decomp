@@ -11,9 +11,9 @@ import net.rim.device.internal.system.MIDletSecurity;
 
 public final class GPSFirewallImpl implements GPSFirewallInterface {
    private int _currentPrivacy;
-   private static final int MAX_GPS_QUERY_ATTEMPT;
-   private static final int GPS_WAIT_TIME;
-   private static final long KEY;
+   private static final int MAX_GPS_QUERY_ATTEMPT = 20;
+   private static final int GPS_WAIT_TIME = 2500;
+   private static final long KEY = -2298432943888020425L;
 
    public GPSFirewallImpl() {
       GPS.addListener(Application.getApplication(), new GPSFirewallImpl$PrivacyListener(this));

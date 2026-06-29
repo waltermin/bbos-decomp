@@ -63,12 +63,12 @@ public final class OTAMessageSync
    private ServiceBook _serviceBook;
    private Recognizer _messageListCommandRecognizer;
    private FlushBuffersThread _flushBuffersThread;
-   private static final long TRANSMISSION_SERVICE_GUID;
-   private static final long OTAFM_PRIVATE_FLAGS_GUID;
-   private static final long ORIGINAL_THREAD_PRIORITY_GUID;
-   private static final int FOLDER_LIST_REQUEST_REQUIRED_FLAG;
-   private static final int BUFFER_LARGE_ENOUGH_TO_SEND;
-   private static final int CLOCK_TICKS_FOR_BACKGROUND_WORK;
+   private static final long TRANSMISSION_SERVICE_GUID = 8797645593349626617L;
+   private static final long OTAFM_PRIVATE_FLAGS_GUID = -8291706733254734206L;
+   private static final long ORIGINAL_THREAD_PRIORITY_GUID = -4249701573962589967L;
+   private static final int FOLDER_LIST_REQUEST_REQUIRED_FLAG = 0;
+   private static final int BUFFER_LARGE_ENOUGH_TO_SEND = 1250;
+   private static final int CLOCK_TICKS_FOR_BACKGROUND_WORK = 5;
    private static OTAMessageSync _instance;
 
    public final void modifyFolderAttributesCommand(ServiceRecord serviceRecord, RIMMessagingFolderManagement request) {

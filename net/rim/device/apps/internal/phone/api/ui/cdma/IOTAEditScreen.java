@@ -19,12 +19,12 @@ final class IOTAEditScreen extends MainScreen {
    private ObjectListField _listField;
    private EditField _propField;
    private int _numOfItems;
-   public static final String PHONE_BOOT_URL;
-   public static final String PHONE_BOOT_NAI_URL;
-   public static final String PHONE_NAI_CURRENT;
-   public static final String BROWSER_DOMAIN_TRUSTED;
-   public static final String BROWSER_PROXY;
-   public static final String PHONE_CDMA_PRL;
+   public static final String PHONE_BOOT_URL = "phone:boot.url";
+   public static final String PHONE_BOOT_NAI_URL = "phone:boot.naiurl";
+   public static final String PHONE_NAI_CURRENT = "phone:nai.current";
+   public static final String BROWSER_DOMAIN_TRUSTED = "browser:domain.trusted";
+   public static final String BROWSER_PROXY = "phone:proxy..0.address..0.wdp";
+   public static final String PHONE_CDMA_PRL = "phone:cdma.prl";
 
    public IOTAEditScreen() {
       super(196608);

@@ -4,7 +4,7 @@ public class SimpleStack {
    protected Object[] _elementData;
    protected int _elementCount;
    protected int _capacityIncrement;
-   private static final int INITIAL_CAPACITY;
+   private static final int INITIAL_CAPACITY = 15;
 
    public SimpleStack(int initialCapacity, int capacityIncrement) {
       if (initialCapacity < 0) {

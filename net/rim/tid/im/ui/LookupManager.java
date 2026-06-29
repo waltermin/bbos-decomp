@@ -49,22 +49,22 @@ public class LookupManager extends Manager implements ISLVariantsObserver {
    private int _lastAllowedHeight;
    private boolean _stickyLookupY;
    private DrawTextParam _drawTextParam = (DrawTextParam)(new Object());
-   public static final byte LOOKUP_DEFAULT;
-   public static final byte LOOKUP_WITH_AMOUNT;
-   public static final byte LOOKUP_WITH_NUMBERS;
-   public static final byte INSIDE_SPACE;
-   public static final byte INSIDE_SPACE_DOUBLE;
-   public static final byte INSIDE_SPACE_WITH_LINE;
-   public static final byte SPACE;
-   private static final int MAX_VISIBLE;
+   public static final byte LOOKUP_DEFAULT = 0;
+   public static final byte LOOKUP_WITH_AMOUNT = 1;
+   public static final byte LOOKUP_WITH_NUMBERS = 8;
+   public static final byte INSIDE_SPACE = 2;
+   public static final byte INSIDE_SPACE_DOUBLE = 4;
+   public static final byte INSIDE_SPACE_WITH_LINE = 3;
+   public static final byte SPACE = 5;
+   private static final int MAX_VISIBLE = 10;
    private static String _leftArrow = "◀";
    private static String _rightArrow = "▶";
    private static String _upArrow = "▲";
    private static String _downArrow = "▼";
-   private static final int LINE_WIDTH_BETWEEN_GROUPS;
-   private static final int SPACE_BETWEEN_GROUPS;
-   private static final int HEIGHT_SENSIBILITY;
-   private static final int WIDTH_SENSIBILITY;
+   private static final int LINE_WIDTH_BETWEEN_GROUPS = 2;
+   private static final int SPACE_BETWEEN_GROUPS = 6;
+   private static final int HEIGHT_SENSIBILITY = 10;
+   private static final int WIDTH_SENSIBILITY = 10;
 
    public void setDelegator(Field delegator) {
       throw new RuntimeException("cod2jar: stack: underflow");

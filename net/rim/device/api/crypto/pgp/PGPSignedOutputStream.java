@@ -27,11 +27,11 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
    private boolean _isClearSigned;
    private SignatureSigner _signer;
    private int _version = 3;
-   public static final int VERSION_THREE;
-   public static final int VERSION_FOUR;
+   public static final int VERSION_THREE = 3;
+   public static final int VERSION_FOUR = 4;
    private static final byte[] CRLF = new byte[]{13, 10};
    private static final int CRLF_LENGTH = CRLF.length;
-   private static final int MAX_CLEAR_SIGNED_LINE_LENGTH;
+   private static final int MAX_CLEAR_SIGNED_LINE_LENGTH = 76;
 
    public PGPSignedOutputStream(OutputStream out, int signatureType, PrivateKey privateKey, byte[] keyID) {
       this(out, signatureType, privateKey, keyID, (Digest)(new Object()), 3, 4);

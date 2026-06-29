@@ -5,13 +5,13 @@ final class IgnoredSession {
    private int _numberOfDatagramsRemaining;
    private int _reason;
    private long _time;
-   public static final byte OBSOLETE;
-   public static final byte OUT_OF_CONTEXT;
-   public static final byte OUT_OF_SYNC;
-   public static final byte TIMEDOUT;
-   public static final byte ABORTED;
-   public static final byte SUCCEEDED;
-   public static final byte LATE;
+   public static final byte OBSOLETE = 1;
+   public static final byte OUT_OF_CONTEXT = 2;
+   public static final byte OUT_OF_SYNC = 3;
+   public static final byte TIMEDOUT = 4;
+   public static final byte ABORTED = 5;
+   public static final byte SUCCEEDED = 6;
+   public static final byte LATE = 7;
 
    IgnoredSession(int aSessionId, int reason) {
       this(aSessionId, -1, reason);

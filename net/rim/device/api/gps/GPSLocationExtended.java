@@ -10,7 +10,7 @@ public class GPSLocationExtended extends GPSLocationStandard {
    private int _numSatTracked;
    private byte[] _satPRN;
    private byte[] _satSignalStrength;
-   private static final int MAX_NUM_SATELLITES;
+   private static final int MAX_NUM_SATELLITES = 12;
 
    public GPSLocationExtended() {
       this.reset();

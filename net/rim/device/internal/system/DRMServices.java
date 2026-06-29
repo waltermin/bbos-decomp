@@ -9,9 +9,9 @@ import net.rim.device.api.util.Arrays;
 import net.rim.vm.Array;
 
 public final class DRMServices {
-   private static final long LOCK_GUID;
-   public static final int DRM_DEVICE_KEY_SIZE;
-   public static final int DRM_SUBSCRIBER_KEY_SIZE;
+   private static final long LOCK_GUID = -1043389362224207904L;
+   public static final int DRM_DEVICE_KEY_SIZE = 16;
+   public static final int DRM_SUBSCRIBER_KEY_SIZE = 16;
    private static final byte[] DRM_SIM_KEY_SCRAMBLE_SET = new byte[]{52, 4, 101, 57, 84, 103, 72, 41, 116, 88, 51, -109, 18, 50, 101, 56};
 
    private DRMServices() {

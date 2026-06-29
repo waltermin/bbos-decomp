@@ -4,7 +4,7 @@ import javax.microedition.pim.RepeatRule;
 import javax.microedition.pim.ToDo;
 
 public interface BlackBerryToDo extends ToDo {
-   int REMINDER;
+   int REMINDER = 20000927;
 
    RepeatRule getRepeat();
 

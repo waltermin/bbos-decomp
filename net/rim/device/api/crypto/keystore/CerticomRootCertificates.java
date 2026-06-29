@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class CerticomRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = 5549467762695674602L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] CERTICOM_MOBILE_TRUST_RSA_X509_CERT = new byte[]{
       48,
       -126,

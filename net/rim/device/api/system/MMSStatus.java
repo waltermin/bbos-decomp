@@ -5,7 +5,7 @@ import java.util.Vector;
 final class MMSStatus {
    private boolean _hasServiceBook;
    private Vector _actions;
-   private static final long MMS_STATUS_GUID;
+   private static final long MMS_STATUS_GUID = -5592630518458187252L;
    private static MMSStatus _instance;
 
    static final MMSStatus getInstance() {

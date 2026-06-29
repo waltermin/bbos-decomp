@@ -1,9 +1,9 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface ViewportNode extends VisualNode {
-   int UNITS_PIXELS;
-   int UNITS_PERCENT;
-   int DEFAULT_UNITS;
+   int UNITS_PIXELS = 1;
+   int UNITS_PERCENT = 2;
+   int DEFAULT_UNITS = 1;
 
    void copyViewbox(int[] var1);
 

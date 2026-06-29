@@ -5,7 +5,7 @@ import net.rim.device.api.ui.MenuItem;
 final class MoveableListField$MyMenu extends MenuItem {
    private int _type;
    private final MoveableListField this$0;
-   public static final int TYPE_START_MOVE;
+   public static final int TYPE_START_MOVE = 0;
 
    MoveableListField$MyMenu(MoveableListField _1, String text, int type) {
       super(text, 0, 0);

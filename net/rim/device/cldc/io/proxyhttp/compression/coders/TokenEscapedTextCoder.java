@@ -34,7 +34,7 @@ public final class TokenEscapedTextCoder extends EscapedTextCoder {
       "US-ASCII",
       "UTF-8"
    };
-   private static final long ID;
+   private static final long ID = 4236317391598801787L;
 
    public static final TokenEscapedTextCoder getInstance() {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();

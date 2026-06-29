@@ -17,16 +17,16 @@ public class Table extends VerticalIndentFieldManager {
    private int _currentFocusCol;
    private int _borders;
    private int _drawGeneration;
-   public static final int CELL_PADDING;
-   public static final int CELL_BORDER_WIDTH;
-   public static final int CELL_MAX_INNER_WIDTH;
-   public static final byte BORDER_TOP;
-   public static final byte BORDER_BOTTOM;
-   public static final byte BORDER_LEFT;
-   public static final byte BORDER_RIGHT;
-   public static final byte RULES_ROWS;
-   public static final byte RULES_COLS;
-   public static final byte RULES_GROUP;
+   public static final int CELL_PADDING = 1;
+   public static final int CELL_BORDER_WIDTH = 1;
+   public static final int CELL_MAX_INNER_WIDTH = 128;
+   public static final byte BORDER_TOP = 1;
+   public static final byte BORDER_BOTTOM = 2;
+   public static final byte BORDER_LEFT = 4;
+   public static final byte BORDER_RIGHT = 8;
+   public static final byte RULES_ROWS = 16;
+   public static final byte RULES_COLS = 32;
+   public static final byte RULES_GROUP = 64;
    private static Table$ColSpanComparator _colSpanComp = new Table$ColSpanComparator();
    private static Table$RowSpanComparator _rowSpanComp = new Table$RowSpanComparator();
 

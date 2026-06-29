@@ -8,7 +8,7 @@ public final class X931SignatureVerifier implements SignatureVerifier {
    private int _length;
    private Digest _digest;
    private byte[] _signature;
-   private static final long ID_TEST_VERIFIER_X931;
+   private static final long ID_TEST_VERIFIER_X931 = -1181815458422461446L;
 
    public X931SignatureVerifier(RSAPublicKey key, byte[] signature, int signatureOffset) {
       this(key, (Digest)(new Object()), signature, signatureOffset);

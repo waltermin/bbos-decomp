@@ -14,14 +14,14 @@ public final class DrawTextParam {
    public boolean iUnderlineToBounds;
    public boolean iShaping;
    public boolean iPasswordMode;
-   public static final int NO_REVERSE;
-   public static final int REVERSE;
-   public static final int ALREADY_REVERSED;
-   public static final int BIDI_REORDER;
-   public static final int NO_TRUNCATE_WITH_ELLIPSIS;
-   public static final int TRUNCATE_WITH_ELLIPSIS_AT_START;
-   public static final int TRUNCATE_WITH_ELLIPSIS_AT_END;
-   public static final int TRUNCATE_WITH_NO_ELLIPSIS_AT_START;
+   public static final int NO_REVERSE = 0;
+   public static final int REVERSE = 1;
+   public static final int ALREADY_REVERSED = 2;
+   public static final int BIDI_REORDER = 3;
+   public static final int NO_TRUNCATE_WITH_ELLIPSIS = 0;
+   public static final int TRUNCATE_WITH_ELLIPSIS_AT_START = 1;
+   public static final int TRUNCATE_WITH_ELLIPSIS_AT_END = 2;
+   public static final int TRUNCATE_WITH_NO_ELLIPSIS_AT_START = 3;
 
    public DrawTextParam(int maxAdvance) {
       this.reset();

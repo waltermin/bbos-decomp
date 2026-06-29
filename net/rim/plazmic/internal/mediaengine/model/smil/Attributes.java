@@ -1,25 +1,25 @@
 package net.rim.plazmic.internal.mediaengine.model.smil;
 
 public interface Attributes {
-   String ALT;
-   String BACKGROUND_COLOR;
-   String BACKGROUND_HYPHEN_COLOR;
-   String BEGIN;
-   String BOTTOM;
-   String CONTENT;
-   String DUR;
-   String END;
-   String FIT;
-   String FILL;
-   String HEIGHT;
-   String ID;
-   String LEFT;
-   String NAME;
-   String REGION;
-   String REGION_NAME;
-   String RIGHT;
-   String SRC;
-   String TOP;
-   String TYPE;
-   String WIDTH;
+   String ALT = "alt";
+   String BACKGROUND_COLOR = "backgroundColor";
+   String BACKGROUND_HYPHEN_COLOR = "background-color";
+   String BEGIN = "begin";
+   String BOTTOM = "bottom";
+   String CONTENT = "content";
+   String DUR = "dur";
+   String END = "end";
+   String FIT = "fit";
+   String FILL = "fill";
+   String HEIGHT = "height";
+   String ID = "id";
+   String LEFT = "left";
+   String NAME = "name";
+   String REGION = "region";
+   String REGION_NAME = "regionName";
+   String RIGHT = "right";
+   String SRC = "src";
+   String TOP = "top";
+   String TYPE = "type";
+   String WIDTH = "width";
 }

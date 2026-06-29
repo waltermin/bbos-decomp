@@ -52,7 +52,7 @@ final class EmailAddressModelImpl
    AccessibleContextProxy {
    private Object _dataEncoding;
    private boolean _isFreeForm;
-   private static final String EMAIL_FIELD_NAME;
+   private static final String EMAIL_FIELD_NAME = "\rEmail:";
 
    @Override
    public final String getURL() {

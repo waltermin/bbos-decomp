@@ -14,7 +14,7 @@ import net.rim.device.apps.internal.browser.util.DomainUtilities;
 public final class DomainOverrides {
    private IntHashtable _domains = (IntHashtable)(new Object());
    private Hashtable _overrides = (Hashtable)(new Object());
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = -1546612066057717803L;
 
    private DomainOverrides() {
    }

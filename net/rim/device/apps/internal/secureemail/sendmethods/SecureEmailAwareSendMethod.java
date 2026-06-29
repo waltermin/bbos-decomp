@@ -23,7 +23,7 @@ public class SecureEmailAwareSendMethod implements SendMethod {
    private boolean _sendSuccessful;
    private MessageEncoder _messageEncoder;
    protected CertificateHarvester _harvester;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    protected MessageEncoder getMessageEncoderUsed() {
       return this._sendSuccessful ? this._messageEncoder : null;

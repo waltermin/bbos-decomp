@@ -6,8 +6,8 @@ import net.rim.device.api.util.DataBuffer;
 final class ConvAcceptBlob extends PeerDataBlob {
    private String _convId;
    private String _contactName;
-   private static final int CONV_ID;
-   private static final int CONTACT_NAME;
+   private static final int CONV_ID = 1;
+   private static final int CONTACT_NAME = 2;
 
    public ConvAcceptBlob() {
    }

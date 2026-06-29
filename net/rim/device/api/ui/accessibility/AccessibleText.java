@@ -1,9 +1,9 @@
 package net.rim.device.api.ui.accessibility;
 
 public interface AccessibleText {
-   int CHAR;
-   int WORD;
-   int LINE;
+   int CHAR = 0;
+   int WORD = 1;
+   int LINE = 2;
 
    String getBeforeIndex(int var1, int var2);
 

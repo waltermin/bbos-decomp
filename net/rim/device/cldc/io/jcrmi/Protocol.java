@@ -28,17 +28,17 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
    private byte _invokeINS;
    private RemoteStub _initialStub;
    private RMIReference _rmiReference;
-   private static final byte FCI_TAG;
-   private static final byte APP_DATA_TAG;
-   private static final byte RMI_DATA_TAG;
-   private static final byte ERROR_TAG;
-   private static final byte EXCEPTION_TAG;
-   private static final byte EXCEPTION_SUBCLASS_TAG;
-   private static final short REF_NULL_TAG;
-   private static final byte NORMAL_RESPONSE_TAG;
-   private static final short COMPLETION_STATUS;
-   static final byte RMI_MAJOR_VERSION;
-   static final byte RMI_MINOR_VERSION;
+   private static final byte FCI_TAG = 111;
+   private static final byte APP_DATA_TAG = 110;
+   private static final byte RMI_DATA_TAG = 94;
+   private static final byte ERROR_TAG = -103;
+   private static final byte EXCEPTION_TAG = -126;
+   private static final byte EXCEPTION_SUBCLASS_TAG = -125;
+   private static final short REF_NULL_TAG = -1;
+   private static final byte NORMAL_RESPONSE_TAG = -127;
+   private static final short COMPLETION_STATUS = -28672;
+   static final byte RMI_MAJOR_VERSION = 2;
+   static final byte RMI_MINOR_VERSION = 2;
 
    @Override
    public void close() {

@@ -8,21 +8,21 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class DeploymentDescriptorSerializer extends AbstractSerializer {
    private static DeploymentDescriptorSerializer _instance;
-   private static final byte URI;
-   private static final byte VERSION;
-   private static final byte NAME;
-   private static final byte VENDOR;
-   private static final byte DESCRIPTION;
-   private static final byte SIZE;
-   private static final byte TYPE;
-   private static final byte INSTALL_NOTIFY_URL;
-   private static final byte BUNDLE_URL;
-   private static final byte DEPENDENCIES;
-   private static final byte LANGUAGES;
-   private static final byte TARGET_FOLDER;
-   private static final byte DEDICATED_AG_URL;
-   private static final byte ENDORSED;
-   private static final byte MULTI_DOMAIN;
+   private static final byte URI = 0;
+   private static final byte VERSION = 1;
+   private static final byte NAME = 2;
+   private static final byte VENDOR = 3;
+   private static final byte DESCRIPTION = 4;
+   private static final byte SIZE = 5;
+   private static final byte TYPE = 6;
+   private static final byte INSTALL_NOTIFY_URL = 7;
+   private static final byte BUNDLE_URL = 8;
+   private static final byte DEPENDENCIES = 9;
+   private static final byte LANGUAGES = 10;
+   private static final byte TARGET_FOLDER = 11;
+   private static final byte DEDICATED_AG_URL = 12;
+   private static final byte ENDORSED = 13;
+   private static final byte MULTI_DOMAIN = 14;
 
    static final DeploymentDescriptorSerializer getInstance() {
       if (_instance == null) {

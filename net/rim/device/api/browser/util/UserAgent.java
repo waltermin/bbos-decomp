@@ -5,7 +5,7 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.DeviceInfo;
 
 public final class UserAgent {
-   private static final String DEFAULT_BROWSER_VERSION;
+   private static final String DEFAULT_BROWSER_VERSION = "4.3.0";
    static Class class$net$rim$device$api$browser$util$UserAgent;
 
    private UserAgent() {

@@ -11,12 +11,12 @@ import net.rim.device.cldc.util.CalendarExtensions;
 
 final class AgendaField extends AgendaFieldBase {
    private CalendarViewController _callback;
-   private static final int DEFAULT_NUM_ITEMS_BEFORE;
-   private static final int DEFAULT_NUM_ITEMS_ON_OR_AFTER;
-   private static final int NUM_OFFSET_BUFFER;
-   private static final byte SELECT_LOAD_TIME;
-   private static final byte SELECT_NEXT_DAY;
-   private static final byte SELECT_PREV_DAY;
+   private static final int DEFAULT_NUM_ITEMS_BEFORE = 16;
+   private static final int DEFAULT_NUM_ITEMS_ON_OR_AFTER = 16;
+   private static final int NUM_OFFSET_BUFFER = 14;
+   private static final byte SELECT_LOAD_TIME = 0;
+   private static final byte SELECT_NEXT_DAY = 1;
+   private static final byte SELECT_PREV_DAY = 2;
 
    final void init(CalendarViewController callback) {
       this._callback = callback;

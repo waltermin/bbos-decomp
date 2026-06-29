@@ -6,8 +6,8 @@ import net.rim.wica.runtime.service.ServiceProvider;
 
 public class Provider extends DefaultContainer {
    private Hashtable _componentTable = (Hashtable)(new Object());
-   public static final String SCHEDULER;
-   public static final String BACKGROUND_SCHEDULER;
+   public static final String SCHEDULER = "Scheduler";
+   public static final String BACKGROUND_SCHEDULER = "BackgroundScheduler";
 
    public Provider(ServiceProvider parent) {
       super(parent);

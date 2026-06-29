@@ -4,8 +4,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class UnicodeServiceRegistry {
    private int _flags;
-   private static final long REGISTRY_KEY;
-   public static final int UNICODE_ENCODED;
+   private static final long REGISTRY_KEY = -133996578404592302L;
+   public static final int UNICODE_ENCODED = 1;
    private static UnicodeServiceRegistry _instance;
 
    private UnicodeServiceRegistry() {

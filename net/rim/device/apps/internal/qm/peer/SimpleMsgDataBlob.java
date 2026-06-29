@@ -15,12 +15,12 @@ final class SimpleMsgDataBlob extends PeerDataBlob {
    private Vector _contactNames = (Vector)(new Object(1));
    private String _contactsStr;
    private boolean _system;
-   private static final int MSG_ID;
-   private static final int MSG;
-   private static final int CONV_ID;
-   private static final int FROM;
-   private static final int CONTACT_STR;
-   private static final int SYSTEM;
+   private static final int MSG_ID = 1;
+   private static final int MSG = 2;
+   private static final int CONV_ID = 3;
+   private static final int FROM = 4;
+   private static final int CONTACT_STR = 5;
+   private static final int SYSTEM = 8;
    private static final StringBuffer _sb = (StringBuffer)(new Object());
 
    public SimpleMsgDataBlob() {

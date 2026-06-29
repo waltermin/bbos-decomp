@@ -20,14 +20,14 @@ public class CalendarReportConverter implements SyncConverter {
    private Comparator _eventComparator;
    private int[] _recurrenceInstances;
    private long[] _inclusions;
-   private static final int RECURRENCE_INSTANCES;
-   private static final int INSTANCE_UID;
-   private static final int INSTANCE_PART;
-   private static final int INSTANCE_OUTSIDE_OF_TIMEFRAME;
-   private static final int INSTANCE_IS_INCLUDE_DATE;
-   private static final int REPORT_START_DATE;
-   private static final int REPORT_END_DATE;
-   private static final int HASH_DATA;
+   private static final int RECURRENCE_INSTANCES = 100;
+   private static final int INSTANCE_UID = 101;
+   private static final int INSTANCE_PART = 102;
+   private static final int INSTANCE_OUTSIDE_OF_TIMEFRAME = 103;
+   private static final int INSTANCE_IS_INCLUDE_DATE = 104;
+   private static final int REPORT_START_DATE = 105;
+   private static final int REPORT_END_DATE = 106;
+   private static final int HASH_DATA = 107;
 
    public Comparator getComparator() {
       return this._eventComparator;

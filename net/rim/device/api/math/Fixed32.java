@@ -1,26 +1,26 @@
 package net.rim.device.api.math;
 
 public final class Fixed32 {
-   public static final int MAX_VALUE;
-   public static final int MIN_VALUE;
-   public static final int PI;
-   public static final int E;
-   public static final short NUM_FRACTION_BITS;
-   public static final int FP090;
-   public static final int FP180;
-   public static final int FP270;
-   public static final int FP360;
-   public static final int RAD2DEG;
-   public static final int ONE;
-   public static final int HALF;
-   public static final int QUARTER;
-   private static final int INT_TEN_THOU;
-   private static final int INT_FIVE_THOU;
+   public static final int MAX_VALUE = Integer.MAX_VALUE;
+   public static final int MIN_VALUE = Integer.MIN_VALUE;
+   public static final int PI = 205887;
+   public static final int E = 178145;
+   public static final short NUM_FRACTION_BITS = 16;
+   public static final int FP090 = 5898240;
+   public static final int FP180 = 11796480;
+   public static final int FP270 = 17694720;
+   public static final int FP360 = 23592960;
+   public static final int RAD2DEG = 3754936;
+   public static final int ONE = 65536;
+   public static final int HALF = 32768;
+   public static final int QUARTER = 16384;
+   private static final int INT_TEN_THOU = 10000;
+   private static final int INT_FIVE_THOU = 5000;
    private static final int[] POWERS_OF_TEN = new int[]{
       1000, 100, 10, 1, 1866989824, 727916, 1094676481, 1655138688, 1979777150, 846737962, 16781645, 1701539702, -977993472, -1958422706, 262159, -333485820
    };
-   public static final int TWOPI;
-   public static final int PI_OVER_2;
+   public static final int TWOPI = 411774;
+   public static final int PI_OVER_2 = 102943;
 
    private Fixed32() {
    }

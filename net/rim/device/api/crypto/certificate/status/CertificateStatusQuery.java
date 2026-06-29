@@ -34,24 +34,24 @@ public final class CertificateStatusQuery {
    private CertificateStatus _overallStatus;
    private String _serviceUID;
    private final String[] ERROR_STRINGS;
-   public static final int STATE_STARTED;
-   public static final int STATE_ENCODING;
-   public static final int STATE_PENDING;
-   public static final int STATE_SENDING;
-   public static final int STATE_SENT;
-   public static final int STATE_DECODING;
-   public static final int STATE_COMPLETE;
-   public static final int STATE_ERROR;
-   public static final int STATE_TIMEOUT;
-   public static final int STATE_ABORTED;
-   public static final int STATE_NO_SERVICE_BOOK;
-   private static final int PROXY_VERSION_ONE;
-   private static final int PROXY_CODE_SUCCESSFUL;
-   private static final int PROXY_CODE_INCORRECT_VERSION;
-   private static final int PROXY_CODE_MALFORMED_REQUEST;
-   private static final int PROXY_CODE_NO_PROVIDERS;
-   private static final int PROXY_CODE_PROVIDER_ERROR;
-   private static final int PROXY_CODE_INTERNAL_ERROR;
+   public static final int STATE_STARTED = 0;
+   public static final int STATE_ENCODING = 1;
+   public static final int STATE_PENDING = 2;
+   public static final int STATE_SENDING = 3;
+   public static final int STATE_SENT = 4;
+   public static final int STATE_DECODING = 5;
+   public static final int STATE_COMPLETE = 6;
+   public static final int STATE_ERROR = 7;
+   public static final int STATE_TIMEOUT = 8;
+   public static final int STATE_ABORTED = 9;
+   public static final int STATE_NO_SERVICE_BOOK = 10;
+   private static final int PROXY_VERSION_ONE = 1;
+   private static final int PROXY_CODE_SUCCESSFUL = 0;
+   private static final int PROXY_CODE_INCORRECT_VERSION = 1;
+   private static final int PROXY_CODE_MALFORMED_REQUEST = 2;
+   private static final int PROXY_CODE_NO_PROVIDERS = 3;
+   private static final int PROXY_CODE_PROVIDER_ERROR = 4;
+   private static final int PROXY_CODE_INTERNAL_ERROR = 5;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
 
    public CertificateStatusQuery(CertificateStatusRequest request, String serviceUID, CertificateStatusListener listener) {
@@ -517,11 +517,11 @@ public final class CertificateStatusQuery {
       // 144: istore 5
       // 146: aload 0
       // 147: iload 5
-      // 149: anewarray 1904
+      // 149: anewarray 1940
       // 14c: putfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery._responseCerts [Lnet/rim/device/api/crypto/certificate/Certificate;
       // 14f: aload 0
       // 150: iload 5
-      // 152: anewarray 1912
+      // 152: anewarray 1948
       // 155: putfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery._responseStatus [Lnet/rim/device/api/crypto/certificate/CertificateStatus;
       // 158: aload 4
       // 15a: invokevirtual java/util/Hashtable.keys ()Ljava/util/Enumeration;

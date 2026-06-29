@@ -17,8 +17,8 @@ public final class AccountSetupScreen extends BasicScreen {
    private BasicEditField _userNameEdit;
    private PasswordEditField _passwordEdit;
    private PasswordEditField _passwordConfirmEdit;
-   private static final String PARAM_USERNAME;
-   private static final String PARAM_PASSWORD;
+   private static final String PARAM_USERNAME = "userName";
+   private static final String PARAM_PASSWORD = "password";
 
    @Override
    public final void refresh(Hashtable screenParams) {

@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface RectNode extends VisualNode {
-   int TYPE;
+   int TYPE = 36;
 
    int getWidth();
 

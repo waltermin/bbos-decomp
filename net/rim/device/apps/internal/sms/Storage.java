@@ -23,16 +23,16 @@ import net.rim.device.internal.deviceoptions.SMSOptions;
 import net.rim.device.internal.system.RadioInternal;
 
 public final class Storage implements PersistentContentListener {
-   public static final long SMS_HIERARCHY_ID;
-   public static final long SMS_INBOX;
-   public static final long SMS_SIM_INBOX;
-   public static final long SMS_OUTBOX;
-   public static final long SMS_ORPHANED_SAVED_ITEMS;
-   public static final long SMS_FAMILY;
+   public static final long SMS_HIERARCHY_ID = 2937394060276591988L;
+   public static final long SMS_INBOX = 1393133342214151287L;
+   public static final long SMS_SIM_INBOX = -441701525336570016L;
+   public static final long SMS_OUTBOX = -8580923390364260649L;
+   public static final long SMS_ORPHANED_SAVED_ITEMS = -4468584479793228955L;
+   public static final long SMS_FAMILY = -6498019436237624557L;
    private static LongKeyProviderAdaptor _longKeyProviderAdaptor = (LongKeyProviderAdaptor)(new Object());
    private static int[] _addressKeys = new int[1];
-   private static final long MESSAGE_THREADS_LUID;
-   private static final long MESSAGE_THREAD_HASH;
+   private static final long MESSAGE_THREADS_LUID = 8379405910859600340L;
+   private static final long MESSAGE_THREAD_HASH = -7647744941858359268L;
    private static LongHashtable _messageThreads;
 
    private Storage() {

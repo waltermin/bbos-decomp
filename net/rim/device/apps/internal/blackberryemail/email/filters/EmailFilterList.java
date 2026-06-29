@@ -38,7 +38,7 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
    private String _userId;
    private WeakReference _weakReference = (WeakReference)(new Object(this));
    private EmailFilterList$EmailFilterSaveVerb _saveVerb;
-   private static final long ID;
+   private static final long ID = -4706366031686710983L;
 
    protected final EmailFilterCollectionListField getListField() {
       EmailFilterList$ServiceInfo info = (EmailFilterList$ServiceInfo)this._service.getChoice(this._service.getSelectedIndex());

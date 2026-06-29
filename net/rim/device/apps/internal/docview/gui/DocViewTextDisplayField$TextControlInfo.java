@@ -36,7 +36,7 @@ final class DocViewTextDisplayField$TextControlInfo {
    IntIntHashtable _bookmarkHash;
    private final Runnable _linksRefreshRunnable;
    private final DocViewTextDisplayField this$0;
-   private static final byte ATTR_MAXREGIONS;
+   private static final byte ATTR_MAXREGIONS = 100;
 
    DocViewTextDisplayField$TextControlInfo(DocViewTextDisplayField _1, int startBlockIndex, int initialInsertIndex, boolean fullDocumentState) {
       this.this$0 = _1;

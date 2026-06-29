@@ -4,14 +4,14 @@ class WicletRuntimeImpl$ProcessingRequest implements Runnable {
    private int _requestType;
    private Object _context;
    private final WicletRuntimeImpl this$0;
-   private static final int STARTUP_REQUEST;
-   private static final int ACTIVATE_REQUEST;
-   private static final int DEACTIVATE_REQUEST;
-   private static final int PROCESS_INCOMING_MESSAGE_REQUEST;
-   private static final int MENU_SHOW_REQUEST;
-   private static final int SCREEN_BACK_REQUEST;
-   private static final int STOP_REQUEST;
-   private static final int RUNNABLE;
+   private static final int STARTUP_REQUEST = 1;
+   private static final int ACTIVATE_REQUEST = 2;
+   private static final int DEACTIVATE_REQUEST = 3;
+   private static final int PROCESS_INCOMING_MESSAGE_REQUEST = 4;
+   private static final int MENU_SHOW_REQUEST = 5;
+   private static final int SCREEN_BACK_REQUEST = 6;
+   private static final int STOP_REQUEST = 7;
+   private static final int RUNNABLE = 8;
 
    private WicletRuntimeImpl$ProcessingRequest(WicletRuntimeImpl this$0, int requestType, Object context) {
       this.this$0 = this$0;

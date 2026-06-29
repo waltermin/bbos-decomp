@@ -18,22 +18,22 @@ public final class SearchRequest extends Request {
    private long _originLatitude;
    private long _originLongitude;
    private int _zoomLevel = 10;
-   public static final int SUCCESS;
-   public static final int INVALID_REQUEST;
-   public static final int SERVER_INTERNAL_ERROR;
-   public static final int UNSUPPORTED_ADDRESS_TYPE;
-   public static final int INVALID_ADDRESS_NUMBER;
-   public static final int ITEM_NOT_FOUND;
-   public static final int TOO_MANY_ITEMS;
-   public static final int UNSUPPORTED_CHARACTER;
-   public static final int INVALID_STATE;
-   public static final int INVALID_COUNTRY;
-   public static final int INVALID_STATE_AND_COUNTRY;
-   public static final int CITY_NOT_FOUND;
-   public static final int CITY_AMBIGUOUS_PLEASE_SPECIFY_STATE;
-   public static final int MALFORMED_INTERSECTION_ADDRESS;
-   public static final int CITY_NOT_SPECIFIED;
-   public static final int INTERNAL_LOOKUP;
+   public static final int SUCCESS = 0;
+   public static final int INVALID_REQUEST = 1;
+   public static final int SERVER_INTERNAL_ERROR = 2;
+   public static final int UNSUPPORTED_ADDRESS_TYPE = 3;
+   public static final int INVALID_ADDRESS_NUMBER = 4;
+   public static final int ITEM_NOT_FOUND = 5;
+   public static final int TOO_MANY_ITEMS = 6;
+   public static final int UNSUPPORTED_CHARACTER = 7;
+   public static final int INVALID_STATE = 8;
+   public static final int INVALID_COUNTRY = 9;
+   public static final int INVALID_STATE_AND_COUNTRY = 10;
+   public static final int CITY_NOT_FOUND = 11;
+   public static final int CITY_AMBIGUOUS_PLEASE_SPECIFY_STATE = 13;
+   public static final int MALFORMED_INTERSECTION_ADDRESS = 14;
+   public static final int CITY_NOT_SPECIFIED = 15;
+   public static final int INTERNAL_LOOKUP = -100;
    private static final SearchRequest _internalSearchRequest = new SearchRequest(null, null);
 
    @Override

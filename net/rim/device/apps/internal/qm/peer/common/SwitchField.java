@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.model.ActionProvider;
 
 final class SwitchField extends LabelField {
    SwitchField$SwitchMenuItem _switchMenuItem;
-   public static final int ACTION_INVOKE;
+   public static final int ACTION_INVOKE = 1;
 
    SwitchField(long style, NotificationMessage cookie) {
       super(cookie.toString(), style);

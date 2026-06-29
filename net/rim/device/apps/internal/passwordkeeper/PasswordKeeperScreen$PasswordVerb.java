@@ -7,15 +7,15 @@ import net.rim.device.apps.api.framework.verb.Verb;
 final class PasswordKeeperScreen$PasswordVerb extends Verb {
    private int _type;
    private final PasswordKeeperScreen this$0;
-   private static final int NEW;
-   private static final int OPEN;
-   private static final int COPY_USERNAME;
-   private static final int COPY_PASSWORD;
-   private static final int DELETE;
-   private static final int CLEAR;
-   private static final int CHANGE;
-   private static final int OPTION;
-   private static final int CLOSE;
+   private static final int NEW = 1;
+   private static final int OPEN = 2;
+   private static final int COPY_USERNAME = 3;
+   private static final int COPY_PASSWORD = 4;
+   private static final int DELETE = 5;
+   private static final int CLEAR = 6;
+   private static final int CHANGE = 7;
+   private static final int OPTION = 8;
+   private static final int CLOSE = 9;
 
    PasswordKeeperScreen$PasswordVerb(PasswordKeeperScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

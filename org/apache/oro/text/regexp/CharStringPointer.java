@@ -3,7 +3,7 @@ package org.apache.oro.text.regexp;
 final class CharStringPointer {
    int _offset;
    char[] _array;
-   static final char _END_OF_STRING;
+   static final char _END_OF_STRING = '\uffff';
 
    CharStringPointer(char[] charArray, int offset) {
       this._array = charArray;

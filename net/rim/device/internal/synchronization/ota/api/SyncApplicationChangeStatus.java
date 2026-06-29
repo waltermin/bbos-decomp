@@ -6,7 +6,7 @@ public final class SyncApplicationChangeStatus implements ReusableObject {
    private int _refId;
    private int _status;
    private boolean _contextual;
-   public static final long POOL_GUID;
+   public static final long POOL_GUID = 5044400588884437613L;
 
    public final int getRefId() {
       return this._refId;

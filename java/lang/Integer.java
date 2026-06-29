@@ -4,8 +4,8 @@ import net.rim.device.api.util.NumberUtilities;
 
 public final class Integer {
    private int value;
-   public static final int MIN_VALUE;
-   public static final int MAX_VALUE;
+   public static final int MIN_VALUE = MIN_VALUE;
+   public static final int MAX_VALUE = MAX_VALUE;
    static final byte[] digits = new byte[]{
       48,
       49,

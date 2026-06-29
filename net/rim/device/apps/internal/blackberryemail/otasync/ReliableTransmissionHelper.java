@@ -21,13 +21,13 @@ public class ReliableTransmissionHelper implements TransmissionStatusListener {
    private TransactionRecord[] _transactions;
    private ContextObject _contextObject;
    private int _lastCheckedIndexId;
-   private static final long TRANSACTIONS_GUID;
-   private static final long LAST_CHECKED_RETRY_INDEX_GUID;
-   private static final int MAX_RETRY_PACKETS_PER_SCAN;
-   private static final long RETRY_TIMEOUT;
-   private static final long RETRY_BACKOFF_INTERVAL;
-   private static final long MAX_RETRIES_ALLOWED;
-   private static final long SUCCESSFUL_TIMEOUT;
+   private static final long TRANSACTIONS_GUID = -2159541579865757717L;
+   private static final long LAST_CHECKED_RETRY_INDEX_GUID = -9018585818145369823L;
+   private static final int MAX_RETRY_PACKETS_PER_SCAN = 5;
+   private static final long RETRY_TIMEOUT = 900000L;
+   private static final long RETRY_BACKOFF_INTERVAL = 480000L;
+   private static final long MAX_RETRIES_ALLOWED = 5L;
+   private static final long SUCCESSFUL_TIMEOUT = 172800000L;
 
    @Override
    public void updateTransmissionStatus(TransmissionService transmissionService, int tag, int code, Object contextObject) {

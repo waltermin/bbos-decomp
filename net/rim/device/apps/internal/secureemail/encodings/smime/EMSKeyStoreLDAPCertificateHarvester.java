@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.secureemail.RecipientData;
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
 
 public class EMSKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificateHarvester {
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = true;
 
    public EMSKeyStoreLDAPCertificateHarvester(String emsEmailAddress, SecureEmailFactory secureEmailFactory, boolean isPINMessage) {
       super(secureEmailFactory, isPINMessage);

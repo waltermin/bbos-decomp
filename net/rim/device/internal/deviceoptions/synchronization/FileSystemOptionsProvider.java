@@ -7,14 +7,14 @@ import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 import net.rim.device.internal.io.file.FileSystemOptions;
 
 final class FileSystemOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int EXTERNAL_MEMORY_ENABLED;
-   private static final int USB_MASS_STORAGE_ENABLED;
-   private static final int AUTO_ENABLE_USB_MASS_STORAGE;
-   private static final int ENCRYPTION_LEVEL;
-   private static final int CONTENT_STORE_TOTAL_SIZE;
-   private static final int PICTURES_RESERVED_SIZE;
-   private static final int SAFELY_REMOVE_MODE;
+   private static final int UID = 1820001043;
+   private static final int EXTERNAL_MEMORY_ENABLED = 1;
+   private static final int USB_MASS_STORAGE_ENABLED = 2;
+   private static final int AUTO_ENABLE_USB_MASS_STORAGE = 3;
+   private static final int ENCRYPTION_LEVEL = 4;
+   private static final int CONTENT_STORE_TOTAL_SIZE = 5;
+   private static final int PICTURES_RESERVED_SIZE = 6;
+   private static final int SAFELY_REMOVE_MODE = 7;
 
    FileSystemOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

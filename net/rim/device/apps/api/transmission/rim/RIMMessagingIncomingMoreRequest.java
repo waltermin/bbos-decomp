@@ -8,10 +8,10 @@ public class RIMMessagingIncomingMoreRequest extends RIMMessagingMessage {
    private int offset = Integer.MIN_VALUE;
    private int length = Integer.MIN_VALUE;
    private byte[] serverComponentId;
-   private static final int INDEX_MESSAGE_REF_ID;
-   private static final int INDEX_CONTENT_ID;
-   private static final int INDEX_OFFSET;
-   private static final int INDEX_LENGTH;
+   private static final int INDEX_MESSAGE_REF_ID = 0;
+   private static final int INDEX_CONTENT_ID = 1;
+   private static final int INDEX_OFFSET = 2;
+   private static final int INDEX_LENGTH = 3;
 
    public byte[] getComponentId() {
       return this.serverComponentId;

@@ -7,11 +7,11 @@ class Sequence {
    private byte[] _data;
    private HeaderChunk _header;
    private TrackChunk[] _tracks;
-   public static final int PPQ;
-   public static final int SMPTE_24;
-   public static final int SMPTE_25;
-   public static final int SMPTE_30DROP;
-   public static final int SMPTE_30;
+   public static final int PPQ = 0;
+   public static final int SMPTE_24 = 1;
+   public static final int SMPTE_25 = 2;
+   public static final int SMPTE_30DROP = 3;
+   public static final int SMPTE_30 = 4;
 
    public Sequence(MidiModel model, byte[] data) {
       this._model = model;

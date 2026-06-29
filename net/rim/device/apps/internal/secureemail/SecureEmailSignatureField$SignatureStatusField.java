@@ -12,13 +12,13 @@ public class SecureEmailSignatureField$SignatureStatusField extends StatusField 
    protected String _signerName;
    protected String _details;
    private final SecureEmailSignatureField this$0;
-   private static final long STATUS_TYPE_SIGNATURE;
-   public static final int VERIFYING;
-   public static final int VERIFIED;
-   public static final int FAILED;
-   public static final int UNKNOWN_ON_DEVICE;
-   public static final int ERROR;
-   public static final int WEAK_DIGEST;
+   private static final long STATUS_TYPE_SIGNATURE = -6760830185273366870L;
+   public static final int VERIFYING = 0;
+   public static final int VERIFIED = 1;
+   public static final int FAILED = 2;
+   public static final int UNKNOWN_ON_DEVICE = 3;
+   public static final int ERROR = 4;
+   public static final int WEAK_DIGEST = 5;
 
    public SecureEmailSignatureField$SignatureStatusField(SecureEmailSignatureField _1, Application app, int initialStatus, String signerName, String details) {
       super(app, initialStatus);

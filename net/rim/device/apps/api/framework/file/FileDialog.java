@@ -13,7 +13,7 @@ public class FileDialog extends Dialog {
    private ButtonField _buttonOk;
    private ButtonField _buttonCancel;
    private boolean _promptForOverwrite;
-   public static final long SAVE;
+   public static final long SAVE = 134217728L;
 
    public FileDialog(String path, String filename, int mediaType, String msg) {
       this(path, filename, mediaType, msg, 0);

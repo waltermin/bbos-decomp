@@ -90,9 +90,9 @@ class DocViewDisplayScreen
    private int _savedCrtMaxBlockIndex = -1;
    private boolean _justChangingTitleName;
    boolean _forceAllowDocInfo;
-   protected static final int IDLE_PERIOD;
-   protected static final int TIMEOUT_IDLE;
-   protected static final String FAKEEMBEDDED_DOMID;
+   protected static final int IDLE_PERIOD = 1000;
+   protected static final int TIMEOUT_IDLE = 1;
+   protected static final String FAKEEMBEDDED_DOMID = "CustomEmbeddedDomID";
    protected static final ResourceBundleFamily _resources = ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView");
 
    final String getValidPassword() {

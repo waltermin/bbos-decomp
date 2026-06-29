@@ -17,13 +17,13 @@ final class VideoViewfinderField extends Field {
    private int _colourEffect = 0;
    private int _vfState = 0;
    private int _vfHandle;
-   private static final int MAX_START_ATTEMPTS;
-   private static final long START_ATTEMPTS_DELAY;
-   private static final int VF_STATE_STOPPED;
-   private static final int VF_STATE_STARTED;
-   private static final int VF_STATE_PAUSED;
-   private static final int VF_STATE_STARTING;
-   private static final int VF_STATE_ERRORED;
+   private static final int MAX_START_ATTEMPTS = 5;
+   private static final long START_ATTEMPTS_DELAY = 500L;
+   private static final int VF_STATE_STOPPED = 0;
+   private static final int VF_STATE_STARTED = 1;
+   private static final int VF_STATE_PAUSED = 2;
+   private static final int VF_STATE_STARTING = 3;
+   private static final int VF_STATE_ERRORED = 4;
 
    public VideoViewfinderField() {
       super(36028861443473408L);

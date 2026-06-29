@@ -1,9 +1,9 @@
 package net.rim.device.api.system;
 
 public class EventInjector$KeyEvent extends EventInjector$Event {
-   public static final int KEY_DOWN;
-   public static final int KEY_REPEAT;
-   public static final int KEY_UP;
+   public static final int KEY_DOWN = 513;
+   public static final int KEY_REPEAT = 514;
+   public static final int KEY_UP = 515;
 
    public EventInjector$KeyEvent(int event, char c, int status, int time) {
       super(2, event, c, status, time, null, null);

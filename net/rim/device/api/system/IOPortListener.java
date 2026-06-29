@@ -1,9 +1,9 @@
 package net.rim.device.api.system;
 
 public interface IOPortListener {
-   int ERROR_PARITY;
-   int ERROR_FRAMING;
-   int ERROR_OVERRUN;
+   int ERROR_PARITY = 2;
+   int ERROR_FRAMING = 3;
+   int ERROR_OVERRUN = 4;
 
    void connected();
 

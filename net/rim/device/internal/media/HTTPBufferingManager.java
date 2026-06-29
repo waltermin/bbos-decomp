@@ -24,12 +24,12 @@ public final class HTTPBufferingManager extends Thread {
    private HTTPBufferingCallback _callback;
    private long _estimatedTime;
    private int _consumeRate;
-   static final int MAX_STREAMING_BUFFER_SIZE;
-   static final int MAX_BUFFER_SIZE_FOR_COMPLETE_READ;
-   static final int DEFAULT_STREAMING_BUFFER_SIZE;
-   static final int RESIZE_INTERVAL;
-   static final int READ_INTERVAL;
-   private static final int WATERMARK_CHECK_INTERVAL;
+   static final int MAX_STREAMING_BUFFER_SIZE = 2097152;
+   static final int MAX_BUFFER_SIZE_FOR_COMPLETE_READ = 1048576;
+   static final int DEFAULT_STREAMING_BUFFER_SIZE = 524288;
+   static final int RESIZE_INTERVAL = 8192;
+   static final int READ_INTERVAL = 6144;
+   private static final int WATERMARK_CHECK_INTERVAL = 30720;
 
    public HTTPBufferingManager(HttpConnection input, InputStream inputStream, HTTPBufferingCallback callback) {
       this._inputConnection = input;

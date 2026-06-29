@@ -34,15 +34,15 @@ public final class MarqueeDetailsField extends Field implements Animation {
    private TextRect _textRect;
    private TextRect _textRect2;
    private WeakReference _listener;
-   private static final int ALL;
-   private static final int TRAILING;
-   private static final int PAUSED;
-   private static final int LEFT_TO_RIGHT;
-   private static final int RIGHT_TO_LEFT;
-   private static final int INCREMENT;
-   private static final int INTERVAL;
-   private static final int BACKWARD_DELAY;
-   private static final int START_DELAY;
+   private static final int ALL = 0;
+   private static final int TRAILING = 1;
+   private static final int PAUSED = 2;
+   private static final int LEFT_TO_RIGHT = 0;
+   private static final int RIGHT_TO_LEFT = 1;
+   private static final int INCREMENT = 1;
+   private static final int INTERVAL = 35;
+   private static final int BACKWARD_DELAY = 171;
+   private static final int START_DELAY = 85;
 
    public final void reset(boolean repaint) {
       if (this._orientation == 0) {

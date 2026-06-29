@@ -15,7 +15,7 @@ final class SessionManager {
    private IntHashtable _pendingSessionRequests = (IntHashtable)(new Object(1));
    private IntHashtable _currentSessions = (IntHashtable)(new Object(1));
    private Hashtable _localRequestListeners = (Hashtable)(new Object(1));
-   private static final long GUID;
+   private static final long GUID = -7605572761419464897L;
    private static SessionManager _instance;
 
    private SessionManager() {

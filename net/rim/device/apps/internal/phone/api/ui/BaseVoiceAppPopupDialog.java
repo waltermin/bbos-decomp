@@ -27,8 +27,8 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
    protected boolean _shouldClose;
    protected Verb _verbOnClose;
    protected UiApplication _voiceUiApp;
-   public static final int LISTEN_FOR_PHONE_EVENTS;
-   static final int BUTTON_STYLE;
+   public static final int LISTEN_FOR_PHONE_EVENTS = 2;
+   static final int BUTTON_STYLE = 0;
 
    protected BaseVoiceAppPopupDialog(char initialInputChar, int flags, boolean globalStatus, Verb[] actions, Object context) {
       super((Manager)(new Object()), globalStatus ? 33554432 : 0);

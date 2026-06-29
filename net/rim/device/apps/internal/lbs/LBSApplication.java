@@ -35,12 +35,12 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
    MapScreen _mapScreen;
    EULA _eula;
    public static long UID = -1037010874164756539L;
-   private static final String APP_INVALID;
+   private static final String APP_INVALID = "APP_INVALID";
    private static long GUID_VIEW_LOCATION = 6982071258373876883L;
    private static long GUID_VIEW_ADDRESS = 9060179257426397655L;
    private static long GUID_OPEN_DOCUMENT = 5481368234910671574L;
    private static long GUID_APP_STATUS = -127223899735346493L;
-   private static final String EXTERNAL_OPEN;
+   private static final String EXTERNAL_OPEN = "externalOpen";
 
    public static final void main(String[] args) {
       if (args.length != 0 && !args[0].equals("externalOpen")) {

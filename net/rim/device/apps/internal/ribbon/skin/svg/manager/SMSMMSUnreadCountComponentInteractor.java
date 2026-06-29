@@ -10,8 +10,8 @@ class SMSMMSUnreadCountComponentInteractor extends UnreadCountComponentInteracto
    private boolean _displayNewSMSMMSIndicator;
    private UnreadCountComponent _ucComponent;
    protected ModelInteractorImpl _modelInteractor;
-   private static final String NEW_SMSMMS;
-   private static final String NO_NEW_SMSMMS;
+   private static final String NEW_SMSMMS = "newSMSMMS";
+   private static final String NO_NEW_SMSMMS = "noNewSMSMMS";
 
    SMSMMSUnreadCountComponentInteractor(TextNode node, Hashtable params, ModelInteractorImpl mi) {
       super(node, params);

@@ -38,8 +38,8 @@ import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 
 public final class ContactListImpl extends PIMListImpl implements ContactList, BlackBerryContactList, PIMResResource {
    static String LIST_NAME = "Contact List";
-   static final int NAMESIZE;
-   static final int ADDRSIZE;
+   static final int NAMESIZE = 5;
+   static final int ADDRSIZE = 7;
    static final int[] SUPPORTED_ATTR_TEL = new int[]{
       8,
       16,
@@ -80,7 +80,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    private static AddressBook _addressBook = AddressBookServices.getAddressBook();
    private static ResourceBundle _resources = ResourceBundle.getBundle(6683049446475877841L, "net.rim.blackberry.api.pim.resource.PIMRes");
    private static Hashtable _actualListeners;
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = -9144547334088878571L;
 
    final void commitAddress(AddressCardModel address) {
       long id = address.getUID();

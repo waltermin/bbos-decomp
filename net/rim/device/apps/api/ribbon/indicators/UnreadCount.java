@@ -23,27 +23,27 @@ public class UnreadCount implements Indicator, CountIndicator {
    private boolean _visible = true;
    StringProps _action;
    boolean _mergeWithText;
-   private static final int ICON_MESSAGE;
-   private static final int ICON_MESSAGE_FILED;
-   private static final int ICON_VOICE;
-   private static final int ICON_BROWSER;
-   private static final int ICON_CALENDAR;
-   private static final int ICON_IM;
-   private static final int ICON_SMS;
-   private static final int ICON_ANONYMOUS;
-   private static final int ICON_TASK;
-   private static final int ICON_COUNT;
-   public static final int TYPE_MESSAGE;
-   public static final int TYPE_MESSAGE_FILED;
-   public static final int TYPE_VOICE;
-   public static final int TYPE_BROWSER;
-   public static final int TYPE_CALENDAR;
-   public static final int TYPE_IM;
-   public static final int TYPE_SMS;
-   public static final int TYPE_ANONYMOUS;
-   public static final int TYPE_TASK;
-   public static final int TYPE_SMSMMS;
-   private static final int TYPE_COUNT;
+   private static final int ICON_MESSAGE = 0;
+   private static final int ICON_MESSAGE_FILED = 1;
+   private static final int ICON_VOICE = 2;
+   private static final int ICON_BROWSER = 3;
+   private static final int ICON_CALENDAR = 4;
+   private static final int ICON_IM = 5;
+   private static final int ICON_SMS = 6;
+   private static final int ICON_ANONYMOUS = 7;
+   private static final int ICON_TASK = 8;
+   private static final int ICON_COUNT = 9;
+   public static final int TYPE_MESSAGE = 0;
+   public static final int TYPE_MESSAGE_FILED = 1;
+   public static final int TYPE_VOICE = 2;
+   public static final int TYPE_BROWSER = 3;
+   public static final int TYPE_CALENDAR = 4;
+   public static final int TYPE_IM = 5;
+   public static final int TYPE_SMS = 6;
+   public static final int TYPE_ANONYMOUS = 7;
+   public static final int TYPE_TASK = 8;
+   public static final int TYPE_SMSMMS = 9;
+   private static final int TYPE_COUNT = 10;
    private static final String[] _typeName = new String[]{
       "message", "messagefiled", "voice", "browser", "calendar", "im", "sms", "anonymous", "task", "smsmms"
    };
@@ -89,8 +89,8 @@ public class UnreadCount implements Indicator, CountIndicator {
       66809,
       738197760
    };
-   public static final String TYPE_NEW_MESSAGE;
-   public static final String TYPE_UNREAD_MESSAGE;
+   public static final String TYPE_NEW_MESSAGE = "new";
+   public static final String TYPE_UNREAD_MESSAGE = "unread";
 
    public boolean hasNewStatus() {
       String appState = null;

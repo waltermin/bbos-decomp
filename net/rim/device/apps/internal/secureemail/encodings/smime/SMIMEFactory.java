@@ -40,8 +40,8 @@ public final class SMIMEFactory extends SecureEmailFactory {
    private PersistentObject _globalSMIMEOptionsHolder;
    private SMIMEOptions _globalSMIMEOptions;
    private OTASyncCapableSyncItem _globalSMIMEOptionsSyncItem;
-   private static final long ID;
-   private static final long GLOBAL_OPTIONS_ID;
+   private static final long ID = -4218546031917805731L;
+   private static final long GLOBAL_OPTIONS_ID = -2380431907050321605L;
    private static final byte[] SECURE_MESSAGING_CAPABILITIES_ARRAY = new byte[]{-128};
    private static SMIMEFactory _instance;
 

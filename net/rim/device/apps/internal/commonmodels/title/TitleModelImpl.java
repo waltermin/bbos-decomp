@@ -33,10 +33,10 @@ public final class TitleModelImpl
    MatchProvider,
    SyncFieldIDProvider {
    private Object _titleEncoding;
-   static final int MEMO_TITLE_SIZE;
-   static final int TASK_TITLE_FIELD_TAG;
-   static final int MEMO_SUBJECT_FIELD_TAG;
-   public static final int SEARCH_TITLE_FIELD_TAG;
+   static final int MEMO_TITLE_SIZE = 255;
+   static final int TASK_TITLE_FIELD_TAG = 2;
+   static final int MEMO_SUBJECT_FIELD_TAG = 1;
+   public static final int SEARCH_TITLE_FIELD_TAG = 1;
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {

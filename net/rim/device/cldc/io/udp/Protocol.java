@@ -30,9 +30,9 @@ public final class Protocol extends NativeConnectionBase {
    private int _localPort = -1;
    private String _apnName;
    private Tunnel _tunnel;
-   private static final byte IS_MIDLET_UNDETERMINED;
-   private static final byte IS_MIDLET_TRUE;
-   private static final byte IS_MIDLET_FALSE;
+   private static final byte IS_MIDLET_UNDETERMINED = 0;
+   private static final byte IS_MIDLET_TRUE = 1;
+   private static final byte IS_MIDLET_FALSE = 2;
    private static PortAssigner _hpa = PortAssigner.getInstance(17);
    private static String SERVER_CHECK_STRING = "//:";
    private static String SLASH_SLASH = "//";

@@ -55,12 +55,12 @@ public class ChoiceField extends Field implements FieldLabelProvider {
    private final StringBufferGap _buffer = new StringBufferGap();
    private static Tag TAG = Tag.create("choice");
    private static Tag TAG_LABEL = Tag.create("label");
-   public static final int CONTEXT_CHANGE_OPTION;
-   public static final long FORCE_SINGLE_LINE;
-   public static final long RESTRICTED_STYLE;
-   public static final long NUMERIC_STYLE;
-   protected static final int PADDING;
-   protected static final int CHANGE_OPTION_ORDERING;
+   public static final int CONTEXT_CHANGE_OPTION = 2;
+   public static final long FORCE_SINGLE_LINE = 536870912L;
+   public static final long RESTRICTED_STYLE = 268435456L;
+   public static final long NUMERIC_STYLE = 134217728L;
+   protected static final int PADDING = 2;
+   protected static final int CHANGE_OPTION_ORDERING = 30270;
    private static MenuItem _changeOptionsItem = new ChoiceField$ChangeOptionMenuItem();
 
    void changeOptionDialog() {

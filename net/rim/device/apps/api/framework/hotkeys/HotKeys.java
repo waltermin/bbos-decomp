@@ -9,16 +9,16 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 public class HotKeys {
-   public static final int MESSAGES_LIST;
-   public static final int EMAIL_VIEW_SCREEN;
-   public static final int SAVED_MESSAGES_LIST;
-   public static final int CALENDAR;
-   public static final int MEMOPAD;
-   public static final int TASKS;
-   public static final int SEARCH;
-   public static final int BROWSER;
-   private static final long KEY;
-   public static final long GUID_HOTKEYS_CHANGED;
+   public static final int MESSAGES_LIST = 1;
+   public static final int EMAIL_VIEW_SCREEN = 2;
+   public static final int SAVED_MESSAGES_LIST = 3;
+   public static final int CALENDAR = 4;
+   public static final int MEMOPAD = 5;
+   public static final int TASKS = 6;
+   public static final int SEARCH = 7;
+   public static final int BROWSER = 8;
+   private static final long KEY = 6579610397692695143L;
+   public static final long GUID_HOTKEYS_CHANGED = -273986034351666339L;
    private static IntHashtable _listTable;
 
    public static boolean registerHotKey(int hotKeyListGUID, char key, Verb action) {

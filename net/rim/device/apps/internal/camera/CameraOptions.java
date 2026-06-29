@@ -13,31 +13,31 @@ import net.rim.device.internal.io.file.FileUtilities;
 
 public final class CameraOptions extends OptionsBase {
    private CameraOptions$PersistedCameraOptions _persistedCameraOptions;
-   private static final long CAMERA_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_CAMERA_OPTIONS;
-   public static final int MEMORY_INTERNAL;
-   public static final int MEMORY_MEDIACARD;
-   public static final int IMAGE_WIDTH;
-   public static final int IMAGE_HEIGHT;
-   private static final int IMAGE_LARGE;
-   private static final int IMAGE_MEDIUM;
-   private static final int IMAGE_SMALL;
-   public static final int IMAGE_SIZE_DEFAULT_INDEX;
+   private static final long CAMERA_OPTIONS_SYNC_ITEM = -2704008073494369964L;
+   private static final long PERSISTED_CAMERA_OPTIONS = -1621984282985383160L;
+   public static final int MEMORY_INTERNAL = 0;
+   public static final int MEMORY_MEDIACARD = 1;
+   public static final int IMAGE_WIDTH = 0;
+   public static final int IMAGE_HEIGHT = 1;
+   private static final int IMAGE_LARGE = 0;
+   private static final int IMAGE_MEDIUM = 1;
+   private static final int IMAGE_SMALL = 2;
+   public static final int IMAGE_SIZE_DEFAULT_INDEX = 0;
    private static int[][][] _imageSizeTable = new int[3][][];
    private static final int[] IMAGE_SIZE_1600x1200 = new int[]{1600, 1200, -805042284, 100692579, 11408, 1935999488, 1811939328, 2141993162};
    private static final int[] IMAGE_SIZE_1280x1024 = new int[]{1280, 1024, 51, -804651006, 320, 240, -804651006, 1600};
    private static final int[] IMAGE_SIZE_1024x768 = new int[]{1024, 768, -804651006, 1280, 1024, 51, -804651006, 320};
    private static final int[] IMAGE_SIZE_640x480 = new int[]{640, 480, 527827200, 16810638, 1701539702, 1870004480, 290219371, -1258225653};
    private static final int[] IMAGE_SIZE_320x240 = new int[]{320, 240, -804651006, 1600, 1200, -805042284, 100692579, 11408};
-   private static final int IMAGE_QUALITY_DEFAULT_INDEX;
+   private static final int IMAGE_QUALITY_DEFAULT_INDEX = 2;
    private static final int[] IMAGE_QUALITY_TABLE = new int[]{0, 1, 2, -804651001, 0, 1, 2, 3, -1, 5, 6, -804651005};
-   public static final int FLASH_MODE_OFF_INDEX;
-   public static final int FLASH_MODE_ON_INDEX;
-   public static final int FLASH_MODE_AUTO_INDEX;
-   private static final int FLASH_MODE_DEFAULT_INDEX;
+   public static final int FLASH_MODE_OFF_INDEX = 0;
+   public static final int FLASH_MODE_ON_INDEX = 1;
+   public static final int FLASH_MODE_AUTO_INDEX = 2;
+   private static final int FLASH_MODE_DEFAULT_INDEX = 2;
    public static final int[] FLASH_MODE_TABLE = new int[]{0, 1, 2, -804651001, 0, 1, 2, 3, -1, 5, 6, -804651005};
-   static final int WHITE_BALANCE_UNUSED_INDEX;
-   private static final int WHITE_BALANCE_DEFAULT_INDEX;
+   static final int WHITE_BALANCE_UNUSED_INDEX = -1;
+   private static final int WHITE_BALANCE_DEFAULT_INDEX = 0;
    private static final int[] WHITE_BALANCE_TABLE = new int[]{
       0,
       1,
@@ -68,26 +68,26 @@ public final class CameraOptions extends OptionsBase {
       11408,
       1935999488
    };
-   public static final int VIEWFINDER_MODE_TOGGLE;
-   public static final int VIEWFINDER_MODE_NORMAL;
-   public static final int VIEWFINDER_MODE_FULLSCREEN;
-   public static final int VIEWFINDER_MODE_DEFAULT;
+   public static final int VIEWFINDER_MODE_TOGGLE = -1;
+   public static final int VIEWFINDER_MODE_NORMAL = 0;
+   public static final int VIEWFINDER_MODE_FULLSCREEN = 1;
+   public static final int VIEWFINDER_MODE_DEFAULT = 0;
    private static final int SUPPORTED_COLOUR_EFFECTS = Camera.getColourEffects();
-   private static final int COLOUR_EFFECTS_DEFAULT_INDEX;
+   private static final int COLOUR_EFFECTS_DEFAULT_INDEX = 0;
    private static final int[] COLOUR_EFFECTS_TABLE = new int[]{0, 5, 6, -804651006, 1024, 768, -804651006, 1280, 1024, 51, -804651006, 320};
-   public static final int CAMERA_OPTION_FLASHMODE;
-   public static final int CAMERA_OPTION_ZOOMMODE;
-   public static final int CAMERA_OPTION_WHITEBALANCE;
-   public static final int CAMERA_OPTION_QUALITY;
-   public static final int CAMERA_OPTION_SIZE;
-   public static final int CAMERA_MEMORY_TYPE;
-   public static final int CAMERA_DESTINATION_FOLDER;
-   public static final int CAMERA_VIEWFINDER_MODE;
-   public static final int CAMERA_COLOUR_EFFECTS;
-   public static final int CAMERA_FREQ_SELECT;
-   static final int DEV_OPTION_PREVIEW;
-   static final int DEV_OPTION_SOUND;
-   static final int DEV_OPTION_LOGGING;
+   public static final int CAMERA_OPTION_FLASHMODE = 1;
+   public static final int CAMERA_OPTION_ZOOMMODE = 2;
+   public static final int CAMERA_OPTION_WHITEBALANCE = 3;
+   public static final int CAMERA_OPTION_QUALITY = 4;
+   public static final int CAMERA_OPTION_SIZE = 5;
+   public static final int CAMERA_MEMORY_TYPE = 6;
+   public static final int CAMERA_DESTINATION_FOLDER = 7;
+   public static final int CAMERA_VIEWFINDER_MODE = 8;
+   public static final int CAMERA_COLOUR_EFFECTS = 9;
+   public static final int CAMERA_FREQ_SELECT = 10;
+   static final int DEV_OPTION_PREVIEW = 1;
+   static final int DEV_OPTION_SOUND = 2;
+   static final int DEV_OPTION_LOGGING = 4;
    private static CameraOptions _options;
 
    private CameraOptions() {

@@ -7,10 +7,10 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 
 class HomeAwayOptionField extends ObjectChoiceField implements MMSOptionsScreen$Saveable {
    private int[] _modes;
-   public static final int CHOICETYPE_ALWAYS_NEVER;
-   public static final int CHOICETYPE_ALWAYS_NEVER_HOMEONLY;
-   public static final int CHOICETYPE_ALWAYS_NEVER_HOMEONLY_UNSPECIFIED;
-   public static final int CHOICETYPE_READONLY;
+   public static final int CHOICETYPE_ALWAYS_NEVER = 0;
+   public static final int CHOICETYPE_ALWAYS_NEVER_HOMEONLY = 1;
+   public static final int CHOICETYPE_ALWAYS_NEVER_HOMEONLY_UNSPECIFIED = 2;
+   public static final int CHOICETYPE_READONLY = 3;
 
    protected void saveMode(int _1) {
       throw null;

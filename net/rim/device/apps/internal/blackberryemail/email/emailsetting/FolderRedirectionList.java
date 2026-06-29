@@ -26,9 +26,9 @@ class FolderRedirectionList extends FolderList implements Confirmation, EmailFol
    private SelectAllFolderVerb _selectAllVerb;
    private SelectAllFolderVerb _deselectAllVerb;
    private FolderRedirectionList$ChangeOptionVerb _changeOptionVerb;
-   private static final int UNCHECKED_ICON;
-   private static final int CHECKED_ICON;
-   private static final int DISABLED_ICON;
+   private static final int UNCHECKED_ICON = 0;
+   private static final int CHECKED_ICON = 1;
+   private static final int DISABLED_ICON = 7;
 
    public FolderRedirectionList(Folder startFolder, String title, boolean shouldMakeSelectVerbDefaultInitially, ServiceRecord sr) {
       super(startFolder, title, shouldMakeSelectVerbDefaultInitially);

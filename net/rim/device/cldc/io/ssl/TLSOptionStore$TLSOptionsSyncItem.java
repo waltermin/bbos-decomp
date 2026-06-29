@@ -9,22 +9,22 @@ import net.rim.device.api.util.DataBuffer;
 
 class TLSOptionStore$TLSOptionsSyncItem extends OTASyncCapableSyncItem {
    private final TLSOptionStore this$0;
-   private static final int SESSION_RESUMPTION;
-   private static final int PROMPT_FOR_CERTIFICATE;
-   private static final int PROMPT_FOR_CERTIFICATE_ONE;
-   private static final int PROMPT_FOR_DOMAIN_NAME;
-   private static final int PROMPT_FOR_CERTIFICATE_TRUST;
-   private static final int MIN_RSA_KEY_SIZE;
-   private static final int MIN_DH_KEY_SIZE;
-   private static final int MIN_EC_KEY_SIZE;
-   private static final int MIN_DSA_KEY_SIZE;
-   private static final int ALLOW_EXPORT;
-   private static final int RESTRICT_FIPS;
-   private static final int DEFAULT_IMPLEMENTATION;
-   private static final int USE_TLS;
-   private static final int USE_SSL;
-   private static final int DO_REDIRECTION;
-   private static final int TRUSTED_HOSTS;
+   private static final int SESSION_RESUMPTION = 1;
+   private static final int PROMPT_FOR_CERTIFICATE = 2;
+   private static final int PROMPT_FOR_CERTIFICATE_ONE = 3;
+   private static final int PROMPT_FOR_DOMAIN_NAME = 4;
+   private static final int PROMPT_FOR_CERTIFICATE_TRUST = 5;
+   private static final int MIN_RSA_KEY_SIZE = 6;
+   private static final int MIN_DH_KEY_SIZE = 7;
+   private static final int MIN_EC_KEY_SIZE = 8;
+   private static final int MIN_DSA_KEY_SIZE = 9;
+   private static final int ALLOW_EXPORT = 10;
+   private static final int RESTRICT_FIPS = 11;
+   private static final int DEFAULT_IMPLEMENTATION = 12;
+   private static final int USE_TLS = 13;
+   private static final int USE_SSL = 14;
+   private static final int DO_REDIRECTION = 15;
+   private static final int TRUSTED_HOSTS = 16;
 
    TLSOptionStore$TLSOptionsSyncItem(TLSOptionStore _1) {
       this.this$0 = _1;

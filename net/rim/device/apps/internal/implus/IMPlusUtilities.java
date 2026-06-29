@@ -27,9 +27,9 @@ import net.rim.device.apps.api.ui.ToggleableField;
 import net.rim.vm.Array;
 
 final class IMPlusUtilities {
-   public static final long SOURCE_ADDRESS_CARD;
-   private static final int MESSAGE_ADDRESS_DATA_SIZE;
-   private static final String MAILTO_PREFIX;
+   public static final long SOURCE_ADDRESS_CARD = -570873356703084835L;
+   private static final int MESSAGE_ADDRESS_DATA_SIZE = 8;
+   private static final String MAILTO_PREFIX = "mailto:";
    private static Object _friendlyContext = new Object(10);
    private static String[] _nameStrings = new Object[2];
 

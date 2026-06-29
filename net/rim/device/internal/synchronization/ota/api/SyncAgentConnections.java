@@ -15,14 +15,14 @@ public final class SyncAgentConnections implements LowMemoryFailedListener, Glob
    private SimpleSortingIntVector _syncAgentConnectionsPriority = (SimpleSortingIntVector)(new Object());
    private byte _lowMemoryPollCounter;
    private boolean _lowInMemory;
-   private static final long APPLICATION_REG_GUID;
-   private static final byte ALL_CONNECTIONS;
-   private static final byte ALL_CONNECTIONS_WITH_PENDING_CHANGES;
-   private static final byte ANY_CONNECTION_WITH_PENDING_CHANGES;
-   private static final byte ALL_CONNECTIONS_UNINITALIZED;
-   private static final byte ANY_CONNECTION_UNINITALIZED;
-   private static final byte ALL_CONNECTIONS_INITALIZED;
-   private static final byte ANY_CONNECTIONS_OPERATIONS_UNCOMPLETE;
+   private static final long APPLICATION_REG_GUID = 2945150083663420434L;
+   private static final byte ALL_CONNECTIONS = 1;
+   private static final byte ALL_CONNECTIONS_WITH_PENDING_CHANGES = 2;
+   private static final byte ANY_CONNECTION_WITH_PENDING_CHANGES = 4;
+   private static final byte ALL_CONNECTIONS_UNINITALIZED = 8;
+   private static final byte ANY_CONNECTION_UNINITALIZED = 16;
+   private static final byte ALL_CONNECTIONS_INITALIZED = 50;
+   private static final byte ANY_CONNECTIONS_OPERATIONS_UNCOMPLETE = 100;
    private static SyncAgentConnections _instance;
 
    private static final void loadSingletonInstance() {

@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class DefaultHttpStack {
    private String _directive;
-   private static final long ID;
+   private static final long ID = -3235705002630425866L;
    public static String TCP = "tcp";
    public static String MDS = "mds";
    private static DefaultHttpStack _instance;

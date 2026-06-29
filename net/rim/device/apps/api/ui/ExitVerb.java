@@ -14,11 +14,11 @@ public class ExitVerb extends Verb {
    private ResourceBundleFamily _descriptionFamily;
    private int _descriptionId;
    private Confirmation _confirmation;
-   public static final int POP_SCREEN;
-   public static final int SYSTEM_EXIT;
-   public static final int APP_REQUEST_BACKGROUND;
-   public static final int SHOW_RIBBON;
-   public static final int NOTHING;
+   public static final int POP_SCREEN = 0;
+   public static final int SYSTEM_EXIT = 1;
+   public static final int APP_REQUEST_BACKGROUND = 2;
+   public static final int SHOW_RIBBON = 3;
+   public static final int NOTHING = 4;
 
    public ExitVerb(int invokeAction, Confirmation confirmation) {
       this(268501008, CommonResource.getBundle(), 9, invokeAction, confirmation);

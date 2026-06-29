@@ -11,7 +11,7 @@ final class WeekVerbManager extends CalendarViewVerbManager {
    private GotoDateVerb _prevWeekVerb = new GotoDateVerb(326, 479536, 341);
    private Calendar _cal = Calendar.getInstance();
    private CalendarExtensions _calEx = (CalendarExtensions)this._cal;
-   private static final int DAYS_IN_WEEK;
+   private static final int DAYS_IN_WEEK = 7;
 
    public WeekVerbManager(CalendarActions calActions) {
       super(calActions);

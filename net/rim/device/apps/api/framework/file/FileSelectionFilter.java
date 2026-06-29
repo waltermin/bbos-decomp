@@ -7,22 +7,22 @@ public class FileSelectionFilter {
    protected int _selectAttribs;
    private Recognizer _recognizer;
    private String _sampleFolder;
-   public static final int ROOT_VIEW_EXPLORE;
-   public static final int ROOT_VIEW_PICTURES;
-   public static final int ROOT_VIEW_RINGTONES;
-   public static final int ROOT_VIEW_VIDEOS;
-   public static final int ROOT_VIEW_MUSIC;
-   public static final int ROOT_VIEW_VOICE_NOTES;
-   public static final int MEDIA_TYPE_FIELD;
-   public static final int FORWARD_LOCKED;
-   public static final int FORWARD_UNLOCKED;
-   public static final int SELECT_FOLDER;
-   public static final int SELECT_FILE;
-   public static final int SELECT_WRITEABLE;
-   public static final int PRELOADED;
-   public static final int HIDE_FILTERED;
-   private static final int DEFAULT_SAVE_ATTRIBS;
-   private static final int DEFAULT_LOAD_ATTRIBS;
+   public static final int ROOT_VIEW_EXPLORE = 0;
+   public static final int ROOT_VIEW_PICTURES = 1;
+   public static final int ROOT_VIEW_RINGTONES = 2;
+   public static final int ROOT_VIEW_VIDEOS = 3;
+   public static final int ROOT_VIEW_MUSIC = 4;
+   public static final int ROOT_VIEW_VOICE_NOTES = 5;
+   public static final int MEDIA_TYPE_FIELD = 255;
+   public static final int FORWARD_LOCKED = 256;
+   public static final int FORWARD_UNLOCKED = 512;
+   public static final int SELECT_FOLDER = 1024;
+   public static final int SELECT_FILE = 2048;
+   public static final int SELECT_WRITEABLE = 4096;
+   public static final int PRELOADED = 8192;
+   public static final int HIDE_FILTERED = Integer.MIN_VALUE;
+   private static final int DEFAULT_SAVE_ATTRIBS = -2147476480;
+   private static final int DEFAULT_LOAD_ATTRIBS = -2147473408;
 
    public FileSelectionFilter() {
       this(0);

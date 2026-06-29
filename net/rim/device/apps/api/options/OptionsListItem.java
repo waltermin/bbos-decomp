@@ -26,10 +26,10 @@ public class OptionsListItem implements RIMModel, PaintProvider, ActionProvider,
    private int _rbKey;
    private int _cachedLocaleCode;
    private long _groupId = 1888231790844671165L;
-   public static final long OPTIONS_GROUP_BASIC;
-   public static final long OPTIONS_GROUP_ADVANCED;
-   public static final long OPTIONS_GROUP_SECURITY;
-   public static final int DEFAULT_SCREEN_ORDER;
+   public static final long OPTIONS_GROUP_BASIC = 1888231790844671165L;
+   public static final long OPTIONS_GROUP_ADVANCED = -1514481539159318190L;
+   public static final long OPTIONS_GROUP_SECURITY = 5294015899860238835L;
+   public static final int DEFAULT_SCREEN_ORDER = 10000;
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {

@@ -14,7 +14,7 @@ import net.rim.device.internal.system.MIDletSecurity;
 import net.rim.vm.PersistentInteger;
 
 final class MIDPRootCertificates {
-   private static final long ID;
+   private static final long ID = -32671864274826206L;
    private static final byte[] US_cingular_Trusted3rd = new byte[]{
       4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 4, 4, 4, 4, 0, 0, 0, 3
    };
@@ -39,7 +39,7 @@ final class MIDPRootCertificates {
    private static final byte[] MIDP_IDENTIFIED_THIRD_PARTY_PROTECTION_DOMAIN = new byte[]{
       4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4
    };
-   private static final long CERTSTATUSTIME;
+   private static final long CERTSTATUSTIME = 1158007107581L;
 
    private static final byte[] nothingAllowed() {
       byte[] base = new byte[40];

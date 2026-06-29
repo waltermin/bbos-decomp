@@ -6,14 +6,14 @@ final class QOP {
    int maxLocAge;
    byte delay;
    byte optionals;
-   static final byte QOP_MASK_VERACC;
-   static final byte QOP_MASK_MAXLOCAGE;
-   static final byte QOP_MASK_DELAY;
-   static final byte QOP_OPTIONALS_BIT_SIZE;
-   static final byte QOP_HORACC_BIT_SIZE;
-   static final byte QOP_VERACC_BIT_SIZE;
-   static final byte QOP_MAXLOCAGE_BIT_SIZE;
-   static final byte QOP_DELAY_BIT_SIZE;
+   static final byte QOP_MASK_VERACC = 4;
+   static final byte QOP_MASK_MAXLOCAGE = 2;
+   static final byte QOP_MASK_DELAY = 1;
+   static final byte QOP_OPTIONALS_BIT_SIZE = 3;
+   static final byte QOP_HORACC_BIT_SIZE = 7;
+   static final byte QOP_VERACC_BIT_SIZE = 7;
+   static final byte QOP_MAXLOCAGE_BIT_SIZE = 16;
+   static final byte QOP_DELAY_BIT_SIZE = 3;
 
    final void decode(Nibbler nib) {
       if (nib.getBit()) {

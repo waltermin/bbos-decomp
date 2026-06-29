@@ -19,14 +19,14 @@ final class PooledTransaction implements Poolable {
    private LongHashtable _operations = (LongHashtable)(new Object());
    private Vector _objFields;
    private int _id;
-   static final int OP_DUMMY;
-   static final int OP_CREATE;
-   static final int OP_MODIFY;
-   static final int OP_REMOVE;
-   static final int OP_MARK_REMOVE;
-   static final int MAX_ID;
-   static final int INVALID_ID;
-   static final int NO_PKEY;
+   static final int OP_DUMMY = 0;
+   static final int OP_CREATE = 1;
+   static final int OP_MODIFY = 2;
+   static final int OP_REMOVE = 4;
+   static final int OP_MARK_REMOVE = 8;
+   static final int MAX_ID = Integer.MAX_VALUE;
+   static final int INVALID_ID = -1;
+   static final int NO_PKEY = -1;
    private static int _idCount = 0;
 
    public final IntVector getEntry(long dh) {

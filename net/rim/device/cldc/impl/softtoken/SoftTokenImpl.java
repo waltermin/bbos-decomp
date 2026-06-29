@@ -15,8 +15,8 @@ public final class SoftTokenImpl implements SoftToken {
    public String _enterpriseConfigID;
    private byte[] _seed;
    private byte[] _seedPassword;
-   public static final int MAX_PIN_LENGTH;
-   public static final int MIN_PIN_LENGTH;
+   public static final int MAX_PIN_LENGTH = 8;
+   public static final int MIN_PIN_LENGTH = 4;
 
    public final String getSeedPassword() {
       return (String)(this._seedPassword == null ? "" : new Object(this._seedPassword));

@@ -31,8 +31,8 @@ final class PINMessageSync
    OTASyncDefaultProvider,
    OTASyncEventOptimizationProvider {
    private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
-   private static final String SYNC_COLLECTION_NAME;
-   private static final long PIN_MESSAGES_BACKUP_MERGE_ID;
+   private static final String SYNC_COLLECTION_NAME = "PIN Messages";
+   private static final long PIN_MESSAGES_BACKUP_MERGE_ID = -8297684192922704087L;
 
    PINMessageSync() {
       EmailHierarchy anonymousEmailHierarchy = EmailHierarchy.getAnonymousEmailHierarchy();

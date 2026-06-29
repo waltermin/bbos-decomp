@@ -10,11 +10,11 @@ public class JarEntry {
    private int _compressedLength;
    private String _name;
    private int _uncompressedLength;
-   private static final int STORED;
-   private static final int DEFLATE;
-   private static final int BUFFER_SIZE;
-   private static final int TRAILER_SIZE;
-   private static final int TRAILER_FIRST_BYTE;
+   private static final int STORED = 0;
+   private static final int DEFLATE = 8;
+   private static final int BUFFER_SIZE = 4096;
+   private static final int TRAILER_SIZE = 16;
+   private static final int TRAILER_FIRST_BYTE = 80;
 
    private final void checkCompression(int compression) {
       if (compression != 0 && compression != 8) {

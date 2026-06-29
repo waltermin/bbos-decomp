@@ -8,8 +8,8 @@ public class NamespaceSupport {
    private NamespaceSupport$Context currentContext;
    private int contextPos;
    private boolean namespaceDeclUris;
-   public static final String XMLNS;
-   public static final String NSDECL;
+   public static final String XMLNS = "http://www.w3.org/XML/1998/namespace";
+   public static final String NSDECL = "http://www.w3.org/xmlns/2000/";
    private static final Enumeration EMPTY_ENUMERATION = ((Vector)(new Object())).elements();
 
    public NamespaceSupport() {

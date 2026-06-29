@@ -7,10 +7,10 @@ import net.rim.device.api.crypto.keystore.KeyStoreDataMap;
 import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 
 public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
-   public static final int SIGNING;
-   public static final int ENCRYPTION;
-   public static final int SIGNING_AND_ENCRYPTION;
+   public static final long ID = 7492162715265800726L;
+   public static final int SIGNING = 0;
+   public static final int ENCRYPTION = 1;
+   public static final int SIGNING_AND_ENCRYPTION = 2;
 
    @Override
    public long getID() {

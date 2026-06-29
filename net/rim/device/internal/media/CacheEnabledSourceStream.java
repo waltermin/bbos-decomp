@@ -10,8 +10,8 @@ public class CacheEnabledSourceStream implements SourceStream {
    private byte[] _cache;
    private long _position;
    private long _streamPosition;
-   private static final int USE_DEFAULT_VALUE;
-   private static final long MAX_CACHE_SIZE;
+   private static final int USE_DEFAULT_VALUE = -1;
+   private static final long MAX_CACHE_SIZE = 1048576L;
 
    public CacheEnabledSourceStream(SourceStream source) {
       this._stream = source;

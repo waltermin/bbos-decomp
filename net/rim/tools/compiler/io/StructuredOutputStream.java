@@ -10,7 +10,7 @@ public class StructuredOutputStream implements Constants {
    private OutputStream _out;
    private byte[] _buffer;
    private int _used;
-   private static final boolean _littleEndian;
+   private static final boolean _littleEndian = true;
 
    protected void init(OutputStream out, boolean littleEndian, PrintStream listing) {
       this._out = out;

@@ -34,10 +34,10 @@ public final class CodeModuleGroup {
    private int _handle;
    private String _midletSigner;
    private byte[] _midletSignerHash;
-   public static final int FLAG_REQUIRED;
-   public static final int FLAG_HIDDEN;
-   public static final int FLAG_DEPENDENCY;
-   public static final int FLAG_LIBRARY;
+   public static final int FLAG_REQUIRED = 1;
+   public static final int FLAG_HIDDEN = 2;
+   public static final int FLAG_DEPENDENCY = 4;
+   public static final int FLAG_LIBRARY = 8;
 
    CodeModuleGroup(int handle) {
       this._handle = handle;

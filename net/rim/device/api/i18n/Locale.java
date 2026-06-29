@@ -25,32 +25,32 @@ public final class Locale {
    private int _code;
    private String _variant;
    private int _keyboardID;
-   private static final int A;
-   private static final int B;
-   private static final int C;
-   private static final int D;
-   private static final int E;
-   private static final int F;
-   private static final int G;
-   private static final int H;
-   private static final int I;
-   private static final int J;
-   private static final int K;
-   private static final int L;
-   private static final int M;
-   private static final int N;
-   private static final int O;
-   private static final int P;
-   private static final int Q;
-   private static final int R;
-   private static final int S;
-   private static final int T;
-   private static final int U;
-   private static final int V;
-   private static final int W;
-   private static final int X;
-   private static final int Y;
-   private static final int Z;
+   private static final int A = 1;
+   private static final int B = 2;
+   private static final int C = 4;
+   private static final int D = 8;
+   private static final int E = 16;
+   private static final int F = 32;
+   private static final int G = 64;
+   private static final int H = 128;
+   private static final int I = 256;
+   private static final int J = 512;
+   private static final int K = 1024;
+   private static final int L = 2048;
+   private static final int M = 4096;
+   private static final int N = 8192;
+   private static final int O = 16384;
+   private static final int P = 32768;
+   private static final int Q = 65536;
+   private static final int R = 131072;
+   private static final int S = 262144;
+   private static final int T = 524288;
+   private static final int U = 1048576;
+   private static final int V = 2097152;
+   private static final int W = 4194304;
+   private static final int X = 8388608;
+   private static final int Y = 16777216;
+   private static final int Z = 33554432;
    private static final int[] _languagesISO639 = new int[]{
       50728995,
       156113,
@@ -157,7 +157,7 @@ public final class Locale {
       1979777150,
       846737962
    };
-   private static final int _languagesISO639Count;
+   private static final int _languagesISO639Count = 139;
    private static final int[] _countriesISO3166 = new int[]{
       39811448,
       57570299,
@@ -264,7 +264,7 @@ public final class Locale {
       1107820713,
       191260277
    };
-   private static final int _countriesISO3166Count;
+   private static final int _countriesISO3166Count = 239;
    private static final short[] _latin1CharacterSetsLocales = new short[]{
       24934,
       25202,
@@ -413,54 +413,54 @@ public final class Locale {
       5271552,
       8355273
    };
-   private static final long LOCALE;
+   private static final long LOCALE = 2450419769951257358L;
    private static String EMPTY = "";
-   public static final long GUID_LOCALE_CHANGED;
-   public static final long GUID_INPUT_LOCALE_CHANGED;
-   public static final long GUID_NAME_ORDER_CHANGED;
-   public static final int APPLICATION;
-   public static final int NO_KEYBOARD_ID;
-   public static final int LOCALE_SET_DECLINED;
-   public static final int LOCALE_SET_OK;
+   public static final long GUID_LOCALE_CHANGED = -7464003439710973532L;
+   public static final long GUID_INPUT_LOCALE_CHANGED = -8040378802380461050L;
+   public static final long GUID_NAME_ORDER_CHANGED = -1438311245835636745L;
+   public static final int APPLICATION = 1;
+   public static final int NO_KEYBOARD_ID = -1;
+   public static final int LOCALE_SET_DECLINED = 0;
+   public static final int LOCALE_SET_OK = 1;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(3895678782769729248L);
    private static Locale$LocalePersist _localePersist;
-   private static final long REGISTRY_NAME;
+   private static final long REGISTRY_NAME = 3895678782769729248L;
    private static Locale$Locales _locales;
    private static Locale _defaultLocale;
    private static Locale _defaultInputLocale;
-   public static final int LOCALE_ROOT;
-   public static final int LOCALE_ar;
-   public static final int LOCALE_ca;
-   public static final int LOCALE_cs;
-   public static final int LOCALE_de;
-   public static final int LOCALE_en;
-   public static final int LOCALE_en_GB;
-   public static final int LOCALE_en_US;
-   public static final int LOCALE_es;
-   public static final int LOCALE_es_MX;
-   public static final int LOCALE_fr;
-   public static final int LOCALE_fr_CA;
-   public static final int LOCALE_he;
-   public static final int LOCALE_hu;
-   public static final int LOCALE_it;
-   public static final int LOCALE_ko;
-   public static final int LOCALE_nl;
-   public static final int LOCALE_pt;
-   public static final int LOCALE_pt_BR;
-   public static final int LOCALE_zh;
-   public static final int LOCALE_zh_CN;
-   public static final int LOCALE_zh_HK;
-   public static final int LOCALE_el;
-   public static final int LOCALE_tr;
-   public static final int LOCALE_ru;
-   public static final int LOCALE_pl;
-   public static final int LOCALE_ja;
-   public static final int KEYBOARD_ID_QWERTY;
-   public static final int KEYBOARD_ID_QWERTY_PHONE;
-   public static final int KEYBOARD_ID_QWERTY_REDUCED;
-   public static final int KEYBOARD_ID_QWERTY_LEGACY;
-   public static final int FIRST_NAME_ORDER;
-   public static final int LAST_NAME_ORDER;
+   public static final int LOCALE_ROOT = 0;
+   public static final int LOCALE_ar = 1634861056;
+   public static final int LOCALE_ca = 1667301376;
+   public static final int LOCALE_cs = 1668481024;
+   public static final int LOCALE_de = 1684340736;
+   public static final int LOCALE_en = 1701707776;
+   public static final int LOCALE_en_GB = 1701726018;
+   public static final int LOCALE_en_US = 1701729619;
+   public static final int LOCALE_es = 1702035456;
+   public static final int LOCALE_es_MX = 1702055256;
+   public static final int LOCALE_fr = 1718747136;
+   public static final int LOCALE_fr_CA = 1718764353;
+   public static final int LOCALE_he = 1751449600;
+   public static final int LOCALE_hu = 1752498176;
+   public static final int LOCALE_it = 1769209856;
+   public static final int LOCALE_ko = 1802436608;
+   public static final int LOCALE_nl = 1852571648;
+   public static final int LOCALE_pt = 1886650368;
+   public static final int LOCALE_pt_BR = 1886667346;
+   public static final int LOCALE_zh = 2053636096;
+   public static final int LOCALE_zh_CN = 2053653326;
+   public static final int LOCALE_zh_HK = 2053654603;
+   public static final int LOCALE_el = 1701576704;
+   public static final int LOCALE_tr = 1953628160;
+   public static final int LOCALE_ru = 1920270336;
+   public static final int LOCALE_pl = 1886126080;
+   public static final int LOCALE_ja = 1784741888;
+   public static final int KEYBOARD_ID_QWERTY = 0;
+   public static final int KEYBOARD_ID_QWERTY_PHONE = 1179602501;
+   public static final int KEYBOARD_ID_QWERTY_REDUCED = 1364346180;
+   public static final int KEYBOARD_ID_QWERTY_LEGACY = 1295594807;
+   public static final int FIRST_NAME_ORDER = 0;
+   public static final int LAST_NAME_ORDER = 1;
 
    private Locale(int code, String variant) {
       if (!verifyCode(code)) {

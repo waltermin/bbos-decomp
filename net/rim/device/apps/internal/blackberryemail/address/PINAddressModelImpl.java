@@ -47,7 +47,7 @@ final class PINAddressModelImpl
    Copyable {
    private Object _dataEncoding;
    private boolean _isFreeForm;
-   private static final String PIN_FIELD_NAME;
+   private static final String PIN_FIELD_NAME = "\rPIN:";
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {

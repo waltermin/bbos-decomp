@@ -17,11 +17,11 @@ import net.rim.device.apps.internal.lbs.resources.LBSResources;
 public final class SearchAddressModel implements MailingAddressModel, FieldProvider, ConversionProvider {
    private byte[] _data;
    private int _type;
-   private static final byte ADDRESS_TAG;
-   private static final byte CITY_TAG;
-   private static final byte AREA_TAG;
-   private static final byte COUNTRY_TAG;
-   private static final byte COMPRESSED_COUNTRY_TAG;
+   private static final byte ADDRESS_TAG = 1;
+   private static final byte CITY_TAG = 2;
+   private static final byte AREA_TAG = 3;
+   private static final byte COUNTRY_TAG = 4;
+   private static final byte COMPRESSED_COUNTRY_TAG = 5;
    private static String[] _countryNames = new String[]{"United States of America", "Canada"};
 
    @Override

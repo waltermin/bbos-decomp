@@ -38,7 +38,7 @@ public class TreeField extends Field implements VariableRowHeightProvider {
    private boolean _drawFocus;
    private boolean _iconFocusChanged;
    private static Tag TAG = Tag.create("tree");
-   private static final int ROW_HEIGHT_FONT;
+   private static final int ROW_HEIGHT_FONT = -1;
    private static MenuItem _expandItem = new TreeField$TreeFieldMenuItem(11, true);
    private static MenuItem _collapseItem = new TreeField$TreeFieldMenuItem(12, false);
 

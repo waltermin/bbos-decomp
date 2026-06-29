@@ -44,7 +44,7 @@ public final class MessageSearchImpl extends MessageSearch {
    private KeywordFilterList _keyList;
    private WeakReference _currentSearch;
    Object[] _keyChoices;
-   static final long FILTER_NAME;
+   static final long FILTER_NAME = 7820085525428081380L;
 
    final void newSearchInProgress(SearchResultCollection src) {
       WeakReference wr = this._currentSearch;

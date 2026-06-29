@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable {
    private static SoftwareDSACryptoToken _instance = new SoftwareDSACryptoToken();
-   private static final long ID_DSA_SIGN_VERIFY;
+   private static final long ID_DSA_SIGN_VERIFY = 4859317825184477194L;
 
    static final SoftwareDSACryptoToken getInstance() {
       return _instance;
@@ -24,7 +24,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       //
       // Bytecode:
       // 00: bipush 1
-      // 01: anewarray 37
+      // 01: anewarray 40
       // 04: dup
       // 05: bipush 0
       // 06: new net/rim/device/api/crypto/DSACryptoSystem

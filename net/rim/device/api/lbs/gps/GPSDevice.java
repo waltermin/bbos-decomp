@@ -6,14 +6,14 @@ public class GPSDevice {
    protected String _name;
    protected String _friendlyName;
    protected GPSLocationData _locationDataInternal;
-   protected static final long UID;
-   public static final long INTERNAL_GPS_GUID;
-   public static final byte NOT_REPORTING;
-   public static final byte REPORTING;
-   public static final byte WAITING;
-   public static final byte FORCED_STOP;
-   public static final byte RETRYING;
-   public static final byte ERROR;
+   protected static final long UID = 4560142210062134028L;
+   public static final long INTERNAL_GPS_GUID = -5162649070632360034L;
+   public static final byte NOT_REPORTING = 0;
+   public static final byte REPORTING = 1;
+   public static final byte WAITING = 2;
+   public static final byte FORCED_STOP = 4;
+   public static final byte RETRYING = 8;
+   public static final byte ERROR = 10;
    public static final NoDevice NO_DEVICE = new NoDevice(null);
 
    private GPSDevice() {

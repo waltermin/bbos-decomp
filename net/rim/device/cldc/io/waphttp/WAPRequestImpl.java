@@ -22,18 +22,18 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
    private WAPConnectionParams _params;
    private ByteArrayOutputStream _outputStream;
    private Object _abortSync = new Object();
-   private static final String CONNECTION_UID;
-   private static final String CONNECTION_TIMEOUT;
-   private static final String WAP_GATEWAY_IP;
-   private static final String WAP_GATEWAY_PORT;
-   private static final String WAP_GATEWAY_APN;
-   private static final String WAP_SOURCE_PORT;
-   private static final String WAP_ENABLE_WTLS;
-   private static final String APN_TunnelAuthUsername;
-   private static final String APN_TunnelAuthPassword;
-   private static final int WAP_GATEWAY_PORT_DEFAULT;
-   private static final int WAP_GATEWAY_SPORT_DEFAULT;
-   private static final int WAP_SOURCE_PORT_DEFAULT;
+   private static final String CONNECTION_UID = "ConnectionUID";
+   private static final String CONNECTION_TIMEOUT = "ConnectionTimeout";
+   private static final String WAP_GATEWAY_IP = "WapGatewayIP";
+   private static final String WAP_GATEWAY_PORT = "WapGatewayPort";
+   private static final String WAP_GATEWAY_APN = "WapGatewayAPN";
+   private static final String WAP_SOURCE_PORT = "WapSourcePort";
+   private static final String WAP_ENABLE_WTLS = "WapEnableWTLS";
+   private static final String APN_TunnelAuthUsername = "TunnelAuthUsername";
+   private static final String APN_TunnelAuthPassword = "TunnelAuthPassword";
+   private static final int WAP_GATEWAY_PORT_DEFAULT = 9201;
+   private static final int WAP_GATEWAY_SPORT_DEFAULT = 9203;
+   private static final int WAP_SOURCE_PORT_DEFAULT = 8205;
 
    public void setStatus(int status) {
       throw new RuntimeException("cod2jar: stack: underflow");

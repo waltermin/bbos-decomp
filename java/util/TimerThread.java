@@ -3,7 +3,7 @@ package java.util;
 class TimerThread extends Thread {
    boolean newTasksMayBeScheduled = true;
    private TaskQueue queue;
-   private static final long THREAD_TIMEOUT;
+   private static final long THREAD_TIMEOUT = 10000L;
 
    TimerThread(TaskQueue queue) {
       this.queue = queue;

@@ -29,11 +29,11 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
    private String _valueAsText;
    private Document _xmlDoc;
    private boolean _xmlDocCreated;
-   private static final int STATE_UNINITIALIZED;
-   private static final int STATE_OPEN;
-   private static final int STATE_SENT;
-   private static final int STATE_RECEIVING;
-   private static final int STATE_LOADED;
+   private static final int STATE_UNINITIALIZED = 0;
+   private static final int STATE_OPEN = 1;
+   private static final int STATE_SENT = 2;
+   private static final int STATE_RECEIVING = 3;
+   private static final int STATE_LOADED = 4;
 
    final synchronized void open(String method, String url, boolean aSync, String username, String pwd) {
       this.reset();

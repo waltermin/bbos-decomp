@@ -5,10 +5,10 @@ public final class ModeManager {
    private int _currentModeIx = 0;
    private AbstractMode _currentMode = null;
    private MapField _mapField = null;
-   public static final int MODE_MAP;
-   public static final int MODE_GPS;
-   public static final int MODE_LOC_REVIEW;
-   public static final int MODE_ROUTE_REVIEW;
+   public static final int MODE_MAP = 0;
+   public static final int MODE_GPS = 1;
+   public static final int MODE_LOC_REVIEW = 2;
+   public static final int MODE_ROUTE_REVIEW = 3;
 
    public ModeManager(MapField mapField) {
       this._mapField = mapField;

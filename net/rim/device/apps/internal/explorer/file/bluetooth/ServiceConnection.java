@@ -37,7 +37,7 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
    private SetProgressRunnable _setProgressRunnable;
    private SetStatusRunnable _statusRunnable;
    private boolean _stopped;
-   private static final int PACKET_SIZE;
+   private static final int PACKET_SIZE = 2048;
 
    public ServiceConnection() {
       this._cancelField.setChangeListener(this);

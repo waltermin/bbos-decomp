@@ -30,11 +30,11 @@ public final class PrefNetworkListOptions extends AppsMainScreen implements Move
    private NetworkInfo _netInfo;
    private MoveableListField _listField;
    private PrefNetworkListOptions$StatusScreen _statusScreen;
-   private static final int STATE_FAILED;
-   private static final int STATE_IDLE;
-   private static final int STATE_READ;
-   private static final int STATE_WRITE;
-   private static final int FLAG_ADD_NETWORK;
+   private static final int STATE_FAILED = 0;
+   private static final int STATE_IDLE = 1;
+   private static final int STATE_READ = 2;
+   private static final int STATE_WRITE = 3;
+   private static final int FLAG_ADD_NETWORK = 1;
 
    protected final Verb getCloseVerb() {
       return this._netList.isListChanged() ? ExitVerb.createCloseVerb(0, this) : ExitVerb.createCloseVerb(0, null);

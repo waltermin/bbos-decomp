@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface EllipseNode extends VisualNode {
-   int TYPE;
+   int TYPE = 34;
 
    int getXRadius();
 

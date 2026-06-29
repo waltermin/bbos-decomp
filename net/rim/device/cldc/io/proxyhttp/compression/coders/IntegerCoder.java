@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class IntegerCoder implements Coder {
-   private static final long ID;
+   private static final long ID = 5227182672208802877L;
 
    public final void encode(int decoded, OutputStream outs) {
       if (decoded >= 0 && decoded <= 127) {

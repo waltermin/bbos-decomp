@@ -20,18 +20,18 @@ public final class TunnelConfig {
    private int _shortDelayTmo;
    private int _updateTmo;
    private int _lingerTmo;
-   public static final int PRIORITY_HIGH;
-   public static final int PRIORITY_NORMAL;
-   public static final int PRIORITY_LOW;
-   public static final int DEF_MAX_ATTEMPTS;
-   public static final int DEF_START_BACKOFF;
-   public static final int DEF_MAX_BACKOFF;
-   public static final int DEF_ACTIVATE_TIMEOUT;
-   public static final int DEF_DEACTIVATE_TIMEOUT;
+   public static final int PRIORITY_HIGH = 0;
+   public static final int PRIORITY_NORMAL = 5;
+   public static final int PRIORITY_LOW = 10;
+   public static final int DEF_MAX_ATTEMPTS = Integer.MAX_VALUE;
+   public static final int DEF_START_BACKOFF = 15000;
+   public static final int DEF_MAX_BACKOFF = 900000;
+   public static final int DEF_ACTIVATE_TIMEOUT = 155000;
+   public static final int DEF_DEACTIVATE_TIMEOUT = 60000;
    public static final int DEF_DELAY_TIMEOUT = RadioInfo.getNetworkType() == 7 ? 600000 : 45000;
-   public static final int DEF_SHORT_DELAY_TIMEOUT;
-   public static final int DEF_UPDATE_TIMEOUT;
-   public static final int DEF_LINGER_TIMEOUT;
+   public static final int DEF_SHORT_DELAY_TIMEOUT = 10000;
+   public static final int DEF_UPDATE_TIMEOUT = 0;
+   public static final int DEF_LINGER_TIMEOUT = 300;
 
    public TunnelConfig(String name, String description, TunnelListener listener) {
       this._delayTmo = DEF_DELAY_TIMEOUT;

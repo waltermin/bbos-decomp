@@ -44,7 +44,7 @@ public class InputContext {
    private int _focusGainedAppId = -1;
    private InvokableActionProducer _invokableActionProducer;
    private boolean _imSwitcherAllowed;
-   private static final long REGISTRY_NAME;
+   private static final long REGISTRY_NAME = -141676089031756153L;
    protected static WeakReference _component = new WeakReference(null);
    private static InputContext _context;
 

@@ -8,7 +8,7 @@ import net.rim.tid.im.SLControlObject;
 
 public class IMOptionsDataBaseSyncItem extends OTASyncCapableSyncItem {
    protected int _notification = 110;
-   private static final int DB_VERSION;
+   private static final int DB_VERSION = 0;
 
    @Override
    public String getSyncName() {

@@ -10,17 +10,17 @@ public final class LiveCallVerb extends Verb {
    private int _whatToDo;
    private LiveCall _call;
    private int _callId;
-   public static final int END;
-   public static final int HOLD;
-   public static final int RESUME;
-   public static final int SWAP;
-   public static final int JOIN;
-   public static final int NOTES;
-   public static final int ECT;
-   public static final int MUTE;
-   public static final int UNMUTE;
-   public static final int PARK;
-   public static final int SENDTOVOICEMAIL;
+   public static final int END = 0;
+   public static final int HOLD = 1;
+   public static final int RESUME = 2;
+   public static final int SWAP = 3;
+   public static final int JOIN = 4;
+   public static final int NOTES = 5;
+   public static final int ECT = 6;
+   public static final int MUTE = 7;
+   public static final int UNMUTE = 8;
+   public static final int PARK = 9;
+   public static final int SENDTOVOICEMAIL = 10;
    private static final int[] RES_IDS = new int[]{
       402,
       401,

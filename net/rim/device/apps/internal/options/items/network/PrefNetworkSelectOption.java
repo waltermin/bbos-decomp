@@ -25,8 +25,8 @@ public final class PrefNetworkSelectOption extends KeywordFilteredScreen impleme
    private int _priority;
    private int _type;
    private CollectionListField _listField;
-   static final int TYPE_AVAIL_NETWORKS;
-   static final int TYPE_KNOWN_NETWORKS;
+   static final int TYPE_AVAIL_NETWORKS = 1;
+   static final int TYPE_KNOWN_NETWORKS = 2;
 
    protected final boolean selectNetwork() {
       NetworkInfo netInfo = (NetworkInfo)this._listField.getSelectedElement();

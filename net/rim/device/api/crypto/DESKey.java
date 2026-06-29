@@ -6,7 +6,7 @@ public final class DESKey implements SymmetricKey, Persistable {
    private DESCryptoToken _cryptoToken;
    private CryptoTokenSymmetricKeyData _cryptoTokenData;
    private int _hashCode;
-   public static final int LENGTH;
+   public static final int LENGTH = 8;
 
    public final CryptoTokenSymmetricKeyData getCryptoTokenData() {
       return this._cryptoTokenData;

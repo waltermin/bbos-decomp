@@ -9,7 +9,7 @@ public final class ASN1InputByteArray {
    private byte[] _buffer;
    private int _startPosition;
    private int _endPosition;
-   private static final int RECURSIVE_LIMIT;
+   private static final int RECURSIVE_LIMIT = 32;
 
    public ASN1InputByteArray(byte[] buffer) {
       this(buffer, 0);

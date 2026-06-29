@@ -11,8 +11,8 @@ import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 
 final class BluetoothTransport extends SerialTransport implements BluetoothSerialPortListener, GlobalEventListener {
    private BluetoothSerialPort _port;
-   private static final boolean DEBUG;
-   private static final boolean DEBUG_IO;
+   private static final boolean DEBUG = false;
+   private static final boolean DEBUG_IO = false;
    private static final byte[] UUID = new byte[]{66, 108, 97, 99, 107, 66, 101, 114, 114, 121, 68, 115, 107, 116, 111, 112};
 
    BluetoothTransport(Transport transport, ProfileString profile) {

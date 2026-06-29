@@ -32,11 +32,11 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    private boolean _closeSubConnectionOnCloseRequest;
    private DataInputStream _subIn;
    private DataOutputStream _subOut;
-   private static final String MSG_Url_is_Null;
-   private static final String MSG_SubConnection_is_Null;
-   private static final String MSG_Connection_is_closed;
-   private static final String MSG_Not_Supported;
-   private static final String MSG_RequestLine_is_Null;
+   private static final String MSG_Url_is_Null = "Url is Null";
+   private static final String MSG_SubConnection_is_Null = "SubConnection is Null";
+   private static final String MSG_Connection_is_closed = "Connection is closed";
+   private static final String MSG_Not_Supported = "Not Supported";
+   private static final String MSG_RequestLine_is_Null = "RequestLine is Null";
 
    @Override
    public final void close() {

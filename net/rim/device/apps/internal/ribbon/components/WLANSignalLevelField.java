@@ -15,7 +15,7 @@ final class WLANSignalLevelField extends StringRibbonComponent implements Ribbon
    private WLANSignalComponentFactory _wlanSignalComponentFactory;
    private IconCollection _wlanSignalIcons;
    private RibbonComponent$RibbonComponentChangeListener _listener;
-   private static final int ICON_COUNT;
+   private static final int ICON_COUNT = 5;
 
    private WLANSignalLevelField() {
    }

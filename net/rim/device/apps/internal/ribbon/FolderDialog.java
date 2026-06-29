@@ -27,8 +27,8 @@ final class FolderDialog extends Dialog implements RibbonResource, FocusChangeLi
    private ButtonField _buttonCancel;
    private String _folderName;
    private String _customImageName;
-   public static final int CREATE_MODE;
-   public static final int EDIT_MODE;
+   public static final int CREATE_MODE = 0;
+   public static final int EDIT_MODE = 1;
    private static FolderDialog _instance;
    private static int _folderSuffix;
 

@@ -3,7 +3,7 @@ package net.rim.wica.compatibility.versionranges;
 public class IntVersionRange implements VersionRange {
    protected int _minRange;
    protected int _maxRange = -1;
-   private static final int VERSION_RANGE_UNBOUNDED;
+   private static final int VERSION_RANGE_UNBOUNDED = -1;
 
    protected boolean isInRange(int version) {
       return this._maxRange == -1 ? version >= this._minRange : version >= this._minRange && version <= this._maxRange;

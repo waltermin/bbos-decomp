@@ -16,7 +16,7 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
    private Vector _choices;
    private Vector _channels;
    private USBPasswordRedirectManager _redirectManager;
-   public static final int DISMISS;
+   public static final int DISMISS = 1;
 
    public SecurityDialog$USBPasswordRedirectDialog() {
       super(null, 1, 32, false, 0);

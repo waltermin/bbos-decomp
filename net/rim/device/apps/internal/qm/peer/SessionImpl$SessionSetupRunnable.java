@@ -7,10 +7,10 @@ final class SessionImpl$SessionSetupRunnable extends ApplicationStartupRunnable 
    private SessionSetupListener _listener;
    private int _event;
    private SessionImpl _session;
-   public static final int EVENT_ACCEPTED;
-   public static final int EVENT_DELIVERED;
-   public static final int EVENT_FAILED;
-   public static final int EVENT_REFUSED;
+   public static final int EVENT_ACCEPTED = 1;
+   public static final int EVENT_DELIVERED = 2;
+   public static final int EVENT_FAILED = 3;
+   public static final int EVENT_REFUSED = 4;
 
    public SessionImpl$SessionSetupRunnable(SessionSetupListener listener, ApplicationDescriptor application) {
       super(application);

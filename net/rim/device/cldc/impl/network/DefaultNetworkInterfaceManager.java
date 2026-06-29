@@ -7,8 +7,8 @@ import net.rim.device.api.system.WLAN;
 
 final class DefaultNetworkInterfaceManager extends NetworkInterfaceManager implements NetworkInterfaceListener {
    private NetworkInterfaceManager _subManager;
-   private static final long GUID;
-   protected static final String NAME;
+   private static final long GUID = -8914838971140472771L;
+   protected static final String NAME = "default";
 
    protected static final void init() {
       NetworkInterfaceFactory.getInstance().registerManager(new DefaultNetworkInterfaceManager());

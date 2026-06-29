@@ -7,7 +7,7 @@ import net.rim.device.api.util.LongEnumeration;
 import net.rim.device.api.util.LongHashtable;
 
 final class LongTermCache extends LongHashtable {
-   private static final long RAW_DATA_CACHE_KEY;
+   private static final long RAW_DATA_CACHE_KEY = 1811606973577470395L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(1811606973577470395L);
    private static LongHashtable _persistedHashtable;
 

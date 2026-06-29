@@ -15,13 +15,13 @@ public final class MessageQueue {
    private int _maxCapacity;
    private int _processState = 0;
    private boolean _isSystemProcess;
-   private static final int START_CAPACITY;
-   private static final int CAPACITY_INCREMENT;
-   public static final int KEY_DROP_WATERMARK;
-   public static final int NATIVE_SOCKET_DROP_WATERMARK;
-   public static final int PROCESS_STATE_STARTUP;
-   public static final int PROCESS_STATE_HANDLING_EVENTS;
-   private static final int MAX_PROCESS_STATES;
+   private static final int START_CAPACITY = 10;
+   private static final int CAPACITY_INCREMENT = 10;
+   public static final int KEY_DROP_WATERMARK = 30;
+   public static final int NATIVE_SOCKET_DROP_WATERMARK = 150;
+   public static final int PROCESS_STATE_STARTUP = 0;
+   public static final int PROCESS_STATE_HANDLING_EVENTS = 1;
+   private static final int MAX_PROCESS_STATES = 2;
    private static final int[] MAX_CAPACITIES_NORMAL_PROCESS = new int[]{30, 50, 51, 4408146, 4801362, 5391186, 5526098, -804651006};
    private static final int[] MAX_CAPACITIES_SYSTEM_PROCESS = new int[]{150, 200, 712179968, 712179968, 1920234561, 16802409, 1701539702, 3102532};
 

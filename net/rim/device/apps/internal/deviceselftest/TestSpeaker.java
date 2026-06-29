@@ -16,10 +16,10 @@ class TestSpeaker extends TestTaskBase implements KeyListener {
    AudioPathControl apc;
    int lastStatusKeyTS;
    String[] amrArray = new String[]{"/400.amr", "/630.amr", "/1000.amr", "/1600.amr", "/3000.amr"};
-   static final int HANDSET;
-   static final int HANDSFREE;
-   static final int HEADSET;
-   static final int BLUETOOTH;
+   static final int HANDSET = 0;
+   static final int HANDSFREE = 1;
+   static final int HEADSET = 2;
+   static final int BLUETOOTH = 3;
 
    TestSpeaker() {
       super.app.addKeyListener(this);

@@ -41,14 +41,14 @@ final class AutoTextCollection
    private AutoTextCollection$AutoTextSyncConverter _autoTextSyncConverter;
    private SyncCollectionSchema _schema;
    private String _lang;
-   private static final int AUTOTEXT_VERSION;
-   private static final int AUTOTEXT_VERSION_MIN;
-   private static final int AUTOTEXT_VERSION_MAX;
-   private static final int AUTOTEXT_VERSION_DESKTOP;
-   private static final long PERSISTENT_NAME;
+   private static final int AUTOTEXT_VERSION = 2;
+   private static final int AUTOTEXT_VERSION_MIN = 2;
+   private static final int AUTOTEXT_VERSION_MAX = 3;
+   private static final int AUTOTEXT_VERSION_DESKTOP = 0;
+   private static final long PERSISTENT_NAME = -4626390048222336213L;
    private static boolean _encryptAutoTextEntries = true;
    private static final int[] KEY_FIELD_IDS = new int[]{1, 4, 6, -805044223, 3, -804651007, 51, -805044221, 10740707, 1829528321, -1989393782, -1566170261};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    AutoTextCollection() {
       this._persistentObject = RIMPersistentStore.getPersistentObject(-4626390048222336213L);

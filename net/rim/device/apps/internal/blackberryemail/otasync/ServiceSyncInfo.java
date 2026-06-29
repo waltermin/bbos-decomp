@@ -18,9 +18,9 @@ final class ServiceSyncInfo implements Persistable {
    private boolean _abortMessageList;
    private boolean _restoreMessageList;
    private long _lastConfigurationSent;
-   private static final int DELETE_MESSAGE_COMMAND_SIZE;
-   private static final int MOVE_MESSAGE_COMMAND_SIZE;
-   private static final int READ_MESSAGE_COMMAND_SIZE;
+   private static final int DELETE_MESSAGE_COMMAND_SIZE = 8;
+   private static final int MOVE_MESSAGE_COMMAND_SIZE = 20;
+   private static final int READ_MESSAGE_COMMAND_SIZE = 11;
 
    final void setConfigurationSentTimestamp(long timestamp) {
       this._lastConfigurationSent = timestamp;

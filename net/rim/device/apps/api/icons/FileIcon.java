@@ -5,23 +5,23 @@ import net.rim.device.internal.ui.IconCollection;
 import net.rim.device.internal.ui.Image;
 
 public final class FileIcon {
-   public static final int FILE_NO_ATTRIBUTES;
-   public static final int FILE_ENCRYPTED;
-   public static final int FILE_REMOVABLE;
-   public static final int FILE_ENCRYPTED_REMOVABLE;
-   public static final int RIM_FILE_UNKNOWN;
-   public static final int RIM_FILE_IMAGE;
-   public static final int RIM_FILE_AUDIO;
-   public static final int RIM_FILE_VIDEO;
-   public static final int RIM_FILE_TEXT;
-   public static final int RIM_FILE_ARCHIVE;
-   public static final int RIM_FILE_WORD;
-   public static final int RIM_FILE_SHEET;
-   public static final int RIM_FILE_PPT;
-   public static final int RIM_FILE_PDF;
-   public static final int RIM_FILE_HTML;
-   public static final int ICON_COLUMNS;
-   public static final int ICON_ROWS;
+   public static final int FILE_NO_ATTRIBUTES = 0;
+   public static final int FILE_ENCRYPTED = 1;
+   public static final int FILE_REMOVABLE = 2;
+   public static final int FILE_ENCRYPTED_REMOVABLE = 3;
+   public static final int RIM_FILE_UNKNOWN = 0;
+   public static final int RIM_FILE_IMAGE = 1;
+   public static final int RIM_FILE_AUDIO = 2;
+   public static final int RIM_FILE_VIDEO = 3;
+   public static final int RIM_FILE_TEXT = 4;
+   public static final int RIM_FILE_ARCHIVE = 5;
+   public static final int RIM_FILE_WORD = 6;
+   public static final int RIM_FILE_SHEET = 7;
+   public static final int RIM_FILE_PPT = 8;
+   public static final int RIM_FILE_PDF = 9;
+   public static final int RIM_FILE_HTML = 10;
+   public static final int ICON_COLUMNS = 11;
+   public static final int ICON_ROWS = 4;
    private static final IconCollection ICONS = IconCollection.get("net_rim_file_app", 11, 4);
 
    FileIcon() {

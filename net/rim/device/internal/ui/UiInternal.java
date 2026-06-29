@@ -16,15 +16,15 @@ import net.rim.tid.im.layout.UILocaleKeyLayout;
 
 public final class UiInternal {
    public static final ResourceBundleFamily BUNDLE = ResourceBundle.getBundle(3711053710409943671L, "net.rim.device.internal.resource.UI");
-   public static final int BM_CACHE_HITS;
-   public static final int BM_CACHE_MISSES;
-   public static final int BM_CACHE_FLUSH_COUNT;
-   public static final int BM_CACHE_AVG_BITMAP_SIZE;
-   public static final int BM_CACHE_AVG_BITMAP_COUNT_WHEN_FLUSHED;
-   public static final int BM_CACHE_ADD_COUNT;
-   public static final int BM_CACHE_TOTAL_CACHE_SIZE;
-   public static final int BM_CACHE_CACHE_FREE;
-   public static final int BM_CACHE_NUM_STATISTICS;
+   public static final int BM_CACHE_HITS = 0;
+   public static final int BM_CACHE_MISSES = 1;
+   public static final int BM_CACHE_FLUSH_COUNT = 3;
+   public static final int BM_CACHE_AVG_BITMAP_SIZE = 4;
+   public static final int BM_CACHE_AVG_BITMAP_COUNT_WHEN_FLUSHED = 5;
+   public static final int BM_CACHE_ADD_COUNT = 6;
+   public static final int BM_CACHE_TOTAL_CACHE_SIZE = 7;
+   public static final int BM_CACHE_CACHE_FREE = 8;
+   public static final int BM_CACHE_NUM_STATISTICS = 9;
 
    public static final native void clearCacheStatistics();
 

@@ -15,10 +15,10 @@ import net.rim.vm.Array;
 final class DefaultService extends Store {
    private Transport _transport;
    private ServiceRecord _serviceRecord;
-   private static final long DEFAULT_SERVICE_ID;
-   private static final long DEFAULT_SERVICE_ID_BASE;
+   private static final long DEFAULT_SERVICE_ID = 3213487877773466990L;
+   private static final long DEFAULT_SERVICE_ID_BASE = 7344728658407325696L;
    static long EVENT_LOGGER_GUID = 3213487877773466990L;
-   static final String EVENT_LOGGER_NAME;
+   static final String EVENT_LOGGER_NAME = "Mail Api";
 
    public static final DefaultService getInstance(ServiceConfiguration sc) {
       MergedCollection c = (MergedCollection)FolderMerge.getMergeCollection(-5581791943352753293L);

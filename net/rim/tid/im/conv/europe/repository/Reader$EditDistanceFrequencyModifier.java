@@ -8,16 +8,16 @@ class Reader$EditDistanceFrequencyModifier implements ResultContainer$FrequencyM
    private char[] _userInput;
    private int _userInputLen;
    private final Reader this$0;
-   private static final int CHAR_DIFF_SHIFT;
-   private static final int CASE_DIFF_SHIFT;
-   private static final int ACCENT_DIFF_SHIFT;
-   private static final int SHARED_KEY_SHIFT;
-   private static final int ADJACENT_KEY_SHIFT;
-   private static final int CHAR_DIFF_COST;
-   private static final int CASE_DIFF_COST;
-   private static final int ACCENT_DIFF_COST;
-   private static final int ADJACENT_KEY_COST;
-   private static final int SHARED_KEY_COST;
+   private static final int CHAR_DIFF_SHIFT = 8;
+   private static final int CASE_DIFF_SHIFT = 5;
+   private static final int ACCENT_DIFF_SHIFT = 6;
+   private static final int SHARED_KEY_SHIFT = 6;
+   private static final int ADJACENT_KEY_SHIFT = 7;
+   private static final int CHAR_DIFF_COST = 256;
+   private static final int CASE_DIFF_COST = 32;
+   private static final int ACCENT_DIFF_COST = 64;
+   private static final int ADJACENT_KEY_COST = 128;
+   private static final int SHARED_KEY_COST = 0;
 
    private Reader$EditDistanceFrequencyModifier(Reader _1) {
       this.this$0 = _1;

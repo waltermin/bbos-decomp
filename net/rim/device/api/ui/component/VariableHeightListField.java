@@ -39,10 +39,10 @@ public class VariableHeightListField extends Field {
    private ThemeAttributeSet _tasRowEven;
    private ThemeAttributeSet _tasRowOdd;
    private static Tag TAG = Tag.create("list");
-   private static final String TAG_ROW_EVEN_SUFFIX;
-   private static final String TAG_ROW_ODD_SUFFIX;
-   public static final int MULTI_SELECT;
-   public static final int NO_ALTED_PAGE_UP_DOWN;
+   private static final String TAG_ROW_EVEN_SUFFIX = "-row-even";
+   private static final String TAG_ROW_ODD_SUFFIX = "-row-odd";
+   public static final int MULTI_SELECT = 2;
+   public static final int NO_ALTED_PAGE_UP_DOWN = 8;
 
    public VariableHeightListField() {
       this(0, 0);

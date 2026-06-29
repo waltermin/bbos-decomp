@@ -4,9 +4,9 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.RichTextField;
 
 public final class RichTextFieldUtilities {
-   private static final char MODIFICATION_FLAG;
-   private static final byte FONT_REGULAR;
-   private static final byte FONT_MODIFIED;
+   private static final char MODIFICATION_FLAG = '*';
+   private static final byte FONT_REGULAR = 0;
+   private static final byte FONT_MODIFIED = 1;
 
    public static final RichTextField getBoldFormattedRichTextField(String text) {
       return getBoldFormattedRichTextField(text, 0);

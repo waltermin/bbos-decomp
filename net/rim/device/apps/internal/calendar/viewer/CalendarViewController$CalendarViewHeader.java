@@ -39,9 +39,9 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
    private int _width;
    private int _height;
    private final CalendarViewController this$0;
-   private static final int HEADER_UPDATE_THRESHOLD;
-   private static final int MAXIMUM_NAV_FONT_SIZE;
-   private static final int MAXIMUM_TEXT_FONT_SIZE;
+   private static final int HEADER_UPDATE_THRESHOLD = 100;
+   private static final int MAXIMUM_NAV_FONT_SIZE = 8;
+   private static final int MAXIMUM_TEXT_FONT_SIZE = 10;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

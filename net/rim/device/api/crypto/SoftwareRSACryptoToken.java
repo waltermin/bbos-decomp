@@ -6,8 +6,8 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable {
    private static SoftwareRSACryptoToken _instance = new SoftwareRSACryptoToken();
-   private static final long ID_TEST_RSA;
-   private static final int RSA_MODULUS_BIT_LENGTH;
+   private static final long ID_TEST_RSA = 542271390387802543L;
+   private static final int RSA_MODULUS_BIT_LENGTH = 512;
 
    static final SoftwareRSACryptoToken getInstance() {
       return _instance;
@@ -126,7 +126,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       //
       // Bytecode:
       // 00: bipush 1
-      // 01: anewarray 316
+      // 01: anewarray 321
       // 04: dup
       // 05: bipush 0
       // 06: new net/rim/device/api/crypto/RSACryptoSystem

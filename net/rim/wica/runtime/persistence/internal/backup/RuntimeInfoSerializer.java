@@ -8,19 +8,19 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class RuntimeInfoSerializer extends AbstractSerializer {
    private static RuntimeInfoSerializer _instance;
-   private static final byte DEVICE_ID;
-   private static final byte DEVICE_PIN;
-   private static final byte TRUSTED_WICLET_ADMIN_POLICY;
-   private static final byte UNTRUSTED_WICLET_ADMIN_POLICY;
-   private static final byte UPGRADED;
-   private static final byte KEY_REFRESH_AG_ID;
-   private static final byte DOING_HANDSHAKE;
-   private static final byte DOING_REGISTRATION;
-   private static final byte REGISTERED;
-   private static final byte DOING_KEY_REFRESH;
-   private static final byte RESTORED;
-   private static final byte DEFAULT_AG_INFO;
-   private static final byte NEW_AG_INFO;
+   private static final byte DEVICE_ID = 1;
+   private static final byte DEVICE_PIN = 2;
+   private static final byte TRUSTED_WICLET_ADMIN_POLICY = 4;
+   private static final byte UNTRUSTED_WICLET_ADMIN_POLICY = 5;
+   private static final byte UPGRADED = 7;
+   private static final byte KEY_REFRESH_AG_ID = 8;
+   private static final byte DOING_HANDSHAKE = 9;
+   private static final byte DOING_REGISTRATION = 10;
+   private static final byte REGISTERED = 11;
+   private static final byte DOING_KEY_REFRESH = 12;
+   private static final byte RESTORED = 13;
+   private static final byte DEFAULT_AG_INFO = 14;
+   private static final byte NEW_AG_INFO = 15;
 
    static final RuntimeInfoSerializer getInstance() {
       if (_instance == null) {

@@ -41,17 +41,17 @@ final class Board extends AbstractForeignObject implements BrickBreakerResResour
    private boolean noBackground = false;
    private Font bigFont = Font.getDefault().derive(1, 42);
    private static ResourceBundle _resources = ResourceBundle.getBundle(4228639183813622747L, "net.rim.device.apps.games.brickbreaker.BrickBreakerRes");
-   static final int MINIMUM_SPEED;
+   static final int MINIMUM_SPEED = 50;
    static int WIDTH;
    static int HEIGHT;
    public static int TILEWIDTH;
    public static int TILEHEIGHT;
    static int FACTORX;
    static int FACTORY;
-   static final int MAX_NUM_BALLS;
-   static final int MAX_NUM_LASERS;
-   static final int MAX_STICKY_PADDLE_COUNT;
-   private static final int SPEED;
+   static final int MAX_NUM_BALLS = 4;
+   static final int MAX_NUM_LASERS = 4;
+   static final int MAX_STICKY_PADDLE_COUNT = 150;
+   private static final int SPEED = 595;
 
    Board(Game game) {
       this._game = game;

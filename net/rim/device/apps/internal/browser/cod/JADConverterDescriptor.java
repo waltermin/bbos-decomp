@@ -6,7 +6,7 @@ import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
 
 public final class JADConverterDescriptor extends BrowserContentProvider {
-   private static final String DEFAULT_JAD_CHARACTER_ENCODING;
+   private static final String DEFAULT_JAD_CHARACTER_ENCODING = "UTF-8";
    public static final String[] ACCEPT = new String[]{"text/vnd.sun.j2me.app-descriptor", "application/java-archive", "application/java"};
 
    @Override

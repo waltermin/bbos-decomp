@@ -16,8 +16,8 @@ import net.rim.device.apps.internal.browser.stack.ModelResult;
 import net.rim.device.apps.internal.browser.store.BrowserFolders;
 
 final class BrowserMessageConverter extends BaseConverter {
-   private static final String CONTENT_LOCATION_KEY;
-   private static final String PUSH_TITLE_KEY;
+   private static final String CONTENT_LOCATION_KEY = "Content-Location";
+   private static final String PUSH_TITLE_KEY = "X-Rim-Push-Title";
 
    @Override
    public final boolean canConvert(Object parameters) {

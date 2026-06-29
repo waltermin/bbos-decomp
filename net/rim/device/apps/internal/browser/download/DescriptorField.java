@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public class DescriptorField extends VerticalFieldManager {
    private Font _labelFont;
-   private static final int LONG_VALUE_LEFT_MARGIN;
+   private static final int LONG_VALUE_LEFT_MARGIN = 40;
 
    public DescriptorField(long style) {
       super(style);

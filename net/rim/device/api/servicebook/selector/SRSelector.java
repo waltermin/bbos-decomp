@@ -14,7 +14,7 @@ public final class SRSelector implements GlobalEventListener {
    private Vector _appData;
    private Vector _callbacks;
    private ServiceBook _sb;
-   public static final long SR_SELECTOR_GUID;
+   public static final long SR_SELECTOR_GUID = 2857166788728229964L;
 
    public final synchronized int register(String name, long guid, String cid, SRSelectorCallback cb) {
       SRSelectorData data = this.findData(guid, cid);

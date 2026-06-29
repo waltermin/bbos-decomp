@@ -15,8 +15,8 @@ public final class SetupPersonalEmailScreen extends UserSettingsScreen {
    RadioButtonField _outlookRadioButton;
    RadioButtonField _provideSettingsRadioButton;
    private LinkEvent _emailSetupLinkEvent;
-   private static final String setupExistingMailScreenLink;
-   private static final String setupBBMailScreenLink;
+   private static final String setupExistingMailScreenLink = "addExistingEmailScreen";
+   private static final String setupBBMailScreenLink = "addBBMailScreen";
 
    public SetupPersonalEmailScreen() {
       super(31);

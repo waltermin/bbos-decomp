@@ -7,13 +7,13 @@ import net.rim.device.internal.media.MediaRemoteControl;
 
 final class BluetoothAVRCPManager extends BluetoothProfileManager implements BluetoothAVRCPListener {
    private int _avrcpHandle;
-   private static final long LOG_GUID;
-   private static final int LOG_CONNECT;
-   private static final int LOG_DISCONNECT;
-   private static final int LOG_CONNECT_RESPONSE;
-   private static final int LOG_PANEL_PRESS;
-   private static final int LOG_PANEL_HOLD;
-   private static final int LOG_PANEL_RELEASE;
+   private static final long LOG_GUID = -451864196759457947L;
+   private static final int LOG_CONNECT = 1129185280;
+   private static final int LOG_DISCONNECT = 1145634816;
+   private static final int LOG_CONNECT_RESPONSE = 1129447424;
+   private static final int LOG_PANEL_PRESS = 1347420160;
+   private static final int LOG_PANEL_HOLD = 1346895872;
+   private static final int LOG_PANEL_RELEASE = 1347551232;
 
    BluetoothAVRCPManager(BluetoothDeviceManagerImpl btManager) {
       super(btManager, -451864196759457947L, "net.rim.bluetooth.avrcp");

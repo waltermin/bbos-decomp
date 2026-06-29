@@ -42,10 +42,10 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
    private boolean _isSureType;
    private static OptionsApp _app;
    private static Object _context = new Object(3);
-   private static final long SELECTED_INDEX_ID_KEY;
-   private static final long DATE_TIME_OPTIONS_SCREEN_KEY;
-   public static final long NETWORK_OPTIONS_SCREEN_KEY;
-   public static final long EVENT_LOGGER_GUID;
+   private static final long SELECTED_INDEX_ID_KEY = -7960768038040625127L;
+   private static final long DATE_TIME_OPTIONS_SCREEN_KEY = 6173420044896290124L;
+   public static final long NETWORK_OPTIONS_SCREEN_KEY = -908968825740058750L;
+   public static final long EVENT_LOGGER_GUID = -4272982832973947638L;
 
    public static final void main(String[] args) {
       String className = null;

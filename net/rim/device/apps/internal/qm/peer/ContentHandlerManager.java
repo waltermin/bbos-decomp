@@ -7,7 +7,7 @@ import net.rim.vm.Array;
 
 final class ContentHandlerManager {
    private Hashtable _systemHandlers = (Hashtable)(new Object(2));
-   private static final long GUID;
+   private static final long GUID = 5434758971540425216L;
    private static ContentHandlerManager _instance;
 
    private ContentHandlerManager() {

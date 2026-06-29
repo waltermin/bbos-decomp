@@ -27,15 +27,15 @@ public final class PasswordKeeperScreen extends KeywordFilteredScreen implements
    private PasswordKeeperScreen$PasswordVerb _changeVerb;
    private PasswordKeeperScreen$PasswordVerb _optionVerb;
    private PasswordKeeperScreen$PasswordVerb _closeVerb;
-   private static final int MENU_ORDERING_NEW;
-   private static final int MENU_ORDERING_OPEN;
-   private static final int MENU_ORDERING_DELETE;
-   private static final int MENU_ORDERING_COPY_USERNAME;
-   private static final int MENU_ORDERING_COPY_PASSWORD;
-   private static final int MENU_ORDERING_CLEAR;
-   private static final int MENU_ORDERING_CHANGE;
-   private static final int MENU_ORDERING_OPTION;
-   private static final int MENU_ORDERING_CLOSE;
+   private static final int MENU_ORDERING_NEW = 1052672;
+   private static final int MENU_ORDERING_OPEN = 1056768;
+   private static final int MENU_ORDERING_DELETE = 1064960;
+   private static final int MENU_ORDERING_COPY_USERNAME = 16846848;
+   private static final int MENU_ORDERING_COPY_PASSWORD = 16847104;
+   private static final int MENU_ORDERING_CLEAR = 16850944;
+   private static final int MENU_ORDERING_CHANGE = 16912384;
+   private static final int MENU_ORDERING_OPTION = 16977920;
+   private static final int MENU_ORDERING_CLOSE = 17043456;
 
    public PasswordKeeperScreen(String title, KeywordFilterList list, ListFieldCallback listCallback, PasswordKeeperSync collection) {
       super(title, list, listCallback, false);

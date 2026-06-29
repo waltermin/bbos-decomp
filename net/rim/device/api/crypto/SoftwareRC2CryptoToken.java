@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable {
    private static SoftwareRC2CryptoToken _instance = new SoftwareRC2CryptoToken();
-   private static final long ID_TEST_RC2;
+   private static final long ID_TEST_RC2 = -7173445221884717265L;
 
    static final SoftwareRC2CryptoToken getInstance() {
       return _instance;

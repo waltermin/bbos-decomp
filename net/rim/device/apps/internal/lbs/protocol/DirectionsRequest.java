@@ -17,13 +17,13 @@ public final class DirectionsRequest extends Request {
    protected int _toLong;
    protected String _routeXMLstring;
    protected byte[] _rawXMLData;
-   public static final int SUCCESS;
-   public static final int INVALID_REQUEST;
-   public static final int SERVER_INTERNAL_ERROR;
-   public static final int FAILED_TO_COMPUTE_NO_ROAD_ORIG;
-   public static final int FAILED_TO_COMPUTE_NO_ROAD_DEST;
-   public static final int FAILED_TO_COMPUTE_NO_PATH;
-   public static final int SERVER_BUSY;
+   public static final int SUCCESS = 0;
+   public static final int INVALID_REQUEST = 1;
+   public static final int SERVER_INTERNAL_ERROR = 2;
+   public static final int FAILED_TO_COMPUTE_NO_ROAD_ORIG = 3;
+   public static final int FAILED_TO_COMPUTE_NO_ROAD_DEST = 4;
+   public static final int FAILED_TO_COMPUTE_NO_PATH = 5;
+   public static final int SERVER_BUSY = 30;
 
    @Override
    public final byte getCommand() {

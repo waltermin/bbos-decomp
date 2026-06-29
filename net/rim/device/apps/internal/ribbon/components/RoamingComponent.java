@@ -26,7 +26,7 @@ final class RoamingComponent
    private IconCollection _roamingIcons = IconCollection.get("net_rim_Ribbon_Roaming", 6);
    private int _width;
    private int _height;
-   private static final int ICON_COUNT;
+   private static final int ICON_COUNT = 6;
 
    RoamingComponent(RoamingComponentFactory factory) {
       this._factory = factory;

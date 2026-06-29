@@ -4,7 +4,7 @@ import net.rim.blackberry.api.mail.Store;
 
 public class StoreEvent extends MailEvent {
    private int _type;
-   public static final int BATCH_OPERATION;
+   public static final int BATCH_OPERATION = 1;
 
    public StoreEvent(Store store, int type) {
       super(store);

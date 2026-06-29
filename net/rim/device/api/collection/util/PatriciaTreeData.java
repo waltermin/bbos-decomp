@@ -1,7 +1,7 @@
 package net.rim.device.api.collection.util;
 
 public interface PatriciaTreeData {
-   int NULL_ID;
+   int NULL_ID = -1;
 
    int getBit(int var1, int var2);
 

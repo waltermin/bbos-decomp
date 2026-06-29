@@ -20,12 +20,12 @@ public class MultiServiceManager implements GlobalEventListener {
    private Hashtable _serviceStore;
    private PersistentObject _persistentServiceStore;
    private Hashtable _serviceFactories = (Hashtable)(new Object());
-   protected static final long ID;
-   protected static final long PERSISTANT_STORE_ID;
-   protected static final long PERSISTANT_EXPIRED_STORE_ID;
-   public static final long DEFAULT_SERVICE_SET;
-   private static final long DEFAULT_SERVICE_KEY;
-   private static final long DEFAULT_SERVICE_KEY_SET_BY_USER;
+   protected static final long ID = 5421400767263226689L;
+   protected static final long PERSISTANT_STORE_ID = 6664804295181405943L;
+   protected static final long PERSISTANT_EXPIRED_STORE_ID = 3614653646137588814L;
+   public static final long DEFAULT_SERVICE_SET = 158775118060600435L;
+   private static final long DEFAULT_SERVICE_KEY = -2793225263839058177L;
+   private static final long DEFAULT_SERVICE_KEY_SET_BY_USER = 4251133684997842836L;
    private static MultiServiceManager _instance;
 
    public synchronized ServiceIdentifier[] getAllServices(String CID) {

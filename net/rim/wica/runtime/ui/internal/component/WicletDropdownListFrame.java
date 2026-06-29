@@ -9,14 +9,14 @@ import net.rim.device.api.ui.theme.Theme;
 class WicletDropdownListFrame extends Manager {
    private Bitmap bitmapDown;
    private int _labelWidth;
-   protected static final long USE_BORDER;
-   private static final int BORDER_WIDTH;
-   private static final int DOUBLE_BORDER_WIDTH;
-   private static final int SUB_BORDER_PADDING;
-   private static final int DOUBLE_SUB_BORDER_PADDING;
-   private static final int H_FRAME_ARC;
-   private static final int V_FRAME_ARC;
-   private static final int MAX_EXTENT;
+   protected static final long USE_BORDER = 1L;
+   private static final int BORDER_WIDTH = 1;
+   private static final int DOUBLE_BORDER_WIDTH = 2;
+   private static final int SUB_BORDER_PADDING = 1;
+   private static final int DOUBLE_SUB_BORDER_PADDING = 2;
+   private static final int H_FRAME_ARC = 8;
+   private static final int V_FRAME_ARC = 4;
+   private static final int MAX_EXTENT = 1073741823;
 
    protected WicletDropdownListFrame() {
       this(0);

@@ -21,20 +21,20 @@ final class EventFieldsModel implements PersistableRIMModel, SyncObject {
    private int _dayInMonth;
    private int _dayInYear;
    private boolean _isDirty;
-   private static final byte FIELD_END_OF_DATA;
-   private static final byte FIELD_UID;
-   private static final byte FIELD_START_DATE;
-   private static final byte FIELD_FREQ;
-   private static final byte FIELD_INTERVAL;
-   private static final byte FIELD_DAY_IN_MONTH;
-   private static final byte FIELD_DAY_IN_WEEK;
-   private static final byte FIELD_DAY_IN_YEAR;
-   private static final byte FIELD_MONTH;
-   private static final byte FIELD_WEEK_IN_MONTH;
-   private static final byte FIELD_COUNT;
-   private static final byte FIELD_END_DATE;
-   private static final int INT_LENGTH;
-   private static final int LONG_LENGTH;
+   private static final byte FIELD_END_OF_DATA = 0;
+   private static final byte FIELD_UID = 1;
+   private static final byte FIELD_START_DATE = 2;
+   private static final byte FIELD_FREQ = 3;
+   private static final byte FIELD_INTERVAL = 4;
+   private static final byte FIELD_DAY_IN_MONTH = 5;
+   private static final byte FIELD_DAY_IN_WEEK = 6;
+   private static final byte FIELD_DAY_IN_YEAR = 7;
+   private static final byte FIELD_MONTH = 8;
+   private static final byte FIELD_WEEK_IN_MONTH = 9;
+   private static final byte FIELD_COUNT = 10;
+   private static final byte FIELD_END_DATE = 11;
+   private static final int INT_LENGTH = 4;
+   private static final int LONG_LENGTH = 8;
 
    public final byte[] getData() {
       DataBuffer buffer = (DataBuffer)(new Object(true));

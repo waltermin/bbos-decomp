@@ -9,16 +9,16 @@ public class BorderSimple extends Border {
    private int _colorRight;
    private int _colorBottom;
    private int _colorLeft;
-   public static final int STYLE_NONE;
-   public static final int STYLE_HIDDEN;
-   public static final int STYLE_DOTTED;
-   public static final int STYLE_DASHED;
-   public static final int STYLE_SOLID;
-   public static final int STYLE_DOUBLE;
-   public static final int STYLE_GROOVE;
-   public static final int STYLE_RIDGE;
-   public static final int STYLE_INSET;
-   public static final int STYLE_OUTSET;
+   public static final int STYLE_NONE = 0;
+   public static final int STYLE_HIDDEN = 0;
+   public static final int STYLE_DOTTED = 0;
+   public static final int STYLE_DASHED = 0;
+   public static final int STYLE_SOLID = 0;
+   public static final int STYLE_DOUBLE = 0;
+   public static final int STYLE_GROOVE = 0;
+   public static final int STYLE_RIDGE = 0;
+   public static final int STYLE_INSET = 0;
+   public static final int STYLE_OUTSET = 0;
 
    public BorderSimple(int top, int right, int bottom, int left) {
       super(top, right, bottom, left);

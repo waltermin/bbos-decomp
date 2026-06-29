@@ -7,7 +7,7 @@ import net.rim.device.api.util.LongHashtable;
 
 public final class ProxyModelStoreManager {
    private LongHashtable _cache = (LongHashtable)(new Object());
-   private static final long ID;
+   private static final long ID = -883030902214570594L;
    private static ProxyModelStoreManager _instance;
 
    public static final ProxyModelStore getProxyModelStore(long rootId) {

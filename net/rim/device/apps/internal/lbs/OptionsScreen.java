@@ -37,9 +37,9 @@ final class OptionsScreen extends MainScreen {
    private MapScreen _mapScreen;
    private CheckboxField[] _visibleLayerGroups;
    public static final ResourceBundleFamily _resources = ResourceBundle.getBundle(6514774203079918781L, "net.rim.device.apps.internal.lbs.LBS");
-   public static final int CLEAR_CACHE;
-   public static final int CLEAR_DOWNLOAD;
-   public static final int BLUETOOTH_CONFIG;
+   public static final int CLEAR_CACHE = 65551;
+   public static final int CLEAR_DOWNLOAD = 65552;
+   public static final int BLUETOOTH_CONFIG = 65553;
    private static LabelField _currentCacheSize;
    private static GPSDevice _deviceSetBeforeBluetoothOptions;
 

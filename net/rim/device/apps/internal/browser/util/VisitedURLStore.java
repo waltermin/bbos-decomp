@@ -11,8 +11,8 @@ public final class VisitedURLStore implements Persistable {
    private Object[] _sortedURLsEncodings = new Object[100];
    private Object[] _recentURLsEncodings = new Object[100];
    private int _numberOfElements;
-   private static final long URL_STORE_KEY;
-   public static final int MAX_SIZE;
+   private static final long URL_STORE_KEY = 6613947982019865069L;
+   public static final int MAX_SIZE = 100;
    private static PersistentObject _persist;
 
    public static final VisitedURLStore getInstance() {

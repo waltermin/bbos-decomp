@@ -5,7 +5,7 @@ import net.rim.wica.common.debug.protocol.messages.IMessageEnvelope;
 
 public final class MessageQueue {
    private Vector _dataQueue = (Vector)(new Object());
-   public static final int WAIT_FOREVER;
+   public static final int WAIT_FOREVER = 0;
 
    public final synchronized IMessageEnvelope get(int timeout) {
       IMessageEnvelope msg = null;

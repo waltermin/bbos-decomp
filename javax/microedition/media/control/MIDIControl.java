@@ -3,8 +3,8 @@ package javax.microedition.media.control;
 import javax.microedition.media.Control;
 
 public interface MIDIControl extends Control {
-   int NOTE_ON;
-   int CONTROL_CHANGE;
+   int NOTE_ON = 144;
+   int CONTROL_CHANGE = 176;
 
    boolean isBankQuerySupported();
 

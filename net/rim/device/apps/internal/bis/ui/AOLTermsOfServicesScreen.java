@@ -9,9 +9,9 @@ import net.rim.device.apps.internal.bis.event.LinkEvent;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class AOLTermsOfServicesScreen extends UserSettingsScreen {
-   private static final String PARAM_EMAIL;
-   private static final String PARAM_PASSWORD;
-   private static final String PARAM_TERMSACCEPTED;
+   private static final String PARAM_EMAIL = "email";
+   private static final String PARAM_PASSWORD = "password";
+   private static final String PARAM_TERMSACCEPTED = "aolTermsAccepted";
 
    public AOLTermsOfServicesScreen() {
       super(31);

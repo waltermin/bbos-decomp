@@ -50,10 +50,10 @@ public final class StartupPage extends Page implements FieldChangeListener {
    private String _initialConfigUID;
    private int _variableItemIndex;
    public static String STARTUP_URL = "about:start";
-   private static final int ICON_WIDTH;
-   private static final int ICON_HEIGHT;
-   private static final int ID_BOOKMARKS;
-   private static final int ID_HISTORY;
+   private static final int ICON_WIDTH = 16;
+   private static final int ICON_HEIGHT = 16;
+   private static final int ID_BOOKMARKS = 0;
+   private static final int ID_HISTORY = 1;
    private static final Tag BG_TAG = Tag.create("browser-startup-background");
    private static final Tag URL_ENTRY_TAG = Tag.create("browser-startup-urlentry");
    private static final Tag URL_ENTRY_BG = Tag.create("browser-startup-urlbg");

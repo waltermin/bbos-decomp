@@ -22,17 +22,17 @@ final class TimeZoneImpl extends TimeZone {
    private int _c_ruleDayStart = -1;
    private int _c_ruleDayEnd = -1;
    private int serialSyncID;
-   static final short NO_MODE;
-   static final short DOW_WIM_MODE;
-   static final short DOM_MODE;
-   static final short DOW_GE_DOM_MODE;
-   static final short DOW_LE_DOM_MODE;
-   private static final int MILLIS_IN_MINUTE;
-   private static final int ONE_MINUTE;
-   private static final int ONE_HOUR;
-   private static final int ONE_DAY;
-   private static final int millisPerHour;
-   private static final int millisPerDay;
+   static final short NO_MODE = 0;
+   static final short DOW_WIM_MODE = 1;
+   static final short DOM_MODE = 2;
+   static final short DOW_GE_DOM_MODE = 3;
+   static final short DOW_LE_DOM_MODE = 4;
+   private static final int MILLIS_IN_MINUTE = 60000;
+   private static final int ONE_MINUTE = 60000;
+   private static final int ONE_HOUR = 3600000;
+   private static final int ONE_DAY = 86400000;
+   private static final int millisPerHour = 3600000;
+   private static final int millisPerDay = 86400000;
    private static final byte[] staticMonthLength = new byte[]{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
    TimeZoneImpl(

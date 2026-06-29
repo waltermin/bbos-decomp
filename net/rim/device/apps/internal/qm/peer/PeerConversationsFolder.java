@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.qm.resource.QmResources;
 final class PeerConversationsFolder extends CollectionListenerManager implements Folder, ReadableList {
    Conversations _conversations;
    boolean _registered;
-   private static final long PEER_CONVERSATIONS_FOLDER;
+   private static final long PEER_CONVERSATIONS_FOLDER = 5954110685349625386L;
    private static PeerConversationsFolder _instance;
 
    final void register() {

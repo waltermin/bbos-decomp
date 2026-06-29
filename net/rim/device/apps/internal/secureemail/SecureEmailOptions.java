@@ -19,10 +19,10 @@ public class SecureEmailOptions implements Persistable, RIMModel, RemoveWhenSend
    protected boolean _promptProblemPersonalCerts;
    protected boolean _promptTruncatedBody;
    protected boolean _promptIgnoredAttachment;
-   private static final boolean SHOW_MESSAGE_DETAILS_DEFAULT;
-   private static final boolean PROMPT_PROBLEM_PERSONAL_CERTS_DEFAULT;
-   private static final boolean PROMPT_TRUNCATED_BODY;
-   private static final boolean PROMPT_IGNORED_ATTACHMENT;
+   private static final boolean SHOW_MESSAGE_DETAILS_DEFAULT = true;
+   private static final boolean PROMPT_PROBLEM_PERSONAL_CERTS_DEFAULT = true;
+   private static final boolean PROMPT_TRUNCATED_BODY = true;
+   private static final boolean PROMPT_IGNORED_ATTACHMENT = true;
 
    protected void reset() {
       this._signingKeyStoreData = null;

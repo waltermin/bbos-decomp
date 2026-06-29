@@ -8,8 +8,8 @@ public final class ContextObject extends LongHashtable {
    private long _bitflags2;
    private long _bitflags3;
    private long[] _privateFlags;
-   public static final int MAX_BITFLAGS;
-   private static final int MAX_PRIVATE_BITFLAGS;
+   public static final int MAX_BITFLAGS = 192;
+   private static final int MAX_PRIVATE_BITFLAGS = 64;
 
    public ContextObject() {
       super(6);

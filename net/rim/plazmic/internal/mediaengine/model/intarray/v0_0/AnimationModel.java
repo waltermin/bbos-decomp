@@ -57,14 +57,14 @@ public class AnimationModel implements MediaModel, MediaListener {
    private long _currentSoundStartTime;
    private long _currentSoundMediaStartTime;
    EventEngine _engine;
-   private static final String TITLE;
-   private static final String DESCRITPTION;
-   private static final int NOT_STARTED;
-   private static final int STARTED;
-   private static final int STOPPED;
-   private static final int STOPPED_AT_NEW_TIME;
-   private static final int RESUMED;
-   private static final int STOPPING;
+   private static final String TITLE = "Title";
+   private static final String DESCRITPTION = "Description";
+   private static final int NOT_STARTED = 0;
+   private static final int STARTED = 1;
+   private static final int STOPPED = 2;
+   private static final int STOPPED_AT_NEW_TIME = 3;
+   private static final int RESUMED = 4;
+   private static final int STOPPING = 5;
 
    public void init() {
       this.started = false;

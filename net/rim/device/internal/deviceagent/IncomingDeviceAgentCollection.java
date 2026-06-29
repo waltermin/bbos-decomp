@@ -8,7 +8,7 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.util.DataBuffer;
 
 public class IncomingDeviceAgentCollection extends DeviceAgentCollection implements DeviceAgent {
-   private static final long DEVICE_CONFIG_DB;
+   private static final long DEVICE_CONFIG_DB = -6163296018230867973L;
 
    private IncomingDeviceAgentCollection() {
       super(-6163296018230867973L);

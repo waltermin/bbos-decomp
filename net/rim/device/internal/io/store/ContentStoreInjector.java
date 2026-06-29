@@ -7,7 +7,7 @@ import net.rim.device.api.util.CRC32;
 import net.rim.device.internal.io.file.FileUtilities;
 
 public final class ContentStoreInjector {
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    private ContentStoreInjector() {
    }

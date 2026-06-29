@@ -9,10 +9,10 @@ class DirectEuropeanConv$Invoker implements Runnable {
    private int _invocationID;
    private Application _appCache;
    private final DirectEuropeanConv this$0;
-   private static final byte INV_TYPE_KEYDOWN_TIMEOUT;
-   private static final byte INV_TYPE_SYMSCREEN_TIMEOUT;
-   private static final byte INV_TYPE_KEYREPEAT_TIMEOUT;
-   private static final short KEY_REPEATE_INV_GAP;
+   private static final byte INV_TYPE_KEYDOWN_TIMEOUT = 0;
+   private static final byte INV_TYPE_SYMSCREEN_TIMEOUT = 1;
+   private static final byte INV_TYPE_KEYREPEAT_TIMEOUT = 2;
+   private static final short KEY_REPEATE_INV_GAP = 100;
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

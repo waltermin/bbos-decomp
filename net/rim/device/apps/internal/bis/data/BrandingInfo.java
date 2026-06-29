@@ -9,13 +9,13 @@ public final class BrandingInfo {
    private String _helpRootURL;
    private boolean _selfCreateEnabled;
    private int _numValidationAttempts;
-   private static final int FORCE_UNIQUE_SUB_ID;
-   private static final int DEVICE_PIN_CHANGE_ENABLED;
-   private static final int IMPORT_CONTROL_ENABLED;
-   private static final int END_USER_AGREEMENT_ENABLED;
-   private static final int AUTO_LOGIN_ENABLED;
-   private static final int AUTO_DETECT_HANDHELD_CHANGE_ENABLED;
-   private static final int FORCE_USER_ID_EQUALS_HOSTED_ADDRESS;
+   private static final int FORCE_UNIQUE_SUB_ID = 1;
+   private static final int DEVICE_PIN_CHANGE_ENABLED = 8;
+   private static final int IMPORT_CONTROL_ENABLED = 16;
+   private static final int END_USER_AGREEMENT_ENABLED = 128;
+   private static final int AUTO_LOGIN_ENABLED = 1024;
+   private static final int AUTO_DETECT_HANDHELD_CHANGE_ENABLED = 2048;
+   private static final int FORCE_USER_ID_EQUALS_HOSTED_ADDRESS = 4096;
 
    public final String getHostedMailDomain() {
       return this._hostedMailDomain;

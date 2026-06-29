@@ -6,7 +6,7 @@ public final class SyncAgentRecordHashes implements ReusableObject {
    private int _uid;
    private int _keyFieldsHash;
    private int _allFieldsHash;
-   public static final long POOL_GUID;
+   public static final long POOL_GUID = -49889245922388290L;
 
    public final void setUid(int aUid) {
       this._uid = aUid;

@@ -3,10 +3,10 @@ package net.rim.device.api.crypto;
 import net.rim.device.internal.i18n.CommonResource;
 
 public final class Crypto3SelfTestModule implements SelfTestModule {
-   private static final int TOTAL_STARTUP_TESTS;
-   private static final int TOTAL_STARTUP_TESTS_NO_ECC;
-   private static final int TOTAL_AFTER_STARTUP;
-   private static final int TOTAL_AFTER_STARTUP_NO_ECC;
+   private static final int TOTAL_STARTUP_TESTS = 8;
+   private static final int TOTAL_STARTUP_TESTS_NO_ECC = 7;
+   private static final int TOTAL_AFTER_STARTUP = 22;
+   private static final int TOTAL_AFTER_STARTUP_NO_ECC = 4;
 
    @Override
    public final int getNumTests(boolean startupTests) {

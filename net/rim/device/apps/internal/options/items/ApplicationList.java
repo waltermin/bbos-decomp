@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.options.resources.OptionsResources;
 
 final class ApplicationList extends AbstractItemList {
    private Hashtable _indents = (Hashtable)(new Object());
-   protected static final int INDENT_SIZE;
+   protected static final int INDENT_SIZE = 5;
    private static Object _loadLock = new Object();
    private static boolean _isProcessing = false;
 

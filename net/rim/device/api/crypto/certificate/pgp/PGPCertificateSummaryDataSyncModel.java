@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 class PGPCertificateSummaryDataSyncModel extends CertificateSummaryDataSyncModel implements Persistable {
    private byte[] _pgpKeyIDs;
-   private static final int KEY_ID_LENGTH;
+   private static final int KEY_ID_LENGTH = 8;
 
    public PGPCertificateSummaryDataSyncModel(Certificate certificate, boolean isPrivateKeySet) {
       super(certificate, isPrivateKeySet);

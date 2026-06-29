@@ -34,14 +34,14 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
    private short _flowControlTimeout;
    private boolean _receiveActive = true;
    private int _sysCheckTimeout;
-   private static final String STRING_ConnectionHandler;
-   private static final String STRING_ConnectionTimeout;
-   private static final String STRING_SpecificUID;
-   private static final String STRING_FlowControlTimeout;
-   private static final String MSG_Connection_is_closed;
-   private static final int EVENT_LOG_TX;
-   private static final int EVENT_LOG_RX;
-   private static final byte IPPP_VERSION_BYTE;
+   private static final String STRING_ConnectionHandler = "ConnectionHandler";
+   private static final String STRING_ConnectionTimeout = "ConnectionTimeout";
+   private static final String STRING_SpecificUID = "SpecificUID";
+   private static final String STRING_FlowControlTimeout = "FlowControlTimeout";
+   private static final String MSG_Connection_is_closed = "Connection is closed";
+   private static final int EVENT_LOG_TX = 1417167682;
+   private static final int EVENT_LOG_RX = 1383613250;
+   private static final byte IPPP_VERSION_BYTE = 16;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

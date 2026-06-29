@@ -20,9 +20,9 @@ public final class WSPClientSession extends WSPSession {
    private UserDefinedEvent _redirectionEvent;
    private WSP_ReplyPDU _replyPDU;
    private HttpHeaders _cachedHeaders;
-   private static final int CONNECT;
-   private static final int RESUME;
-   private static final int METHOD;
+   private static final int CONNECT = 0;
+   private static final int RESUME = 1;
+   private static final int METHOD = 2;
 
    public WSPClientSession(WSPLayer instance, IWapStackLayer requestor, WSPAddress localAddress, WSPAddress destAddress) {
       super(requestor, instance, localAddress, destAddress);

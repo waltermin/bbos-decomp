@@ -4,11 +4,11 @@ import net.rim.device.api.util.ToIntHashtable;
 
 class PhoneEventProvider extends CountEventProvider {
    boolean _registeredForNewMissedCall;
-   static final String NEW_MISSED_CALL;
-   static final String NO_NEW_MISSED_CALL;
-   static final String NEW_MISSED_CALL_VISIBLE;
-   static final String NO_NEW_MISSED_CALL_VISIBLE;
-   private static final int EVENT_TYPE_NEW_MISSED_CALL;
+   static final String NEW_MISSED_CALL = "new_missed_call";
+   static final String NO_NEW_MISSED_CALL = "no_new_missed_call";
+   static final String NEW_MISSED_CALL_VISIBLE = "new_missed_call_visible";
+   static final String NO_NEW_MISSED_CALL_VISIBLE = "no_new_missed_call_visible";
+   private static final int EVENT_TYPE_NEW_MISSED_CALL = 0;
    private static PhoneEventProvider$Helper _helper;
    private static ToIntHashtable _events;
 

@@ -12,7 +12,7 @@ public final class QmPopupStatus extends QmThemedPopupScreen {
    protected LabelField _label;
    protected BitmapField _icon;
    protected VerticalFieldManager _vfm = (VerticalFieldManager)this.getDelegate();
-   private static final int MIN_DISMISS_TIME;
+   private static final int MIN_DISMISS_TIME = 1000;
 
    public QmPopupStatus(String message, Bitmap bitmap) {
       super(new QmPopupStatus$1());

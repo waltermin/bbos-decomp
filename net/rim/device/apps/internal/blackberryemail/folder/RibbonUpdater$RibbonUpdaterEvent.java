@@ -12,9 +12,9 @@ import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 final class RibbonUpdater$RibbonUpdaterEvent implements Runnable {
    private int _type;
    private ServiceRecord _sr;
-   private static final int ADD;
-   private static final int REMOVE;
-   private static final int REFRESH;
+   private static final int ADD = 1;
+   private static final int REMOVE = 2;
+   private static final int REFRESH = 3;
 
    RibbonUpdater$RibbonUpdaterEvent(int type, ServiceRecord sr) {
       this._type = type;

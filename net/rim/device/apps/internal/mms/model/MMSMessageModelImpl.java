@@ -51,16 +51,16 @@ final class MMSMessageModelImpl
    private int _flags;
    private long _deliveryDate;
    private long _readDate;
-   static final int UNOPENED;
-   static final int SAVED;
-   static final int SAVED_THEN_ORPHANED;
-   static final int DELETED;
-   static final int INBOUND;
-   static final int HIDE_SENDER;
-   static final int USE_SMART_DIALING;
-   static final int FORWARD_LOCKED;
-   static final int PENDING_READ_NOTIFICATION;
-   static final int IS_NEW;
+   static final int UNOPENED = 1;
+   static final int SAVED = 2;
+   static final int SAVED_THEN_ORPHANED = 4;
+   static final int DELETED = 8;
+   static final int INBOUND = 16;
+   static final int HIDE_SENDER = 32;
+   static final int USE_SMART_DIALING = 64;
+   static final int FORWARD_LOCKED = 128;
+   static final int PENDING_READ_NOTIFICATION = 256;
+   static final int IS_NEW = 512;
 
    final void addDeliveryReport(MMSStatusReport report) {
       if (this._deliveryReports == null) {

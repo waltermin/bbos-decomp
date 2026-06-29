@@ -47,14 +47,14 @@ public final class DateSortedSeparatedMessageArray
    private LongKeyProviderAdaptor _longKeyProviderAdaptor;
    DialogWithBackgroundThread _dialogWithBackgroundThread = (DialogWithBackgroundThread)(new Object());
    DateSortedSeparatedMessageArray$ApplyRunnable _applyRunnable = new DateSortedSeparatedMessageArray$ApplyRunnable(this);
-   private static final boolean CHECK_ASSERT;
-   private static final int ASCENDING_DIRECTION;
-   private static final int DESCENDING_DIRECTION;
-   private static final int INITIAL_RANGE_SIZE;
-   private static final int RANGE_SIZE_GROWTH;
-   private static final long EVENT_LOGGER_ID;
-   public static final long FLAG_DISPLAY_POPUP_SCREEN_DURING_BULK_MARK_OLD;
-   private static final long TWO_DAYS_IN_MS;
+   private static final boolean CHECK_ASSERT = false;
+   private static final int ASCENDING_DIRECTION = 1;
+   private static final int DESCENDING_DIRECTION = -1;
+   private static final int INITIAL_RANGE_SIZE = 64;
+   private static final int RANGE_SIZE_GROWTH = 64;
+   private static final long EVENT_LOGGER_ID = 4720449521217587723L;
+   public static final long FLAG_DISPLAY_POPUP_SCREEN_DURING_BULK_MARK_OLD = 2800326993345467839L;
+   private static final long TWO_DAYS_IN_MS = 172800000L;
 
    @Override
    public final void loadFrom(Object collection) {

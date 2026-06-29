@@ -21,8 +21,8 @@ final class UserSettingsSync implements SyncCollection, SyncCollectionStatistics
    private UserPermissions _userPermissions;
    private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private SyncCollectionSchema _schema;
-   private static final int USR_RESET_INTERVAL;
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int USR_RESET_INTERVAL = 3600000;
+   private static final int DEFAULT_RECORD_TYPE = 1;
    private static final int[] KEY_FIELD_IDS = new int[]{0, 0, 0, 0};
 
    final void settingRemoved(UserSetting us) {

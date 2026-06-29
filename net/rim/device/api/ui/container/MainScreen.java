@@ -11,8 +11,8 @@ import net.rim.device.api.ui.component.Menu;
 public class MainScreen extends FullScreen {
    private TitleStatusManager _manager = (TitleStatusManager)this.getDelegate();
    private Vector _menu;
-   public static final long NO_TITLE_SEPARATOR;
-   public static final long NO_STATUS_SEPARATOR;
+   public static final long NO_TITLE_SEPARATOR = 2147483648L;
+   public static final long NO_STATUS_SEPARATOR = 1073741824L;
 
    public MainScreen() {
       this(0);

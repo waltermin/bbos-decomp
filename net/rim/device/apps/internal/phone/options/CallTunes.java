@@ -6,18 +6,18 @@ import net.rim.device.resources.Resource;
 public final class CallTunes {
    private short[][][] _tunes = new short[9][][];
    private byte[][][] _polyTunes = new byte[9][][];
-   static final long GUID;
+   static final long GUID = -7841402171854956200L;
    private static CallTunes _instance;
-   public static final int TUNE_CALL_ENDED;
-   public static final int TUNE_CALL_FAILED;
-   public static final int TUNE_CALL_WAITING;
-   public static final int TUNE_MUTE_ON;
-   public static final int TUNE_MUTE_OFF;
-   public static final int TUNE_PRIVACY_GAINED;
-   public static final int TUNE_PRIVACY_LOST;
-   public static final int TUNE_EMERGENCY_CALL;
-   public static final int TUNE_USSD_ALERT;
-   private static final int TUNE_COUNT;
+   public static final int TUNE_CALL_ENDED = 0;
+   public static final int TUNE_CALL_FAILED = 1;
+   public static final int TUNE_CALL_WAITING = 2;
+   public static final int TUNE_MUTE_ON = 3;
+   public static final int TUNE_MUTE_OFF = 4;
+   public static final int TUNE_PRIVACY_GAINED = 5;
+   public static final int TUNE_PRIVACY_LOST = 6;
+   public static final int TUNE_EMERGENCY_CALL = 7;
+   public static final int TUNE_USSD_ALERT = 8;
+   private static final int TUNE_COUNT = 9;
 
    private CallTunes() {
       short[] endTune = new short[]{600, 300, 14, -12280};

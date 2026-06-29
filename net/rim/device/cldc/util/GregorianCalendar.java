@@ -34,11 +34,11 @@ public final class GregorianCalendar extends Calendar implements CalendarExtensi
    private int _zoneOffset;
    private int _dstOffset;
    private int _nextStamp = 2;
-   private static final int ACTUAL_MINIMUM_MASK;
-   private static final int UNSET;
-   private static final int INTERNALLY_SET;
-   private static final int MINIMUM_USER_STAMP;
-   private static final int GREGORIAN_CUTOVER_YEAR;
+   private static final int ACTUAL_MINIMUM_MASK = 226;
+   private static final int UNSET = 0;
+   private static final int INTERNALLY_SET = 1;
+   private static final int MINIMUM_USER_STAMP = 2;
+   private static final int GREGORIAN_CUTOVER_YEAR = 1582;
    private static final int[] MONTH_LENGTH = new int[]{
       31,
       28,
@@ -139,11 +139,11 @@ public final class GregorianCalendar extends Calendar implements CalendarExtensi
       1933597168,
       -790102144
    };
-   private static final int ONE_SECOND;
-   private static final int ONE_MINUTE;
-   private static final int ONE_HOUR;
-   private static final long ONE_DAY;
-   private static final long ONE_WEEK;
+   private static final int ONE_SECOND = 1000;
+   private static final int ONE_MINUTE = 60000;
+   private static final int ONE_HOUR = 3600000;
+   private static final long ONE_DAY = 86400000L;
+   private static final long ONE_WEEK = 604800000L;
    private static final int[] MIN_VALUES = new int[]{
       0,
       1,

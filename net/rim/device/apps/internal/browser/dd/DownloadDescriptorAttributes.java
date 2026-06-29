@@ -18,22 +18,22 @@ final class DownloadDescriptorAttributes {
    private String[] _errors;
    private int _statusCode = 900;
    private int _size = -1;
-   private static final int MAJOR_VERSION_SUPPORTED;
-   public static final int TYPE;
-   public static final int OBJECT_URI;
-   public static final int SIZE;
-   public static final int NAME;
-   public static final int DD_VERSION;
-   public static final int VENDOR;
-   public static final int DESCRIPTION;
-   public static final int INSTALL_NOTIFY_URI;
-   public static final int NEXT_URL;
-   public static final int INFO_URL;
-   public static final int ICON_URI;
-   public static final int INSTALL_PARAM;
-   private static final int NUM_ATTRIBUTES;
-   private static final int UNKNOWN;
-   private static final int MINIMUM_ATTRIBUTE_LENGTH;
+   private static final int MAJOR_VERSION_SUPPORTED = 1;
+   public static final int TYPE = 1000;
+   public static final int OBJECT_URI = 0;
+   public static final int SIZE = 1;
+   public static final int NAME = 2;
+   public static final int DD_VERSION = 3;
+   public static final int VENDOR = 4;
+   public static final int DESCRIPTION = 5;
+   public static final int INSTALL_NOTIFY_URI = 6;
+   public static final int NEXT_URL = 7;
+   public static final int INFO_URL = 8;
+   public static final int ICON_URI = 9;
+   public static final int INSTALL_PARAM = 10;
+   private static final int NUM_ATTRIBUTES = 11;
+   private static final int UNKNOWN = -1;
+   private static final int MINIMUM_ATTRIBUTE_LENGTH = 4;
 
    public DownloadDescriptorAttributes() {
    }
@@ -268,7 +268,7 @@ final class DownloadDescriptorAttributes {
       // 132: sipush 764
       // 135: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
       // 138: bipush 1
-      // 139: anewarray 528
+      // 139: anewarray 560
       // 13c: dup
       // 13d: bipush 0
       // 13e: lload 5

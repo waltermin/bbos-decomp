@@ -15,7 +15,7 @@ public final class Dashboard extends Field {
    private Bitmap _background = Bitmap.getBitmapResource(
       ((StringBuffer)(new Object("images/lbs_dashboard_"))).append(Display.getWidth()).append(".png").toString()
    );
-   private static final int TITLE_HEIGHT;
+   private static final int TITLE_HEIGHT = 16;
 
    public Dashboard() {
       super(36028797018963968L);

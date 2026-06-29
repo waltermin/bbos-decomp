@@ -10,10 +10,10 @@ import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 public final class ServiceAuthentication {
    private String[] _services = new Object[0];
    private AuthThread[] _threads = new AuthThread[0];
-   private static final long MAX_SESSION_TIME;
-   private static final int NO_KEY_FOR_SERVICE;
-   private static final int ALREADY_AUTHENTICATING;
-   private static final int NOT_AUTHENTICATING;
+   private static final long MAX_SESSION_TIME = 600000L;
+   private static final int NO_KEY_FOR_SERVICE = 1313564025;
+   private static final int ALREADY_AUTHENTICATING = 1094808948;
+   private static final int NOT_AUTHENTICATING = 1312912756;
 
    protected ServiceAuthentication() {
    }

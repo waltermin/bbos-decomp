@@ -49,16 +49,16 @@ public class BrowserBitmapField extends MIMEContentAnimatedBitmapField {
    protected BrowserContentBaseImpl _browserContent;
    public static final Bitmap _brokenImage = Bitmap.getBitmapResource("BrokenImage.gif");
    private static final Bitmap _loadingImage = Bitmap.getBitmapResource("LoadingImage.gif");
-   protected static final int DEFAULT_FOCUS_HEIGHT;
-   protected static final int DEFAULT_FOCUS_WIDTH;
-   private static final int IMAGE_LOAD_PAD;
-   public static final int SAFE_FOCUS_TYPE;
-   public static final int TEXT_FLOW_FOCUS_TYPE;
-   public static final int TEXT_FLOW_FOCUS_TYPE_WITH_FOCUS;
-   private static final int MAX_VSPACE;
-   private static final int MIN_VSPACE;
-   private static final int MAX_HSPACE;
-   private static final int MIN_HSPACE;
+   protected static final int DEFAULT_FOCUS_HEIGHT = 3;
+   protected static final int DEFAULT_FOCUS_WIDTH = 3;
+   private static final int IMAGE_LOAD_PAD = 4;
+   public static final int SAFE_FOCUS_TYPE = 0;
+   public static final int TEXT_FLOW_FOCUS_TYPE = 1;
+   public static final int TEXT_FLOW_FOCUS_TYPE_WITH_FOCUS = 2;
+   private static final int MAX_VSPACE = 3;
+   private static final int MIN_VSPACE = 0;
+   private static final int MAX_HSPACE = 3;
+   private static final int MIN_HSPACE = 0;
 
    public BrowserBitmapField(BrowserContentBaseImpl browserField, Bitmap bitmap, String imageUrl) {
       this(browserField, bitmap, imageUrl, 0, false, -1, -1, 0, null, null);

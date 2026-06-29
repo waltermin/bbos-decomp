@@ -7,9 +7,9 @@ final class ITPolicyParser implements TLEFieldController {
    private DataBuffer _previousKey;
    private DataBuffer _currentKey;
    private DataBuffer _buffer;
-   private static final int SET_PEER_TO_PEER_KEY_MAJOR_VERSION;
-   private static final int SET_PEER_TO_PEER_KEY_MINOR_VERSION;
-   private static final int SET_PEER_TO_PEER_KEY_VERSION;
+   private static final int SET_PEER_TO_PEER_KEY_MAJOR_VERSION = 16;
+   private static final int SET_PEER_TO_PEER_KEY_MINOR_VERSION = 0;
+   private static final int SET_PEER_TO_PEER_KEY_VERSION = 16;
 
    public ITPolicyParser(byte[] data, int offset, int length) {
       this._buffer = (DataBuffer)(new Object(data, offset, length, true));

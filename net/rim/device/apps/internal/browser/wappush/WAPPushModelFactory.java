@@ -3,23 +3,23 @@ package net.rim.device.apps.internal.browser.wappush;
 import net.rim.device.api.util.Factory;
 
 public final class WAPPushModelFactory implements Factory {
-   public static final int TYPE;
-   public static final int TIME_STAMP;
-   public static final int STATUS;
-   public static final int URL;
-   public static final int ACTION;
-   public static final int MESSAGE;
-   public static final int MESSAGE_2;
-   public static final int EXPIRY;
-   public static final int CREATED;
-   public static final int ID;
-   public static final int PREFERRED_CONFIG_UID;
-   public static final int PREFERRED_TRANSPORT_CID;
-   public static final int PREFERRED_CONFIG_TYPE;
-   public static final int SI;
-   public static final int SL;
-   public static final int CO;
-   public static final int PROVISIONING;
+   public static final int TYPE = 1;
+   public static final int TIME_STAMP = 2;
+   public static final int STATUS = 3;
+   public static final int URL = 4;
+   public static final int ACTION = 5;
+   public static final int MESSAGE = 6;
+   public static final int MESSAGE_2 = 7;
+   public static final int EXPIRY = 8;
+   public static final int CREATED = 9;
+   public static final int ID = 10;
+   public static final int PREFERRED_CONFIG_UID = 11;
+   public static final int PREFERRED_TRANSPORT_CID = 12;
+   public static final int PREFERRED_CONFIG_TYPE = 13;
+   public static final int SI = 1;
+   public static final int SL = 2;
+   public static final int CO = 3;
+   public static final int PROVISIONING = 4;
 
    @Override
    public final Object createInstance(Object param1) {

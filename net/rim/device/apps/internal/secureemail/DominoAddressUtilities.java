@@ -8,7 +8,7 @@ import net.rim.device.api.util.StringUtilities;
 
 public class DominoAddressUtilities {
    private static final OID[] DOMINO_ADDRESS_OIDS = new Object[]{OIDs.getOID(-1253056853), OIDs.getOID(-1252532565), OIDs.getOID(-1252598101)};
-   private static final String COMMON_NAME_PREFIX;
+   private static final String COMMON_NAME_PREFIX = "cn=";
 
    private DominoAddressUtilities() {
    }

@@ -1,29 +1,29 @@
 package net.rim.device.api.crypto.certificate;
 
 public class CertificateProperties {
-   public static final long INCOMPLETE_CERTIFICATE_CHAIN;
-   public static final long UNVERIFIED_CERTIFICATE_CHAIN;
-   public static final long UNSUPPORTED_CERTIFICATE_CHAIN;
-   public static final long UNTRUSTED_CERTIFICATE_CHAIN;
-   public static final long IMPROPER_CERTIFICATE_CHAIN;
-   public static final long WEAK_CERTIFICATE_CHAIN;
-   public static final long WEAK_CERTIFICATE_CHAIN_DIGEST;
-   public static final long INVALID_CERTIFICATE_PRESENT;
-   public static final long UNKNOWN_CERTIFICATE_STATUS_PRESENT;
-   public static final long REVOKED_CERTIFICATE_STATUS_PRESENT;
-   public static final long STALE_CERTIFICATE_STATUS;
-   protected static final long REVOCATION_REASON_BASE;
-   public static final long REVOCATION_REASON_UNSPECIFIED;
-   public static final long REVOCATION_REASON_KEY_COMPROMISE;
-   public static final long REVOCATION_REASON_CA_COMPROMISE;
-   public static final long REVOCATION_REASON_AFFILIATION_CHANGED;
-   public static final long REVOCATION_REASON_SUPERSEDED;
-   public static final long REVOCATION_REASON_CESSATION_OF_OPERATION;
-   public static final long REVOCATION_REASON_CERTIFICATE_HOLD;
-   public static final long REVOCATION_REASON_REMOVE_FROM_CRL;
-   public static final long REVOCATION_REASON_KEY_RETIRED;
-   public static final long REVOCATION_REASON_USER_ID_INVALID;
-   private static final long REVOCATION_REASONS;
+   public static final long INCOMPLETE_CERTIFICATE_CHAIN = 1L;
+   public static final long UNVERIFIED_CERTIFICATE_CHAIN = 2L;
+   public static final long UNSUPPORTED_CERTIFICATE_CHAIN = 4L;
+   public static final long UNTRUSTED_CERTIFICATE_CHAIN = 8L;
+   public static final long IMPROPER_CERTIFICATE_CHAIN = 16L;
+   public static final long WEAK_CERTIFICATE_CHAIN = 32L;
+   public static final long WEAK_CERTIFICATE_CHAIN_DIGEST = 64L;
+   public static final long INVALID_CERTIFICATE_PRESENT = 256L;
+   public static final long UNKNOWN_CERTIFICATE_STATUS_PRESENT = 512L;
+   public static final long REVOKED_CERTIFICATE_STATUS_PRESENT = 1024L;
+   public static final long STALE_CERTIFICATE_STATUS = 2048L;
+   protected static final long REVOCATION_REASON_BASE = 65536L;
+   public static final long REVOCATION_REASON_UNSPECIFIED = 65536L;
+   public static final long REVOCATION_REASON_KEY_COMPROMISE = 131072L;
+   public static final long REVOCATION_REASON_CA_COMPROMISE = 262144L;
+   public static final long REVOCATION_REASON_AFFILIATION_CHANGED = 524288L;
+   public static final long REVOCATION_REASON_SUPERSEDED = 1048576L;
+   public static final long REVOCATION_REASON_CESSATION_OF_OPERATION = 2097152L;
+   public static final long REVOCATION_REASON_CERTIFICATE_HOLD = 4194304L;
+   public static final long REVOCATION_REASON_REMOVE_FROM_CRL = 8388608L;
+   public static final long REVOCATION_REASON_KEY_RETIRED = 16777216L;
+   public static final long REVOCATION_REASON_USER_ID_INVALID = 33554432L;
+   private static final long REVOCATION_REASONS = 67043328L;
    private static final long[] DEFAULT_PROPERTY_MASKS = new long[]{
       0L,
       2048L,

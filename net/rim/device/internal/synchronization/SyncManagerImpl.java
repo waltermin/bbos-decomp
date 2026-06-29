@@ -44,9 +44,9 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    private Object[] _serialSyncListeners;
    private boolean _serialSyncInProgress;
    private ToIntHashtable _itPolicyTagMap = (ToIntHashtable)(new Object(4));
-   private static final byte USER_PREFERENCE;
-   private static final byte IT_POLICY;
-   private static final byte SYNC_AGENT;
+   private static final byte USER_PREFERENCE = 0;
+   private static final byte IT_POLICY = 1;
+   private static final byte SYNC_AGENT = 2;
 
    SyncManagerImpl() {
       this._syncAgent = SyncAgent.getSingletonInstance();
@@ -346,7 +346,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       //
       // Bytecode:
       // 00: bipush 3
-      // 02: anewarray 1108
+      // 02: anewarray 1114
       // 05: astore 2
       // 06: aload 0
       // 07: aload 1

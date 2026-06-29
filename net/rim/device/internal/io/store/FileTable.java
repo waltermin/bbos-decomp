@@ -21,9 +21,9 @@ final class FileTable implements Persistable {
    private Object[] _indexes = new Object[1];
    private static Vector _picturesAllFiles;
    private static PersistentObject _picturesPersist = RIMPersistentStore.getPersistentObject(3969401279175688951L);
-   private static final long PICTURES_ROOT_PERSISTENT_NAME;
-   private static final int INDEX_ORIGINAL_URL;
-   private static final int INDEX_COUNT;
+   private static final long PICTURES_ROOT_PERSISTENT_NAME = 3969401279175688951L;
+   private static final int INDEX_ORIGINAL_URL = 0;
+   private static final int INDEX_COUNT = 1;
    private static String _preloadedCodPrefix;
 
    final void optionsChanged() {

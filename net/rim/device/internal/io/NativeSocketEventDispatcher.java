@@ -7,14 +7,14 @@ import net.rim.vm.Message;
 
 public final class NativeSocketEventDispatcher extends EventDispatcher {
    private int _protocolDaemonPid;
-   private static final int JVM_DEVICE_SOCKET;
-   private static final int SOC_CONNECT_CNF;
-   private static final int SOC_CLOSE_CNF;
-   private static final int SOC_CONNECT_IND;
-   private static final int SOC_SEND_CNF;
-   private static final int SOC_RECEIVE_IND;
-   private static final int SOC_DISCONNECT_IND;
-   private static final int SOC_READY_IND;
+   private static final int JVM_DEVICE_SOCKET = 39;
+   private static final int SOC_CONNECT_CNF = 9985;
+   private static final int SOC_CLOSE_CNF = 9986;
+   private static final int SOC_CONNECT_IND = 9987;
+   private static final int SOC_SEND_CNF = 9988;
+   private static final int SOC_RECEIVE_IND = 9989;
+   private static final int SOC_DISCONNECT_IND = 9990;
+   private static final int SOC_READY_IND = 9991;
 
    private NativeSocketEventDispatcher(int protocolDaemonPid) {
       this._protocolDaemonPid = protocolDaemonPid;

@@ -3,9 +3,9 @@ package net.rim.ecmascript.runtime;
 import net.rim.ecmascript.util.Misc;
 
 public class RedirectedObject extends ESObject {
-   public static final int DeleteDone;
-   public static final int DisableDelete;
-   public static final int DelegateDelete;
+   public static final int DeleteDone = 0;
+   public static final int DisableDelete = 1;
+   public static final int DelegateDelete = 2;
 
    public RedirectedObject() {
       this.setIsRedirected();

@@ -3,7 +3,7 @@ package net.rim.device.apps.api.addressbook;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 public interface SelectionListener {
-   long CONTEXT_ID;
+   long CONTEXT_ID = 1021178189941494075L;
 
    boolean select(Object var1, int var2);
 

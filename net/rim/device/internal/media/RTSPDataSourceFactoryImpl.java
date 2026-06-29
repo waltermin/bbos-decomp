@@ -13,7 +13,7 @@ import net.rim.device.internal.io.tunnel.TunnelCredentialsProvider;
 import net.rim.device.internal.system.InternalServices;
 
 final class RTSPDataSourceFactoryImpl extends RTSPDataSourceFactory {
-   private static final String DEFAULT_USER_AGENT;
+   private static final String DEFAULT_USER_AGENT = "BlackBerry";
 
    @Override
    public final RTSPDataSource createDataSource(String locator, String userAgent) {

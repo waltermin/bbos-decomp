@@ -7,8 +7,8 @@ import net.rim.device.api.ui.XYRect;
 
 final class VideoPresentationElementField$MMSMediaPlayerDialog$MMSMediaPlayerDialogManager extends Manager {
    private final VideoPresentationElementField$MMSMediaPlayerDialog this$0;
-   private static final int BANNER;
-   private static final int BROWSER;
+   private static final int BANNER = 0;
+   private static final int BROWSER = 1;
 
    VideoPresentationElementField$MMSMediaPlayerDialog$MMSMediaPlayerDialogManager(VideoPresentationElementField$MMSMediaPlayerDialog _1) {
       super(0);

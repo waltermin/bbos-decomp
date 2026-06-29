@@ -20,7 +20,7 @@ public class StreamDatagramServerSocketConnectionBase implements ServerSocketCon
    protected int _mode;
    protected boolean _timeouts;
    private static String STR_CLOSED = "connection is closed";
-   public static final int STREAM_DEBUG_LEVEL;
+   public static final int STREAM_DEBUG_LEVEL = 1000000;
 
    @Override
    public void close() {

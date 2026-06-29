@@ -11,9 +11,9 @@ public final class CertificateStatus implements Persistable {
    private long _revocationDate;
    private int _revocationReason;
    private long _creationDate;
-   public static final int GOOD;
-   public static final int REVOKED;
-   public static final int UNKNOWN;
+   public static final int GOOD = 0;
+   public static final int REVOKED = 1;
+   public static final int UNKNOWN = -1;
 
    public CertificateStatus() {
       this(-1, -1, -1, -1, -1, -1);

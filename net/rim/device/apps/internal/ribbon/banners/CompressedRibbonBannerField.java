@@ -35,8 +35,8 @@ final class CompressedRibbonBannerField extends Field implements BannerField, Ri
    private static final String[] _componentIDs = new Object[]{
       RibbonComponentIDs.SIGNAL_NAME, RibbonComponentIDs.BATTERY_NAME, RibbonComponentIDs.DATE_TIME_NAME, RibbonComponentIDs.HORIZ_INDICATOR_NAME
    };
-   private static final int COMPONENT_GAP;
-   private static final int SEPARATOR_HEIGHT;
+   private static final int COMPONENT_GAP = 2;
+   private static final int SEPARATOR_HEIGHT = 1;
    private static final int SIGNAL_ARROW_WIDTH = Graphics.isColor() ? (InternalServices.isReducedFormFactor() ? -2 : 12) : 7;
 
    CompressedRibbonBannerField(RibbonComponent$RibbonComponentChangeListener listener, String title) {

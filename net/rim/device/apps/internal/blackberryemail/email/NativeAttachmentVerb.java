@@ -14,12 +14,12 @@ public class NativeAttachmentVerb extends Verb implements EmailEditorScreen$Atta
    protected WeakReference _serviceRecordReference;
    protected EmailEditorScreen _emailEditorScreen;
    protected boolean _compressImage;
-   private static final long GUID;
-   private static final int LOG_SERVICE_ROCORD_IS_NULL;
-   private static final int LOG_EMAIL_EDITOR_SCREEN_IS_NULL;
-   private static final int LOG_NATIVE_ATTACHMENT_MODEL_CREATED;
-   private static final int LOG_NATIVE_ATTACHMENT_MODEL_IS_NULL;
-   private static final int LOG_IO_EXCEPTION;
+   private static final long GUID = -1237457833540244999L;
+   private static final int LOG_SERVICE_ROCORD_IS_NULL = 1;
+   private static final int LOG_EMAIL_EDITOR_SCREEN_IS_NULL = 2;
+   private static final int LOG_NATIVE_ATTACHMENT_MODEL_CREATED = 3;
+   private static final int LOG_NATIVE_ATTACHMENT_MODEL_IS_NULL = 4;
+   private static final int LOG_IO_EXCEPTION = 5;
 
    public NativeAttachmentVerb(EmailEditorScreen emailEditorScreen, ServiceRecord serviceRecord) {
       this(emailEditorScreen, serviceRecord, false);

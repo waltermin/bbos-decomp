@@ -11,7 +11,7 @@ import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 final class DatagramReceiveThread extends Thread implements ConnectionListener {
    private Hashtable _connections = new Hashtable();
    private CyclicQueue _queue = new CyclicQueue(32);
-   private static final long ID;
+   private static final long ID = -4931091334314128113L;
 
    public static final DatagramReceiveThread getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

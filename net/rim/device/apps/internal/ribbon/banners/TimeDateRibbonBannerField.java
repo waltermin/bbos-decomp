@@ -26,8 +26,8 @@ final class TimeDateRibbonBannerField implements BannerField, RibbonComponent$Ri
    private int _width;
    private int _height;
    private RibbonComponent$RibbonComponentChangeListener _listener;
-   private static final int SEPARATOR_HEIGHT;
-   private static final int DATE_TIME_WIDTH;
+   private static final int SEPARATOR_HEIGHT = 1;
+   private static final int DATE_TIME_WIDTH = 73;
 
    public final int getPreferredWidth() {
       return 73;

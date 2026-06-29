@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class GetValidDevice extends Model {
    private String _candidateDevice;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/dispatcher/message/GetValidDevice.java#1 $";
 
    public GetValidDevice(String candidateDevice) {
       this._candidateDevice = candidateDevice;

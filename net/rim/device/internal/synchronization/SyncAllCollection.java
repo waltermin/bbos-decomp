@@ -18,7 +18,7 @@ public class SyncAllCollection implements SyncCollection, SyncCollectionStatusPr
    private IntHashtable _syncObjects = (IntHashtable)(new Object());
    private int _syncObjectCount = 0;
    private String _syncCollectionName = " - All";
-   private static final String _syncCollectionNameSuffix;
+   private static final String _syncCollectionNameSuffix = " - All";
 
    public synchronized void addSyncCollection(MultiServiceSyncCollection mssc, long sid) {
       this._collections.put(sid, mssc);

@@ -8,7 +8,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 public class CertificateInfoDialogFactory {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = 6643584644822215036L;
    private static Hashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getHashtable(6643584644822215036L);
    private static CertificateInfoDialogFactory _defaultCertificateInfoDialogFactory = new DefaultCertificateInfoDialogFactory();
 

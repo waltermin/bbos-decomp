@@ -11,8 +11,8 @@ final class AddressCardCache implements MemoryCleanerListener {
    private AddressCardModel[] _values = new Object[25];
    private int[] _touched = new int[25];
    private int _counter;
-   private static final long ADDRESS_CARD_CACHE_GUID;
-   private static final int CACHE_SIZE;
+   private static final long ADDRESS_CARD_CACHE_GUID = 8455120407288834537L;
+   private static final int CACHE_SIZE = 25;
    private static AddressCardCache _theCache;
 
    private AddressCardCache() {

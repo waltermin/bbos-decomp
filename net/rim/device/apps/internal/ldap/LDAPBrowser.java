@@ -77,8 +77,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    private boolean _certsAdded;
    private Font _font = Font.getDefault();
    private Font _boldFont = this._font.derive(this._font.getStyle() | 1);
-   private static final int FIRST_STAGE;
-   private static final int SECOND_STAGE;
+   private static final int FIRST_STAGE = 1;
+   private static final int SECOND_STAGE = 2;
    private static ResourceBundleFamily _rb = ResourceBundle.getBundle(-4732399874182263183L, "net.rim.device.apps.internal.ldap.resource.LDAP");
 
    public LDAPBrowser(String context) {

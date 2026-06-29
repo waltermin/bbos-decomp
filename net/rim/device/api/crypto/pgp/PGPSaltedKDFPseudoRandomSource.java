@@ -9,7 +9,7 @@ public final class PGPSaltedKDFPseudoRandomSource extends AbstractPseudoRandomSo
    private PGPSimpleKDFPseudoRandomSource _kdf;
    private byte[] _salt;
    private Digest _digest;
-   private static final int DEFAULT_SALT_LENGTH;
+   private static final int DEFAULT_SALT_LENGTH = 8;
 
    public final byte[] getSalt() {
       return Arrays.copy(this._salt);

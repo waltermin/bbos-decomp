@@ -8,7 +8,7 @@ import net.rim.device.internal.provisioning.ProvisioningHandler;
 final class ActivationServiceHandler implements ProvisioningHandler {
    private byte[] _state = new byte[1];
    ActivationServiceImpl _activationService;
-   private static final int DEFAULT_VALUE;
+   private static final int DEFAULT_VALUE = 1;
 
    public final boolean isOTAEnterpriseActivationProvisioned() {
       return this._state[0] != 0;

@@ -16,9 +16,9 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
    private String _name;
    private String _bindName;
    private int _attributes;
-   private static final int ARCHIVE_ATTR_ON;
-   private static final int ARCHIVE_ATTR_OFF;
-   private static final int ATTR_CONSTANT;
+   private static final int ARCHIVE_ATTR_ON = 32;
+   private static final int ARCHIVE_ATTR_OFF = 2052;
+   private static final int ATTR_CONSTANT = -134217728;
 
    public final FileImpl addFile(String name, int open) {
       FileImpl prev = this.getFile(name);

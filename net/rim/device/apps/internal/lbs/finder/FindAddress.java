@@ -32,14 +32,14 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
    private MailingAddressModel _callbackModel = null;
    private DirectionsChoiceScreen _screen = null;
    private int _searchType = -1;
-   private static final int MIN_LAT_VAL;
-   private static final int MAX_LAT_VAL;
-   private static final int MIN_LONG_VAL;
-   private static final int MAX_LONG_VAL;
-   public static final int SEARCH_NO_TYPE;
-   public static final int SEARCH_HISTORYLIST;
-   public static final int SEARCH_ENTEREDADDRESS;
-   public static final int SEARCH_ADDRESSBOOK;
+   private static final int MIN_LAT_VAL = -9000000;
+   private static final int MAX_LAT_VAL = 8999999;
+   private static final int MIN_LONG_VAL = -18000000;
+   private static final int MAX_LONG_VAL = 17999999;
+   public static final int SEARCH_NO_TYPE = -1;
+   public static final int SEARCH_HISTORYLIST = 0;
+   public static final int SEARCH_ENTEREDADDRESS = 1;
+   public static final int SEARCH_ADDRESSBOOK = 2;
 
    public FindAddress(String title, boolean direction) {
       super(0);

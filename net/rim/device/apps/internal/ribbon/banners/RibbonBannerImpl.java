@@ -20,7 +20,7 @@ public final class RibbonBannerImpl extends RibbonBanner {
    private boolean _compressedBanners = Display.getHeight() < 160;
    private BannerManager _bannerManager = new BannerManager();
    private SimpleRibbonComponent _bannerStandard;
-   private static final int NORMAL_BANNERS_SCREEN_HEIGHT;
+   private static final int NORMAL_BANNERS_SCREEN_HEIGHT = 160;
 
    public static final void init() {
       RibbonBannerImpl instance = new RibbonBannerImpl();

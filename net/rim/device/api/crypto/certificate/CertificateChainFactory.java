@@ -6,7 +6,7 @@ import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class CertificateChainFactory extends CertificateProperties {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = -8204259325785503721L;
    private static Hashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getHashtable(-8204259325785503721L);
    private static CryptoSystemProperties _defaultCryptoSystemProperties = new CryptoSystemProperties();
    private static CertificateChainFactory _defaultCertificateChainFactory = new DefaultCertificateChainFactory();

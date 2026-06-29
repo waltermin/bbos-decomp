@@ -23,15 +23,15 @@ public final class TraceRouteSession extends EScreenSession implements ICMPPacke
    private byte[] _payload;
    private int[] _dnsIds;
    private EditField _maxHopsField = (EditField)(new Object("MaxHops: ", "30", Integer.MAX_VALUE, 16777216));
-   private static final int MAX_RESULTS;
-   private static final int SEND_NOW;
-   private static final int HOP_TIMEOUT;
-   public static final int COUNTER_TX;
-   public static final int COUNTER_TX_ERR;
-   public static final int COUNTER_RX;
-   public static final int COUNTER_RX_ERR;
-   public static final int COUNTER_RX_TIMEOUT;
-   public static final int MAX_COUNTERS;
+   private static final int MAX_RESULTS = 30;
+   private static final int SEND_NOW = -1;
+   private static final int HOP_TIMEOUT = 5;
+   public static final int COUNTER_TX = 0;
+   public static final int COUNTER_TX_ERR = 1;
+   public static final int COUNTER_RX = 2;
+   public static final int COUNTER_RX_ERR = 3;
+   public static final int COUNTER_RX_TIMEOUT = 4;
+   public static final int MAX_COUNTERS = 5;
    private static final String[] COUNTER_HEADERS = new String[]{"Tx: ", "Tx err: ", "Rx: ", "Rx err: ", "Rx timeout: "};
 
    @Override

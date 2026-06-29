@@ -34,10 +34,10 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
    private CICALTransmissionManager _transmissionManager;
    private ContextObject _context;
    private IntIntHashtable _slowSyncTrackingTable;
-   private static final long ID;
-   private static final long SLOW_SYNC_TRACKER_OBJECT;
-   static final long CAL_TRASMISSION_PRIVATE_FLAGS;
-   static final int DO_NOT_TRACK_PACKET;
+   private static final long ID = -9027560642818204641L;
+   private static final long SLOW_SYNC_TRACKER_OBJECT = -2174959204821111592L;
+   static final long CAL_TRASMISSION_PRIVATE_FLAGS = -1677359872409272575L;
+   static final int DO_NOT_TRACK_PACKET = 1;
 
    public void initalizeOTACalendar() {
       this.checkForRequiredSlowSyncing();

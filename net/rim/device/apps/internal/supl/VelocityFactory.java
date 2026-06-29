@@ -1,11 +1,11 @@
 package net.rim.device.apps.internal.supl;
 
 final class VelocityFactory {
-   static final byte VELOCITY_ALT_HORVEL;
-   static final byte VELOCITY_ALT_HORANDVERVEL;
-   static final byte VELOCITY_ALT_HORVELUNCERT;
-   static final byte VELOCITY_ALT_HORANDVERUNCERT;
-   static final byte VELOCITY_CHOICE_BIT_SIZE;
+   static final byte VELOCITY_ALT_HORVEL = 0;
+   static final byte VELOCITY_ALT_HORANDVERVEL = 1;
+   static final byte VELOCITY_ALT_HORVELUNCERT = 2;
+   static final byte VELOCITY_ALT_HORANDVERUNCERT = 3;
+   static final byte VELOCITY_CHOICE_BIT_SIZE = 2;
 
    static final Velocity DecodeChoiceIndex(Nibbler nib) {
       Velocity velocity = null;

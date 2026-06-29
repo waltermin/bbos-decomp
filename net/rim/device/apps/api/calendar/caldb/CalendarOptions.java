@@ -19,14 +19,14 @@ import net.rim.vm.PersistentInteger;
 
 public final class CalendarOptions extends OptionsBase {
    private CalendarOptions$PersistedCalendarOptions _persistedCalendarOptions;
-   private static final long CALENDAR_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_CALENDAR_OPTIONS;
-   public static final long USER_CHANGED_OTA_CALENDAR_SETTING;
-   public static final int DAY_VIEW;
-   public static final int WEEK_VIEW;
-   public static final int MONTH_VIEW;
-   public static final int AGENDA_VIEW;
-   public static final int LAST_VIEW;
+   private static final long CALENDAR_OPTIONS_SYNC_ITEM = 7371696380813287106L;
+   private static final long PERSISTED_CALENDAR_OPTIONS = -8395920205769737713L;
+   public static final long USER_CHANGED_OTA_CALENDAR_SETTING = 1103480146496078488L;
+   public static final int DAY_VIEW = 0;
+   public static final int WEEK_VIEW = 1;
+   public static final int MONTH_VIEW = 2;
+   public static final int AGENDA_VIEW = 3;
+   public static final int LAST_VIEW = 4;
    public static int FIRST_DOW = 1;
    public static int START_OF_DAY = 2;
    public static int END_OF_DAY = 4;
@@ -242,15 +242,15 @@ public final class CalendarOptions extends OptionsBase {
       576671892903264836L,
       8460796985688745162L
    };
-   private static final int DEFAULT_REMINDER_INDEX;
+   private static final int DEFAULT_REMINDER_INDEX = 4;
    public static final short[] KEEP_APPOINTMENTS_DURATION_CHOICES = new short[]{15, 30, 60, 90, -1, 51, 0, 0, 8192, -12284};
-   private static final int DEFAULT_KEEP_APPOINTMENTS_DURATION_INDEX;
-   private static final int FOREVER_KEEP_APPOINTMENTS_DURATION_INDEX;
-   private static final int FREE_TIME_BLOCK_THRESHOLD;
-   private static final int DEFAULT_CALENDAR_COLOR;
+   private static final int DEFAULT_KEEP_APPOINTMENTS_DURATION_INDEX = 2;
+   private static final int FOREVER_KEEP_APPOINTMENTS_DURATION_INDEX = 4;
+   private static final int FREE_TIME_BLOCK_THRESHOLD = 15;
+   private static final int DEFAULT_CALENDAR_COLOR = 255;
    private static CalendarOptions _options;
-   private static final long APPOINTMENT_COLOR_MODE;
-   private static final long PRIVATE_APPOINTMENTS_COLOUR;
+   private static final long APPOINTMENT_COLOR_MODE = 623602917881886043L;
+   private static final long PRIVATE_APPOINTMENTS_COLOUR = -2060260901660362511L;
    private static final int PRIVATE_APPOINTMENTS_COLOUR_ID = PersistentInteger.getId(-2060260901660362511L, -1);
 
    private CalendarOptions() {

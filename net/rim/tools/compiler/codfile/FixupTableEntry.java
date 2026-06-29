@@ -9,7 +9,7 @@ public final class FixupTableEntry extends CodfileItem {
    private CodfileItem _ref;
    private int _offsetLength;
    private int[] _offsets;
-   private static final int FIXUP_INDENT;
+   private static final int FIXUP_INDENT = 7;
 
    public FixupTableEntry(int align) {
       this._align = align;

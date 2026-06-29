@@ -8,14 +8,14 @@ public final class TransmissionHelper {
       TransmissionServiceManager.get(8399767144006445082L)
    );
    private static long MESSAGING_TRANSMISSION_HELPER = -1373616754082319289L;
-   public static final byte TRANSMISSION_STATUS_FAILED;
-   public static final byte TRANSMISSION_STATUS_SUCCESFUL;
-   public static final byte TRANSMISSION_STATUS_RETRY_QUEUED;
-   public static final byte TRANSMISSION_STATUS_SEND_QUEUED;
-   public static final byte TRANSMISSION_SERIALZATION_FAILED;
-   public static final byte TRANSMISSION_STATUS_SENT;
-   public static final byte NO_RETRY_LIMIT;
-   private static final int SUCCESS_TIMEOUT;
+   public static final byte TRANSMISSION_STATUS_FAILED = 1;
+   public static final byte TRANSMISSION_STATUS_SUCCESFUL = 2;
+   public static final byte TRANSMISSION_STATUS_RETRY_QUEUED = 3;
+   public static final byte TRANSMISSION_STATUS_SEND_QUEUED = 4;
+   public static final byte TRANSMISSION_SERIALZATION_FAILED = 5;
+   public static final byte TRANSMISSION_STATUS_SENT = 6;
+   public static final byte NO_RETRY_LIMIT = -1;
+   private static final int SUCCESS_TIMEOUT = 21600000;
 
    private TransmissionHelper() {
    }

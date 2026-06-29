@@ -19,7 +19,7 @@ final class VoicemailEntry extends Action implements GlobalEventListener, Persis
    String _state;
    boolean _disabled;
    boolean _uncertain;
-   private static final boolean _debugState;
+   private static final boolean _debugState = false;
 
    VoicemailEntry() {
       super(

@@ -9,11 +9,11 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.internal.provisioning.ActivationService;
 
 public final class ActivationServiceImpl$ASCollection implements SyncCollection, SyncConverter, SyncObject {
-   private static final int CURRENT_VERSION;
-   private static final int THE_UID;
-   private static final int TAG_KEY_VALUE;
-   private static final int TAG_COMPLETED;
-   private static final int TAG_ACTIVATION_RECORD;
+   private static final int CURRENT_VERSION = 3;
+   private static final int THE_UID = 1;
+   private static final int TAG_KEY_VALUE = 16;
+   private static final int TAG_COMPLETED = 17;
+   private static final int TAG_ACTIVATION_RECORD = 18;
 
    @Override
    public final SyncObject[] getSyncObjects() {

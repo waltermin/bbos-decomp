@@ -8,10 +8,10 @@ import net.rim.device.apps.api.phone.VoiceServices;
 final class PhoneApiListener implements PhoneEventListener {
    private Vector _listeners = (Vector)(new Object());
    private int _initCallID = -1;
-   private static final long ID;
-   private static final int CALL_ADDED;
-   private static final int CALL_CONNECTED;
-   private static final int CALL_DISCONNECTED;
+   private static final long ID = 5619741197140605979L;
+   private static final int CALL_ADDED = 0;
+   private static final int CALL_CONNECTED = 1;
+   private static final int CALL_DISCONNECTED = 2;
 
    static final PhoneApiListener getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

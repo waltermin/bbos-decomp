@@ -7,7 +7,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 
 final class BrowserChannelDeleteConverter extends BaseConverter {
-   private static final String PUSH_CHANNEL_ID_KEY;
+   private static final String PUSH_CHANNEL_ID_KEY = "X-Rim-Push-Channel-Id";
 
    @Override
    public final boolean canConvert(Object parameters) {

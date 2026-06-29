@@ -7,7 +7,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreTicket;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class CertificateImporterFactory {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = -3725666709869900501L;
    private static Hashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getHashtable(-3725666709869900501L);
    protected static CertificateImporterFactory _defaultCertificateImporterFactory = new DefaultCertificateImporterFactory();
 

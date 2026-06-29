@@ -8,10 +8,10 @@ final class EmailFolderId {
    private int _persistentId = PersistentInteger.getId(4908121320859842266L, -1);
    private int _deviceFolderIdPersistentId = PersistentInteger.getId(7943593562601989565L, 1);
    private SyncCollection _syncCollection = new EmailFolderId$EmailFolderIdSyncCollection(this);
-   private static final long FOLDER_ID_DATA;
-   private static final long DEVICE_FOLDER_ID_DATA;
-   private static final int FIRST_VALUE;
-   private static final int DEVICE_FOLDER_ID_FIRST_VALUE;
+   private static final long FOLDER_ID_DATA = 4908121320859842266L;
+   private static final long DEVICE_FOLDER_ID_DATA = 7943593562601989565L;
+   private static final int FIRST_VALUE = -1;
+   private static final int DEVICE_FOLDER_ID_FIRST_VALUE = 1;
    private static EmailFolderId _instance;
 
    private EmailFolderId() {

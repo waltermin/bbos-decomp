@@ -7,11 +7,11 @@ import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 final class PasswordKeeperElementScreen$PasswordVerb extends Verb {
    private int _type;
    private final PasswordKeeperElementScreen this$0;
-   static final int RANDOM;
-   static final int SAVE;
-   static final int EDIT_LABEL;
-   static final int DELETE;
-   static final int CLOSE;
+   static final int RANDOM = 1;
+   static final int SAVE = 2;
+   static final int EDIT_LABEL = 3;
+   static final int DELETE = 4;
+   static final int CLOSE = 5;
 
    PasswordKeeperElementScreen$PasswordVerb(PasswordKeeperElementScreen _1, int type, int ordering, ResourceBundleFamily rb, int rbKey) {
       super(ordering, rb, rbKey);

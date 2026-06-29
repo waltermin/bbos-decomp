@@ -3,17 +3,17 @@ package net.rim.ecmascript.runtime;
 import net.rim.ecmascript.util.Misc;
 
 public class Value {
-   public static final int TypeInteger;
-   static final long TypeIntegerValueMask;
-   static final long TypeIntegerTypeMask;
-   public static final int TypeReturnAddress;
-   public static final int TypeUndefined;
-   public static final int TypeNull;
-   public static final int TypeBoolean;
-   public static final int TypeString;
-   public static final int TypeObject;
-   public static final int TypeDouble;
-   static final long DENORMAL_DISGUISED_AS_NAN;
+   public static final int TypeInteger = 0;
+   static final long TypeIntegerValueMask = 4294967295L;
+   static final long TypeIntegerTypeMask = -4294967296L;
+   public static final int TypeReturnAddress = 1;
+   public static final int TypeUndefined = 2;
+   public static final int TypeNull = 3;
+   public static final int TypeBoolean = 4;
+   public static final int TypeString = 5;
+   public static final int TypeObject = 6;
+   public static final int TypeDouble = 7;
+   static final long DENORMAL_DISGUISED_AS_NAN = -68719476736L;
    public static final long UNDEFINED = makeValue(2, 0);
    static final long PLACEHOLDER_GLOBAL = makeValue(2, 1);
    static final long PLACEHOLDER_ARRAY = makeValue(2, 2);
@@ -29,7 +29,7 @@ public class Value {
    public static final long ZERO = makeIntegerValue(0);
    public static final long PLUS_ZERO = makeDoubleValue((double)0L);
    public static final long MINUS_ZERO = makeDoubleValue((double)Long.MIN_VALUE);
-   public static final int MaxStringLength;
+   public static final int MaxStringLength = 131072;
 
    private static long makeValue(int type, int value) {
       return ((long)type << 32) + (value & 4294967295L);

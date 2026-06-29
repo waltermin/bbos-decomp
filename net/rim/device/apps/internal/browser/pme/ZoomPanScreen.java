@@ -45,13 +45,13 @@ public final class ZoomPanScreen extends Screen {
    int[] _magPointY = new int[4];
    private static int ZOOM_FACTOR;
    private static MediaPlayer _player;
-   private static final int SCROLL_FACTOR;
-   private static final int MAX_ZOOM_AMOUNT;
-   private static final int MIN_ZOOM_AMOUNT;
-   public static final int DEFAULT_ZOOM_FACTOR;
-   private static final long MILLISEC_PER_FRAME;
-   public static final int PAN_STATE;
-   public static final int ZOOM_STATE;
+   private static final int SCROLL_FACTOR = 12;
+   private static final int MAX_ZOOM_AMOUNT = 589856;
+   private static final int MIN_ZOOM_AMOUNT = 1;
+   public static final int DEFAULT_ZOOM_FACTOR = 65536;
+   private static final long MILLISEC_PER_FRAME = 41L;
+   public static final int PAN_STATE = 0;
+   public static final int ZOOM_STATE = 1;
    private static int _startingState;
 
    public ZoomPanScreen(long style, Field field, Object model, Object contentPMEPlayer) {

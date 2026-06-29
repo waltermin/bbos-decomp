@@ -30,9 +30,9 @@ import net.rim.device.apps.internal.blackberryemail.email.api.EmailBuilderApi;
 import net.rim.vm.Array;
 
 public final class MeetingUtilities {
-   public static final long MEETING_LISTENER_SINGLETON;
-   private static final long DONT_NOTIFY_ATTENDEES_LUID_LIST;
-   public static final String ATTENDEE_LIST_TRUNCATED;
+   public static final long MEETING_LISTENER_SINGLETON = 8503322669810003080L;
+   private static final long DONT_NOTIFY_ATTENDEES_LUID_LIST = 7708406907057731816L;
+   public static final String ATTENDEE_LIST_TRUNCATED = "Truncated";
 
    private MeetingUtilities() {
    }

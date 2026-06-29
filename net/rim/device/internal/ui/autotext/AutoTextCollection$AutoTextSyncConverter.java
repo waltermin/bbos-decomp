@@ -8,11 +8,11 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.internal.i18n.LocaleUtil;
 
 final class AutoTextCollection$AutoTextSyncConverter implements SyncConverter {
-   private static final int AT_FIELD_ORIGINAL_TEXT;
-   private static final int AT_FIELD_REPLACEMENT_TEXT;
-   private static final int AT_FIELD_LOCALE_NUMBER;
-   private static final int AT_FIELD_CASE_FLAGS;
-   private static final int AT_FIELD_EXTENDED_LOCALE_NUMBER;
+   private static final int AT_FIELD_ORIGINAL_TEXT = 1;
+   private static final int AT_FIELD_REPLACEMENT_TEXT = 2;
+   private static final int AT_FIELD_LOCALE_NUMBER = 4;
+   private static final int AT_FIELD_CASE_FLAGS = 5;
+   private static final int AT_FIELD_EXTENDED_LOCALE_NUMBER = 6;
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {

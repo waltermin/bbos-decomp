@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class ThawteRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -2864505441097913600L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] THAWTE_SERVER_CA = new byte[]{
       48,
       -126,

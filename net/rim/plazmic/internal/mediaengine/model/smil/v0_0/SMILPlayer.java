@@ -18,17 +18,17 @@ public class SMILPlayer implements MediaListener {
    private RegionManager _regionManager;
    private MediaObject _currentAudio;
    private MediaObject _currentVideo;
-   private static final long AUDIO_VOLUME_KEY;
-   private static final long AUDIO_MUTE_KEY;
-   private static final int VOLUME_MUTED;
-   private static final int VOLUME_NOT_MUTED;
+   private static final long AUDIO_VOLUME_KEY = -7706154300538739807L;
+   private static final long AUDIO_MUTE_KEY = -2226019264938368368L;
+   private static final int VOLUME_MUTED = 1;
+   private static final int VOLUME_NOT_MUTED = 0;
    private static int _audioVolumeHandle;
    private static int _audioMuteHandle = PersistentInteger.getId(-2226019264938368368L, 0);
-   public static final int UNREALIZED;
-   public static final int REALIZED;
-   public static final int PLAYING;
-   public static final int PAUSED;
-   public static final int ENDED;
+   public static final int UNREALIZED = 0;
+   public static final int REALIZED = 1;
+   public static final int PLAYING = 2;
+   public static final int PAUSED = 1;
+   public static final int ENDED = 3;
 
    public void setCurrentAudio(MediaObject mo) {
       this._currentAudio = mo;

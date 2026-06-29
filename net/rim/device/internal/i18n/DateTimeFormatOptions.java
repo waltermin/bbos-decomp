@@ -7,10 +7,10 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.vm.PersistentInteger;
 
 public class DateTimeFormatOptions {
-   public static final int TIME_FORMAT_UNSET;
-   public static final int TIME_FORMAT_12_HOUR;
-   public static final int TIME_FORMAT_24_HOUR;
-   private static final long TIME_FORMAT_GUID;
+   public static final int TIME_FORMAT_UNSET = -1;
+   public static final int TIME_FORMAT_12_HOUR = 0;
+   public static final int TIME_FORMAT_24_HOUR = 1;
+   private static final long TIME_FORMAT_GUID = -7914069170068447103L;
    private static int _timeFormatId = PersistentInteger.getId(-7914069170068447103L, -1);
    private static DateTimeFormatOptions$TimeFormatOptions _instance;
    private static int _timeFormatApplication = -1;

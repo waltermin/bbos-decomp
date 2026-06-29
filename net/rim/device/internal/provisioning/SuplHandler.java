@@ -8,10 +8,10 @@ import net.rim.device.api.util.IntIntHashtable;
 import net.rim.device.api.util.TLEUtilities;
 
 public class SuplHandler implements ProvisioningHandler {
-   static final long SUPL_CONNECTION_PREFIX;
-   static final long SUPL_APN;
-   static final long SUPL_USERNAME;
-   static final long SUPL_PASSWORD;
+   static final long SUPL_CONNECTION_PREFIX = -6699953639456723831L;
+   static final long SUPL_APN = -2354981130308907098L;
+   static final long SUPL_USERNAME = 7493617955115389875L;
+   static final long SUPL_PASSWORD = 8604973231239970469L;
    private static String _connectionPrefix;
    private static String _apn;
    private static String _username;

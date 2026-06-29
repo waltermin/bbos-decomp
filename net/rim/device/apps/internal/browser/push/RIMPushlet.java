@@ -19,9 +19,9 @@ import net.rim.device.cldc.io.ippp.SocketTransportBase;
 
 public final class RIMPushlet implements Pushlet, PushEventLogger {
    private RIMPushletListener _listener;
-   private static final long APPLICATION_REGISTRY_NAME;
-   public static final String CONTEXT;
-   public static final String PUSH_TYPE_KEY;
+   private static final long APPLICATION_REGISTRY_NAME = 159080113504478440L;
+   public static final String CONTEXT = "net.rim.device.apps.internal.browser.wappush";
+   public static final String PUSH_TYPE_KEY = "X-Rim-Push-Type";
    static RIMPushlet _instance;
 
    public static final RIMPushlet getInstance() {

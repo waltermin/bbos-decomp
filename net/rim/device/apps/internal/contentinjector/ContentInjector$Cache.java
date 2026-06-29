@@ -7,7 +7,7 @@ import net.rim.device.api.util.Comparator;
 
 final class ContentInjector$Cache implements Comparator {
    private String[] _cache;
-   private static final long ID;
+   private static final long ID = 3344829125041281212L;
 
    public static final ContentInjector$Cache loadCache() {
       PersistentObject po = PersistentStore.getPersistentObject(3344829125041281212L);

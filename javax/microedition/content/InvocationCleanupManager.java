@@ -24,7 +24,7 @@ class InvocationCleanupManager implements GlobalEventListener {
    private Hashtable _classnameToRegistrationTypeMap = new Hashtable();
    private int _crc;
    private int[] _currentHandles = new int[0];
-   private static final long INVOCATION_CLEANUP_MANAGER_ID;
+   private static final long INVOCATION_CLEANUP_MANAGER_ID = -863891308161769843L;
    private static InvocationCleanupManager _instance;
 
    void checkModules() {

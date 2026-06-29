@@ -8,7 +8,7 @@ import net.rim.device.internal.deviceoptions.SMSOptions;
 public class SMSUiRegistry {
    private Vector _registeredUis = (Vector)(new Object());
    private Object _currentDelegate;
-   private static final long SMS_UI_REGISTRY;
+   private static final long SMS_UI_REGISTRY = 6113993352280971942L;
    private static SMSUiRegistry _registry;
 
    public static SMSUiRegistry getRegistry() {

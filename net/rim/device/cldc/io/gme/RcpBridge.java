@@ -19,7 +19,7 @@ public final class RcpBridge extends GmeRouterConnection implements SrpListener 
    private int _connectionType = -1;
    private static String SCHEME = "srp:";
    private static String EMPTY = "";
-   private static final int CAPABILITIES;
+   private static final int CAPABILITIES = 63;
 
    protected RcpBridge(Transport transport, boolean wifiLink) {
       super(

@@ -24,7 +24,7 @@ import net.rim.vm.PersistentInteger;
 public class MMSModelScreen extends ModelScreen implements HolsterListener, SystemListener {
    private MMSMessageModel _message;
    private VolumeControl _volumeControl;
-   private static final long PREVIOUS_VOLUME_GUID;
+   private static final long PREVIOUS_VOLUME_GUID = -5967616738637215101L;
    private static int _previousVolumeId = PersistentInteger.getId(-5967616738637215101L, 50);
 
    public MMSModelScreen(Object context) {

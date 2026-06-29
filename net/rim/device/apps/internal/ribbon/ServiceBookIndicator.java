@@ -18,7 +18,7 @@ public final class ServiceBookIndicator implements Indicator, TestPoint {
    private int _bitmapHeight;
    private int _themeGeneration;
    static ServiceBookIndicator _instance;
-   public static final long SERVICE_BOOK_INDICATOR;
+   public static final long SERVICE_BOOK_INDICATOR = -5367908543902225098L;
 
    public final void updateIndicator() {
       if (this.isPendingServiceRecord()) {

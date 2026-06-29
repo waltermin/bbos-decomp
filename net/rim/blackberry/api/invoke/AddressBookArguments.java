@@ -4,8 +4,8 @@ import javax.microedition.pim.Contact;
 
 public final class AddressBookArguments extends ApplicationArguments {
    private Contact _contact;
-   public static final String ARG_COMPOSE;
-   public static final String ARG_NEW;
+   public static final String ARG_COMPOSE = "compose";
+   public static final String ARG_NEW = "new";
 
    public AddressBookArguments() {
    }

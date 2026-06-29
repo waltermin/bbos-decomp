@@ -5,8 +5,8 @@ import net.rim.device.apps.api.utility.general.SerialNumber;
 
 public final class StatusMACAddress extends StatusListItem {
    private int _macType = -1;
-   public static final int MAC_ADDRESS_WLAN;
-   public static final int MAC_ADDRESS_BLUETOOTH;
+   public static final int MAC_ADDRESS_WLAN = 0;
+   public static final int MAC_ADDRESS_BLUETOOTH = 1;
 
    public StatusMACAddress(int macType) {
       switch (macType) {

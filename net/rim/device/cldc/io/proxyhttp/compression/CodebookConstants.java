@@ -1,20 +1,20 @@
 package net.rim.device.cldc.io.proxyhttp.compression;
 
 public interface CodebookConstants {
-   String STRING_codebookTag;
-   String STRING_versionTag;
-   String STRING_headersTag;
-   String STRING_headerTag;
-   String STRING_valueTypesTag;
-   String STRING_escapedTextTag;
-   String STRING_escapeValueTag;
-   String STRING_messageLineTag;
-   String STRING_nameAttr;
-   String STRING_valueTypeAttr;
-   String STRING_codeAttr;
-   String STRING_caseSensitiveAttr;
-   String STRING_integerType;
-   String STRING_textType;
-   String STRING_dateType;
-   String STRING_valuesAttr;
+   String STRING_codebookTag = "HttpHeaderCodebook";
+   String STRING_versionTag = "version";
+   String STRING_headersTag = "headers";
+   String STRING_headerTag = "header";
+   String STRING_valueTypesTag = "valueTypes";
+   String STRING_escapedTextTag = "escapedTextType";
+   String STRING_escapeValueTag = "escapeValue";
+   String STRING_messageLineTag = "messageLine";
+   String STRING_nameAttr = "name";
+   String STRING_valueTypeAttr = "valueType";
+   String STRING_codeAttr = "code";
+   String STRING_caseSensitiveAttr = "caseSensitive";
+   String STRING_integerType = "Integer";
+   String STRING_textType = "Text-value";
+   String STRING_dateType = "Date";
+   String STRING_valuesAttr = "values";
 }

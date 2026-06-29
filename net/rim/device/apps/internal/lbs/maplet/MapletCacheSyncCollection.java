@@ -10,10 +10,10 @@ import net.rim.device.api.synchronization.SyncObject;
 public final class MapletCacheSyncCollection implements SyncCollection, SyncCollectionStatistics {
    private MapletCache _mapletCache;
    private boolean _inTransaction;
-   public static final int SYNC_VERSION;
-   public static final int SYNC_VERSION_DESKTOP;
-   public static final int SYNC_VERSION_MIN;
-   public static final int SYNC_VERSION_MAX;
+   public static final int SYNC_VERSION = 1;
+   public static final int SYNC_VERSION_DESKTOP = 1;
+   public static final int SYNC_VERSION_MIN = 1;
+   public static final int SYNC_VERSION_MAX = 1;
 
    MapletCacheSyncCollection(MapletCache mapletCache) {
       this._mapletCache = mapletCache;

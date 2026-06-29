@@ -12,8 +12,8 @@ public class SyncApplicationChangeList implements Persistable {
    private byte _flags;
    protected IntHashtable _changes = (IntHashtable)(new Object());
    protected IntIntHashtable _refIdToHashCodeMap = (IntIntHashtable)(new Object());
-   private static final int LOCKED;
-   private static final int FILL_IN;
+   private static final int LOCKED = 1;
+   private static final int FILL_IN = 2;
 
    public synchronized void lock() {
       this._flags = (byte)Helper.setFlagValue(this._flags, true, 1);

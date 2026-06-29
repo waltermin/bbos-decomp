@@ -8,14 +8,14 @@ import net.rim.device.api.system.SIMCard;
 import net.rim.device.internal.system.RadioInternal;
 
 public final class SMSOptions {
-   public static final long GUID_SMS_OPTIONS_CHANGED;
-   public static final long GUID_SMS_UI_CHANGED;
-   private static final long SMS_OPTIONS_DATA_KEY;
+   public static final long GUID_SMS_OPTIONS_CHANGED = 6063360555319689575L;
+   public static final long GUID_SMS_UI_CHANGED = 7884295420352689779L;
+   private static final long SMS_OPTIONS_DATA_KEY = -4677898393278760324L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(-4677898393278760324L);
    private static SMSOptions$SMSOptionsData _smsOptionsData;
-   public static final int NUMBER_PREVIOUS_ITEMS_MAX;
-   public static final int NUMBER_PREVIOUS_ITEMS_DEFAULT;
-   public static final int NUMBER_PREVIOUS_ITEMS_DEFAULT_IDEN;
+   public static final int NUMBER_PREVIOUS_ITEMS_MAX = 50;
+   public static final int NUMBER_PREVIOUS_ITEMS_DEFAULT = 7;
+   public static final int NUMBER_PREVIOUS_ITEMS_DEFAULT_IDEN = 0;
 
    private SMSOptions() {
    }

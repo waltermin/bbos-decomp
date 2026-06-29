@@ -16,7 +16,7 @@ class ProfilesPopupScreen$ProfilesPopupScreenCache implements GlobalEventListene
    private Bitmap[] _normalBitmaps;
    private Bitmap[] _focusBitmaps;
    private Profiles _profiles;
-   public static final long PROFILES_POPUP_SCREEN_CACHE;
+   public static final long PROFILES_POPUP_SCREEN_CACHE = 4956679396741038789L;
 
    public Bitmap getIconBitmap(int profileIndex, boolean isFocused) {
       this.validate();

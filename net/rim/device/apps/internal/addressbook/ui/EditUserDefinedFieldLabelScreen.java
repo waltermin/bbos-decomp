@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 public final class EditUserDefinedFieldLabelScreen extends PopupScreen {
    private String _labelText;
    private EditField _editField;
-   private static final int MAX_FIELD_LENGTH;
+   private static final int MAX_FIELD_LENGTH = 30;
 
    private EditUserDefinedFieldLabelScreen(String value) {
       super((Manager)(new Object(1153202979583557632L)));

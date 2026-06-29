@@ -1,18 +1,18 @@
 package net.rim.tid.awt.im.repository;
 
 public interface CustomWordsRepository {
-   int ADDRESS_BOOK_REPOSITORY;
-   int EUROPEAN_READERS_REPOSITORY_DATA;
-   int MAIL_EXTRACTOR_REPOSITORY;
-   int FREQUENCY_LEARNING_REPOSITORY;
-   int CHINESE_REPOSITORY_DATA;
-   int YOMI_ADDRESS_BOOK_REPOSITORY;
-   byte LOW_PRIORITY;
-   byte NORMAL_PRIORITY;
-   int NO;
-   int YES;
-   int YES_WORD;
-   int YES_PREFIX;
+   int ADDRESS_BOOK_REPOSITORY = 1;
+   int EUROPEAN_READERS_REPOSITORY_DATA = 2;
+   int MAIL_EXTRACTOR_REPOSITORY = 3;
+   int FREQUENCY_LEARNING_REPOSITORY = 4;
+   int CHINESE_REPOSITORY_DATA = 5;
+   int YOMI_ADDRESS_BOOK_REPOSITORY = 6;
+   byte LOW_PRIORITY = 1;
+   byte NORMAL_PRIORITY = 2;
+   int NO = 0;
+   int YES = 1;
+   int YES_WORD = 2;
+   int YES_PREFIX = 3;
 
    void init(int var1);
 

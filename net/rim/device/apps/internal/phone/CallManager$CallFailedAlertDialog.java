@@ -15,9 +15,9 @@ final class CallManager$CallFailedAlertDialog extends Dialog implements PhoneEve
    private CallManager$DelayedCallRemover _callRemover;
    private boolean _hasClosed;
    private long _displayTime;
-   private static final int _OUTSIDE_SPACE;
-   private static final int _INSIDE_SPACE;
-   private static final int MIN_DISPLAY_TIME;
+   private static final int _OUTSIDE_SPACE = 1;
+   private static final int _INSIDE_SPACE = 3;
+   private static final int MIN_DISPLAY_TIME = 2500;
 
    final void setCallRemover(CallManager$DelayedCallRemover remover) {
       throw new RuntimeException("cod2jar: stack: underflow");

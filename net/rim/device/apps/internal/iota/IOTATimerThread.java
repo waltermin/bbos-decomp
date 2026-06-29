@@ -6,7 +6,7 @@ final class IOTATimerThread extends Thread {
    private MMCProcessor _theProcessor;
    private long _timeoutVal;
    private boolean _timedOut = false;
-   public static final long TIMEOUT_15_MIN;
+   public static final long TIMEOUT_15_MIN = 900000L;
 
    public IOTATimerThread(MMCProcessor proc, long time) {
       this._theProcessor = proc;

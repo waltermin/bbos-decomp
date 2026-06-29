@@ -8,7 +8,7 @@ import net.rim.device.api.util.StringTokenizer;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public final class ApplicationResources {
-   private static final int LANGUAGE_AND_COUNTRY_SEPERATOR;
+   private static final int LANGUAGE_AND_COUNTRY_SEPERATOR = 95;
    private static ResourceBundleFamily _resources = ResourceBundle.getBundle(-4646224451783035820L, "net.rim.device.apps.internal.bis.resource.BISClient");
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

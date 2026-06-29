@@ -22,7 +22,7 @@ class OTACalendarListener implements CollectionListener {
    private OTACalendarSyncDataManager _otaSyncDataManager = OTACalendarSyncDataManager.getInstance();
    private ContextObject _context;
    private CalendarServiceManager _calendarServiceManager = CalendarServiceManager.getInstance();
-   private static final long ID;
+   private static final long ID = 5200073708061784973L;
    private static OTACalendarListener _instance;
 
    private OTACalendarListener() {

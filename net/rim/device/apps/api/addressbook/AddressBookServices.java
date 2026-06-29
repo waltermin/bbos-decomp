@@ -16,12 +16,12 @@ import net.rim.device.apps.api.utility.general.Copyable;
 import net.rim.vm.Array;
 
 public final class AddressBookServices {
-   public static final long ADDRESS_BOOK_KEY;
+   public static final long ADDRESS_BOOK_KEY = 5765246712487104764L;
    public static Tag TAG_LINE1 = Tag.create("addressbook-list-line1");
    public static Tag TAG_LINE2 = Tag.create("addressbook-list-line2");
    public static Tag ADDRESS_BOOK_LIST_STRIPES_TAG = Tag.create("addressbook");
    public static Tag ADDRESS_BOOK_LIST_PLAIN_TAG = Tag.create("addressbook-plain");
-   public static final long LIST_FIELD_GUID;
+   public static final long LIST_FIELD_GUID = -3906294199383546540L;
    private static ApplicationRegistry _ar = ApplicationRegistry.getApplicationRegistry();
 
    private AddressBookServices() {

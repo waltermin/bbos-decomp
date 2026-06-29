@@ -19,7 +19,7 @@ final class IdleScreenApplication$GlobalData implements FileSystemListener, File
    private Application _hook;
    private boolean _launchPending;
    private long _myStoredUSN;
-   static final long GUID;
+   static final long GUID = 5892374562583112875L;
 
    IdleScreenApplication$GlobalData() {
       ApplicationDescriptor descriptor = ApplicationDescriptor.currentApplicationDescriptor();

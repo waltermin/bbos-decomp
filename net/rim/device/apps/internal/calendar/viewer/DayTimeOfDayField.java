@@ -21,9 +21,9 @@ final class DayTimeOfDayField extends DayList {
    private XYPoint _popupLocation = (XYPoint)(new Object());
    private long _visibleStartOfList;
    private long _visibleEndOfList;
-   private static final int DAYS_IN_WEEK;
-   public static final int TRANSITION_SPACING;
-   private static final int NEAR_MILLIS;
+   private static final int DAYS_IN_WEEK = 7;
+   public static final int TRANSITION_SPACING = 3600000;
+   private static final int NEAR_MILLIS = 300000;
    private static Tag TAG_DESCRIPTION_AREA = Tag.create("day-description-area");
    private static Tag TAG_APPOINTMENT = Tag.create("day-appointment");
    private static Tag TAG_DAY = Tag.create("day");

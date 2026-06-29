@@ -71,19 +71,19 @@ public class NativeTransport
    protected boolean _dataServicesEnabled;
    protected int _dataServicesMode;
    protected boolean _itPolicyEnabled;
-   public static final int STATUS_PENDING;
-   public static final int STATUS_SENDING;
-   public static final int STATUS_SENT;
-   public static final int STATUS_CANCELLED;
-   public static final int STATUS_NON_FATAL;
-   public static final int STATUS_COVERAGE;
-   public static final int SERVICE_VOICE;
-   public static final int SERVICE_DATA;
-   private static final int NETWORK_STARTED_TMO;
-   private static final int SEND_BACKOFF_MAX;
-   private static final int SEND_BACKOFF_LEVEL;
-   private static final int TX_FLOW_CONTROL_RETRIES;
-   private static final int MAX_SEND_STATUS;
+   public static final int STATUS_PENDING = 1;
+   public static final int STATUS_SENDING = 2;
+   public static final int STATUS_SENT = 0;
+   public static final int STATUS_CANCELLED = -2;
+   public static final int STATUS_NON_FATAL = -3;
+   public static final int STATUS_COVERAGE = -4;
+   public static final int SERVICE_VOICE = 0;
+   public static final int SERVICE_DATA = 1;
+   private static final int NETWORK_STARTED_TMO = 5000;
+   private static final int SEND_BACKOFF_MAX = 900000;
+   private static final int SEND_BACKOFF_LEVEL = 3;
+   private static final int TX_FLOW_CONTROL_RETRIES = 8;
+   private static final int MAX_SEND_STATUS = 8;
 
    public void nativeInit() {
       throw null;

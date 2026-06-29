@@ -17,12 +17,12 @@ import net.rim.device.internal.timesync.TimeSyncImpl;
 
 public final class ServiceStartup implements SystemListener {
    private int _registeredCriticalServices = 0;
-   private static final long ID;
-   public static final int SECURITY_APP;
-   public static final int IT_ADMIN_TRANSMISSION_SERVICE;
-   public static final int SECURITY_MONITOR_SERVICE;
-   public static final int NUM_CRITICAL_SERVICES;
-   public static final int ALL_CRITICAL_SERVICES;
+   private static final long ID = -2381599947898288336L;
+   public static final int SECURITY_APP = 1;
+   public static final int IT_ADMIN_TRANSMISSION_SERVICE = 2;
+   public static final int SECURITY_MONITOR_SERVICE = 4;
+   public static final int NUM_CRITICAL_SERVICES = 3;
+   public static final int ALL_CRITICAL_SERVICES = 7;
 
    public static final void libMain(String[] args) {
       if (!InternalServices.isFermion()) {

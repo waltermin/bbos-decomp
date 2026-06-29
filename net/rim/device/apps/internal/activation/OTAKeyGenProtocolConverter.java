@@ -9,8 +9,8 @@ import net.rim.device.apps.api.utility.serialization.ConverterDescriptor;
 import net.rim.vm.Array;
 
 final class OTAKeyGenProtocolConverter extends BaseConverter implements ConverterDescriptor {
-   public static final long ID;
-   public static final String RIM_OTAKEYGEN_PROTOCOL;
+   public static final long ID = 4560650054989280205L;
+   public static final String RIM_OTAKEYGEN_PROTOCOL = "net.rim.OTAKeyGenProtocol";
 
    protected final String readStringField(DataBuffer dataBuffer, int length) {
       if (length > 0) {

@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class QuovadisRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -6754724573253818771L;
+   private static final long CERTSTATUSTIME = 1007118671960L;
    private static final byte[] QUOVADIS_ROOT_CERTIFICATE = new byte[]{
       48,
       -126,

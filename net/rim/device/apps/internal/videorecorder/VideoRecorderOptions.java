@@ -12,38 +12,38 @@ import net.rim.device.internal.io.file.FileUtilities;
 
 public final class VideoRecorderOptions extends OptionsBase {
    private VideoRecorderOptions$PersistedVideoOptions _persistedVideoOptions;
-   private static final long VIDEORECORD_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_VIDEORECORD_OPTIONS;
-   public static final int MEMORY_INTERNAL;
-   public static final int MEMORY_MEDIACARD;
-   public static final int VIDEO_WIDTH;
-   public static final int VIDEO_HEIGHT;
-   public static final int VIDEO_CODEC;
-   public static final int VIDEO_FORMAT_STANDARD;
-   public static final int VIDEO_FORMAT_MMS_MODE;
-   public static final int VIDEO_FORMAT_DEFAULT_INDEX;
+   private static final long VIDEORECORD_OPTIONS_SYNC_ITEM = 9066959603476445837L;
+   private static final long PERSISTED_VIDEORECORD_OPTIONS = 825712288313247278L;
+   public static final int MEMORY_INTERNAL = 0;
+   public static final int MEMORY_MEDIACARD = 1;
+   public static final int VIDEO_WIDTH = 0;
+   public static final int VIDEO_HEIGHT = 1;
+   public static final int VIDEO_CODEC = 2;
+   public static final int VIDEO_FORMAT_STANDARD = 0;
+   public static final int VIDEO_FORMAT_MMS_MODE = 1;
+   public static final int VIDEO_FORMAT_DEFAULT_INDEX = 0;
    private static int[][][] _videoFormatTable = new int[2][][];
    private static final int[] VIDEO_FORMAT_240x180 = new int[]{
       240, 180, 2, 527827200, 16810638, 1701539702, 1870004480, 1849779563, 56711012, 1870004480, 290219371, 262155
    };
    private static final int[] VIDEO_FORMAT_240x176 = new int[]{240, 176, 2, -804651005, 240, 180, 2, 527827200, 16810638, 1701539702, 1870004480, 1849779563};
    private static final int[] VIDEO_FORMAT_176x144 = new int[]{176, 144, 5, -804651005, 240, 176, 2, -804651005, 240, 180, 2, 527827200};
-   public static final int FLASH_MODE_OFF_INDEX;
-   public static final int FLASH_MODE_ON_INDEX;
-   public static final int FLASH_MODE_AUTO_INDEX;
-   private static final int FLASH_MODE_DEFAULT_INDEX;
+   public static final int FLASH_MODE_OFF_INDEX = 0;
+   public static final int FLASH_MODE_ON_INDEX = 1;
+   public static final int FLASH_MODE_AUTO_INDEX = 2;
+   private static final int FLASH_MODE_DEFAULT_INDEX = 0;
    public static final int[] FLASH_MODE_TABLE = new int[]{0, 1, 2, -804651005, 0, 5, 6, -805044216, 33554432, 0, -805044216, 67108864};
    private static final int SUPPORTED_COLOUR_EFFECTS = Camera.getColourEffects();
-   private static final int COLOUR_EFFECTS_DEFAULT_INDEX;
+   private static final int COLOUR_EFFECTS_DEFAULT_INDEX = 0;
    private static final int[] COLOUR_EFFECTS_TABLE = new int[]{
       0, 5, 6, -805044216, 33554432, 0, -805044216, 67108864, 1953066601, -805044213, 775162112, 774909491
    };
-   public static final int VIDEO_OPTION_FLASHMODE;
-   public static final int VIDEO_OPTION_WHITEBALANCE;
-   public static final int VIDEO_OPTION_FORMAT;
-   public static final int VIDEO_MEMORY_TYPE;
-   public static final int VIDEO_DESTINATION_FOLDER;
-   public static final int VIDEO_COLOUR_EFFECTS;
+   public static final int VIDEO_OPTION_FLASHMODE = 1;
+   public static final int VIDEO_OPTION_WHITEBALANCE = 2;
+   public static final int VIDEO_OPTION_FORMAT = 3;
+   public static final int VIDEO_MEMORY_TYPE = 4;
+   public static final int VIDEO_DESTINATION_FOLDER = 5;
+   public static final int VIDEO_COLOUR_EFFECTS = 6;
    private static VideoRecorderOptions _options;
 
    private VideoRecorderOptions() {

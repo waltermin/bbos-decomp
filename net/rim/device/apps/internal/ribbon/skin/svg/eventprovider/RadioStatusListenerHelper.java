@@ -7,8 +7,8 @@ class RadioStatusListenerHelper extends WeakReferenceCollectionUpdater implement
    private int _eventType;
    private int _networkId;
    private int _service;
-   private static final int TYPE_NETWORK_STARTED;
-   private static final int TYPE_NETWORK_SERVICE_CHANGED;
+   private static final int TYPE_NETWORK_STARTED = 0;
+   private static final int TYPE_NETWORK_SERVICE_CHANGED = 1;
 
    public void mobilityManagementEvent(int eventCode, int cause) {
    }

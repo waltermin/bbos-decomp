@@ -10,8 +10,8 @@ import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 
 final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortListener, GlobalEventListener {
    private BluetoothSerialPort _port;
-   private static final boolean DEBUG;
-   private static final boolean DEBUG_IO;
+   private static final boolean DEBUG = true;
+   private static final boolean DEBUG_IO = false;
    private static final byte[] UUID = new byte[]{66, 108, 97, 99, 107, 66, 101, 114, 114, 121, 66, 121, 112, 97, 115, 115};
 
    protected BluetoothLayer(Transport transport) {

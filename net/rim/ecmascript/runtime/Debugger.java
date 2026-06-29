@@ -1,10 +1,10 @@
 package net.rim.ecmascript.runtime;
 
 public interface Debugger {
-   int STEP_NONE;
-   int STEP_INTO;
-   int STEP_OVER;
-   int STEP_RETURN;
+   int STEP_NONE = 0;
+   int STEP_INTO = 1;
+   int STEP_OVER = 2;
+   int STEP_RETURN = 3;
 
    void registerDebugCallback(DebugCallback var1);
 

@@ -33,8 +33,8 @@ public final class PeerContactListCollection implements CollectionEventSource, C
    private GTPatriciaTree _contactKeywords;
    PeerContactListCollection$SearchData _searchData = new PeerContactListCollection$SearchData();
    PeerContactListCollection$SearcherThread _searcher;
-   static final int CONTACT_LISTS;
-   static final int NEW_REQUESTS;
+   static final int CONTACT_LISTS = 1;
+   static final int NEW_REQUESTS = 2;
    static IntHashtable _pendingContacts = (IntHashtable)(new Object());
    static Comparator _contactsSorter = new PeerContactListCollection$1();
    static Comparator _requestsSorter = new PeerContactListCollection$2();

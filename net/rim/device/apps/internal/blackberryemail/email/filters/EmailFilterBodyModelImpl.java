@@ -26,22 +26,22 @@ final class EmailFilterBodyModelImpl implements FieldProvider, ConversionProvide
    private byte _sensitivity;
    private int _action;
    private int _enabled;
-   public static final int SEND_DIRECTLY_TO_ME;
-   public static final int CC_TO_ME;
-   public static final int BCC_TO_ME;
-   public static final int IMPORTANCE_NONE;
-   public static final int IMPORTANCE_HIGH;
-   public static final int IMPORTANCE_NOMAL;
-   public static final int IMPORTANCE_LOW;
-   public static final int SENSITIVITY_NONE;
-   public static final int SENSITIVITY_NORMAL;
-   public static final int SENSITIVITY_PERSONAL;
-   public static final int SENSITIVITY_PRIVATE;
-   public static final int SENSITIVITY_CONFIDENTIAL;
-   public static final int DO_NOT_FORWARD;
-   public static final int FORWARD;
-   public static final int FORWARD_LEVEL1_NOTIFICATION;
-   public static final int FORWARD_HEADER_ONLY;
+   public static final int SEND_DIRECTLY_TO_ME = 1;
+   public static final int CC_TO_ME = 2;
+   public static final int BCC_TO_ME = 4;
+   public static final int IMPORTANCE_NONE = 1;
+   public static final int IMPORTANCE_HIGH = 2;
+   public static final int IMPORTANCE_NOMAL = 4;
+   public static final int IMPORTANCE_LOW = 8;
+   public static final int SENSITIVITY_NONE = 1;
+   public static final int SENSITIVITY_NORMAL = 2;
+   public static final int SENSITIVITY_PERSONAL = 4;
+   public static final int SENSITIVITY_PRIVATE = 8;
+   public static final int SENSITIVITY_CONFIDENTIAL = 16;
+   public static final int DO_NOT_FORWARD = 0;
+   public static final int FORWARD = 1;
+   public static final int FORWARD_LEVEL1_NOTIFICATION = 2;
+   public static final int FORWARD_HEADER_ONLY = 4;
 
    public final void setFromList(String fromList) {
       this._fromListEncoding = PersistentContent.encode(fromList);

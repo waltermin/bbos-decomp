@@ -21,8 +21,8 @@ public final class PasswordValidationScreen extends UserSettingsScreen {
    private Hashtable _pendingParams;
    private Button _cancel;
    private Button _save;
-   public static final String PARAM_MAILBOXES;
-   public static final String PARAM_PASSWORD;
+   public static final String PARAM_MAILBOXES = "mailboxesToValidate";
+   public static final String PARAM_PASSWORD = "password";
 
    public PasswordValidationScreen() {
       super(31);

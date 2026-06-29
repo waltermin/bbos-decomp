@@ -8,7 +8,7 @@ public class CodfileData extends CodfileItem {
    protected int _arrayType;
    protected int _length;
    protected byte[] _bytes;
-   public static final int HEADER_SIZE;
+   public static final int HEADER_SIZE = 4;
 
    protected CodfileData() {
    }

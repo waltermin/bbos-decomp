@@ -15,8 +15,8 @@ final class CallWaitingOption extends VoiceOptionsListItem implements PhoneOptio
    private ObjectChoiceField _callWaitingEnabledChoiceField;
    private boolean _ssTestingHackEnabled;
    private int _originalSelectedIndex = -1;
-   static final int NO;
-   static final int YES;
+   static final int NO = 0;
+   static final int YES = 1;
 
    CallWaitingOption(Object context) {
       super(PhoneResources.getString(254), context);

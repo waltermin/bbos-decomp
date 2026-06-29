@@ -16,10 +16,10 @@ public class ErrorHandler implements Serviceable, EventListener {
    private ScriptEngine _scriptEngine;
    private UiService _uiService;
    private int _errorScript;
-   private static final int RE_ERROR_CLASS_CONTINUE;
-   private static final int RE_ERROR_CLASS_SHUTDOWN;
-   private static final int RE_ERROR_CLASS_SECURITY_VIOLATION;
-   private static final int RE_ERROR_CLASS_PERSISTENT_CONTENT;
+   private static final int RE_ERROR_CLASS_CONTINUE = 2;
+   private static final int RE_ERROR_CLASS_SHUTDOWN = 3;
+   private static final int RE_ERROR_CLASS_SECURITY_VIOLATION = 4;
+   private static final int RE_ERROR_CLASS_PERSISTENT_CONTENT = 5;
    static Class class$net$rim$wica$runtime$metadata$WicletRuntime;
    static Class class$net$rim$wica$runtime$event$EventService;
    static Class class$net$rim$wica$runtime$ui$UiService;

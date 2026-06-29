@@ -13,7 +13,7 @@ public class TcpDatagramProperties {
    public int _dataOffset;
    public boolean _isEssential;
    protected boolean _freshnessSealed = true;
-   private static final int SEPARATOR;
+   private static final int SEPARATOR = 124;
 
    public TcpDatagramProperties() {
    }

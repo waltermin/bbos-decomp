@@ -19,12 +19,12 @@ public class MIMEOutputStream extends OutputStream {
    private NoCopyByteArrayOutputStream _bufferOut;
    private MIMEHeader _mimeHeader;
    private boolean _closed;
-   private static final byte CR;
-   private static final byte LF;
-   public static final String ENCODING_7BIT;
-   public static final String ENCODING_8BIT;
-   public static final String ENCODING_BINARY;
-   public static final String ENCODING_BASE64;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
+   public static final String ENCODING_7BIT = "7bit";
+   public static final String ENCODING_8BIT = "8bit";
+   public static final String ENCODING_BINARY = "binary";
+   public static final String ENCODING_BASE64 = "base64";
 
    public MIMEOutputStream(OutputStream out, boolean isMultiPart, String encoding) {
       this(out, isMultiPart, encoding, true, 0, null);

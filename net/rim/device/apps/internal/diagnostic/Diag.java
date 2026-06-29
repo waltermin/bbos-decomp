@@ -25,20 +25,20 @@ public final class Diag extends UiApplication {
    PersistentObject persistReport = PersistentStore.getPersistentObject(-1422526349460635256L);
    ReportDepot reports;
    DiagScreen mainScreen;
-   static final long APP_DESCRIPTOR;
-   private static final String INITIALIZE_ARGUMENT;
+   static final long APP_DESCRIPTOR = 1548127712067364994L;
+   private static final String INITIALIZE_ARGUMENT = "init";
    static boolean appDisabled = false;
    private static Diag instance = null;
    private static DiagnosticDisplayVerb menuItemInstance = null;
    private static Dialog d;
-   static final long FROMRADIOON;
-   static final long FROMGPRSATT;
-   static final long FROMPDPACT;
-   static final long ICMPPING;
-   static final int REGREQ;
-   static final int MDPPING;
-   static final int PIN2PIN;
-   static final long EMAILPING;
+   static final long FROMRADIOON = 30000L;
+   static final long FROMGPRSATT = 20000L;
+   static final long FROMPDPACT = 15000L;
+   static final long ICMPPING = 10000L;
+   static final int REGREQ = 30000;
+   static final int MDPPING = 15000;
+   static final int PIN2PIN = 15000;
+   static final long EMAILPING = 45000L;
 
    public final boolean isPinRecptSetByITPolicy() {
       return ITPolicy.getString(46, 3) != null;

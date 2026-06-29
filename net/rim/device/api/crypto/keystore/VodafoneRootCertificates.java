@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 class VodafoneRootCertificates {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -3942808541900799170L;
+   private static final long CERTSTATUSTIME = 1158007107581L;
    private static final byte[] VODAFONE_WTLS_CA = new byte[]{
       1,
       2,

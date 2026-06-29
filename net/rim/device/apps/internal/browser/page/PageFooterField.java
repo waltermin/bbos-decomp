@@ -50,13 +50,13 @@ public final class PageFooterField extends Field {
    private Runnable _repaintRunnable;
    private int _repaintRunnableId = -1;
    private static final Tag TAG = Tag.create("browser-footer");
-   private static final int SEPARATOR_HEIGHT;
-   private static final int SPACE_PADDING_WIDTH;
-   private static final int MIN_PAINT_DELAY;
-   private static final String BROWSER_FOOTER_PROGRESS_BITMAP;
-   private static final String BROWSER_FOOTER_FOCUS_LEFT_BITMAP;
-   private static final String BROWSER_FOOTER_FOCUS_RIGHT_BITMAP;
-   private static final String BROWSER_FOOTER_BITMAP;
+   private static final int SEPARATOR_HEIGHT = 1;
+   private static final int SPACE_PADDING_WIDTH = 5;
+   private static final int MIN_PAINT_DELAY = 200;
+   private static final String BROWSER_FOOTER_PROGRESS_BITMAP = "browser-footer~progress";
+   private static final String BROWSER_FOOTER_FOCUS_LEFT_BITMAP = "browser-footer~focus-left";
+   private static final String BROWSER_FOOTER_FOCUS_RIGHT_BITMAP = "browser-footer~focus-right";
+   private static final String BROWSER_FOOTER_BITMAP = "browser-footer";
 
    PageFooterField() {
       this.setTag(TAG);

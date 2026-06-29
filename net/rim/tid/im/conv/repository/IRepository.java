@@ -8,7 +8,7 @@ import net.rim.tid.itie.LinguisticData;
 import net.rim.tid.util.SLTextDataContainer;
 
 public class IRepository implements IDataSearchRepository {
-   public static final int SL_WORDLIST_MAGIC_NUMBER;
+   public static final int SL_WORDLIST_MAGIC_NUMBER = 1397507668;
 
    public void setLocale(Locale _1) {
       throw null;

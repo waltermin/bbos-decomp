@@ -4,8 +4,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
 
 public final class DocViewDisplayScreenInstance {
-   private static final long AV_ACTIVEPART_ARRAY;
-   private static final long AV_FORWARDSCREEN_ARRAY;
+   private static final long AV_ACTIVEPART_ARRAY = -7709433243068286410L;
+   private static final long AV_FORWARDSCREEN_ARRAY = 2882202296741631652L;
 
    public static final ActiveDisplayedPart getActivePartInstance(int messageID, int applicationID) {
       Object obj = ApplicationRegistry.getApplicationRegistry().get(-7709433243068286410L);

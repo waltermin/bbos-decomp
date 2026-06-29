@@ -9,7 +9,7 @@ import net.rim.device.api.util.LongHashtable;
 public final class ServicesConfigurationManager {
    private LongHashtable _loadedConfigurations;
    private Configuration _defaultConfiguration;
-   private static final long GUID;
+   private static final long GUID = 6489741850224630387L;
 
    public static final ServicesConfigurationManager getSingletonInstance() {
       ApplicationRegistry theApplicationRegistry = ApplicationRegistry.getApplicationRegistry();

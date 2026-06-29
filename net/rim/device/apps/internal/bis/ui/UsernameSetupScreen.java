@@ -26,10 +26,10 @@ public final class UsernameSetupScreen extends UserSettingsScreen {
    private PasswordEditField _passwordEdit;
    private PasswordEditField _passwordConfirmEdit;
    private String _failedIntegrationType;
-   public static final String PARAM_SUGGESTIONS;
-   public static final String PARAM_USERNAME;
-   public static final String PARAM_PASSWORD;
-   public static final String PARAM_FAILED_INTEGRATION_TYPE;
+   public static final String PARAM_SUGGESTIONS = "suggestions";
+   public static final String PARAM_USERNAME = "userName";
+   public static final String PARAM_PASSWORD = "password";
+   public static final String PARAM_FAILED_INTEGRATION_TYPE = "failedIntegrationType";
    static Class class$net$rim$device$apps$internal$bis$ui$MailConnectorScreen;
    static Class class$net$rim$device$apps$internal$bis$ui$AccountSetupInstructionScreen;
 

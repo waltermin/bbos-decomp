@@ -14,7 +14,7 @@ final class HintStringPattern extends EmoticonStringPattern {
    private Image _sendImage;
    StringSetMatch _match = new StringSetMatch();
    private static HintStringPattern _instance;
-   private static final String SEND;
+   private static final String SEND = "￼";
 
    static final HintStringPattern getHintStringPattern() {
       if (_instance == null) {

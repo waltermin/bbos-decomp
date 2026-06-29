@@ -54,9 +54,9 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
    private final Object _syncObject = new Object();
    private boolean _duringPausedAutoMore;
    private boolean _initialDisplay;
-   protected static final short FLAG_ADDFIND;
-   protected static final short FLAG_ADDMULTIPAGE;
-   private static final int COLOR_IDENTICAL_RANGE;
+   protected static final short FLAG_ADDFIND = 1;
+   protected static final short FLAG_ADDMULTIPAGE = 2;
+   private static final int COLOR_IDENTICAL_RANGE = 255;
    protected static ResourceBundleFamily _resources = ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView");
 
    protected void onFinalRelease() {

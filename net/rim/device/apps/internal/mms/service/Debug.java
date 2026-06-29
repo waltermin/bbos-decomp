@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.mms.service;
 
 final class Debug {
-   private static final int MAX_DUMP_LENGTH;
-   private static final int BYTES_PER_ROW;
+   private static final int MAX_DUMP_LENGTH = 2048;
+   private static final int BYTES_PER_ROW = 12;
 
    static final void dumpBytes(byte[] data) {
       StringBuffer bufA = (StringBuffer)(new Object());

@@ -24,10 +24,10 @@ public class AddressGuesser {
    private EmailMessageModel _message = null;
    private boolean _loading = false;
    private EmailMessageModel[] _sentMessages = null;
-   private static final int BUFFER_LENGTH;
-   private static final int ILLEGAL_VALUE;
-   private static final int BUFFER_MARKER;
-   private static final long GUESSER_KEY;
+   private static final int BUFFER_LENGTH = 1024;
+   private static final int ILLEGAL_VALUE = 0;
+   private static final int BUFFER_MARKER = 0;
+   private static final long GUESSER_KEY = -3272901161760843350L;
    private static AddressGuesser _theInstance = new AddressGuesser();
 
    public static AddressGuesser getInstance() {

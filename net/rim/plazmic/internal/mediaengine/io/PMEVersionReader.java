@@ -5,7 +5,7 @@ import net.rim.plazmic.mediaengine.MediaException;
 public class PMEVersionReader implements FormatVersionReader {
    private byte[] data;
    private int offset = 0;
-   public static final int PME_START_HEADER;
+   public static final int PME_START_HEADER = -749712059;
 
    protected final int readInt() {
       if (this.data.length - this.offset < 4) {

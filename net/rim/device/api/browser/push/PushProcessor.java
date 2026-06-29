@@ -28,7 +28,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
    private boolean _wapProvisioningEnabled;
    private boolean _doPPGConnect;
    private static PushProcessor _instance;
-   private static final long APPLICATION_REGISTRY_NAME;
+   private static final long APPLICATION_REGISTRY_NAME = 4580961082022641941L;
 
    public final Application getDispatchApplication() {
       return this._dispatchApplication;

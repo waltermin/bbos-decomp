@@ -9,13 +9,13 @@ import net.rim.tid.im.conv.SLVariants;
 
 public class Lookup extends PopupScreen implements LookupIf {
    private Object _parent;
-   public static final byte LOOKUP_DEFAULT;
-   public static final byte LOOKUP_WITH_AMOUNT;
-   public static final byte LOOKUP_WITH_NUMBERS;
-   public static final byte INSIDE_SPACE;
-   public static final byte INSIDE_SPACE_DOUBLE;
-   public static final byte INSIDE_SPACE_WITH_LINE;
-   public static final byte SPACE;
+   public static final byte LOOKUP_DEFAULT = 0;
+   public static final byte LOOKUP_WITH_AMOUNT = 1;
+   public static final byte LOOKUP_WITH_NUMBERS = 8;
+   public static final byte INSIDE_SPACE = 2;
+   public static final byte INSIDE_SPACE_DOUBLE = 4;
+   public static final byte INSIDE_SPACE_WITH_LINE = 3;
+   public static final byte SPACE = 5;
    private static Lookup _instance;
 
    public void setParent(Object parent) {

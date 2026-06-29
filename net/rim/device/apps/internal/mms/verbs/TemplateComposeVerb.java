@@ -13,8 +13,8 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 public class TemplateComposeVerb extends MMSComposeVerb {
    private MMSAttachment _pdu;
    private FileSelector _fileSelector;
-   private static final String MMS_IMAGE_FOLDER;
-   private static final String MMS_TEMPLATE_FOLDER;
+   private static final String MMS_IMAGE_FOLDER = "/store/samples/mms/pictures/";
+   private static final String MMS_TEMPLATE_FOLDER = "/store/samples/mms/templates/";
    private static Recognizer _templateRecognizer = new TemplateComposeVerb$1();
 
    static void registerTemplateAlias() {

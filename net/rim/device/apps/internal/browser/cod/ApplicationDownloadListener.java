@@ -3,8 +3,8 @@ package net.rim.device.apps.internal.browser.cod;
 import net.rim.device.api.system.CodeModuleGroup;
 
 interface ApplicationDownloadListener {
-   int PROGRESS_DOWNLOADING;
-   int PROGRESS_INSTALLING;
+   int PROGRESS_DOWNLOADING = 0;
+   int PROGRESS_INSTALLING = 1;
 
    void progressUpdate(int var1, int var2);
 

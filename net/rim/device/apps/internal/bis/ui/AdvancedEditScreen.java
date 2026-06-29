@@ -20,8 +20,8 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 public final class AdvancedEditScreen extends UserSettingsScreen {
    private BasicEditField _serverEdit;
    private CheckboxField _sslCheckbox;
-   public static final String PARAM_SERVER;
-   public static final String PARAM_SSL;
+   public static final String PARAM_SERVER = "server";
+   public static final String PARAM_SSL = "ssl";
 
    public AdvancedEditScreen() {
       super(31);

@@ -7,7 +7,7 @@ import net.rim.wica.runtime.persistence.CredentialStore;
 
 public class CredentialStoreImpl implements CredentialStore {
    private LongSubstore _credentialsSubstore = new LongSubstore(2027130143323582880L);
-   private static final long KEY_CREDENTIALS;
+   private static final long KEY_CREDENTIALS = 2027130143323582880L;
 
    CredentialStoreImpl() {
    }

@@ -9,13 +9,13 @@ public class DAC implements Persistable {
    protected boolean _dirty;
    protected int _nextCodeIndex = -1;
    private int _loadSharingCode;
-   public static final int LS_USE_FIRST_VALUE_ONLY;
-   public static final int LS_USE_SEQUENTIAL;
-   public static final int LS_USE_SEQUENTIAL_ON_FAILURE;
-   public static final int LS_USE_RANDOM;
-   public static final int LS_USE_RANDOM_ON_FAILURE;
-   public static final int LS_USE_LAST_RECEIVED_SEQUENTIAL_ON_FAILURE;
-   public static final int LS_USE_LAST_RECEIVED_RANDOM_ON_FAILURE;
+   public static final int LS_USE_FIRST_VALUE_ONLY = 0;
+   public static final int LS_USE_SEQUENTIAL = 1;
+   public static final int LS_USE_SEQUENTIAL_ON_FAILURE = 2;
+   public static final int LS_USE_RANDOM = 3;
+   public static final int LS_USE_RANDOM_ON_FAILURE = 4;
+   public static final int LS_USE_LAST_RECEIVED_SEQUENTIAL_ON_FAILURE = 5;
+   public static final int LS_USE_LAST_RECEIVED_RANDOM_ON_FAILURE = 6;
    private static Random _rand = (Random)(new Object());
 
    protected DAC() {

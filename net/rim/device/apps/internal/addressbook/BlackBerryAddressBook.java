@@ -32,8 +32,8 @@ public final class BlackBerryAddressBook implements AddressBook {
    private AddressBookOrderHelper _lastNameHelper;
    private AddressBookOrderHelper _helper = new AddressBookOrderHelper(null, this._addressBookOptions.getSortOrder());
    private UIDGeneratorCallback _uidGeneratorCallback;
-   public static final long COLLECTION_BUSY;
-   public static final long COLLECTION_READY;
+   public static final long COLLECTION_BUSY = 1381575293511996494L;
+   public static final long COLLECTION_READY = -992760093076435005L;
    private static BlackBerryAddressBook _theAddressBook;
    private static AddressBookKeywordFilterList _activeView;
 

@@ -9,7 +9,7 @@ import net.rim.device.api.util.DataBuffer;
 final class SSLBlockDecryptor extends DecryptorInputStream {
    private TLSBlockUnformatterEngine _unformatter;
    private DataBuffer _inBuffer;
-   private static final int BUFFER;
+   private static final int BUFFER = 256;
 
    public SSLBlockDecryptor(BlockDecryptorEngine engine, InputStream input, boolean paddingVerification) {
       super(input);

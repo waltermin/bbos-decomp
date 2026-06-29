@@ -11,7 +11,7 @@ public final class GPSLocationData {
    boolean _isValid;
    float _vAccuracy;
    float _hAccuracy;
-   public static final double PRECISION_DIVISOR;
+   public static final double PRECISION_DIVISOR = 100000.0;
 
    public GPSLocationData() {
       this.reset();

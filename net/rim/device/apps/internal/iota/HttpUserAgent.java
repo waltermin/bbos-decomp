@@ -33,7 +33,7 @@ final class HttpUserAgent {
    private OutputStream _outputStream;
    private String _proxyUsername;
    private String _proxyPassword;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
    private static final String USER_AGENT = ((StringBuffer)(new Object("BlackBerry")))
       .append(DeviceInfo.getDeviceName())
       .append('/')
@@ -47,13 +47,13 @@ final class HttpUserAgent {
       .append(UAProf.getFormattedUAProfURI("http://device.sprintpcs.com/RIM/BlackBerry{0}/{2}.rdf"))
       .append('"')
       .toString();
-   private static final String ACCEPT;
-   private static final int MAX_REDIRECTS;
-   private static final String URL_PARAMETERS;
-   private static final int BEFORE_QUOTED_HEADER;
-   private static final int FIELD_NAME;
-   private static final int ESCAPED_FIELD_VALUE;
-   private static final int AFTER_QUOTED_HEADER;
+   private static final String ACCEPT = "application/vnd.phonecom.mmc-xml, multipart/related, application/octet-stream";
+   private static final int MAX_REDIRECTS = 13;
+   private static final String URL_PARAMETERS = ";apn=iota;DeviceSide=true;ConnectionSetup=delayed;ConnectionUID=IOTA Provisioning";
+   private static final int BEFORE_QUOTED_HEADER = 0;
+   private static final int FIELD_NAME = 1;
+   private static final int ESCAPED_FIELD_VALUE = 2;
+   private static final int AFTER_QUOTED_HEADER = 3;
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

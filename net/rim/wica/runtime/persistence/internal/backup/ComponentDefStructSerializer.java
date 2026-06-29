@@ -7,9 +7,9 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class ComponentDefStructSerializer extends AbstractSerializer {
    private static ComponentDefStructSerializer _instance;
-   private static final byte DEFS;
-   private static final byte VAR_DATA;
-   private static final byte OBJECT_DATA;
+   private static final byte DEFS = 0;
+   private static final byte VAR_DATA = 1;
+   private static final byte OBJECT_DATA = 2;
 
    static final ComponentDefStructSerializer getInstance() {
       if (_instance == null) {

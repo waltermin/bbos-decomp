@@ -9,19 +9,19 @@ public class Background {
    private int _positionX;
    private int _positionY;
    private int _repeat;
-   public static final int POSITION_X_INHERIT;
-   public static final int POSITION_X_LEFT;
-   public static final int POSITION_X_RIGHT;
-   public static final int POSITION_X_CENTER;
-   public static final int POSITION_Y_INHERIT;
-   public static final int POSITION_Y_TOP;
-   public static final int POSITION_Y_BOTTOM;
-   public static final int POSITION_Y_CENTER;
-   public static final int REPEAT_INHERIT;
-   public static final int REPEAT_NONE;
-   public static final int REPEAT_HORIZONTAL;
-   public static final int REPEAT_VERTICAL;
-   public static final int REPEAT_BOTH;
+   public static final int POSITION_X_INHERIT = 0;
+   public static final int POSITION_X_LEFT = 1;
+   public static final int POSITION_X_RIGHT = 2;
+   public static final int POSITION_X_CENTER = 3;
+   public static final int POSITION_Y_INHERIT = 0;
+   public static final int POSITION_Y_TOP = 1;
+   public static final int POSITION_Y_BOTTOM = 2;
+   public static final int POSITION_Y_CENTER = 3;
+   public static final int REPEAT_INHERIT = 0;
+   public static final int REPEAT_NONE = 1;
+   public static final int REPEAT_HORIZONTAL = 2;
+   public static final int REPEAT_VERTICAL = 3;
+   public static final int REPEAT_BOTH = 4;
 
    public static Background createSolidBackground(int color) {
       return new BackgroundSolid(color);

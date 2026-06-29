@@ -40,19 +40,19 @@ final class CoverageComponentFactory implements Factory, RadioStatusListener, Gl
    private static int ROUTE_TYPE_RF = 1;
    private static int ROUTE_TYPE_WIFI = 2;
    private static int ROUTE_TYPE_SERIAL = 4;
-   private static final int NO_COVERAGE;
-   private static final int VOICE_COVERAGE;
-   private static final int DATA_COVERAGE;
-   private static final int DATA_COVERAGE_ATTACHED;
-   private static final int DATA_COVERAGE_WITH_PATH;
-   private static final int DATA_COVERAGE_WITH_EMAIL;
-   private static final int DATA_ONLY_COVERAGE_WITH_EMAIL;
-   private static final int EMERGENCY_COVERAGE_ONLY;
-   private static final int DATA_COVERAGE_HS;
-   private static final int DATA_COVERAGE_HS_WITH_EMAIL;
-   static final int NUMBER_OF_LEVELS;
-   static final int IDEN_EMERGENCY_COVERAGE_ONLY;
-   static final int IDEN_BASE_BITMAP_INDEX;
+   private static final int NO_COVERAGE = 0;
+   private static final int VOICE_COVERAGE = 1;
+   private static final int DATA_COVERAGE = 2;
+   private static final int DATA_COVERAGE_ATTACHED = 3;
+   private static final int DATA_COVERAGE_WITH_PATH = 4;
+   private static final int DATA_COVERAGE_WITH_EMAIL = 5;
+   private static final int DATA_ONLY_COVERAGE_WITH_EMAIL = 6;
+   private static final int EMERGENCY_COVERAGE_ONLY = 7;
+   private static final int DATA_COVERAGE_HS = 8;
+   private static final int DATA_COVERAGE_HS_WITH_EMAIL = 9;
+   static final int NUMBER_OF_LEVELS = 10;
+   static final int IDEN_EMERGENCY_COVERAGE_ONLY = 1;
+   static final int IDEN_BASE_BITMAP_INDEX = 2;
    private static int[] _GPRSCoverageIndex = new int[]{
       67,
       59,

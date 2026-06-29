@@ -7,8 +7,8 @@ import net.rim.device.internal.synchronization.ota.util.ReusableObjectPool;
 import net.rim.device.internal.synchronization.ota.util.ReusableStringBuffer;
 
 public final class Logger {
-   public static final long SYNC_EVENTLOGGER_GUID;
-   public static final String SYNC_EVENTLOGGER_DISPLAYNAME;
+   public static final long SYNC_EVENTLOGGER_GUID = 2424575107343457299L;
+   public static final String SYNC_EVENTLOGGER_DISPLAYNAME = "net.rim.otasync";
 
    private static final void log(Object message, int logLevel) {
       if (message != null) {

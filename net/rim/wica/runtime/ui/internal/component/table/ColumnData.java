@@ -13,7 +13,7 @@ public class ColumnData extends TableStyle {
    private boolean _isFrozen;
    private boolean _isAutoSized = true;
    private boolean _isHidden;
-   private static final int _ROWS_TO_AUTOSIZE;
+   private static final int _ROWS_TO_AUTOSIZE = 20;
 
    public ColumnData(String[] cells, String header) {
       this._cells = cells == null ? new Object[0] : cells;

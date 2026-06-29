@@ -13,8 +13,8 @@ import net.rim.device.internal.bluetooth.BluetoothME;
 public class RemoteDevice {
    private String _address;
    private byte[] _addressAsBytes;
-   private static final int WAIT;
-   private static final int SUCCEEDED;
+   private static final int WAIT = 0;
+   private static final int SUCCEEDED = 1;
 
    protected RemoteDevice(String address) {
       this._address = address;

@@ -38,21 +38,21 @@ public class Dialog extends PopupScreen implements FieldChangeListener, HolsterL
    private CheckboxField _dontAskAgainCheckbox;
    private long _drawStyle = 68;
    private Application _app;
-   public static final int D_OK;
-   public static final int D_SAVE;
-   public static final int D_DELETE;
-   public static final int D_YES_NO;
-   public static final int D_OK_CANCEL;
-   public static final int CANCEL;
-   public static final int OK;
-   public static final int SAVE;
-   public static final int DISCARD;
-   public static final int DELETE;
-   public static final int YES;
-   public static final int NO;
-   public static final int LIST;
-   public static final int UNDEFINED;
-   public static final int GLOBAL_STATUS;
+   public static final int D_OK = 0;
+   public static final int D_SAVE = 1;
+   public static final int D_DELETE = 2;
+   public static final int D_YES_NO = 3;
+   public static final int D_OK_CANCEL = 4;
+   public static final int CANCEL = -1;
+   public static final int OK = 0;
+   public static final int SAVE = 1;
+   public static final int DISCARD = 2;
+   public static final int DELETE = 3;
+   public static final int YES = 4;
+   public static final int NO = -1;
+   public static final int LIST = 1;
+   public static final int UNDEFINED = Integer.MIN_VALUE;
+   public static final int GLOBAL_STATUS = 33554432;
    private static final int[] _resources = new int[]{
       10004,
       10000,

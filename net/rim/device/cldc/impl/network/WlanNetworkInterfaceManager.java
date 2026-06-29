@@ -17,14 +17,14 @@ final class WlanNetworkInterfaceManager extends NetworkInterfaceManager implemen
    private boolean _networkStatus;
    private boolean _interfaceStatus;
    private byte[] _ipAddress;
-   private static final long GUID;
-   protected static final String NAME;
-   private static final int STALE_RADIO_STATE;
-   private static final int STALE_NETWORK_STATE;
-   private static final int STALE_INTERFACE_STATE;
-   private static final int NO_IP_ADDRESS;
-   private static final int STALE_INTERFACE_INFO;
-   private static final int EXTRA_INTERFACE_INFO;
+   private static final long GUID = 833896789245248843L;
+   protected static final String NAME = "wlan";
+   private static final int STALE_RADIO_STATE = 1400132164;
+   private static final int STALE_NETWORK_STATE = 1400131156;
+   private static final int STALE_INTERFACE_STATE = 1400129862;
+   private static final int NO_IP_ADDRESS = 1315916112;
+   private static final int STALE_INTERFACE_INFO = 1400129865;
+   private static final int EXTRA_INTERFACE_INFO = 1165510985;
 
    public static final void init() {
       NetworkInterfaceFactory.getInstance().registerManager(new WlanNetworkInterfaceManager());

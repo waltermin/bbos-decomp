@@ -44,10 +44,10 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
    private int[] _recurBySetPos = new int[0];
    private Date _recurEndTime = (Date)(new Object());
    private Date[] _recurExceptions = new Object[0];
-   private static final String VERSION_1_0;
-   private static final String VERSION_2_0;
-   private static final int ABSOLUTE;
-   private static final int RELATIVE;
+   private static final String VERSION_1_0 = "1.0";
+   private static final String VERSION_2_0 = "2.0";
+   private static final int ABSOLUTE = 0;
+   private static final int RELATIVE = 1;
 
    public final VCal getEventModel() {
       if (this._version == null) {

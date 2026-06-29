@@ -19,7 +19,7 @@ final class DocViewImageDisplayField extends DocViewDisplayField {
    private Hashtable _displayHash = (Hashtable)(new Object(1));
    private final int _flipValue;
    private final byte _presentationValue;
-   private static final long IMAGEFIELDDISPLAY_STYLE;
+   private static final long IMAGEFIELDDISPLAY_STYLE = 18014398509482020L;
 
    DocViewImageDisplayField(
       DocViewDataProvider dataProvider,

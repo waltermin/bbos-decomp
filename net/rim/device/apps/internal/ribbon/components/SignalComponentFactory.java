@@ -16,10 +16,10 @@ final class SignalComponentFactory implements Factory, RadioStatusListener {
    private int _lastLevel = 0;
    boolean _numericDisplay;
    StringBuffer _valueString = (StringBuffer)(new Object(8));
-   static final int RADIO_OFF_LEVEL;
-   static final int RADIO_NO_COVERAGE_LEVEL;
-   static final int RADIO_SOS_COVERAGE_LEVEL;
-   static final int NUMBER_OF_LEVELS;
+   static final int RADIO_OFF_LEVEL = 0;
+   static final int RADIO_NO_COVERAGE_LEVEL = 1;
+   static final int RADIO_SOS_COVERAGE_LEVEL = 8;
+   static final int NUMBER_OF_LEVELS = 9;
 
    public SignalComponentFactory() {
    }

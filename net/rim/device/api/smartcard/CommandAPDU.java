@@ -13,10 +13,10 @@ public class CommandAPDU {
    private int _Le;
    private byte[] _data;
    private int _apduHeaderLength = 4;
-   public static final int CASE_1;
-   public static final int CASE_2;
-   public static final int CASE_3;
-   public static final int CASE_4;
+   public static final int CASE_1 = 1;
+   public static final int CASE_2 = 2;
+   public static final int CASE_3 = 3;
+   public static final int CASE_4 = 4;
 
    public CommandAPDU() {
    }

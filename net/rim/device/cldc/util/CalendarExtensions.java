@@ -1,11 +1,11 @@
 package net.rim.device.cldc.util;
 
 public interface CalendarExtensions {
-   int ERA;
-   int BC;
-   int AD;
-   int DAY_OF_YEAR;
-   int DST_OFFSET;
+   int ERA = 0;
+   int BC = 0;
+   int AD = 1;
+   int DAY_OF_YEAR = 6;
+   int DST_OFFSET = 16;
 
    void add(int var1, int var2);
 

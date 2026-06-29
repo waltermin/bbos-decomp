@@ -3,7 +3,7 @@ package net.rim.wica.runtime.script.internal.appenv;
 import net.rim.ecmascript.runtime.ESObject;
 
 public final class ESScreenPrototype extends ESObject {
-   private static final String Display;
+   private static final String Display = "display";
 
    public ESScreenPrototype() {
       this.setGrowthIncrement(1);

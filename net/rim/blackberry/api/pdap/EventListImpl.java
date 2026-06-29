@@ -21,7 +21,7 @@ import net.rim.device.apps.api.ui.CommonResources;
 public final class EventListImpl extends PIMListImpl implements EventList {
    private static ResourceBundle _resources = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
    private static Hashtable _actualListeners;
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = 7918772433172892313L;
    static String LIST_NAME;
    private static String LIST_CLOSED_MESSAGE;
    private static String READONLY_MESSAGE;

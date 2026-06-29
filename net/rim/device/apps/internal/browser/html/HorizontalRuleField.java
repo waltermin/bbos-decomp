@@ -11,10 +11,10 @@ final class HorizontalRuleField extends SeparatorField {
    private int _height;
    private int _stipple;
    private int _padding;
-   public static final int STIPPLE_SOLID;
-   public static final int STIPPLE_DASHED;
-   public static final int STIPPLE_DOTTED;
-   public static final int STIPPLE_HIDDEN;
+   public static final int STIPPLE_SOLID = -1;
+   public static final int STIPPLE_DASHED = -252645136;
+   public static final int STIPPLE_DOTTED = -858993460;
+   public static final int STIPPLE_HIDDEN = 0;
 
    HorizontalRuleField(int ruleWidth, boolean percentage, long style, int size, boolean filled, int color, int stipple, int padding) {
       super(style);

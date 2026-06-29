@@ -21,12 +21,12 @@ public final class EScreenVMProcesses extends MainScreen implements Comparator, 
    private ListField _list;
    private EScreenVMProcesses$EScreenProcess[] _processes = new EScreenVMProcesses$EScreenProcess[0];
    private EScreenVMProcesses$EScreenProcess[] _drawnProcesses;
-   private static final int MENU_REFRESH;
-   private static final int MENU_KILL_PROCESS;
-   private static final int MENU_NO_CPU;
-   private static final int MENU_TOP_CPU;
-   private static final int MENU_TOTAL_CPU;
-   private static final int MENU_AUTO_REFRESH;
+   private static final int MENU_REFRESH = 1;
+   private static final int MENU_KILL_PROCESS = 2;
+   private static final int MENU_NO_CPU = 3;
+   private static final int MENU_TOP_CPU = 4;
+   private static final int MENU_TOTAL_CPU = 5;
+   private static final int MENU_AUTO_REFRESH = 6;
    private static int _displayType = 4;
 
    @Override

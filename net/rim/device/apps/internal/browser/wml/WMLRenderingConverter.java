@@ -8,7 +8,7 @@ import net.rim.device.api.io.http.HttpProtocolConstants;
 
 public final class WMLRenderingConverter extends BrowserContentProvider implements HttpProtocolConstants {
    private static String APPLICATION__VND_WAP_WMLC = "application/vnd.wap.wmlc";
-   private static final String TEXT_WML;
+   private static final String TEXT_WML = "text/vnd.wap.wml;q=0.5";
    private static final String[] ACCEPT = new String[]{"application/vnd.wap.wmlc", "text/vnd.wap.wml;q=0.5"};
    private static final String[] ACCEPT_WHEN_HTML_SUPPORTED = new String[]{"application/vnd.wap.wmlc;q=0.7", "text/vnd.wap.wml;q=0.5"};
 

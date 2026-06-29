@@ -29,13 +29,13 @@ final class InPlaceEventDialog extends Screen {
    private int _xTopLeft;
    private int _yTopLeft;
    private int _initialKeycode;
-   private static final int OUTSIDE_SPACE;
-   private static final int INSIDE_SPACE;
-   private static final int TOTAL_BORDER;
-   private static final int START_TIME_INCREMENT;
-   private static final int BIG_DURATION_INCREMENT;
-   private static final int SMALL_DURATION_INCREMENT;
-   private static final int DURATION_BOUNDARY;
+   private static final int OUTSIDE_SPACE = 1;
+   private static final int INSIDE_SPACE = 2;
+   private static final int TOTAL_BORDER = 3;
+   private static final int START_TIME_INCREMENT = 900000;
+   private static final int BIG_DURATION_INCREMENT = 3600000;
+   private static final int SMALL_DURATION_INCREMENT = 900000;
+   private static final int DURATION_BOUNDARY = 7200000;
 
    public InPlaceEventDialog(int xTopLeft, int yTopLeft) {
       super((Manager)(new Object(0)));

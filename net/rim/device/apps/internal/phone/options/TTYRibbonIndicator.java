@@ -20,8 +20,8 @@ public final class TTYRibbonIndicator implements Indicator, AudioTTYListener, Te
    private int _TTYUses = 0;
    private StringBuffer _strBuffer = (StringBuffer)(new Object(PhoneResources.getString(6025)));
    static TTYRibbonIndicator _instance;
-   private static final int MAX_TTY_USES;
-   public static final long TTY_RIBBON_INDICATOR;
+   private static final int MAX_TTY_USES = 5;
+   public static final long TTY_RIBBON_INDICATOR = -9082444837343367946L;
 
    public static final void initialize() {
       if (_instance == null) {

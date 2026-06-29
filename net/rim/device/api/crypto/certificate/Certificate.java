@@ -6,13 +6,13 @@ import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.util.Persistable;
 
 public interface Certificate extends Persistable {
-   long EMAIL_ADDRESSES;
-   long PUBLIC_KEY_ALGORITHM_INFORMATION;
-   long DISPLAY_ROOT;
-   long DISPLAY_CA;
-   long PROMPT_TO_TRUST_ON_IMPORT;
-   long IS_END_ENTITY;
-   long SUMMARY_TEXT;
+   long EMAIL_ADDRESSES = -7850001002262082664L;
+   long PUBLIC_KEY_ALGORITHM_INFORMATION = -3174973482910568002L;
+   long DISPLAY_ROOT = -334528756150594391L;
+   long DISPLAY_CA = -2021910959928808912L;
+   long PROMPT_TO_TRUST_ON_IMPORT = -1188891808812199856L;
+   long IS_END_ENTITY = -7341435958452683242L;
+   long SUMMARY_TEXT = -5753772986264564736L;
 
    void verify(PublicKey var1);
 

@@ -9,8 +9,8 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 public final class CacheModel implements PersistableRIMModel, SyncObject, ConversionProvider {
    CacheNode _cacheNode;
    boolean _sticky;
-   static final int AVAILABLE_OFFLINE;
-   private static final int VERSION;
+   static final int AVAILABLE_OFFLINE = 2;
+   private static final int VERSION = 1;
 
    public final long getCreationDate() {
       return this._cacheNode.getCreationDate();

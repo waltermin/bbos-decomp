@@ -17,10 +17,10 @@ final class AddressCardVerb extends Verb {
    private Verb _storeAction;
    private Screen _screenToClose;
    private int _type;
-   static final int NEW_ADDRESS_CARD_VERB;
-   static final int VIEW_ADDRESS_CARD_VERB;
-   static final int EDIT_ADDRESS_CARD_VERB;
-   static final int ADD_ADDRESS_CARD_VERB;
+   static final int NEW_ADDRESS_CARD_VERB = 0;
+   static final int VIEW_ADDRESS_CARD_VERB = 1;
+   static final int EDIT_ADDRESS_CARD_VERB = 2;
+   static final int ADD_ADDRESS_CARD_VERB = 3;
 
    public AddressCardVerb(int type, int menuOrdering) {
       super(menuOrdering);

@@ -7,7 +7,7 @@ final class SIMATDisplayTextScreen extends SIMATPopupScreen {
    private SIMATDisplayTextScreen$PopScreenRunnable _popScreenRunnable;
    private int _scheduledAppID;
    private boolean _hasBeenPopped;
-   private static final long DISPLAY_STATUS_DURATION;
+   private static final long DISPLAY_STATUS_DURATION = 10000L;
 
    public SIMATDisplayTextScreen(SIMToolkit stk, String text) {
       super(stk, text);

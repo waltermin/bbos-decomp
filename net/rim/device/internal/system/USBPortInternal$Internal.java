@@ -1,8 +1,8 @@
 package net.rim.device.internal.system;
 
 public class USBPortInternal$Internal {
-   public static final int USB_MODE_HANDHELD;
-   public static final int USB_MODE_MODEM;
+   public static final int USB_MODE_HANDHELD = 0;
+   public static final int USB_MODE_MODEM = 1;
 
    public static native void setMode(int var0);
 

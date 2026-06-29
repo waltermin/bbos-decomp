@@ -3,7 +3,7 @@ package net.rim.device.api.ui.menu;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class MenuScreenFactory {
-   private static final long GUID;
+   private static final long GUID = -6653542185639997188L;
    private static MenuScreenFactory$Instance _instance;
 
    protected MenuScreenFactory() {

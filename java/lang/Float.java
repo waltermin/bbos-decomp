@@ -2,11 +2,11 @@ package java.lang;
 
 public final class Float {
    private float value;
-   public static final float POSITIVE_INFINITY;
-   public static final float NEGATIVE_INFINITY;
-   public static final float NaN;
-   public static final float MAX_VALUE;
-   public static final float MIN_VALUE;
+   public static final float POSITIVE_INFINITY = POSITIVE_INFINITY;
+   public static final float NEGATIVE_INFINITY = NEGATIVE_INFINITY;
+   public static final float NaN = NaN;
+   public static final float MAX_VALUE = MAX_VALUE;
+   public static final float MIN_VALUE = MIN_VALUE;
 
    public static final String toString(float f) {
       return new FloatingDecimal(f).toJavaFormatString();

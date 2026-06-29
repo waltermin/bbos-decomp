@@ -3,9 +3,9 @@ package net.rim.device.apps.api.calendar.modelcontrollerinterface;
 import java.util.Enumeration;
 
 public interface MeetingInfo {
-   long ID;
-   byte CAPABILITIES_NONE;
-   byte CAPABILITIES_MEETING_CAN_BE_MODIFIED;
+   long ID = 7228817433593908387L;
+   byte CAPABILITIES_NONE = 0;
+   byte CAPABILITIES_MEETING_CAN_BE_MODIFIED = 1;
 
    int getAttendeeCount();
 

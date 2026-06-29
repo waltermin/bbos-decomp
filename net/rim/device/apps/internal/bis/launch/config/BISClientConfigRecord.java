@@ -17,18 +17,18 @@ public final class BISClientConfigRecord {
    private boolean _autoStart;
    private boolean _showOnRibbon;
    private int _brandingIconIndex;
-   public static final String CID;
-   public static final byte ENCODED_TYPE_XML_SERVER;
-   public static final byte ENCODED_TYPE_TRANSPORT_CID;
-   public static final byte ENCODED_TYPE_TRANSPORT_UID;
-   public static final byte ENCODED_TYPE_SERVICE_TIMEOUT;
-   public static final byte ENCODED_TYPE_BRAND_NAME;
-   public static final byte ENCODED_TYPE_AUTOSTART;
-   public static final byte ENCODED_TYPE_BRANDINGICON;
-   public static final byte ENCODED_TYPE_SHOW_ON_RIBBON;
-   public static final byte ENCODED_TYPE_LOCALES;
-   public static final byte ENCODED_TYPE_RIBBON_TITLE;
-   public static final int BRANDING_ICON_VALUE_NONE;
+   public static final String CID = "BISClientConfig";
+   public static final byte ENCODED_TYPE_XML_SERVER = 1;
+   public static final byte ENCODED_TYPE_TRANSPORT_CID = 2;
+   public static final byte ENCODED_TYPE_TRANSPORT_UID = 3;
+   public static final byte ENCODED_TYPE_SERVICE_TIMEOUT = 4;
+   public static final byte ENCODED_TYPE_BRAND_NAME = 5;
+   public static final byte ENCODED_TYPE_AUTOSTART = 6;
+   public static final byte ENCODED_TYPE_BRANDINGICON = 7;
+   public static final byte ENCODED_TYPE_SHOW_ON_RIBBON = 8;
+   public static final byte ENCODED_TYPE_LOCALES = 9;
+   public static final byte ENCODED_TYPE_RIBBON_TITLE = 10;
+   public static final int BRANDING_ICON_VALUE_NONE = -1;
 
    private BISClientConfigRecord() {
    }

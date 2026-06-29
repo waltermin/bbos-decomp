@@ -26,7 +26,7 @@ public final class BrowserSession {
    private String _hmac;
    private byte[] _hmacKey;
    private BSMManager _bsmManager;
-   public static final long BROWSER_SESSION_REQUEST_COMPLETE;
+   public static final long BROWSER_SESSION_REQUEST_COMPLETE = 4624362102524391658L;
    private static BrowserSession$ActiveConfigs _activeConfigs;
 
    private final String createHmacKey() {

@@ -3,9 +3,9 @@ package net.rim.device.apps.api.transmission;
 import net.rim.device.internal.io.TrafficLogger;
 
 public interface TransmissionService {
-   int CANNOT_RECEIVE_OR_SEND;
-   int CAN_SEND;
-   int CAN_RECEIVE;
+   int CANNOT_RECEIVE_OR_SEND = 0;
+   int CAN_SEND = 1;
+   int CAN_RECEIVE = 2;
 
    Object getContext();
 

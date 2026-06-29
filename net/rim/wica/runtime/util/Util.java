@@ -8,7 +8,7 @@ import net.rim.device.api.system.Memory;
 public class Util {
    public static final SimpleDateFormat DEFAULT_DATE_FORMATTER = (SimpleDateFormat)(new Object(54));
    private static Util$ProvisioningLowMemoryListener _lmmListener;
-   private static final String URL_PREFIX;
+   private static final String URL_PREFIX = "http://";
 
    public static String printBytes(byte[] bytes) {
       StringBuffer output = (StringBuffer)(new Object());

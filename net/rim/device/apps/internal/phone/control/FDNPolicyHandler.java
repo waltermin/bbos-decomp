@@ -15,8 +15,8 @@ public final class FDNPolicyHandler implements GlobalEventListener {
    private FDNPolicyHandler$BlackWhiteTable _incomingTable;
    private String _outgoingPolicy;
    private FDNPolicyHandler$BlackWhiteTable _outgoingTable;
-   private static final int TYPE_CELL;
-   private static final int TYPE_WLAN;
+   private static final int TYPE_CELL = 0;
+   private static final int TYPE_WLAN = 1;
 
    public static final void registerOnceOnSystemStart() {
       new FDNPolicyHandler(0, 130).initialize();

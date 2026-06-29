@@ -37,12 +37,12 @@ public class AddressReferenceViewField extends HorizontalFieldManager implements
    private AddressReferenceViewField$TooltipFieldManager _tooltipField;
    private boolean _trustedAddressCheckingEnabled = false;
    private static final Bitmap UNTRUSTED_ADDRESS_BITMAP = Bitmap.getBitmapResource("net_rim_bb_framework_api", "untrustedaddress.png");
-   private static final int UNTRUSTED_ADDRESS_BITMAP_MARGIN;
+   private static final int UNTRUSTED_ADDRESS_BITMAP_MARGIN = 1;
    private static Tag EMAIL_ADDRESS_TOOLTIP_TAG = Tag.create("email-address-tooltip");
    private static Tag EMAIL_ADDRESS_TOOLTIP_ADDRESS_TEXT_TAG = Tag.create("email-address-tooltip-address-text");
    private static Tag EMAIL_ADDRESS_TOOLTIP_NAME_TEXT_TAG = Tag.create("email-address-tooltip-name-text");
    private static Tag EMAIL_ADDRESS_TOOLTIP_PHOTO_TAG = Tag.create("email-address-tooltip-photo");
-   private static final int TOOLTIP_DURATION_MS;
+   private static final int TOOLTIP_DURATION_MS = 15000;
 
    public AddressReferenceViewField(AddressReference address, String label, long justification, Object context) {
       super(1170935903116328960L);

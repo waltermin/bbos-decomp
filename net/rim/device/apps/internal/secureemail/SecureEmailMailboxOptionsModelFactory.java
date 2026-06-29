@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
 public class SecureEmailMailboxOptionsModelFactory extends RIMModelFactory {
    private static Vector _secureEmailEncodings = ApplicationRegistry.getApplicationRegistry().getVector(-6065380658396699831L);
-   private static final long SECURE_EMAIL_OPTIONS_FACTORIES;
+   private static final long SECURE_EMAIL_OPTIONS_FACTORIES = -6065380658396699831L;
 
    SecureEmailMailboxOptionsModelFactory() {
    }

@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.profiles.Profiles;
 
 public final class PagingSupport {
    private static boolean _pagingInitialized;
-   private static final long PAGING_ENABLED_GUID;
+   private static final long PAGING_ENABLED_GUID = 3974083155728078924L;
 
    private PagingSupport() {
    }

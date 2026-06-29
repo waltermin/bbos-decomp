@@ -11,7 +11,7 @@ public final class TLSBlockUnformatterEngine implements BlockUnformatterEngine {
    private int _outputBlockLength;
    private byte[] _decryptedDataBuffer;
    private boolean _paddingVerification;
-   public static final int SLIDING_WINDOW_SIZE;
+   public static final int SLIDING_WINDOW_SIZE = 256;
 
    public final int decryptAndUnformat(DataBuffer inBuffer, DataBuffer outBuffer) {
       byte[] tempOutBuf = new byte[256];

@@ -62,7 +62,7 @@ final class EmailTransmissionServiceListener
    EmailEventLoggerEvents,
    NotificationsEngineListener {
    private static EmailTransmissionServiceListener _instance;
-   private static final long EMAIL_TRANSMISSION_SERVICE_LISTENER;
+   private static final long EMAIL_TRANSMISSION_SERVICE_LISTENER = -7341137093681909706L;
    private static EmailMessageModel _displayedMessage;
 
    @Override

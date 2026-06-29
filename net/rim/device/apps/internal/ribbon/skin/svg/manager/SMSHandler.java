@@ -5,8 +5,8 @@ import net.rim.device.apps.internal.ribbon.skin.svg.NewMessageFilter;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 
 class SMSHandler extends EmailHandler implements Runnable {
-   private static final String ACTIVATE_SMS;
-   private static final String ACTIVATE_SMS_MMS;
+   private static final String ACTIVATE_SMS = "ActivateSMS";
+   private static final String ACTIVATE_SMS_MMS = "ActivateSMSMMS";
 
    public SMSHandler(ModelInteractorImpl mi, UiApplication app, NewMessageFilter msgCollection) {
       super(mi, app, msgCollection);

@@ -10,7 +10,7 @@ public final class EndCallHintField extends LabelField {
    private static final boolean _largeMonoScreen;
    private static final boolean _monoScreen;
    private static final boolean _hasSendEndKeys;
-   private static final int COLOUR_FONT_SIZE;
+   private static final int COLOUR_FONT_SIZE = 16;
    private static Font _defaultFont;
 
    public EndCallHintField() {

@@ -22,9 +22,9 @@ public final class FontCache {
    private String[] _mappingCacheValue;
    private String _defaultScalableFont;
    private static FontCache _instance;
-   private static final int FONT_STYLES_MASK;
+   private static final int FONT_STYLES_MASK = 111;
    private static String DEFAULT_SCALABLE_TURE_TYPE_FONT = "BBAlpha Sans";
-   private static final int MAPPING_CACHE_SIZE;
+   private static final int MAPPING_CACHE_SIZE = 5;
    private static boolean _trueTypeCheckDone = false;
    private static boolean _trueTypeFontAvailable = false;
    private static String ARIAL = "arial";

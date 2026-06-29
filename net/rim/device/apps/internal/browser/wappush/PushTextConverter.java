@@ -12,9 +12,9 @@ import net.rim.device.internal.browser.markup.MarkupInputStream;
 
 final class PushTextConverter extends BaseConverter {
    private int _type;
-   public static final int TYPE_SI;
-   public static final int TYPE_SL;
-   public static final int TYPE_CO;
+   public static final int TYPE_SI = 0;
+   public static final int TYPE_SL = 1;
+   public static final int TYPE_CO = 2;
    private static final String[] SL_T_NAMES = new String[]{"sl"};
    private static final int[] SL_T_INDICIES = new int[]{
       0,

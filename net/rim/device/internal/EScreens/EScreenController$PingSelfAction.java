@@ -19,12 +19,12 @@ final class EScreenController$PingSelfAction implements ICMPPacketListener, Runn
    private Application _app;
    private int _responseTimeout;
    private int _apnId;
-   private static final int SEND_TIMEOUT;
-   private static final int BASE_PAYLOAD_SIZE;
-   private static final int STATE_IDLE;
-   private static final int STATE_INIT;
-   private static final int STATE_SEND_WAIT;
-   private static final int STATE_RESPONSE_WAIT;
+   private static final int SEND_TIMEOUT = 5000;
+   private static final int BASE_PAYLOAD_SIZE = 2;
+   private static final int STATE_IDLE = 0;
+   private static final int STATE_INIT = 1;
+   private static final int STATE_SEND_WAIT = 2;
+   private static final int STATE_RESPONSE_WAIT = 3;
 
    public EScreenController$PingSelfAction(Application app) {
       this._app = app;

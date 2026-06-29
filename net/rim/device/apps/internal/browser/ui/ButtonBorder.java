@@ -8,9 +8,9 @@ public final class ButtonBorder extends Border {
    private int _state;
    private int _backgroundColor;
    private Border _parentBorder;
-   public static final int STATE_NORMAL;
-   public static final int STATE_FOCUS;
-   public static final int STATE_ACTIVE;
+   public static final int STATE_NORMAL = 0;
+   public static final int STATE_FOCUS = 1;
+   public static final int STATE_ACTIVE = 2;
 
    public ButtonBorder(int state, int backgroundColor, Border parentBorder) {
       super(

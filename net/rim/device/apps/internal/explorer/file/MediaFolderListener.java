@@ -24,12 +24,12 @@ public final class MediaFolderListener implements FilteredFolderListener {
    private int _rootView;
    private Object _context;
    private FileIndexService _indexService;
-   private static final String SAMPLES_ROOT_FOLDER;
-   private static final String PICTURES_SAMPLE_FOLDER;
-   private static final String CONTACTS_SAMPLE_FOLDER;
-   private static final String RINGTONES_SAMPLE_FOLDER;
-   private static final String MUSIC_SAMPLES_FOLDER;
-   private static final String VIDEO_SAMPLE_FOLDER;
+   private static final String SAMPLES_ROOT_FOLDER = "/store/samples/";
+   private static final String PICTURES_SAMPLE_FOLDER = "/store/samples/pictures/";
+   private static final String CONTACTS_SAMPLE_FOLDER = "/store/samples/contacts/";
+   private static final String RINGTONES_SAMPLE_FOLDER = "/store/samples/ringtones/";
+   private static final String MUSIC_SAMPLES_FOLDER = "/store/samples/music/";
+   private static final String VIDEO_SAMPLE_FOLDER = "/store/samples/videos/";
 
    public final synchronized void setManager(ExploreManager manager) {
       this._managerRef = (WeakReference)(new Object(manager));

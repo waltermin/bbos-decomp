@@ -12,7 +12,7 @@ import net.rim.device.api.util.IntHashtable;
 final class StackTracePermissions {
    private IntHashtable _delegate;
    private PersistentObject _persistentDelegate = RIMPersistentStore.getPersistentObject(2849651058031202388L);
-   private static final long STACK_HASHES_KEY;
+   private static final long STACK_HASHES_KEY = 2849651058031202388L;
 
    StackTracePermissions() {
       synchronized (this._persistentDelegate) {

@@ -23,7 +23,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
    private CalendarService _calendarService;
    private CalendarServiceManager _calendarServiceManager;
    private static String SYNC_NAME = "Calendar";
-   private static final int SYNC_VER;
+   private static final int SYNC_VER = 5;
    private static CalendarSyncManager _calendarSyncManager = CalendarSyncManager.getInstance();
    static TimeZone _deviceTimeZone;
 

@@ -16,7 +16,7 @@ import net.rim.device.apps.internal.browser.page.PageModel;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class BrowserFolders {
-   private static final long UPPER_BITS;
+   private static final long UPPER_BITS = -5045751545258311680L;
    public static final long RIM_BROWSER_BOOKMARKS_HIERARCHY_ID = makeLUID(1039255463);
    public static final long RIM_BROWSER_MESSAGES_HIERARCHY_ID = makeLUID(-1772343459);
    public static final long RIM_BROWSER_CHANNELS_HIERARCHY_ID = makeLUID(340675538);

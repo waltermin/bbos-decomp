@@ -33,7 +33,7 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
    private RichTextField _textMessage;
    private ButtonField _hideButton;
    private ButtonField _cancelButton;
-   private static final int STATE_NONE;
+   private static final int STATE_NONE = -1;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
 
    public void setTitle(String title) {

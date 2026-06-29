@@ -12,9 +12,9 @@ public class SimpleDateFormat extends DateFormat {
    private int _localeCode;
    private boolean _localeFixed;
    private int _style;
-   private static final int TEXT_FIELD;
-   private static final int CHAR_FIELD;
-   private static final int NI_FIELD;
+   private static final int TEXT_FIELD = 65535;
+   private static final int CHAR_FIELD = 65534;
+   private static final int NI_FIELD = 65533;
 
    private SimpleDateFormat(Locale locale, boolean localeFixed) {
       if (locale == null) {

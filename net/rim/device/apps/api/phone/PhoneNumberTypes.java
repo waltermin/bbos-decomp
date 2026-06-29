@@ -1,20 +1,20 @@
 package net.rim.device.apps.api.phone;
 
 public class PhoneNumberTypes {
-   public static final int DEFAULT_NUMBER_TYPE;
-   public static final int WORK_NUMBER_TYPE;
-   public static final int WORK2_NUMBER_TYPE;
-   public static final int HOME_NUMBER_TYPE;
-   public static final int HOME2_NUMBER_TYPE;
-   public static final int MOBILE_NUMBER_TYPE;
-   public static final int PAGER_NUMBER_TYPE;
-   public static final int FAX_NUMBER_TYPE;
-   public static final int OTHER_NUMBER_TYPE;
-   public static final int DC_PRIVATE_TYPE;
-   public static final int DC_GROUP_TYPE;
-   public static final int DC_UFMI_TYPE;
-   public static final int IMODE_NUMBER_TYPE;
-   public static final int ALPHANUMERIC_NUMBER_TYPE;
+   public static final int DEFAULT_NUMBER_TYPE = 0;
+   public static final int WORK_NUMBER_TYPE = 1;
+   public static final int WORK2_NUMBER_TYPE = 2;
+   public static final int HOME_NUMBER_TYPE = 3;
+   public static final int HOME2_NUMBER_TYPE = 4;
+   public static final int MOBILE_NUMBER_TYPE = 5;
+   public static final int PAGER_NUMBER_TYPE = 6;
+   public static final int FAX_NUMBER_TYPE = 7;
+   public static final int OTHER_NUMBER_TYPE = 8;
+   public static final int DC_PRIVATE_TYPE = 9;
+   public static final int DC_GROUP_TYPE = 10;
+   public static final int DC_UFMI_TYPE = 11;
+   public static final int IMODE_NUMBER_TYPE = 12;
+   public static final int ALPHANUMERIC_NUMBER_TYPE = 13;
    private static final int[] BACKUP_RESTORE_TYPES = new int[]{
       0,
       1,
@@ -73,11 +73,11 @@ public class PhoneNumberTypes {
       -1153416596,
       1957496320
    };
-   public static final char DTMF_PAUSE;
-   public static final char DTMF_STOP;
-   public static final char PHONE_NUMBER_EXT;
-   public static final char DTMF_HASH;
-   public static final char DTMF_STAR;
+   public static final char DTMF_PAUSE = ',';
+   public static final char DTMF_STOP = '!';
+   public static final char PHONE_NUMBER_EXT = 'x';
+   public static final char DTMF_HASH = '#';
+   public static final char DTMF_STAR = '*';
 
    public static final int mapType(int type, boolean toBackupRestoreType) {
       if (type >= 0 && type < BACKUP_RESTORE_TYPES.length) {

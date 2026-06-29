@@ -10,8 +10,8 @@ import net.rim.vm.Array;
 public class LongTermHistory implements Persistable {
    private LongTermHistoryNode[] _nodes;
    private int _numberOfElements;
-   private static final long LONG_TERM_HISTORY_KEY;
-   private static final int MAX_SIZE;
+   private static final long LONG_TERM_HISTORY_KEY = -528033205888586755L;
+   private static final int MAX_SIZE = 500;
    private static int GROW_ZISE = 10;
    private static PersistentObject _persist;
 

@@ -9,8 +9,8 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.util.StringUtilities;
 
 public class MediaOptionsUtilities {
-   private static final long GUID;
-   private static final int SIM_CARD_NOT_PRESENT_IMSI_VALUE;
+   private static final long GUID = 8285784959406531370L;
+   private static final int SIM_CARD_NOT_PRESENT_IMSI_VALUE = -1;
 
    public static MediaOptionsUtilities getInstance() {
       MediaOptionsUtilities instance = (MediaOptionsUtilities)ApplicationRegistry.getApplicationRegistry().get(8285784959406531370L);

@@ -34,9 +34,9 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
    private FontFamily[] _fontFamilies = new Object[0];
    private DocViewOptions _docViewOptions = DocViewOptions.getOptions();
    private byte _optionsType = -1;
-   private static final byte STYLE_UPDATED;
-   private static final byte SIZE_UPDATED;
-   private static final byte FAMILY_UPDATED;
+   private static final byte STYLE_UPDATED = 0;
+   private static final byte SIZE_UPDATED = 1;
+   private static final byte FAMILY_UPDATED = 2;
    private static ResourceBundleFamily _optionsResources = ResourceBundle.getBundle(5215163841290712012L, "net.rim.device.apps.internal.resource.Options");
    private static ResourceBundle _resources = ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView");
    private static final int[] FONT_SIZES;

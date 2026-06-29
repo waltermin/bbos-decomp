@@ -9,15 +9,15 @@ final class PGPDashEscapedInputStream extends InputStream {
    private byte[] _buffer;
    private int _bufferLength;
    private int _bufferOffset;
-   private static final int STATE_LINE_START;
-   private static final int STATE_LINE_MIDDLE;
-   private static final int STATE_CR_READ;
-   private static final int STATE_DASH_READ;
-   private static final byte CR;
-   private static final byte LF;
-   private static final byte DASH;
-   private static final byte SPACE;
-   private static final int READ_LENGTH;
+   private static final int STATE_LINE_START = 0;
+   private static final int STATE_LINE_MIDDLE = 1;
+   private static final int STATE_CR_READ = 2;
+   private static final int STATE_DASH_READ = 3;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
+   private static final byte DASH = 45;
+   private static final byte SPACE = 32;
+   private static final int READ_LENGTH = 128;
 
    public PGPDashEscapedInputStream(InputStream input) {
       if (input == null) {

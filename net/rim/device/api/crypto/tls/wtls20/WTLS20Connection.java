@@ -14,10 +14,10 @@ public class WTLS20Connection implements DatagramConnection {
    private DataBuffer _out;
    private DataBuffer _in;
    private boolean _isClosed;
-   public static final int USE_CLIENT_ID_INFO;
-   public static final int DELETE_SESSIONS_ON_ALERTS;
-   public static final int WAP_20_CONFORMANCE;
-   public static final int TIMEOUT;
+   public static final int USE_CLIENT_ID_INFO = 1;
+   public static final int DELETE_SESSIONS_ON_ALERTS = 2;
+   public static final int WAP_20_CONFORMANCE = 4;
+   public static final int TIMEOUT = 5000;
 
    @Override
    public void close() {

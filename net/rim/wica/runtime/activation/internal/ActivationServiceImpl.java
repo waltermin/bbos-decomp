@@ -46,13 +46,13 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
    private ManagementService _managementService;
    private int _activationProgressStage = -1;
    private String _activationProgressString;
-   static final int ACTIVATION_MAX_STAGE;
-   static final int STATE_DEACTIVATED;
-   static final int STATE_ACTIVATED;
-   static final int STATE_ACTIVATING;
-   static final int STATE_FAILED;
-   static final int STATE_DISABLED;
-   private static final String IPPP_SERVICE_CID;
+   static final int ACTIVATION_MAX_STAGE = 6;
+   static final int STATE_DEACTIVATED = 0;
+   static final int STATE_ACTIVATED = 1;
+   static final int STATE_ACTIVATING = 2;
+   static final int STATE_FAILED = 4;
+   static final int STATE_DISABLED = 8;
+   private static final String IPPP_SERVICE_CID = "IPPP";
    private static final int[] EVENTS = new int[]{
       100,
       108,
@@ -75,12 +75,12 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
       -1637413882,
       -62004469
    };
-   private static final String EMAIL_URL_TOKEN;
-   private static final String EMAIL_TRANSPORT_UID_TOKEN;
-   private static final char EMAIL_SEPARATOR;
-   private static final String ENTRYPOINT_ID;
-   private static final String ENTRYPOINT_ICON_RESOURCE;
-   private static final int ENTRYPOINT_POSITION;
+   private static final String EMAIL_URL_TOKEN = "RegistrationURL";
+   private static final String EMAIL_TRANSPORT_UID_TOKEN = "IPPPUID";
+   private static final char EMAIL_SEPARATOR = '=';
+   private static final String ENTRYPOINT_ID = "net.rim.mds.runtime.activation";
+   private static final String ENTRYPOINT_ICON_RESOURCE = "activation_icon.png";
+   private static final int ENTRYPOINT_POSITION = 60;
    static Class class$net$rim$wica$runtime$management$ManagementService;
    static Class class$net$rim$wica$runtime$event$EventService;
 

@@ -11,9 +11,9 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class DocViewOptions extends OptionsBase {
    private DocViewOptions$PersistedDocViewOptions _persistedDocViewOptions;
-   private static final long DOCVIEW_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_DOCVIEW_OPTIONS;
-   public static final long NEW_OPTIONS_SYNCED;
+   private static final long DOCVIEW_OPTIONS_SYNC_ITEM = -3398605801590679464L;
+   private static final long PERSISTED_DOCVIEW_OPTIONS = 4949335666682152184L;
+   public static final long NEW_OPTIONS_SYNCED = -2473353045158446860L;
    public static final int[] CACHE_SIZES = new int[]{
       1024000, 2048000, 3072000, 4096000, 5120000, -804650999, 6, 7, 8, 9, 10, 11, 12, 13, 14, -804651000, 7, 8, 9, 10
    };

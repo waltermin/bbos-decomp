@@ -29,8 +29,8 @@ public final class DeviceSelfTest extends UiApplication {
    final String[] taskSuiteRF = new String[]{"TestRFAntenna"};
    final String[] taskSuiteGPS = new String[]{"TestGPS"};
    private static DeviceSelfTest instance = null;
-   private static final String INITIALIZE_ARGUMENT;
-   static final String packageName;
+   private static final String INITIALIZE_ARGUMENT = "init";
+   static final String packageName = "net.rim.device.apps.internal.deviceselftest";
 
    public final void loadReports() {
       this.reports = (ReportDepot)this.persistReport.getContents();

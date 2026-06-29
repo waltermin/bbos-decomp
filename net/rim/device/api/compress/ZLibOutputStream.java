@@ -9,11 +9,11 @@ public class ZLibOutputStream extends OutputStream {
    private Deflater _deflater;
    private byte[] _buffer;
    private int _bufferOffset;
-   public static final int MIN_LOG2_WINDOW_LENGTH;
-   public static final int MAX_LOG2_WINDOW_LENGTH;
-   public static final int COMPRESSION_NONE;
-   public static final int COMPRESSION_BEST;
-   private static final int BUFFER_LENGTH;
+   public static final int MIN_LOG2_WINDOW_LENGTH = 8;
+   public static final int MAX_LOG2_WINDOW_LENGTH = 15;
+   public static final int COMPRESSION_NONE = 0;
+   public static final int COMPRESSION_BEST = 9;
+   private static final int BUFFER_LENGTH = 1024;
 
    public ZLibOutputStream(OutputStream outputStream) {
       this(outputStream, false);

@@ -44,7 +44,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    protected long _bestCertificateChainProperties;
    private boolean _allowFetchStatus;
    protected Hashtable _alreadyViewedCertificates;
-   private static final int MAX_NUM_WARNINGS;
+   private static final int MAX_NUM_WARNINGS = 2;
 
    protected String[] getWarnings(long propertiesSummary) {
       String[] warnings = new Object[0];

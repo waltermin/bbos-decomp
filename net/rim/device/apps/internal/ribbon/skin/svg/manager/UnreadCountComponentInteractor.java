@@ -12,7 +12,7 @@ class UnreadCountComponentInteractor extends SimpleRibbonComponentContentInterac
    private String[] _displayOptions;
    private boolean _forceNew;
    private boolean _roundBrackets;
-   static final String UNREAD_COUNT_FACTORY;
+   static final String UNREAD_COUNT_FACTORY = "UnreadCount";
    private static ResourceBundleFamily _rbf = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
 
    UnreadCountComponentInteractor(TextNode node, Hashtable params) {

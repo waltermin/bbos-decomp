@@ -23,10 +23,10 @@ public class MediaObject extends TimingObject implements PlayerListener {
    private boolean _realizedSuccessfully;
    private long _playerTime;
    private long _startTime;
-   public static final int TYPE_UNKNOWN;
-   public static final int TYPE_AUDIO;
-   public static final int TYPE_ANIMATED_BITMAP;
-   public static final int TYPE_VIDEO;
+   public static final int TYPE_UNKNOWN = 0;
+   public static final int TYPE_AUDIO = 1;
+   public static final int TYPE_ANIMATED_BITMAP = 2;
+   public static final int TYPE_VIDEO = 3;
 
    public MediaObject(int id, TimeContainer parent) {
       super(id, parent);

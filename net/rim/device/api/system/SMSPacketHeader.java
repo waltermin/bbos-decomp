@@ -21,19 +21,19 @@ public final class SMSPacketHeader extends SMSParameters implements RadioPacketH
    private long _timestamp;
    private boolean _fromSIM;
    private boolean _replyPath;
-   public static final int WAITING_INDICATOR_TYPE_VOICEMAIL;
-   public static final int WAITING_INDICATOR_TYPE_FAX;
-   public static final int WAITING_INDICATOR_TYPE_EMAIL;
-   public static final int WAITING_INDICATOR_TYPE_OTHER;
+   public static final int WAITING_INDICATOR_TYPE_VOICEMAIL = 0;
+   public static final int WAITING_INDICATOR_TYPE_FAX = 1;
+   public static final int WAITING_INDICATOR_TYPE_EMAIL = 2;
+   public static final int WAITING_INDICATOR_TYPE_OTHER = 3;
    public static final String[] INDICATOR_TYPE_NAMES = new String[]{"smsvoicemail", "smsfax", "smsemail", "smsother"};
-   public static final int RECORD_STATUS_UNREAD;
-   public static final int RECORD_STATUS_MS_ORIGINATED;
-   public static final int RECORD_STATUS_REPORT_REQUESTED;
-   public static final int RECORD_STATUS_REPORT_RECEIVED;
-   public static final int SMS_ID_NOT_ON_SIM;
+   public static final int RECORD_STATUS_UNREAD = 2;
+   public static final int RECORD_STATUS_MS_ORIGINATED = 4;
+   public static final int RECORD_STATUS_REPORT_REQUESTED = 8;
+   public static final int RECORD_STATUS_REPORT_RECEIVED = 16;
+   public static final int SMS_ID_NOT_ON_SIM = 65535;
    private static int _maxPacketBits;
-   private static final int SEGMENT_HEADER_BYTES;
-   private static final int SEGMENT_HEADER_BITS;
+   private static final int SEGMENT_HEADER_BYTES = 6;
+   private static final int SEGMENT_HEADER_BITS = 48;
 
    public SMSPacketHeader() {
       this.reset();

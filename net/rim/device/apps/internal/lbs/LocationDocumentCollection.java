@@ -28,9 +28,9 @@ final class LocationDocumentCollection implements SyncCollection, SyncConverter,
    private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(3038715446844855584L);
    LocationSyncable[] _locations;
-   private static final long GUID;
+   private static final long GUID = -1967313653648119582L;
    private static LocationDocumentCollection _instance;
-   private static final long LOCATIONS_BY_NAME_GUID;
+   private static final long LOCATIONS_BY_NAME_GUID = 3038715446844855584L;
    private static LocationLabelComparator _locationComparator = new LocationLabelComparator();
    private static SingleLocationDocumentConverter _singleLocationDocumentConverter = SingleLocationDocumentConverter.getInstance();
    static int _index = 100;

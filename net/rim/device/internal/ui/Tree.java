@@ -13,12 +13,12 @@ public final class Tree {
    private short[] _previousSibling;
    private Object[] _cookie;
    private byte[] _info;
-   private static final int START_SIZE;
-   private static final int SUPERROOT;
-   private static final int INFO_EXPANDED;
-   private static final int INFO_VISIBLE;
-   private static final int INFO_OCCUPIED;
-   private static final int INFO_DEFAULT;
+   private static final int START_SIZE = 8;
+   private static final int SUPERROOT = 0;
+   private static final int INFO_EXPANDED = 1;
+   private static final int INFO_VISIBLE = 2;
+   private static final int INFO_OCCUPIED = 4;
+   private static final int INFO_DEFAULT = 6;
 
    public Tree() {
       this.init(true);

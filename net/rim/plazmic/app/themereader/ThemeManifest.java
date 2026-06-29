@@ -9,13 +9,13 @@ class ThemeManifest {
    private String _osVersion;
    private String _description;
    private String _hash;
-   public static final String STANDARD_FILENAME;
-   private static final String MANIFEST_VERSION_FIELDNAME;
-   private static final String CREATED_BY_FIELDNAME;
-   private static final String OS_VERSION_FIELDNAME;
-   private static final String DESCRIPTION_FIELDNAME_10;
-   private static final String DESCRIPTION_FIELDNAME_11;
-   private static final String HASH_FIELDNAME;
+   public static final String STANDARD_FILENAME = "theme_manifest.mf";
+   private static final String MANIFEST_VERSION_FIELDNAME = "Manifest-Version";
+   private static final String CREATED_BY_FIELDNAME = "Created-By";
+   private static final String OS_VERSION_FIELDNAME = "OS-Version";
+   private static final String DESCRIPTION_FIELDNAME_10 = "Theme-Description";
+   private static final String DESCRIPTION_FIELDNAME_11 = "Theme-XML";
+   private static final String HASH_FIELDNAME = "Theme-Hash";
 
    public ThemeManifest(InputStream is) {
       String description11 = null;

@@ -4,8 +4,8 @@ import java.util.Hashtable;
 
 public class ResourceContext {
    private Hashtable _table;
-   public static final String MEDIA;
-   public static final String HANDLE;
+   public static final String MEDIA = "Media";
+   public static final String HANDLE = "Handle";
 
    private ResourceContext() {
    }

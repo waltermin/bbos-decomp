@@ -60,12 +60,12 @@ class CalendarViewController
    private FontMetrics _fontMetrics = (FontMetrics)(new Object());
    private int _dismissRequests = 0;
    private int _dialogRequestCount = 0;
-   protected static final byte PASSED;
-   protected static final byte SELECTED;
-   protected static final byte CACHED;
-   protected static final byte NEXT_DAY;
-   protected static final byte PREV_DAY;
-   private static final long ORGANIZING_CALENDAR_DELAY;
+   protected static final byte PASSED = 0;
+   protected static final byte SELECTED = 1;
+   protected static final byte CACHED = 2;
+   protected static final byte NEXT_DAY = 3;
+   protected static final byte PREV_DAY = 4;
+   private static final long ORGANIZING_CALENDAR_DELAY = 200L;
 
    protected void setVerbManager(CalendarViewVerbManager verbManager) {
       this._verbManager = verbManager;

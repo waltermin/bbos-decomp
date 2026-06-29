@@ -17,14 +17,14 @@ public final class InputMethodEvent extends Event {
    private boolean _overrideCommittedTextAttributes;
    private ISupplementaryInputData _supplementaryInputData;
    private byte _caretShape;
-   public static final int INPUT_METHOD_FIRST;
-   public static final int INPUT_METHOD_TEXT_CHANGED;
-   public static final int CARET_POSITION_CHANGED_UNCOMMITTED;
-   public static final int CARET_POSITION_CHANGED_COMMITTED;
-   public static final int INPUT_METHOD_RESTART;
-   public static final int CARET_SHAPE_CHANGED;
-   public static final int CARET_POSITION_CHANGED;
-   public static final int INPUT_METHOD_LAST;
+   public static final int INPUT_METHOD_FIRST = 1100;
+   public static final int INPUT_METHOD_TEXT_CHANGED = 1100;
+   public static final int CARET_POSITION_CHANGED_UNCOMMITTED = 1101;
+   public static final int CARET_POSITION_CHANGED_COMMITTED = 1102;
+   public static final int INPUT_METHOD_RESTART = 1103;
+   public static final int CARET_SHAPE_CHANGED = 1104;
+   public static final int CARET_POSITION_CHANGED = 1101;
+   public static final int INPUT_METHOD_LAST = 1104;
 
    public InputMethodEvent(
       IComponent source,

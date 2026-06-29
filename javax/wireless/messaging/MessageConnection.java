@@ -3,9 +3,9 @@ package javax.wireless.messaging;
 import javax.microedition.io.Connection;
 
 public interface MessageConnection extends Connection {
-   String TEXT_MESSAGE;
-   String BINARY_MESSAGE;
-   String MULTIPART_MESSAGE;
+   String TEXT_MESSAGE = "text";
+   String BINARY_MESSAGE = "binary";
+   String MULTIPART_MESSAGE = "multipart";
 
    Message newMessage(String var1);
 

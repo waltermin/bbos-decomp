@@ -1,7 +1,7 @@
 package net.rim.device.api.util;
 
 public final class CRC32 {
-   public static final int INITIAL_VALUE;
+   public static final int INITIAL_VALUE = -1;
 
    private CRC32() {
    }

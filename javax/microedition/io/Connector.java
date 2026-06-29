@@ -8,9 +8,9 @@ import net.rim.device.internal.io.RIMConnector;
 import net.rim.vm.TraceBack;
 
 public class Connector {
-   public static final int READ;
-   public static final int WRITE;
-   public static final int READ_WRITE;
+   public static final int READ = 1;
+   public static final int WRITE = 2;
+   public static final int READ_WRITE = 3;
 
    private Connector() {
    }

@@ -22,9 +22,9 @@ public final class CameraMain extends UiApplication implements FileSystemListene
    private CameraOptions _options = CameraOptions.getOptions();
    private CameraScreen _screen;
    private Dialog _mediaDialog;
-   private static final long MEDIA_CARD_PRESENCE;
-   private static final int MEDIACARD_NOT_FOUND;
-   private static final int MEDIACARD_FOUND;
+   private static final long MEDIA_CARD_PRESENCE = -4855661188771997500L;
+   private static final int MEDIACARD_NOT_FOUND = 0;
+   private static final int MEDIACARD_FOUND = 1;
    private static int _mediaCardFlag = PersistentInteger.getId(-4855661188771997500L, 0);
    static ResourceBundle _rb = ResourceBundle.getBundle(7839140414916824787L, "net.rim.device.apps.internal.camera.Camera");
    private static CameraMain$CameraAliasFileEntry _cameraAppAlias = new CameraMain$CameraAliasFileEntry(

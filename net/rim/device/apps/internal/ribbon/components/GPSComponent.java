@@ -14,7 +14,7 @@ final class GPSComponent implements SimpleRibbonComponent, RibbonComponent$Ribbo
    private IconCollection _gpsIcons;
    private int _width;
    private int _height;
-   private static final int ICON_COUNT;
+   private static final int ICON_COUNT = 2;
 
    GPSComponent(GPSComponentFactory factory) {
       this._factory = factory;

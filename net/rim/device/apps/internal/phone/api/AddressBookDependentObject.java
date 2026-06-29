@@ -1,12 +1,12 @@
 package net.rim.device.apps.internal.phone.api;
 
 public interface AddressBookDependentObject {
-   int ADDRESS_BOOK_RESET;
-   int ADDRESS_BOOK_ADD;
-   int ADDRESS_BOOK_REMOVE;
-   int ADDRESS_BOOK_ELEMENT_UPDATE;
-   int INITIALIZATION;
-   int ADDRESS_BOOK_GENERIC_UPDATE;
+   int ADDRESS_BOOK_RESET = 0;
+   int ADDRESS_BOOK_ADD = 1;
+   int ADDRESS_BOOK_REMOVE = 2;
+   int ADDRESS_BOOK_ELEMENT_UPDATE = 3;
+   int INITIALIZATION = 4;
+   int ADDRESS_BOOK_GENERIC_UPDATE = 5;
 
    boolean isOutOfSyncWithAddressBook();
 

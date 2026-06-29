@@ -4,11 +4,11 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.system.InternalServices;
 
 public class TimeSync {
-   public static final long ID;
-   public static final int OFF;
-   protected static final int LEGACY_ENABLED;
-   public static final int BLACKBERRY;
-   public static final int NETWORK;
+   public static final long ID = 1339175110175922940L;
+   public static final int OFF = 0;
+   protected static final int LEGACY_ENABLED = 1;
+   public static final int BLACKBERRY = 2;
+   public static final int NETWORK = 3;
 
    public boolean isEnabled() {
       throw null;

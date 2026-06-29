@@ -57,19 +57,19 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
       .append(getFormFactor())
       .append("__")
       .toString();
-   private static final String FILE_EXTENSION;
-   private static final int WML_B;
-   private static final int WML_CARD;
-   private static final int WML_OPTION;
-   private static final int WML_P;
-   private static final int WML_SELECT;
-   private static final int WML_WML;
-   private static final int WML_NAME;
-   private static final int WML_ONPICK;
-   private static final int WML_TITLE;
-   private static final int WML_VALUE;
-   private static final int WML_ELEMENT_HAS_ATTRIBUTES;
-   private static final int WML_ELEMENT_HAS_CONTENT;
+   private static final String FILE_EXTENSION = ".wmlc";
+   private static final int WML_B = 36;
+   private static final int WML_CARD = 39;
+   private static final int WML_OPTION = 53;
+   private static final int WML_P = 32;
+   private static final int WML_SELECT = 55;
+   private static final int WML_WML = 63;
+   private static final int WML_NAME = 33;
+   private static final int WML_ONPICK = 36;
+   private static final int WML_TITLE = 54;
+   private static final int WML_VALUE = 77;
+   private static final int WML_ELEMENT_HAS_ATTRIBUTES = 128;
+   private static final int WML_ELEMENT_HAS_CONTENT = 64;
 
    protected void loadHelpTopic(String topic) {
       if (topic != null) {

@@ -21,24 +21,24 @@ public class CertificateStatusRequest {
    private String _errorMessage;
    private Vector _providerErrorMessages;
    private int _errorCode;
-   public static final int SUCCESSFUL;
-   public static final int CERTIFICATE_ALREADY_REVOKED;
-   public static final int NO_STATUS_PROVIDERS;
-   public static final int NO_SERVICE_BOOK_ENTRY;
-   public static final int RADIO_IS_OFF;
-   public static final int MALFORMED_RESPONSE;
-   public static final int PROVIDER_ENCODING_ERROR;
-   public static final int PROVIDER_DECODING_ERROR;
-   public static final int FATAL_INTERNAL_ERROR;
-   public static final int PROXY_CONNECTION_ERROR;
-   public static final int PROXY_IO_ERROR;
-   public static final int PROXY_VERSION_INCORRECT;
-   public static final int PROXY_MALFORMED_REQUEST;
-   public static final int PROXY_NO_PROVIDERS;
-   public static final int PROXY_PROVIDER_ERROR;
-   public static final int PROXY_INTERNAL_ERROR;
-   public static final int UPDATING_HANDHELD_STATUS_FAILED;
-   public static final int SERVICE_NOT_AVAILABLE;
+   public static final int SUCCESSFUL = 0;
+   public static final int CERTIFICATE_ALREADY_REVOKED = 1;
+   public static final int NO_STATUS_PROVIDERS = 2;
+   public static final int NO_SERVICE_BOOK_ENTRY = 3;
+   public static final int RADIO_IS_OFF = 4;
+   public static final int MALFORMED_RESPONSE = 5;
+   public static final int PROVIDER_ENCODING_ERROR = 6;
+   public static final int PROVIDER_DECODING_ERROR = 7;
+   public static final int FATAL_INTERNAL_ERROR = 8;
+   public static final int PROXY_CONNECTION_ERROR = 9;
+   public static final int PROXY_IO_ERROR = 10;
+   public static final int PROXY_VERSION_INCORRECT = 11;
+   public static final int PROXY_MALFORMED_REQUEST = 12;
+   public static final int PROXY_NO_PROVIDERS = 13;
+   public static final int PROXY_PROVIDER_ERROR = 14;
+   public static final int PROXY_INTERNAL_ERROR = 15;
+   public static final int UPDATING_HANDHELD_STATUS_FAILED = 16;
+   public static final int SERVICE_NOT_AVAILABLE = 17;
 
    public CertificateStatusRequest(Certificate[] certChain, boolean checkEntireChain, KeyStore keyStore, CertificateStatusManagerTicket ticket, Object cookie) {
       if (certChain != null && certChain.length >= 1) {

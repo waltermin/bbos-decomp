@@ -21,7 +21,7 @@ public final class Maplet implements Persistable, SyncObject {
    private int[] _matrix = new int[9];
    private int[] _translate = new int[9];
    private int[] _rotate = new int[9];
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
    private static int[] _mapletSize = new int[]{
       5000, 50000, 500000, 5000000, -805044094, 1196314761, 169478669, 218103808, 1380206665, 134217728, 134217728, 770, 1449244928, 24, 1414287372, 69
    };
@@ -29,12 +29,12 @@ public final class Maplet implements Persistable, SyncObject {
    private static final int[] DEPartSize = new int[]{
       4, 36, 4, 2, -805037244, 1041973275, 1196314761, 169478669, 218103808, 1380206665, 1006632960, 922746880, 1544, 691752960, 177, 1497919497
    };
-   private static final int VERSION;
-   private static final int FIELD_LAYER_COUNT;
-   private static final int FIELD_LAYER_HEADER;
-   private static final int FIELD_DENTRY_HEADER;
-   private static final int FIELD_DENTRY_DATA;
-   private static final boolean USE_VECMATH;
+   private static final int VERSION = 3;
+   private static final int FIELD_LAYER_COUNT = 1;
+   private static final int FIELD_LAYER_HEADER = 2;
+   private static final int FIELD_DENTRY_HEADER = 4;
+   private static final int FIELD_DENTRY_DATA = 5;
+   private static final boolean USE_VECMATH = true;
 
    public final int getMapletBLY() {
       if (this._layers != null) {

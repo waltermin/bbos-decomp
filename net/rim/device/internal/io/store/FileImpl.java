@@ -37,16 +37,16 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    private byte[] _content;
    private int _contentLength;
    private CodeSigningKey _codeSigningKey;
-   public static final int DRM_UNPROTECTED;
-   public static final int DRM_PROTECTED;
-   public static final int DRM_NO_COPY;
-   public static final int DRM_NO_MODIFY;
-   public static final byte HEADER_VERSION;
-   public static final int TYPE_BYTEARRAY;
-   public static final int TYPE_INT;
-   public static final int TYPE_LONG;
-   public static final int TYPE_STRING;
-   private static final int MAX_CONTIGUOUS_ARRAY_SIZE;
+   public static final int DRM_UNPROTECTED = 0;
+   public static final int DRM_PROTECTED = 1;
+   public static final int DRM_NO_COPY = 3;
+   public static final int DRM_NO_MODIFY = 5;
+   public static final byte HEADER_VERSION = 1;
+   public static final int TYPE_BYTEARRAY = 0;
+   public static final int TYPE_INT = 1;
+   public static final int TYPE_LONG = 2;
+   public static final int TYPE_STRING = 3;
+   private static final int MAX_CONTIGUOUS_ARRAY_SIZE = 4096;
    public static String ATTRIB_NAME = "name";
    public static String ATTRIB_FOLDER = "folder";
    public static String ATTRIB_ORIGINAL_URL = "x-rim-original-url";
@@ -59,8 +59,8 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    public static String ATTRIB_TIME_MODIFY = "last-modified";
    public static String ATTRIB_TIME_EXPIRY = "expires";
    private static boolean _onSync;
-   private static final int ARCHIVE_ATTR_ON;
-   private static final int ARCHIVE_ATTR_OFF;
+   private static final int ARCHIVE_ATTR_ON = 32;
+   private static final int ARCHIVE_ATTR_OFF = 2052;
 
    void commit() {
       ContentStoreDatabase.getInstance().commit(this, false);

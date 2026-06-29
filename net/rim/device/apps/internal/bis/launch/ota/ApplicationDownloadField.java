@@ -27,11 +27,11 @@ public final class ApplicationDownloadField extends PopupScreen implements Appli
    private Thread _downloadThread;
    private ApplicationDownloadManager _downloadManager;
    private int _downloadStatus;
-   public static final int DOWNLOAD_STATUS_FAILED;
-   public static final int DOWNLOAD_STATUS_SUCCESS;
-   public static final int DOWNLOAD_STATUS_CANCELLED;
-   public static final int DOWNLOAD_STATUS_NO_MEMORY;
-   private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR;
+   public static final int DOWNLOAD_STATUS_FAILED = 0;
+   public static final int DOWNLOAD_STATUS_SUCCESS = 1;
+   public static final int DOWNLOAD_STATUS_CANCELLED = 2;
+   public static final int DOWNLOAD_STATUS_NO_MEMORY = 3;
+   private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR = 131072;
 
    public ApplicationDownloadField(String[] codUrls, byte[][][] digests, int size) {
       super((Manager)(new Object()), 0);

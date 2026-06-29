@@ -74,14 +74,14 @@ final class TaskModelImpl
    int _uid = TaskCollectionImpl.getInstance().generateUniqueID();
    private static Recognizer _titleModelRecognizer = RecognizerRepository.getRecognizers(-4904857078378172834L);
    private static ContextObjectWR _taskSyncContextWR = (ContextObjectWR)(new Object(28, 19));
-   private static final int ICON_COUNT;
-   private static final int MAX_TASK_NOTES_LENGTH;
+   private static final int ICON_COUNT = 5;
+   private static final int MAX_TASK_NOTES_LENGTH = 4096;
    private static IconCollection STATUS_ICONS = IconCollection.get("net_rim_Task_Status", 5);
    public static IconCollection PRIORITY_ICONS = PriorityIcons.ICONS;
    protected static final IconCollection TASK_DETAIL_ICONS = CalendarIcons.CAL_STATUS_ICONS;
-   static final int START_MILLIS_DEFAULT;
-   static final int END_MILLIS_DEFAULT;
-   static final long TIMEZONE_KEY;
+   static final int START_MILLIS_DEFAULT = 28800000;
+   static final int END_MILLIS_DEFAULT = 61200000;
+   static final long TIMEZONE_KEY = -553074023984152200L;
    private static int[] _hints = new int[0];
    private static byte[] taskId = new byte[]{116};
 

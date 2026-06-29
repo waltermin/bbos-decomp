@@ -10,10 +10,10 @@ import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachment
 import net.rim.vm.Persistable;
 
 public class PKCS7CertificateAttachmentModel extends CertificateAttachmentModel implements Persistable {
-   public static final String PKCS7_CERTIFICATE_P7B;
-   public static final String PKCS7_CERTIFICATE_P7C;
-   public static final String STRING_BASE64;
-   public static final String CERTIFICATE_EXTENSION_CER;
+   public static final String PKCS7_CERTIFICATE_P7B = ".p7b";
+   public static final String PKCS7_CERTIFICATE_P7C = ".p7c";
+   public static final String STRING_BASE64 = "base64";
+   public static final String CERTIFICATE_EXTENSION_CER = ".cer";
 
    public PKCS7CertificateAttachmentModel(Object initialData) {
    }

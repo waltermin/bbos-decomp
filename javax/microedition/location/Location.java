@@ -9,17 +9,17 @@ public class Location {
    private long _timeStamp;
    private int _locationMethod;
    private int _satellites;
-   public static final int MTE_SATELLITE;
-   public static final int MTE_TIMEDIFFERENCE;
-   public static final int MTE_TIMEOFARRIVAL;
-   public static final int MTE_CELLID;
-   public static final int MTE_SHORTRANGE;
-   public static final int MTE_ANGLEOFARRIVAL;
-   public static final int MTY_TERMINALBASED;
-   public static final int MTY_NETWORKBASED;
-   public static final int MTA_ASSISTED;
-   public static final int MTA_UNASSISTED;
-   private static final String SAT_STRING;
+   public static final int MTE_SATELLITE = 1;
+   public static final int MTE_TIMEDIFFERENCE = 2;
+   public static final int MTE_TIMEOFARRIVAL = 4;
+   public static final int MTE_CELLID = 8;
+   public static final int MTE_SHORTRANGE = 16;
+   public static final int MTE_ANGLEOFARRIVAL = 32;
+   public static final int MTY_TERMINALBASED = 65536;
+   public static final int MTY_NETWORKBASED = 131072;
+   public static final int MTA_ASSISTED = 262144;
+   public static final int MTA_UNASSISTED = 524288;
+   private static final String SAT_STRING = "satellites";
 
    protected Location() {
    }

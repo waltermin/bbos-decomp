@@ -44,7 +44,7 @@ public final class OTACalendarApp implements RealtimeClockListener, LowMemoryLis
    private int _clockUpdatedCounter;
    private long _lastCheckTime;
    private boolean _purgingOldAppointments;
-   private static final int TRANSMISSION_MANAGER_UPDATE_FREQUENCY;
+   private static final int TRANSMISSION_MANAGER_UPDATE_FREQUENCY = 4;
    private static LongHashtable _transmissionServiceTable = (LongHashtable)(new Object(3));
    private static long[] _inclusions = new long[0];
 

@@ -22,15 +22,15 @@ final class SpinnerDialog extends Dialog implements Runnable, RadioStatusListene
    private int _myReturnValue = 0;
    private int TICK_IN_MILLIS = 500;
    private int RETRY_TIMEOUT = 4;
-   public static final int MODE_SCAN;
-   public static final int MODE_MANUAL_SELECT;
-   public static final int OK;
-   public static final int NONE;
-   public static final int TIMEOUT;
-   public static final int FAILED;
-   private static final int SELECT_RETRY_TIMEOUT;
-   private static final int INIT_MANUAL_SELECT_RETRY_COUNT;
-   private static final int INIT_SCAN_RETRY_COUNT;
+   public static final int MODE_SCAN = 1;
+   public static final int MODE_MANUAL_SELECT = 2;
+   public static final int OK = 1;
+   public static final int NONE = 0;
+   public static final int TIMEOUT = -1000;
+   public static final int FAILED = -1001;
+   private static final int SELECT_RETRY_TIMEOUT = 4;
+   private static final int INIT_MANUAL_SELECT_RETRY_COUNT = 5;
+   private static final int INIT_SCAN_RETRY_COUNT = 0;
 
    public SpinnerDialog(int mode, int netIndex, int netId) {
       super(getString(mode, false), null, null, -1, null);

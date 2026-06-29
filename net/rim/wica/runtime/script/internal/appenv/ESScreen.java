@@ -20,10 +20,10 @@ final class ESScreen extends RedirectedObject {
    private String _id;
    private ScreenModel _model;
    private WicaAppContext _context;
-   private static final String Menu;
-   private static final String MenuUpperCase;
-   private static final String DefaultAction;
-   private static final String CurrentFocus;
+   private static final String Menu = "menu";
+   private static final String MenuUpperCase = "MENU";
+   private static final String DefaultAction = "defaultAction";
+   private static final String CurrentFocus = "currentFocus";
 
    ESScreen(String id, ScreenModel model, WicaAppContext context) {
       super("MDSScreenElement", context.getScreenPrototype());

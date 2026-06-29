@@ -13,13 +13,13 @@ import net.rim.device.apps.internal.messaging.search.resources.SearchResources;
 
 public final class ShowSearchModel implements PersistableRIMModel, SearchCriterion, FieldProvider, ConversionProvider {
    public int _index;
-   public static final int SHOW_INVALID;
-   public static final int SHOW_SENT_RECEIVED;
-   public static final int SHOW_RECEIVED;
-   public static final int SHOW_SENT;
-   public static final int SHOW_SAVED;
-   public static final int SHOW_DRAFT;
-   public static final int SHOW_UNOPENED;
+   public static final int SHOW_INVALID = -1;
+   public static final int SHOW_SENT_RECEIVED = 0;
+   public static final int SHOW_RECEIVED = 1;
+   public static final int SHOW_SENT = 2;
+   public static final int SHOW_SAVED = 3;
+   public static final int SHOW_DRAFT = 4;
+   public static final int SHOW_UNOPENED = 5;
 
    public final void setIndex(int index) {
       switch (index) {

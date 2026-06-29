@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.phone;
 
 interface PhoneInputScreen {
-   long MIN_TIME_BEFORE_CONTINUATION_ACTION;
+   long MIN_TIME_BEFORE_CONTINUATION_ACTION = 500L;
 
    void onRollOffPhoneNumberInput();
 

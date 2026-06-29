@@ -1,7 +1,7 @@
 package net.rim.device.apps.api.browser;
 
 public interface Browser {
-   long APP_REGISTRY_KEY;
+   long APP_REGISTRY_KEY = 4307171400805038204L;
 
    boolean isBrowserAvailable();
 

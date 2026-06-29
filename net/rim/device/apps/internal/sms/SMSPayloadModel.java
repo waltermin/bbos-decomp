@@ -40,21 +40,21 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
    private int[] _TONAndNPI;
    private PersistableRIMModel _callbackAddress;
    public String _scAddress;
-   public static final int BYTE_FIELD_MESSAGE_CODING;
-   public static final int BYTE_FIELD_MESSAGE_CLASS;
-   public static final int BYTE_FIELD_PROTOCOL_MEANING;
-   public static final int BYTE_FIELD_PROTOCOL_ID;
-   public static final int BYTE_FIELD_UNUSED;
-   public static final int BYTE_FIELD_PRIVACY;
-   public static final int BYTE_FIELD_PRIORITY;
-   public static final int BYTE_FIELD_LANGUAGE;
-   public static final int BYTE_FIELD_ADDRESS_TON_NOW_OBSOLETE;
-   public static final int BYTE_FIELD_ADDRESS_NPI_NOW_OBSOLETE;
-   public static final int BYTE_FIELD_SC_ADDRESS_TON;
-   public static final int BYTE_FIELD_SC_ADDRESS_NPI;
-   public static final int NUM_BYTE_FIELDS;
-   public static final int MAXIMUM_NUMBER_OF_ADDRESSES;
-   public static final int DEFAULT_NPI;
+   public static final int BYTE_FIELD_MESSAGE_CODING = 0;
+   public static final int BYTE_FIELD_MESSAGE_CLASS = 1;
+   public static final int BYTE_FIELD_PROTOCOL_MEANING = 2;
+   public static final int BYTE_FIELD_PROTOCOL_ID = 3;
+   public static final int BYTE_FIELD_UNUSED = 4;
+   public static final int BYTE_FIELD_PRIVACY = 5;
+   public static final int BYTE_FIELD_PRIORITY = 6;
+   public static final int BYTE_FIELD_LANGUAGE = 7;
+   public static final int BYTE_FIELD_ADDRESS_TON_NOW_OBSOLETE = 8;
+   public static final int BYTE_FIELD_ADDRESS_NPI_NOW_OBSOLETE = 9;
+   public static final int BYTE_FIELD_SC_ADDRESS_TON = 10;
+   public static final int BYTE_FIELD_SC_ADDRESS_NPI = 11;
+   public static final int NUM_BYTE_FIELDS = 12;
+   public static final int MAXIMUM_NUMBER_OF_ADDRESSES = 10;
+   public static final int DEFAULT_NPI = 0;
 
    public int getTON(int index) {
       return index >= this._TONAndNPI.length ? 0 : this._TONAndNPI[index] >> 16 & 65535;

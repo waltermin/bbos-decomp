@@ -10,9 +10,9 @@ public class LineReader {
    protected byte[] _buffer;
    protected int _bufferOffset;
    protected int _bufferLength;
-   protected static final int BUFFER_LENGTH;
-   private static final byte CR;
-   private static final byte LF;
+   protected static final int BUFFER_LENGTH = 1024;
+   private static final byte CR = 13;
+   private static final byte LF = 10;
 
    public LineReader(InputStream stream) {
       if (stream == null) {

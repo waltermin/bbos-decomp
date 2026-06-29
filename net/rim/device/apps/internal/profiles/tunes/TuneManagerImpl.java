@@ -36,7 +36,7 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
    private AlertPlayer _brandingTune;
    private int _brandingTuneIndex = -1;
    private TuneManagerImpl$TuneManagerData _tuneManagerData;
-   private static final long GUID;
+   private static final long GUID = 8253404770240635913L;
    private static String[] AUTO_LOAD_PATHS = new String[]{"/store/home/user/ringtones/", "/SDCard/BlackBerry/ringtones/"};
    private static String STORE_RINGTONES_FOLDER = AUTO_LOAD_PATHS[0];
    private static String BUILTIN_RINGTONES_FOLDER = "/store/samples/ringtones/";

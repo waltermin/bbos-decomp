@@ -6,7 +6,7 @@ import net.rim.device.apps.api.search.criteria.TextSearchModel;
 import net.rim.device.apps.internal.messaging.search.MessageSearchableSubItem;
 
 class EncodingActionMessageSearchableSubItem implements MessageSearchableSubItem {
-   private static final long ID;
+   private static final long ID = 1998100331012273891L;
 
    @Override
    public long[] getSubItemIds(boolean advancedMode) {

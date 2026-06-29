@@ -5,7 +5,7 @@ import net.rim.vm.TraceBack;
 
 public final class RuntimeStore {
    private ApplicationRegistry _ar;
-   private static final long GUID;
+   private static final long GUID = -4040261540098774066L;
 
    private RuntimeStore(ApplicationRegistry ar) {
       this._ar = ar;

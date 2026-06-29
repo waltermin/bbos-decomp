@@ -9,11 +9,11 @@ final class InviteAcceptedDataBlob extends PeerDataBlob {
    private String _contactId;
    private String _key;
    private String _originalContactInfo;
-   private static final int COOKIE;
-   private static final int USERNAME;
-   private static final int CONTACT_ID;
-   private static final int KEY;
-   private static final int ORIGINAL_CONTACT_INFO;
+   private static final int COOKIE = 1;
+   private static final int USERNAME = 2;
+   private static final int CONTACT_ID = 3;
+   private static final int KEY = 4;
+   private static final int ORIGINAL_CONTACT_INFO = 6;
 
    public InviteAcceptedDataBlob() {
       this(null, null, null, null, null);

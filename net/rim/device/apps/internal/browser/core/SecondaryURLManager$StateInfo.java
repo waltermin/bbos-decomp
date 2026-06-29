@@ -4,9 +4,9 @@ class SecondaryURLManager$StateInfo {
    SecondaryURLNode[] _nodes;
    int _state;
    String _url;
-   static final int URL_NOT_REQUESTED;
-   static final int URL_REQUESTED;
-   static final int URL_WAITING;
+   static final int URL_NOT_REQUESTED = 0;
+   static final int URL_REQUESTED = 1;
+   static final int URL_WAITING = 2;
 
    public SecondaryURLManager$StateInfo(String url, int state) {
       this._url = url;

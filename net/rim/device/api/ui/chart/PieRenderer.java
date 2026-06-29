@@ -6,10 +6,10 @@ import net.rim.device.api.ui.XYPoint;
 public class PieRenderer extends ChartRenderer {
    private int _slicePadding;
    private int _valuesTotal;
-   public static final int PADDING_NONE;
-   public static final int PADDING_LOW;
-   public static final int PADDING_MEDIUM;
-   public static final int PADDING_HIGH;
+   public static final int PADDING_NONE = 0;
+   public static final int PADDING_LOW = 4;
+   public static final int PADDING_MEDIUM = 8;
+   public static final int PADDING_HIGH = 12;
 
    public PieRenderer(ChartField field) {
       super(field);

@@ -4,13 +4,13 @@ final class SetCapabilities {
    private byte posTechnology = 112;
    private PrefMethod prefMethod = new PrefMethod();
    private byte posProtocol = 2;
-   static final byte POS_TECH_SET_ASSISTED;
-   static final byte POS_TECH_SET_BASED;
-   static final byte POS_TECH_AUTONOMOUS;
-   static final byte POS_TECH_NUM_BITS;
-   static final byte POS_PROTOCOL_RRLP;
-   static final byte POS_PROTOCOL_RRC;
-   static final byte POS_PROTOCOL_NUM_BITS;
+   static final byte POS_TECH_SET_ASSISTED = 64;
+   static final byte POS_TECH_SET_BASED = 32;
+   static final byte POS_TECH_AUTONOMOUS = 16;
+   static final byte POS_TECH_NUM_BITS = 7;
+   static final byte POS_PROTOCOL_RRLP = 2;
+   static final byte POS_PROTOCOL_RRC = 1;
+   static final byte POS_PROTOCOL_NUM_BITS = 3;
 
    final void encode(Stuffer stuff) {
       stuff.putBit(false);

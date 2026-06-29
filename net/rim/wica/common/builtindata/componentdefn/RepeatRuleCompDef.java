@@ -1,20 +1,20 @@
 package net.rim.wica.common.builtindata.componentdefn;
 
 public class RepeatRuleCompDef extends BuiltinKeylessDataComponentDefinition {
-   public static final String REPEAT_RULE_COMP_NAME;
-   public static final int FREQUENCY_ID;
-   public static final String FREQUENCY;
-   public static final int FREQUENCY_TYPE;
-   public static final int INTERVAL_ID;
-   public static final String INTERVAL;
-   public static final int INTERVAL_TYPE;
-   public static final int END_ID;
-   public static final String END;
-   public static final int END_TYPE;
+   public static final String REPEAT_RULE_COMP_NAME = "RepeatRule";
+   public static final int FREQUENCY_ID = 0;
+   public static final String FREQUENCY = "frequency";
+   public static final int FREQUENCY_TYPE = 5;
+   public static final int INTERVAL_ID = 1;
+   public static final String INTERVAL = "interval";
+   public static final int INTERVAL_TYPE = 1;
+   public static final int END_ID = 2;
+   public static final String END = "end";
+   public static final int END_TYPE = 4;
    private static final int[] _fieldTypes = new int[]{5, 1, 4, -804651006, 5, 3, -804651005, 5, 6, 7, -804651007, 9};
    private static final String[] _fieldNames = new String[]{"frequency", "interval", "end"};
-   public static final int REPEAT_RULE_NUM_INT_FIELDS;
-   public static final int REPEAT_RULE_NUM_LONG_FIELDS;
+   public static final int REPEAT_RULE_NUM_INT_FIELDS = 2;
+   public static final int REPEAT_RULE_NUM_LONG_FIELDS = 1;
    private static RepeatRuleCompDef _instance;
 
    public static RepeatRuleCompDef getInstance() {

@@ -82,11 +82,11 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
    protected String _lookupLeftLabel;
    protected String _lookupRightLabel;
    protected boolean _debug = false;
-   public static final byte FAST_REGULAR_MODE;
-   public static final byte FAST_PREDICTIVE_MODE;
-   public static final byte FAST_AND_PREDICTIVE_MODE;
-   public static final byte EDIT_MODE;
-   public static final byte UNDEFINED_MODE;
+   public static final byte FAST_REGULAR_MODE = 0;
+   public static final byte FAST_PREDICTIVE_MODE = 1;
+   public static final byte FAST_AND_PREDICTIVE_MODE = 2;
+   public static final byte EDIT_MODE = 3;
+   public static final byte UNDEFINED_MODE = 127;
    protected static WeakReference lookup = (WeakReference)(new Object(null));
    public static long _tlTime;
    public static long _startTimer;

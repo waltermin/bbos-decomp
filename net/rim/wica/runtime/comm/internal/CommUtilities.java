@@ -6,8 +6,8 @@ import javax.microedition.io.HttpConnection;
 import net.rim.device.apps.api.utility.general.URI;
 
 final class CommUtilities {
-   public static final int MAX_REDIRECTS;
-   private static final String OPENWAVE_REDIRECT_PREFIX;
+   public static final int MAX_REDIRECTS = 10;
+   private static final String OPENWAVE_REDIRECT_PREFIX = "uplink:///goto?url=";
 
    private CommUtilities() {
    }

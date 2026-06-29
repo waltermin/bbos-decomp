@@ -40,10 +40,10 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
    private Verb[] _sendVerbs;
    private Verb _terminalVerb = null;
    private LEDEngine _led;
-   private static final int RESET_PROGRESS;
-   private static final int DISMISS_PROGRESS;
-   private static final long PROGRESS_UPDATE_INTERVAL;
-   private static final String MIME_TYPE;
+   private static final int RESET_PROGRESS = 0;
+   private static final int DISMISS_PROGRESS = -1;
+   private static final long PROGRESS_UPDATE_INTERVAL = 250L;
+   private static final String MIME_TYPE = "video/3gpp";
 
    final void cleanup() {
       this.setLedState(false);

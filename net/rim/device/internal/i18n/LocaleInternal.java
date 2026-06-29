@@ -6,10 +6,10 @@ import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.system.ApplicationDescriptor;
 
 public final class LocaleInternal {
-   public static final String LOCALE_SEPARATOR;
-   public static final char LOCALE_SEPARATOR_CHAR;
-   public static final String LOCALE_SEPARATOR_STRING;
-   public static final String CRB_EXTENSION;
+   public static final String LOCALE_SEPARATOR = "__";
+   public static final char LOCALE_SEPARATOR_CHAR = '£';
+   public static final String LOCALE_SEPARATOR_STRING = "£";
+   public static final String CRB_EXTENSION = ".crb";
    private static String RUNTIME_RESOURCES = "net_rim_resouce";
    private static ResourceBundleFamily _resourceFamily;
    private static ResourceBundle _resources;

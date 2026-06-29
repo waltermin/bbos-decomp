@@ -59,7 +59,7 @@ public class ClientProtocol
    private ServiceRecord _serviceRecord;
    private boolean _closeCalled;
    private boolean _newPersistentConnectionOpened;
-   private static final String PROXY_AUTHENTICATION_INFO;
+   private static final String PROXY_AUTHENTICATION_INFO = "Proxy-Authentication-Info";
 
    public ClientProtocol(
       String originalHost,

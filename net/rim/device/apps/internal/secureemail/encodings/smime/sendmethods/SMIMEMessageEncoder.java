@@ -41,9 +41,9 @@ import net.rim.device.apps.internal.secureemail.encodings.smime.SignedReceiptHel
 import net.rim.device.apps.internal.secureemail.sendmethods.SecureEmailMessageEncoder;
 
 public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
-   private static final int EMS_TO_RECIPIENT_NAMES_TAG;
-   private static final int EMS_CC_RECIPIENT_NAMES_TAG;
-   private static final int EMS_BCC_RECIPIENT_NAMES_TAG;
+   private static final int EMS_TO_RECIPIENT_NAMES_TAG = 0;
+   private static final int EMS_CC_RECIPIENT_NAMES_TAG = 1;
+   private static final int EMS_BCC_RECIPIENT_NAMES_TAG = 2;
 
    public SMIMEMessageEncoder(
       EmailMessageModel message,
@@ -374,13 +374,13 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       //
       // Bytecode:
       // 000: bipush 0
-      // 001: anewarray 906
+      // 001: anewarray 912
       // 004: astore 1
       // 005: bipush 0
-      // 006: anewarray 908
+      // 006: anewarray 914
       // 009: astore 2
       // 00a: bipush 0
-      // 00b: anewarray 910
+      // 00b: anewarray 916
       // 00e: astore 3
       // 00f: aload 0
       // 010: getfield net/rim/device/apps/internal/secureemail/sendmethods/SecureEmailMessageEncoder._message Lnet/rim/device/apps/internal/blackberryemail/email/EmailMessageModel;

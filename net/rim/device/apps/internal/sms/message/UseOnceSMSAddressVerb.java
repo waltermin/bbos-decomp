@@ -12,8 +12,8 @@ import net.rim.device.apps.internal.sms.resources.SMSResources;
 final class UseOnceSMSAddressVerb extends Verb {
    private Verb _composeVerb;
    private int _type;
-   static final int PHONE;
-   static final int EMAIL;
+   static final int PHONE = 0;
+   static final int EMAIL = 1;
 
    UseOnceSMSAddressVerb() {
       this(null, 0);

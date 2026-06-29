@@ -19,12 +19,12 @@ public class RecurCalc {
    private Recur$Modifier _sharedModifier = new Recur$Modifier();
    private BitSet _sharedDOWOfEvent = (BitSet)(new Object(7));
    private int[] _sharedDaysBetweenEvents = new int[7];
-   private static final int NUM_WEEKEND_MODIFIERS;
-   private static final int NUM_WEEKDAY_MODIFIERS;
-   private static final int NUM_DAY_MODIFIERS;
-   private static final int ANY_DAY;
-   private static final int ANY_WEEKDAY;
-   private static final int ANY_WEEKEND_DAY;
+   private static final int NUM_WEEKEND_MODIFIERS = 2;
+   private static final int NUM_WEEKDAY_MODIFIERS = 5;
+   private static final int NUM_DAY_MODIFIERS = 7;
+   private static final int ANY_DAY = 7;
+   private static final int ANY_WEEKDAY = 8;
+   private static final int ANY_WEEKEND_DAY = 9;
 
    public synchronized boolean getAnInstance(
       long target, boolean forward, Recur$Handle handle, long eventStartInstant, long eventInstanceDuration, Recur recur, TimeZone tz

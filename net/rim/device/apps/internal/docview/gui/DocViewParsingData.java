@@ -38,7 +38,7 @@ public final class DocViewParsingData implements ArznParseCallback {
    private boolean _pausable;
    private boolean _firstTimePausable;
    private boolean _trackChangesOn;
-   protected static final int CHUNKTEXTDATA;
+   protected static final int CHUNKTEXTDATA = 750;
    private static final int DEFAULTSIZE_CPTD = Ui.convertSize(8, 3, 4194307);
 
    final void parsedSpreadsheetChunk() {

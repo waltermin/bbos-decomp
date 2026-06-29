@@ -11,11 +11,11 @@ final class MIMEHeader {
    private Vector _parameters;
    private String _encoding;
    private Vector _extensions;
-   public static final String Version;
-   public static final String ContentTypeHeader;
-   public static final String ContentEncodingHeader;
-   public static final String ContentIDHeader;
-   public static final String ContentDescriptionHeader;
+   public static final String Version = "MIME-Version: 1.0";
+   public static final String ContentTypeHeader = "Content-Type";
+   public static final String ContentEncodingHeader = "Content-Transfer-Encoding";
+   public static final String ContentIDHeader = "Content-ID";
+   public static final String ContentDescriptionHeader = "Content-Description";
    public static final byte[] CRLF = new byte[]{13, 10};
 
    public MIMEHeader(String encoding) {

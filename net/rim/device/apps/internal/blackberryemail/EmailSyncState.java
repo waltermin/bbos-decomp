@@ -7,14 +7,14 @@ public class EmailSyncState implements SummaryParameterListener {
    private boolean _summaryParameterSet;
    private int _summaryServiceNameHash;
    private int _summaryServiceUIDHash;
-   public static final int MS_READ_FLAG;
-   public static final int MS_MOVED_FLAG;
-   public static final int MS_USE_FLAG;
-   public static final int MS_DELETE_FLAG;
-   public static final int MS_FOLDER_ATTR_LOCAL_FOLDER;
-   public static final int MS_FOLDER_ATTR_NO_MESSAGES;
-   private static final int SUMMARY_VERSION;
-   private static final int SUMMARY_PARAMETER_COMMAND;
+   public static final int MS_READ_FLAG = 1;
+   public static final int MS_MOVED_FLAG = 2;
+   public static final int MS_USE_FLAG = 4;
+   public static final int MS_DELETE_FLAG = 8;
+   public static final int MS_FOLDER_ATTR_LOCAL_FOLDER = 1;
+   public static final int MS_FOLDER_ATTR_NO_MESSAGES = 2;
+   private static final int SUMMARY_VERSION = 1;
+   private static final int SUMMARY_PARAMETER_COMMAND = 1;
 
    public boolean getUseFlag(ServiceRecordProvider srp) {
       return this._summaryParameterSet && (srp.getServiceUidHash() == this._summaryServiceUIDHash || srp.getServiceNameHash() == this._summaryServiceNameHash);

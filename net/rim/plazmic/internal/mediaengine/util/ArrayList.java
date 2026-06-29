@@ -4,8 +4,8 @@ public class ArrayList {
    private Array _array;
    private int _size;
    private int _increment;
-   public static final int DEFAULT_CAPACITY;
-   public static final int DEFAULT_CAPACITY_INCREMENT;
+   public static final int DEFAULT_CAPACITY = 10;
+   public static final int DEFAULT_CAPACITY_INCREMENT = 10;
 
    public ArrayList(Array array) {
       this(array, 10, 10);

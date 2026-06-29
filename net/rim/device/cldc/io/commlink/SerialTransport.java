@@ -40,7 +40,7 @@ class SerialTransport extends CommLinkTransport {
    protected byte[] _writeBuffer;
    protected int _writeBufferLen;
    protected int _writeBufferStart;
-   protected static final int BUFFER_SIZE;
+   protected static final int BUFFER_SIZE = 1024;
 
    protected SerialTransport(Transport transport, ProfileString profile) {
       this._security = Security.getInstance();

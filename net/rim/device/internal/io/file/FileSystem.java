@@ -41,13 +41,13 @@ public final class FileSystem {
    private OutputStream[][][] _openedRIMOutputStreams;
    private int[] _maxWriteSize;
    private int[] _maxReadSize;
-   public static final int FILESYSTEM_SDCARD;
-   public static final int FILESYSTEM_INTERNAL_FLASH;
-   public static final int FILE_STATUS_SUCCESS;
+   public static final int FILESYSTEM_SDCARD = 1;
+   public static final int FILESYSTEM_INTERNAL_FLASH = 3;
+   public static final int FILE_STATUS_SUCCESS = 0;
    public static String SDCARD_ROOT_STR = "SDCard/";
-   private static final int JOURNAL_SIZE;
-   private static final int MAX_THIRD_PARTY_HANDLES;
-   private static final long FILE_SYSTEM_REGISTRY;
+   private static final int JOURNAL_SIZE = 100;
+   private static final int MAX_THIRD_PARTY_HANDLES = 8;
+   private static final long FILE_SYSTEM_REGISTRY = -1463491272206122121L;
    private static FileSystem _fileSystem;
 
    private FileSystem() {

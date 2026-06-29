@@ -1,58 +1,58 @@
 package org.apache.oro.text.regexp;
 
 final class OpCode {
-   static final char _END;
-   static final char _BOL;
-   static final char _MBOL;
-   static final char _SBOL;
-   static final char _EOL;
-   static final char _MEOL;
-   static final char _SEOL;
-   static final char _ANY;
-   static final char _SANY;
-   static final char _ANYOF;
-   static final char _CURLY;
-   static final char _CURLYX;
-   static final char _BRANCH;
-   static final char _BACK;
-   static final char _EXACTLY;
-   static final char _NOTHING;
-   static final char _STAR;
-   static final char _PLUS;
-   static final char _ALNUM;
-   static final char _NALNUM;
-   static final char _BOUND;
-   static final char _NBOUND;
-   static final char _SPACE;
-   static final char _NSPACE;
-   static final char _DIGIT;
-   static final char _NDIGIT;
-   static final char _REF;
-   static final char _OPEN;
-   static final char _CLOSE;
-   static final char _MINMOD;
-   static final char _GBOL;
-   static final char _IFMATCH;
-   static final char _UNLESSM;
-   static final char _SUCCEED;
-   static final char _WHILEM;
-   static final char _ANYOFUN;
-   static final char _NANYOFUN;
-   static final char _RANGE;
-   static final char _ALPHA;
-   static final char _BLANK;
-   static final char _CNTRL;
-   static final char _GRAPH;
-   static final char _LOWER;
-   static final char _PRINT;
-   static final char _PUNCT;
-   static final char _UPPER;
-   static final char _XDIGIT;
-   static final char _OPCODE;
-   static final char _NOPCODE;
-   static final char _ONECHAR;
-   static final char _ALNUMC;
-   static final char _ASCII;
+   static final char _END = '\u0000';
+   static final char _BOL = '\u0001';
+   static final char _MBOL = '\u0002';
+   static final char _SBOL = '\u0003';
+   static final char _EOL = '\u0004';
+   static final char _MEOL = '\u0005';
+   static final char _SEOL = '\u0006';
+   static final char _ANY = '\u0007';
+   static final char _SANY = '\b';
+   static final char _ANYOF = '\t';
+   static final char _CURLY = '\n';
+   static final char _CURLYX = '\u000b';
+   static final char _BRANCH = '\f';
+   static final char _BACK = '\r';
+   static final char _EXACTLY = '\u000e';
+   static final char _NOTHING = '\u000f';
+   static final char _STAR = '\u0010';
+   static final char _PLUS = '\u0011';
+   static final char _ALNUM = '\u0012';
+   static final char _NALNUM = '\u0013';
+   static final char _BOUND = '\u0014';
+   static final char _NBOUND = '\u0015';
+   static final char _SPACE = '\u0016';
+   static final char _NSPACE = '\u0017';
+   static final char _DIGIT = '\u0018';
+   static final char _NDIGIT = '\u0019';
+   static final char _REF = '\u001a';
+   static final char _OPEN = '\u001b';
+   static final char _CLOSE = '\u001c';
+   static final char _MINMOD = '\u001d';
+   static final char _GBOL = '\u001e';
+   static final char _IFMATCH = '\u001f';
+   static final char _UNLESSM = ' ';
+   static final char _SUCCEED = '!';
+   static final char _WHILEM = '"';
+   static final char _ANYOFUN = '#';
+   static final char _NANYOFUN = '$';
+   static final char _RANGE = '%';
+   static final char _ALPHA = '&';
+   static final char _BLANK = '\'';
+   static final char _CNTRL = '(';
+   static final char _GRAPH = ')';
+   static final char _LOWER = '*';
+   static final char _PRINT = '+';
+   static final char _PUNCT = ',';
+   static final char _UPPER = '-';
+   static final char _XDIGIT = '.';
+   static final char _OPCODE = '/';
+   static final char _NOPCODE = '0';
+   static final char _ONECHAR = '1';
+   static final char _ALNUMC = '2';
+   static final char _ASCII = '3';
    static final int[] _operandLength = new int[]{
       0,
       0,
@@ -424,8 +424,8 @@ final class OpCode {
       '来',
       '씁'
    };
-   static final int _NULL_OFFSET;
-   static final char _NULL_POINTER;
+   static final int _NULL_OFFSET = -1;
+   static final char _NULL_POINTER = '\u0000';
 
    private OpCode() {
    }

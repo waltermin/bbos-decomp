@@ -1,7 +1,7 @@
 package net.rim.device.api.crypto.certificate;
 
 public interface KeyUsageResult {
-   int ALLOWED;
-   int NOT_ALLOWED;
-   int UNSPECIFIED;
+   int ALLOWED = 1;
+   int NOT_ALLOWED = 0;
+   int UNSPECIFIED = -1;
 }

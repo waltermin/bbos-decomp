@@ -9,10 +9,10 @@ final class CallHistoryField extends PhoneListFieldManager {
    private CallLogItem _callLogItem;
    private long[] _callHistoryItems;
    private CallSummaryInfo _summaryInfo;
-   static final int MIN_NUM_LINES;
-   private static final int ICON_SPACE;
-   private static final int NUMBER_TYPE_SPACE;
-   private static final int DATE_TIME_SPACE;
+   static final int MIN_NUM_LINES = 2;
+   private static final int ICON_SPACE = 2;
+   private static final int NUMBER_TYPE_SPACE = 2;
+   private static final int DATE_TIME_SPACE = 3;
 
    CallHistoryField(CallLogItem callLogItem, CallSummaryInfo summaryInfo, FocusChangeListener focusListener) {
       super(0, false);

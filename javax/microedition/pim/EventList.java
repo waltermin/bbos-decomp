@@ -3,9 +3,9 @@ package javax.microedition.pim;
 import java.util.Enumeration;
 
 public interface EventList extends PIMList {
-   int STARTING;
-   int ENDING;
-   int OCCURRING;
+   int STARTING = 0;
+   int ENDING = 1;
+   int OCCURRING = 2;
 
    Event createEvent();
 

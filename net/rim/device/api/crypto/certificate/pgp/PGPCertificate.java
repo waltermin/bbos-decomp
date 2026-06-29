@@ -35,10 +35,10 @@ import net.rim.vm.Memory;
 
 public final class PGPCertificate implements Certificate {
    private Content _content;
-   public static final int TRUSTED;
-   public static final int PARTIALLY_TRUSTED;
-   public static final int UNTRUSTED;
-   public static final int UNKNOWN;
+   public static final int TRUSTED = 0;
+   public static final int PARTIALLY_TRUSTED = 1;
+   public static final int UNTRUSTED = 2;
+   public static final int UNKNOWN = 3;
    public static String PGP_KEY = "pgpkey";
    public static String PGP_USER_ID = "pgpuserid";
    public static String PGP_CERT_ID = "pgpcertid";

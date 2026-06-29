@@ -8,14 +8,14 @@ import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.utility.serialization.Converter;
 
 public final class CMIMEConverterRegistry implements CMIMEConstants {
-   private static final long CONVERTERS;
-   private static final long CONVERTER_PRIORITIES;
-   private static final long CMIME_TEXT_PLAIN_CONVERTER_SINGLETON;
-   private static final long CMIME_UNKNOWN_CONVERTER_SINGLETON;
+   private static final long CONVERTERS = -8340287525872651265L;
+   private static final long CONVERTER_PRIORITIES = -1857441766889925113L;
+   private static final long CMIME_TEXT_PLAIN_CONVERTER_SINGLETON = -963689262970357577L;
+   private static final long CMIME_UNKNOWN_CONVERTER_SINGLETON = 5760752211972640782L;
    private static Vector _converters;
    private static IntVector _converterRanks;
-   public static final int MIN_RANK;
-   public static final int MAX_RANK;
+   public static final int MIN_RANK = 1;
+   public static final int MAX_RANK = 10;
 
    public static final synchronized void addConverter(Converter converter, int rank) {
       if (rank >= 1 && rank <= 10 && converter != null) {

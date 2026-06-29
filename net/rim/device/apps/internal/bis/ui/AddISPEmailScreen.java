@@ -21,10 +21,10 @@ public final class AddISPEmailScreen extends UserSettingsScreen {
    private BasicEditField _userNameEdit;
    private PasswordEditField _passwordEdit;
    private BasicEditField _emailServerEdit;
-   private static final String PARAM_EMAIL;
-   private static final String PARAM_SERVER;
-   private static final String PARAM_USERNAME;
-   private static final String PARAM_PASSWORD;
+   private static final String PARAM_EMAIL = "email";
+   private static final String PARAM_SERVER = "server";
+   private static final String PARAM_USERNAME = "userName";
+   private static final String PARAM_PASSWORD = "password";
 
    public AddISPEmailScreen() {
       super(31);

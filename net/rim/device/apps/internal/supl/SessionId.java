@@ -4,9 +4,9 @@ final class SessionId {
    SetSessionId setSessionId;
    SlpSessionId slpSessionId;
    byte optionals;
-   static final byte SUPL_MASK_SET_SESSION_ID;
-   static final byte SUPL_MASK_SLP_SESSION_ID;
-   static final byte SUPL_SESSION_ID_OPTIONALS_BIT_SIZE;
+   static final byte SUPL_MASK_SET_SESSION_ID = 2;
+   static final byte SUPL_MASK_SLP_SESSION_ID = 1;
+   static final byte SUPL_SESSION_ID_OPTIONALS_BIT_SIZE = 2;
 
    SessionId() {
    }

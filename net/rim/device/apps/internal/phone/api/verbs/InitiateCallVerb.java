@@ -9,9 +9,9 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class InitiateCallVerb extends Verb implements PhoneVerb {
-   private static final int DEFAULT_DESCRIPTION;
-   private static final int DEFAULT_ORDERING;
-   private static final long GUID;
+   private static final int DEFAULT_DESCRIPTION = 421;
+   private static final int DEFAULT_ORDERING = 1266768;
+   private static final long GUID = -7067766573164335547L;
    private static Verb _instance;
 
    private InitiateCallVerb() {

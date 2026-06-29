@@ -5,7 +5,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 public final class WaitForSessionReady extends Model {
    private String _sessionName;
    private int _timeout;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/dispatcher/message/WaitForSessionReady.java#1 $";
 
    public WaitForSessionReady(String sessionName, int timeout) {
       this._sessionName = sessionName;

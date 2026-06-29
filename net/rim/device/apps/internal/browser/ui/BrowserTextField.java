@@ -25,16 +25,16 @@ public class BrowserTextField extends ActiveRichTextField {
    private BrowserContentImpl _browserContent;
    protected TextFieldLink[] _links;
    private boolean _minimalMenuMode;
-   public static final int FONT_DEFAULT;
-   public static final int FONT_UNDERLINED;
-   public static final int FONT_BOLD;
-   public static final int FONT_BOLD_UNDERLINED;
-   public static final int FONT_ITALIC;
-   public static final int FONT_SMALL;
-   public static final int FONT_MEDIUM;
-   public static final int FONT_LARGE;
-   public static final int LINK_COLOR;
-   public static final int HIGHLIGHT_LINK_COLOR;
+   public static final int FONT_DEFAULT = 0;
+   public static final int FONT_UNDERLINED = 1;
+   public static final int FONT_BOLD = 2;
+   public static final int FONT_BOLD_UNDERLINED = 3;
+   public static final int FONT_ITALIC = 4;
+   public static final int FONT_SMALL = 0;
+   public static final int FONT_MEDIUM = 1;
+   public static final int FONT_LARGE = 2;
+   public static final int LINK_COLOR = 4856319;
+   public static final int HIGHLIGHT_LINK_COLOR = 16772045;
    private static ContextObject _browserContextObject = (ContextObject)(new Object(2, 96, 61));
 
    public BrowserTextField(

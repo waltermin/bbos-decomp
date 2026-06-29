@@ -7,10 +7,10 @@ import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.ControlledAccessException;
 
 public final class ApplicationControl {
-   public static final int LAPI_ALLOWED_FLAG;
-   public static final int LAPI_PROMPT_FLAG;
-   public static final int SCREEN_CAPTURE_ALLOWED_FLAG;
-   public static final int SCREEN_CAPTURE_PROMPT_FLAG;
+   public static final int LAPI_ALLOWED_FLAG = 17;
+   public static final int LAPI_PROMPT_FLAG = 18;
+   public static final int SCREEN_CAPTURE_ALLOWED_FLAG = 25;
+   public static final int SCREEN_CAPTURE_PROMPT_FLAG = 26;
 
    private ApplicationControl() {
    }

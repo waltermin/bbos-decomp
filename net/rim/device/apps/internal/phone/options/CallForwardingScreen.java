@@ -34,7 +34,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
    private boolean _forwardingNumbersOutOfDate;
    private CallForwardingScreen$SaveVerb _saveVerb = new CallForwardingScreen$SaveVerb(this);
    private static int[] _originalChoiceIndices = new int[4];
-   private static final int DO_NOT_FWD_INDEX;
+   private static final int DO_NOT_FWD_INDEX = 0;
 
    final Verb getSaveVerb() {
       return this._saveVerb;

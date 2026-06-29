@@ -34,8 +34,8 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    private KeyStoreTicket _keyStoreTicket;
    private LDAPBrowserOptionStore _optionStore;
    private ApplicationDescriptor _ribbonApplicationDescriptor;
-   private static final long LAST_SERVER;
-   private static final String CONTEXT;
+   private static final long LAST_SERVER = -684815099476831942L;
+   private static final String CONTEXT = "PGP";
 
    public PGPLDAPBrowserContext() {
       this._keyStore.addIndex((KeyStoreIndex)(new Object()));

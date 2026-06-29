@@ -30,14 +30,14 @@ public class AnimatedBitmapField extends BitmapField implements Animation {
    private boolean _visible;
    private long _timeToExecuteAt;
    WeakReference[] _listeners = new WeakReference[0];
-   private static final int GIF_DELAY_FACTOR;
-   private static final int MAX_FRAMES_PER_SECOND;
-   private static final int MIN_DELAY_PER_FRAME;
-   private static final int ANIMATION_STARTED;
-   private static final int ANIMATION_STOPPED;
-   private static final int ANIMATION_PAUSED;
-   private static final int ANIMATION_RESUMED;
-   private static final int MAX_MESSAGE_INDEX;
+   private static final int GIF_DELAY_FACTOR = 10;
+   private static final int MAX_FRAMES_PER_SECOND = 15;
+   private static final int MIN_DELAY_PER_FRAME = 66;
+   private static final int ANIMATION_STARTED = 0;
+   private static final int ANIMATION_STOPPED = 1;
+   private static final int ANIMATION_PAUSED = 2;
+   private static final int ANIMATION_RESUMED = 3;
+   private static final int MAX_MESSAGE_INDEX = 3;
 
    public AnimatedBitmapField() {
       this((Bitmap)null, 0);

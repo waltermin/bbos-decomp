@@ -4,8 +4,8 @@ import net.rim.device.apps.internal.browser.stack.FormData;
 
 public class PostData {
    FormData _formData;
-   public static final int ENCTYPE_URLENCODED;
-   public static final int ENCTYPE_MULTIPART_FORMDATA;
+   public static final int ENCTYPE_URLENCODED = 0;
+   public static final int ENCTYPE_MULTIPART_FORMDATA = 1;
 
    protected PostData() {
    }

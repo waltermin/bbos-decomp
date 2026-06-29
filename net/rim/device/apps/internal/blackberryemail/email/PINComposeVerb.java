@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.blackberryemail.email.api.EmailMessageUtilit
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public final class PINComposeVerb extends Verb {
-   public static final long GUID_SEND_AS_PIN;
+   public static final long GUID_SEND_AS_PIN = -1946364186576950217L;
 
    public static final PINComposeVerb getSendAsVerb() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

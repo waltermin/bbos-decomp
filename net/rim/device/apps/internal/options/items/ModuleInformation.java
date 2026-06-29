@@ -31,7 +31,7 @@ class ModuleInformation {
    protected MainScreen _mainScreen;
    private Font _defaultFont = Font.getDefault();
    private int _screenWidth = Display.getWidth();
-   protected static final int INDENT_SIZE;
+   protected static final int INDENT_SIZE = 10;
    private static ResourceBundle _prb = ResourceBundle.getBundle(8732645638888225014L, "net.rim.device.internal.resource.PlatformSecurity");
 
    public ModuleInformation(int moduleHandle) {

@@ -3,12 +3,12 @@ package net.rim.device.internal.i18n;
 import net.rim.device.api.i18n.Locale;
 
 public final class LocaleUtil {
-   private static final int ENGLISH_LOCALE_NUMBER;
-   private static final int FRENCH_LOCALE_NUMBER;
-   private static final int SPANISH_LOCALE_NUMBER;
-   private static final int GERMAN_LOCALE_NUMBER;
-   private static final int ITALIAN_LOCALE_NUMBER;
-   private static final int ALL_LOCALES;
+   private static final int ENGLISH_LOCALE_NUMBER = 0;
+   private static final int FRENCH_LOCALE_NUMBER = 1;
+   private static final int SPANISH_LOCALE_NUMBER = 2;
+   private static final int GERMAN_LOCALE_NUMBER = 3;
+   private static final int ITALIAN_LOCALE_NUMBER = 4;
+   private static final int ALL_LOCALES = -1;
 
    public static final int convertCppLocaleToJavaLocale(int code) {
       switch (code) {

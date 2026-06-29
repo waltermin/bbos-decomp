@@ -26,8 +26,8 @@ public class PrefixKeywordFilterList extends AbstractKeywordFilterList implement
    private boolean _firstWordBias;
    protected WeakReference _keywordsWR;
    private boolean _commitsSuspended;
-   private static final int GROW_SIZE;
-   protected static final int KEYWORDS_INITIAL_SIZE;
+   private static final int GROW_SIZE = 20;
+   protected static final int KEYWORDS_INITIAL_SIZE = 10;
 
    public int getPrefixCount() {
       return this._prefixList.getPrefixCount();

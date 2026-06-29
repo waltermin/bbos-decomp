@@ -1,12 +1,12 @@
 package net.rim.ecmascript.compiler;
 
 public class OpcodeBranches {
-   public static final int NO_BRANCH;
-   public static final int RETURN;
-   public static final int RET_FROM_JSR;
-   public static final int UNCONDITIONAL_BRANCH;
-   public static final int CONDITIONAL_BRANCH;
-   public static final int THROW;
+   public static final int NO_BRANCH = 0;
+   public static final int RETURN = 1;
+   public static final int RET_FROM_JSR = 2;
+   public static final int UNCONDITIONAL_BRANCH = 3;
+   public static final int CONDITIONAL_BRANCH = 4;
+   public static final int THROW = 5;
    private static final byte[] _table = new byte[]{
       0,
       0,

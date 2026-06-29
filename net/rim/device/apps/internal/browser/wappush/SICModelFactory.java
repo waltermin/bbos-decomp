@@ -13,24 +13,24 @@ import net.rim.device.apps.internal.browser.stack.HeaderParser;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 
 final class SICModelFactory {
-   public static final int ACTION_SIGNAL_NONE;
-   public static final int ACTION_SIGNAL_LOW;
-   public static final int ACTION_SIGNAL_MEDIUM;
-   public static final int ACTION_SIGNAL_HIGH;
-   public static final int ACTION_SIGNAL_DELETE;
-   public static final int CREATED;
-   public static final int HREF;
-   public static final int HREF_HTTP;
-   public static final int HREF_HTTP_WWW;
-   public static final int HREF_HTTPS;
-   public static final int HREF_HTTPS_WWW;
-   public static final int EXPIRES;
-   public static final int SI_ID;
-   public static final int CLASS;
-   public static final int SI;
-   public static final int INDICATION;
-   public static final int INFO;
-   public static final int ITEM;
+   public static final int ACTION_SIGNAL_NONE = 5;
+   public static final int ACTION_SIGNAL_LOW = 6;
+   public static final int ACTION_SIGNAL_MEDIUM = 7;
+   public static final int ACTION_SIGNAL_HIGH = 8;
+   public static final int ACTION_SIGNAL_DELETE = 9;
+   public static final int CREATED = 10;
+   public static final int HREF = 11;
+   public static final int HREF_HTTP = 12;
+   public static final int HREF_HTTP_WWW = 13;
+   public static final int HREF_HTTPS = 14;
+   public static final int HREF_HTTPS_WWW = 15;
+   public static final int EXPIRES = 16;
+   public static final int SI_ID = 17;
+   public static final int CLASS = 18;
+   public static final int SI = 5;
+   public static final int INDICATION = 6;
+   public static final int INFO = 7;
+   public static final int ITEM = 8;
 
    public static final SICModel createSICModel(DataInputStream inStream, HttpHeaders headers) {
       try {

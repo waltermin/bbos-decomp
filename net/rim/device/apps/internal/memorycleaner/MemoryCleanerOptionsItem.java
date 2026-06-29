@@ -32,7 +32,7 @@ final class MemoryCleanerOptionsItem extends SaveableMainScreenOptionsListItem i
    private MemoryCleanerListener[] _listeners;
    MemoryCleanerManager _manager = MemoryCleanerManager.getInstance();
    private static final ResourceBundle _rb = ResourceBundle.getBundle(-7878136828847559798L, "net.rim.device.apps.internal.resource.MemoryCleaner");
-   private static final int LIST_INDENT_PIXELS;
+   private static final int LIST_INDENT_PIXELS = 5;
 
    public MemoryCleanerOptionsItem() {
       super(_rb.getString(3), 5294015899860238835L);

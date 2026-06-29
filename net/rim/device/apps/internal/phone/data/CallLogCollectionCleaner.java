@@ -10,7 +10,7 @@ public final class CallLogCollectionCleaner implements GlobalEventListener, Runn
    private Application _app;
    private int _id = -1;
    private long _snooze;
-   private static final long CLEAN_AT;
+   private static final long CLEAN_AT = 0L;
 
    private CallLogCollectionCleaner(Application app) {
       this._app = app;

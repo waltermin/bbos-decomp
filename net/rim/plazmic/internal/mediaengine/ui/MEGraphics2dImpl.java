@@ -25,13 +25,13 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
    private static int[] tempy = new int[4];
    private static int[] xTempArray = new int[4];
    private static int[] yTempArray = new int[4];
-   private static final boolean HAS_NATIVE_TRANSFORM;
-   private static final boolean HAS_NATIVE_ALPHA;
-   private static final int DEFAULT_UNITS;
-   private static final int DEFAULT_ANTI_ALIAS_MODE;
-   private static final int DEFAULT_EFFECTS;
-   private static final String DEFAULT_FONT_FAMILY;
-   private static final int DEFAULT_STYLE;
+   private static final boolean HAS_NATIVE_TRANSFORM = false;
+   private static final boolean HAS_NATIVE_ALPHA = false;
+   private static final int DEFAULT_UNITS = 0;
+   private static final int DEFAULT_ANTI_ALIAS_MODE = 1;
+   private static final int DEFAULT_EFFECTS = 0;
+   private static final String DEFAULT_FONT_FAMILY = "System";
+   private static final int DEFAULT_STYLE = 0;
    private static int _fontKey;
    private static Font _cachedFont;
 

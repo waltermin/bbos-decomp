@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.TraceBack;
 
 public final class RandomSource {
-   private static final long ID_TEST;
+   private static final long ID_TEST = 2906436475455030299L;
 
    private static final void selfTest() {
       FIPS186PseudoRandomSource.selfTest();

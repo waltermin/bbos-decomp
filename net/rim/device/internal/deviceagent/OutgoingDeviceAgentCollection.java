@@ -58,9 +58,9 @@ public class OutgoingDeviceAgentCollection
    SyncCollectionStatusProvider {
    private OutgoingDeviceAgentCollection$CurrentStatus _currentStatus;
    private boolean _is413OrLaterBES;
-   private static final long ID;
-   private static final long CURRENT_STATUS_TIMER;
-   private static final long DEVICE_AGENT_DB;
+   private static final long ID = -4762577470950986502L;
+   private static final long CURRENT_STATUS_TIMER = 21600000L;
+   private static final long DEVICE_AGENT_DB = -1904221448506136235L;
 
    private OutgoingDeviceAgentCollection() {
       super(-1904221448506136235L);

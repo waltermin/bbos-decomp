@@ -10,7 +10,7 @@ import net.rim.device.apps.api.transmission.TransmissionService;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 
 public class OTACalendarSyncDataManager extends OTASyncDataManager {
-   private static final long ID;
+   private static final long ID = 7645607223821437186L;
    private static OTACalendarSyncDataManager _manager;
 
    private OTACalendarSyncDataManager() {

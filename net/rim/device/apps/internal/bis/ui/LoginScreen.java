@@ -31,9 +31,9 @@ public final class LoginScreen extends BasicScreen implements ShutdownListener {
    private CheckboxField _rememberCredentialsCheckbox;
    private Event _createAccountEvent;
    private Event _loginEvent;
-   private static final String PARAM_USERNAME;
-   private static final String PARAM_PASSWORD;
-   private static final String PARAM_REMEMBER_CREDENTIALS;
+   private static final String PARAM_USERNAME = "userName";
+   private static final String PARAM_PASSWORD = "password";
+   private static final String PARAM_REMEMBER_CREDENTIALS = "rememberCredentials";
 
    protected final boolean isEmpty(TextField textField) {
       return textField == null || textField.getText() == null || textField.getText().length() <= 0;

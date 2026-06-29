@@ -9,18 +9,18 @@ import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.UIDGeneratorCallback;
 
 public interface AddressBook extends CollectionEventSource {
-   int EXACT_MATCH;
-   int EXACT_MATCH_LAST_NAME;
-   int PREFIX_MATCH;
-   int SHORT_DISPLAY_NAME;
-   long FIRST_NAME_ORDER;
-   long LAST_NAME_ORDER;
-   long COMPANY_NAME_ORDER;
-   long FIRST_NAME_KEYS_ONLY;
-   long LAST_NAME_KEYS_ONLY;
-   long REVERSE_LOOKUP_KEYS;
-   long ADDRESSCARD_KEYWORDS;
-   long ADDRESSCARD_KEYWORDS_ONLY;
+   int EXACT_MATCH = 1;
+   int EXACT_MATCH_LAST_NAME = 3;
+   int PREFIX_MATCH = 5;
+   int SHORT_DISPLAY_NAME = 6;
+   long FIRST_NAME_ORDER = 1232448844688687736L;
+   long LAST_NAME_ORDER = -227891759293611117L;
+   long COMPANY_NAME_ORDER = -4388042602796535003L;
+   long FIRST_NAME_KEYS_ONLY = 4922084531409364683L;
+   long LAST_NAME_KEYS_ONLY = 8199160529614935340L;
+   long REVERSE_LOOKUP_KEYS = -4145532165335996154L;
+   long ADDRESSCARD_KEYWORDS = -6544199576583918793L;
+   long ADDRESSCARD_KEYWORDS_ONLY = -6544199576583918792L;
 
    Object reverseLookup(Object var1);
 

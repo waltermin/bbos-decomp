@@ -7,9 +7,9 @@ import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 import net.rim.device.internal.deviceoptions.Owner;
 
 final class OwnerInfoOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int NAME_TAG;
-   private static final int INFO_TAG;
+   private static final int UID = -1113958365;
+   private static final int NAME_TAG = 1;
+   private static final int INFO_TAG = 2;
 
    OwnerInfoOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

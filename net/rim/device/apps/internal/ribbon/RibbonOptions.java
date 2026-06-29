@@ -9,10 +9,10 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 public final class RibbonOptions extends OptionsBase {
    private RibbonOptions$PersistedRibbonOptions _persistedRibbonOptions;
-   private static final long RIBBON_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_RIBBON_OPTIONS;
-   public static final long NEW_OPTIONS_SYNCED;
-   public static final long EVENT_LOGGER_GUID;
+   private static final long RIBBON_OPTIONS_SYNC_ITEM = 293775760836449343L;
+   private static final long PERSISTED_RIBBON_OPTIONS = 2160146156658040375L;
+   public static final long NEW_OPTIONS_SYNCED = 7596964640041972456L;
+   public static final long EVENT_LOGGER_GUID = -6210296463828503575L;
    private static RibbonOptions _options;
 
    private RibbonOptions() {

@@ -16,7 +16,7 @@ import net.rim.device.api.util.StringTokenizer;
 import net.rim.vm.Array;
 
 public final class TrustedKeyStore extends SyncableRIMKeyStore {
-   private static final long TRUSTEDKEYSTORE;
+   private static final long TRUSTEDKEYSTORE = -3805845534753462595L;
    private static SyncableRIMKeyStore _trustedKeyStore;
 
    private TrustedKeyStore() {

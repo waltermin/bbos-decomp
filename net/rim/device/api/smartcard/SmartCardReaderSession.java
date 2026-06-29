@@ -13,7 +13,7 @@ public class SmartCardReaderSession {
    private CallBackThread _callBackThread;
    private LEDEngine _ledEngine;
    private static SmartCardCache _cache = SmartCardCache.getInstance();
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
 
    protected SmartCardReaderSession(SmartCardReader reader) {

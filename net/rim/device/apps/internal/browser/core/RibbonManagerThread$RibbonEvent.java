@@ -8,8 +8,8 @@ final class RibbonManagerThread$RibbonEvent implements Runnable {
    private int _serviceRecordId;
    private ServiceRecord _serviceRecord;
    private final RibbonManagerThread this$0;
-   static final int ADD;
-   static final int REMOVE;
+   static final int ADD = 1;
+   static final int REMOVE = 2;
 
    RibbonManagerThread$RibbonEvent(RibbonManagerThread _1, int type, int id, boolean refresh, ServiceRecord rec) {
       this.this$0 = _1;

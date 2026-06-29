@@ -24,7 +24,7 @@ public final class OperationImpl extends Operation {
    private FaultDetailHandler _faultDetailHandler;
    private Hashtable _properties;
    static boolean processingFault = false;
-   private static final int PROPERTY_TABLE_INITIAL_SIZE;
+   private static final int PROPERTY_TABLE_INITIAL_SIZE = 7;
 
    public OperationImpl(QName qname, Element inputDescription, Element outputDescription, FaultDetailHandler faultDetailHandler) {
       this._inputDescription = inputDescription;

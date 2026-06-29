@@ -33,7 +33,7 @@ public final class MediaEscapedTextCoder extends EscapedTextCoder {
       "text/x-vcard",
       "text/xml"
    };
-   private static final long ID;
+   private static final long ID = -5963165340771518656L;
 
    public static final MediaEscapedTextCoder getInstance() {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();

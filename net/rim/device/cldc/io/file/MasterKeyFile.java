@@ -20,18 +20,18 @@ public class MasterKeyFile implements TLEFieldController {
    int _pin;
    int _cipherAlgorithm;
    long _timestamp;
-   public static final int DEVICE_LOCKED;
-   public static final int DEVIVE_AND_PASSWORD_LOCKED;
-   public static final int PASSWORD_LOCKED;
-   public static final int KNOWN_PASSOWRD_LOCKED;
-   public static final int CIPHER_AES_WITH_256_DIGEST;
-   private static final int VERSION;
-   private static final int LOCK_TYPE;
-   private static final int CIPHER;
-   private static final int SALT;
-   private static final int KEY_HASH;
-   private static final int PIN;
-   private static final int CIPHER_ALGORITHM;
+   public static final int DEVICE_LOCKED = 1;
+   public static final int DEVIVE_AND_PASSWORD_LOCKED = 2;
+   public static final int PASSWORD_LOCKED = 3;
+   public static final int KNOWN_PASSOWRD_LOCKED = 4;
+   public static final int CIPHER_AES_WITH_256_DIGEST = 1;
+   private static final int VERSION = 1;
+   private static final int LOCK_TYPE = 2;
+   private static final int CIPHER = 3;
+   private static final int SALT = 4;
+   private static final int KEY_HASH = 5;
+   private static final int PIN = 6;
+   private static final int CIPHER_ALGORITHM = 7;
 
    public void writeFields(DataBuffer db) {
       TLEUtilities.writeField(db, 6, this);

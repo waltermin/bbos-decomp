@@ -2,10 +2,10 @@ package net.rim.device.apps.internal.docview.core;
 
 final class ArznParagraph extends ArznObject {
    private byte _byFlags;
-   private static final int DEFAULT_FONT_HEIGHT;
-   private static final byte TOC_FLAG;
-   private static final byte LIST_FLAG;
-   private static final byte BULLET_FLAG;
+   private static final int DEFAULT_FONT_HEIGHT = 200;
+   private static final byte TOC_FLAG = 1;
+   private static final byte LIST_FLAG = 2;
+   private static final byte BULLET_FLAG = 4;
 
    @Override
    final void initialize(UCSParser docParser, ArznClassFactory classFactory, ArznObject parent) {

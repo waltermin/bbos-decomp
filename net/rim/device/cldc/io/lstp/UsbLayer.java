@@ -12,12 +12,12 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
    private int _portSendStatus;
    private int _fragmentBufferSize;
    private USBPortInternal _port;
-   private static final int PORT_SEND_TIMEOUT;
-   private static final int PORT_SEND_NONE;
-   private static final int PORT_SEND_SUCCESS;
-   private static final int PORT_SEND_CANCEL;
-   private static final int PORT_SEND_FAIL;
-   private static final int DATA_HEADER_SIZE;
+   private static final int PORT_SEND_TIMEOUT = 10000;
+   private static final int PORT_SEND_NONE = 0;
+   private static final int PORT_SEND_SUCCESS = 1;
+   private static final int PORT_SEND_CANCEL = 2;
+   private static final int PORT_SEND_FAIL = 3;
+   private static final int DATA_HEADER_SIZE = 2;
 
    public UsbLayer(Transport transport) {
       super(transport);

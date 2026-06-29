@@ -45,7 +45,7 @@ public class SecureEmailProcessor extends Thread {
    protected SecureEmailProcessor _equalSecureEmailProcessor;
    private static Vector _processorQueue = (Vector)(new Object());
    private static SecureEmailProcessor$WorkerThread _workerThread;
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = true;
 
    public SecureEmailProcessor(SecureEmailFactory secureEmailFactory, SecureEmailBodyModel secureEmailBodyModel, Object target, boolean allowUI, Object context) {
       this._secureEmailFactory = secureEmailFactory;
@@ -264,7 +264,7 @@ public class SecureEmailProcessor extends Thread {
       // 10f: iload 1
       // 110: iflt 133
       // 113: bipush 1
-      // 114: anewarray 811
+      // 114: anewarray 813
       // 117: dup
       // 118: bipush 0
       // 119: aload 0

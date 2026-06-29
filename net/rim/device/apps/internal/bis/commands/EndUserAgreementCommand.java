@@ -20,9 +20,9 @@ import net.rim.device.cldc.io.utility.URIEncoder;
 
 public final class EndUserAgreementCommand implements DomainCommand {
    boolean _acceptAgreement;
-   private static final String URL_BEFORE_ACCEPTED;
-   private static final String URL_AFTER_ACCEPTED;
-   private static final String WAP_CID;
+   private static final String URL_BEFORE_ACCEPTED = "?c=10&a=44";
+   private static final String URL_AFTER_ACCEPTED = "?c=1&a=109";
+   private static final String WAP_CID = "WAP";
 
    public EndUserAgreementCommand(boolean acceptAgreement) {
       this._acceptAgreement = acceptAgreement;

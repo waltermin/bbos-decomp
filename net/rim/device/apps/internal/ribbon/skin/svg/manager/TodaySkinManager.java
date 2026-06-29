@@ -8,7 +8,7 @@ import net.rim.plazmic.internal.mediaengine.service.FocusInteractor;
 public class TodaySkinManager extends SkinManager {
    private ContentInteractorManager _contentInteractorManager;
    private FocusInteractor _focusInteractor;
-   private static final String LAUNCH_INTERNAL;
+   private static final String LAUNCH_INTERNAL = "launchinternal?";
 
    @Override
    public void setServices(MediaServices services) {

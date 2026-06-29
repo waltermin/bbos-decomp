@@ -42,12 +42,12 @@ public class SoftTokenDialogImpl extends SoftTokenDialog implements FieldChangeL
    private String _usernameText;
    private String _responseText;
    private static ResourceBundle _rb = ResourceBundle.getBundle(390461180289309471L, "net.rim.device.internal.resource.SoftTokenResources");
-   private static final int GENERATE_TOKENCODE_INDEX;
-   private static final int GENERATE_NEXT_TOKENCODE_INDEX;
-   private static final int GENERATE_NEXT_NEXT_TOKENCODE_INDEX;
-   private static final int GENERATE_PASSCODE_INDEX;
-   private static final int GENERATE_NEXT_PASSCODE_INDEX;
-   private static final int GENERATE_NEXT_NEXT_PASSCODE_INDEX;
+   private static final int GENERATE_TOKENCODE_INDEX = 0;
+   private static final int GENERATE_NEXT_TOKENCODE_INDEX = 1;
+   private static final int GENERATE_NEXT_NEXT_TOKENCODE_INDEX = 2;
+   private static final int GENERATE_PASSCODE_INDEX = 3;
+   private static final int GENERATE_NEXT_PASSCODE_INDEX = 4;
+   private static final int GENERATE_NEXT_NEXT_PASSCODE_INDEX = 5;
    private static String[] _passcodeUseChoices = new Object[]{
       _rb.getString(4), _rb.getString(5), _rb.getString(6), _rb.getString(1), _rb.getString(2), _rb.getString(3)
    };

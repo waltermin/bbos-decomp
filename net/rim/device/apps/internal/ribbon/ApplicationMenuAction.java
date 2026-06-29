@@ -7,7 +7,7 @@ import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 final class ApplicationMenuAction extends Action {
    private ResourceBundleFamily _rbf = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
-   public static final String UNIQUE_ID;
+   public static final String UNIQUE_ID = "net_rim_application_menu";
 
    static final void register(RibbonLauncher ribbonLauncher, boolean b) {
       ribbonLauncher.unregisterAction("net_rim_application_menu");

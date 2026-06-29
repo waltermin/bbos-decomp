@@ -17,9 +17,9 @@ public final class FilterList extends VerticalFieldManager implements ListFieldC
    private NotificationMenuItemListener _menuItemListener;
    private ThemeAttributeSet _themeAttributesHeader;
    private int _themeGeneration;
-   public static final int INSTANCE_FILTER_LIST_SELECTED;
-   public static final String PARAM_FILTER_ID;
-   public static final String PARAM_FILTER_NAME;
+   public static final int INSTANCE_FILTER_LIST_SELECTED = 65538;
+   public static final String PARAM_FILTER_ID = "filterid";
+   public static final String PARAM_FILTER_NAME = "filtername";
    private static final Tag TAG_HEADER = Tag.create("header");
 
    public final void setMenuListener(NotificationMenuItemListener menuItemListener) {

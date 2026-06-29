@@ -31,7 +31,7 @@ public final class InstructionResolver implements Constants {
    private ClassType _classType;
    private Method _method;
    private ByteCodeInstructions _block;
-   private static final int NO_MAPPING;
+   private static final int NO_MAPPING = -1;
    private static final int[] _opcodeMapping = new int[]{
       204,
       34,

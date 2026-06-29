@@ -20,7 +20,7 @@ public final class ContentProtectionIndicator implements Indicator, PersistentCo
    private StringBuffer _text = (StringBuffer)(new Object(3));
    private int _state = 1;
    private int _bitmapState = -1;
-   private static final long CONTENT_PROTECTION_INDICATOR;
+   private static final long CONTENT_PROTECTION_INDICATOR = -8125869066658600065L;
 
    static final void initialize() {
       ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();

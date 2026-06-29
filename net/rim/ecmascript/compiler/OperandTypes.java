@@ -1,34 +1,34 @@
 package net.rim.ecmascript.compiler;
 
 public class OperandTypes {
-   public static final int OP_GLOBAL_BYTE;
-   public static final int OP_GLOBAL;
-   public static final int OP_LOCAL;
-   public static final int OP_NPARMS;
-   public static final int OP_INT;
-   public static final int OP_FUNCTION;
-   public static final int OP_DOUBLE;
-   public static final int OP_STRING;
-   public static final int OP_LOCAL_WIDE_BYTE;
-   public static final int OP_TEMP_WIDE;
-   public static final int OP_BYTE;
-   public static final int OP_TEMP;
-   public static final int OP_LOCAL_WIDE;
-   public static final int OP_LABEL_WIDE;
-   public static final int OP_JSR;
-   public static final int OP_LOCAL_BYTE;
-   public static final int OP_NONE;
-   public static final int OP_ID;
-   public static final int OP_NPARMS_WIDE;
-   public static final int OP_INVALID;
-   public static final int OP_STRING_WIDE;
-   public static final int OP_INT_INDEX;
-   public static final int OP_LABEL;
-   public static final int OP_ID_WIDE;
-   public static final int OP_GLOBAL_WIDE;
-   public static final int OP_GLOBAL_WIDE_BYTE;
-   public static final int OP_LINENUM;
-   public static final int OP_ID_BYTE;
+   public static final int OP_GLOBAL_BYTE = 0;
+   public static final int OP_GLOBAL = 1;
+   public static final int OP_LOCAL = 2;
+   public static final int OP_NPARMS = 3;
+   public static final int OP_INT = 4;
+   public static final int OP_FUNCTION = 5;
+   public static final int OP_DOUBLE = 6;
+   public static final int OP_STRING = 7;
+   public static final int OP_LOCAL_WIDE_BYTE = 8;
+   public static final int OP_TEMP_WIDE = 9;
+   public static final int OP_BYTE = 10;
+   public static final int OP_TEMP = 11;
+   public static final int OP_LOCAL_WIDE = 12;
+   public static final int OP_LABEL_WIDE = 13;
+   public static final int OP_JSR = 14;
+   public static final int OP_LOCAL_BYTE = 15;
+   public static final int OP_NONE = 16;
+   public static final int OP_ID = 17;
+   public static final int OP_NPARMS_WIDE = 18;
+   public static final int OP_INVALID = 19;
+   public static final int OP_STRING_WIDE = 20;
+   public static final int OP_INT_INDEX = 21;
+   public static final int OP_LABEL = 22;
+   public static final int OP_ID_WIDE = 23;
+   public static final int OP_GLOBAL_WIDE = 24;
+   public static final int OP_GLOBAL_WIDE_BYTE = 25;
+   public static final int OP_LINENUM = 26;
+   public static final int OP_ID_BYTE = 27;
    private static final byte[] _table = new byte[]{
       16,
       16,

@@ -11,7 +11,7 @@ class KeywordPrefixCache {
    private Hashtable _returnResultCache;
    private ToIntHashtable _timestamps;
    private int _timestamp;
-   private static final int MAX_ENTRY_COUNT;
+   private static final int MAX_ENTRY_COUNT = 128;
 
    KeywordPrefixCache() {
       int initialSize = 171;

@@ -8,9 +8,9 @@ import net.rim.device.api.util.DataBuffer;
 
 class LDAPBrowserOptionStore$LDAPOptionsSyncItem extends OTASyncCapableSyncItem {
    private final LDAPBrowserOptionStore this$0;
-   private static final int CONTEXT_NAME;
-   private static final int FETCH_CERT_STATUS;
-   private static final int PROMPT_FOR_CERT_LABEL;
+   private static final int CONTEXT_NAME = 1;
+   private static final int FETCH_CERT_STATUS = 2;
+   private static final int PROMPT_FOR_CERT_LABEL = 4;
 
    LDAPBrowserOptionStore$LDAPOptionsSyncItem(LDAPBrowserOptionStore _1) {
       this.this$0 = _1;

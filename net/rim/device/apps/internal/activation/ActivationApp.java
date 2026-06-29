@@ -40,15 +40,15 @@ public final class ActivationApp
    private int _currentState;
    private Dialog _currentGlobalScreenDialog = null;
    private ActivationEventQueue _eventQueue = new ActivationEventQueue();
-   static final String ACTIVATION_APP_RIBBON_ID;
+   static final String ACTIVATION_APP_RIBBON_ID = "net.rim.ActivationHomeScreenApp";
    public static long ACTIVATION_APP_ID = 3829627575527376155L;
    public static long ACTIVATION_APP_SYNC_STATUS_CHANGED = 7566343571206858229L;
-   public static final int READY;
-   public static final int PREPARING;
-   public static final int ACTIVATING;
-   public static final int KEYREGENERATING;
-   public static final int SLOWSYNCING;
-   public static final int CANCELLING;
+   public static final int READY = 0;
+   public static final int PREPARING = 1;
+   public static final int ACTIVATING = 2;
+   public static final int KEYREGENERATING = 3;
+   public static final int SLOWSYNCING = 4;
+   public static final int CANCELLING = 5;
    static ResourceBundleFamily _resources = ResourceBundle.getBundle(6266320976869391490L, "net.rim.device.apps.internal.resource.Activation");
 
    final void exitApp() {

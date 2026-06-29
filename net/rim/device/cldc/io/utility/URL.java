@@ -45,7 +45,7 @@ public class URL {
       ";localport=",
       ";sessiontimeout="
    };
-   private static final String STRING_NetPart;
+   private static final String STRING_NetPart = "//";
 
    public URL(String url) {
       this.initialize(url);

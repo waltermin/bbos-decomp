@@ -10,15 +10,15 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.system.InternalServices;
 
 public final class GSM230Filter extends PhoneNumberFilter {
-   public static final int CODE_NONE;
-   public static final int CODE_DISPLAY_IMEI;
-   public static final int CODE_ENTER_PIN;
-   public static final int CODE_ENTER_PIN2;
-   public static final int CODE_ENTER_PUK;
-   public static final int CODE_ENTER_PUK2;
+   public static final int CODE_NONE = -1;
+   public static final int CODE_DISPLAY_IMEI = 0;
+   public static final int CODE_ENTER_PIN = 1;
+   public static final int CODE_ENTER_PIN2 = 2;
+   public static final int CODE_ENTER_PUK = 3;
+   public static final int CODE_ENTER_PUK2 = 4;
    private static int GSM_SUPPORT_FLAGS = 0;
    private static String[] GSM_CODES = new String[]{"*#06#", "**04*", "**042*", "**05*", "**052*"};
-   public static final int MIN_CODE_LENGTH;
+   public static final int MIN_CODE_LENGTH = 5;
 
    public static final boolean isSupported() {
       return GSM_SUPPORT_FLAGS != 0;

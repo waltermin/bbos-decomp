@@ -19,7 +19,7 @@ public final class SyncAgent {
    private LongHashtable _dbsUsedByOtherSyncSources;
    private ServicesConfigurationManager _servicesConfigurationManager;
    private EventHandler _eventHandler;
-   private static final long APPLICATION_REG_GUID;
+   private static final long APPLICATION_REG_GUID = -2145435626893159055L;
 
    public static final SyncAgent getSingletonInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

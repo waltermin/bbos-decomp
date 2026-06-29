@@ -25,27 +25,27 @@ final class TimeZoneCollection
    SyncCollectionStatusProvider {
    private TimeService _collection = TimeService.getTimeService();
    private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
-   private static final byte TZID;
-   private static final byte ZONE_STRING_ID;
-   private static final byte GMT_OFFSET;
-   private static final byte DST_AMOUNT;
-   private static final byte DST_START_MODE;
-   private static final byte DST_START_MONTH;
-   private static final byte DST_START_DOW;
-   private static final byte DST_START_DAY;
-   private static final byte DST_START_TIME;
-   private static final byte DST_END_MODE;
-   private static final byte DST_END_MONTH;
-   private static final byte DST_END_DOW;
-   private static final byte DST_END_DAY;
-   private static final byte DST_END_TIME;
-   private static final byte DEFAULT_LONG_DESCRIPTION;
-   private static final byte DEFAULT_SHORT_DESCRIPTION;
-   private static final byte TZID_MAPPING;
-   private static final byte HIDDEN_STATE;
-   private static final byte RECORD_TYPE;
-   private static final int DEFAULT_TYPE;
-   private static final String TIMEZONES_DATABASE_NAME;
+   private static final byte TZID = 1;
+   private static final byte ZONE_STRING_ID = 2;
+   private static final byte GMT_OFFSET = 3;
+   private static final byte DST_AMOUNT = 4;
+   private static final byte DST_START_MODE = 5;
+   private static final byte DST_START_MONTH = 6;
+   private static final byte DST_START_DOW = 7;
+   private static final byte DST_START_DAY = 8;
+   private static final byte DST_START_TIME = 9;
+   private static final byte DST_END_MODE = 10;
+   private static final byte DST_END_MONTH = 11;
+   private static final byte DST_END_DOW = 12;
+   private static final byte DST_END_DAY = 13;
+   private static final byte DST_END_TIME = 14;
+   private static final byte DEFAULT_LONG_DESCRIPTION = 15;
+   private static final byte DEFAULT_SHORT_DESCRIPTION = 16;
+   private static final byte TZID_MAPPING = 17;
+   private static final byte HIDDEN_STATE = 18;
+   private static final byte RECORD_TYPE = 100;
+   private static final int DEFAULT_TYPE = 1;
+   private static final String TIMEZONES_DATABASE_NAME = "Time Zones";
    private static TimeZoneCollection _instance = null;
 
    private TimeZoneCollection() {

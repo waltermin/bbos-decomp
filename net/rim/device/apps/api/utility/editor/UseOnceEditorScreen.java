@@ -25,7 +25,7 @@ public class UseOnceEditorScreen extends AppsMainScreen {
    private Verb _cancelVerb = new UseOnceEditorScreen$CancelVerb(this);
    private Verb[] _verbs = new Verb[0];
    private Object _context;
-   static final long USE_ONCE_REGISTRY;
+   static final long USE_ONCE_REGISTRY = -1985753716985742011L;
 
    private UseOnceEditorScreen(String title, RIMModel model, FieldProvider fieldProvider, Field modelField, RIMModel tmpValidationModel, Object context) {
       super(0);

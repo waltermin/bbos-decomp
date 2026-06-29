@@ -7,7 +7,7 @@ import net.rim.vm.OTAUpgrade;
 import net.rim.vm.TraceBack;
 
 public final class Radio {
-   private static final long ID;
+   private static final long ID = 6796807463572612615L;
    private static Radio _instance;
 
    private Radio() {

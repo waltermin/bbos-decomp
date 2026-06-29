@@ -4,14 +4,14 @@ import net.rim.device.api.util.Arrays;
 
 final class PosPayload {
    byte[] payload;
-   static final boolean DEBUG_DUMP_RAW_PAYLOAD;
-   static final byte POS_PAYLOAD_ALT_TIA802;
-   static final byte POS_PAYLOAD_ALT_RRC;
-   static final byte POS_PAYLOAD_ALT_RRLP;
-   static final byte POS_PAYLOAD_CHOICE_BIT_SIZE;
-   static final byte POS_PAYLOAD_MIN_LENGTH;
-   static final int POS_PAYLOAD_MAX_LENGTH;
-   static final byte POS_PAYLOAD_LENGTH_BIT_SIZE;
+   static final boolean DEBUG_DUMP_RAW_PAYLOAD = true;
+   static final byte POS_PAYLOAD_ALT_TIA802 = 0;
+   static final byte POS_PAYLOAD_ALT_RRC = 1;
+   static final byte POS_PAYLOAD_ALT_RRLP = 2;
+   static final byte POS_PAYLOAD_CHOICE_BIT_SIZE = 2;
+   static final byte POS_PAYLOAD_MIN_LENGTH = 1;
+   static final int POS_PAYLOAD_MAX_LENGTH = 8192;
+   static final byte POS_PAYLOAD_LENGTH_BIT_SIZE = 13;
 
    PosPayload() {
    }

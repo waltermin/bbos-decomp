@@ -57,12 +57,12 @@ class SymbolScreen$SymbolField extends Field {
    protected int _pagesStandard;
    protected int[] _pages;
    private final SymbolScreen this$0;
-   protected static final int XTAB;
-   protected static final int YTAB;
-   protected static final int VSPACE;
-   protected static final int ARROW_SIGN;
-   private static final int NUMBER_OF_ROWS;
-   private static final int NUMBER_OF_MAPPED_PAGES;
+   protected static final int XTAB = 5;
+   protected static final int YTAB = 4;
+   protected static final int VSPACE = 1;
+   protected static final int ARROW_SIGN = 8646;
+   private static final int NUMBER_OF_ROWS = 3;
+   private static final int NUMBER_OF_MAPPED_PAGES = 2;
 
    protected SymbolScreen$SymbolField(SymbolScreen _1) {
       super(18014398509481984L);

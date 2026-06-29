@@ -5,7 +5,7 @@ import net.rim.device.api.util.LongIntHashtable;
 
 public class SecureEmailEncodingManager {
    private LongIntHashtable _encodingPrioritiesByUID = (LongIntHashtable)(new Object());
-   private static final long ID;
+   private static final long ID = -7375709277351116640L;
    private static SecureEmailEncodingManager _instance;
 
    public static SecureEmailEncodingManager getInstance() {

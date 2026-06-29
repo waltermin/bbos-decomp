@@ -12,9 +12,9 @@ import net.rim.device.internal.bluetooth.BluetoothME;
 final class BluetoothDevice$QuestionDialog extends Dialog {
    private int _type;
    private final BluetoothDevice this$0;
-   static final int TYPE_AUTHORIZE;
-   static final int TYPE_PAIRING_COMPLETE_CONNECT;
-   static final int TYPE_PAIRING_FAILED_TRY_AGAIN;
+   static final int TYPE_AUTHORIZE = 0;
+   static final int TYPE_PAIRING_COMPLETE_CONNECT = 1;
+   static final int TYPE_PAIRING_FAILED_TRY_AGAIN = 2;
 
    BluetoothDevice$QuestionDialog(BluetoothDevice _1, int type) {
       super(3, null, -1, Bitmap.getPredefinedBitmap(1), 33554432);

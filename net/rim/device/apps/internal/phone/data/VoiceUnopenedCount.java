@@ -7,7 +7,7 @@ import net.rim.device.apps.internal.phone.options.PhoneOptions;
 
 public class VoiceUnopenedCount {
    private int _unopenedCount = 0;
-   private static final long GUID;
+   private static final long GUID = 4360880965294639395L;
    private static VoiceUnopenedCount _instance;
 
    private VoiceUnopenedCount() {

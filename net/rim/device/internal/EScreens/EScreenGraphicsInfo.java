@@ -19,14 +19,14 @@ public final class EScreenGraphicsInfo extends MainScreen implements ListFieldCa
    private int _vert_ppm;
    private int[] _cacheStats;
    private ListField _list;
-   private static final int MENU_CLEAR_CACHE_STATS;
-   private static final int MENU_REFRESH;
-   private static final int DIMENSIONS;
-   private static final int DIMENSIONS_MM;
-   private static final int COLORS;
-   private static final int RESOLUTION;
-   private static final int CACHE;
-   private static final int NUM_COMMON_IMMUTABLES;
+   private static final int MENU_CLEAR_CACHE_STATS = 1;
+   private static final int MENU_REFRESH = 2;
+   private static final int DIMENSIONS = 0;
+   private static final int DIMENSIONS_MM = 1;
+   private static final int COLORS = 2;
+   private static final int RESOLUTION = 3;
+   private static final int CACHE = 4;
+   private static final int NUM_COMMON_IMMUTABLES = 5;
    private static final String[] NAMES = new String[]{
       "Screen dimensions: ",
       "Screen dimensions: ",

@@ -13,8 +13,8 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
    private int _sessionId;
    private int _messageId = Integer.MAX_VALUE;
    private byte[] _body;
-   protected static final int MAGIC_NUMBER;
-   protected static final int MESSAGEID_NULL;
+   protected static final int MAGIC_NUMBER = 12246278;
+   protected static final int MESSAGEID_NULL = Integer.MAX_VALUE;
 
    MessageEnvelope() {
       this.calculateCheck();

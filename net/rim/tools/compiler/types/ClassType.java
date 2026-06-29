@@ -41,7 +41,7 @@ public final class ClassType extends ReferenceType {
    private boolean _extended;
    private Object _classInfo;
    private static StringBuffer _stringBuffer = (StringBuffer)(new Object());
-   private static final int NUM_RESERVED_STATICS;
+   private static final int NUM_RESERVED_STATICS = 2;
 
    public ClassType(String name, String packageName) {
       super(name);

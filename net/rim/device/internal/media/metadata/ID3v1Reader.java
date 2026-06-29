@@ -6,19 +6,19 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.i18n.ResourceBundle;
 
 public final class ID3v1Reader {
-   private static final int ID3V1_TITLE_FIELD_LENGTH;
-   private static final int ID3V1_ARTIST_FIELD_LENGTH;
-   private static final int ID3V1_ALBUM_FIELD_LENGTH;
-   private static final int ID3V1_YEAR_FIELD_LENGTH;
-   private static final int ID3V1_COMMENT_FIELD_LENGTH;
-   private static final int ID3V1_TITLE_FIELD_OFFSET;
-   private static final int ID3V1_ARTIST_FIELD_OFFSET;
-   private static final int ID3V1_ALBUM_FIELD_OFFSET;
-   private static final int ID3V1_YEAR_FIELD_OFFSET;
-   private static final int ID3V1_COMMENT_FIELD_OFFSET;
-   private static final int ID3V1_GENRE_FIELD_OFFSET;
-   private static final int ID3V1_1_TRACK_NUMBER_FIELD_OFFSET;
-   private static final int MAX_GENRE_CODE;
+   private static final int ID3V1_TITLE_FIELD_LENGTH = 30;
+   private static final int ID3V1_ARTIST_FIELD_LENGTH = 30;
+   private static final int ID3V1_ALBUM_FIELD_LENGTH = 30;
+   private static final int ID3V1_YEAR_FIELD_LENGTH = 4;
+   private static final int ID3V1_COMMENT_FIELD_LENGTH = 30;
+   private static final int ID3V1_TITLE_FIELD_OFFSET = 0;
+   private static final int ID3V1_ARTIST_FIELD_OFFSET = 30;
+   private static final int ID3V1_ALBUM_FIELD_OFFSET = 60;
+   private static final int ID3V1_YEAR_FIELD_OFFSET = 90;
+   private static final int ID3V1_COMMENT_FIELD_OFFSET = 94;
+   private static final int ID3V1_GENRE_FIELD_OFFSET = 124;
+   private static final int ID3V1_1_TRACK_NUMBER_FIELD_OFFSET = 123;
+   private static final int MAX_GENRE_CODE = 147;
 
    private ID3v1Reader() {
    }

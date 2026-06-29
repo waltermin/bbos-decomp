@@ -21,7 +21,7 @@ public final class PushDisplayDialog extends PopupDialog implements FieldChangeL
    private ButtonField _dismissButton;
    private DialogFieldManager _dfm;
    private String _url;
-   public static final int POSTPONE;
+   public static final int POSTPONE = 1;
 
    final void loadPage(Object cookie) {
       if (cookie != null) {

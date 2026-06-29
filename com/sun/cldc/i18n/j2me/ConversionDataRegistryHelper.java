@@ -19,11 +19,11 @@ final class ConversionDataRegistryHelper {
       new ConversionDataRegistryHelper$EncodingMappingData("windows-1252", 18, 1701707776, "System"),
       new ConversionDataRegistryHelper$EncodingMappingData("UTF-16LE", 39, 0, "BBCondensed")
    };
-   private static final int CDBF_CONVERSION_SIGNATURE;
-   private static final int CDBF_CURRENT_VERSION_MAJOR;
-   private static final int CDBF_CURRENT_VERSION_MINOR;
-   private static final int ENC_INCREMENT_NUMBER;
-   private static final int STRIP_FLAG;
+   private static final int CDBF_CONVERSION_SIGNATURE = 1717724259;
+   private static final int CDBF_CURRENT_VERSION_MAJOR = 1;
+   private static final int CDBF_CURRENT_VERSION_MINOR = 0;
+   private static final int ENC_INCREMENT_NUMBER = 5;
+   private static final int STRIP_FLAG = 268435456;
 
    final synchronized String[] getSupportedEncodings() {
       return this._availableEncodings;

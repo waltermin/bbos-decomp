@@ -42,8 +42,8 @@ public final class MediaCardOptionsItem extends SaveableMainScreenOptionsListIte
    private MediaCardOptionsItem$FormatCardVerb _formatCardVerb;
    private MediaCardOptionsItem$SafelyRemoveCardVerb _safelyRemoveCardVerb;
    private MediaCardOptionsItem$MountCardVerb _mountCardVerb;
-   private static final long ONE_GIGABYTE;
-   private static final long ONE_MEGABYTE;
+   private static final long ONE_GIGABYTE = 1073741824L;
+   private static final long ONE_MEGABYTE = 1048576L;
 
    public MediaCardOptionsItem() {
       super(ExplorerResources.getResourceBundleFamily(), 52, 1888231790844671165L);

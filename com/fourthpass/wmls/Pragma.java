@@ -3,10 +3,10 @@ package com.fourthpass.wmls;
 final class Pragma {
    private int _type;
    private int _index;
-   static final int ACCESS_DOMAIN;
-   static final int ACCESS_PATH;
-   static final int USR_AGENT_PROP;
-   static final int USR_AGENT_PROP_SCHEME;
+   static final int ACCESS_DOMAIN = 0;
+   static final int ACCESS_PATH = 1;
+   static final int USR_AGENT_PROP = 2;
+   static final int USR_AGENT_PROP_SCHEME = 3;
 
    Pragma(WMLInputStream stream, int type) {
       this._type = type;

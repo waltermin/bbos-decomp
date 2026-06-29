@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.phone.api;
 import net.rim.device.api.system.EventLogger;
 
 public final class PhoneLogger {
-   private static final long GUID;
+   private static final long GUID = 5330340012958674867L;
 
    public static final void init() {
       EventLogger.register(5330340012958674867L, "PhoneApp", 2);

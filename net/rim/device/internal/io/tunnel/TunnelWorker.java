@@ -13,7 +13,7 @@ import net.rim.device.cldc.io.tunnel.TunnelListener;
 public final class TunnelWorker implements TunnelListener {
    private int _tunnelState;
    private int _tunnelCode;
-   private static final int TUNNEL_OPEN_TIMEOUT;
+   private static final int TUNNEL_OPEN_TIMEOUT = 30000;
 
    public final Tunnel open(TunnelConfig config) {
       this._tunnelState = 0;

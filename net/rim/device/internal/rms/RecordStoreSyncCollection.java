@@ -20,7 +20,7 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.IntHashtable;
 
 public class RecordStoreSyncCollection implements SyncCollection, SyncConverter, SyncCollectionStatistics {
-   private static final long RECORD_STORE_ID;
+   private static final long RECORD_STORE_ID = 5639922433554527164L;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(5639922433554527164L);
    private static Hashtable _allRecordStores;
    private static Hashtable _activeStores;

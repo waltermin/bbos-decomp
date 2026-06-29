@@ -3,18 +3,18 @@ package net.rim.wica.common.builtindata.componentEnums;
 import net.rim.device.api.util.ToIntHashtable;
 
 public final class RptRuleFreqEnumDef extends EnumDefinition {
-   public static final int NUM_ENUM_VALUES;
-   private static final String FREQUENCY_NONE;
-   private static final String FREQUENCY_DAILY;
-   private static final String FREQUENCY_WEEKLY;
-   private static final String FREQUENCY_MONTHLY;
-   private static final String FREQUENCY_YEARLY;
-   public static final int FREQUENCY_NONE_VALUE;
-   public static final int FREQUENCY_DAILY_VALUE;
-   public static final int FREQUENCY_WEEKLY_VALUE;
-   public static final int FREQUENCY_MONTHLY_VALUE;
-   public static final int FREQUENCY_YEARLY_VALUE;
-   public static final String REPEAT_RULE_FREQUENCY_ENUM_NAME;
+   public static final int NUM_ENUM_VALUES = 5;
+   private static final String FREQUENCY_NONE = "NONE";
+   private static final String FREQUENCY_DAILY = "DAILY";
+   private static final String FREQUENCY_WEEKLY = "WEEKLY";
+   private static final String FREQUENCY_MONTHLY = "MONTHLY";
+   private static final String FREQUENCY_YEARLY = "YEARLY";
+   public static final int FREQUENCY_NONE_VALUE = 0;
+   public static final int FREQUENCY_DAILY_VALUE = 1;
+   public static final int FREQUENCY_WEEKLY_VALUE = 2;
+   public static final int FREQUENCY_MONTHLY_VALUE = 3;
+   public static final int FREQUENCY_YEARLY_VALUE = 4;
+   public static final String REPEAT_RULE_FREQUENCY_ENUM_NAME = "REPEAT_RULE_FREQUENCY";
 
    public RptRuleFreqEnumDef() {
       super._enumNames = new Object[5];

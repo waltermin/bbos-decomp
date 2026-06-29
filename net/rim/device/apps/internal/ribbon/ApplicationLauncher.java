@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationManager;
 
 public final class ApplicationLauncher {
    public static String FOLDER_URL_PREFIX = "folder://";
-   private static final int FOLDER_URL_PREFIX_LENGTH;
+   private static final int FOLDER_URL_PREFIX_LENGTH = 9;
 
    private ApplicationLauncher() {
    }

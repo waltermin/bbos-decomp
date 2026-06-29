@@ -14,8 +14,8 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.vm.Array;
 
 public final class PhoneLogs {
-   public static final long FOLDER_MISSED_CALLS;
-   public static final long FOLDER_NORMAL_CALLS;
+   public static final long FOLDER_MISSED_CALLS = 7042951934619290849L;
+   public static final long FOLDER_NORMAL_CALLS = 5390902206192375236L;
    private static PhoneLogs _phoneLogs;
    private static PersistedSortedCollection _calls;
    private static PersistedSortedCollection _missedCalls;

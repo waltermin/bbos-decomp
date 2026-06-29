@@ -60,14 +60,14 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
    private DateField _rawNetworkTimeField;
    private boolean _isWizard;
    private int _timeZoneLocale;
-   private static final int NONE;
-   private static final int DATE;
-   private static final int TIME;
-   private static final int OFF;
-   private static final int BLACKBERRY;
-   private static final int NETWORK;
-   private static final long TIME_ZONE_BEST_GUESS;
-   private static final short TIME_ZONE_CASABLANCA;
+   private static final int NONE = 0;
+   private static final int DATE = 1;
+   private static final int TIME = 2;
+   private static final int OFF = 0;
+   private static final int BLACKBERRY = 1;
+   private static final int NETWORK = 2;
+   private static final long TIME_ZONE_BEST_GUESS = 4039358504000129822L;
+   private static final short TIME_ZONE_CASABLANCA = 90;
 
    public DateTimeController() {
       this(false);

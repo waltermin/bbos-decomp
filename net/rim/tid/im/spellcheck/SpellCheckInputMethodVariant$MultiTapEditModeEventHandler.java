@@ -5,7 +5,7 @@ import net.rim.tid.awt.event.KeyEvent;
 
 class SpellCheckInputMethodVariant$MultiTapEditModeEventHandler extends SpellCheckInputMethodVariant$EditModeEventHandler {
    private final SpellCheckInputMethodVariant this$0;
-   private static final long MULTITAP_SPELLCHECK_DELAY;
+   private static final long MULTITAP_SPELLCHECK_DELAY = 1000L;
 
    SpellCheckInputMethodVariant$MultiTapEditModeEventHandler(SpellCheckInputMethodVariant _1) {
       super(_1);

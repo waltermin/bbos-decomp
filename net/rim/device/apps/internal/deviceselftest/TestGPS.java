@@ -5,9 +5,9 @@ import net.rim.device.api.ui.Keypad;
 
 final class TestGPS extends TestTaskBase {
    TestGPSScreen taskScreen;
-   private static final String MAIN_SCREEN_NAME;
-   private static final String GPS_SCREEN_NAME;
-   static final int fixingTimeout;
+   private static final String MAIN_SCREEN_NAME = "OS Engineering Screens";
+   private static final String GPS_SCREEN_NAME = "GPS";
+   static final int fixingTimeout = 150;
 
    TestGPS() {
       super.app = (DeviceSelfTest)Application.getApplication();

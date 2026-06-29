@@ -4,16 +4,16 @@ import net.rim.device.apps.internal.lbs.LBSOptions;
 
 public final class LayerOptions {
    private LayerGroup[] _layerGroups = new LayerGroup[6];
-   private static final long PARAM_LAYER_WATER;
-   private static final long PARAM_LAYER_AREAS;
-   private static final long PARAM_LAYER_STREETS;
-   private static final long PARAM_LAYER_PARKS;
-   private static final long PARAM_LAYER_PLACES;
-   private static final long PARAM_LAYER_LANDMARKS;
-   private static final long PARAM_LAYER_WATERPIPES;
-   private static final long PARAM_LAYER_FIREPOL;
-   private static final long PARAM_LAYER_EPA;
-   private static final long PARAM_LAYER_BUILDING;
+   private static final long PARAM_LAYER_WATER = 396181434621866035L;
+   private static final long PARAM_LAYER_AREAS = -1918199190376411056L;
+   private static final long PARAM_LAYER_STREETS = -8188202621221368016L;
+   private static final long PARAM_LAYER_PARKS = 8507163742773983544L;
+   private static final long PARAM_LAYER_PLACES = -8621727332676546690L;
+   private static final long PARAM_LAYER_LANDMARKS = 9003665314392694763L;
+   private static final long PARAM_LAYER_WATERPIPES = 3756508069940835150L;
+   private static final long PARAM_LAYER_FIREPOL = -371574474708413306L;
+   private static final long PARAM_LAYER_EPA = -4327241178805394520L;
+   private static final long PARAM_LAYER_BUILDING = -773893637296555188L;
    private static LayerOptions INSTANCE;
 
    private LayerOptions() {

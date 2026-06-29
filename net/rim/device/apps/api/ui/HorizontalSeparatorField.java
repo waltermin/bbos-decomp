@@ -4,8 +4,8 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 
 public class HorizontalSeparatorField extends Field {
-   private static final int WIDTH_THICK;
-   private static final int DRAW_POS_THICK;
+   private static final int WIDTH_THICK = 3;
+   private static final int DRAW_POS_THICK = 1;
 
    @Override
    public int getPreferredWidth() {

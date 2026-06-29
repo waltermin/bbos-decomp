@@ -5,7 +5,7 @@ import net.rim.device.api.ui.Graphics;
 final class Pills {
    Pill[] pill;
    Board _board;
-   static final int MAXPILLS;
+   static final int MAXPILLS = 3;
 
    Pills(Board board) {
       this._board = board;

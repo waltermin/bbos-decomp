@@ -12,10 +12,10 @@ public final class TcpOptionManager implements TcpConstants {
    boolean _keepAliveEnabled;
    int _lingerTimeout = 0;
    boolean _freshnessSealed = true;
-   static final boolean _headerPredictionEnabled;
-   static final boolean _mtuDiscoveryEnabled;
-   static final boolean _timeStampsEnabled;
-   static final boolean _goBackToListenState;
+   static final boolean _headerPredictionEnabled = true;
+   static final boolean _mtuDiscoveryEnabled = false;
+   static final boolean _timeStampsEnabled = false;
+   static final boolean _goBackToListenState = false;
 
    TcpOptionManager() {
       this.reset();

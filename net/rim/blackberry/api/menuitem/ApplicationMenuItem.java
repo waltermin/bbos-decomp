@@ -7,8 +7,8 @@ public class ApplicationMenuItem {
    int _order;
    Object _cookie;
    BitSet _flags;
-   static final int EMAIL_ALLOWED_INDEX;
-   static final int PIM_ALLOWED_INDEX;
+   static final int EMAIL_ALLOWED_INDEX = 0;
+   static final int PIM_ALLOWED_INDEX = 1;
 
    public ApplicationMenuItem(Object context, int order) {
       this(order);

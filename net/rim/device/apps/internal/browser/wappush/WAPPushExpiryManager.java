@@ -12,8 +12,8 @@ import net.rim.device.apps.internal.browser.store.BrowserFolders;
 public final class WAPPushExpiryManager implements Runnable {
    private int _currentTimer = -1;
    private long _nextExpiry = Long.MAX_VALUE;
-   private static final long APP_REGISTRY_KEY;
-   private static final long MAX_INVOKE_LATER_TIME;
+   private static final long APP_REGISTRY_KEY = -7842278682478177781L;
+   private static final long MAX_INVOKE_LATER_TIME = 108000000L;
 
    public static final WAPPushExpiryManager getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

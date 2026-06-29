@@ -22,8 +22,8 @@ public final class PasswordKeeperOptionsScreen extends AppsMainScreen {
    private ObjectChoiceField _otaSync;
    private PasswordKeeperOptionsScreen$PasswordVerb _saveVerb;
    private PasswordKeeperOptionsScreen$PasswordVerb _closeVerb;
-   private static final int MENU_ORDERING_SAVE;
-   private static final int MENU_ORDERING_CLOSE;
+   private static final int MENU_ORDERING_SAVE = 131072;
+   private static final int MENU_ORDERING_CLOSE = 200704;
 
    public PasswordKeeperOptionsScreen() {
       super(0);

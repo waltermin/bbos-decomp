@@ -67,11 +67,11 @@ public final class IdleScreenOptions extends IdleScreenOptionsProvider {
       -4503570352766976L,
       1082315636977L
    };
-   private static final int ONE_MINUTE;
-   private static final int DEFAULT_TIMEOUT;
-   static final long TIMEOUT_KEY;
-   static final long IDLE_SCREEN_FILE_KEY;
-   static final long OLD_DISABLED_VALUE;
+   private static final int ONE_MINUTE = 60;
+   private static final int DEFAULT_TIMEOUT = 600;
+   static final long TIMEOUT_KEY = 5986625456595542661L;
+   static final long IDLE_SCREEN_FILE_KEY = 964187185309765141L;
+   static final long OLD_DISABLED_VALUE = -1L;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(8585934785835124063L, "net.rim.device.apps.internal.resource.IdleScreen");
 
    static final int getTimeout() {

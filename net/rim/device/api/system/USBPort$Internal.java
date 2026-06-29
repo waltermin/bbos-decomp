@@ -3,8 +3,8 @@ package net.rim.device.api.system;
 import net.rim.device.internal.system.USBPortInternal$Internal;
 
 public class USBPort$Internal {
-   public static final int USB_MODE_HANDHELD;
-   public static final int USB_MODE_MODEM;
+   public static final int USB_MODE_HANDHELD = 0;
+   public static final int USB_MODE_MODEM = 1;
 
    public static void setMode(int mode) {
       USBPortInternal$Internal.setMode(mode);

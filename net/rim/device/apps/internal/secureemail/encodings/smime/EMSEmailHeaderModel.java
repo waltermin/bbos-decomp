@@ -18,12 +18,12 @@ import net.rim.vm.Array;
 
 public class EMSEmailHeaderModel extends EmailHeaderModel implements PersistableRIMModel, EncryptableProvider {
    private EmailHeaderModel[] _innerEmailHeaderModels = new Object[0];
-   static final byte EMS_ADDRESS;
-   static final byte TO_ADDRESS;
-   static final byte CC_ADDRESS;
-   static final byte BCC_ADDRESS;
-   static final byte STRING_PAIR_0;
-   static final byte STRING_PAIR_1;
+   static final byte EMS_ADDRESS = 1;
+   static final byte TO_ADDRESS = 2;
+   static final byte CC_ADDRESS = 3;
+   static final byte BCC_ADDRESS = 4;
+   static final byte STRING_PAIR_0 = 5;
+   static final byte STRING_PAIR_1 = 6;
 
    public EMSEmailHeaderModel(String[] stringPair, ContextObject context) {
       super(stringPair, context);

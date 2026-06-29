@@ -17,14 +17,14 @@ public final class RecipientCache implements RecryptableCollection, PersistentCo
    private LRUCache _cache;
    private RecipientCache$RecipientCacheSyncItem _syncItem;
    private PersistentObject _persist = RIMPersistentStore.getPersistentObject(-362925792369882738L);
-   private static final long RECIPIENT_SEND_CACHE_PERSISTED;
-   private static final long RECIPIENT_SEND_CACHE_APP_REG;
-   private static final int MAX_RECORDS;
-   public static final long DEFAULT_ENCODING_UID;
-   public static final int DEFAULT_SERVICE_UID_HASH;
-   public static final int DEFAULT_SERVICE_USERID;
-   public static final int DEFAULT_FLAGS;
-   public static final int DEFAULT_CLASSIFICATION;
+   private static final long RECIPIENT_SEND_CACHE_PERSISTED = -362925792369882738L;
+   private static final long RECIPIENT_SEND_CACHE_APP_REG = -8547700227378297055L;
+   private static final int MAX_RECORDS = 128;
+   public static final long DEFAULT_ENCODING_UID = -1L;
+   public static final int DEFAULT_SERVICE_UID_HASH = -1;
+   public static final int DEFAULT_SERVICE_USERID = -1;
+   public static final int DEFAULT_FLAGS = 0;
+   public static final int DEFAULT_CLASSIFICATION = -1;
 
    public static final synchronized RecipientCache getInstance() {
       ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();

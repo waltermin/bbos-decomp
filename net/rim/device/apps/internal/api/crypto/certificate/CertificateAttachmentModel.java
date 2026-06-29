@@ -27,9 +27,9 @@ public class CertificateAttachmentModel extends UnknownMimePartModel implements 
    protected String _outgoingDisplayName;
    protected Certificate[] _certificates;
    protected PrivateKey[] _privateKeys;
-   public static final String STRING_NAME;
-   public static final String STRING_CONTENT_DISPOSITION;
-   public static final String STRING_CONTENT_DISPOSITION_ATTACHMENT_FILENAME;
+   public static final String STRING_NAME = "name";
+   public static final String STRING_CONTENT_DISPOSITION = "Content-Disposition";
+   public static final String STRING_CONTENT_DISPOSITION_ATTACHMENT_FILENAME = "Content-Disposition: attachment;\r\n\tfilename=";
 
    protected CertificateAttachmentModel(Object initialData) {
       super(initialData);

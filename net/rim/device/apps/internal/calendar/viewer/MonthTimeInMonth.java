@@ -41,7 +41,7 @@ final class MonthTimeInMonth implements FocusChangeListener {
    private CalendarExtensions _sharedCalEx = (CalendarExtensions)this._sharedCal;
    private CalendarExtensions _sharedCalForMonthLoadsEx = (CalendarExtensions)this._sharedCalForMonthLoads;
    private TimeZone _sharedTZ = this._sharedCal.getTimeZone();
-   private static final int MAX_DAYS_IN_MONTH;
+   private static final int MAX_DAYS_IN_MONTH = 31;
 
    final void init(CalendarViewController callback) {
       this._timeBasedCollection = TimeBasedCollection.getInstance();

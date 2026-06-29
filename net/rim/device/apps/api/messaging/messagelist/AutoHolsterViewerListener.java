@@ -13,7 +13,7 @@ public class AutoHolsterViewerListener implements HolsterListener, GlobalEventLi
    private Application _messagingApp;
    private final MessageEntryPoint _mep = MessageEntryPoint.findEntry("mainview");
    private boolean _inOperation;
-   private static final long ID;
+   private static final long ID = -4978371853589284601L;
    private static AutoHolsterViewerListener _instance;
 
    private AutoHolsterViewerListener() {

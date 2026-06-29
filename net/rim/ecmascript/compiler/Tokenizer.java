@@ -42,7 +42,7 @@ public class Tokenizer implements TokenConstants {
    private int _tokenStreamLength = 0;
    private boolean _onlyDecimalNumbers = false;
    private Compiler _compiler;
-   static final int EOF;
+   static final int EOF = -1;
    private static final String[] _keywordTable = new String[]{
       "break",
       "case",
@@ -157,10 +157,10 @@ public class Tokenizer implements TokenConstants {
       "::",
       "@"
    };
-   public static final int ACCURATE_LINES;
-   public static final int COMPRESSED_LINES;
-   public static final int ONE_LINE;
-   public static final int PRETTY_PRINT;
+   public static final int ACCURATE_LINES = 0;
+   public static final int COMPRESSED_LINES = 1;
+   public static final int ONE_LINE = 2;
+   public static final int PRETTY_PRINT = 3;
 
    void saveState() {
       this._ssPeekedToken = this._peekedToken;

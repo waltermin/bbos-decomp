@@ -33,10 +33,10 @@ public final class EmailSettingCollectionImpl
    private String _id;
    private static ContextObject _encodeContext = (ContextObject)(new Object(50, 50, 19));
    private static ContextObject _decodeContext = _encodeContext.clone();
-   private static final int EMAIL_SETTING_INITIAL_SIZE;
-   private static final String EMAIL_SETTING_DATA_NAME_STR;
+   private static final int EMAIL_SETTING_INITIAL_SIZE = 16;
+   private static final String EMAIL_SETTING_DATA_NAME_STR = "net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_DATA_NAME.";
    private static long EMAIL_SETTING_DATA_NAME;
-   private static final String EMAIL_SETTING_COLLECTION_ID_STR;
+   private static final String EMAIL_SETTING_COLLECTION_ID_STR = "net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_COLLECTION_ID.";
    private static long EMAIL_SETTING_COLLECTION_ID;
 
    private EmailSettingCollectionImpl(String id) {

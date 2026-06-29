@@ -1,12 +1,12 @@
 package net.rim.device.api.ui;
 
 public interface UiEngine {
-   int GLOBAL_MODAL;
-   int GLOBAL_QUEUE;
-   int GLOBAL_SHOW_LOWER;
-   int PUSH_SCREEN_METHOD;
-   int QUEUE_STATUS_METHOD;
-   long GUID_JVM_REFRESH_DISPLAY;
+   int GLOBAL_MODAL = 1;
+   int GLOBAL_QUEUE = 2;
+   int GLOBAL_SHOW_LOWER = 4;
+   int PUSH_SCREEN_METHOD = 0;
+   int QUEUE_STATUS_METHOD = 1;
+   long GUID_JVM_REFRESH_DISPLAY = -8341035019292897176L;
 
    void addUserInputEventListener(UserInputEventListener var1);
 

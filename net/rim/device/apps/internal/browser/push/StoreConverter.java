@@ -13,10 +13,10 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 
 final class StoreConverter extends BaseConverter {
-   private static final String PUSH_LOCATION_KEY;
-   private static final String SIG_HTTP_HEADER_NAME;
-   private static final String CONTENT_LOCATION;
-   private static final String CONTENT_TYPE;
+   private static final String PUSH_LOCATION_KEY = "X-Rim-Content-Location";
+   private static final String SIG_HTTP_HEADER_NAME = "X-ContentSig";
+   private static final String CONTENT_LOCATION = "/appdata/rim/idlescreen/carrier/";
+   private static final String CONTENT_TYPE = "Content-Type";
 
    @Override
    public final boolean canConvert(Object parameters) {

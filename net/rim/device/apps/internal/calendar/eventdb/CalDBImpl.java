@@ -74,14 +74,14 @@ class CalDBImpl implements CalDB {
    private long _calendarServiceID;
    private CalendarServiceManager _calendarServiceManager = CalendarServiceManager.getInstance();
    private CalDBImpl$CalendarBigSortedReadableList _eventsSortedByStartDate;
-   static final long SYNC_STATS_GUID;
-   private static final int MAX_DST_CHANGE_HANDLED;
-   private static final int DOUBLE_MAX_DST_CHANGE_HANDLED;
-   private static final int PERSISTENT_GC_THRESHOLD;
-   private static final long INVALID_TIME;
+   static final long SYNC_STATS_GUID = -2552927992871374063L;
+   private static final int MAX_DST_CHANGE_HANDLED = 7200000;
+   private static final int DOUBLE_MAX_DST_CHANGE_HANDLED = 14400000;
+   private static final int PERSISTENT_GC_THRESHOLD = 10;
+   private static final long INVALID_TIME = -1L;
    private static EventComparator _eventComparator = new EventComparator();
-   private static final int MIN_IDLE_TIME_SEC;
-   private static final int MIN_IDLE_TIME_MSEC;
+   private static final int MIN_IDLE_TIME_SEC = 5;
+   private static final int MIN_IDLE_TIME_MSEC = 1000;
 
    boolean init(long calendarServiceID) {
       this._recurCache = new RecurCache();

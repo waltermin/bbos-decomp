@@ -18,22 +18,22 @@ public final class MapsServices implements GlobalEventListener {
    private boolean _showIcon = false;
    private boolean _mapsDisabled = false;
    private String _disabledMessage = null;
-   private static final long GUID;
-   private static final String MAPS_MODULE_NAME;
-   public static final String SERVICEBOOK_UID;
-   public static final String SERVICEBOOK_CID;
-   private static final int ICON_VISIBLE;
-   private static final int DISABLE_MAPS;
-   private static final int DISABLE_MESSAGE;
-   private static final int MDS;
-   private static final int MAPS_URL;
-   private static final int MAPS_CONTEXT;
-   private static final int LOCATE_URL;
-   private static final int LOCATE_CONTEXT;
-   private static final int ROUTE_URL;
-   private static final int ROUTE_CONTEXT;
-   private static final int POI_URL;
-   private static final int POI_CONTEXT;
+   private static final long GUID = -8658320507517835992L;
+   private static final String MAPS_MODULE_NAME = "net_rim_bb_lbs";
+   public static final String SERVICEBOOK_UID = "LBS";
+   public static final String SERVICEBOOK_CID = "LbsConfig";
+   private static final int ICON_VISIBLE = 36;
+   private static final int DISABLE_MAPS = 37;
+   private static final int DISABLE_MESSAGE = 38;
+   private static final int MDS = 39;
+   private static final int MAPS_URL = 61;
+   private static final int MAPS_CONTEXT = 62;
+   private static final int LOCATE_URL = 64;
+   private static final int LOCATE_CONTEXT = 65;
+   private static final int ROUTE_URL = 67;
+   private static final int ROUTE_CONTEXT = 68;
+   private static final int POI_URL = 70;
+   private static final int POI_CONTEXT = 71;
 
    public final boolean isRimBranded() {
       int id = Branding.getVendorId();

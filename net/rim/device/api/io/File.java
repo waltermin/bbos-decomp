@@ -9,7 +9,7 @@ import net.rim.device.internal.io.file.FileSystemInfo;
 import net.rim.device.internal.system.EventDispatchManager;
 
 public final class File {
-   public static final int FILESYSTEM_PATRIOT;
+   public static final int FILESYSTEM_PATRIOT = 0;
 
    private File() {
    }

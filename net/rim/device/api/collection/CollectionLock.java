@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public final class CollectionLock {
    private static CollectionLock _lockObject;
-   private static final long GLOBAL_COLLECTION_LOCK_OBJECT_LUID;
+   private static final long GLOBAL_COLLECTION_LOCK_OBJECT_LUID = 26644082433128156L;
 
    private CollectionLock() {
    }

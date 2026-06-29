@@ -16,12 +16,12 @@ public final class TextFlowNative$Lines {
    private short[] _bidiStateIndex = new short[0];
    private byte[] _bidiState = new byte[0];
    private int _bidiStateCount = 0;
-   public static final int KParStartFlag;
-   public static final int KParEndFlag;
-   public static final int KForcedStartFlag;
-   public static final int KForcedEndFlag;
-   public static final int KRightToLeftFlag;
-   public static final int KNeedsBidiReorderingFlag;
+   public static final int KParStartFlag = 1;
+   public static final int KParEndFlag = 2;
+   public static final int KForcedStartFlag = 4;
+   public static final int KForcedEndFlag = 8;
+   public static final int KRightToLeftFlag = 16;
+   public static final int KNeedsBidiReorderingFlag = 128;
 
    public final void reset() {
       this._count = 0;

@@ -5,9 +5,9 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class ProfilesOptions$ProfilesOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int MIN_DATA_LENGTH;
-   private static final int DATA_LENGTH;
-   private static final int DB_VERSION;
+   private static final int MIN_DATA_LENGTH = 4;
+   private static final int DATA_LENGTH = 8;
+   private static final int DB_VERSION = 1;
 
    @Override
    public final String getSyncName() {

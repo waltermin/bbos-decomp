@@ -10,10 +10,10 @@ public class MessagePropertiesDefaults {
    private MessagePropertiesDefaults$MessagePropertiesDefaultsPersistedData _persistedData = (MessagePropertiesDefaults$MessagePropertiesDefaultsPersistedData)this._persistedDataHolder
       .getContents();
    private MessagePropertiesDefaults$MessagePropertiesDefaultsSyncItem _syncItem;
-   private static final long ID;
+   private static final long ID = -1345867410942591367L;
    private static MessagePropertiesDefaults _instance;
-   private static final long PERSISTED_DATA;
-   private static final long ENCODING_UID_PGP_UNIVERSAL_DEFAULT;
+   private static final long PERSISTED_DATA = 8944909432115055420L;
+   private static final long ENCODING_UID_PGP_UNIVERSAL_DEFAULT = -742709496102783169L;
 
    public static MessagePropertiesDefaults getInstance() {
       if (_instance == null) {

@@ -6,8 +6,8 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.component.SimpleInputDialog;
 
 final class UssdInputDialog extends SimpleInputDialog {
-   private static final int MIN_USSD_INPUT_LENGTH;
-   private static final int MAX_USSD_INPUT_LENGTH;
+   private static final int MIN_USSD_INPUT_LENGTH = 1;
+   private static final int MAX_USSD_INPUT_LENGTH = 229;
 
    UssdInputDialog(String msg) {
       super(0, msg, 1, 229, 33554432);

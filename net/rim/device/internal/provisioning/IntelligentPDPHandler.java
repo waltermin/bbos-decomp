@@ -11,12 +11,12 @@ import net.rim.device.internal.system.RadioInternal;
 class IntelligentPDPHandler implements ProvisioningHandler, SystemListener2 {
    private boolean _enabled;
    private boolean _initialized = false;
-   private static final long GUID;
-   private static final int BRANDING_ON;
-   private static final int BRANDING_OFF;
-   private static final int PROVISIONING_ON;
-   private static final int PROVISIONING_OFF;
-   private static final int RADIO_MULTIPLE_PDP_ENABLE;
+   private static final long GUID = -7994417364447547294L;
+   private static final int BRANDING_ON = 1114787694;
+   private static final int BRANDING_OFF = 1114787686;
+   private static final int PROVISIONING_ON = 1349668718;
+   private static final int PROVISIONING_OFF = 1349668710;
+   private static final int RADIO_MULTIPLE_PDP_ENABLE = 113;
 
    public IntelligentPDPHandler() {
       EventLogger.register(-7994417364447547294L, "net.rim.bbprotectmode", 2);

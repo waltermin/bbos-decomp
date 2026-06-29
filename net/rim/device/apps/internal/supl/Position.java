@@ -5,8 +5,8 @@ final class Position {
    private PositionEstimate posEst;
    private Velocity velocity;
    private byte optionals;
-   static final byte POS_OPT_VEL;
-   static final byte NUM_OPT_ELEMENTS;
+   static final byte POS_OPT_VEL = 1;
+   static final byte NUM_OPT_ELEMENTS = 1;
 
    final void decode(Nibbler nib) {
       nib.getBit();

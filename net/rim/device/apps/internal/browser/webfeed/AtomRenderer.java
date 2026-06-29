@@ -23,15 +23,15 @@ final class AtomRenderer extends Renderer {
    private ContentReadEvent _contentRead;
    private PipeContext _pipePosition;
    private boolean _append;
-   private static final int FEED;
-   private static final int ENTRY;
-   private static final int TITLE;
-   private static final int LINK;
-   private static final int CONTENT;
-   private static final int UPDATED;
-   private static final int ID;
-   private static final int ISSUED;
-   private static final int SUMMARY;
+   private static final int FEED = 0;
+   private static final int ENTRY = 1;
+   private static final int TITLE = 2;
+   private static final int LINK = 3;
+   private static final int CONTENT = 4;
+   private static final int UPDATED = 5;
+   private static final int ID = 6;
+   private static final int ISSUED = 7;
+   private static final int SUMMARY = 8;
    private static String[] TAGS = new String[]{"feed", "entry", "title", "link", "content", "updated", "id", "issued", "summary"};
 
    public AtomRenderer(HttpConnection connection, RenderingSession renderingSession, RenderingApplication renderingApplication, String referrer, int flags) {

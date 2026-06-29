@@ -19,7 +19,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.message.ThemeRequest;
 import net.rim.plazmic.internal.contentpreview.dispatcher.message.VoidMessage;
 
 public class AbstractDispatcher implements Dispatcher {
-   public static final String rcsid;
+   public static final String rcsid = "$Id: $";
 
    protected Model request(Model _1) {
       throw null;

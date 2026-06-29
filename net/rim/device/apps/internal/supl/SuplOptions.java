@@ -15,7 +15,7 @@ public final class SuplOptions {
    private Fqdn slpAddress = new Fqdn();
    private Object[] suplInfo;
    String uri;
-   static final int SUPL_PORT;
+   static final int SUPL_PORT = 7275;
    private static PersistentObject persist;
    private static long MY_KEY = -5700456430655177747L;
 

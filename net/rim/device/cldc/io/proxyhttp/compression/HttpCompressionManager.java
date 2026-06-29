@@ -10,16 +10,16 @@ public final class HttpCompressionManager {
    private final Object _loadLock = new Object();
    private Hashtable _uidToMessageEncoder = (Hashtable)(new Object(5));
    private IntHashtable _messageEncoderCache = (IntHashtable)(new Object(3));
-   private static final String STRING_codebookURLPrefix;
-   private static final String STRING_codebookURLPostfix;
-   private static final String STRING_codebookXslURL;
-   private static final String STRING_xRimContentTranscoder;
-   private static final String STRING_xRimXsltUrl;
-   private static final String STRING_httpAccept;
-   private static final String STRING_xRimForcedHttpCompression;
-   private static final String STRING_transformedCodebookMIMEType;
-   private static final String STRING_xmlTranscoder;
-   public static final int DEFAULT_COMPRESSION_VERSION;
+   private static final String STRING_codebookURLPrefix = "www.blackberry.net/go/mobile/mds/http/codebook_";
+   private static final String STRING_codebookURLPostfix = ".xml";
+   private static final String STRING_codebookXslURL = "http://www.blackberry.net/go/mobile/mds/http/codebook2prop.xsl";
+   private static final String STRING_xRimContentTranscoder = "Content-Transcoder";
+   private static final String STRING_xRimXsltUrl = "x-rim-xsl-url";
+   private static final String STRING_httpAccept = "Accept";
+   private static final String STRING_xRimForcedHttpCompression = "x-rim-forced-http-compression";
+   private static final String STRING_transformedCodebookMIMEType = "text/plain";
+   private static final String STRING_xmlTranscoder = "vnd.rim.xml";
+   public static final int DEFAULT_COMPRESSION_VERSION = 16;
    private static final MessageEncoder DEFAULT_MESSAGE_ENCODER = new DefaultMessageEncoder();
    private static final HttpCompressionManager INSTANCE = new HttpCompressionManager();
 

@@ -20,8 +20,8 @@ public class StreamDatagramAddressBase extends DatagramAddressBase implements St
    private static String TRUE = "true";
    private static String TCP_SCHEME = "tcp";
    private static String SIMULTCP_SCHEME = "simultcp";
-   public static final int TCP_IP_ADDRESS_NONE;
-   public static final int TCP_PORT_NONE;
+   public static final int TCP_IP_ADDRESS_NONE = -1;
+   public static final int TCP_PORT_NONE = -1;
 
    public String getApnName() {
       return this._apnName;

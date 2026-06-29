@@ -5,14 +5,14 @@ import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.IntHashtable;
 
 public final class MessageLookups {
-   public static final long CMIME_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long PIN_CMIME_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long GME_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long SMS_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long VOICE_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long IMPLUS_REFERENCE_IDENTIFIER_LOOKUP;
-   public static final long CMIME_ORIGINAL_REFERENCE_IDENTIFIER_LOOKUP;
-   private static final long MESSAGE_LOOKUPS_PERSISTENT_STORE;
+   public static final long CMIME_REFERENCE_IDENTIFIER_LOOKUP = -4420850319371185992L;
+   public static final long PIN_CMIME_REFERENCE_IDENTIFIER_LOOKUP = 1844977059971836508L;
+   public static final long GME_REFERENCE_IDENTIFIER_LOOKUP = 431630751329425149L;
+   public static final long SMS_REFERENCE_IDENTIFIER_LOOKUP = -6051701886797080507L;
+   public static final long VOICE_REFERENCE_IDENTIFIER_LOOKUP = -7579072715623987642L;
+   public static final long IMPLUS_REFERENCE_IDENTIFIER_LOOKUP = 2623838111545834320L;
+   public static final long CMIME_ORIGINAL_REFERENCE_IDENTIFIER_LOOKUP = 4530015158237739359L;
+   private static final long MESSAGE_LOOKUPS_PERSISTENT_STORE = 2428421339051139361L;
 
    private MessageLookups() {
    }

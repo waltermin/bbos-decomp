@@ -11,20 +11,20 @@ public final class Deflater {
    private byte[] _overlay;
    private byte[] _head;
    private byte[] _prev;
-   public static final int MAX_WINDOW_BITS;
-   public static final int DEFAULT_WINDOW_BITS;
-   public static final int Z_SYNC_FLUSH;
-   public static final int Z_FULL_FLUSH;
-   public static final int Z_FINISH;
-   public static final int COMPRESSION_NONE;
-   public static final int COMPRESSION_BEST_SPEED;
-   public static final int COMPRESSION_BEST;
-   public static final int COMPRESSION_DEFAULT;
-   public static final int STRATEGY_FILTERED;
-   public static final int STRATEGY_HUFFMAN_ONLY;
-   public static final int STRATEGY_RLE;
-   public static final int STRATEGY_DEFAULT;
-   public static final int Z_DEF_MEM_LEVEL;
+   public static final int MAX_WINDOW_BITS = 15;
+   public static final int DEFAULT_WINDOW_BITS = 15;
+   public static final int Z_SYNC_FLUSH = 2;
+   public static final int Z_FULL_FLUSH = 3;
+   public static final int Z_FINISH = 4;
+   public static final int COMPRESSION_NONE = 0;
+   public static final int COMPRESSION_BEST_SPEED = 1;
+   public static final int COMPRESSION_BEST = 9;
+   public static final int COMPRESSION_DEFAULT = -1;
+   public static final int STRATEGY_FILTERED = 1;
+   public static final int STRATEGY_HUFFMAN_ONLY = 2;
+   public static final int STRATEGY_RLE = 3;
+   public static final int STRATEGY_DEFAULT = 0;
+   public static final int Z_DEF_MEM_LEVEL = 1;
 
    public Deflater(int level, int strategy, int windowbits) {
       this.init(level, windowbits, 1, strategy);

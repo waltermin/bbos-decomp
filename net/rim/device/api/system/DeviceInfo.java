@@ -10,24 +10,24 @@ import net.rim.device.internal.system.Security;
 import net.rim.vm.TraceBack;
 
 public final class DeviceInfo {
-   public static final int BSTAT_DEAD;
-   public static final int BSTAT_TOO_COLD;
-   public static final int BSTAT_TOO_HOT;
-   public static final int BSTAT_LOW;
-   public static final int BSTAT_NONE;
-   public static final int BSTAT_REVERSED;
-   public static final int BSTAT_UNKNOWN_BATTERY;
-   public static final int BSTAT_NO_TURN_ON;
-   public static final int BSTAT_NO_RADIO;
-   public static final int BSTAT_NO_CAMERA_FLASH;
-   public static final int BSTAT_CHARGING;
-   public static final int BSTAT_LOW_RATE_CHARGING;
-   public static final int BSTAT_IS_USING_EXTERNAL_POWER;
-   public static final int BSTAT_LEVEL_CHANGED;
-   public static final int BSTAT_NO_WLAN;
-   public static final int BSTAT_AC_CONTACTS;
-   public static final int INVALID_DEVICE_ID;
-   private static final String EMPTY_STRING;
+   public static final int BSTAT_DEAD = Integer.MIN_VALUE;
+   public static final int BSTAT_TOO_COLD = 1073741824;
+   public static final int BSTAT_TOO_HOT = 536870912;
+   public static final int BSTAT_LOW = 268435456;
+   public static final int BSTAT_NONE = 8388608;
+   public static final int BSTAT_REVERSED = 4194304;
+   public static final int BSTAT_UNKNOWN_BATTERY = 2097152;
+   public static final int BSTAT_NO_TURN_ON = 32768;
+   public static final int BSTAT_NO_RADIO = 16384;
+   public static final int BSTAT_NO_CAMERA_FLASH = 8192;
+   public static final int BSTAT_CHARGING = 1;
+   public static final int BSTAT_LOW_RATE_CHARGING = 8;
+   public static final int BSTAT_IS_USING_EXTERNAL_POWER = 4;
+   public static final int BSTAT_LEVEL_CHANGED = 2;
+   public static final int BSTAT_NO_WLAN = 4096;
+   public static final int BSTAT_AC_CONTACTS = 16;
+   public static final int INVALID_DEVICE_ID = -1;
+   private static final String EMPTY_STRING = "";
 
    private DeviceInfo() {
    }

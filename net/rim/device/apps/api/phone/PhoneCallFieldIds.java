@@ -1,21 +1,21 @@
 package net.rim.device.apps.api.phone;
 
 public interface PhoneCallFieldIds {
-   byte PHONE_CALL_RECORD_ID;
-   int PHONE_CALL;
-   int TYPE;
-   int ELAPSED_TIME;
-   int TIME_STAMP;
-   int REF_ID;
-   int ERROR_CODE;
-   int UID;
-   int MEMO;
-   int CALLER_ID_INFO_PHONE_NUMBER;
-   int CALLER_ID_INFO_ADDRESS_UID;
-   int PHONE_NUMBER_TYPE;
-   int PHONE_NUMBER_VALUE;
-   int CALLER_ID_INFO_FLAGS;
-   int CLIP_DISPLAY_MODE;
-   int DC_PHONE_NUMBER_TYPE;
-   int LINE_ID;
+   byte PHONE_CALL_RECORD_ID = 112;
+   int PHONE_CALL = 1;
+   int TYPE = 2;
+   int ELAPSED_TIME = 3;
+   int TIME_STAMP = 4;
+   int REF_ID = 5;
+   int ERROR_CODE = 6;
+   int UID = 7;
+   int MEMO = 8;
+   int CALLER_ID_INFO_PHONE_NUMBER = 9;
+   int CALLER_ID_INFO_ADDRESS_UID = 10;
+   int PHONE_NUMBER_TYPE = 11;
+   int PHONE_NUMBER_VALUE = 12;
+   int CALLER_ID_INFO_FLAGS = 13;
+   int CLIP_DISPLAY_MODE = 14;
+   int DC_PHONE_NUMBER_TYPE = 15;
+   int LINE_ID = 16;
 }

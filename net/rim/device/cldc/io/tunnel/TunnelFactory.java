@@ -3,8 +3,8 @@ package net.rim.device.cldc.io.tunnel;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class TunnelFactory {
-   public static final long ID;
-   public static final String STR;
+   public static final long ID = 4292459735430940092L;
+   public static final String STR = "net.rim.tunnel";
 
    public static Tunnel openTunnel(TunnelConfig config) {
       return getTunnelFactory().open(config);

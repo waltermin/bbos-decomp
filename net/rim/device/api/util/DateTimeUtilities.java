@@ -6,12 +6,12 @@ import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.vm.Array;
 
 public final class DateTimeUtilities {
-   public static final long GUID_DATE_CHANGED;
-   public static final long GUID_TIMEZONE_CHANGED;
-   public static final int ONESECOND;
-   public static final int ONEMINUTE;
-   public static final int ONEHOUR;
-   public static final int ONEDAY;
+   public static final long GUID_DATE_CHANGED = 8877632280522743328L;
+   public static final long GUID_TIMEZONE_CHANGED = 3596208183088439728L;
+   public static final int ONESECOND = 1000;
+   public static final int ONEMINUTE = 60000;
+   public static final int ONEHOUR = 3600000;
+   public static final int ONEDAY = 86400000;
    public static String GMT = "GMT";
    private static final int[] DAYS_IN_MONTH = new int[]{
       31,

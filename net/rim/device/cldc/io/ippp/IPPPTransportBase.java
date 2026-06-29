@@ -25,15 +25,15 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
    private int _sysCheckTimeout = 10000;
    private int _numSysCheckSentId;
    private int _numSysCheckSentAndWorkedId;
-   private static final int EVENT_LOG_TX;
-   private static final int EVENT_LOG_RX;
-   private static final int EVENT_LOG_SYS_CHCK;
-   public static final byte VERSION;
-   public static final long IPPP_TRANSPORT_GUID;
-   private static final int DEFAULT_SYS_CHECK_TIMEOUT;
-   private static final long SYS_CHECK_PERSISTENT_ID;
-   private static final long SYS_CHECK_SENT_PERSISTENT_ID;
-   private static final long SYS_CHECK_SENT_AND_WORKED_PERSISTENT_ID;
+   private static final int EVENT_LOG_TX = 1417169218;
+   private static final int EVENT_LOG_RX = 1383614786;
+   private static final int EVENT_LOG_SYS_CHCK = 1417171779;
+   public static final byte VERSION = 16;
+   public static final long IPPP_TRANSPORT_GUID = 6406224406390975741L;
+   private static final int DEFAULT_SYS_CHECK_TIMEOUT = 10000;
+   private static final long SYS_CHECK_PERSISTENT_ID = -5227468754307966203L;
+   private static final long SYS_CHECK_SENT_PERSISTENT_ID = -3040950248556710806L;
+   private static final long SYS_CHECK_SENT_AND_WORKED_PERSISTENT_ID = -367257579294980944L;
    static Class class$net$rim$device$cldc$io$ippp$Transport;
 
    void sysCheckWorked() {

@@ -11,8 +11,8 @@ public class Slide extends Manager {
    private ActiveRichTextFieldWrapper _textComponent;
    private Region _imageRegion = (Region)(new Object(163624922399113216L));
    private Region _textRegion;
-   public static final int DEFAULT_STYLE;
-   public static final int MISSING_IMG_STYLE;
+   public static final int DEFAULT_STYLE = 0;
+   public static final int MISSING_IMG_STYLE = 1;
 
    public Slide(long style, int imageRegionBackgroundColor, int textRegionBackgroundColor) {
       super(style | 1125899906842624L | 281474976710656L | 1152921504606846976L | 2305843009213693952L);

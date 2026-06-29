@@ -13,12 +13,12 @@ public final class M3UPlaylist extends Playlist {
    private String[] _urls = new Object[0];
    private String[] _titles = new Object[0];
    private int[] _lengths = new int[0];
-   private static final String UTF8;
-   private static final String CHARSET_UTF8;
-   public static final String CONTENT_TYPE;
-   private static final String FORMAT_DESCRIPTOR;
-   private static final String RECORD_MARKER;
-   private static final char NEW_LINE;
+   private static final String UTF8 = "UTF-8";
+   private static final String CHARSET_UTF8 = ";charset=UTF-8";
+   public static final String CONTENT_TYPE = "audio/x-mpegurl";
+   private static final String FORMAT_DESCRIPTOR = "#EXTM3U";
+   private static final String RECORD_MARKER = "#EXTINF";
+   private static final char NEW_LINE = '\n';
 
    public M3UPlaylist() {
    }

@@ -8,18 +8,18 @@ import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 
 final class COCModelFactory {
-   public static final int URI;
-   public static final int URI_HTTP;
-   public static final int URI_HTTP_WWW;
-   public static final int URI_HTTPS;
-   public static final int URI_HTTPS_WWW;
-   public static final int CO;
-   public static final int INVALIDATE_OBJECT;
-   public static final int INVALIDATE_SERVICE;
-   private static final int DOT_COM;
-   private static final int DOT_EDU;
-   private static final int DOT_NET;
-   private static final int DOT_ORG;
+   public static final int URI = 5;
+   public static final int URI_HTTP = 6;
+   public static final int URI_HTTP_WWW = 7;
+   public static final int URI_HTTPS = 8;
+   public static final int URI_HTTPS_WWW = 9;
+   public static final int CO = 5;
+   public static final int INVALIDATE_OBJECT = 6;
+   public static final int INVALIDATE_SERVICE = 7;
+   private static final int DOT_COM = 133;
+   private static final int DOT_EDU = 134;
+   private static final int DOT_NET = 135;
+   private static final int DOT_ORG = 136;
 
    public static final Object createCOCModel(DataInputStream inStream, HttpHeaders headers) {
       try {

@@ -1,10 +1,10 @@
 package net.rim.device.cldc.util;
 
 final class TimeZoneData {
-   private static final short ONE_MINUTE;
-   private static final short ONE_HOUR;
-   static final int NUMBER_OF_ZONES;
-   static final int ZONE_DATA_ELEMENTS;
+   private static final short ONE_MINUTE = 1;
+   private static final short ONE_HOUR = 60;
+   static final int NUMBER_OF_ZONES = 88;
+   static final int ZONE_DATA_ELEMENTS = 9;
    static final byte[] ZONE_ID_DATA = new byte[]{
       80,
       97,

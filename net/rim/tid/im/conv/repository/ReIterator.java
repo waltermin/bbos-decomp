@@ -34,12 +34,12 @@ public class ReIterator implements PersistentContentListener {
    protected boolean iHasWildcards;
    protected boolean iStartFromThird;
    private BitSet _foundSubst;
-   public static final char ASTERISK;
-   public static final char OPEN_BRACKET;
-   public static final char CLOSED_BRACKET;
-   public static final char DOT;
-   private static final int MAX_WILDCARD_NO;
-   private static final int INC;
+   public static final char ASTERISK = '\u0001';
+   public static final char OPEN_BRACKET = '\u0002';
+   public static final char CLOSED_BRACKET = '\u0003';
+   public static final char DOT = '\u0004';
+   private static final int MAX_WILDCARD_NO = 10;
+   private static final int INC = 10;
 
    public ReIterator(int aMaxStackSize) {
       this.iMaxStackSize = aMaxStackSize;

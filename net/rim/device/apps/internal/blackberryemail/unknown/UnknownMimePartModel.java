@@ -36,9 +36,9 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
    private Object _nameEncoding;
    protected boolean _isHidden;
    private boolean _isEncoded;
-   public static final int MORE_REQUEST_SENT;
-   public static final int MORE_REQUEST_RECEIVED;
-   private static final int UNKNOWN_ATTACHMENT_HEADER_LENGTH;
+   public static final int MORE_REQUEST_SENT = 1;
+   public static final int MORE_REQUEST_RECEIVED = 2;
+   private static final int UNKNOWN_ATTACHMENT_HEADER_LENGTH = 10;
    private static final byte[] UNKNOWN_ATTACHMENT_TRAILER = new byte[]{
       0, 97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 47, 111, 99, 116, 101, 116, 45, 115, 116, 114, 101, 97, 109, 0
    };

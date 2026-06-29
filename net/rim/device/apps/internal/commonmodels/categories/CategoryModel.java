@@ -16,7 +16,7 @@ public final class CategoryModel implements PersistableRIMModel, SyncObject, Con
    private int _id;
    private Object _nameEncoding;
    private String _key;
-   static final int CATEGORY_NAME_TAG;
+   static final int CATEGORY_NAME_TAG = 1;
 
    public final String getName() {
       try {

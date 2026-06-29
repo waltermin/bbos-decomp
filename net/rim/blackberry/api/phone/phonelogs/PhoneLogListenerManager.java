@@ -11,11 +11,11 @@ final class PhoneLogListenerManager implements CollectionListener {
    private Vector _listeners;
    private PersistedSortedCollection _calls = PhoneFolders.getContainedItems(5390902206192375236L);
    private PersistedSortedCollection _missedCalls = PhoneFolders.getContainedItems(7042951934619290849L);
-   private static final long ID;
-   static final int LOG_ADDED;
-   static final int LOG_UPDATED;
-   static final int LOG_REMOVED;
-   static final int RESET;
+   private static final long ID = -903902942794875202L;
+   static final int LOG_ADDED = 0;
+   static final int LOG_UPDATED = 1;
+   static final int LOG_REMOVED = 2;
+   static final int RESET = 3;
 
    final void register(PhoneLogListener l) {
       if (!this._listeners.contains(l)) {

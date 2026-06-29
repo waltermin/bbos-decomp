@@ -10,8 +10,8 @@ final class Tooltip$TooltipPollingThread extends Thread {
    private int _previous;
    private long _notificationTime;
    private UiApplication _app = UiApplication.getUiApplication();
-   private static final int TIP_DELAY;
-   private static final int TIP_DELAY_MS;
+   private static final int TIP_DELAY = 1;
+   private static final int TIP_DELAY_MS = 1000;
    private static Tooltip$TooltipPollingThread _instance;
 
    private static final synchronized Tooltip$TooltipPollingThread getInstance() {

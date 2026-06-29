@@ -11,7 +11,7 @@ public final class BufferedInputStream extends InputStream {
    private int _currentMarkPos = -1;
    private int _maxMarkPos;
    private boolean _closed;
-   private static final int BUFFER_SIZE;
+   private static final int BUFFER_SIZE = 2048;
 
    public BufferedInputStream(InputStream in) {
       this(in, 2048);

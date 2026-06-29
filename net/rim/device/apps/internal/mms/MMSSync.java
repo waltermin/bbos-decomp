@@ -14,8 +14,8 @@ import net.rim.vm.Array;
 
 public final class MMSSync implements SyncCollection, SyncCollectionStatistics {
    private SyncConverter _converter;
-   private static final String DATABASE_NAME;
-   public static final int CURRENT_VERSION;
+   private static final String DATABASE_NAME = "MMS Messages";
+   public static final int CURRENT_VERSION = 1;
 
    public MMSSync(SyncConverter converter) {
       this._converter = converter;

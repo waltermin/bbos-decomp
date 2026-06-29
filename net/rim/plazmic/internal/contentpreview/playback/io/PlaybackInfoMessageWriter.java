@@ -6,7 +6,7 @@ import net.rim.plazmic.internal.contentpreview.playback.PlaybackInfoHandler;
 
 public final class PlaybackInfoMessageWriter extends AbstractMessageWriter implements PlaybackInfoHandler {
    private final byte[] HEADER = new byte[]{0, 64};
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/playback/PlaybackInfoMessageWriter.java#1 $";
 
    public PlaybackInfoMessageWriter(OutputStream out) {
       super(out);

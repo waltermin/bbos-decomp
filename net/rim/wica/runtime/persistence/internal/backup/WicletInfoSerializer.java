@@ -10,31 +10,31 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class WicletInfoSerializer extends AbstractSerializer {
    private static WicletInfoSerializer _instance;
-   private static final byte NAME;
-   private static final byte URI;
-   private static final byte VERSION;
-   private static final byte VENDOR;
-   private static final byte DESCRIPTION;
-   private static final byte TARGET_FOLDER;
-   private static final byte SYSTEM_APPLICATION;
-   private static final byte ICON;
-   private static final byte RIBBON_VISIBLE;
-   private static final byte PROCESS_MSGS_IN_BACKGROUND;
-   private static final byte ENTRY_POINT;
-   private static final byte PERSISTENCE_MODE;
-   private static final byte MESSAGE_DELIVERY;
-   private static final byte ALERTS;
-   private static final byte ID;
-   private static final byte DEDICATED_SERVER_ID;
-   private static final byte INSTALL_DATE;
-   private static final byte STORE_ID;
-   private static final byte QUARANTINED;
-   private static final byte QUARANTINE_TASK;
-   private static final byte UNINSTALL_TASK;
-   private static final byte UPGRADE_TASK;
-   private static final byte HOVER_ICON;
-   private static final byte LANGUAGES;
-   private static final byte LANGUAGE_INDEX;
+   private static final byte NAME = 0;
+   private static final byte URI = 1;
+   private static final byte VERSION = 2;
+   private static final byte VENDOR = 3;
+   private static final byte DESCRIPTION = 4;
+   private static final byte TARGET_FOLDER = 5;
+   private static final byte SYSTEM_APPLICATION = 6;
+   private static final byte ICON = 7;
+   private static final byte RIBBON_VISIBLE = 8;
+   private static final byte PROCESS_MSGS_IN_BACKGROUND = 9;
+   private static final byte ENTRY_POINT = 10;
+   private static final byte PERSISTENCE_MODE = 11;
+   private static final byte MESSAGE_DELIVERY = 12;
+   private static final byte ALERTS = 13;
+   private static final byte ID = 14;
+   private static final byte DEDICATED_SERVER_ID = 15;
+   private static final byte INSTALL_DATE = 16;
+   private static final byte STORE_ID = 17;
+   private static final byte QUARANTINED = 19;
+   private static final byte QUARANTINE_TASK = 21;
+   private static final byte UNINSTALL_TASK = 22;
+   private static final byte UPGRADE_TASK = 23;
+   private static final byte HOVER_ICON = 24;
+   private static final byte LANGUAGES = 25;
+   private static final byte LANGUAGE_INDEX = 26;
 
    static final WicletInfoSerializer getInstance() {
       if (_instance == null) {

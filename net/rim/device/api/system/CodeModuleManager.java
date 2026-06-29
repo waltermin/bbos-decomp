@@ -11,25 +11,25 @@ import net.rim.vm.Process;
 import net.rim.vm.TraceBack;
 
 public final class CodeModuleManager {
-   public static final int CMM_OK;
-   public static final int CMM_OK_MODULE_OVERWRITTEN;
-   public static final int CMM_HASH_INVALID;
-   public static final int CMM_SIGNATURE_INVALID;
-   public static final int CMM_MODULE_INVALID;
-   public static final int CMM_MODULE_INCOMPATIBLE;
-   public static final int CMM_OK_MODULE_MARKED_FOR_DELETION;
-   public static final int CMM_MODULE_IN_USE;
-   public static final int CMM_MODULE_IN_USE_BY_PERSISTENT_STORE;
-   public static final int CMM_MODULE_REQUIRED;
-   public static final int CMM_HANDLE_INVALID;
-   public static final int CMM_OUT_OF_MEMORY;
-   public static final int CMM_MODULE_EXCLUDED;
-   public static final int CMM_TRANSACTION_INVALID;
-   public static final int CMM_TRANSACTION_COMPLETE;
-   public static final int CMM_TRANSACTION_RESET_REQUIRED;
-   public static final int MODULE_FLAG_DELETE;
-   public static final int MODULE_FLAG_OTA;
-   public static final int MODULE_FLAG_INSTALLED;
+   public static final int CMM_OK = 0;
+   public static final int CMM_OK_MODULE_OVERWRITTEN = 1;
+   public static final int CMM_HASH_INVALID = 2;
+   public static final int CMM_SIGNATURE_INVALID = 3;
+   public static final int CMM_MODULE_INVALID = 4;
+   public static final int CMM_MODULE_INCOMPATIBLE = 5;
+   public static final int CMM_OK_MODULE_MARKED_FOR_DELETION = 6;
+   public static final int CMM_MODULE_IN_USE = 7;
+   public static final int CMM_MODULE_IN_USE_BY_PERSISTENT_STORE = 8;
+   public static final int CMM_MODULE_REQUIRED = 9;
+   public static final int CMM_HANDLE_INVALID = 10;
+   public static final int CMM_OUT_OF_MEMORY = 11;
+   public static final int CMM_MODULE_EXCLUDED = 12;
+   public static final int CMM_TRANSACTION_INVALID = 13;
+   public static final int CMM_TRANSACTION_COMPLETE = 14;
+   public static final int CMM_TRANSACTION_RESET_REQUIRED = 15;
+   public static final int MODULE_FLAG_DELETE = 1;
+   public static final int MODULE_FLAG_OTA = 2;
+   public static final int MODULE_FLAG_INSTALLED = 4;
 
    private CodeModuleManager() {
    }

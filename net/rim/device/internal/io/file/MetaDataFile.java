@@ -28,29 +28,29 @@ public final class MetaDataFile {
    private long[] _fileModTimes = new long[0];
    private int _numEntries;
    private boolean _isRemovable;
-   private static final int VERSION;
-   private static final int MAGIC;
+   private static final int VERSION = 7;
+   private static final int MAGIC = 604315651;
    static String THUMBS_DB_FILE = "BBThumbs.dat";
    private static String TEMP_DB_FILE = "BBThumbs.tmp";
-   static final int DESIRED_THUMBNAIL_HEIGHT;
-   static final int DESIRED_THUMBNAIL_WIDTH;
-   private static final int ENTRY_TAG;
-   public static final int METADATA_THUMBNAIL_IMAGE;
-   public static final int METADATA_TITLE;
-   public static final int METADATA_DURATION;
-   public static final int METADATA_ARTIST;
-   public static final int METADATA_ALBUM;
-   public static final int METADATA_GENRE;
-   public static final int METADATA_TRACK_NUMBER;
-   public static final int METADATA_BOOKMARK;
-   public static final int METADATA_MAX;
-   private static final int METADATA_END;
-   private static final int MAX_SANE_STRING_SIZE;
-   private static final int MAX_SANE_THUMB_SIZE;
+   static final int DESIRED_THUMBNAIL_HEIGHT = 84;
+   static final int DESIRED_THUMBNAIL_WIDTH = 112;
+   private static final int ENTRY_TAG = 1;
+   public static final int METADATA_THUMBNAIL_IMAGE = 0;
+   public static final int METADATA_TITLE = 1;
+   public static final int METADATA_DURATION = 2;
+   public static final int METADATA_ARTIST = 3;
+   public static final int METADATA_ALBUM = 4;
+   public static final int METADATA_GENRE = 5;
+   public static final int METADATA_TRACK_NUMBER = 6;
+   public static final int METADATA_BOOKMARK = 7;
+   public static final int METADATA_MAX = 8;
+   private static final int METADATA_END = 255;
+   private static final int MAX_SANE_STRING_SIZE = 1000;
+   private static final int MAX_SANE_THUMB_SIZE = 37632;
    private static Object NO_DATA_AVAILABLE = new Object();
    private static Object[] EMPTY_META_DATA = new Object[8];
    private static WeakReference _tempData;
-   private static final long METADATAFILE_GUID;
+   private static final long METADATAFILE_GUID = 5383068212830684791L;
    private static Vector _openFileList;
 
    private MetaDataFile(String path) {
@@ -2242,7 +2242,7 @@ public final class MetaDataFile {
       // 50: lcmp
       // 51: ifeq 6e
       // 54: bipush 8
-      // 56: anewarray 4108
+      // 56: anewarray 4145
       // 59: astore 7
       // 5b: aload 7
       // 5d: bipush 0
@@ -2307,7 +2307,7 @@ public final class MetaDataFile {
       //
       // Bytecode:
       // 00: bipush 8
-      // 02: anewarray 4188
+      // 02: anewarray 4225
       // 05: astore 4
       // 07: aload 4
       // 09: bipush 7

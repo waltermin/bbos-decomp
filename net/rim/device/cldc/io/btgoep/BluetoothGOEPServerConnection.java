@@ -19,8 +19,8 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
    private boolean _serviceRecordAdded;
    private BluetoothStreamConnection _connection;
    private boolean _connectionInUse;
-   private static final String PORT_NOT_OPEN;
-   private static final boolean DEBUG;
+   private static final String PORT_NOT_OPEN = "Port not open";
+   private static final boolean DEBUG = false;
 
    public BluetoothGOEPServerConnection(BluetoothURL url) {
       String serviceName = url.getName();

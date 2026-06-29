@@ -9,18 +9,18 @@ public final class SIMCardPhoneBookEntry {
    private int _fleetId;
    private int _urbanId;
    private String _phoneNumber;
-   public static final int MAX_NAME_LENGTH;
-   public static final int MAX_PHONE_NUMBER_LENGTH;
-   public static final int NUMBER_TYPE_MAIN_PHONE;
-   public static final int NUMBER_TYPE_PRIVATE_PHONE;
-   public static final int NUMBER_TYPE_HOME_PHONE;
-   public static final int NUMBER_TYPE_WORK_PHONE;
-   public static final int NUMBER_TYPE_MOBILE_PHONE;
-   public static final int NUMBER_TYPE_FAX;
-   public static final int NUMBER_TYPE_PAGER;
-   public static final int NUMBER_TYPE_TALK_GROUP;
-   public static final int NUMBER_TYPE_IP_ADDRESS;
-   public static final int NUMBER_TYPE_OTHER;
+   public static final int MAX_NAME_LENGTH = 12;
+   public static final int MAX_PHONE_NUMBER_LENGTH = 24;
+   public static final int NUMBER_TYPE_MAIN_PHONE = 0;
+   public static final int NUMBER_TYPE_PRIVATE_PHONE = 1;
+   public static final int NUMBER_TYPE_HOME_PHONE = 2;
+   public static final int NUMBER_TYPE_WORK_PHONE = 3;
+   public static final int NUMBER_TYPE_MOBILE_PHONE = 4;
+   public static final int NUMBER_TYPE_FAX = 5;
+   public static final int NUMBER_TYPE_PAGER = 6;
+   public static final int NUMBER_TYPE_TALK_GROUP = 7;
+   public static final int NUMBER_TYPE_IP_ADDRESS = 8;
+   public static final int NUMBER_TYPE_OTHER = 9;
 
    public final int getSlot() {
       return this._slot;

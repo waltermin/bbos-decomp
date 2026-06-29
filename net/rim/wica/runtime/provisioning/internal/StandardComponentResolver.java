@@ -8,7 +8,7 @@ public class StandardComponentResolver {
    boolean _builtComponents;
    UniqueCodeGenerator _uniqueCodeGenerator;
    WicletElement _wiclet;
-   private static final String STANDARD_COMPONENTS_DEFINITION_FILE;
+   private static final String STANDARD_COMPONENTS_DEFINITION_FILE = "standardcomponents.xml";
    static Class class$net$rim$wica$runtime$provisioning$internal$elements$DataElement;
    static Class class$net$rim$wica$runtime$provisioning$internal$elements$FieldElement;
    static Class class$net$rim$wica$runtime$provisioning$internal$elements$EnumerationElement;

@@ -12,23 +12,23 @@ import net.rim.device.api.util.LongIntHashtable;
 
 public class ActivationService {
    public Hashtable _listeners = new Hashtable(1);
-   protected static final long ACTIVATION_SERVICE_ID;
-   protected static final long ACTIVATION_KEY_ID;
-   public static final byte OTAKEYGEN_ABORT_REASON_NONE;
-   public static final byte OTAKEYGEN_ABORT_REASON_GENERAL;
-   public static final byte OTAKEYGEN_ABORT_REASON_NO_LONGTERM_KEY;
-   public static final byte OTAKEYGEN_ABORT_REASON_SERVICE_RESET;
-   public static final byte OTAKEYGEN_ABORT_REASON_MAX_RETRY;
-   public static final byte OTAKEYGEN_ABORT_REASON_KEY_VALIDATION;
-   public static final byte OTAKEYGEN_ABORT_REASON_USER_ALREADY_ACTIVE;
-   public static final byte OTAKEYGEN_ABORT_REASON_USER;
-   public static final byte OTAKEYGEN_ABORT_REASON_TIMEOUT;
-   public static final byte OTAKEYGEN_ABORT_REASON_NO_PASSWORD;
-   public static final byte OTAKEYGEN_ABORT_PIN_ALREADY_REGISTERED;
-   public static final byte OTAKEYGEN_ABORT_ITPOLICY_REJECTED;
-   public static final byte OTAKEYGEN_ABORT_NOT_AUTHORIZED;
-   public static final byte OTAKEYGEN_ABORT_REASON_SEND_ERROR;
-   public static final String PROVISIONING_CID;
+   protected static final long ACTIVATION_SERVICE_ID = -1320069024724775836L;
+   protected static final long ACTIVATION_KEY_ID = 6247846804872834637L;
+   public static final byte OTAKEYGEN_ABORT_REASON_NONE = 0;
+   public static final byte OTAKEYGEN_ABORT_REASON_GENERAL = 1;
+   public static final byte OTAKEYGEN_ABORT_REASON_NO_LONGTERM_KEY = 2;
+   public static final byte OTAKEYGEN_ABORT_REASON_SERVICE_RESET = 3;
+   public static final byte OTAKEYGEN_ABORT_REASON_MAX_RETRY = 4;
+   public static final byte OTAKEYGEN_ABORT_REASON_KEY_VALIDATION = 5;
+   public static final byte OTAKEYGEN_ABORT_REASON_USER_ALREADY_ACTIVE = 6;
+   public static final byte OTAKEYGEN_ABORT_REASON_USER = 7;
+   public static final byte OTAKEYGEN_ABORT_REASON_TIMEOUT = 8;
+   public static final byte OTAKEYGEN_ABORT_REASON_NO_PASSWORD = 9;
+   public static final byte OTAKEYGEN_ABORT_PIN_ALREADY_REGISTERED = 10;
+   public static final byte OTAKEYGEN_ABORT_ITPOLICY_REJECTED = 11;
+   public static final byte OTAKEYGEN_ABORT_NOT_AUTHORIZED = 12;
+   public static final byte OTAKEYGEN_ABORT_REASON_SEND_ERROR = 13;
+   public static final String PROVISIONING_CID = "PROVISIONING";
 
    public int attemptActivation(String _1, String _2, String _3) {
       throw null;

@@ -5,9 +5,9 @@ public final class DSACryptoSystem implements CryptoSystem {
    private CryptoTokenCryptoSystemData _cryptoTokenData;
    private int _hashCode;
    private boolean _verified;
-   public static final String SUN512;
-   public static final String SUN768;
-   public static final String SUN1024;
+   public static final String SUN512 = "SUN512";
+   public static final String SUN768 = "SUN768";
+   public static final String SUN1024 = "SUN1024";
 
    public final DSAKeyPair createDSAKeyPair() {
       return this._cryptoToken.createDSAKeyPair(this._cryptoTokenData);

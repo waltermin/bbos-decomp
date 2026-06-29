@@ -21,7 +21,7 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
    private VerbMenuItem _showShortFormVerb;
    private VerbMenuItem _showLongFormVerb;
    protected EmailMessageModel _messageModel;
-   private static final int HORIZONTAL_SPACER_PIXEL_WIDTH;
+   private static final int HORIZONTAL_SPACER_PIXEL_WIDTH = 3;
 
    SecureEmailMessageManager(long style, EmailMessageModel messageModel) {
       super(style);

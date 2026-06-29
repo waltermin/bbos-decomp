@@ -113,12 +113,12 @@ public final class VoiceApp
    private boolean _editingNotes;
    private boolean _foregroundedToEditNotes;
    private EditCallNotesScreen _editNotesScreen;
-   private static final long EVENT_LOG_GUID;
-   private static final long REDIAL_INFO_KEY;
-   private static final long SIM_CARD_KEY;
-   public static final int DEFAULT_AUDIO_VOLUME;
-   private static final int CS_FIRST_ALPHA_ID;
-   private static final int CS_SECOND_ALPHA_ID;
+   private static final long EVENT_LOG_GUID = 7963442286867385855L;
+   private static final long REDIAL_INFO_KEY = -5114641656481802126L;
+   private static final long SIM_CARD_KEY = 4897752255641431829L;
+   public static final int DEFAULT_AUDIO_VOLUME = 50;
+   private static final int CS_FIRST_ALPHA_ID = 0;
+   private static final int CS_SECOND_ALPHA_ID = 1;
    private static final Integer USSD_INPUT_DIALOG_COOKIE = (Integer)(new Object(0));
    private static Field[] RIBBON_COMPONENTS;
    private static final int[] COMPONENT_MAP = new int[]{4, 5, 6, 9, -804650997, 17, 18, 33, 41, 42, 43, 146, 147, 148, 153, 154};

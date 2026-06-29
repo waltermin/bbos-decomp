@@ -4,12 +4,12 @@ import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.internal.browser.stack.ModelResult;
 
 public interface PageModel extends PersistableRIMModel {
-   int STATUS_INITIAL;
-   int STATUS_LOADING;
-   int STATUS_PENDING;
-   int STATUS_LOADED;
-   int STATUS_OPENED;
-   int STATUS_ERROR;
+   int STATUS_INITIAL = 0;
+   int STATUS_LOADING = 1;
+   int STATUS_PENDING = 2;
+   int STATUS_LOADED = 3;
+   int STATUS_OPENED = 4;
+   int STATUS_ERROR = 5;
 
    long getLUID();
 

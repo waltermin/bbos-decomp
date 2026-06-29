@@ -17,7 +17,7 @@ import net.rim.device.apps.internal.browser.ui.DialogEnterString;
 import net.rim.device.internal.system.InternalServices;
 
 public final class SavePageToMessageListVerb extends BrowserVerb {
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 111;
 
    public SavePageToMessageListVerb() {
       super(16987184);

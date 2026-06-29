@@ -5,7 +5,7 @@ import net.rim.wica.runtime.script.ScriptMonitor;
 
 class WicletRuntimeImpl$ScriptMonitorImpl implements ScriptMonitor {
    private final WicletRuntimeImpl this$0;
-   private static final long DEFAULT_TIMEOUT;
+   private static final long DEFAULT_TIMEOUT = 20000L;
 
    private WicletRuntimeImpl$ScriptMonitorImpl(WicletRuntimeImpl this$0) {
       this.this$0 = this$0;

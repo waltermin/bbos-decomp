@@ -44,7 +44,7 @@ import net.rim.device.internal.system.ITPolicyInternal;
 import net.rim.vm.Array;
 
 public class SecureEmailUtilities {
-   private static final int BLOCK_SIZE;
+   private static final int BLOCK_SIZE = 1024;
 
    public long getCertificateProperties(Certificate _1) {
       throw null;

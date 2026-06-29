@@ -5,7 +5,7 @@ public class ConnectionInfo {
    private Object _connection;
    private long _length = -1;
    private String _source;
-   private static final int LENGTH_UNKNOWN;
+   private static final int LENGTH_UNKNOWN = -1;
 
    public String getContentType() {
       return this._contentType;

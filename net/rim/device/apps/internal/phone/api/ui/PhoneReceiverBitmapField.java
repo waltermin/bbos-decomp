@@ -18,16 +18,16 @@ public final class PhoneReceiverBitmapField extends Field implements PhoneEventL
    private boolean _listening;
    private int _callType;
    private AudioRouter _audioRouter;
-   private static final int UNMUTED_ICON_INDEX;
-   private static final int MUTED_ICON_INDEX;
-   private static final int SPEAKERPHONE_UNMUTED_ICON_INDEX;
-   private static final int SPEAKERPHONE_MUTED_ICON_INDEX;
-   private static final int ACTIVE_DIRECT_CONNECT_ICON_INDEX;
-   private static final int BLUETOOTH_UNMUTED_ICON_INDEX;
-   private static final int BLUETOOTH_MUTED_ICON_INDEX;
-   private static final int ICON_COUNT;
-   private static final int DEFAULT_HEIGHT;
-   private static final int DEFAULT_WIDTH;
+   private static final int UNMUTED_ICON_INDEX = 0;
+   private static final int MUTED_ICON_INDEX = 1;
+   private static final int SPEAKERPHONE_UNMUTED_ICON_INDEX = 2;
+   private static final int SPEAKERPHONE_MUTED_ICON_INDEX = 3;
+   private static final int ACTIVE_DIRECT_CONNECT_ICON_INDEX = 4;
+   private static final int BLUETOOTH_UNMUTED_ICON_INDEX = 5;
+   private static final int BLUETOOTH_MUTED_ICON_INDEX = 6;
+   private static final int ICON_COUNT = 7;
+   private static final int DEFAULT_HEIGHT = 40;
+   private static final int DEFAULT_WIDTH = 40;
    private static IconCollection _icons = IconCollection.get("net_rim_Phone_Receiver", 7);
 
    public final void audioSinkRequested(int sink) {

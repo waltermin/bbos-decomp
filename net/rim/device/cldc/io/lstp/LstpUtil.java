@@ -10,7 +10,7 @@ public final class LstpUtil {
    private boolean _linkState;
    private Object[] _listeners;
    private String[] _appNames = new Object[1];
-   private static final long GUID;
+   private static final long GUID = -715130445863266572L;
 
    public static final LstpUtil getInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class GoToVerb extends BrowserVerb {
    private Screen _screenToClose;
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 101;
 
    public GoToVerb() {
       this(null);

@@ -5,12 +5,12 @@ public final class DHCryptoSystem implements CryptoSystem {
    private CryptoTokenCryptoSystemData _cryptoTokenData;
    private int _hashCode;
    private boolean _verified;
-   public static final String WTLS1;
-   public static final String WTLS2;
-   public static final String SUN512;
-   public static final String SUN768;
-   public static final String SUN1024;
-   public static final int DEFAULT_PRIVATE_KEY_MIN_RANDOM_BITS;
+   public static final String WTLS1 = "WTLS1";
+   public static final String WTLS2 = "WTLS2";
+   public static final String SUN512 = "SUN512";
+   public static final String SUN768 = "SUN768";
+   public static final String SUN1024 = "SUN1024";
+   public static final int DEFAULT_PRIVATE_KEY_MIN_RANDOM_BITS = -1;
    static final byte[] WTLS1_P = new byte[]{
       -6,
       -13,

@@ -5,8 +5,8 @@ import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringUtilities;
 
 public final class URIDecoder {
-   private static final String UTF_8;
-   private static final String ISO_8859_1;
+   private static final String UTF_8 = "utf-8";
+   private static final String ISO_8859_1 = "iso-8859-1";
    private static StringMatch DECODER_MATCH_PLUS = new StringMatch(new String[]{"%", "+"}, false, false);
    private static StringMatch DECODER_MATCH = new StringMatch(new String[]{"%"}, false, false);
 

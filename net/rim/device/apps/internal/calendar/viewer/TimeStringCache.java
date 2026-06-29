@@ -7,7 +7,7 @@ import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.cldc.util.CalendarExtensions;
 
 final class TimeStringCache {
-   private static final int MAX_HOURS;
+   private static final int MAX_HOURS = 24;
    private static String[] _cache = new Object[48];
    private static DateFormat _timeFormat = DateFormat.getInstance(7);
    private static Calendar _gmtCal = Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT));

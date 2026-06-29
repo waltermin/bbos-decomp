@@ -32,7 +32,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
    private Hashtable _contentTypeOptionsProviderHashtable;
    private static ServiceBook _sb;
    private static SRSelector _srs;
-   private static final int OPTIONS_PROVIDER_FIELD_INDENT;
+   private static final int OPTIONS_PROVIDER_FIELD_INDENT = 12;
 
    protected final ServiceRecord getServiceRecord(SRSelectorApp srsApp, String defaultService) {
       String cid = srsApp.getCid();

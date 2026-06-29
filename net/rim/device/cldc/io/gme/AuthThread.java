@@ -32,14 +32,14 @@ final class AuthThread extends Thread implements DatagramStatusListener {
    private DatagramConnectionBase _gme;
    private int _backoff = 10000;
    private long _sessionTimestamp = System.currentTimeMillis();
-   private static final int MIN_BACKOFF;
-   private static final int MAX_BACKOFF;
+   private static final int MIN_BACKOFF = 10000;
+   private static final int MAX_BACKOFF = 120000;
    private static String BBR = "BBR";
-   static final int STATE_AUTH_NOT_STARTED;
-   static final int STATE_AUTH_STARTED;
-   static final int STATE_AUTH_SUCCEEDED;
-   static final int STATE_AUTH_FAILED;
-   static final int STATE_AUTH_TIMEOUT;
+   static final int STATE_AUTH_NOT_STARTED = 0;
+   static final int STATE_AUTH_STARTED = 1;
+   static final int STATE_AUTH_SUCCEEDED = 2;
+   static final int STATE_AUTH_FAILED = 3;
+   static final int STATE_AUTH_TIMEOUT = 4;
 
    public AuthThread(String service, int serviceCapabilities, String connection, int routingHandle) {
       boolean runAuth = (serviceCapabilities & 2) == 2;

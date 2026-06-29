@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.bis.api.ui;
 import java.util.Hashtable;
 
 public final class DefaultCommand implements DomainCommand {
-   public static final String DEFAULT_COMMAND_RESULT;
+   public static final String DEFAULT_COMMAND_RESULT = "success";
    private static DefaultCommand _instance = new DefaultCommand();
    private static DomainCommandResult _commandResult = new DomainCommandResult("success", null, null);
 

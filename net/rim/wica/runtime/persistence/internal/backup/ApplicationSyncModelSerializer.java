@@ -8,10 +8,10 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 public class ApplicationSyncModelSerializer extends AbstractSerializer {
    private static ApplicationSyncModelSerializer _instance;
-   private static final byte ID;
-   private static final byte DESCRIPTOR;
-   private static final byte PACKAGE_LOCATION;
-   private static final byte COLLECTIONS;
+   private static final byte ID = 0;
+   private static final byte DESCRIPTOR = 1;
+   private static final byte PACKAGE_LOCATION = 2;
+   private static final byte COLLECTIONS = 3;
 
    static ApplicationSyncModelSerializer getInstance() {
       if (_instance == null) {

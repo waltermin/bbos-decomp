@@ -13,12 +13,12 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 
 public class UserSettingsScreen extends BasicScreen {
    private int _menuOptions;
-   public static final int EMAIL_ACCOUNTS_OPTION;
-   public static final int CHANGE_DEVICE_OPTION;
-   public static final int CHANGE_LANGUAGE_OPTION;
-   public static final int CHANGE_PASSWORD_OPTION;
-   public static final int SEND_SB_OPTION;
-   public static final int ALL_OPTIONS;
+   public static final int EMAIL_ACCOUNTS_OPTION = 1;
+   public static final int CHANGE_DEVICE_OPTION = 2;
+   public static final int CHANGE_LANGUAGE_OPTION = 4;
+   public static final int CHANGE_PASSWORD_OPTION = 8;
+   public static final int SEND_SB_OPTION = 16;
+   public static final int ALL_OPTIONS = 31;
 
    public UserSettingsScreen() {
       this(0);

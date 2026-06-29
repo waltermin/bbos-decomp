@@ -14,7 +14,7 @@ final class SSQueryVerb extends Verb implements PhoneControlListener, Runnable {
    private boolean _timedOut;
    private Application _app;
    private int _timeoutTimerId;
-   private static final long TIMEOUT;
+   private static final long TIMEOUT = 30000L;
 
    public SSQueryVerb(int queryType, SSQueryListener listener, Application app) {
       super(268491007);

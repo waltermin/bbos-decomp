@@ -4,7 +4,7 @@ public final class RC2DecryptorEngine implements SymmetricKeyDecryptorEngine {
    private RC2CryptoToken _cryptoToken;
    private CryptoTokenCipherContext _context;
    private int _keyLength;
-   public static final int BLOCK_LENGTH;
+   public static final int BLOCK_LENGTH = 8;
 
    public final int getKeyLength() {
       return this._keyLength;

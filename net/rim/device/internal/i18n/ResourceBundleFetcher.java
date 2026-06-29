@@ -14,7 +14,7 @@ public final class ResourceBundleFetcher implements RIMProcessLauncher$Applicati
    private Application _fetcherAppRef = null;
    private Object _requestLock = new Object();
    private ResourceBundleFetcher$ResourceBundleFetcherRequestRunnable _requestRunnable = new ResourceBundleFetcher$ResourceBundleFetcherRequestRunnable(null);
-   private static final long REGISTRY_NAME;
+   private static final long REGISTRY_NAME = 3190551698550597928L;
    private static ResourceBundleFetcher _instance;
 
    private ResourceBundleFetcher() {

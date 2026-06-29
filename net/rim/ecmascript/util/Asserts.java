@@ -1,7 +1,7 @@
 package net.rim.ecmascript.util;
 
 public class Asserts {
-   public static final boolean on;
+   public static final boolean on = false;
 
    public static void checkInterned(String name) {
       check(name == Misc.stringIntern(name));

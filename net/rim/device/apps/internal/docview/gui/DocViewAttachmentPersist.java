@@ -16,8 +16,8 @@ final class DocViewAttachmentPersist implements LowMemoryListener {
    private DocViewAttachmentPersist$DocViewAttachmentPersistData _data;
    private PersistentObject _persistentObject;
    private int _attachmentDataSize;
-   static final long PERSISTENCE_GUID;
-   private static final long ID;
+   static final long PERSISTENCE_GUID = -907586620148940345L;
+   private static final long ID = -8178559449158512521L;
    private static DocViewAttachmentPersist _instance;
 
    final void changeAttachmentDataSize(int numBytes) {

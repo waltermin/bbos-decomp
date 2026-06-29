@@ -56,7 +56,7 @@ class GlobalProperties {
    private static final GlobalProperties$PackageTable ptJava = new GlobalProperties$PackageTable(
       "java", new GlobalProperties$PackageTable[]{ptLang, ptUtil, ptIO}
    );
-   static final String hexDigits;
+   static final String hexDigits = "0123456789ABCDEF";
 
    private GlobalProperties() {
    }

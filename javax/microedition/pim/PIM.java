@@ -5,12 +5,12 @@ import java.io.OutputStream;
 import net.rim.blackberry.api.pdap.PIMImpl;
 
 public class PIM {
-   public static final int READ_ONLY;
-   public static final int WRITE_ONLY;
-   public static final int READ_WRITE;
-   public static final int CONTACT_LIST;
-   public static final int EVENT_LIST;
-   public static final int TODO_LIST;
+   public static final int READ_ONLY = 1;
+   public static final int WRITE_ONLY = 2;
+   public static final int READ_WRITE = 3;
+   public static final int CONTACT_LIST = 1;
+   public static final int EVENT_LIST = 2;
+   public static final int TODO_LIST = 3;
 
    protected PIM() {
    }

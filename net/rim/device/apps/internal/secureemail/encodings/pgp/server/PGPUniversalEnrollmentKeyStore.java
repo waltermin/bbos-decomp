@@ -5,7 +5,7 @@ import net.rim.device.api.crypto.keystore.RIMKeyStore;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class PGPUniversalEnrollmentKeyStore extends RIMKeyStore {
-   private static final long ID;
+   private static final long ID = 4730272560307327500L;
    private static PGPUniversalEnrollmentKeyStore _instance;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

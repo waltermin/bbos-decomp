@@ -9,12 +9,12 @@ public class SeparatorField extends Field {
    private int _fieldHeight;
    private int _linePosition;
    private static Tag TAG = Tag.create("separator");
-   private static final int HEIGHT_THIN;
-   private static final int HEIGHT_THICK;
-   public static final long LINE_HORIZONTAL;
-   public static final long LINE_VERTICAL;
-   public static final long LINE_MASK;
-   public static final long CHECK_FONT;
+   private static final int HEIGHT_THIN = 1;
+   private static final int HEIGHT_THICK = 3;
+   public static final long LINE_HORIZONTAL = 65536L;
+   public static final long LINE_VERTICAL = 131072L;
+   public static final long LINE_MASK = 196608L;
+   public static final long CHECK_FONT = 8388608L;
 
    public SeparatorField() {
       this(0);

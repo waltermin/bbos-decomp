@@ -17,12 +17,12 @@ public final class CertificateServers implements Persistable {
    private Vector _ocspServers = (Vector)(new Object());
    private Vector _crlServers = (Vector)(new Object());
    private Vector _deletedServers = (Vector)(new Object());
-   public static final int LDAP_SERVER;
-   public static final int OCSP_SERVER;
-   public static final int CRL_SERVER;
-   public static final int DELETED_SERVER;
-   private static final long CERTIFICATE_OPTIONS;
-   private static final long CERTIFICATE_COLLECTION;
+   public static final int LDAP_SERVER = 1;
+   public static final int OCSP_SERVER = 2;
+   public static final int CRL_SERVER = 3;
+   public static final int DELETED_SERVER = 4;
+   private static final long CERTIFICATE_OPTIONS = -3117817938665553109L;
+   private static final long CERTIFICATE_COLLECTION = -7396257705664757140L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(-3117817938665553109L);
    private static CertificateOptionsSyncCollection _collection;
 

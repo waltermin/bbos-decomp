@@ -8,9 +8,9 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.util.MathUtilities;
 
 public class VerticalFieldManager extends Manager {
-   private static final int MAX_EXTENT;
+   private static final int MAX_EXTENT = 1073741823;
    private static Class _myclass;
-   private static final long REQ_STYLES;
+   private static final long REQ_STYLES = 3459045988797251584L;
 
    public VerticalFieldManager() {
       this(0);

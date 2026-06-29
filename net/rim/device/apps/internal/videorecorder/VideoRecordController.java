@@ -25,17 +25,17 @@ public final class VideoRecordController implements MediaStreamingCallback {
    private OutputStream _tempOS;
    private InputStream _tempIS;
    private VideoRecorderOptions _options = VideoRecorderOptions.getOptions();
-   protected static final long NEXT_VIDEONUM_KEY;
-   public static final int STATE_INACTIVE;
-   public static final int STATE_SOURCED;
-   public static final int STATE_RECORDING;
-   public static final int STATE_TRANSCODING;
-   private static final String VIDEO_MEDIA_TYPE;
-   private static final String FINAL_VIDEO_FILENAME_PREFIX;
-   private static final String FINAL_VIDEO_FILENAME_SUFFIX;
-   private static final int FIXED_VIDEO_FILESIZE;
-   private static final int FILESPACE_HEADROOM;
-   private static final int MMS_OVERHEAD;
+   protected static final long NEXT_VIDEONUM_KEY = -357719501564298138L;
+   public static final int STATE_INACTIVE = 0;
+   public static final int STATE_SOURCED = 1;
+   public static final int STATE_RECORDING = 2;
+   public static final int STATE_TRANSCODING = 3;
+   private static final String VIDEO_MEDIA_TYPE = "video/3gpp";
+   private static final String FINAL_VIDEO_FILENAME_PREFIX = "VID ";
+   private static final String FINAL_VIDEO_FILENAME_SUFFIX = ".3GP";
+   private static final int FIXED_VIDEO_FILESIZE = 307200;
+   private static final int FILESPACE_HEADROOM = 25600;
+   private static final int MMS_OVERHEAD = 10240;
    private static VideoRecordController _instance;
 
    private VideoRecordController() {

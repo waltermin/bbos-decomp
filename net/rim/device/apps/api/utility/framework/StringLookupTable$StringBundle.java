@@ -5,7 +5,7 @@ import net.rim.vm.Array;
 
 class StringLookupTable$StringBundle implements Persistable {
    private String[] _strings = new Object[0];
-   public static final int STRINGS_PER_BUNDLE;
+   public static final int STRINGS_PER_BUNDLE = 64;
 
    synchronized int addString(String string) {
       int length = this._strings.length;

@@ -5,9 +5,9 @@ import net.rim.device.api.util.Arrays;
 
 public final class SHA384Digest extends AbstractDigest implements Digest {
    private NativeDigest _context = NativeDigest.initializeSHA384();
-   private static final int MAX_UPDATE;
-   public static final int DIGEST_LENGTH;
-   public static final int BLOCK_LENGTH;
+   private static final int MAX_UPDATE = 1024;
+   public static final int DIGEST_LENGTH = 48;
+   public static final int BLOCK_LENGTH = 128;
 
    @Override
    public final String getAlgorithm() {

@@ -11,8 +11,8 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.util.Arrays;
 
 public final class MediaContentHandlerApplication extends UiApplication {
-   public static final String CLASSNAME;
-   private static final long APP_ID;
+   public static final String CLASSNAME = "net.rim.device.apps.internal.explorer.content.MediaContentHandlerApplication";
+   private static final long APP_ID = 1802896972155356383L;
    private static MediaContentHandlerApplication _app;
    private static RenderScreen _renderScreen;
    private static Invocation _invocation;

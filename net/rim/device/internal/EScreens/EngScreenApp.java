@@ -11,8 +11,8 @@ import net.rim.device.internal.system.RadioInternal;
 
 public final class EngScreenApp extends UiApplication {
    private boolean _alreadyViewing;
-   private static final int CDMA_RADIO_SETUP_DM_ACCESS;
-   private static final int CDMA_RADIO_ENABLE_ENGINEERING_MODE;
+   private static final int CDMA_RADIO_SETUP_DM_ACCESS = 7;
+   private static final int CDMA_RADIO_ENABLE_ENGINEERING_MODE = 4915;
 
    public static final void main(String[] args) {
       if (args != null && args.length != 0) {

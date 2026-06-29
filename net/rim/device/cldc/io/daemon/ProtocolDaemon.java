@@ -8,7 +8,7 @@ import net.rim.device.internal.system.ApplicationManagerInternal;
 import net.rim.vm.Process;
 
 public final class ProtocolDaemon extends UiApplication {
-   private static final long ID;
+   private static final long ID = 6860522476510630950L;
 
    private ProtocolDaemon() {
    }

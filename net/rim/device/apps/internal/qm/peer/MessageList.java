@@ -16,8 +16,8 @@ final class MessageList extends Manager {
    private Scrollbar _scrollbar = (Scrollbar)(new Object());
    private Hashtable _lookup = (Hashtable)(new Object());
    private static Tag TAG = Tag.create("bbmessenger-messagelist");
-   private static final long VFM_STYLE;
-   private static final int MAX_NUM_MESSAGES;
+   private static final long VFM_STYLE = 3477060387306733568L;
+   private static final int MAX_NUM_MESSAGES = 250;
 
    MessageList(ReadableList collection) {
       super(0);

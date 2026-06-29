@@ -46,8 +46,8 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
    private static final ResourceBundle _rb = ResourceBundle.getBundle(
       -3843310740975580338L, "net.rim.device.internal.resource.crypto.CertificateServersOptions"
    );
-   private static final int DEFAULT_LDAP_PORT;
-   private static final int DEFAULT_LDAPS_PORT;
+   private static final int DEFAULT_LDAP_PORT = 389;
+   private static final int DEFAULT_LDAPS_PORT = 636;
 
    public CertificateServersOptionsScreen(CertificateServerInfo serverInfo, int initialType) {
       super(0);

@@ -16,10 +16,10 @@ final class MdpWaitingQueueThread extends Thread implements MdpConstants, ConnEv
    private long _minDatagramAckTimeout = Long.MAX_VALUE;
    private final byte[] _rcArrayEmpty = new byte[16];
    private int _overflowSize;
-   private static final int MDP_WAITING_QUEUE_MAX_RETRIES;
-   private static final int MDP_WAITING_QUEUE_MAX_BACKOFF;
-   private static final int MDP_WAITING_QUEUE_DEF_BACKOFF_MAX;
-   private static final int MDP_WAITING_QUEUE_MAX_DATAGRAMS_NUMBER;
+   private static final int MDP_WAITING_QUEUE_MAX_RETRIES = 3;
+   private static final int MDP_WAITING_QUEUE_MAX_BACKOFF = 600000;
+   private static final int MDP_WAITING_QUEUE_DEF_BACKOFF_MAX = 720000;
+   private static final int MDP_WAITING_QUEUE_MAX_DATAGRAMS_NUMBER = 20;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

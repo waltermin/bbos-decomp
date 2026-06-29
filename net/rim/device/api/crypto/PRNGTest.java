@@ -1,12 +1,12 @@
 package net.rim.device.api.crypto;
 
 public final class PRNGTest {
-   public static final int MONO_BIT_TEST_PASSED;
-   public static final int POKER_TEST_PASSED;
-   public static final int RUNS_TEST_PASSED;
-   public static final int LONG_RUNS_TEST_PASSED;
-   public static final int ALL_TESTS_PASSED;
-   public static final int ALL_FIPS_TESTS_PASSED;
+   public static final int MONO_BIT_TEST_PASSED = 1;
+   public static final int POKER_TEST_PASSED = 2;
+   public static final int RUNS_TEST_PASSED = 4;
+   public static final int LONG_RUNS_TEST_PASSED = 8;
+   public static final int ALL_TESTS_PASSED = 15;
+   public static final int ALL_FIPS_TESTS_PASSED = 3;
 
    private PRNGTest() {
    }

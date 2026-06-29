@@ -27,8 +27,8 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
    private RibbonIconField _iconField;
    private int _priority;
    private ApplicationEntry$MyMemoryCleanerListener _memoryCleanerListener;
-   private static final int DEFAULT_PRIORITY;
-   private static final int UNDEFINED_PRIORITY;
+   private static final int DEFAULT_PRIORITY = 200;
+   private static final int UNDEFINED_PRIORITY = -1;
    private static StringBuffer _stringBuffer = (StringBuffer)(new Object());
 
    public ApplicationEntry(EntryPointDescriptor descriptor, boolean hotKeysDisabled) {

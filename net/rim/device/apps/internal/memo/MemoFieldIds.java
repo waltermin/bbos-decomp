@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.memo;
 
 interface MemoFieldIds {
-   byte MEMOID;
-   int NAME;
-   int NOTES;
-   int RECORDID;
+   byte MEMOID = 109;
+   int NAME = 1;
+   int NOTES = 2;
+   int RECORDID = 3;
 }

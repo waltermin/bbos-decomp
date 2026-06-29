@@ -26,12 +26,12 @@ public final class EventLoggerOptions extends MainScreen implements ListFieldCal
    private EventLoggerContents _evlContents;
    private PersistentObject _persist;
    private boolean _filterFlagsDirty;
-   private static final int MENU_CLOSE;
-   private static final int MENU_SAVE;
-   private static final int MENU_TOGGLE_FILTER;
-   private static final int MENU_SET_ALL;
-   private static final int MENU_CLEAR_ALL;
-   private static final String SPACE;
+   private static final int MENU_CLOSE = 0;
+   private static final int MENU_SAVE = 1;
+   private static final int MENU_TOGGLE_FILTER = 2;
+   private static final int MENU_SET_ALL = 3;
+   private static final int MENU_CLEAR_ALL = 4;
+   private static final String SPACE = " ";
 
    public EventLoggerOptions(EventLoggerContents evlContents, PersistentObject persist) {
       this._evlContents = evlContents;

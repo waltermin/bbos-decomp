@@ -15,9 +15,9 @@ class FocusGroup {
    boolean _useCustomFocusEvents;
    int[] _customEventMoveFocusNext;
    int[] _customEventMoveFocusPrevious;
-   static final int DIRECTION_OMNI;
-   static final int DIRECTION_HORIZONTAL;
-   static final int DIRECTION_VERTICAL;
+   static final int DIRECTION_OMNI = 0;
+   static final int DIRECTION_HORIZONTAL = 1;
+   static final int DIRECTION_VERTICAL = 2;
 
    FocusGroup(Attributes attributes) {
       String sWrap = attributes.getValue("wrap");

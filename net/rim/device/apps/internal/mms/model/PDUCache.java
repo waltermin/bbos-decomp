@@ -8,7 +8,7 @@ import net.rim.vm.WeakReference;
 
 final class PDUCache {
    private LongHashtable _hashtable;
-   private static final long PDU_CACHE_GUID;
+   private static final long PDU_CACHE_GUID = 9118645089098207847L;
    private static PDUCache _instance;
 
    private static final PDUCache getInstance() {

@@ -14,10 +14,10 @@ import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachment
 import net.rim.vm.Persistable;
 
 public class PKCS12CertificateKeyAttachmentModel extends CertificateAttachmentModel implements Persistable {
-   public static final String PKCS12_CERTIFICATE_KEY_P12;
-   public static final String PKCS12_CERTIFICATE_KEY_PFX;
-   public static final String STRING_BASE64;
-   public static final String CERTIFICATE_EXTENSION_CER;
+   public static final String PKCS12_CERTIFICATE_KEY_P12 = ".p12";
+   public static final String PKCS12_CERTIFICATE_KEY_PFX = ".pfx";
+   public static final String STRING_BASE64 = "base64";
+   public static final String CERTIFICATE_EXTENSION_CER = ".cer";
 
    public PKCS12CertificateKeyAttachmentModel(Object initialData) {
    }

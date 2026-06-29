@@ -8,18 +8,18 @@ final class Notification {
    private byte[] clientName = new byte[50];
    private FormatIndicator clientNameType;
    private byte optionals;
-   static final byte NOTIFICATION_MIN_CLIENT_LENGTH;
-   static final byte NOTIFICATION_MAX_CLIENT_LENGTH;
-   static final byte NOTIFICATION_CLIENT_LENGTH_BIT_SIZE;
-   static final byte NOTIFICATION_MIN_REQ_LENGTH;
-   static final byte NOTIFICATION_MAX_REQ_LENGTH;
-   static final byte NOTIFICATION_REQ_LENGTH_BIT_SIZE;
-   static final byte NOTIFICATION_MASK_ENCODING_TYPE;
-   static final byte NOTIFICATION_MASK_REQUESTOR_ID;
-   static final byte NOTIFICATION_MASK_REQUESTOR_ID_TYPE;
-   static final byte NOTIFICATION_MASK_CLIENT_NAME;
-   static final byte NOTIFICATION_MASK_CLIENT_NAME_TYPE;
-   static final byte NOTIFICATION_OPTIONALS_BIT_SIZE;
+   static final byte NOTIFICATION_MIN_CLIENT_LENGTH = 1;
+   static final byte NOTIFICATION_MAX_CLIENT_LENGTH = 50;
+   static final byte NOTIFICATION_CLIENT_LENGTH_BIT_SIZE = 6;
+   static final byte NOTIFICATION_MIN_REQ_LENGTH = 1;
+   static final byte NOTIFICATION_MAX_REQ_LENGTH = 50;
+   static final byte NOTIFICATION_REQ_LENGTH_BIT_SIZE = 6;
+   static final byte NOTIFICATION_MASK_ENCODING_TYPE = 16;
+   static final byte NOTIFICATION_MASK_REQUESTOR_ID = 8;
+   static final byte NOTIFICATION_MASK_REQUESTOR_ID_TYPE = 4;
+   static final byte NOTIFICATION_MASK_CLIENT_NAME = 2;
+   static final byte NOTIFICATION_MASK_CLIENT_NAME_TYPE = 1;
+   static final byte NOTIFICATION_OPTIONALS_BIT_SIZE = 5;
 
    final void decode(Nibbler nib) {
       nib.getBit();

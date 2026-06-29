@@ -27,9 +27,9 @@ public final class OTAFMOptionsScreen extends SaveableMainScreenOptionsListItem 
    private ObjectChoiceField _service;
    private MainScreen _mainScreen;
    private OTAFMConfigurationManager _otafmConfigManager;
-   public static final long OTAFM_OPTIONS_FACTORY_REPOSITORY_GUID;
-   private static final long ID;
-   private static final int CONTINUE;
+   public static final long OTAFM_OPTIONS_FACTORY_REPOSITORY_GUID = 4950224479719224677L;
+   private static final long ID = 4431471039491245661L;
+   private static final int CONTINUE = 0;
 
    private OTAFMOptionsScreen() {
       super(EmailResources.getResourceBundle(), 198);

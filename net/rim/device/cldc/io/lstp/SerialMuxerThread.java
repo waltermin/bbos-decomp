@@ -10,20 +10,20 @@ class SerialMuxerThread extends MuxerThread {
    protected byte[] _challenge;
    protected int _baudrate;
    protected int _fragmentSize;
-   protected static final byte SC_MAJOR;
-   protected static final byte SC_MINOR;
-   protected static final byte OV_MAJOR;
-   protected static final byte OV_MINOR;
-   public static final int VERSION;
-   protected static final int MAX_BAUD_RATE;
-   protected static final int CHALLENGE_DEVICE;
-   protected static final int CHALLENGE_DESKTOP;
-   protected static final int CHALLENGE_DEVICE_FORCED;
-   protected static final int CHALLENGE_DESKTOP_FORCED;
-   protected static final int NO_PASSWORD;
-   protected static final int SHA_1;
-   protected static final int CHALLENGE_SIZE;
-   protected static final int PROMPT;
+   protected static final byte SC_MAJOR = 2;
+   protected static final byte SC_MINOR = 0;
+   protected static final byte OV_MAJOR = 3;
+   protected static final byte OV_MINOR = 0;
+   public static final int VERSION = 131075;
+   protected static final int MAX_BAUD_RATE = 115200;
+   protected static final int CHALLENGE_DEVICE = 0;
+   protected static final int CHALLENGE_DESKTOP = 1;
+   protected static final int CHALLENGE_DEVICE_FORCED = 16;
+   protected static final int CHALLENGE_DESKTOP_FORCED = 17;
+   protected static final int NO_PASSWORD = 0;
+   protected static final int SHA_1 = 1;
+   protected static final int CHALLENGE_SIZE = 20;
+   protected static final int PROMPT = 1433625970;
 
    protected SerialMuxerThread(NativeLayer nativeLayer) {
       super(nativeLayer);

@@ -1,18 +1,18 @@
 package org.w3c.dom;
 
 public interface Node {
-   short ELEMENT_NODE;
-   short ATTRIBUTE_NODE;
-   short TEXT_NODE;
-   short CDATA_SECTION_NODE;
-   short ENTITY_REFERENCE_NODE;
-   short ENTITY_NODE;
-   short PROCESSING_INSTRUCTION_NODE;
-   short COMMENT_NODE;
-   short DOCUMENT_NODE;
-   short DOCUMENT_TYPE_NODE;
-   short DOCUMENT_FRAGMENT_NODE;
-   short NOTATION_NODE;
+   short ELEMENT_NODE = 1;
+   short ATTRIBUTE_NODE = 2;
+   short TEXT_NODE = 3;
+   short CDATA_SECTION_NODE = 4;
+   short ENTITY_REFERENCE_NODE = 5;
+   short ENTITY_NODE = 6;
+   short PROCESSING_INSTRUCTION_NODE = 7;
+   short COMMENT_NODE = 8;
+   short DOCUMENT_NODE = 9;
+   short DOCUMENT_TYPE_NODE = 10;
+   short DOCUMENT_FRAGMENT_NODE = 11;
+   short NOTATION_NODE = 12;
 
    String getNodeName();
 

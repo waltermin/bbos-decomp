@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 
 public final class AttachVideoVerb extends Verb {
    private MMSPresentationModel _presentation;
-   private static final String MMS_VIDEO_FOLDER;
+   private static final String MMS_VIDEO_FOLDER = "file:///store/samples/mms/videos/";
 
    public AttachVideoVerb(MMSPresentationModel presentation) {
       super(16864064);

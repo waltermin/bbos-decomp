@@ -12,7 +12,7 @@ import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 
 public class CompressedFileAttachmentModel extends AbstractEmailFileAttachment implements Persistable {
    private byte[] _compressedData;
-   private static final int MAX_SIZE;
+   private static final int MAX_SIZE = 47616;
 
    public byte[] getData() {
       return this._compressedData;

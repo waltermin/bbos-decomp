@@ -41,7 +41,7 @@ public final class HotlistItem
    private long _sortValue;
    protected int _uid;
    protected char _speedDialKey;
-   private static final long DEFAULT_ATBC;
+   private static final long DEFAULT_ATBC = 86400000L;
    private static final byte[] phoneCallRecordId = new byte[]{104};
    private static ContextObjectWR _hotlistSyncContextWR = (ContextObjectWR)(new Object(20, 19));
 

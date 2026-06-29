@@ -14,7 +14,7 @@ public final class TimeSyncImpl extends TimeSync implements GlobalEventListener,
    private int _timeSourceId;
    private int _timeSource;
    private boolean _lazySync;
-   private static final long SYNC_SOURCE_ID;
+   private static final long SYNC_SOURCE_ID = -442051743619216161L;
 
    public static final void TimeSyncMain() {
       new TimeSyncImpl();

@@ -16,9 +16,9 @@ import net.rim.vm.Array;
 
 public final class SpecialAddressCard implements PersistableRIMModel, PaintProvider, VerbProvider, FieldProvider {
    private long _typeUid;
-   public static final long VOICE_MAIL;
-   public static final long EMERGENCY_CALL;
-   public static final long SIM_CALL_SETUP;
+   public static final long VOICE_MAIL = -7117173429217454741L;
+   public static final long EMERGENCY_CALL = 2280195576896513113L;
+   public static final long SIM_CALL_SETUP = -2948267102114848593L;
 
    @Override
    public final int paint(Graphics graphics, int x, int y, int width, int height, Object context) {

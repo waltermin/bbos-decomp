@@ -6,8 +6,8 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.vm.PersistentInteger;
 
 final class ComodoRootCerts {
-   private static final long ID;
-   private static final long CERTSTATUSTIME;
+   private static final long ID = -7557320369019910827L;
+   private static final long CERTSTATUSTIME = 1158007107581L;
    private static final byte[] AAA_Certificate_Service = new byte[]{
       48,
       -126,

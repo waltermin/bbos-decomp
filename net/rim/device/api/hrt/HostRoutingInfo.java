@@ -16,24 +16,24 @@ public class HostRoutingInfo implements Persistable {
    protected String _apn;
    protected String _apnUsername;
    protected String _apnPassword;
-   public static final int MOBITEX_WIRELESS_NET_TYPE;
-   public static final int GPRS_WIRELESS_NET_TYPE;
-   public static final int CDMA_WIRELESS_NET_TYPE;
-   public static final int IDEN_WIRELESS_NET_TYPE;
-   public static final int WIFI_WIRELESS_NET_TYPE;
-   public static final int ART_3GPP_GPRS;
-   public static final int ART_3GPP_UMTS;
-   public static final int ART_3GPP_GAN;
-   public static final int ART_WLAN_DEFAULT;
-   public static final int ART_CDMA_DEFAULT;
-   public static final int ART_IDEN_DEFAULT;
-   public static final int PTE_RESERVED;
-   public static final int PTE_MDP_UDP_UNENCRYPTED;
-   public static final int PTE_SSL_TCP_ENCRYPTED;
-   public static final int PTE_SSL_TCP_UNENCRYPTED;
-   public static final int PTE_IPSEC_UDP_VPN;
-   public static final int PTE_TCP_UNENCRYPTED;
-   public static final int PTE_IPSEC_TCP_VPN;
+   public static final int MOBITEX_WIRELESS_NET_TYPE = 2;
+   public static final int GPRS_WIRELESS_NET_TYPE = 3;
+   public static final int CDMA_WIRELESS_NET_TYPE = 4;
+   public static final int IDEN_WIRELESS_NET_TYPE = 5;
+   public static final int WIFI_WIRELESS_NET_TYPE = 6;
+   public static final int ART_3GPP_GPRS = 1;
+   public static final int ART_3GPP_UMTS = 2;
+   public static final int ART_3GPP_GAN = 4;
+   public static final int ART_WLAN_DEFAULT = 8;
+   public static final int ART_CDMA_DEFAULT = 16;
+   public static final int ART_IDEN_DEFAULT = 32;
+   public static final int PTE_RESERVED = 0;
+   public static final int PTE_MDP_UDP_UNENCRYPTED = 1;
+   public static final int PTE_SSL_TCP_ENCRYPTED = 2;
+   public static final int PTE_SSL_TCP_UNENCRYPTED = 3;
+   public static final int PTE_IPSEC_UDP_VPN = 4;
+   public static final int PTE_TCP_UNENCRYPTED = 5;
+   public static final int PTE_IPSEC_TCP_VPN = 6;
 
    protected HostRoutingInfo() {
    }

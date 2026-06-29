@@ -11,7 +11,7 @@ final class SRSelectorData implements Persistable {
    public int cbIndex;
    public String stashedUid;
    public boolean stashedUserSet;
-   public static final int NULL_CB;
+   public static final int NULL_CB = -1;
 
    public SRSelectorData(String n, long g, String c) {
       this.name = n;

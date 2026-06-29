@@ -9,7 +9,7 @@ public final class ContextMenu {
    private int _defaultItem = -1;
    private boolean _defaultIsSet;
    private static ContextMenu _menu = new ContextMenu();
-   public static final int UNDEFINED;
+   public static final int UNDEFINED = -1;
 
    private ContextMenu() {
       this._items = new MenuItem[0];

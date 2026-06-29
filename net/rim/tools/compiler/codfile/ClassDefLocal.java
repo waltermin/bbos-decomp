@@ -25,7 +25,7 @@ public final class ClassDefLocal extends ClassDef {
    private int _staticFieldDefsOffset;
    private int _fieldDefsOffset2;
    private int _staticFieldDefsOffset2;
-   public static final int HEADER_SIZE;
+   public static final int HEADER_SIZE = 40;
 
    private final void init() {
       this._createSize = -1;

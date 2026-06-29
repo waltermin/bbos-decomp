@@ -33,9 +33,9 @@ final class AfterDialToneHandler implements PopupDialogClosedListener, PhoneEven
    private boolean _finished;
    private boolean _continueOnCallConnected;
    private boolean _simPhoneBookCall;
-   private static final int CTI_PAUSE_LENGTH;
-   private static final int STANDARD_PAUSE_LENGTH;
-   private static final int GSM_11_11_PAUSE_LENGTH;
+   private static final int CTI_PAUSE_LENGTH = 1;
+   private static final int STANDARD_PAUSE_LENGTH = 2;
+   private static final int GSM_11_11_PAUSE_LENGTH = 3;
 
    public AfterDialToneHandler(LiveCall call, String dtmfTones, UiApplication app) {
       this(call, dtmfTones, app, null);

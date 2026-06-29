@@ -1,7 +1,7 @@
 package net.rim.blackberry.api.mail;
 
 public interface Message$Priority {
-   byte HIGH;
-   byte LOW;
-   byte NORMAL;
+   byte HIGH = 2;
+   byte LOW = 3;
+   byte NORMAL = 1;
 }

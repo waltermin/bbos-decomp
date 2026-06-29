@@ -9,7 +9,7 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvid
 
 public final class KeyStoreBrowser implements OptionsProviderRegistration$OptionsProvider {
    private Hashtable _registeredContexts = (Hashtable)(new Object());
-   private static final long OPTIONS_KEY_STORE_DISPLAY;
+   private static final long OPTIONS_KEY_STORE_DISPLAY = -4706105373277579899L;
 
    public final void register(String name, KeyStoreBrowserContext context) {
       this.verifyName(name);

@@ -97,8 +97,8 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
    private boolean _trustedAddressCheckingEnabled = false;
    private boolean _automoreUnavailableIsLogged;
    FindVerbManager _findVerbManager = (FindVerbManager)(new Object(this.getDelegate()));
-   static final long EMAIL_PRIVATE_FLAGS;
-   static final int MORE_UPDATE_BODY_FLAG;
+   static final long EMAIL_PRIVATE_FLAGS = -4104667787783617270L;
+   static final int MORE_UPDATE_BODY_FLAG = 0;
 
    EmailViewerScreen(Object context) {
       super(288239172244733952L, null, context, 0, RecognizerRepository.getRecognizers(-1249752217278100236L));

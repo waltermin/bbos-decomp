@@ -1,15 +1,15 @@
 package net.rim.blackberry.api.pim;
 
 public interface PIMItem {
-   int BINARY;
-   int BOOLEAN;
-   int DATE;
-   int INT;
-   int STRING;
-   int STRING_ARRAY;
-   int ATTR_NONE;
-   int EXTENDED_FIELD_MIN_VALUE;
-   int EXTENDED_ATTRIBUTE_MIN_VALUE;
+   int BINARY = 0;
+   int BOOLEAN = 1;
+   int DATE = 2;
+   int INT = 3;
+   int STRING = 4;
+   int STRING_ARRAY = 5;
+   int ATTR_NONE = 0;
+   int EXTENDED_FIELD_MIN_VALUE = 16777216;
+   int EXTENDED_ATTRIBUTE_MIN_VALUE = 16777216;
 
    PIMList getPIMList();
 

@@ -8,8 +8,8 @@ import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 final class DefaultSendThread$SendThreadCollector extends Thread {
    private Vector _packetQueue = (Vector)(new Object());
    private static DefaultSendThread$SendThreadCollector _collector;
-   private static final long REGISTRY_NAME;
-   private static final long GUID;
+   private static final long REGISTRY_NAME = -32340375862732252L;
+   private static final long GUID = -5359313744971625388L;
 
    private DefaultSendThread$SendThreadCollector() {
       EventLogger.register(-5359313744971625388L, "net.rim.transmission.SendThread", 2);

@@ -11,7 +11,7 @@ public class RingBuffer {
    private int _dataLength = 0;
    private boolean _isOpen = true;
    private int _maxBytesToReadEntirely = Integer.MAX_VALUE;
-   private static final int BUFFER_SECTION_SIZE;
+   private static final int BUFFER_SECTION_SIZE = 2048;
 
    public RingBuffer(int size) {
       this._buffer = new byte[size];

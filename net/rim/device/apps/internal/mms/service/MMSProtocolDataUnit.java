@@ -25,9 +25,9 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
    private Hashtable[] _contentHeader;
    private boolean _forwardLocked;
    private boolean _truncated;
-   private static final String CONTENT_LOCATION_HEADER_NAME_STRING;
-   private static final String CONTENT_ID_HEADER_NAME_STRING;
-   private static final String X_WAP_CONTENT_URI_HEADER_NAME_STRING;
+   private static final String CONTENT_LOCATION_HEADER_NAME_STRING = "content-location";
+   private static final String CONTENT_ID_HEADER_NAME_STRING = "content-id";
+   private static final String X_WAP_CONTENT_URI_HEADER_NAME_STRING = "x-wap-content-uri";
    private static String[] WSP_PARAMETER_NAMES = new Object[]{
       "wsp-q",
       "wsp-charset",

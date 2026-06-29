@@ -13,9 +13,9 @@ import net.rim.wica.runtime.resources.RuntimeResources;
 final class LifecycleDialogManager implements DialogClosedListener {
    private LifecycleServiceImpl _lifecycleService;
    private Application _application = Application.getApplication();
-   private static final String DISABLED_ICON;
-   private static final String UPGRADE_ICON;
-   private static final String EXPIRED_ICON;
+   private static final String DISABLED_ICON = "disabled_icon.png";
+   private static final String UPGRADE_ICON = "upgrade_icon.png";
+   private static final String EXPIRED_ICON = "expired_icon.png";
 
    LifecycleDialogManager(LifecycleServiceImpl lifecycleService) {
       this._lifecycleService = lifecycleService;

@@ -14,8 +14,8 @@ final class SplashScreen implements Runnable {
    private Bitmap _initialStartupImage;
    private int _initialStartupImageTimeout = 2000;
    private BitmapField _bitmapField;
-   private static final int INTEL_SPLASH_TIME;
-   private static final int EVAL_SPLASH_TIME;
+   private static final int INTEL_SPLASH_TIME = 2000;
+   private static final int EVAL_SPLASH_TIME = 5000;
 
    final synchronized boolean queue(boolean carrierImageOnly, Runnable runWhenDone, boolean dismissScreen) {
       if (this._runWhenDone != null) {

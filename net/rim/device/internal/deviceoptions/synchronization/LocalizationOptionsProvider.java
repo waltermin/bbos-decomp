@@ -7,12 +7,12 @@ import net.rim.device.internal.deviceoptions.OptionsProviderChangeListener;
 import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 
 final class LocalizationOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int LOCALE_CODE_TAG;
-   private static final int LOCALE_VARIANT_TAG;
-   private static final int INPUT_LOCALE_CODE_TAG;
-   private static final int SYSTEM_NAME_ORDER;
-   private static final int INPUT_LOCALE_VARIANT_TAG;
+   private static final int UID = -1399197799;
+   private static final int LOCALE_CODE_TAG = 1;
+   private static final int LOCALE_VARIANT_TAG = 2;
+   private static final int INPUT_LOCALE_CODE_TAG = 5;
+   private static final int SYSTEM_NAME_ORDER = 6;
+   private static final int INPUT_LOCALE_VARIANT_TAG = 7;
 
    LocalizationOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

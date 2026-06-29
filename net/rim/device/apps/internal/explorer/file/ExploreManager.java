@@ -77,7 +77,7 @@ public final class ExploreManager
    private ThumbnailFetcher _thumbnailFetcher;
    private ExploreManager$UpdateLayoutInvokeLater _updateLayoutInvokeLater = new ExploreManager$UpdateLayoutInvokeLater(this, null);
    private ExploreManager$OpenDirectoryWorker _openDirTask;
-   private static final int BULK_ADD_COUNT;
+   private static final int BULK_ADD_COUNT = 100;
 
    public final void cleanup() {
       UiApplication app = UiApplication.getUiApplication();
@@ -464,7 +464,7 @@ public final class ExploreManager
       // 1f3: getfield net/rim/device/apps/internal/explorer/file/ExploreManager._showAllMenuItems Z
       // 1f6: ifeq 237
       // 1f9: bipush 0
-      // 1fa: anewarray 1096
+      // 1fa: anewarray 1098
       // 1fd: astore 9
       // 1ff: aload 2
       // 200: aload 8

@@ -2,10 +2,10 @@ package java.lang;
 
 public final class Double {
    private double value;
-   public static final double POSITIVE_INFINITY;
-   public static final double NEGATIVE_INFINITY;
-   public static final double NaN;
-   public static final double MAX_VALUE;
+   public static final double POSITIVE_INFINITY = POSITIVE_INFINITY;
+   public static final double NEGATIVE_INFINITY = NEGATIVE_INFINITY;
+   public static final double NaN = NaN;
+   public static final double MAX_VALUE = MAX_VALUE;
    public static final double MIN_VALUE = longBitsToDouble(1);
 
    public static final String toString(double d) {

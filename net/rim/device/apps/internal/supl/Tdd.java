@@ -8,16 +8,16 @@ final class Tdd extends ModeSpecificInfo {
    private byte numTimeslotIscpListItems;
    private byte[] timeslotIscpList;
    private byte optionals;
-   static final byte TDD_OPT_TGSN;
-   static final byte TDD_OPT_PRI_CCPCH_RSCP;
-   static final byte TDD_OPT_PATH_LOSS;
-   static final byte TDD_OPT_TS_ISCP_LIST;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte CELL_PARAM_ID_BIT_SIZE;
-   static final byte TGSN_BIT_SIZE;
-   static final byte PRI_CCPCH_RSCP_BIT_SIZE;
-   static final byte TS_ISCP_NUM_LIST_ITEMS_BIT_SIZE;
-   static final byte TS_ISCP_ELEMENT_BIT_SIZE;
+   static final byte TDD_OPT_TGSN = 8;
+   static final byte TDD_OPT_PRI_CCPCH_RSCP = 4;
+   static final byte TDD_OPT_PATH_LOSS = 2;
+   static final byte TDD_OPT_TS_ISCP_LIST = 1;
+   static final byte NUM_OPT_ELEMENTS = 4;
+   static final byte CELL_PARAM_ID_BIT_SIZE = 7;
+   static final byte TGSN_BIT_SIZE = 4;
+   static final byte PRI_CCPCH_RSCP_BIT_SIZE = 7;
+   static final byte TS_ISCP_NUM_LIST_ITEMS_BIT_SIZE = 4;
+   static final byte TS_ISCP_ELEMENT_BIT_SIZE = 7;
 
    @Override
    final void encode(Stuffer stuff) {

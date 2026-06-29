@@ -22,11 +22,11 @@ public final class CDMAInfo {
    private boolean _smsDeliveryTimerSupport;
    private String _aKey;
    private static CDMAInfo _info;
-   public static final int CAPABILITY_VOICE;
-   public static final int CAPABILITY_SMS;
-   public static final int CAPABILITY_SIP;
-   public static final int CAPABILITY_MIP;
-   public static final int CAPABILITY_GPS;
+   public static final int CAPABILITY_VOICE = 1;
+   public static final int CAPABILITY_SMS = 16;
+   public static final int CAPABILITY_SIP = 256;
+   public static final int CAPABILITY_MIP = 512;
+   public static final int CAPABILITY_GPS = 4096;
 
    private CDMAInfo() {
    }

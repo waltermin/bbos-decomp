@@ -14,8 +14,8 @@ import net.rim.vm.Array;
 
 public final class AddressBookOptionsImpl extends OptionsBase implements AddressBookOptions {
    private AddressBookOptionsImpl$PersistedAddressBookOptions _persistedAddressBookOptions;
-   private static final long ADDRESS_BOOK_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_ADDRESS_BOOK_OPTIONS;
+   private static final long ADDRESS_BOOK_OPTIONS_SYNC_ITEM = -8992489210269143538L;
+   private static final long PERSISTED_ADDRESS_BOOK_OPTIONS = 7669149722475870444L;
    public static int SORT_ORDER = 1;
    public static int LIST_SEPARATOR_APPEARANCE = 2;
    private static AddressBookOptionsImpl _options;

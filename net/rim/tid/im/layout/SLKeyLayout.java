@@ -24,8 +24,8 @@ public class SLKeyLayout {
    private int[] _iAltedKeys;
    private StringBuffer _bytes2StringCache;
    private String _nameID;
-   private static final int STATUS_CHARACTER;
-   private static final int STATUS_UNALT;
+   private static final int STATUS_CHARACTER = 12288;
+   private static final int STATUS_UNALT = 16384;
    private static String MAP_COMMON_PREFIX = "Keypad_";
    private static String MAP_COMMON_SUFFIX = ".map";
    private static int[] _modifiers = new int[]{

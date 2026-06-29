@@ -29,10 +29,10 @@ final class EditGroupAddressCardScreen extends GroupAddressCardScreen implements
    private AutoTextEditField _nameField;
    private boolean _isNew;
    private GroupAddressCardMember[] _originalMembers = new GroupAddressCardMember[0];
-   private static final char CHANGE_MEMBER_VERB;
-   private static final char DELETE_MEMBER_VERB;
-   private static final char ADD_MEMBER_VERB;
-   private static final char SAVE_GROUP_VERB;
+   private static final char CHANGE_MEMBER_VERB = '\u0000';
+   private static final char DELETE_MEMBER_VERB = '\u0001';
+   private static final char ADD_MEMBER_VERB = '\u0002';
+   private static final char SAVE_GROUP_VERB = '\u0003';
 
    protected final byte pickAddressFromList(Object acm, Object[] members) {
       String[] values = new Object[members.length];

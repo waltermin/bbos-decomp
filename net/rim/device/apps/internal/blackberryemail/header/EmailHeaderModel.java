@@ -64,10 +64,10 @@ public class EmailHeaderModel
    private static FriendlyNameAddressModel _serializeOneWayPagerModel;
    private static FriendlyNameAddressModel _serializePhoneModel;
    private static FriendlyNameAddressModel _serializeFaxModel;
-   public static final byte DELIVERY_RECEIPT_RECEIVED;
-   public static final byte READ_RECEIPT_RECEIVED;
-   public static final byte FAILURE_RECEIPT_RECEIVED;
-   public static final byte IS_ORIGINAL_RECIPIENT;
+   public static final byte DELIVERY_RECEIPT_RECEIVED = 1;
+   public static final byte READ_RECEIPT_RECEIVED = 2;
+   public static final byte FAILURE_RECEIPT_RECEIVED = 4;
+   public static final byte IS_ORIGINAL_RECIPIENT = 8;
    private static Object[] _resultContainer = new Object[2];
 
    public boolean isBlank() {

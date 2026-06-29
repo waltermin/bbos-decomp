@@ -36,11 +36,11 @@ public class GaugeField extends Field implements FieldLabelProvider {
    private static Tag TAG = Tag.create("gauge");
    private static Tag TAG_FILL = Tag.create("gauge-fill");
    private static Tag TAG_BAR = Tag.create("gauge-bar");
-   public static final int NO_TEXT;
-   public static final int PERCENT;
-   public static final long LABEL_AS_PROGRESS;
-   public static final int CURRENT_WITH_MAX;
-   private static final int BAR_CLEARANCE;
+   public static final int NO_TEXT = 2;
+   public static final int PERCENT = 4;
+   public static final long LABEL_AS_PROGRESS = 65536L;
+   public static final int CURRENT_WITH_MAX = 8;
+   private static final int BAR_CLEARANCE = 1;
    private static MenuItem _changeOptionsItem = new GaugeField$1(CommonResource.getBundle(), 1, 30201, 10);
 
    public void reset(String label, int min, int max, int start) {

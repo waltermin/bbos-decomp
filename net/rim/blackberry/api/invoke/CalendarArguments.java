@@ -6,13 +6,13 @@ import javax.microedition.pim.Event;
 public final class CalendarArguments extends ApplicationArguments {
    private Calendar _date;
    private Event _event;
-   protected static final String ARG_VIEW;
-   public static final String ARG_VIEW_DAY;
-   public static final String ARG_VIEW_WEEK;
-   public static final String ARG_VIEW_MONTH;
-   public static final String ARG_VIEW_AGENDA;
-   public static final String ARG_VIEW_DEFAULT;
-   public static final String ARG_NEW;
+   protected static final String ARG_VIEW = "newview";
+   public static final String ARG_VIEW_DAY = "2";
+   public static final String ARG_VIEW_WEEK = "3";
+   public static final String ARG_VIEW_MONTH = "1";
+   public static final String ARG_VIEW_AGENDA = "4";
+   public static final String ARG_VIEW_DEFAULT = "-1";
+   public static final String ARG_NEW = "newappt";
 
    public CalendarArguments() {
    }

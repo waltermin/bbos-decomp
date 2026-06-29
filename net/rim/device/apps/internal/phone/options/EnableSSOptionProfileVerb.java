@@ -4,9 +4,9 @@ import net.rim.device.apps.api.ui.CommonResources;
 
 final class EnableSSOptionProfileVerb extends SSOptionProfileVerb {
    private int _flags;
-   public static final int OVERRIDE_ENABLED_STATE;
-   public static final int ENABLE;
-   public static final int DISABLE;
+   public static final int OVERRIDE_ENABLED_STATE = 2;
+   public static final int ENABLE = 4;
+   public static final int DISABLE = 8;
 
    public EnableSSOptionProfileVerb() {
       this(0);

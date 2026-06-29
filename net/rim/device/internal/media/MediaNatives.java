@@ -6,18 +6,18 @@ import net.rim.device.internal.system.EventDispatchManager;
 import net.rim.device.internal.system.InternalServices;
 
 public final class MediaNatives {
-   public static final int MEDIA_STOPPED;
-   public static final int MEDIA_PAUSE_COMPLETE;
-   public static final int MEDIA_ERROR;
-   public static final int MEDIA_SEEK_ADDRESS;
-   public static final int MEDIA_LOADED;
-   public static final int MEDIA_STATUS;
-   public static final int MEDIA_AUTH_REQUIRED;
-   public static final int MEDIA_PARAMS_UPDATED;
-   public static final int VIDEO_CODEC_MPEG1;
-   public static final int VIDEO_CODEC_MPEG4;
-   public static final int VIDEO_CODEC_WMV;
-   public static final int VIDEO_CODEC_H263;
+   public static final int MEDIA_STOPPED = 8192;
+   public static final int MEDIA_PAUSE_COMPLETE = 8193;
+   public static final int MEDIA_ERROR = 8194;
+   public static final int MEDIA_SEEK_ADDRESS = 8195;
+   public static final int MEDIA_LOADED = 8196;
+   public static final int MEDIA_STATUS = 8197;
+   public static final int MEDIA_AUTH_REQUIRED = 8198;
+   public static final int MEDIA_PARAMS_UPDATED = 8199;
+   public static final int VIDEO_CODEC_MPEG1 = 1;
+   public static final int VIDEO_CODEC_MPEG4 = 2;
+   public static final int VIDEO_CODEC_WMV = 4;
+   public static final int VIDEO_CODEC_H263 = 5;
 
    private MediaNatives() {
    }

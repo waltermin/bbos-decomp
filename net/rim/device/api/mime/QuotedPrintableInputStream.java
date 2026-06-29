@@ -8,12 +8,12 @@ final class QuotedPrintableInputStream extends InputStream {
    private byte[] _buffer;
    private int _bufferLength;
    private int _bufferOffset;
-   private static final int BUFFER_SIZE;
-   private static final int ANY_STATE;
-   private static final int HEX1_STATE;
-   private static final int HEX2_STATE;
-   private static final int STRIP_SPACES_STATE;
-   private static final int SOFT_BREAK_STATE;
+   private static final int BUFFER_SIZE = 100;
+   private static final int ANY_STATE = 0;
+   private static final int HEX1_STATE = 1;
+   private static final int HEX2_STATE = 2;
+   private static final int STRIP_SPACES_STATE = 3;
+   private static final int SOFT_BREAK_STATE = 4;
 
    public QuotedPrintableInputStream(InputStream input) {
       if (input == null) {

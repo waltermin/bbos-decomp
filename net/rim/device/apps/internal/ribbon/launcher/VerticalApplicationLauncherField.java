@@ -57,18 +57,18 @@ final class VerticalApplicationLauncherField extends VerticalFieldManager implem
    private int _marginAbsoluteXFocus;
    private int _marginAbsoluteXNormal;
    private boolean _bDirtyList;
-   private static final int PADDING_STYLE_LEFT;
-   private static final int PADDING_STYLE_RIGHT;
-   private static final int PADDING_STYLE_CENTER;
-   private static final int PADDING_STYLE_TIGHT;
-   private static final int MARGIN_STYLE_LEFT;
-   private static final int MARGIN_STYLE_RIGHT;
-   private static final int MARGIN_STYLE_CENTER;
-   private static final int MARGIN_STYLE_FULL_SCREEN;
+   private static final int PADDING_STYLE_LEFT = 0;
+   private static final int PADDING_STYLE_RIGHT = 1;
+   private static final int PADDING_STYLE_CENTER = 2;
+   private static final int PADDING_STYLE_TIGHT = 3;
+   private static final int MARGIN_STYLE_LEFT = 0;
+   private static final int MARGIN_STYLE_RIGHT = 1;
+   private static final int MARGIN_STYLE_CENTER = 2;
+   private static final int MARGIN_STYLE_FULL_SCREEN = 3;
    private static Tag TAG = Tag.create("homescreen");
    private static String TAG_ID = "chooser";
    private static String OPTIONS_ID = "net_rim_bb_options_app.Options";
-   private static final String TEXT_DISPLACEMENT_FROM_ICON_ID;
+   private static final String TEXT_DISPLACEMENT_FROM_ICON_ID = "ApplicationMenuTextDisplacementFromIcon";
    private static XYEdges _emptyEdges = (XYEdges)(new Object());
    private static Border _emptyBorder = (Border)(new Object(0, 0, 0, 0));
 

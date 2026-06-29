@@ -9,7 +9,7 @@ public class SaveImageVerb extends Verb {
    private String _url;
    private EncodedImage _image;
    private boolean _drmProtected;
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 670;
 
    public SaveImageVerb(String url, EncodedImage image, boolean drmProtected) {
       super(341584);

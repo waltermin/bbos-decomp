@@ -9,12 +9,12 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 public final class CallTimers extends OptionsBase {
    private int[] _timers;
-   private static final long PERSISTED_CALL_TIMERS;
-   public static final int LAST_CALL_TIME;
-   public static final int TOTAL_CALL_TIME;
-   public static final int DC_LAST_CALL_TIME;
-   public static final int DC_TOTAL_CALL_TIME;
-   private static final int TIMER_COUNT;
+   private static final long PERSISTED_CALL_TIMERS = 4349576476285167631L;
+   public static final int LAST_CALL_TIME = 0;
+   public static final int TOTAL_CALL_TIME = 1;
+   public static final int DC_LAST_CALL_TIME = 2;
+   public static final int DC_TOTAL_CALL_TIME = 3;
+   private static final int TIMER_COUNT = 4;
    private static CallTimers _instance;
 
    private CallTimers() {

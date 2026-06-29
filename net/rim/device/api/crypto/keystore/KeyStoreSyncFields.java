@@ -4,15 +4,15 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.IntHashtable;
 
 public final class KeyStoreSyncFields {
-   private static final int EMAIL;
-   private static final int DESKTOP_COOKIE;
-   private static final int ISSUER;
-   private static final int SERIAL_NUMBER;
-   private static final int SMART_CARD_KEY;
-   private static final int HISTORICAL_KEY_ID;
-   private static final int PGP_KEY_ID;
+   private static final int EMAIL = 2;
+   private static final int DESKTOP_COOKIE = 3;
+   private static final int ISSUER = 15;
+   private static final int SERIAL_NUMBER = 17;
+   private static final int SMART_CARD_KEY = 28;
+   private static final int HISTORICAL_KEY_ID = 30;
+   private static final int PGP_KEY_ID = 31;
    private static boolean _notMe = true;
-   static final long HASHTABLE;
+   static final long HASHTABLE = -6244618566307895102L;
 
    private KeyStoreSyncFields() {
    }

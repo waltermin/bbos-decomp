@@ -39,12 +39,12 @@ public final class Protocol extends NativeConnectionBase implements MessageConne
    private MessageListener _listener;
    private Vector _messagequeue = new Vector();
    private boolean _stop;
-   public static final int SRC_PORT_INDEX;
-   public static final int DEST_PORT_INDEX;
+   public static final int SRC_PORT_INDEX = 0;
+   public static final int DEST_PORT_INDEX = 1;
    public static String PROPERTY_USER_DATA_HEADER_LENGTH = "sms-udh-length";
-   private static final long ID;
+   private static final long ID = 5140128676453846469L;
    private static Integer USER_DATA_HEADER_LENGTH_INTEGER = new Integer(6);
-   private static final int MESSAGE_QUEUE_LENGTH;
+   private static final int MESSAGE_QUEUE_LENGTH = 10;
    private static IntHashtable _portTable;
    private static final int[] RESERVED_PORTS = new int[]{
       2805,

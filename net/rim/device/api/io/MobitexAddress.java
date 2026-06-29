@@ -4,10 +4,10 @@ import net.rim.device.api.system.MobitexPacketHeader;
 import net.rim.device.api.system.UnsupportedOperationException;
 
 public final class MobitexAddress extends DatagramAddressBase {
-   public static final int TYPE_TEXT;
-   public static final int TYPE_DATA;
-   public static final int TYPE_STATUS;
-   public static final int TYPE_HPDATA;
+   public static final int TYPE_TEXT = 1;
+   public static final int TYPE_DATA = 2;
+   public static final int TYPE_STATUS = 3;
+   public static final int TYPE_HPDATA = 4;
 
    public MobitexAddress() {
       throw new UnsupportedOperationException();

@@ -6,7 +6,7 @@ import net.rim.device.internal.proxy.Proxy;
 public class SyncAgentTransactionManager {
    private Object _transactionLock = new Object();
    private SyncAgentTransactionManager$TransactionScheduler _transactionScheduler = new SyncAgentTransactionManager$TransactionScheduler(this);
-   private static final long GUID_TRANSACTION_MANAGER;
+   private static final long GUID_TRANSACTION_MANAGER = 2523630400836903352L;
 
    private SyncAgentTransactionManager() {
       Proxy.getInstance().startThread(this._transactionScheduler);

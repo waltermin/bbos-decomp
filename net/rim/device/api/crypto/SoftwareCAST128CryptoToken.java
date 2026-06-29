@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Persistable {
    private static SoftwareCAST128CryptoToken _instance = new SoftwareCAST128CryptoToken();
-   private static final long ID_TEST_CAST128;
+   private static final long ID_TEST_CAST128 = 5824818956596953396L;
 
    static final SoftwareCAST128CryptoToken getInstance() {
       return _instance;

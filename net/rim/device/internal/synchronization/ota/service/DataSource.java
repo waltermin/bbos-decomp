@@ -18,11 +18,11 @@ public final class DataSource implements Persistable, TLESerializableObject {
    private Hashtable _nameToDatabaseMap = (Hashtable)(new Object());
    private IntHashtable _idToDatabaseMap = (IntHashtable)(new Object());
    private boolean _couldHandleNonSync;
-   private static final byte VERSION;
-   private static final byte NAME;
-   private static final byte ID;
-   private static final byte DATABASE;
-   private static final byte DEFAULT;
+   private static final byte VERSION = 1;
+   private static final byte NAME = 2;
+   private static final byte ID = 3;
+   private static final byte DATABASE = 4;
+   private static final byte DEFAULT = 5;
 
    public final void addDataSourceDatabase(DataSourceDatabase aDataSourceDatabase) {
       String xName = aDataSourceDatabase.getName();

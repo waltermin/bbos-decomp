@@ -7,9 +7,9 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class AutoText implements ReadableSet, CollectionEventSource {
-   protected static final long KEY_NAME;
-   public static final int SMART_CASE;
-   public static final int SPECIFIED_CASE;
+   protected static final long KEY_NAME = -8979623067881713245L;
+   public static final int SMART_CASE = 0;
+   public static final int SPECIFIED_CASE = 1;
 
    public static final AutoText getAutoText() {
       return (AutoText)ApplicationRegistry.getApplicationRegistry().waitFor(-8979623067881713245L);

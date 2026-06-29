@@ -3,7 +3,7 @@ package net.rim.device.api.crypto;
 import net.rim.device.api.util.Arrays;
 
 public class CryptoByteArrayArithmetic {
-   private static final int MAX_LENGTH;
+   private static final int MAX_LENGTH = 256;
    private static final byte[] ONE = new byte[]{1};
 
    private CryptoByteArrayArithmetic() {

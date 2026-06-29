@@ -26,7 +26,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
    private Diag manager;
    int _curPacketID;
    byte[] _pingBuffer = new byte[6];
-   public static final int PAYLOAD_SIZE;
+   public static final int PAYLOAD_SIZE = 6;
 
    public TestRadio(RunningScreen _screen) {
       this.screen = _screen;

@@ -10,7 +10,7 @@ import net.rim.vm.Array;
 public class StringLookupTable implements Persistable {
    private StringLookupTable$StringBundle[] _bundles = new StringLookupTable$StringBundle[1];
    private BigIntVector _sortedIndex;
-   private static final long STRING_LOOKUP_TABLE_GUID;
+   private static final long STRING_LOOKUP_TABLE_GUID = -6406650129714817592L;
    private static StringLookupTable _lookupTable;
 
    public StringLookupTable() {

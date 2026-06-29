@@ -17,7 +17,7 @@ public class EscapedTextCoder implements Coder {
    private String[] _cacheKey;
    private byte[][][] _cacheValue;
    private MemoryCleanerListener _memoryCleanerListener;
-   private static final int CACHE_SIZE;
+   private static final int CACHE_SIZE = 4;
 
    public void clearCacheData() {
       this.clearCacheData2();

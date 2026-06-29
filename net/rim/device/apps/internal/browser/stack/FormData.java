@@ -3,8 +3,8 @@ package net.rim.device.apps.internal.browser.stack;
 import net.rim.device.api.util.Persistable;
 
 public class FormData implements Persistable {
-   public static final int ENCTYPE_URLENCODED;
-   public static final int ENCTYPE_MULTIPART_FORMDATA;
+   public static final int ENCTYPE_URLENCODED = 0;
+   public static final int ENCTYPE_MULTIPART_FORMDATA = 1;
 
    protected FormData() {
    }

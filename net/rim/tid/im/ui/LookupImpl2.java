@@ -49,9 +49,9 @@ public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInpu
    private int _foregroundColor;
    private int _composedHeight;
    private int _composedY;
-   public static final int INPUT_METHOD_LOOKUP_PRIORITY;
+   public static final int INPUT_METHOD_LOOKUP_PRIORITY = 550;
    private static final Tag TAG = Tag.create("input-method-popup");
-   private static final int MAX_VISIBLE;
+   private static final int MAX_VISIBLE = 10;
    private static String _leftArrow = "◀";
    private static String _rightArrow = "▶";
 

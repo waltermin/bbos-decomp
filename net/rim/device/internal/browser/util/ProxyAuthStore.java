@@ -6,10 +6,10 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.internal.system.NvStore;
 
 public final class ProxyAuthStore {
-   private static final int VERSION_1;
-   public static final int REALM;
-   public static final int USERNAME;
-   public static final int PASSWORD;
+   private static final int VERSION_1 = 1;
+   public static final int REALM = 0;
+   public static final int USERNAME = 1;
+   public static final int PASSWORD = 2;
 
    private ProxyAuthStore() {
    }

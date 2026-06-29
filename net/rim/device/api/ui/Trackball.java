@@ -7,12 +7,12 @@ import net.rim.device.internal.ui.UiOptionsRegistry;
 import net.rim.vm.TraceBack;
 
 public final class Trackball {
-   public static final int SENSITIVITY_UNSET;
-   public static final int SENSITIVITY_OFF;
-   public static final int FILTER_DEFAULT;
-   public static final int FILTER_XY_SNAP;
-   public static final int FILTER_NO_TIME_WINDOW;
-   public static final int FILTER_ACCELERATION;
+   public static final int SENSITIVITY_UNSET = Integer.MAX_VALUE;
+   public static final int SENSITIVITY_OFF = 0;
+   public static final int FILTER_DEFAULT = -1;
+   public static final int FILTER_XY_SNAP = 1;
+   public static final int FILTER_NO_TIME_WINDOW = 2;
+   public static final int FILTER_ACCELERATION = 4;
    private static boolean _supported = isSupported0();
    private static int _sensitivityX = Integer.MAX_VALUE;
    private static int _sensitivityY = Integer.MAX_VALUE;

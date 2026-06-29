@@ -12,7 +12,7 @@ final class TitleBar extends VerticalFieldManager {
    private LabelField _title;
    private BitmapField _helpImage;
    private TitleBar$TitleAndHelpManager _titleAndHelpManager;
-   private static final int TITLEBAR_FONT_SIZE_PT;
+   private static final int TITLEBAR_FONT_SIZE_PT = 7;
 
    public TitleBar(String title) {
       this._title = (LabelField)(new Object(title, 4294967360L));

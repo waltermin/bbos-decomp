@@ -21,13 +21,13 @@ public final class VolumeIndicator extends Field implements AudioRouterListener 
    private TrackwheelListener _trackwheelListener = new VolumeIndicator$1(this);
    private UiApplication _app = UiApplication.getUiApplication();
    private WeakReference _screenRef;
-   private static final int ICON_LEVEL_INCREMENTS;
-   private static final int NUM_ICONS;
-   private static final int DEFAULT_WIDTH;
-   private static final int DEFAULT_HEIGHT;
+   private static final int ICON_LEVEL_INCREMENTS = 10;
+   private static final int NUM_ICONS = 11;
+   private static final int DEFAULT_WIDTH = 41;
+   private static final int DEFAULT_HEIGHT = 76;
    private static IconCollection _icons = IconCollection.get("net_rim_Phone_Volume", 11);
-   private static final int X_LABEL_OFFSET;
-   private static final int X_LABEL_IMAGE_BUFFER;
+   private static final int X_LABEL_OFFSET = 1;
+   private static final int X_LABEL_IMAGE_BUFFER = 3;
 
    public final int getImageHeight() {
       return this.getPreferredHeight();

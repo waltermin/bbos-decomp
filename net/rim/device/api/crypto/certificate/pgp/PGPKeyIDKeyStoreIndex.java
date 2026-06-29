@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.util.Arrays;
 
 public class PGPKeyIDKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = -2737350786039236692L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

@@ -5,7 +5,7 @@ public final class AESDecryptorEngine implements SymmetricKeyDecryptorEngine {
    private CryptoTokenCipherContext _context;
    private int _blockLength;
    private int _keyLength;
-   public static final int BLOCK_LENGTH_DEFAULT;
+   public static final int BLOCK_LENGTH_DEFAULT = 16;
 
    public final int getKeyLength() {
       return this._keyLength;

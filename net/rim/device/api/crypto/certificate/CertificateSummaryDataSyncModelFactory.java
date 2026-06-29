@@ -5,7 +5,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class CertificateSummaryDataSyncModelFactory {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = -7199809812455420773L;
    private static Hashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getHashtable(-7199809812455420773L);
 
    public static boolean register(CertificateSummaryDataSyncModelFactory factory) {

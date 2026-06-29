@@ -10,7 +10,7 @@ public final class WebResource extends Resource implements Persistable, Recrypta
    private long _timestamp;
    private long _expiration;
    private long _lastModified;
-   private static final long DEFAULT_EXPIRY;
+   private static final long DEFAULT_EXPIRY = 43200000L;
 
    public WebResource(String uri, byte[] data, HttpHeaders headers) {
       super(uri, data);

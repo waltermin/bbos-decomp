@@ -8,7 +8,7 @@ import net.rim.plazmic.mediaengine.MediaListener;
 class AnimationHandler extends BehaviorHandler implements MediaListener {
    private TimeBasedAnimationManager _animationManager = new ModelIntArray_v1_2();
    private int[] _relativeValues = new int[4];
-   private static final int MAX_KEYVALUES_LENGTH;
+   private static final int MAX_KEYVALUES_LENGTH = 4;
 
    public boolean update() {
       return this._animationManager.animate();

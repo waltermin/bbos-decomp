@@ -15,11 +15,11 @@ import net.rim.device.internal.ui.component.ProgressDialog;
 public class WizardExitDialog extends Dialog {
    ProgressDialog _progressDialog;
    boolean _deleting = false;
-   public static final int RESTART_NOW;
-   public static final int RESTART_LATER;
-   public static final String WIZARD_RESTART_PROMPT;
-   private static final long WIZARD_RESCHEDULE_RESTART_IN_MS;
-   private static final long WIZARD_RESTART_SCHEDULED;
+   public static final int RESTART_NOW = 100;
+   public static final int RESTART_LATER = 101;
+   public static final String WIZARD_RESTART_PROMPT = "Wizard-Restart-Prompt";
+   private static final long WIZARD_RESCHEDULE_RESTART_IN_MS = 86400000L;
+   private static final long WIZARD_RESTART_SCHEDULED = -2647672557108466860L;
 
    public static WizardExitDialog createExitDialog(boolean restartOnly) {
       return createExitDialog(-1, restartOnly);

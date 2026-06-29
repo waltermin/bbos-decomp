@@ -23,11 +23,11 @@ public final class SIMManager implements SIMCardStatusListener, SIMCardSecurityL
    private Vector _smsRequestQueue = (Vector)(new Object());
    private Dialog _simFullDialog;
    private Dialog _simFaultDialog;
-   private static final long SIM_MANAGER;
-   private static final int READ;
-   private static final int DELETE;
-   private static final int REQUEST_TYPE_INDEX;
-   private static final int PACKET_ID_INDEX;
+   private static final long SIM_MANAGER = 172149956913108052L;
+   private static final int READ = 0;
+   private static final int DELETE = 1;
+   private static final int REQUEST_TYPE_INDEX = 0;
+   private static final int PACKET_ID_INDEX = 1;
    private static SIMManager _manager;
 
    public final void markSMSMessageAsRead(int packetId) {

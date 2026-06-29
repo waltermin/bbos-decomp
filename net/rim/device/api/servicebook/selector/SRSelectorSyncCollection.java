@@ -21,14 +21,14 @@ public final class SRSelectorSyncCollection implements SyncCollection, SyncConve
    private SRSelector _srSel;
    private ServiceBook _sb;
    private SyncCollectionSchema _schema;
-   public static final long SR_SELECTOR_SYNC_GUID;
-   private static final int NAME_TAG;
-   private static final int GUID_TAG;
-   private static final int CID_TAG;
-   private static final int UID_TAG;
-   private static final int USER_SET_TAG;
+   public static final long SR_SELECTOR_SYNC_GUID = -1080498432380349415L;
+   private static final int NAME_TAG = 1;
+   private static final int GUID_TAG = 2;
+   private static final int CID_TAG = 3;
+   private static final int UID_TAG = 4;
+   private static final int USER_SET_TAG = 5;
    private static final int[] KEY_FIELD_IDS = new int[]{2, 3, -804651003, 5, 6, 7, 8, 3};
-   private static final int DEFAULT_RECORD_TYPE;
+   private static final int DEFAULT_RECORD_TYPE = 1;
 
    public final void elementAdded(SRSelectorData data) {
       SRAppSyncObject syncObj = new SRAppSyncObject(data, (int)data.guid);

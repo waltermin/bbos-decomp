@@ -7,12 +7,12 @@ import net.rim.device.api.util.DataBuffer;
 
 class WTLSOptionStore$WTLSOptionsSyncItem extends OTASyncCapableSyncItem {
    private final WTLSOptionStore this$0;
-   private static final int SESSION_RESUMPTION;
-   private static final int MIN_RSA_KEY_SIZE;
-   private static final int MIN_DH_KEY_SIZE;
-   private static final int MIN_ECC_KEY_SIZE;
-   private static final int DISPLAY_SERVER_WARNINGS;
-   private static final int ALLOW_EXPORT;
+   private static final int SESSION_RESUMPTION = 1;
+   private static final int MIN_RSA_KEY_SIZE = 2;
+   private static final int MIN_DH_KEY_SIZE = 3;
+   private static final int MIN_ECC_KEY_SIZE = 4;
+   private static final int DISPLAY_SERVER_WARNINGS = 5;
+   private static final int ALLOW_EXPORT = 6;
 
    WTLSOptionStore$WTLSOptionsSyncItem(WTLSOptionStore _1) {
       this.this$0 = _1;

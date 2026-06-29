@@ -20,9 +20,9 @@ public class UdpAddress extends DatagramAddressBase {
    protected String _apnUsername;
    protected String _apnPassword;
    protected int _type;
-   public static final int TYPE_UDP;
-   public static final int TYPE_GPAK;
-   public static final int TYPE_GCMP;
+   public static final int TYPE_UDP = 1;
+   public static final int TYPE_GPAK = 2;
+   public static final int TYPE_GCMP = 4;
    private static String USERNAME = "tunnelauthusername";
    private static String PASSWORD = "tunnelauthpassword";
 

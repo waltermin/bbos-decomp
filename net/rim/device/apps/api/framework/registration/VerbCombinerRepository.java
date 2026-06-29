@@ -6,15 +6,15 @@ import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.verb.VerbCombiner;
 
 public class VerbCombinerRepository {
-   private static final long ID;
-   public static final long ALL_VERB_COMBINERS;
-   public static final long COMPOSE_VERB_COMBINER;
-   public static final long PHONE_COMPOSE_VERB_COMBINER;
-   public static final long SMS_COMPOSE_VERB_COMBINER;
-   public static final long MMS_COMPOSE_VERB_COMBINER;
-   public static final long EMAIL_COMPOSE_VERB_COMBINER;
-   public static final long PIN_COMPOSE_VERB_COMBINER;
-   public static final long IMPLUS_PHONE_COMPOSE_VERB_COMBINER;
+   private static final long ID = -6051637417518632414L;
+   public static final long ALL_VERB_COMBINERS = -3072555018635390988L;
+   public static final long COMPOSE_VERB_COMBINER = -1031618953275249972L;
+   public static final long PHONE_COMPOSE_VERB_COMBINER = -3336488203278641373L;
+   public static final long SMS_COMPOSE_VERB_COMBINER = -4069039132719574797L;
+   public static final long MMS_COMPOSE_VERB_COMBINER = -1018434224218757332L;
+   public static final long EMAIL_COMPOSE_VERB_COMBINER = 6552349874078558230L;
+   public static final long PIN_COMPOSE_VERB_COMBINER = -4100019750034398199L;
+   public static final long IMPLUS_PHONE_COMPOSE_VERB_COMBINER = 282149773611355264L;
    private static LongHashtable _combinerCollections = ApplicationRegistry.getApplicationRegistry().getLongHashtable(-6051637417518632414L);
 
    private VerbCombinerRepository() {

@@ -4,7 +4,7 @@ final class SequenceProviderImpl$OutgoingSequence {
    private int _sequenceId;
    private int _lastSave;
    private int _index;
-   private static final int BLOCK_SIZE;
+   private static final int BLOCK_SIZE = 32;
 
    SequenceProviderImpl$OutgoingSequence(int index, int sequenceId) {
       this._index = index;

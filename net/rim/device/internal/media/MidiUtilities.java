@@ -5,13 +5,13 @@ import java.io.DataOutputStream;
 import java.util.Vector;
 
 public class MidiUtilities {
-   public static final short SMPTE_MILLISECOND_RESOLUTION;
-   public static final int DEFAULT_TEMPO;
-   public static final int UNDEFINED_RESOLUTION;
-   private static final int NUM_HEADER_BYTES;
-   private static final int NUM_NOTE_EVENT_BYTES;
-   private static final int END_OF_TRACK_EVENT;
-   private static final int TEMPO_EVENT;
+   public static final short SMPTE_MILLISECOND_RESOLUTION = -6360;
+   public static final int DEFAULT_TEMPO = 120;
+   public static final int UNDEFINED_RESOLUTION = 0;
+   private static final int NUM_HEADER_BYTES = 14;
+   private static final int NUM_NOTE_EVENT_BYTES = 3;
+   private static final int END_OF_TRACK_EVENT = 16723712;
+   private static final int TEMPO_EVENT = 16732419;
 
    public static byte[] convertNoteDurationToMidi(short[] tune, int timestampResolution, int tempo) {
       int numTrackBytes = 8;

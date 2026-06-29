@@ -7,9 +7,9 @@ import net.rim.device.api.ui.UiApplication;
 final class IOTAEditScreen$IOTAMenuItem extends MenuItem {
    private int _type;
    private final IOTAEditScreen this$0;
-   public static final int ADD;
-   public static final int DELETE;
-   public static final int EDIT;
+   public static final int ADD = 0;
+   public static final int DELETE = 1;
+   public static final int EDIT = 2;
 
    public IOTAEditScreen$IOTAMenuItem(IOTAEditScreen _1, String title, int type) {
       super(title, 628224, 100);

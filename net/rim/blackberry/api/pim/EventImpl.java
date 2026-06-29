@@ -25,12 +25,12 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    private net.rim.device.apps.api.calendar.modelcontrollerinterface.Event _committedEvent;
    private EventListImpl _eventList;
    private RepeatRule _repeatRule;
-   private static final long REMINDER_FIELD;
-   private static final long REMINDER_NONE;
-   private static final int NUM_YEARS_CALC;
-   private static final int MODIFY_NONE;
-   private static final int MODIFY_ADD;
-   private static final int MODIFY_REMOVE;
+   private static final long REMINDER_FIELD = 813899564474876953L;
+   private static final long REMINDER_NONE = -1L;
+   private static final int NUM_YEARS_CALC = 5;
+   private static final int MODIFY_NONE = 0;
+   private static final int MODIFY_ADD = 1;
+   private static final int MODIFY_REMOVE = 2;
    private static int _allWeekInMonth = 31;
    private static int _allDaysInWeek = 130048;
    private static EventContainer _eventContainer = EventContainer.getInstance();

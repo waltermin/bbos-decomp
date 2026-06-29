@@ -9,8 +9,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class ProfilesOptions extends OptionsBase {
    private ProfilesOptions$PersistedProfilesOptions _persistedProfilesOptions;
-   private static final long PROFILES_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_PROFILES_OPTIONS;
+   private static final long PROFILES_OPTIONS_SYNC_ITEM = -6120236007087344572L;
+   private static final long PERSISTED_PROFILES_OPTIONS = 373376368149331352L;
    private static ProfilesOptions _options;
 
    private ProfilesOptions() {

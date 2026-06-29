@@ -3,8 +3,8 @@ package net.rim.device.api.crypto;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class ITPolicyAuthentication {
-   public static final String EC_CURVE;
-   private static final long ID_SELF_TEST;
+   public static final String EC_CURVE = "EC571K1";
+   private static final long ID_SELF_TEST = -2209102495321377670L;
 
    private ITPolicyAuthentication() {
    }

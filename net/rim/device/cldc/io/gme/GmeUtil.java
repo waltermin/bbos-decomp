@@ -4,11 +4,11 @@ import net.rim.device.api.io.DatagramBase;
 import net.rim.device.cldc.io.daemon.TransportRegistry;
 
 public final class GmeUtil {
-   public static final int CID_NONE;
-   public static final int CID_IPPP;
-   public static final int CID_UNKNOWN;
-   private static final int TYPE_CID;
-   public static final int GME_TERROR_BAD_GME_FORMAT;
+   public static final int CID_NONE = 0;
+   public static final int CID_IPPP = 3;
+   public static final int CID_UNKNOWN = 4;
+   private static final int TYPE_CID = 80;
+   public static final int GME_TERROR_BAD_GME_FORMAT = 65;
 
    private GmeUtil() {
    }

@@ -17,10 +17,10 @@ final class TextOverlayFieldManager extends VerticalFieldManager {
    private int _height = 180;
    private Field[][][] _fieldsForView = new Object[3][][];
    private int _currentView;
-   public static final int VIEW_AUDIO;
-   public static final int VIEW_PLAYLIST;
-   public static final int VIEW_VIDEO;
-   private static final int MAX_VIEWS;
+   public static final int VIEW_AUDIO = 0;
+   public static final int VIEW_PLAYLIST = 1;
+   public static final int VIEW_VIDEO = 2;
+   private static final int MAX_VIEWS = 3;
 
    TextOverlayFieldManager() {
       super(3458764513820540928L);

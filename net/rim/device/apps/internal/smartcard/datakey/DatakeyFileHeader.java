@@ -4,9 +4,9 @@ import net.rim.device.internal.system.DebugUtilities;
 
 class DatakeyFileHeader {
    private byte[] _header;
-   public static final int RSA_BOTH_PUBLIC_KEY_FILE;
-   public static final int RSA_BOTH_PRIVATE_KEY_FILE;
-   public static final int ATTRIBUTE_FILE;
+   public static final int RSA_BOTH_PUBLIC_KEY_FILE = 240;
+   public static final int RSA_BOTH_PRIVATE_KEY_FILE = 241;
+   public static final int ATTRIBUTE_FILE = 0;
 
    public DatakeyFileHeader(byte[] header) {
       if (header != null && header.length == 11) {

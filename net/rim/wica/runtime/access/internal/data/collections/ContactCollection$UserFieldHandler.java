@@ -7,7 +7,7 @@ import net.rim.wica.runtime.access.internal.data.handlers.ObjectFieldHandler;
 final class ContactCollection$UserFieldHandler implements ObjectFieldHandler {
    private int _userIndex;
    private boolean _valid;
-   private static final int NUM_USER_FIELDS;
+   private static final int NUM_USER_FIELDS = 4;
 
    public ContactCollection$UserFieldHandler(int userIndex) {
       this._userIndex = userIndex;

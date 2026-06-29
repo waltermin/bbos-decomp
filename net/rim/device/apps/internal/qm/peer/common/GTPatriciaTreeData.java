@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.qm.peer.common;
 
 public interface GTPatriciaTreeData {
-   int NULL_ID;
+   int NULL_ID = -1;
 
    int getBit(int var1, int var2);
 

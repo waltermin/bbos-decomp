@@ -24,11 +24,11 @@ public class BundledMediaReader implements ResourceProvider {
    protected int _checksum;
    Hashtable _resourceHashTable = (Hashtable)(new Object());
    protected ResourceProvider _resourceProvider;
-   private static final String UNKNOWN_RESOURCE;
-   static final int SUPPORTED_MAJOR1_VERSION;
-   static final int SUPPORTED_MAJOR2_VERSION;
-   static final int SUPPORTED_MINOR1_VERSION;
-   static final int BUNDLE_START_HEADER;
+   private static final String UNKNOWN_RESOURCE = "content/unknown";
+   static final int SUPPORTED_MAJOR1_VERSION = 0;
+   static final int SUPPORTED_MAJOR2_VERSION = 1;
+   static final int SUPPORTED_MINOR1_VERSION = 6;
+   static final int BUNDLE_START_HEADER = -548385470;
    protected static Hashtable _mediaReaders = (Hashtable)(new Object());
 
    private Object read(Object m, byte[] data, int offset, ResourceContext context) {

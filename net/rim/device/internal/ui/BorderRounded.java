@@ -9,9 +9,9 @@ public class BorderRounded extends Border {
    private int _arcWidth;
    private int _arcHeight;
    private Border _outerBackground;
-   public static final int FILLED;
-   public static final int DASHED;
-   public static final int TRANSPARENT;
+   public static final int FILLED = 1;
+   public static final int DASHED = 2;
+   public static final int TRANSPARENT = 4;
 
    public BorderRounded(int top, int right, int bottom, int left, int style) {
       super(top, right, bottom, left);

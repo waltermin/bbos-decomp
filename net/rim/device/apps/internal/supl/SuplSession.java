@@ -28,17 +28,17 @@ public final class SuplSession extends Thread implements LCSListener {
    private SuplEventMonitor eventMonitor;
    private SuplUtilities utils;
    private Timer timer;
-   static final boolean SUPL_DEBUG;
-   static final byte STATE_ESTABLISH_CONNECTION;
-   static final byte STATE_SUPL_INIT_RECEIVED;
-   static final byte STATE_SEND_SUPL_START;
-   static final byte STATE_WAIT_FOR_SUPL_RESP;
-   static final byte STATE_WAIT_FOR_SUPL_POS;
-   static final byte STATE_CLOSING;
-   static final long TIMER_CONN_EST_GUARD_DELAY;
-   static final long TIMER_UT1_DELAY;
-   static final long TIMER_UT2_DELAY;
-   static final long TIMER_UT3_DELAY;
+   static final boolean SUPL_DEBUG = true;
+   static final byte STATE_ESTABLISH_CONNECTION = 0;
+   static final byte STATE_SUPL_INIT_RECEIVED = 1;
+   static final byte STATE_SEND_SUPL_START = 2;
+   static final byte STATE_WAIT_FOR_SUPL_RESP = 3;
+   static final byte STATE_WAIT_FOR_SUPL_POS = 4;
+   static final byte STATE_CLOSING = 5;
+   static final long TIMER_CONN_EST_GUARD_DELAY = 30000L;
+   static final long TIMER_UT1_DELAY = 10000L;
+   static final long TIMER_UT2_DELAY = 10000L;
+   static final long TIMER_UT3_DELAY = 10000L;
    static int sessionIdCounter = 0;
    static final byte[] SUPPORTED_POS_METHODS = new byte[]{0, 2, 1, 3, 4};
 

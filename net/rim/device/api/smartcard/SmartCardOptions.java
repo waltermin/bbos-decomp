@@ -11,8 +11,8 @@ public final class SmartCardOptions implements Persistable {
    private boolean _allowLockOnCardRemoval;
    private boolean _allowPINCaching;
    private boolean _enableLEDFlashingOnOpenSession;
-   private static final long SYNC_ID;
-   private static final long ID;
+   private static final long SYNC_ID = 6548238223947587527L;
+   private static final long ID = -2650598348482057462L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(-2650598348482057462L);
 
    public static final SmartCardOptions getInstance() {

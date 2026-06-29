@@ -2,8 +2,8 @@ package net.rim.tid.im.conv.europe.spellcheck;
 
 class ItalianConversionRules$Conversion {
    private int _conversionType;
-   static final int NO_CONV;
-   static final int CONTRACTION_CONV;
+   static final int NO_CONV = 0;
+   static final int CONTRACTION_CONV = 1;
 
    ItalianConversionRules$Conversion(int conversionType) {
       this._conversionType = conversionType;

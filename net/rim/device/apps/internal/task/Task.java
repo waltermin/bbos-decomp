@@ -9,16 +9,16 @@ final class Task {
    private TaskCollectionImpl _taskCollection = TaskCollectionImpl.getInstance();
    private TaskUICollection _taskUICollection = new TaskUICollection(this._taskCollection);
    private TaskStatusAndKeywordFilterList _keyList;
-   static final int TASK_DB_VERSION;
-   public static final long EVENT_LOGGER_GUID;
-   public static final String EVENT_LOGGER_NAME;
-   static final int TASK_CORRUPT_TASK_DATA;
-   static final int TASK_NOT_A_TASK_OBJECT;
-   static final int TASK_ERROR_CONVERTING_DATA;
-   static final int TASK_INVALID_STATUS;
-   static final int TASK_DATA_MISSING;
-   static final int REMINDER_COUNT_MISMATCH;
-   static final long ID;
+   static final int TASK_DB_VERSION = 2;
+   public static final long EVENT_LOGGER_GUID = -1576052272418032312L;
+   public static final String EVENT_LOGGER_NAME = "net.rim.tasks";
+   static final int TASK_CORRUPT_TASK_DATA = 1129469264;
+   static final int TASK_NOT_A_TASK_OBJECT = 1312904271;
+   static final int TASK_ERROR_CONVERTING_DATA = 1162040900;
+   static final int TASK_INVALID_STATUS = 1229870675;
+   static final int TASK_DATA_MISSING = 1313817665;
+   static final int REMINDER_COUNT_MISMATCH = 1380796755;
+   static final long ID = -6809143763226991117L;
 
    private Task() {
    }

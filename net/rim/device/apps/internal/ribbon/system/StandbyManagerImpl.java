@@ -34,8 +34,8 @@ public final class StandbyManagerImpl
    private boolean _enableBacklightForNotify = false;
    private boolean _muteKeyPressed;
    private ResourceBundle _rb = ResourceBundle.getBundle(-6812884907508133143L, "net.rim.device.internal.resource.Common");
-   private static final int TWO_SECONDS;
-   private static final int FIVE_SECONDS;
+   private static final int TWO_SECONDS = 2000;
+   private static final int FIVE_SECONDS = 5000;
 
    static final void init() {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();

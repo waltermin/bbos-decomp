@@ -27,7 +27,7 @@ public final class InsertInternetServiceBook {
    private static String _portValue = "19780";
    private static String _ippp_relayip = null;
    private static String MAIL_HRTNAME = "SimNet_mail";
-   private static final long GUID;
+   private static final long GUID = -3363160933426248541L;
 
    public static final void libMain(String[] args) {
       EventLogger.register(-3363160933426248541L, "InsertInternetServiceBook");

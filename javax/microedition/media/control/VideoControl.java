@@ -1,7 +1,7 @@
 package javax.microedition.media.control;
 
 public interface VideoControl extends GUIControl {
-   int USE_DIRECT_VIDEO;
+   int USE_DIRECT_VIDEO = 1;
 
    @Override
    Object initDisplayMode(int var1, Object var2);

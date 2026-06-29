@@ -37,10 +37,10 @@ public final class FindLocationScreen extends ModelScreen implements ListFieldCa
    private GPSLocationData _gpsLocationData;
    private int _currentScreenZoom;
    private boolean _showGPS;
-   static final int ACTION_GPS_LOCATION;
-   static final int ACTION_ENTER_ADDRESS;
-   static final int ACTION_ADDRESS_BOOK;
-   static final int ACTION_FAVOURITES;
+   static final int ACTION_GPS_LOCATION = 0;
+   static final int ACTION_ENTER_ADDRESS = 1;
+   static final int ACTION_ADDRESS_BOOK = 2;
+   static final int ACTION_FAVOURITES = 3;
 
    public FindLocationScreen(GPSLocationData gpsLocationData, int currentScreenZoom) {
       super(281474976907264L, LBSResources.getString(317), null);

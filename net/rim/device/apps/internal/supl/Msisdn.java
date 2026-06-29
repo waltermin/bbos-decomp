@@ -4,8 +4,8 @@ import net.rim.device.api.util.Arrays;
 
 final class Msisdn implements SetId {
    private char[] msisdn = new char[8];
-   static final byte MSISDN_SIZE;
-   static final byte OCTET_BIT_SIZE;
+   static final byte MSISDN_SIZE = 8;
+   static final byte OCTET_BIT_SIZE = 8;
 
    @Override
    public final void decode(Nibbler nib) {

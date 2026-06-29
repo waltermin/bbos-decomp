@@ -25,8 +25,8 @@ import net.rim.tid.im.layout.SLKeyLayout;
 public final class QuickContactUtil {
    private static boolean _reducedQWERTYSupport = InternalServices.isReducedFormFactor();
    private static String _validKeys = _reducedQWERTYSupport ? "123456789!?.,@" : "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-   private static final int STRING_TYPE_LABEL;
-   private static final int STRING_TYPE_PROMPT;
+   private static final int STRING_TYPE_LABEL = 0;
+   private static final int STRING_TYPE_PROMPT = 1;
    private static Tag _hotkeyTag = Tag.create("phone-hotlist-hotkey");
    private static ThemeAttributeSet _hotkeyTheme;
    private static int _themeGeneration;

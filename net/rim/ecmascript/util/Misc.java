@@ -7,10 +7,10 @@ import net.rim.vm.Array;
 import net.rim.vm.Memory;
 
 public class Misc {
-   public static final int PLATFORM_DESKTOPVM;
-   public static final int PLATFORM_SIMULATOR;
-   public static final int PLATFORM_J2SE;
-   public static final int PLATFORM_DEVICE;
+   public static final int PLATFORM_DESKTOPVM = 0;
+   public static final int PLATFORM_SIMULATOR = 1;
+   public static final int PLATFORM_J2SE = 2;
+   public static final int PLATFORM_DEVICE = 3;
 
    public static int separatedArraySize(long len, int lenSep) {
       long estimate = len * lenSep + 1;

@@ -14,8 +14,8 @@ final class QuerySSOptions extends SSRequest {
    private boolean _checkCspFlags;
    private QuerySSOptions$Listener _listener;
    private int _index;
-   static final int SKIP_CSP_CHECK;
-   static final int SS_OPTION_NOT_PROVISIONED;
+   static final int SKIP_CSP_CHECK = -1;
+   static final int SS_OPTION_NOT_PROVISIONED = 0;
 
    QuerySSOptions(int[] friendlySSTypes, int[] ssOptions, int cspServiceGroup, int[] cspTypesMap, QuerySSOptions$Listener listener) {
       this._ssOptions = ssOptions;

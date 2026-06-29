@@ -46,9 +46,9 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
    private boolean _attemptedMountOnInsert;
    private boolean _poweredOff;
    private boolean _batteryDoorRemoved;
-   private static final long FILE_SYSTEM_ROOT_REGISTER;
-   public static final long FILE_SYSTEM_USB_MS_CHANGED;
-   private static final int DEVICE_KEY_LENGTH;
+   private static final long FILE_SYSTEM_ROOT_REGISTER = 6719885707613225690L;
+   public static final long FILE_SYSTEM_USB_MS_CHANGED = -278191449801390253L;
+   private static final int DEVICE_KEY_LENGTH = 32;
    private static RootRegister _rootRegister;
    private static String _knownPassword;
    static Class class$net$rim$device$cldc$io$file$PosixFileConnection;

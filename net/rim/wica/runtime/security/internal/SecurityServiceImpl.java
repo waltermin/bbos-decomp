@@ -21,8 +21,8 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
    private SequenceProviderImpl _sequenceProvider;
    private EventService _eventService;
    private ServiceProvider _serviceProvider;
-   private static final int SECURITY_MIN_VERSION;
-   private static final int SECURITY_MAX_VERSION;
+   private static final int SECURITY_MIN_VERSION = 1;
+   private static final int SECURITY_MAX_VERSION = 2;
    static Class class$net$rim$wica$runtime$event$EventService;
    static Class class$net$rim$wica$runtime$persistence$PersistenceService;
 

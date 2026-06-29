@@ -52,7 +52,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
    private boolean _resetScreenType;
    private LongHashtable _serviceMessageListUIs = (LongHashtable)(new Object(2));
    private long _currentlyVisibleServiceID;
-   private static final int SET_FILTER_SLOW_THRESHOLD;
+   private static final int SET_FILTER_SLOW_THRESHOLD = 1500;
 
    public static final void main(String[] args) {
       if (args != null && args.length == 1) {

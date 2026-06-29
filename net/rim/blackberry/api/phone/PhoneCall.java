@@ -4,11 +4,11 @@ import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 
 public class PhoneCall {
    private LiveCall _livecall;
-   public static final int STATUS_CONNECTED;
-   public static final int STATUS_CONNECTED_MUTED;
-   public static final int STATUS_CONNECTING;
-   public static final int STATUS_DISCONNECTED;
-   public static final int STATUS_HELD;
+   public static final int STATUS_CONNECTED = 1;
+   public static final int STATUS_CONNECTED_MUTED = 2;
+   public static final int STATUS_CONNECTING = 0;
+   public static final int STATUS_DISCONNECTED = 4;
+   public static final int STATUS_HELD = 3;
 
    PhoneCall(LiveCall lc) {
       this._livecall = lc;

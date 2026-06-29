@@ -16,21 +16,21 @@ public final class EventLogger {
    private byte[] _intBuffer = new byte[4];
    private byte[] _longBuffer = new byte[8];
    private byte[] _byteBuffer = new byte[18];
-   public static final long EVLV_GUID;
-   public static final long SYSTEM_LOG_GUID;
-   public static final int DEBUG_INFO;
-   public static final int INFORMATION;
-   public static final int WARNING;
-   public static final int ERROR;
-   public static final int SEVERE_ERROR;
-   public static final int ALWAYS_LOG;
-   public static final int VIEWER_NUMBER;
-   public static final int VIEWER_STRING;
-   public static final int VIEWER_EXCEPTION;
+   public static final long EVLV_GUID = -1723378108824417453L;
+   public static final long SYSTEM_LOG_GUID = -7509200465648525729L;
+   public static final int DEBUG_INFO = 5;
+   public static final int INFORMATION = 4;
+   public static final int WARNING = 3;
+   public static final int ERROR = 2;
+   public static final int SEVERE_ERROR = 1;
+   public static final int ALWAYS_LOG = 0;
+   public static final int VIEWER_NUMBER = 1;
+   public static final int VIEWER_STRING = 2;
+   public static final int VIEWER_EXCEPTION = 3;
    private static long LOG_LEVEL = 1512962004565244438L;
    private static EventLogger _theLogger = ((ApplicationManagerImpl)ApplicationManager.getApplicationManager()).getEventLogger();
    private static EventLogger$MyPersistentContentListener _myPersistentContentListener;
-   public static final long PERSISTENT_CONTENT_LISTENER_ID;
+   public static final long PERSISTENT_CONTENT_LISTENER_ID = -3768474813176659123L;
 
    EventLogger() {
       this._logLevelId = PersistentInteger.getId(LOG_LEVEL, 3);

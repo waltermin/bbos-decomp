@@ -19,8 +19,8 @@ class AddressReferenceViewField$TooltipFieldManager extends HorizontalFieldManag
    private int _maxWidth;
    private boolean _rightJustified;
    private boolean _focusRectAlignment;
-   public static final long FLAG_RIGHT_JUSTIFIED;
-   public static final long FLAG_FOCUS_RECT_ALIGNMENT;
+   public static final long FLAG_RIGHT_JUSTIFIED = 1L;
+   public static final long FLAG_FOCUS_RECT_ALIGNMENT = 2L;
 
    public AddressReferenceViewField$TooltipFieldManager(Field parentField, long flags) {
       super(0);

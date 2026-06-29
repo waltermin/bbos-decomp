@@ -6,8 +6,8 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.Array;
 
 public class FolderHierarchies {
-   private static final long MESSAGE_FOLDER_HIERARCHIES;
-   private static final long FOLDER_HIERARCHIES_LOCK_OBJECT_APPLICATION_REGISTRY_LUID;
+   private static final long MESSAGE_FOLDER_HIERARCHIES = 515427541846697633L;
+   private static final long FOLDER_HIERARCHIES_LOCK_OBJECT_APPLICATION_REGISTRY_LUID = 574401069540349213L;
    private static Folder[] _folderHierarchies;
 
    private FolderHierarchies() {

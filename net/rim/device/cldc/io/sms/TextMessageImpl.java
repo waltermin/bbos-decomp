@@ -6,8 +6,8 @@ import net.rim.device.api.system.SMSPacketHeader;
 
 public final class TextMessageImpl extends MessageImpl implements TextMessage {
    String _encoder;
-   public static final String DEFAULT_SMS_ENCODER;
-   public static final String UCS2_SMS_ENCODER;
+   public static final String DEFAULT_SMS_ENCODER = "SMS";
+   public static final String UCS2_SMS_ENCODER = "UnicodeBigUnmarked";
 
    public TextMessageImpl(String address) {
       super(address);

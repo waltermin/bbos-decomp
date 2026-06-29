@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareHMACCryptoToken extends HMACCryptoToken implements Persistable {
    private static SoftwareHMACCryptoToken _instance = new SoftwareHMACCryptoToken();
-   private static final long ID_TEST_HMAC;
+   private static final long ID_TEST_HMAC = 3649595655998352079L;
 
    public static final SoftwareHMACCryptoToken getInstance() {
       return _instance;

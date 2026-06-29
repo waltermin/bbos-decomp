@@ -10,10 +10,10 @@ import net.rim.device.apps.api.ribbon.indicators.UnreadCountManager;
 
 final class AnonymousMessagesImpl extends AnonymousMessages {
    private AnonymousMessagesImpl$AnonymousMessageHierarchy _hierarchy;
-   private static final long HIERARCHY_KEY;
-   private static final long MAIN_FOLDER_KEY;
-   private static final long SAVED_THEN_ORPHANED_FOLDER_KEY;
-   private static final long ANONYMOUS_FAMILY;
+   private static final long HIERARCHY_KEY = 2261407540084218132L;
+   private static final long MAIN_FOLDER_KEY = -77939598941636974L;
+   private static final long SAVED_THEN_ORPHANED_FOLDER_KEY = -4135505141387831963L;
+   private static final long ANONYMOUS_FAMILY = 3205022748636245883L;
    private static AnonymousMessagesImpl _instance;
 
    static final void register() {

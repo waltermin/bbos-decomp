@@ -12,8 +12,8 @@ final class TestRFAntenna extends TestTaskBase {
    TimeoutAction timeoutAction;
    TestRFAntenna$MyPhoneListener phoneListener;
    int processId;
-   static final String DEFAULT_PHONE_NO;
-   static final int SAMPLING_PERIOD;
+   static final String DEFAULT_PHONE_NO = "15198887465";
+   static final int SAMPLING_PERIOD = 5000;
 
    TestRFAntenna() {
       super.app = (DeviceSelfTest)Application.getApplication();

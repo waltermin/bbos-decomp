@@ -8,13 +8,13 @@ public final class MessageArguments extends ApplicationArguments {
    private Message _message;
    private TextMessage _textMessage;
    private Folder _folder;
-   public static final String ARG_DEFAULT;
-   public static final String ARG_SAVED;
-   public static final String ARG_SEARCH;
-   public static final String ARG_NEW;
-   public static final String ARG_NEW_PIN;
-   public static final String ARG_NEW_SMS;
-   public static final String ARG_NEW_MMS;
+   public static final String ARG_DEFAULT = "mainview";
+   public static final String ARG_SAVED = "saved";
+   public static final String ARG_SEARCH = "search";
+   public static final String ARG_NEW = "new";
+   public static final String ARG_NEW_PIN = "newpin";
+   public static final String ARG_NEW_SMS = "newsms";
+   public static final String ARG_NEW_MMS = "newmms";
 
    public MessageArguments() {
       super._args = new String[]{"mainview"};

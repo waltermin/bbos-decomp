@@ -56,14 +56,14 @@ public class WAPPushModel
    protected String _preferredConfigUID;
    protected String _preferredTransportCID;
    protected int _preferredConfigType;
-   public static final int STATUS_OPEN;
-   public static final int STATUS_UNOPEN;
-   static final int ICON_PAINT_WIDTH;
-   static final int TIME_PAINT_WIDTH;
-   static final int DESCRIPTION_PAINT_WIDTH;
-   static final int ICON_COLUMN;
-   static final int TIME_COLUMN;
-   static final int DESCRIPTION_COLUMN;
+   public static final int STATUS_OPEN = 0;
+   public static final int STATUS_UNOPEN = 1;
+   static final int ICON_PAINT_WIDTH = 15;
+   static final int TIME_PAINT_WIDTH = 35;
+   static final int DESCRIPTION_PAINT_WIDTH = 105;
+   static final int ICON_COLUMN = 0;
+   static final int TIME_COLUMN = 1;
+   static final int DESCRIPTION_COLUMN = 2;
    private static ContextObject _notificationsContext = (ContextObject)(new Object());
 
    public int getPreferredConfigType() {

@@ -8,11 +8,11 @@ final class QuickContactScreen$QuickContactItemVerb extends Verb {
    private int _id;
    private QuickContactItem _item;
    private final QuickContactScreen this$0;
-   static final int EDIT;
-   static final int DELETE;
-   static final int INVOKE;
-   static final int VIEW;
-   static final int MOVE;
+   static final int EDIT = 0;
+   static final int DELETE = 1;
+   static final int INVOKE = 2;
+   static final int VIEW = 3;
+   static final int MOVE = 4;
 
    QuickContactScreen$QuickContactItemVerb(QuickContactScreen _1, QuickContactItem item, int id, int ordering) {
       super(ordering);

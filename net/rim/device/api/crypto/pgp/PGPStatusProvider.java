@@ -21,12 +21,12 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 
 public class PGPStatusProvider extends CertificateStatusProvider {
-   private static final long ID;
-   private static final int TAG_RESPONDER_URL;
-   private static final int TAG_KEY_ID;
-   private static final int TAG_STATUS;
-   private static final int TAG_HASH;
-   private static final int TAG_CERTIFICATE;
+   private static final long ID = -5040597249237244723L;
+   private static final int TAG_RESPONDER_URL = 1;
+   private static final int TAG_KEY_ID = 2;
+   private static final int TAG_STATUS = 3;
+   private static final int TAG_HASH = 4;
+   private static final int TAG_CERTIFICATE = 5;
 
    public PGPStatusProvider() {
       super(-5040597249237244723L);
@@ -191,7 +191,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 114: sipush 8030
       // 117: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 11a: bipush 1
-      // 11b: anewarray 359
+      // 11b: anewarray 372
       // 11e: dup
       // 11f: bipush 0
       // 120: aload 16
@@ -224,7 +224,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 165: sipush 8030
       // 168: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 16b: bipush 1
-      // 16c: anewarray 409
+      // 16c: anewarray 422
       // 16f: dup
       // 170: bipush 0
       // 171: aload 16

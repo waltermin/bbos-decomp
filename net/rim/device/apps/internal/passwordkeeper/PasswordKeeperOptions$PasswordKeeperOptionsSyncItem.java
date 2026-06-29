@@ -6,15 +6,15 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class PasswordKeeperOptions$PasswordKeeperOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int RANDOM_PASSWORD_LENGTH;
-   private static final int ALPHA;
-   private static final int NUMERIC;
-   private static final int SYMBOL;
-   private static final int CONFIRM;
-   private static final int ALLOW_COPY;
-   private static final int SHOW_PASSWORD;
-   private static final int OTA_SYNC;
-   private static final int DB_VERSION;
+   private static final int RANDOM_PASSWORD_LENGTH = 1;
+   private static final int ALPHA = 2;
+   private static final int NUMERIC = 3;
+   private static final int SYMBOL = 4;
+   private static final int CONFIRM = 5;
+   private static final int ALLOW_COPY = 6;
+   private static final int SHOW_PASSWORD = 7;
+   private static final int OTA_SYNC = 8;
+   private static final int DB_VERSION = 0;
 
    private PasswordKeeperOptions$PasswordKeeperOptionsSyncItem() {
    }

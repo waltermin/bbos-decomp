@@ -20,7 +20,7 @@ public class DownloadManager implements Runnable {
    private boolean _drmProtected;
    protected long _totalDecodedSizeDownloaded;
    private RenderingApplication _renderingApp;
-   protected static final String DRM_CONTENT_TYPE;
+   protected static final String DRM_CONTENT_TYPE = "application/vnd.oma.drm.message";
 
    protected InputStream unwrapDRM(InputStream inputStream, String contentType) {
       if (contentType != null && StringUtilities.startsWithIgnoreCase(contentType, "application/vnd.oma.drm.message", 1701707776)) {

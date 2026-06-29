@@ -4,8 +4,8 @@ import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.util.MathUtilities;
 
 final class ConnectionTimeoutOptionField extends NumericChoiceField implements MMSOptionsScreen$Saveable {
-   private static final int MIN_VALUE;
-   private static final int MAX_VALUE;
+   private static final int MIN_VALUE = 0;
+   private static final int MAX_VALUE = 600;
 
    ConnectionTimeoutOptionField() {
       super("Connection Timeout (s): ", 0, 600, 1, initialValue());

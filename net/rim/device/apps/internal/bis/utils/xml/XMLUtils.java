@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.bis.utils.xml;
 import java.io.OutputStream;
 
 public final class XMLUtils {
-   private static final String UTF_ENCODING;
+   private static final String UTF_ENCODING = "UTF-8";
 
    public static final void startElement(OutputStream ostream, String tag) {
       ostream.write(((StringBuffer)(new Object("<"))).append(tag).append(">").toString().getBytes("UTF-8"));

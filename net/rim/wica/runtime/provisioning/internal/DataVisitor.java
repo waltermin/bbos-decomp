@@ -15,7 +15,7 @@ public final class DataVisitor extends DefinitionVisitorAdapter {
    private EncodingContextOffset _dataDefsOffset;
    private int _globalDataDefId;
    private UniqueCodeGenerator _uniqueCodeGenerator;
-   private static final String _GLOBALS_INTERNAL_NAME;
+   private static final String _GLOBALS_INTERNAL_NAME = "Global";
 
    public DataVisitor(UniqueCodeGenerator ucg) {
       this._uniqueCodeGenerator = ucg;

@@ -3,14 +3,14 @@ package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 import net.rim.plazmic.mediaengine.MediaListener;
 
 public interface Animate extends TimingBehavior {
-   int DISCRETE;
-   int LINEAR;
-   int REPLACE;
-   int SUM;
-   int NONE;
-   int BOOL_ARRAY;
-   int INT_ARRAY;
-   int OBJECT_ARRAY;
+   int DISCRETE = 0;
+   int LINEAR = 1;
+   int REPLACE = 0;
+   int SUM = 1;
+   int NONE = 0;
+   int BOOL_ARRAY = 0;
+   int INT_ARRAY = 1;
+   int OBJECT_ARRAY = 2;
 
    int[] getKeyTimes();
 

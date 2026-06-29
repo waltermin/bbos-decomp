@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 public class SetupWizardRegistration {
    private static Vector _wizardProviders;
-   private static final long KEY_NAME;
+   private static final long KEY_NAME = -6881666848190429556L;
 
    public static void registerWizardProvider(WizardPageProvider wizardProvider) {
       synchronized (_wizardProviders) {

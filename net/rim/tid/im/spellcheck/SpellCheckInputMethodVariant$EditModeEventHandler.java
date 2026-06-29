@@ -11,7 +11,7 @@ import net.rim.tid.text.TextHitInfo;
 
 class SpellCheckInputMethodVariant$EditModeEventHandler extends SpellCheckInputMethodVariant$DispatchEventHandlerImpl {
    private final SpellCheckInputMethodVariant this$0;
-   private static final long SPELLCHECK_DELAY;
+   private static final long SPELLCHECK_DELAY = 20L;
 
    SpellCheckInputMethodVariant$EditModeEventHandler(SpellCheckInputMethodVariant _1) {
       super(_1);

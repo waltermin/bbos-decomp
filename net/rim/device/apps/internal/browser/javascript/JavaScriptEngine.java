@@ -142,7 +142,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       "application/x-javascript"
    };
    private static boolean DEBUG = DeviceInfo.isSimulator();
-   private static final int MAX_CACHE_SIZE;
+   private static final int MAX_CACHE_SIZE = 50;
    private static int _cacheSize = 0;
    private static int[] _verifiedScriptsCache = new int[50];
    private static byte[][][] _verifiedScriptsHash = new byte[50][][];

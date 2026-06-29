@@ -11,7 +11,7 @@ import net.rim.vm.WeakReference;
 public class PersistentProxyModelStore extends AbstractProxyModelStore implements Persistable {
    private boolean _group;
    private long _ramCacheId;
-   private static final long RAMCACHE_ID;
+   private static final long RAMCACHE_ID = -4403285339980975672L;
 
    public static final PersistentProxyModelStore getInstance(long rootId, boolean group) {
       PersistentObject po = RIMPersistentStore.getPersistentObject(rootId);

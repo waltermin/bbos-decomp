@@ -10,18 +10,18 @@ public final class ICMPPacketHeader implements RadioPacketHeader {
    private byte _code;
    private short _checksum;
    private byte _ttl;
-   public static final int TYPE_ECHO_REPLY;
-   public static final int TYPE_DEST_UNREACHABLE;
-   public static final int TYPE_SOURCE_QUENCH;
-   public static final int TYPE_REDIRECT;
-   public static final int TYPE_ECHO;
-   public static final int TYPE_TIME_EXCEEDED;
-   public static final int TYPE_PARAMETER_PROBLEM;
-   public static final int TYPE_TIMESTAMP;
-   public static final int TYPE_TIMESTAMP_REPLY;
-   public static final int TYPE_INFO_REQUEST;
-   public static final int TYPE_INFO_REPLY;
-   public static final int MAX_ICMP_PACKET_SIZE;
+   public static final int TYPE_ECHO_REPLY = 0;
+   public static final int TYPE_DEST_UNREACHABLE = 3;
+   public static final int TYPE_SOURCE_QUENCH = 4;
+   public static final int TYPE_REDIRECT = 5;
+   public static final int TYPE_ECHO = 8;
+   public static final int TYPE_TIME_EXCEEDED = 11;
+   public static final int TYPE_PARAMETER_PROBLEM = 12;
+   public static final int TYPE_TIMESTAMP = 13;
+   public static final int TYPE_TIMESTAMP_REPLY = 14;
+   public static final int TYPE_INFO_REQUEST = 15;
+   public static final int TYPE_INFO_REPLY = 16;
+   public static final int MAX_ICMP_PACKET_SIZE = 1488;
 
    public ICMPPacketHeader() {
       this.reset();

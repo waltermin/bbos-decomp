@@ -21,19 +21,19 @@ public final class ArticInterface$Layout {
    public int[] _lineData = new int[0];
    public int[] _runData = new int[0];
    public byte[] _bidi = new byte[0];
-   private static final int KTextLengthOffset;
-   private static final int KSkippedCharactersOffset;
-   private static final int KLayoutRunsOffset;
-   private static final int KOriginXOffset;
-   private static final int KOriginYOffset;
-   private static final int KBoundsLeftOffset;
-   private static final int KBoundsTopOffset;
-   private static final int KBoundsRightOffset;
-   private static final int KBoundsBottomOffset;
-   private static final int KBidiBytesOffset;
-   private static final int KFlagsOffset;
-   private static final int KLineElements;
-   private static final int KRunElements;
+   private static final int KTextLengthOffset = 0;
+   private static final int KSkippedCharactersOffset = 1;
+   private static final int KLayoutRunsOffset = 2;
+   private static final int KOriginXOffset = 3;
+   private static final int KOriginYOffset = 4;
+   private static final int KBoundsLeftOffset = 5;
+   private static final int KBoundsTopOffset = 6;
+   private static final int KBoundsRightOffset = 7;
+   private static final int KBoundsBottomOffset = 8;
+   private static final int KBidiBytesOffset = 9;
+   private static final int KFlagsOffset = 10;
+   private static final int KLineElements = 11;
+   private static final int KRunElements = 5;
 
    public final int lines() {
       return this._lineData.length / 11;

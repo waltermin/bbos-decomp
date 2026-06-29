@@ -8,7 +8,7 @@ import net.rim.plazmic.internal.contentpreview.message.MessageFormatException;
 import net.rim.plazmic.internal.contentpreview.message.MessageNotFoundException;
 
 public final class DispatcherMessageReader extends AbstractMessageReader {
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/DispatcherMessageReader.java#1 $";
 
    public static final void parse(InputStream is, DispatcherEventHandler handler) {
       parse(is, handler, 1);

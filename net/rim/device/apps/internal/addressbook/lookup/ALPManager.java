@@ -40,13 +40,13 @@ public class ALPManager
    private Object _retryLock = new Object();
    private long _managerId = System.currentTimeMillis();
    private int _whatToDo;
-   private static final int MAX_SEARCHES_PENDING;
-   private static final int MAX_SEARCHES_WHEN_LOW_ON_MEMORY;
-   private static final int CLOCKS_FOR_RETRY;
-   private static final int CLOCKS_FOR_PURGE;
-   private static final int WTD_RETRY;
-   private static final int WTD_PURGE;
-   private static final int WTD_NULL;
+   private static final int MAX_SEARCHES_PENDING = 5;
+   private static final int MAX_SEARCHES_WHEN_LOW_ON_MEMORY = 1;
+   private static final int CLOCKS_FOR_RETRY = 2;
+   private static final int CLOCKS_FOR_PURGE = 120;
+   private static final int WTD_RETRY = 1;
+   private static final int WTD_PURGE = 2;
+   private static final int WTD_NULL = 0;
 
    public synchronized Request createRequest(String pattern, long order, long service, Object context) {
       pattern = pattern.trim();

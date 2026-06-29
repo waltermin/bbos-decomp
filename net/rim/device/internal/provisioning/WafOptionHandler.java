@@ -11,18 +11,18 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.system.RadioInternal;
 
 final class WafOptionHandler implements ProvisioningHandler, SystemListener2 {
-   private static final int DTM_VERSION;
-   private static final int RRLP_VERSION;
-   private static final int SUPL_VERSION;
-   private static final int DTM_ENABLED;
-   private static final int DTM_DISABLED;
-   private static final int RRLP_ENABLED;
-   private static final int RRLP_DISABLED;
-   private static final int SUPL_ENABLED;
-   private static final int SUPL_DISABLED;
-   private static final int OPTION_ENABLED;
-   private static final int OPTION_NOT_PROVISIONED;
-   private static final int OPTION_DISABLED;
+   private static final int DTM_VERSION = 3;
+   private static final int RRLP_VERSION = 1;
+   private static final int SUPL_VERSION = 1;
+   private static final int DTM_ENABLED = 1146375525;
+   private static final int DTM_DISABLED = 1146375524;
+   private static final int RRLP_ENABLED = 1381125221;
+   private static final int RRLP_DISABLED = 1381125220;
+   private static final int SUPL_ENABLED = 1398100069;
+   private static final int SUPL_DISABLED = 1398100068;
+   private static final int OPTION_ENABLED = 1;
+   private static final int OPTION_NOT_PROVISIONED = 0;
+   private static final int OPTION_DISABLED = -1;
 
    WafOptionHandler() {
       Proxy.getInstance().addSystemListener(this);

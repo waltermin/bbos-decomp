@@ -8,8 +8,8 @@ import net.rim.device.api.ui.Keypad;
 final class TestHolster extends TestTaskBase implements HolsterListener {
    TestHolsterScreen taskScreen;
    final long FILTER_THRESHOLD = 3000;
-   static final int INTO_HOLSTER;
-   static final int OUTOF_HOLSTER;
+   static final int INTO_HOLSTER = 1;
+   static final int OUTOF_HOLSTER = 2;
    static String clipName;
 
    TestHolster() {

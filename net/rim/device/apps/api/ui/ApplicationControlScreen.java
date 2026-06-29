@@ -55,11 +55,11 @@ public class ApplicationControlScreen extends AppsMainScreen {
    private boolean _isInternalConnectionHidden;
    private boolean _permissionsSavedEqualOrMorePermissive;
    ScreenUiEngineAttachedListener _closeListener;
-   private static final long GUID;
+   private static final long GUID = 2594183781511917644L;
    private static ResourceBundle _rb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
    private static ResourceBundle _prb = ResourceBundle.getBundle(8732645638888225014L, "net.rim.device.internal.resource.PlatformSecurity");
-   private static final long RESET_PROMPT_DELAY;
-   protected static final String WML_HELP_FILE_NAME;
+   private static final long RESET_PROMPT_DELAY = 3600000L;
+   protected static final String WML_HELP_FILE_NAME = "third_party_program_control";
    private static final String WML_HELP_CONNECTIONS_GROUP = null;
    private static final String WML_HELP_INTERACTIONS_GROUP = null;
    private static final String WML_HELP_USERDATA_GROUP = null;

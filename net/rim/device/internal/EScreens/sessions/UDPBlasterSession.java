@@ -24,9 +24,9 @@ public final class UDPBlasterSession extends EScreenSession implements UDPPacket
    private EditField _portField = (EditField)(new Object("Destination Port: ", "56026", Integer.MAX_VALUE, 16777216));
    private NumericChoiceField _windowSizeField = (NumericChoiceField)(new Object("Window Size: ", 1, 5, 1, 4));
    private EditField _packetSizeField = (EditField)(new Object("Packet size: ", "256", Integer.MAX_VALUE, 16777216));
-   private static final int COUNTER_SENT;
-   private static final int COUNTER_SENT_OK;
-   private static final int COUNTER_SENT_FAIL;
+   private static final int COUNTER_SENT = 0;
+   private static final int COUNTER_SENT_OK = 1;
+   private static final int COUNTER_SENT_FAIL = 2;
    private static final String[] COUNTER_HEADERS = new String[]{"Tx Attempts: ", "Tx Succeeded: ", "Tx Failed: "};
 
    @Override

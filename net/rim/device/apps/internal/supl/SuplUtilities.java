@@ -12,7 +12,7 @@ public final class SuplUtilities implements DialogClosedListener {
    private Timer timer;
    private int dialogResponse;
    private int defaultChoice;
-   private static final int VERIFICATION_RESPONSE_TIME_MS;
+   private static final int VERIFICATION_RESPONSE_TIME_MS = 30000;
    static ResourceBundle _rb = ResourceBundle.getBundle(-8422383104449549495L, "net.rim.device.apps.internal.supl.Supl");
 
    public final boolean cachedPositionAcceptable(GPSLocationExtended position, QOP desiredQOP) {

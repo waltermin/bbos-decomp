@@ -4,9 +4,9 @@ import net.rim.device.api.ui.MenuItem;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
 
 public class LBSMenuItem extends MenuItem {
-   public static final int BASIC_PRIORITY;
-   public static final int MEDIUM_PRIORITY;
-   public static final int HIGH_PRIORITY;
+   public static final int BASIC_PRIORITY = 1000;
+   public static final int MEDIUM_PRIORITY = 500;
+   public static final int HIGH_PRIORITY = 10;
    public static int CONTEXT_ORDER;
    public static int MODE_ORDER;
 

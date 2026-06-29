@@ -4,7 +4,7 @@ import javax.xml.namespace.QName;
 import net.rim.device.api.xml.jaxrpc.OperationImpl;
 
 public class Operation {
-   public static final String SOAPACTION_URI_PROPERTY;
+   public static final String SOAPACTION_URI_PROPERTY = "javax.xml.rpc.soap.http.soapaction.uri";
 
    protected Operation() {
    }

@@ -14,8 +14,8 @@ class ResourceBundleFetcher$CompressedResourceHashtable extends Hashtable {
    private Object _lockObject = new Object();
    private int _cachedFSGeneration = 0;
    ApplicationRegistry _appRegistry = ApplicationRegistry.getApplicationRegistry();
-   private static final long CRC_GUID;
-   private static final long MODULES_GUID;
+   private static final long CRC_GUID = -2054058001874678213L;
+   private static final long MODULES_GUID = -5612214964325329634L;
 
    private ResourceBundleFetcher$CompressedResourceHashtable() {
       synchronized (this._lockObject) {

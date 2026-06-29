@@ -32,20 +32,20 @@ import net.rim.device.cldc.io.http.HttpProtocolBase;
 import net.rim.vm.Array;
 
 public final class RendererControl {
-   public static final String CONTENT_TYPE_HEADER;
-   public static final int MAX_REDIRECT;
-   public static final int MIME_MAGIC_BUFFER_SIZE;
+   public static final String CONTENT_TYPE_HEADER = "content-type";
+   public static final int MAX_REDIRECT = 10;
+   public static final int MIME_MAGIC_BUFFER_SIZE = 512;
    private static final String[] OFFLINE_QUEUE_VALUES = new String[]{
       "x-rim-queue-id", "x-rim-request-id", "x-rim-request-date", "x-rim-request-title", "x-rim-next-target"
    };
-   private static final String OPENWAVE_REDIRECT_PREFIX;
-   private static final int STATE_NO_MATCH;
-   private static final int STATE_LESSTHAN;
-   private static final int STATE_LESSTHAN_H;
-   private static final int STATE_LESSTHAN_HT;
-   private static final int STATE_LESSTHAN_HTM;
-   private static final int STATE_LESSTHAN_W;
-   private static final int STATE_LESSTHAN_WM;
+   private static final String OPENWAVE_REDIRECT_PREFIX = "uplink:///goto?url=";
+   private static final int STATE_NO_MATCH = 0;
+   private static final int STATE_LESSTHAN = 1;
+   private static final int STATE_LESSTHAN_H = 2;
+   private static final int STATE_LESSTHAN_HT = 3;
+   private static final int STATE_LESSTHAN_HTM = 4;
+   private static final int STATE_LESSTHAN_W = 12;
+   private static final int STATE_LESSTHAN_WM = 13;
 
    public static final String getStatusDescription(int statusCode) {
       try {

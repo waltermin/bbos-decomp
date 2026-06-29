@@ -19,12 +19,12 @@ import net.rim.vm.Array;
 public final class CallLogItem implements PhoneListItem, EncryptableProvider {
    private PhoneCallModelImpl _callLog;
    private long[] _historyItems = new long[0];
-   private static final int MIN_HISTORY_ITEMS_FOR_DELETE_STATUS;
-   private static final int ICON_SPACE;
-   private static final int TIME_STRING_SPACE;
-   private static final int NUMBER_TYPE_STRING_SPACE;
-   private static final int CALLER_ID_STRING_LEFT_SPACE;
-   private static final int CALLER_ID_STRING_RIGHT_SPACE;
+   private static final int MIN_HISTORY_ITEMS_FOR_DELETE_STATUS = 4;
+   private static final int ICON_SPACE = 3;
+   private static final int TIME_STRING_SPACE = 2;
+   private static final int NUMBER_TYPE_STRING_SPACE = 2;
+   private static final int CALLER_ID_STRING_LEFT_SPACE = 3;
+   private static final int CALLER_ID_STRING_RIGHT_SPACE = 4;
    private static int _timeStringAllotment = 60;
    private static int _numberTypeStringAllotment = 30;
 

@@ -3,11 +3,11 @@ package net.rim.device.apps.api.iota;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class IOTAManager {
-   private static final long KEY;
-   public static final int IOTA_IDLE;
-   public static final int IOTA_BUSY;
-   public static final int IOTA_CIP_IDLE;
-   public static final int IOTA_CIP_BUSY;
+   private static final long KEY = -2072185981212834145L;
+   public static final int IOTA_IDLE = 0;
+   public static final int IOTA_BUSY = 1;
+   public static final int IOTA_CIP_IDLE = 2;
+   public static final int IOTA_CIP_BUSY = 3;
 
    public static void register(IOTAManager manager) {
       ApplicationRegistry.getApplicationRegistry().put(-2072185981212834145L, manager);

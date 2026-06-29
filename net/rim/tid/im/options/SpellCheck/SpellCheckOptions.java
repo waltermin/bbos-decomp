@@ -11,22 +11,22 @@ public final class SpellCheckOptions implements SpellCheckConstants {
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(-7831230383556836047L);
    private SpellCheckOptions$PersistedSpellCheckOptions _persistedSpellCheckOptions;
    private OTASyncCapableSyncItem _syncItem;
-   private static final long SPELL_CHECK_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_SPELL_CHECK_OPTIONS;
-   public static final int DIFFERENT_LETTER_CASE_AS_SAME;
-   public static final int UPPER_CASE_IGNORE;
-   public static final int WORDS_WITH_NUMBERS_IGNORE;
-   public static final int ACCENTED_CHARACTERS_IGNORE;
-   public static final int LEARNING_ON_OFF;
-   public static final int AUTOMATIC_SUFFIX_HANDLING;
-   public static final int DEFAULT_DIALOG_NOTIFICATION;
-   public static final int SPELLCHECK_EMAIL_BEFORE_SEND;
-   public static final int USE_ADDRESS_BOOK;
-   public static final int SUGGESTIONS_LEVEL;
-   public static final int MIN_WORD_SIZE_FOR_CHECK;
-   public static final int CUSTOM_DICT_SIZE;
-   public static final int REPLACEMENT_PAIRS_SIZE;
-   public static final int CONTAINER_SIZE;
+   private static final long SPELL_CHECK_OPTIONS_SYNC_ITEM = -2621761209518645263L;
+   private static final long PERSISTED_SPELL_CHECK_OPTIONS = -7831230383556836047L;
+   public static final int DIFFERENT_LETTER_CASE_AS_SAME = 1;
+   public static final int UPPER_CASE_IGNORE = 2;
+   public static final int WORDS_WITH_NUMBERS_IGNORE = 4;
+   public static final int ACCENTED_CHARACTERS_IGNORE = 8;
+   public static final int LEARNING_ON_OFF = 16;
+   public static final int AUTOMATIC_SUFFIX_HANDLING = 32;
+   public static final int DEFAULT_DIALOG_NOTIFICATION = 64;
+   public static final int SPELLCHECK_EMAIL_BEFORE_SEND = 128;
+   public static final int USE_ADDRESS_BOOK = 256;
+   public static final int SUGGESTIONS_LEVEL = 65536;
+   public static final int MIN_WORD_SIZE_FOR_CHECK = 131072;
+   public static final int CUSTOM_DICT_SIZE = 262144;
+   public static final int REPLACEMENT_PAIRS_SIZE = 524288;
+   public static final int CONTAINER_SIZE = 1048576;
    private static SpellCheckOptions _options;
 
    private SpellCheckOptions() {

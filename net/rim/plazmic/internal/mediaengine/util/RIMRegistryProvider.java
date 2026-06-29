@@ -6,7 +6,7 @@ import net.rim.plazmic.internal.mediaengine.registry.Registry;
 import net.rim.plazmic.internal.mediaengine.registry.RegistryProvider;
 
 public class RIMRegistryProvider implements RegistryProvider {
-   public static final long ME_REGISTRY_KEY;
+   public static final long ME_REGISTRY_KEY = -3828669597622888330L;
    private static Registry _registry;
 
    public RIMRegistryProvider() {

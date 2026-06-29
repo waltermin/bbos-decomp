@@ -6,7 +6,7 @@ import net.rim.vm.Array;
 
 class PKCS11DatakeyFile extends DatakeyFile {
    IntHashtable _attributes;
-   private static final int BLOCK_SIZE;
+   private static final int BLOCK_SIZE = 1024;
 
    public PKCS11DatakeyFile(DatakeyFileHeader fileHeader, byte[] fileContents) {
       super(fileHeader);

@@ -43,7 +43,7 @@ public class ActiveAutoTextEditField extends AutoTextEditField implements Cookie
    private boolean _scanForSmileys = true;
    private boolean _inPostResults = false;
    private int[] _sectionLen = new int[3];
-   private static final int REGION_INCREMENT;
+   private static final int REGION_INCREMENT = 8;
 
    public void scanForActiveRegions() {
       this._pendingVersion++;

@@ -6,7 +6,7 @@ import net.rim.device.apps.api.setupwizard.LogManager;
 public final class LogManagerImpl implements LogManager {
    private StringBuffer _buffer = (StringBuffer)(new Object());
    private static Object _lock = new Object();
-   private static final long KEY_NAME;
+   private static final long KEY_NAME = 6452391534420581228L;
 
    public final void save() {
       // $VF: Couldn't be decompiled

@@ -7,13 +7,13 @@ import net.rim.device.api.ui.MenuItem;
 final class SBAppContents$MyMenuItem extends MenuItem {
    private int _id;
    private final SBAppContents this$0;
-   public static final int MENU_ADD;
-   public static final int MENU_VIEW;
-   public static final int MENU_EDIT;
-   public static final int MENU_DELETE;
-   public static final int MENU_ACCEPT;
-   public static final int MENU_DECLINE;
-   public static final int MENU_UNDELETE;
+   public static final int MENU_ADD = 10;
+   public static final int MENU_VIEW = 11;
+   public static final int MENU_EDIT = 12;
+   public static final int MENU_DELETE = 13;
+   public static final int MENU_ACCEPT = 14;
+   public static final int MENU_DECLINE = 15;
+   public static final int MENU_UNDELETE = 16;
 
    public SBAppContents$MyMenuItem(SBAppContents _1, int id, int resourceId, ResourceBundle rb) {
       super(rb.getString(resourceId), id, id);

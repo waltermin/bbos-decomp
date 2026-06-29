@@ -6,9 +6,9 @@ public class RecordStore {
    RecordStoreData _recordStoreData;
    RecordEventGenerator _eventGenerator;
    private int _openCount;
-   public static final int AUTHMODE_PRIVATE;
-   public static final int AUTHMODE_ANY;
-   static final int AUTHMODE_ANY_RO;
+   public static final int AUTHMODE_PRIVATE = 0;
+   public static final int AUTHMODE_ANY = 1;
+   static final int AUTHMODE_ANY_RO = 2;
 
    RecordStore(RecordStoreData recordStoreData) {
       this._recordStoreData = recordStoreData;

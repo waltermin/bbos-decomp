@@ -20,8 +20,8 @@ public final class MissedCallIndicator implements Indicator, TestPoint {
    private Action _action;
    private StringBuffer _workBuffer = (StringBuffer)(new Object());
    private static MissedCallIndicator _instance;
-   private static final long NEW_MISSED_CALLS_ID;
-   public static final long GUID;
+   private static final long NEW_MISSED_CALLS_ID = -66177064401403627L;
+   public static final long GUID = 4293092249614032519L;
 
    public static final void initialize() {
       if (_instance == null) {

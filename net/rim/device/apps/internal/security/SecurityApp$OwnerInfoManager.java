@@ -14,7 +14,7 @@ final class SecurityApp$OwnerInfoManager extends Manager implements SecurityReso
    private boolean _drawInfo;
    private Tag TAG;
    private final SecurityApp this$0;
-   private static final int INSIDE_SPACE;
+   private static final int INSIDE_SPACE = 4;
 
    private SecurityApp$OwnerInfoManager(SecurityApp _1) {
       super(3458764513820540928L);

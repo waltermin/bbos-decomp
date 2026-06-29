@@ -7,12 +7,12 @@ import net.rim.device.resources.Resource$Internal;
 public final class TextProcessingRegistry {
    private ConversionDataRegistryHelper _conversionRegistryHelper = new ConversionDataRegistryHelper();
    private BreakingDataRegistryHelper _breakingDataRegistryHelper = new BreakingDataRegistryHelper();
-   public static final int CONVERSION_DATA_TYPE;
-   public static final int COLLATION_DATA_TYPE_TAILORING;
-   public static final int BREAKING_DATA_TYPE_LINE;
-   public static final int BREAKING_DATA_TYPE_CHAR;
-   public static final int BREAKING_DATA_TYPE_WORD;
-   private static final long REGISTRY_NAME;
+   public static final int CONVERSION_DATA_TYPE = 0;
+   public static final int COLLATION_DATA_TYPE_TAILORING = 1;
+   public static final int BREAKING_DATA_TYPE_LINE = 2;
+   public static final int BREAKING_DATA_TYPE_CHAR = 4;
+   public static final int BREAKING_DATA_TYPE_WORD = 5;
+   private static final long REGISTRY_NAME = -4826416735495760855L;
    private static TextProcessingRegistry _registry;
 
    public static final TextProcessingRegistry getInstance() {

@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 
 public final class AttachAudioVerb extends Verb {
    private MMSPresentationModel _presentation;
-   private static final String MMS_AUDIO_FOLDER;
+   private static final String MMS_AUDIO_FOLDER = "file:///store/samples/mms/tunes/";
 
    public AttachAudioVerb(MMSPresentationModel presentation) {
       super(16864048);

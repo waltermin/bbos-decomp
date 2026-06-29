@@ -9,12 +9,12 @@ final class ServiceBook$SBRestriction implements Persistable, TLEFieldController
    private int _action;
    private String _uid;
    private String _cid;
-   public static final int DONT_CARE;
-   public static final int ACCEPT;
-   public static final int REJECT;
-   public static final int IMPLICIT;
-   public static final int IMPLICIT_ACCEPT;
-   public static final int IMPLICIT_REJECT;
+   public static final int DONT_CARE = 0;
+   public static final int ACCEPT = 1;
+   public static final int REJECT = 2;
+   public static final int IMPLICIT = Integer.MIN_VALUE;
+   public static final int IMPLICIT_ACCEPT = -2147483647;
+   public static final int IMPLICIT_REJECT = -2147483646;
 
    public ServiceBook$SBRestriction(int a) {
       this._action = a;

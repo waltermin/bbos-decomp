@@ -5,9 +5,9 @@ import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.api.util.StringUtilities;
 
 class ContactTreeField$SortedBranch extends Branch {
-   private static final byte TYPE_SYMBOL;
-   private static final byte TYPE_DIGIT;
-   private static final byte TYPE_LETTER;
+   private static final byte TYPE_SYMBOL = 1;
+   private static final byte TYPE_DIGIT = 2;
+   private static final byte TYPE_LETTER = 3;
 
    private byte getType(char ch) {
       byte type = 3;

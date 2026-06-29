@@ -9,11 +9,11 @@ import net.rim.device.internal.proxy.Proxy;
 
 public final class ForcedResetManager implements GlobalEventListener {
    private int _currentFIPSLevel = ITPolicy.getInteger(24, 39, 1);
-   private static final long GUID;
-   private static final long RESET_SCHEDULE_GUID;
-   private static final int NUM_RESET_WARNINGS;
-   private static final long TIME_BETWEEN_RESET_WARNINGS;
-   private static final long SIXTY_SECONDS;
+   private static final long GUID = -8068307003274200341L;
+   private static final long RESET_SCHEDULE_GUID = 150282248917516260L;
+   private static final int NUM_RESET_WARNINGS = 5;
+   private static final long TIME_BETWEEN_RESET_WARNINGS = 600000L;
+   private static final long SIXTY_SECONDS = 60000L;
    private static ForcedResetManager _resetManager;
 
    public final void scheduleDeviceResetNoTimeout(String message, int numResetWarnings, long timeBetweenResetWarnings, boolean delayedResetOption) {

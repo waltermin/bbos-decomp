@@ -7,7 +7,7 @@ import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 class ProfilesPopupScreen$ProfilesMenuAction extends Action {
    private ResourceBundleFamily _res = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
-   private static final String UNIQUE_ID;
+   private static final String UNIQUE_ID = "net_rim_profiles_menu";
 
    static void register(boolean b) {
       RibbonLauncher ribbonLauncher = RibbonLauncher.getInstance();

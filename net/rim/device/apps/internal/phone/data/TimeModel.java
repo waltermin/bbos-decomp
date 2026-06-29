@@ -15,8 +15,8 @@ import net.rim.vm.WeakReference;
 class TimeModel implements RIMModel, PaintProvider, ConversionProvider {
    private long _time;
    private int _format;
-   public static final int TIMESTAMP_FORMAT;
-   public static final int DURATION_FORMAT;
+   public static final int TIMESTAMP_FORMAT = 1;
+   public static final int DURATION_FORMAT = 2;
    private static WeakReference _bufferWR = (WeakReference)(new Object(null));
 
    @Override

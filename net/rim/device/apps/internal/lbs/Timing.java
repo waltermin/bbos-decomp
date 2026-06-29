@@ -14,13 +14,13 @@ public final class Timing {
    private static final String[] action = new String[]{
       "Requesting dentries", "Drawing map", "Generating labels", "Drawing labels", "GPS Tracking", "Driver Assist", "Drawing overlays"
    };
-   public static final int TIME_TO_REQUEST_PATHS;
-   public static final int TIME_TO_DRAW_PATHS;
-   public static final int TIME_TO_GENERATE_LABELS;
-   public static final int TIME_TO_DRAW_LABELS;
-   public static final int TIME_TO_DO_GPS_TRACKING;
-   public static final int TIME_TO_DO_DRIVER_ASSIST;
-   public static final int TIME_TO_DRAW_OVERLAYS;
+   public static final int TIME_TO_REQUEST_PATHS = 0;
+   public static final int TIME_TO_DRAW_PATHS = 1;
+   public static final int TIME_TO_GENERATE_LABELS = 2;
+   public static final int TIME_TO_DRAW_LABELS = 3;
+   public static final int TIME_TO_DO_GPS_TRACKING = 4;
+   public static final int TIME_TO_DO_DRIVER_ASSIST = 5;
+   public static final int TIME_TO_DRAW_OVERLAYS = 6;
 
    public final void toggleTimer() {
       _timingInfo = !_timingInfo;

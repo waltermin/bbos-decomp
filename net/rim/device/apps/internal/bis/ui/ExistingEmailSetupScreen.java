@@ -23,9 +23,9 @@ public final class ExistingEmailSetupScreen extends UserSettingsScreen {
    private CommandEvent _setupExistingMailEvent;
    private LinkEvent _servicesMainLinkEvent;
    private EventWrapper _nextEvent;
-   private static final String PARAM_EMAIL;
-   private static final String PARAM_PASSWORD;
-   private static final String PARAM_REENTERED;
+   private static final String PARAM_EMAIL = "email";
+   private static final String PARAM_PASSWORD = "password";
+   private static final String PARAM_REENTERED = "reentered";
 
    public ExistingEmailSetupScreen() {
       super(31);

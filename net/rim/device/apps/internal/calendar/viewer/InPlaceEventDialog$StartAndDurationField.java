@@ -19,11 +19,11 @@ final class InPlaceEventDialog$StartAndDurationField extends Field {
    private int _widthPerBar;
    private int _heightPerLine;
    private DateFormat _tf = DateFormat.getInstance(7);
-   private static final char NO_EVENT_BAR_CHAR;
-   private static final char BEGIN_EVENT_BAR_CHAR;
-   private static final char MIDDLE_EVENT_BAR_CHAR;
-   private static final char END_EVENT_BAR_CHAR;
-   private static final int MIN_HEIGHT_PER_LINE;
+   private static final char NO_EVENT_BAR_CHAR = '\uf460';
+   private static final char BEGIN_EVENT_BAR_CHAR = '┌';
+   private static final char MIDDLE_EVENT_BAR_CHAR = '│';
+   private static final char END_EVENT_BAR_CHAR = '└';
+   private static final int MIN_HEIGHT_PER_LINE = 8;
 
    public final void setStart(long start) {
       this._start = start;

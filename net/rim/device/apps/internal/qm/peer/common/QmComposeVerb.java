@@ -4,7 +4,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.qm.resource.QmResources;
 
 public class QmComposeVerb extends Verb {
-   public static final int COMPOSE_IM;
+   public static final int COMPOSE_IM = 1267040;
 
    public QmComposeVerb(int ordering) {
    }

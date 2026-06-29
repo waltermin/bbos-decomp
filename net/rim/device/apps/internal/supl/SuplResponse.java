@@ -6,11 +6,11 @@ final class SuplResponse extends UlpMessage {
    private SetAuthKey authKey;
    private byte[] keyIdentity4 = new byte[16];
    private byte optionals;
-   static final byte SUPL_RESP_OPT_SLP_ADDR;
-   static final byte SUPL_RESP_OPT_SET_AUTH_KEY;
-   static final byte SUPL_RESP_OPT_KEY_ID_4;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte MAX_KEY_IDENTITY4_SIZE;
+   static final byte SUPL_RESP_OPT_SLP_ADDR = 4;
+   static final byte SUPL_RESP_OPT_SET_AUTH_KEY = 2;
+   static final byte SUPL_RESP_OPT_KEY_ID_4 = 1;
+   static final byte NUM_OPT_ELEMENTS = 3;
+   static final byte MAX_KEY_IDENTITY4_SIZE = 16;
 
    @Override
    final void decode(Nibbler nib) {

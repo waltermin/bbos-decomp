@@ -9,13 +9,13 @@ final class NavigationModel {
    private byte toeLimit;
    private SatelliteInfoElement[] satInfo;
    private byte optionals;
-   static final byte NAV_MODEL_OPT_SAT_INFO;
-   static final byte NUM_OPT_ELEMENTS;
-   static final byte GPS_WEEK_BIT_SIZE;
-   static final byte GPS_TOE_BIT_SIZE;
-   static final byte NSAT_BIT_SIZE;
-   static final byte TOE_LIMIT_BIT_SIZE;
-   static final byte MIN_NSAT_VALUE;
+   static final byte NAV_MODEL_OPT_SAT_INFO = 1;
+   static final byte NUM_OPT_ELEMENTS = 1;
+   static final byte GPS_WEEK_BIT_SIZE = 10;
+   static final byte GPS_TOE_BIT_SIZE = 8;
+   static final byte NSAT_BIT_SIZE = 5;
+   static final byte TOE_LIMIT_BIT_SIZE = 4;
+   static final byte MIN_NSAT_VALUE = 1;
 
    NavigationModel() {
    }

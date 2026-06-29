@@ -27,7 +27,7 @@ public final class GPSProvider {
    GPSDevice _internalGPS;
    private boolean _checkForInternalGPS;
    private boolean _useLAPI = false;
-   private static final long GUID;
+   private static final long GUID = -5807538809205914903L;
    private static GPSProvider _INSTANCE;
    private static ResourceBundle _lbsBundle;
    private static boolean CAN_USE_GPS = true;

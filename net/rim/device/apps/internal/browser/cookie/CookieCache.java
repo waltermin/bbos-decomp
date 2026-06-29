@@ -22,8 +22,8 @@ import net.rim.device.apps.internal.browser.util.QuincyUtil;
 public final class CookieCache implements BrowserStateListener, PersistentContentListener {
    private int _cookieCacheGeneration;
    private LongHashtable _cookies;
-   private static final long APP_REGISTRY_KEY;
-   private static final long COOKIE_CACHE_KEY;
+   private static final long APP_REGISTRY_KEY = 7595927212303924497L;
+   private static final long COOKIE_CACHE_KEY = 6375174330656707005L;
 
    @Override
    public final void browserStateChanged(int newState) {

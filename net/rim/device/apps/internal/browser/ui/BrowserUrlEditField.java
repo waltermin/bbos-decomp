@@ -10,9 +10,9 @@ import net.rim.tid.awt.event.NavigationEvent;
 
 public class BrowserUrlEditField extends BasicEditField {
    private String _clearValue;
-   public static final String STRING_HTTP;
-   public static final String STRING_HTTPS;
-   public static final String STRING_HTTP_WWW;
+   public static final String STRING_HTTP = "http://";
+   public static final String STRING_HTTPS = "https://";
+   public static final String STRING_HTTP_WWW = "http://www.";
 
    public BrowserUrlEditField(String label, String initialValue, int maxNumChars, long style, String clearValue) {
       super(label, initialValue, maxNumChars, style);

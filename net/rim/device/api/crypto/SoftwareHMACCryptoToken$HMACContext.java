@@ -5,8 +5,8 @@ final class SoftwareHMACCryptoToken$HMACContext implements CryptoTokenMACContext
    private Digest _digest2;
    private byte[] _ipad;
    private byte[] _opad;
-   private static final byte IPAD_BYTE;
-   private static final byte OPAD_BYTE;
+   private static final byte IPAD_BYTE = 54;
+   private static final byte OPAD_BYTE = 92;
 
    public SoftwareHMACCryptoToken$HMACContext(SoftwareHMACCryptoToken$HMACKeyData key, Digest digest) {
       if (key != null && digest != null && digest.getBlockLength() >= 0) {

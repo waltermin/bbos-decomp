@@ -12,7 +12,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
 public class QuickContactItemRegistrationFactory extends RIMModelFactory {
-   private static final long QUICK_CONTACT_ITEM_FACTORIES_GUID;
+   private static final long QUICK_CONTACT_ITEM_FACTORIES_GUID = 931849679150063665L;
    private static LongHashtable _factories = ApplicationRegistry.getApplicationRegistry().getLongHashtable(931849679150063665L);
 
    QuickContactItemRegistrationFactory() {

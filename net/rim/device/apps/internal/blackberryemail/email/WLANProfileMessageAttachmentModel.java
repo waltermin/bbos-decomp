@@ -29,7 +29,7 @@ public class WLANProfileMessageAttachmentModel
    DeleteConfirmationProvider,
    VerbProvider,
    FieldProvider {
-   private static final String PROFILE_EXT;
+   private static final String PROFILE_EXT = ".prf";
 
    public WLANProfileMessageAttachmentModel() {
       super(null);

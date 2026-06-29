@@ -18,8 +18,8 @@ public final class QmRenderScreen extends MainScreen implements RenderingApplica
    private UiApplication _uiApp;
    private BrowserContent _content;
    private Field _field;
-   private static final int RenderingOptions_IMAGE_QUALITY_VALUE;
-   private static final int RenderingOptions_IMAGE_QUALITY_VALUE_HIGH;
+   private static final int RenderingOptions_IMAGE_QUALITY_VALUE = 43;
+   private static final int RenderingOptions_IMAGE_QUALITY_VALUE_HIGH = 2;
 
    public QmRenderScreen(InputConnection input) {
       this._inputConnection = input;

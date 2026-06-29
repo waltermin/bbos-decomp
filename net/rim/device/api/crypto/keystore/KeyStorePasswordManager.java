@@ -20,11 +20,11 @@ public final class KeyStorePasswordManager {
    private KeyStorePasswordManager$KeyStoreDevicePasswordListener _passwordListener;
    private int _oldPasswordMinLength = FIPSPolicy.getMaxInteger(8, 4, 5);
    private int _oldPasswordPattern = ITPolicy.getInteger(13, 0);
-   private static final int SALT_LENGTH;
-   private static final int AES_KEY_SIZE_BYTES;
-   private static final long ID;
+   private static final int SALT_LENGTH = 16;
+   private static final int AES_KEY_SIZE_BYTES = 32;
+   private static final long ID = -2533086573079312352L;
    private static final byte[] PASSWORD = new byte[]{-68, -101, -72, -71, 119, -102, 35, -98, -21, -36, -75, -127, 31, -58, -74, 98};
-   private static final int PASSWORD_VERSION_LENGTH;
+   private static final int PASSWORD_VERSION_LENGTH = 4;
    private static KeyStorePasswordManager _manager;
 
    private KeyStorePasswordManager() {

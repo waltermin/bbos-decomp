@@ -8,8 +8,8 @@ public class PGPOutputStream extends OutputStream {
    protected SharedOutputStream _out;
    protected PGPOutputStream _pgpOut;
    protected int _tagFormat;
-   public static final int OLD_FORMAT;
-   public static final int NEW_FORMAT;
+   public static final int OLD_FORMAT = 3;
+   public static final int NEW_FORMAT = 4;
 
    protected PGPOutputStream(OutputStream out, int tagFormat) {
       if (out != null && (tagFormat == 3 || tagFormat == 4)) {

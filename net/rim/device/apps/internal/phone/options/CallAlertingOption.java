@@ -10,8 +10,8 @@ final class CallAlertingOption extends VoiceOptionsListItem {
    private ObjectChoiceField _privacyAlertField;
    private ObjectChoiceField _roamingAlertField;
    private static final String[] CHOICE_ARRAY = new Object[]{PhoneResources.getString(6017), PhoneResources.getString(6016)};
-   private static final int NONE;
-   private static final int TONE;
+   private static final int NONE = 0;
+   private static final int TONE = 1;
 
    public CallAlertingOption(Object context) {
       super(PhoneResources.getString(6014), context);

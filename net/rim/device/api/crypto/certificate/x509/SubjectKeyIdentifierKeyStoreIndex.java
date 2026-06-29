@@ -8,7 +8,7 @@ import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.util.Arrays;
 
 public class SubjectKeyIdentifierKeyStoreIndex implements KeyStoreIndex {
-   public static final long ID;
+   public static final long ID = 1612863905495138626L;
 
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {

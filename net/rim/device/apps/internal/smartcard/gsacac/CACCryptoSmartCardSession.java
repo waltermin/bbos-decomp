@@ -22,31 +22,31 @@ import net.rim.vm.Array;
 public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    private X509Certificate _idCertificate;
    private static ResourceBundle _rb = ResourceBundle.getBundle(-2744454300651253428L, "net.rim.device.apps.internal.resource.crypto.SmartCard");
-   public static final byte ID_PKI;
-   public static final byte SIGNING_PKI;
-   public static final byte ENCRYPTION_PKI;
-   private static final int CAC_PWD_LENGTH;
-   private static final byte T_BUFFER;
-   private static final byte V_BUFFER;
-   private static final byte INS_GET_PROPERTIES;
-   private static final byte INS_READ_BUFFER;
-   private static final byte INS_GET_CERTIFICATE;
-   private static final byte INS_SIGN_DECRYPT;
-   private static final byte INS_GENERATE_KEY;
-   private static final byte INS_INITIALIZE_UPDATE;
-   private static final byte ZERO_BYTE;
-   private static final byte CLASS_00;
-   private static final byte CLASS_80;
-   private static final byte CLASS_84;
-   private static final int GOLD_TAG;
-   private static final int BSI_TAG;
-   private static final byte RESPONSE_BYTES_AVAILABLE;
-   private static final byte COMMAND_COMPLETE;
+   public static final byte ID_PKI = 0;
+   public static final byte SIGNING_PKI = 1;
+   public static final byte ENCRYPTION_PKI = 2;
+   private static final int CAC_PWD_LENGTH = 8;
+   private static final byte T_BUFFER = 1;
+   private static final byte V_BUFFER = 2;
+   private static final byte INS_GET_PROPERTIES = 86;
+   private static final byte INS_READ_BUFFER = 82;
+   private static final byte INS_GET_CERTIFICATE = 54;
+   private static final byte INS_SIGN_DECRYPT = 66;
+   private static final byte INS_GENERATE_KEY = 70;
+   private static final byte INS_INITIALIZE_UPDATE = 80;
+   private static final byte ZERO_BYTE = 0;
+   private static final byte CLASS_00 = 0;
+   private static final byte CLASS_80 = -128;
+   private static final byte CLASS_84 = -124;
+   private static final int GOLD_TAG = 1;
+   private static final int BSI_TAG = 5;
+   private static final byte RESPONSE_BYTES_AVAILABLE = 97;
+   private static final byte COMMAND_COMPLETE = -112;
    private static final byte[] CARD_MANAGER_AID = new byte[]{-96, 0, 0, 0, 3, 0, 0};
    private static final byte[] PIN_MANAGEMENT_AID = new byte[]{-96, 0, 0, 0, 121, 3, 0};
-   public static final int MAX_LOGIN_ATTEMPTS;
+   public static final int MAX_LOGIN_ATTEMPTS = 3;
    private static CommandAPDU _cmd = (CommandAPDU)(new Object((byte)0, (byte)0, (byte)0, (byte)0));
-   private static final long UID_INFO_ID;
+   private static final long UID_INFO_ID = 2984846373662370609L;
    static CACCryptoSmartCardSession$UIDInfo _uidInfo;
 
    protected CACCryptoSmartCardSession(SmartCard smartCard, SmartCardReaderSession readerSession) {
@@ -121,7 +121,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 01f: invokespecial net/rim/device/api/crypto/RSACryptoSystem.<init> (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 022: astore 3
       // 023: bipush 3
-      // 025: anewarray 244
+      // 025: anewarray 289
       // 028: astore 6
       // 02a: aload 0
       // 02b: bipush 1

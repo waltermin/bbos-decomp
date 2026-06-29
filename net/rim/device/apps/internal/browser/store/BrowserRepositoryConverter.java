@@ -11,7 +11,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.internal.browser.page.BrowserPageModel;
 
 final class BrowserRepositoryConverter implements SyncConverter {
-   public static final int VERSION_SUPPORTED;
+   public static final int VERSION_SUPPORTED = 1;
    private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19, 61));
 
    @Override

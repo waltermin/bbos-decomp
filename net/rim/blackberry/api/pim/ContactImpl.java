@@ -41,8 +41,8 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    private boolean _committed;
    private boolean _isModified;
    private String _uncommittedUID;
-   static final int MAX_EMAIL;
-   static final int MAX_TEL;
+   static final int MAX_EMAIL = 3;
+   static final int MAX_TEL = 5;
    private static Factory _addressCardModelFactory;
    private static Factory _mailingAddressFactory;
    private static Factory _personFactory;

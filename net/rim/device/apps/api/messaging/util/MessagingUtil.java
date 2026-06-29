@@ -10,8 +10,8 @@ import net.rim.device.apps.api.messaging.messagelist.ShowMessageApp;
 import net.rim.device.apps.api.messaging.resources.MessageResources;
 
 public final class MessagingUtil {
-   public static final long MESSAGING_PRIVATE_CONTEXT_FLAGS;
-   public static final int CLEAR_TERMINAL_RESULT_FLAG_ON_COMPOSE;
+   public static final long MESSAGING_PRIVATE_CONTEXT_FLAGS = -337556985625701066L;
+   public static final int CLEAR_TERMINAL_RESULT_FLAG_ON_COMPOSE = 0;
 
    public static final void robustElementUpdated(CollectionListener listener, Object model) {
       synchronized (FolderHierarchies.getLockObject()) {

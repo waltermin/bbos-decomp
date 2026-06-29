@@ -17,19 +17,19 @@ import net.rim.device.cldc.io.utility.URLParameters;
 import net.rim.device.internal.browser.wap.WPTCPServiceRecord;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static final String INTERFACE;
-   private static final String RETRY_NO_CONTEXT;
-   private static final String DEVICE_SIDE;
-   private static final String CONNECTION_UID;
-   private static final String CONNECTION_HANDLER;
-   private static final String APN;
-   private static final String TUNNEL_AUTH_USERNAME;
-   private static final String TUNNEL_AUTH_PASSWORD;
-   private static final String SOCKET_CONNECTION_PREFIX;
-   private static final String LOAD_BALANCING_CONNECTION_PREFIX;
-   private static final String PRIMARY_DNS_ATTRIBUTE_NAME;
-   private static final String SECONDARY_DNS_ATTRIBUTE_NAME;
-   private static final String SESSION_TIMEOUT;
+   private static final String INTERFACE = "interface";
+   private static final String RETRY_NO_CONTEXT = "retrynocontext";
+   private static final String DEVICE_SIDE = "deviceside";
+   private static final String CONNECTION_UID = "connectionuid";
+   private static final String CONNECTION_HANDLER = "connectionhandler";
+   private static final String APN = "apn";
+   private static final String TUNNEL_AUTH_USERNAME = "tunnelauthusername";
+   private static final String TUNNEL_AUTH_PASSWORD = "tunnelauthpassword";
+   private static final String SOCKET_CONNECTION_PREFIX = "socket://";
+   private static final String LOAD_BALANCING_CONNECTION_PREFIX = "socketmanager://";
+   private static final String PRIMARY_DNS_ATTRIBUTE_NAME = ";PrimaryDNS=";
+   private static final String SECONDARY_DNS_ATTRIBUTE_NAME = ";SecondaryDNS=";
+   private static final String SESSION_TIMEOUT = "sessiontimeout";
 
    @Override
    public final int getProperties(String name) {

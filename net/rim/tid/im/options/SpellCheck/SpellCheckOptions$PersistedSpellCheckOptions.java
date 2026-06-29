@@ -10,5 +10,5 @@ final class SpellCheckOptions$PersistedSpellCheckOptions implements Persistable,
    byte _learningBuffCustDictSize = 2;
    byte _learningBuffReplPairsSize = 3;
    byte _containerSize = 32;
-   private static final int DEFAULT_OFF;
+   private static final int DEFAULT_OFF = 136;
 }

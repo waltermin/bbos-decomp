@@ -16,8 +16,8 @@ final class RIMPhone$HookswitchHandler implements AudioHeadsetListener, Runnable
    private int _timerID;
    private int _clickTime;
    private final RIMPhone this$0;
-   private static final int DEFAULT_TIMEOUT;
-   private static final int INVALID_TIMER_ID;
+   private static final int DEFAULT_TIMEOUT = 500;
+   private static final int INVALID_TIMER_ID = -1;
 
    protected RIMPhone$HookswitchHandler(RIMPhone _1, Application application) {
       this(_1, application, 500);

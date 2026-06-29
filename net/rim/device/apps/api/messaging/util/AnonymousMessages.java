@@ -3,7 +3,7 @@ package net.rim.device.apps.api.messaging.util;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class AnonymousMessages {
-   protected static final long KEY;
+   protected static final long KEY = -7420407412231626381L;
 
    private static AnonymousMessages getInstance() {
       return (AnonymousMessages)ApplicationRegistry.getApplicationRegistry().waitFor(-7420407412231626381L);

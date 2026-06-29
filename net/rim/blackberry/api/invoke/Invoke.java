@@ -43,17 +43,17 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 import net.rim.device.internal.i18n.CommonResource;
 
 public final class Invoke {
-   public static final int APP_TYPE_ADDRESSBOOK;
-   public static final int APP_TYPE_CALENDAR;
-   public static final int APP_TYPE_MESSAGES;
-   public static final int APP_TYPE_MEMOPAD;
-   public static final int APP_TYPE_PHONE;
-   public static final int APP_TYPE_TASKS;
-   public static final int APP_TYPE_CAMERA;
-   public static final int APP_TYPE_MAPS;
-   public static final int APP_TYPE_BLUETOOTH_CONFIG;
-   public static final int APP_TYPE_CALCULATOR;
-   public static final int APP_TYPE_SEARCH;
+   public static final int APP_TYPE_ADDRESSBOOK = 0;
+   public static final int APP_TYPE_CALENDAR = 1;
+   public static final int APP_TYPE_MESSAGES = 2;
+   public static final int APP_TYPE_MEMOPAD = 3;
+   public static final int APP_TYPE_PHONE = 4;
+   public static final int APP_TYPE_TASKS = 5;
+   public static final int APP_TYPE_CAMERA = 6;
+   public static final int APP_TYPE_MAPS = 7;
+   public static final int APP_TYPE_BLUETOOTH_CONFIG = 8;
+   public static final int APP_TYPE_CALCULATOR = 9;
+   public static final int APP_TYPE_SEARCH = 10;
 
    private Invoke() {
    }

@@ -8,12 +8,12 @@ public class NavigationEvent extends ComponentEvent {
    private int _dyMagnitude;
    private int _status;
    private int _eventConsumptionId;
-   public static final int COMPOSED_TEXT_NOT_CHANGED;
-   public static final int COMPOSED_TEXT_CHANGED;
-   public static final int CARET_POSITION_CHANGED;
-   public static final int LOOKUP_POSITION_CHANGED;
-   public static final int TRACK_BALL_ID;
-   public static final int THUMB_WHEEL_ID;
+   public static final int COMPOSED_TEXT_NOT_CHANGED = 0;
+   public static final int COMPOSED_TEXT_CHANGED = 1;
+   public static final int CARET_POSITION_CHANGED = 2;
+   public static final int LOOKUP_POSITION_CHANGED = 3;
+   public static final int TRACK_BALL_ID = 1;
+   public static final int THUMB_WHEEL_ID = 2;
 
    public NavigationEvent(IComponent source, int id) {
       super(source, id, Event.NAVIGATION_EVENT_MASK);

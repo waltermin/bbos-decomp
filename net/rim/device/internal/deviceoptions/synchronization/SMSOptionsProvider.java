@@ -7,13 +7,13 @@ import net.rim.device.internal.deviceoptions.OptionsProviderGlobalEventListener;
 import net.rim.device.internal.deviceoptions.SMSOptions;
 
 final class SMSOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int ROUTE_TAG;
-   private static final int DELIVERY_REPORTS_TAG;
-   private static final int STORE_ON_SIM_TAG;
-   private static final int NUM_PREVIOUS_ITEMS_TAG;
-   private static final int DISABLE_AUTOTEXT_TAG;
-   private static final int ENABLE_CELL_BROADCAST_TAG;
+   private static final int UID = 287956570;
+   private static final int ROUTE_TAG = 1;
+   private static final int DELIVERY_REPORTS_TAG = 2;
+   private static final int STORE_ON_SIM_TAG = 3;
+   private static final int NUM_PREVIOUS_ITEMS_TAG = 4;
+   private static final int DISABLE_AUTOTEXT_TAG = 5;
+   private static final int ENABLE_CELL_BROADCAST_TAG = 6;
 
    SMSOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

@@ -8,7 +8,7 @@ import net.rim.device.api.util.Factory;
 
 public class RenderingSession {
    protected RenderingOptions _renderingOptions = new RenderingOptions();
-   public static final long APP_REGISTRY_KEY;
+   public static final long APP_REGISTRY_KEY = 6405613126867753457L;
 
    public static RenderingSession getNewInstance() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

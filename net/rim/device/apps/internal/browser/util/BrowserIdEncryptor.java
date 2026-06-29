@@ -8,7 +8,7 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.internal.browser.util.IdEncryptor;
 
 public final class BrowserIdEncryptor {
-   public static final String RIM_ID_NAME;
+   public static final String RIM_ID_NAME = "XXX_RIM_ID";
 
    public static final String getEncryptedId() {
       String imeiESN = null;

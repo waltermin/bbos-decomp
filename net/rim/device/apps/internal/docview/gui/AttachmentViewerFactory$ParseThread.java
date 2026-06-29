@@ -10,7 +10,7 @@ final class AttachmentViewerFactory$ParseThread extends Thread {
    private final int _currentBlockIndex;
    private final boolean _pausable;
    private final int _totalBlockCount;
-   private static final long WAIT_TIMEOUT;
+   private static final long WAIT_TIMEOUT = 6000L;
 
    AttachmentViewerFactory$ParseThread(
       Object data, DocViewParser coreData, BaseParsingThread progressThread, int currentBlockIndex, boolean pausable, int totalBlockCount

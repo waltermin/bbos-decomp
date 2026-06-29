@@ -21,10 +21,10 @@ public final class ProvisioningServiceAgent extends UiApplication {
    private IOTARequestBuffer _buffer;
    private boolean _sessionInProgress = false;
    private IOTAStatusDialog _dialog;
-   private static final long KEY;
-   public static final int CIIP_PROVISION;
-   public static final int CISP_PROVISION;
-   public static final int NIP_PROVISION;
+   private static final long KEY = -7688435971308426807L;
+   public static final int CIIP_PROVISION = 0;
+   public static final int CISP_PROVISION = 1;
+   public static final int NIP_PROVISION = 2;
    static ResourceBundle _resources = ResourceBundle.getBundle(1200788073156220994L, "net.rim.device.apps.internal.resource.IOTA");
 
    private ProvisioningServiceAgent() {

@@ -14,8 +14,8 @@ import net.rim.vm.PersistentInteger;
 class LocaleRemovalLowMemoryListener implements LowMemoryListener {
    private ApplicationDescriptor _wizardAppDescriptor = null;
    private static long GUID_REMOVAL_LOW_MEMORY_LISTENER = 3312329773377818998L;
-   private static final int CHUNK_SIZE;
-   private static final int ONE_MEGABYTE;
+   private static final int CHUNK_SIZE = 32768;
+   private static final int ONE_MEGABYTE = 1048576;
 
    private LocaleRemovalLowMemoryListener() {
       this._wizardAppDescriptor = this.getWizardApplicationDescriptor();

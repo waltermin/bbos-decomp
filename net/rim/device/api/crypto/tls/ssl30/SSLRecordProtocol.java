@@ -59,11 +59,11 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
    private boolean _headerValid;
    private boolean _inRead;
    private boolean _closedByServer;
-   public static final int LOCAL_VERSION;
+   public static final int LOCAL_VERSION = 768;
    private static final byte[] V2_ERROR = new byte[]{-128, 3, 0, 0, 1};
-   protected static final boolean DEBUG;
-   private static final int SEQUENCE_LENGTH;
-   protected static final int HEADER_LENGTH;
+   protected static final boolean DEBUG = false;
+   private static final int SEQUENCE_LENGTH = 8;
+   protected static final int HEADER_LENGTH = 5;
    protected static final ResourceBundle _rb = ResourceBundle.getBundle(5710659227867441061L, "net.rim.device.internal.resource.crypto.SSL");
 
    protected SSLRecordProtocol() {

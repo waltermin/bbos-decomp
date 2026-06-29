@@ -8,9 +8,9 @@ public final class LZSSInputStream extends InputStream {
    private int _windowPosition;
    private int _numAccumulatedBits;
    private int _accumulatedBits;
-   private static final int BITS_PER_CHARACTER;
-   private static final int POSITION_BIT_COUNT;
-   private static final int LENGTH_BIT_COUNT;
+   private static final int BITS_PER_CHARACTER = 8;
+   private static final int POSITION_BIT_COUNT = 12;
+   private static final int LENGTH_BIT_COUNT = 4;
 
    public LZSSInputStream(InputStream in) {
       this._in = in;

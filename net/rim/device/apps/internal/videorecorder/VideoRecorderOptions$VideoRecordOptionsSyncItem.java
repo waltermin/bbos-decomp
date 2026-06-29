@@ -6,13 +6,13 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 final class VideoRecorderOptions$VideoRecordOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int TAG_VIDEO_FORMAT_INDEX;
-   private static final int TAG_MEMORY_TYPE;
-   private static final int TAG_DESTINATION_FOLDER;
-   private static final int TAG_FLASH_MODE_INDEX;
-   private static final int TAG_WHITE_BALANCE_INDEX;
-   private static final int TAG_COLOUR_EFFECT_INDEX;
-   private static final int DB_VERSION;
+   private static final int TAG_VIDEO_FORMAT_INDEX = 1;
+   private static final int TAG_MEMORY_TYPE = 2;
+   private static final int TAG_DESTINATION_FOLDER = 3;
+   private static final int TAG_FLASH_MODE_INDEX = 4;
+   private static final int TAG_WHITE_BALANCE_INDEX = 5;
+   private static final int TAG_COLOUR_EFFECT_INDEX = 6;
+   private static final int DB_VERSION = 0;
 
    @Override
    public final String getSyncName() {

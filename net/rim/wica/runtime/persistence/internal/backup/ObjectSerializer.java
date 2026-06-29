@@ -6,14 +6,14 @@ import net.rim.wica.runtime.util.SerializerUtil;
 
 final class ObjectSerializer extends AbstractBigVectorSerializer {
    private static ObjectSerializer _instance;
-   private static final byte STRING;
-   private static final byte STRING_ARRAY;
-   private static final byte BYTE_ARRAY;
-   private static final byte INT_ARRAY;
-   private static final byte LONG_ARRAY;
-   private static final byte DOUBLE_ARRAY;
-   private static final byte BOOLEAN_ARRAY;
-   private static final byte OBJECT_ARRAY;
+   private static final byte STRING = 0;
+   private static final byte STRING_ARRAY = 1;
+   private static final byte BYTE_ARRAY = 2;
+   private static final byte INT_ARRAY = 3;
+   private static final byte LONG_ARRAY = 4;
+   private static final byte DOUBLE_ARRAY = 5;
+   private static final byte BOOLEAN_ARRAY = 6;
+   private static final byte OBJECT_ARRAY = 7;
 
    static final ObjectSerializer getInstance() {
       if (_instance == null) {

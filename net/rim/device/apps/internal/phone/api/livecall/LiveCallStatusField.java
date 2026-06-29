@@ -19,14 +19,14 @@ public final class LiveCallStatusField extends SelfDrawingListField {
    private ContextObject _contextObject = (ContextObject)(new Object());
    private int _statusWidth = Display.getWidth();
    private boolean _rightJustified;
-   public static final int STATUS_COLUMN;
-   public static final int SPACER_COLUMN;
-   public static final int TIMER_COLUMN;
-   public static final int DEFAULT_NUM_COLUMNS;
-   private static final int DEFAULT_PAINTING_FLAGS;
-   private static final int DEFAULT_STATUS_WIDTH;
-   private static final int DEFAULT_SPACER_WIDTH;
-   private static final int DEFAULT_TIMER_WIDTH;
+   public static final int STATUS_COLUMN = 0;
+   public static final int SPACER_COLUMN = 1;
+   public static final int TIMER_COLUMN = 2;
+   public static final int DEFAULT_NUM_COLUMNS = 3;
+   private static final int DEFAULT_PAINTING_FLAGS = 64;
+   private static final int DEFAULT_STATUS_WIDTH = 115;
+   private static final int DEFAULT_SPACER_WIDTH = 3;
+   private static final int DEFAULT_TIMER_WIDTH = 40;
 
    public LiveCallStatusField(RIMModel liveCall, Object context) {
       super(1, 36028797018963968L);

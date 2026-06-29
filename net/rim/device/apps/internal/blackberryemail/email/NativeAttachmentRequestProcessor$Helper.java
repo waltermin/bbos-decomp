@@ -19,28 +19,28 @@ import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.device.internal.io.file.FileUtilities;
 
 public class NativeAttachmentRequestProcessor$Helper {
-   public static final long GUID_PROCESSOR;
-   public static final int LOG_REQUEST_ADDED_IS_NULL;
-   public static final int LOG_REQUEST_ADDED_TO_CACHE;
-   public static final int LOG_CANCEL_REQUEST_CURRENT_REQUEST_ONLY;
-   public static final int LOG_CANCEL_MESSAGE;
-   public static final int LOG_MORE_COMPLETED_FOR_MSG;
-   public static final int LOG_PROCESS_CALLED_BUT_NO_REQUESTS_TO_SERVE;
-   public static final int LOG_PERFORM_SERVING_REQUEST;
-   public static final int LOG_PERFORM_REQUEST_COMPLETED;
-   public static final int LOG_CANCEL_REQUEST;
-   public static final int LOG_CANCEL_REQUEST_RETRY;
-   public static final int LOG_RESEND_REQUEST_CHUNKS;
-   public static final int LOG_RESEND_REQUEST_COMPLETED;
-   public static final int LOG_REQUEST_TRANSMISSION_FAILED;
-   public static final long KEY_IS_INVOKED_BY_NATIVE_ATTACHMENT_PROCESSOR;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_SUCCESSFUL;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_NO_SERVICE;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_SERVICE_DOES_NOT_ALLOW_LARGE_ATTACHMENT;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_ATTACHMENT_SIZE_VIOLATED;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_ATTACHMENT_TOTAL_SIZE_VIOLATED;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_NO_MODELS;
-   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_CURRENT_ATTACHMENT_SIZE_VIOLATED;
+   public static final long GUID_PROCESSOR = -1237457833540244999L;
+   public static final int LOG_REQUEST_ADDED_IS_NULL = 1;
+   public static final int LOG_REQUEST_ADDED_TO_CACHE = 2;
+   public static final int LOG_CANCEL_REQUEST_CURRENT_REQUEST_ONLY = 3;
+   public static final int LOG_CANCEL_MESSAGE = 4;
+   public static final int LOG_MORE_COMPLETED_FOR_MSG = 5;
+   public static final int LOG_PROCESS_CALLED_BUT_NO_REQUESTS_TO_SERVE = 6;
+   public static final int LOG_PERFORM_SERVING_REQUEST = 7;
+   public static final int LOG_PERFORM_REQUEST_COMPLETED = 8;
+   public static final int LOG_CANCEL_REQUEST = 9;
+   public static final int LOG_CANCEL_REQUEST_RETRY = 10;
+   public static final int LOG_RESEND_REQUEST_CHUNKS = 11;
+   public static final int LOG_RESEND_REQUEST_COMPLETED = 12;
+   public static final int LOG_REQUEST_TRANSMISSION_FAILED = 13;
+   public static final long KEY_IS_INVOKED_BY_NATIVE_ATTACHMENT_PROCESSOR = 4619344424211138694L;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_SUCCESSFUL = 0;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_NO_SERVICE = 1;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_SERVICE_DOES_NOT_ALLOW_LARGE_ATTACHMENT = 2;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_ATTACHMENT_SIZE_VIOLATED = 3;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_ATTACHMENT_TOTAL_SIZE_VIOLATED = 4;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_NO_MODELS = 5;
+   public static final int NATIVE_ATTACHMENT_VALIDATION_ERROR_CURRENT_ATTACHMENT_SIZE_VIOLATED = 6;
 
    private NativeAttachmentRequestProcessor$Helper() {
    }

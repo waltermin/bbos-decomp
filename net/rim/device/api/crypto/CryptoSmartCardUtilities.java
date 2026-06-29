@@ -11,7 +11,7 @@ import net.rim.device.internal.ui.component.PleaseWaitDialog;
 import net.rim.vm.Array;
 
 public final class CryptoSmartCardUtilities {
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(7215549882295292649L, "net.rim.device.internal.resource.SmartCard");
 
    private CryptoSmartCardUtilities() {

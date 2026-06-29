@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.docview.gui;
 
 interface MoreDataProcessor {
-   byte CHUNK_ADDED;
-   byte CHUNK_FAILED;
-   byte CHUNK_TRYAGAIN;
+   byte CHUNK_ADDED = 0;
+   byte CHUNK_FAILED = 1;
+   byte CHUNK_TRYAGAIN = 2;
 
    void processEmbeddedInitialChunk(Object var1, int var2, String var3, int var4);
 

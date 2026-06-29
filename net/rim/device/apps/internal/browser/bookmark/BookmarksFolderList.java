@@ -26,7 +26,7 @@ public final class BookmarksFolderList extends FolderList implements FolderEvent
    private Verb _deleteVerb;
    private Verb _createVerb;
    private Verb _renameVerb;
-   private static final int PROVISIONED_BOOKMARKS_FOLDER_ID_SCOPE;
+   private static final int PROVISIONED_BOOKMARKS_FOLDER_ID_SCOPE = -1578139142;
    static final Folder[] BOOKMARKS_HIERARCHIES = new Object[]{
       FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, BrowserFolders.BROWSER_BOOKMARKS_FOLDER_ID)
    };

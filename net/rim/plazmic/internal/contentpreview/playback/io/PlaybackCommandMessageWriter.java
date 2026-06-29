@@ -6,7 +6,7 @@ import net.rim.plazmic.internal.contentpreview.playback.PlaybackCommandHandler;
 
 public final class PlaybackCommandMessageWriter extends AbstractMessageWriter implements PlaybackCommandHandler {
    private final byte[] HEADER = new byte[]{0, 32};
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/playback/PlaybackCommandMessageWriter.java#1 $";
 
    public PlaybackCommandMessageWriter(OutputStream out) {
       super(out);

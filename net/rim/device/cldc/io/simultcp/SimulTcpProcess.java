@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.Process;
 
 public final class SimulTcpProcess extends Application {
-   private static final long GUID;
+   private static final long GUID = -8788489361183018457L;
 
    public static final void libMain(String[] args) {
       getInstance().enterEventDispatcher();

@@ -8,8 +8,8 @@ import net.rim.device.apps.api.options.OptionsBase;
 
 final class AlarmOptions extends OptionsBase {
    private AlarmOptions$PersistedAlarmOptions _persistedAlarmOptions = (AlarmOptions$PersistedAlarmOptions)this.getPersistentObject().getContents();
-   private static final long ALARM_OPTIONS_SYNC_ITEM;
-   private static final long PERSISTED_ALARM_OPTIONS;
+   private static final long ALARM_OPTIONS_SYNC_ITEM = 5627370694302260787L;
+   private static final long PERSISTED_ALARM_OPTIONS = -1560511511382083433L;
    private static AlarmOptions _options;
 
    private AlarmOptions() {

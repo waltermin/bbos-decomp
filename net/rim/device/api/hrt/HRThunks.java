@@ -1,7 +1,7 @@
 package net.rim.device.api.hrt;
 
 public interface HRThunks {
-   long HRT_THUNKS_GUID;
+   long HRT_THUNKS_GUID = 6176832563945898679L;
 
    void displayEditor(HostRoutingTable var1, int var2);
 

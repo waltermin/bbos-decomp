@@ -4,7 +4,7 @@ import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler
 
 public final class GetPlaybackCommandPort extends Model {
    private String _sessionName;
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/dev/pbaldwin/advancedgraphics/src/net/rim/plazmic/internal/contentpreview/message/GetPlaybackCommandPort.java#1 $";
 
    public GetPlaybackCommandPort(String sessionName) {
       this._sessionName = sessionName;

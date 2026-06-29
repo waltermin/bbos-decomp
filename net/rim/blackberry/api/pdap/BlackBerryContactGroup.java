@@ -4,11 +4,11 @@ import javax.microedition.pim.Contact;
 import javax.microedition.pim.PIMItem;
 
 public interface BlackBerryContactGroup extends PIMItem {
-   int ADDRESS_TYPE_EMAIL;
-   int ADDRESS_TYPE_PIN;
-   int ADDRESS_TYPE_PHONE;
-   int NAME;
-   int UID;
+   int ADDRESS_TYPE_EMAIL = 0;
+   int ADDRESS_TYPE_PIN = 1;
+   int ADDRESS_TYPE_PHONE = 2;
+   int NAME = 100;
+   int UID = 101;
 
    Contact getContact(int var1);
 

@@ -10,12 +10,12 @@ public class PIM {
    static String[] VCARD_VERSIONS = new Object[]{VCARD_VERSION_2_1, VCARD_VERSION_3_0};
    static String DEFAULT_VCAL_VERSION = "VCALENDAR/1.0";
    static String[] VCAL_VERSIONS = new Object[]{DEFAULT_VCAL_VERSION, "VCALENDAR/2.0"};
-   public static final int READ_ONLY;
-   public static final int WRITE_ONLY;
-   public static final int READ_WRITE;
-   public static final int CONTACT_LIST;
-   public static final int EVENT_LIST;
-   public static final int TODO_LIST;
+   public static final int READ_ONLY = 1;
+   public static final int WRITE_ONLY = 2;
+   public static final int READ_WRITE = 3;
+   public static final int CONTACT_LIST = 1;
+   public static final int EVENT_LIST = 2;
+   public static final int TODO_LIST = 3;
 
    public static PIM getInstance() {
       return PIMImpl.getInstance();

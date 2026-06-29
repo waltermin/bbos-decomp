@@ -6,11 +6,11 @@ import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.util.DataBuffer;
 
 public final class CertificateOptionsSyncConverter implements SyncConverter {
-   public static final int FRIENDLY_NAME;
-   public static final int BASE_QUERY;
-   public static final int PORT;
-   public static final int AUTH_TYPE;
-   public static final int CONN_TYPE;
+   public static final int FRIENDLY_NAME = 4;
+   public static final int BASE_QUERY = 5;
+   public static final int PORT = 6;
+   public static final int AUTH_TYPE = 7;
+   public static final int CONN_TYPE = 8;
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {

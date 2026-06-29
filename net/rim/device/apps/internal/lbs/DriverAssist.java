@@ -40,9 +40,9 @@ public final class DriverAssist {
    private MapRect _zRect = new MapRect();
    private MapRect _mRect = new MapRect();
    private boolean _useZoom = false;
-   private static final boolean DEBUG;
-   private static final byte RESOLUTION;
-   private static final int NULL;
+   private static final boolean DEBUG = false;
+   private static final byte RESOLUTION = 2;
+   private static final int NULL = 16777215;
    private static final ByteBuffer _textBuffer = new ByteBuffer();
 
    public DriverAssist(int width, int height, byte scale, boolean useZoom) {

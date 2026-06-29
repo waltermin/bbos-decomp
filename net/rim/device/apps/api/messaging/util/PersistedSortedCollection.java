@@ -10,7 +10,7 @@ import net.rim.device.apps.api.messaging.FolderHierarchies;
 
 public class PersistedSortedCollection extends SortedCollection {
    protected PersistentObject _collectionsPersistentObject;
-   protected static final long SORTED_FOLDER_COLLECTIONS;
+   protected static final long SORTED_FOLDER_COLLECTIONS = 2113200491979413031L;
 
    @Override
    public boolean initialize(long applicationFamily, long folderId, LongKeyProviderAdaptor longKeyProviderAdaptor, Object context) {

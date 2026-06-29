@@ -15,7 +15,7 @@ public class XMLHashtable extends Hashtable implements Persistable {
    private static String[] _emptyStrings = new Object[0];
    private static String _emptyString = "";
    private static String _true = "true";
-   private static final boolean DEBUG;
+   private static final boolean DEBUG = false;
 
    public boolean includesNamespaces() {
       return this._includesNamespaces;

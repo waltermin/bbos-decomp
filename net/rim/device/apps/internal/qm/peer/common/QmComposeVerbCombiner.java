@@ -8,8 +8,8 @@ import net.rim.device.apps.api.framework.verb.VerbCombiner;
 import net.rim.device.apps.internal.qm.resource.QmResources;
 
 public final class QmComposeVerbCombiner implements VerbCombiner {
-   public static final int COMPOSE_QM_VERB_GROUP;
-   public static final long QM_COMPOSE_VERB_COMBINER;
+   public static final int COMPOSE_QM_VERB_GROUP = -1937319827;
+   public static final long QM_COMPOSE_VERB_COMBINER = 5126250407518351329L;
    private static QmComposeVerbCombiner _instance;
 
    public static final void registerOnceOnSystemStartUp() {

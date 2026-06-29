@@ -86,10 +86,10 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
    private int _reloadCounter;
    private long _reloadCounterLastIncremented;
    private KeyStoreBrowserOptionsItem$RunnablesThread _runnablesThread;
-   private static final int PROPERTY_SERIAL_NUMBER;
-   private static final int PROPERTY_LABEL;
-   private static final int PROPERTY_SECURITY_LEVEL;
-   private static final boolean DEBUG;
+   private static final int PROPERTY_SERIAL_NUMBER = 0;
+   private static final int PROPERTY_LABEL = 1;
+   private static final int PROPERTY_SECURITY_LEVEL = 2;
+   private static final boolean DEBUG = false;
 
    public KeyStoreBrowserOptionsItem(KeyStoreBrowserContext browserContext, Object displayContext) {
       super(browserContext.getKeyStoreBrowserName(), new Object(0, 2), 5294015899860238835L);

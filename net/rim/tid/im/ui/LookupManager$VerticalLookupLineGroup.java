@@ -18,9 +18,9 @@ class LookupManager$VerticalLookupLineGroup extends LookupManager$LookupLineGrou
    private int _fontHeight;
    private int[] _ascents;
    private final LookupManager this$0;
-   private static final int MAX_ALLOWED_VARIANTS_PER_FRAME;
-   private static final int LEFT_INDENT;
-   private static final int RIGHT_INDENT;
+   private static final int MAX_ALLOWED_VARIANTS_PER_FRAME = 4;
+   private static final int LEFT_INDENT = 1;
+   private static final int RIGHT_INDENT = 2;
 
    public LookupManager$VerticalLookupLineGroup(LookupManager _1, boolean isAdditionalVariants) {
       super(_1, isAdditionalVariants);

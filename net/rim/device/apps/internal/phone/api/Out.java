@@ -2,12 +2,12 @@ package net.rim.device.apps.internal.phone.api;
 
 public final class Out {
    private static String PARAMETERS_START = " (";
-   private static final char PARAMETERS_COMMA;
-   private static final char PARAMETERS_END;
+   private static final char PARAMETERS_COMMA = ',';
+   private static final char PARAMETERS_END = ')';
    private static String PARAMETER_NULL = "null";
-   public static final int DIRECT_CONNECT_EVENT;
-   public static final int CALL_MANAGER_EVENT;
-   public static final int LIVE_CALL_EVENT;
+   public static final int DIRECT_CONNECT_EVENT = 538985539;
+   public static final int CALL_MANAGER_EVENT = 1129138002;
+   public static final int LIVE_CALL_EVENT = 1128352844;
 
    public static final void p(String s) {
       System.out.println(s);

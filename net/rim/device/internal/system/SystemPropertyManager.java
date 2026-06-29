@@ -5,7 +5,7 @@ import net.rim.device.api.util.Arrays;
 
 public final class SystemPropertyManager {
    private SystemPropertyProvider[] _providers = new SystemPropertyProvider[0];
-   private static final long GUID;
+   private static final long GUID = -6763663770985155769L;
 
    private SystemPropertyManager() {
    }

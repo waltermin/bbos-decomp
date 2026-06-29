@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.ldap.LDAPBrowserContextFactory;
 
 public final class X509LDAPBrowserImpl extends UiApplication implements Runnable {
    private LDAPBrowser _app = (LDAPBrowser)(new Object("X509"));
-   private static final String CONTEXT_NAME;
+   private static final String CONTEXT_NAME = "X509";
 
    public static final void main(String[] args) {
       if (args != null && args.length == 1 && args[0].equals("init")) {

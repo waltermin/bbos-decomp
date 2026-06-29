@@ -4,11 +4,11 @@ import com.rsa.securidlib.blackberry.SecurIDLib;
 
 public final class RimSecurIDLib {
    private SecurIDLib _securIDLib;
-   public static final int ACTIVE_TOKEN;
-   public static final String LIB_VERSION_STRING;
-   public static final int MAJOR_VERSION;
-   public static final int MAX_TOKENS;
-   public static final int MINOR_VERSION;
+   public static final int ACTIVE_TOKEN = -1;
+   public static final String LIB_VERSION_STRING = "SecurIDLib version 2.1.0";
+   public static final int MAJOR_VERSION = 2;
+   public static final int MAX_TOKENS = 10;
+   public static final int MINOR_VERSION = 1;
 
    public final boolean isLicenseAccepted() {
       throw new RuntimeException("cod2jar: invokevirtual: negative slot, no fixup");

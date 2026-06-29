@@ -11,9 +11,9 @@ import net.rim.device.internal.synchronization.NoProtectedContentInCollection;
 
 final class RandomDatabaseSync implements SyncCollection, SyncConverter, AlwaysSyncCollection, NoProtectedContentInCollection {
    private String _name;
-   private static final int RANDOM_LENGTH;
-   private static final int RANDOM_DATA_TYPE;
-   private static final int UID;
+   private static final int RANDOM_LENGTH = 1024;
+   private static final int RANDOM_DATA_TYPE = 1;
+   private static final int UID = 1;
 
    public RandomDatabaseSync(String name) {
       this._name = name;

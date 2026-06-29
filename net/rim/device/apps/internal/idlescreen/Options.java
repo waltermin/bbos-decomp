@@ -5,15 +5,15 @@ import net.rim.device.internal.util.OptionsRegistry;
 import net.rim.device.internal.util.OptionsRegistry$ParameterDefinition;
 
 final class Options extends OptionsRegistry {
-   public static final long PARAM_TIMEOUT;
-   public static final long PARAM_FILENAME;
-   public static final long PARAM_FQN_FILENAME;
-   public static final long PARAM_IMAGE_ROTATION;
-   public static final long PARAM_IMAGE_SCALE;
-   public static final long PARAM_IMAGE_TOP_X;
-   public static final long PARAM_IMAGE_TOP_Y;
-   public static final int MINUTES;
-   private static final long GUID;
+   public static final long PARAM_TIMEOUT = -8475525960600792234L;
+   public static final long PARAM_FILENAME = 845737328485785096L;
+   public static final long PARAM_FQN_FILENAME = 5872329845182774168L;
+   public static final long PARAM_IMAGE_ROTATION = 2550679879375249665L;
+   public static final long PARAM_IMAGE_SCALE = 2349937757985153567L;
+   public static final long PARAM_IMAGE_TOP_X = -7340185234772503578L;
+   public static final long PARAM_IMAGE_TOP_Y = -3942144983241110768L;
+   public static final int MINUTES = 60;
+   private static final long GUID = -6239515778363321254L;
    private static Options _instance;
 
    Options() {

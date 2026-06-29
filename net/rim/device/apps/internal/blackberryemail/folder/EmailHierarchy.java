@@ -49,18 +49,18 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
    private EmailFolder _deletedFolder;
    private IntHashtable _refIdToMessageTable;
    private GhostMessageData _ghostData = new GhostMessageData();
-   private static final long FOLDER_KEY;
-   private static final long COMPARATOR_KEY;
-   private static final long EMAIL_FAMILY;
-   private static final long EMAIL_FOLDER_LISTENERS_KEY;
+   private static final long FOLDER_KEY = 4848635152656490553L;
+   private static final long COMPARATOR_KEY = -7100114292399893306L;
+   private static final long EMAIL_FAMILY = 283552684730285077L;
+   private static final long EMAIL_FOLDER_LISTENERS_KEY = -8357190046905569807L;
    private static EmailHierarchy[] _hierarchies;
    private static PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(4848635152656490553L);
    private static LongHashtable _folderCollections;
    private static Comparator _longKeyProviderAdaptorComparator;
    private static Vector _emailFolderListeners;
-   private static final long PREVERIFYLISTENERS_ID;
+   private static final long PREVERIFYLISTENERS_ID = 1684962353143705358L;
    private static Vector _preverifyListeners;
-   static final int MIN_PURGE_SIZE;
+   static final int MIN_PURGE_SIZE = 50;
 
    public Object getGhostMessageLock() {
       return this._ghostData.getLock();

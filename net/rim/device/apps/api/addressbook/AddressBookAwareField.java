@@ -12,10 +12,10 @@ public class AddressBookAwareField extends VerticalFieldManager implements Colle
    private RIMModel _model;
    private Object _addressCard;
    private boolean _ensureUpdateNotifications;
-   static final int ELEMENT_ADDED;
-   static final int ELEMENT_REMOVED;
-   static final int ELEMENT_UPDATED;
-   static final int RESET;
+   static final int ELEMENT_ADDED = 0;
+   static final int ELEMENT_REMOVED = 1;
+   static final int ELEMENT_UPDATED = 2;
+   static final int RESET = 3;
 
    protected AddressBookAwareField(RIMModel addressModel) {
       this(addressModel, false, null);

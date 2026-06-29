@@ -13,7 +13,7 @@ class GranularPolicyElement {
    protected GranularPolicyElement _parentElement;
    protected SimpleSortingVector _childElements;
    protected Comparator _childElementComparator;
-   protected static final boolean DEBUG;
+   protected static final boolean DEBUG = true;
 
    protected GranularPolicyElement(String xmlTag, GranularPolicyElement parentElement) {
       this._xmlTag = xmlTag;

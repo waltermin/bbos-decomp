@@ -38,10 +38,10 @@ public class BodyModelImpl
    CloneProvider,
    EncryptableProvider {
    private Object _textEncoding;
-   static final int MEMO_BODY_SIZE;
-   static final int TASK_FIELD_TAG;
-   static final int MEMO_FIELD_TAG;
-   private static final int MAX_MESSAGE_SIZE;
+   static final int MEMO_BODY_SIZE = 8191;
+   static final int TASK_FIELD_TAG = 3;
+   static final int MEMO_FIELD_TAG = 2;
+   private static final int MAX_MESSAGE_SIZE = 16384;
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {

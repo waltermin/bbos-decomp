@@ -8,8 +8,8 @@ import net.rim.device.internal.system.InternalServices;
 
 public final class QmUtil {
    private static TextMetrics _metrics = (TextMetrics)(new Object());
-   public static final int HW_LAYOUT_REDUCED;
-   public static final int HW_LAYOUT_REDUCED_24;
+   public static final int HW_LAYOUT_REDUCED = 1364346180;
+   public static final int HW_LAYOUT_REDUCED_24 = 1364341300;
 
    public static final boolean isReducedKeyboard() {
       return InternalServices.isReducedFormFactor();

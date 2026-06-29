@@ -15,8 +15,8 @@ final class RequestedAssistData {
    private boolean navigationModelReq;
    private NavigationModel navigationModel;
    private byte optionals = 0;
-   static final byte REQ_ASSIST_DATA_OPT_NAV_MODEL;
-   static final byte NUM_OPT_ELEMENTS;
+   static final byte REQ_ASSIST_DATA_OPT_NAV_MODEL = 1;
+   static final byte NUM_OPT_ELEMENTS = 1;
 
    RequestedAssistData() {
       GPSRequestedAssistData reqAssistData = (GPSRequestedAssistData)(new Object());

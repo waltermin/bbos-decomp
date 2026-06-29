@@ -11,10 +11,10 @@ import net.rim.device.internal.system.RadioInternal;
 
 final class IPModemProvHandler implements ProvisioningHandler, GlobalEventListener {
    private boolean _isIPModemProvisioned = RadioInfo.getNetworkType() != 4;
-   public static final long EVENT_LOGGER_GUID;
-   public static final String EVENT_LOGGER_NAME;
-   public static final int EVENT_ERROR_EXCEPTION_PROV_PARSING;
-   public static final int ERROR_PROVISION_SERVICE_NOT_AVAILABLE;
+   public static final long EVENT_LOGGER_GUID = 3239869412285299861L;
+   public static final String EVENT_LOGGER_NAME = "net.rim.ipmodem";
+   public static final int EVENT_ERROR_EXCEPTION_PROV_PARSING = 1296322640;
+   public static final int ERROR_PROVISION_SERVICE_NOT_AVAILABLE = 1347636801;
 
    public IPModemProvHandler() {
       this.setupIPModem();

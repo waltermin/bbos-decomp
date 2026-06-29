@@ -20,10 +20,10 @@ public class LocationWorker implements LocationListener, LocationCallback {
    NmeaStream _nmeaStream = new NmeaStream();
    private long _startTime = 0;
    private boolean _firstTime = false;
-   private static final long GUID;
-   private static final float MS_TO_KNOTS;
-   private static final int GPS_LOCK_TIMEOUT;
-   private static final String NMEA_MIME;
+   private static final long GUID = 7528405864290685501L;
+   private static final float MS_TO_KNOTS = 1.9438444F;
+   private static final int GPS_LOCK_TIMEOUT = 900000;
+   private static final String NMEA_MIME = "application/X-jsr179-location-nmea";
    private static ResourceBundle _lbsBundle;
    private static LocationWorker INSTANCE = null;
 

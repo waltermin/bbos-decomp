@@ -9,11 +9,11 @@ final class VerifyHashBlob extends PeerDataBlob {
    private String _hash;
    private String _displayName;
    private int _cookie;
-   private static final int REQUEST;
-   private static final int MESSAGE;
-   private static final int HASH;
-   private static final int DISPLAY_NAME;
-   private static final int COOKIE;
+   private static final int REQUEST = 1;
+   private static final int MESSAGE = 2;
+   private static final int HASH = 3;
+   private static final int DISPLAY_NAME = 4;
+   private static final int COOKIE = 5;
 
    public VerifyHashBlob() {
       this(false, null, null, 0);

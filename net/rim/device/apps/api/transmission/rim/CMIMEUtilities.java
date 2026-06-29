@@ -17,9 +17,9 @@ import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.internal.i18n.UnicodeServiceUtilities;
 
 public final class CMIMEUtilities implements CMIMEConstants {
-   private static final int ENTRY_POINT_PARAMETERS_SUBFIELD;
-   private static final byte ENTRY_POINT_CONTENT_URL;
-   private static final byte ENTRY_POINT_ICON_VERSION;
+   private static final int ENTRY_POINT_PARAMETERS_SUBFIELD = 128;
+   private static final byte ENTRY_POINT_CONTENT_URL = 1;
+   private static final byte ENTRY_POINT_ICON_VERSION = 2;
    public static String CMIME_DEFAULT_EMAIL_ENCODING = "windows-1252\r";
    public static byte[] _encodingsArray;
    private static byte HINTS = 112;

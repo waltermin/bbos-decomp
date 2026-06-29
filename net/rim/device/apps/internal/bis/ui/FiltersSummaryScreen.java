@@ -20,7 +20,7 @@ public final class FiltersSummaryScreen extends UserSettingsScreen {
    private RadioButtonField _forward1Choice;
    private RadioButtonField _forward2Choice;
    private Mailbox _mailbox;
-   public static final String PARAM_DEFAULT_RULE_SEND;
+   public static final String PARAM_DEFAULT_RULE_SEND = "defaultRuleSend";
 
    public FiltersSummaryScreen() {
       super(30);

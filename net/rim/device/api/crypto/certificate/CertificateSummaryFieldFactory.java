@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Field;
 
 public class CertificateSummaryFieldFactory {
-   private static final long HASHTABLE_ID;
+   private static final long HASHTABLE_ID = 4797364130951242112L;
    private static Hashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getHashtable(4797364130951242112L);
    private static CertificateSummaryFieldFactory _defaultCertificateSummaryFieldFactory = new DefaultCertificateSummaryFieldFactory();
 

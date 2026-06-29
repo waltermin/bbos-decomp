@@ -10,8 +10,8 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 public class QuickContactItem implements PersistableRIMModel, SyncObject, EncryptableProvider {
    private int _uid;
    private char _key;
-   static final int QUICK_CONTACT_ITEM_TAG;
-   static final int QUICK_CONTACT_KEY_TAG;
+   static final int QUICK_CONTACT_ITEM_TAG = 1;
+   static final int QUICK_CONTACT_KEY_TAG = 2;
    private static GhostQuickContactItem _ghostItem = new GhostQuickContactItem();
 
    public boolean isValidItem() {

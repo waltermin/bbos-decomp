@@ -19,12 +19,12 @@ import net.rim.device.internal.ui.component.SimpleInputDialog;
 
 final class CDMAServiceFilter extends PhoneNumberFilter implements EngineeringDataListener {
    private boolean _rtnRequested;
-   private static final String DESKTOP_USB;
-   private static final String MODEM_USB;
-   private static final String RTN;
-   private static final String RTN_RESTORE;
-   private static final String RTN_RESTORE_FAILED;
-   private static final String FAST_100_CONFIG;
+   private static final String DESKTOP_USB = "##3375867";
+   private static final String MODEM_USB = "##66336";
+   private static final String RTN = "786";
+   private static final String RTN_RESTORE = "Restoring the device to factory defaults will erase all the personal information.";
+   private static final String RTN_RESTORE_FAILED = "Device Restore failed...";
+   private static final String FAST_100_CONFIG = "##266344";
 
    @Override
    public final int startCall(String phoneNumber, int flags) {

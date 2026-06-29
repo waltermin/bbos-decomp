@@ -16,7 +16,7 @@ public class LearningComplexPrefixTable extends LearningPrefixTable {
    protected boolean _hasExactMatch;
    protected LearningComplexPrefixTable$TableInfo _tableInfo = new LearningComplexPrefixTable$TableInfo();
    private int _iteratorOffset;
-   private static final int COUNT;
+   private static final int COUNT = 10;
 
    public LearningComplexPrefixTable(int aLevel, LearningReader aReader) {
       super(aLevel, aReader);

@@ -3,14 +3,14 @@ package net.rim.device.api.media.control;
 import javax.microedition.media.Control;
 
 public interface AudioPathControl extends Control {
-   int AUDIO_PATH_HANDSET;
-   int AUDIO_PATH_HANDSFREE;
-   int AUDIO_PATH_BLUETOOTH;
-   int AUDIO_PATH_HEADSET;
-   int AUDIO_PATH_HEADSET_HANDSFREE;
-   int AUDIO_PATH_BLUETOOTH_A2DP;
-   int NUM_AUDIO_PATHS;
-   int DEFAULT_SINK;
+   int AUDIO_PATH_HANDSET = 0;
+   int AUDIO_PATH_HANDSFREE = 1;
+   int AUDIO_PATH_BLUETOOTH = 2;
+   int AUDIO_PATH_HEADSET = 3;
+   int AUDIO_PATH_HEADSET_HANDSFREE = 4;
+   int AUDIO_PATH_BLUETOOTH_A2DP = 5;
+   int NUM_AUDIO_PATHS = 6;
+   int DEFAULT_SINK = -1;
 
    void setAudioPath(int var1);
 

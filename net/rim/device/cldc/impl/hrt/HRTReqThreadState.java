@@ -18,9 +18,9 @@ final class HRTReqThreadState implements Persistable {
    public long homeNPC_CDMA = -1;
    public long homeNPC_IDEN = -1;
    public long pendingLifetimeDynPIN;
-   public static final int FLAG_THREAD_ENABLED;
-   public static final int FLAG_REG_SERVER_PRESENT;
-   public static final int FLAG_FIRST_TIME_EVER;
+   public static final int FLAG_THREAD_ENABLED = 1;
+   public static final int FLAG_REG_SERVER_PRESENT = 2;
+   public static final int FLAG_FIRST_TIME_EVER = 4;
 
    public final boolean isFlagSet(int f) {
       return (this.flags & f) != 0;

@@ -4,8 +4,8 @@ final class AltitudeInfo {
    private AltitudeDirection altitudeDirection;
    private short altitude;
    private byte altUncert;
-   static final byte ALTITUDE_BIT_SIZE;
-   static final byte ALT_UNCERT_BIT_SIZE;
+   static final byte ALTITUDE_BIT_SIZE = 15;
+   static final byte ALT_UNCERT_BIT_SIZE = 7;
 
    final void decode(Nibbler nib) {
       nib.getBit();

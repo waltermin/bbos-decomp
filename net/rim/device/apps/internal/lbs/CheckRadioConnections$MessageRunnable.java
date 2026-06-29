@@ -12,9 +12,9 @@ final class CheckRadioConnections$MessageRunnable implements Runnable {
    private Object _lock;
    private int _msgType;
    private final CheckRadioConnections this$0;
-   static final int MESSAGE_ALERT;
-   static final int MESSAGE_RADIO;
-   static final int MESSAGE_DATASERVICES;
+   static final int MESSAGE_ALERT = 0;
+   static final int MESSAGE_RADIO = 1;
+   static final int MESSAGE_DATASERVICES = 2;
 
    public CheckRadioConnections$MessageRunnable(CheckRadioConnections this$0, String msg, int msgType) {
       this.this$0 = this$0;

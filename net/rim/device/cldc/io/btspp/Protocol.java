@@ -6,7 +6,7 @@ import net.rim.device.cldc.io.utility.EventThreadCheck;
 import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 
 public class Protocol implements ConnectionBaseInterface {
-   static final int MAX_PACKET_SIZE;
+   static final int MAX_PACKET_SIZE = 2048;
 
    @Override
    public int getProperties(String name) {

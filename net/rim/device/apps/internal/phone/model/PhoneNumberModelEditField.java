@@ -6,7 +6,7 @@ import net.rim.device.internal.ui.component.PhoneNumberEditField;
 public class PhoneNumberModelEditField extends PhoneNumberEditField {
    String[] _phoneNumberTypes;
    private static ResourceBundle _resources = ResourceBundle.getBundle(2699923441625099942L, "net.rim.device.apps.internal.resource.Phone");
-   public static final int MAX_CHARS;
+   public static final int MAX_CHARS = 80;
 
    public PhoneNumberModelEditField(PhoneNumberModel model) {
       super(((StringBuffer)(new Object())).append((String)((Object[])_resources.getObject(601))[model._type]).append(": ").toString(), model.getValue(), 80, 6);

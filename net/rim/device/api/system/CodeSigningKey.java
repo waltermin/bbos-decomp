@@ -8,14 +8,14 @@ public final class CodeSigningKey implements Persistable {
    private int _signerId;
    private byte[] _publicKey;
    private String _description;
-   public static final int RRI_SIGNER_ID;
-   public static final int RRT_SIGNER_ID;
-   public static final int RCC_SIGNER_ID;
-   public static final int RCI_SIGNER_ID;
-   public static final int RCR_SIGNER_ID;
-   public static final int RBB_SIGNER_ID;
-   public static final int RBA_SIGNER_ID;
-   public static final int RATT_SIGNER_ID;
+   public static final int RRI_SIGNER_ID = 51;
+   public static final int RRT_SIGNER_ID = 5526098;
+   public static final int RCC_SIGNER_ID = 4408146;
+   public static final int RCI_SIGNER_ID = 4801362;
+   public static final int RCR_SIGNER_ID = 5391186;
+   public static final int RBB_SIGNER_ID = 4342354;
+   public static final int RBA_SIGNER_ID = 4276818;
+   public static final int RATT_SIGNER_ID = 1414807890;
    private static IntHashtable _builtInKeys = ApplicationRegistry.getApplicationRegistry().getIntHashtable(491444893097860105L);
 
    private CodeSigningKey() {

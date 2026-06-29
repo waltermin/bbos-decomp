@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 final class CachedStackTraceResponse implements Persistable {
    private byte[] _traceHash;
    private long _responseReceivedMask;
-   private static final long FLAG;
+   private static final long FLAG = Long.MIN_VALUE;
 
    CachedStackTraceResponse(byte[] traceHash) {
       this._traceHash = traceHash;

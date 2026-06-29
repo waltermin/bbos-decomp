@@ -10,7 +10,7 @@ import net.rim.vm.Array;
 
 public final class SyncAgentStatisticsCollector {
    private IntHashtable _statistics;
-   private static final long GUID;
+   private static final long GUID = 8620019904824715973L;
 
    private static final SyncAgentStatisticsCollector getSingletonInstance() {
       ApplicationRegistry theApplicationRegistry = ApplicationRegistry.getApplicationRegistry();

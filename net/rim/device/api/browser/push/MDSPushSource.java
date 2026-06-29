@@ -11,8 +11,8 @@ import net.rim.device.api.system.EventLogger;
 final class MDSPushSource extends PushSource implements PushEventLogger {
    private Pushlet _listener;
    private MDSPushSource$RunThread _runThread;
-   private static final long PUSH_NOTIFIER_KEY;
-   private static final int DEFAULT_PORT;
+   private static final long PUSH_NOTIFIER_KEY = -713047639350268568L;
+   private static final int DEFAULT_PORT = 7874;
 
    private MDSPushSource(int port) {
       super(port, null, null, null);

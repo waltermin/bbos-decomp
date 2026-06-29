@@ -8,8 +8,8 @@ import net.rim.tid.im.spellcheck.SpellCheckConstants;
 import net.rim.tid.im.spellcheck.SpellCheckUtilities;
 
 final class SpellCheckOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener, SpellCheckConstants {
-   private static final int UID;
-   private static final int OPTIONS_TAG;
+   private static final int UID = 686875650;
+   private static final int OPTIONS_TAG = 1;
 
    SpellCheckOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

@@ -46,8 +46,8 @@ final class Alarm$AlarmTrigger
    private long _alarmTriggerStartTime;
    private Dialog _dialog;
    private boolean _alarmInterrupted = false;
-   private static final int ALARM_SILENCED_DEFAULT_DELAY;
-   private static final long ALARM_MAX_IDLE_DURATION;
+   private static final int ALARM_SILENCED_DEFAULT_DELAY = 70000;
+   private static final long ALARM_MAX_IDLE_DURATION = 3600000L;
 
    private Alarm$AlarmTrigger() {
       AlarmOptions options = AlarmOptions.getOptions();

@@ -12,20 +12,20 @@ import net.rim.device.internal.system.LockEventLogger;
 import net.rim.device.internal.system.Security;
 
 final class SecurityOptionsProvider extends OptionsProviderBase implements OptionsProviderGlobalEventListener {
-   private static final int UID;
-   private static final int TIMEOUT_TAG;
-   private static final int LOCK_WHEN_HOLSTERED_TAG;
-   private static final int ALLOW_OUTGOING_CALL_WHEN_LOCKED_TAG;
-   private static final int PASSWORD_ENABLED_TAG;
-   private static final int CONTENT_PROTECTION_ENABLED_TAG;
-   private static final int CONTENT_COMPRESSION_ENABLED_TAG;
-   private static final int DISABLE_NUMERIC_PASSWORD_INPUT_TAG;
-   private static final int IT_POLICY_SERVICE_COLOUR_TAG;
-   private static final int OTHER_SERVICE_COLOUR_TAG;
-   private static final int EXCLUDE_ADDRESS_BOOK_TAG;
-   private static final int MAX_PASSWORD_ATTEMPTS_TAG;
-   private static final int CONTENT_PROTECTION_STRENGTH_TAG;
-   private static final int PASSWORD_REQUIRED_FOR_APP_INSTALL_TAG;
+   private static final int UID = -133933004;
+   private static final int TIMEOUT_TAG = 1;
+   private static final int LOCK_WHEN_HOLSTERED_TAG = 2;
+   private static final int ALLOW_OUTGOING_CALL_WHEN_LOCKED_TAG = 3;
+   private static final int PASSWORD_ENABLED_TAG = 4;
+   private static final int CONTENT_PROTECTION_ENABLED_TAG = 5;
+   private static final int CONTENT_COMPRESSION_ENABLED_TAG = 6;
+   private static final int DISABLE_NUMERIC_PASSWORD_INPUT_TAG = 7;
+   private static final int IT_POLICY_SERVICE_COLOUR_TAG = 8;
+   private static final int OTHER_SERVICE_COLOUR_TAG = 9;
+   private static final int EXCLUDE_ADDRESS_BOOK_TAG = 10;
+   private static final int MAX_PASSWORD_ATTEMPTS_TAG = 11;
+   private static final int CONTENT_PROTECTION_STRENGTH_TAG = 12;
+   private static final int PASSWORD_REQUIRED_FOR_APP_INSTALL_TAG = 13;
 
    SecurityOptionsProvider(OptionsProviderChangeListener listener) {
       super(listener);

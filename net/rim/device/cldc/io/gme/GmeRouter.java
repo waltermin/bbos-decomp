@@ -11,7 +11,7 @@ public final class GmeRouter implements ServiceRoutingListener {
    private GmeRouterConnection[] _connections = new GmeRouterConnection[0];
    private GmeRouterConnection _currentConnection;
    private Datagram _currentDatagram;
-   private static final long GUID;
+   private static final long GUID = -18860188569269429L;
 
    protected final void addConnection(GmeRouterConnection connection) {
       Arrays.add(this._connections, connection);

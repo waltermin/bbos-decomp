@@ -13,8 +13,8 @@ public final class HACOption extends VoiceOptionsListItem {
    private ObjectChoiceField _hacChoiceField;
    private String[] _HACoptionsArray = new Object[1];
    private int _previousChoice;
-   static final int OFF;
-   static final int TELECOIL;
+   static final int OFF = 0;
+   static final int TELECOIL = 1;
 
    HACOption(Object context) {
       super(PhoneResources.getString(6250), context);

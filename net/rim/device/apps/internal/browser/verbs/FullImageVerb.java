@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 public final class FullImageVerb extends Verb {
    private String _url;
    private BrowserContentBaseImpl _browserContent;
-   private static final int DESCRIPTION;
+   private static final int DESCRIPTION = 587;
 
    public FullImageVerb(String url, BrowserContentBaseImpl browserContent) {
       super(341504);

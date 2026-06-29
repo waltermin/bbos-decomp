@@ -25,7 +25,7 @@ final class RibbonDescriptionField extends Field implements MemoryCleanerListene
    private ThemeAttributeSet _backgroundTas;
    private boolean _backgroundSet;
    private Bitmap _screenBackground;
-   private static final int ACCENTED_FONT_ADJUSTMENT;
+   private static final int ACCENTED_FONT_ADJUSTMENT = 2;
 
    RibbonDescriptionField(boolean compressedBanners) {
       super(1152921504606846976L);

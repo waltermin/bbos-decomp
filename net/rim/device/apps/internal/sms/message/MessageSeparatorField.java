@@ -4,8 +4,8 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.SeparatorField;
 
 final class MessageSeparatorField extends SeparatorField {
-   private static final int DASHED_LINE_STIPPLE;
-   private static final int SOLID_LINE_STIPPLE;
+   private static final int DASHED_LINE_STIPPLE = 1431655765;
+   private static final int SOLID_LINE_STIPPLE = -1;
 
    @Override
    protected final void paint(Graphics graphics) {

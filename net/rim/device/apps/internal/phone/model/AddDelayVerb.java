@@ -7,8 +7,8 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 final class AddDelayVerb extends Verb {
    private int _type;
    private EditField _editField;
-   static final int STOP;
-   static final int PAUSE;
+   static final int STOP = 0;
+   static final int PAUSE = 1;
 
    public AddDelayVerb(EditField editField, int type) {
       super(16864261);

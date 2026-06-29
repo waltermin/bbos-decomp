@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.browser.css;
 
 public interface CSSParser {
-   int RGB_FUNCTION_PROPERTY_VALUE_LENGTH;
-   int MAX_PROPERTY_VALUE_LENGTH;
+   int RGB_FUNCTION_PROPERTY_VALUE_LENGTH = 11;
+   int MAX_PROPERTY_VALUE_LENGTH = 11;
 
    void parseStyleSheet(String var1);
 

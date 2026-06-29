@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.node;
 
 public interface ImageNode extends ViewportNode {
-   int TYPE;
+   int TYPE = 42;
 
    Object getImage();
 

@@ -27,8 +27,8 @@ public final class ChannelModelCollection implements SyncCollection, OTASyncCapa
    private SyncConverter _converter;
    private Folder _folder;
    private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
-   private static final String DATABASE_NAME;
-   private static final int SYNC_VERSION;
+   private static final String DATABASE_NAME = "Browser Channels";
+   private static final int SYNC_VERSION = 1;
 
    public ChannelModelCollection() {
       this._converter = new ChannelModelConverter();

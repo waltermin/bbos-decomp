@@ -9,22 +9,22 @@ import net.rim.device.internal.ui.Image;
 public class SecureEmailSignatureField$TrustStatusField extends StatusField {
    protected String _details;
    private final SecureEmailSignatureField this$0;
-   private static final long STATUS_TYPE_TRUST;
-   public static final int VERIFYING;
-   public static final int TRUSTED;
-   public static final int NOT_TRUSTED;
-   public static final int EXPIRED;
-   public static final int REVOKED;
-   public static final int ERROR;
-   public static final int NO_SENDER_CERT;
-   public static final int NO_SENDER_CERT_REQUESTING;
-   public static final int EMAIL_ADDRESS_NOMATCH;
-   public static final int NOT_AVAILABLE;
-   public static final int STALE;
-   public static final int STALE_REQUESTING;
-   public static final int WEAK;
-   public static final int UNVERIFIABLE;
-   public static final int LONG_DELAY;
+   private static final long STATUS_TYPE_TRUST = -7654458812076809197L;
+   public static final int VERIFYING = 0;
+   public static final int TRUSTED = 1;
+   public static final int NOT_TRUSTED = 2;
+   public static final int EXPIRED = 3;
+   public static final int REVOKED = 4;
+   public static final int ERROR = 5;
+   public static final int NO_SENDER_CERT = 6;
+   public static final int NO_SENDER_CERT_REQUESTING = 7;
+   public static final int EMAIL_ADDRESS_NOMATCH = 8;
+   public static final int NOT_AVAILABLE = 9;
+   public static final int STALE = 10;
+   public static final int STALE_REQUESTING = 11;
+   public static final int WEAK = 12;
+   public static final int UNVERIFIABLE = 13;
+   public static final int LONG_DELAY = 14;
 
    public SecureEmailSignatureField$TrustStatusField(SecureEmailSignatureField _1, Application app, int initialStatus, String details) {
       super(app, initialStatus);

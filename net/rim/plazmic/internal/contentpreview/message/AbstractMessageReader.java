@@ -3,7 +3,7 @@ package net.rim.plazmic.internal.contentpreview.message;
 import java.io.DataInput;
 
 public class AbstractMessageReader {
-   public static final String rcsid;
+   public static final String rcsid = "$Id:$";
 
    protected static String readString(DataInput din) {
       int len = din.readInt();

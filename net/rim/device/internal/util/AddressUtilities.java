@@ -3,9 +3,9 @@ package net.rim.device.internal.util;
 import net.rim.device.api.util.StringUtilities;
 
 public final class AddressUtilities {
-   private static final String MAILTO_PREFIX;
-   private static final String PINTO_PREFIX;
-   private static final String PIN_PREFIX;
+   private static final String MAILTO_PREFIX = "mailto:";
+   private static final String PINTO_PREFIX = "pinto:";
+   private static final String PIN_PREFIX = "pin:";
 
    private AddressUtilities() {
    }

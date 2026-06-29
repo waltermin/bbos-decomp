@@ -7,9 +7,9 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 
 public class ModelViewListenerRegistry {
    private static LongHashtable _typeToListenersVectorTable;
-   private static final long TYPE_TO_LISTENERS_VECTOR_TABLE;
+   private static final long TYPE_TO_LISTENERS_VECTOR_TABLE = 698947564434617175L;
    private static OpenViewer[] _openViewers;
-   private static final long OPEN_VIEWERS_VECTOR;
+   private static final long OPEN_VIEWERS_VECTOR = 8355840199595148178L;
 
    private ModelViewListenerRegistry() {
    }

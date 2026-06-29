@@ -18,17 +18,17 @@ public final class SelectMediaVerb extends Verb implements SelectionListener {
    private Object[] _selection;
    private boolean _external = true;
    private boolean _selectAll = true;
-   public static final int FLAG_USERLOADED;
-   public static final int FLAG_PRELOADED;
-   public static final int FLAG_LOCATION;
-   public static final int TYPE_VOICENOTE;
-   public static final int TYPE_RINGTONE;
-   public static final int TYPE_VIDEO;
-   public static final int TYPE_MUSIC;
-   public static final int TYPE_ALL_SONGS;
-   public static final int TYPE_GENRE;
-   public static final int TYPE_ARTIST;
-   public static final int TYPE_ALBUM;
+   public static final int FLAG_USERLOADED = 1;
+   public static final int FLAG_PRELOADED = 2;
+   public static final int FLAG_LOCATION = 4;
+   public static final int TYPE_VOICENOTE = 1;
+   public static final int TYPE_RINGTONE = 2;
+   public static final int TYPE_VIDEO = 3;
+   public static final int TYPE_MUSIC = 4;
+   public static final int TYPE_ALL_SONGS = 5;
+   public static final int TYPE_GENRE = 6;
+   public static final int TYPE_ARTIST = 7;
+   public static final int TYPE_ALBUM = 8;
 
    public final void setExternal(boolean external) {
       throw new RuntimeException("cod2jar: stack: underflow");

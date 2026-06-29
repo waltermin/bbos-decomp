@@ -9,7 +9,7 @@ import net.rim.device.internal.synchronization.ota.util.ReusableObjectPool;
 public final class SyncAgentGroupOfRecords extends Vector implements ReusableObject {
    private int _groupHashCode;
    private int _id;
-   public static final long POOL_GUID;
+   public static final long POOL_GUID = -7570004851727517767L;
 
    public static final SyncAgentGroupOfRecords[] createGroups(
       SyncAgentRecordHashesList recordHashesList, DataSourceDatabase aDataSourceDatabase, boolean aNoneXorHashEnabled

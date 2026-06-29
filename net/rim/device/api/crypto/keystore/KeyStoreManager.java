@@ -13,10 +13,10 @@ import net.rim.vm.WeakReference;
 
 public final class KeyStoreManager {
    private WeakReference[] _keyStores;
-   private static final long KEYSTOREMANAGER;
-   static final long EVENT_LOGGER_GUID;
-   private static final int EVENT_CHANGE_PASSWORD_START;
-   private static final int EVENT_CHANGE_PASSWORD_FINISH;
+   private static final long KEYSTOREMANAGER = -5169796521124280422L;
+   static final long EVENT_LOGGER_GUID = 3915475930975345450L;
+   private static final int EVENT_CHANGE_PASSWORD_START = 1129346899;
+   private static final int EVENT_CHANGE_PASSWORD_FINISH = 1129346886;
    private static KeyStoreManager _manager;
 
    private KeyStoreManager() {

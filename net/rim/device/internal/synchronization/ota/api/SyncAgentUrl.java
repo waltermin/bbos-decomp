@@ -9,9 +9,9 @@ public final class SyncAgentUrl implements Persistable {
    private String[] _urlItems = new Object[3];
    private byte _version;
    private boolean _externalToSync;
-   private static final byte SID;
-   private static final byte DATASOURCENAME;
-   private static final byte DATABASENAME;
+   private static final byte SID = 0;
+   private static final byte DATASOURCENAME = 1;
+   private static final byte DATABASENAME = 2;
 
    public SyncAgentUrl() {
    }

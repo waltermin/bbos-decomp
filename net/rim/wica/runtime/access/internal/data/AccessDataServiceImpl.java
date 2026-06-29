@@ -24,7 +24,7 @@ public class AccessDataServiceImpl implements AccessDataService, Startable {
    private StdComponentEnumCollection _enumCollection = StdComponentEnumCollection.getInstance();
    private ToIntHashtable _definitionHandles;
    private IntHashtable _collections;
-   private static final int ACCESS_NUM_COMP_DEFS_AND_ENUMS;
+   private static final int ACCESS_NUM_COMP_DEFS_AND_ENUMS = 14;
 
    @Override
    public void start() {

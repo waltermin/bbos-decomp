@@ -37,7 +37,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
    private boolean _pushBackBufferValid;
    private boolean _havePeek;
    private int _peek;
-   private static final String WAPFORUM_DTD;
+   private static final String WAPFORUM_DTD = "-//WAPFORUM//DTD ";
    private static final String[] PUBLIC_ID = new String[]{
       "WML 1.0//EN",
       "WTA 1.0//EN",
@@ -52,9 +52,9 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       "WTA-WML 1.2//EN",
       "CHANNEL 1.2//EN"
    };
-   private static final int _MAX_OPAQUE_SIZE;
-   private static final String _CDATA;
-   private static final String emptyString;
+   private static final int _MAX_OPAQUE_SIZE = 60;
+   private static final String _CDATA = "CDATA";
+   private static final String emptyString = "";
 
    public void setTagTable(IntHashtable tagTables) {
       this._tagTable = tagTables;

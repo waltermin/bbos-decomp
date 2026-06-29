@@ -12,9 +12,9 @@ final class NetworkOrStkMsgDlg extends PopupDialog implements Runnable {
    int _type;
    private boolean _closeOnAnyKey;
    private String _msg2;
-   static final int CALL_SETUP_DIALOG;
-   static final int USSD_DISPLAY_DIALOG;
-   static final int SS_NOTIFICATION_DIALOG;
+   static final int CALL_SETUP_DIALOG = 0;
+   static final int USSD_DISPLAY_DIALOG = 1;
+   static final int SS_NOTIFICATION_DIALOG = 2;
 
    NetworkOrStkMsgDlg(String msg1, String msg2, int type, String[] options, int[] closeReasons) {
       this(msg1, msg2, type, options, closeReasons, false);

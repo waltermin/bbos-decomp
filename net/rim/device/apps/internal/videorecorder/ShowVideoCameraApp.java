@@ -9,7 +9,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 public final class ShowVideoCameraApp {
    private ApplicationDescriptor _videoCameraAppDescriptor;
    private ContextObject _obj;
-   private static final long SHOW_VIDEO_CAMERA_APP_ID;
+   private static final long SHOW_VIDEO_CAMERA_APP_ID = 4557057938713831249L;
 
    private ShowVideoCameraApp(ApplicationDescriptor applicationDescriptor) {
       this._videoCameraAppDescriptor = applicationDescriptor;

@@ -40,8 +40,8 @@ public final class FirewallOptionsItem extends SaveableMainScreenOptionsListItem
    private LabelField _invalidDatagramCountLabel;
    private LabelField _mismatchedKeyCountLabel;
    private Object _optionsAppEventLock;
-   private static final int INDENT;
-   private static final int SPACER;
+   private static final int INDENT = 6;
+   private static final int SPACER = 18;
 
    public FirewallOptionsItem() {
       super(OptionsResources.getString(1700), 5294015899860238835L);

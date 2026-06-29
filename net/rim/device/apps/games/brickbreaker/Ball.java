@@ -39,7 +39,7 @@ final class Ball {
    private int deltaX;
    private int deltaY;
    private int tickPos;
-   private static final boolean FORCE_STICKY;
+   private static final boolean FORCE_STICKY = false;
    public static int speedFactor = 3;
    private static final Bitmap BALLS = Bitmap.getBitmapResource(Game.currentModule, "balls.png");
 

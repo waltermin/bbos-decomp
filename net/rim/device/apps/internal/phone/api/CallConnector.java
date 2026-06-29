@@ -11,8 +11,8 @@ public class CallConnector implements PhoneEventListener, Runnable {
    protected int _eventToWaitFor;
    protected boolean _conditionsSatisfied;
    private int _originalLine;
-   protected static final long DEFAULT_TIMEOUT;
-   protected static final long MAX_EVENTS;
+   protected static final long DEFAULT_TIMEOUT = 5000L;
+   protected static final long MAX_EVENTS = 3L;
 
    protected void setPreferredLine(int line) {
       if (this._originalLine != line) {

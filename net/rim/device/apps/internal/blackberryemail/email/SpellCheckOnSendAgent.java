@@ -26,15 +26,15 @@ public class SpellCheckOnSendAgent implements FieldChangeListener, UIConstants, 
    private SLControlObject _controlObject;
    private boolean _userInteractionDetected;
    private Application _app;
-   public static final int SPELL_CHECK_COMPLETE;
-   public static final int SPELL_CHECK_SPAWNED;
-   private static final int SPELL_CHECK_FIELDS_COMPLETED;
-   private static final int SPELL_CHECK_FIELDS_SPAWNED;
-   private static final int NO_SPELL_CHECKABLE_FIELDS;
-   private static final int SPELL_CHECK_FIELD_COMPLETED;
-   private static final int SPELL_CHECK_FIELD_SPAWNED;
-   private static final int SPELL_CHECK_FIELD_ERROR;
-   private static final int IDLE_TIME_OUT;
+   public static final int SPELL_CHECK_COMPLETE = 0;
+   public static final int SPELL_CHECK_SPAWNED = 1;
+   private static final int SPELL_CHECK_FIELDS_COMPLETED = 0;
+   private static final int SPELL_CHECK_FIELDS_SPAWNED = 1;
+   private static final int NO_SPELL_CHECKABLE_FIELDS = 2;
+   private static final int SPELL_CHECK_FIELD_COMPLETED = 0;
+   private static final int SPELL_CHECK_FIELD_SPAWNED = 1;
+   private static final int SPELL_CHECK_FIELD_ERROR = 2;
+   private static final int IDLE_TIME_OUT = 300;
    private static final Integer ABORT_REASON_IDLE = (Integer)(new Object(16));
 
    SpellCheckOnSendAgent(EmailSendVerb invokee) {

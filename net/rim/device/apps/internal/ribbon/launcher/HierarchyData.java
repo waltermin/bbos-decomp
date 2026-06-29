@@ -15,11 +15,11 @@ final class HierarchyData implements Persistable {
    private Hashtable _properties = (Hashtable)(new Object());
    private String[] _deletedThemeFolders;
    private boolean _disableHotKeys;
-   private static final int END_OF_DATA;
-   private static final int APPLICATION_PROPERTY_KEY;
-   private static final int APPLICATION_PROPERTY;
-   private static final int FOLDER;
-   private static final int DELETED_THEME_FOLDER;
+   private static final int END_OF_DATA = 0;
+   private static final int APPLICATION_PROPERTY_KEY = 1;
+   private static final int APPLICATION_PROPERTY = 2;
+   private static final int FOLDER = 3;
+   private static final int DELETED_THEME_FOLDER = 4;
 
    HierarchyData() {
       this._folders = new Object[0];

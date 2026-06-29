@@ -18,7 +18,7 @@ public final class ConfirmationDialog extends SimpleChoiceDialog {
    private Verb _optionsVerb = (Verb)ApplicationRegistry.getApplicationRegistry().get(6173420044896290124L);
    Application _foregroundBeforeRibbon = null;
    private static ResourceBundleFamily _resources = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
-   private static final long DATE_TIME_OPTIONS_SCREEN_KEY;
+   private static final long DATE_TIME_OPTIONS_SCREEN_KEY = 6173420044896290124L;
    private static boolean _dialogShownFlag;
 
    public ConfirmationDialog() {

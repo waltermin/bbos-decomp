@@ -13,12 +13,12 @@ public class ImageItem extends Item {
    private String _altText;
    private Image _midpImage;
    int _appearanceMode;
-   public static final int LAYOUT_DEFAULT;
-   public static final int LAYOUT_LEFT;
-   public static final int LAYOUT_RIGHT;
-   public static final int LAYOUT_CENTER;
-   public static final int LAYOUT_NEWLINE_BEFORE;
-   public static final int LAYOUT_NEWLINE_AFTER;
+   public static final int LAYOUT_DEFAULT = 0;
+   public static final int LAYOUT_LEFT = 1;
+   public static final int LAYOUT_RIGHT = 2;
+   public static final int LAYOUT_CENTER = 3;
+   public static final int LAYOUT_NEWLINE_BEFORE = 256;
+   public static final int LAYOUT_NEWLINE_AFTER = 512;
 
    public ImageItem(String label, Image img, int layout, String altText) {
       synchronized (Application.getEventLock()) {

@@ -29,10 +29,10 @@ public class BaseDurationField extends Field {
    private int _durationWidth;
    private int _durationHeight;
    private boolean _digitEntered;
-   public static final int DAYS;
-   public static final int HOURS;
-   public static final int MINUTES;
-   public static final int SECONDS;
+   public static final int DAYS = 3;
+   public static final int HOURS = 2;
+   public static final int MINUTES = 1;
+   public static final int SECONDS = 0;
    private static MenuItem _changeOptionsItem = new BaseDurationField$2(CommonResource.getBundle(), 1, 30270, Integer.MAX_VALUE);
    private static Tag TAG = Tag.create("date");
    private static final int[][][] DISPLAY_NAMES = new int[][][]{
@@ -41,10 +41,10 @@ public class BaseDurationField extends Field {
       (int[][])({103, 104, -804651006, 105, 106, -804651006, 107, 108}),
       (int[][])({101, 102, -804651006, 103, 104, -804651006, 105, 106})
    };
-   private static final int MILLIS_PER_SECOND;
-   private static final int MILLIS_PER_MINUTE;
-   private static final int MILLIS_PER_HOUR;
-   private static final int MILLIS_PER_DAY;
+   private static final int MILLIS_PER_SECOND = 1000;
+   private static final int MILLIS_PER_MINUTE = 60000;
+   private static final int MILLIS_PER_HOUR = 3600000;
+   private static final int MILLIS_PER_DAY = 86400000;
    private static final int[] UNITS = new int[]{
       1000,
       60000,
@@ -63,7 +63,7 @@ public class BaseDurationField extends Field {
       56711012,
       1870004480
    };
-   private static final int ABSOLUTE_MAX;
+   private static final int ABSOLUTE_MAX = 99999;
    private static final int[] UNIT_MAX = new int[]{60, 60, 24, 100000, -804651006, 101, 102, -804651006, 103, 104, -804651006, 105, 106, -804651006, 107, 108};
 
    public BaseDurationField(int largestUnitsDisplayed, int smallestUnitsDisplayed, long duration, long style) {

@@ -5,7 +5,7 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.system.RadioInfo;
 
 public final class PhoneFirmwareImpl {
-   public static final long GUID_CDMA_FLASH;
+   public static final long GUID_CDMA_FLASH = 5606159505026478103L;
 
    private PhoneFirmwareImpl() {
    }

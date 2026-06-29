@@ -5,10 +5,10 @@ import net.rim.device.internal.util.OptionsRegistry;
 import net.rim.device.internal.util.OptionsRegistry$ParameterDefinition;
 
 public final class WiFiDiagnosticsOptions extends OptionsRegistry {
-   private static final long WIFI_DIAGNOSTICS_OPTIONS_GUID;
-   public static final long DISPLAY_MODE_KEY;
-   public static final long DEFAULT_EMAIL_RECIPIENT_KEY;
-   public static final long DEFAULT_PIN_RECIPIENT_KEY;
+   private static final long WIFI_DIAGNOSTICS_OPTIONS_GUID = -2886879053204416204L;
+   public static final long DISPLAY_MODE_KEY = 4738717690654536784L;
+   public static final long DEFAULT_EMAIL_RECIPIENT_KEY = 1486128106401969997L;
+   public static final long DEFAULT_PIN_RECIPIENT_KEY = -6758119585724106862L;
    private static WiFiDiagnosticsOptions _instance;
 
    private WiFiDiagnosticsOptions() {

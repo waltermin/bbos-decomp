@@ -20,8 +20,8 @@ public class OBEXSession {
    protected boolean _disconnected;
    protected boolean _operationInProgress;
    protected Authenticator _authenticator;
-   protected static final int DATA_PACKET_OVERHEAD;
-   protected static final boolean DEBUG;
+   protected static final int DATA_PACKET_OVERHEAD = 6;
+   protected static final boolean DEBUG = false;
 
    public void init(InputStream in, OutputStream out) {
       this._din = (DataInputStream)(new Object(in));

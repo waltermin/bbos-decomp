@@ -6,9 +6,9 @@ import net.rim.device.resources.Resource;
 class ResourceFile {
    ResourceFile$Resource[] _resources;
    byte[] _filedata;
-   public static final int RESOURCE_TYPE_STRING;
-   public static final int RESOURCE_TYPE_BINARY;
-   public static final int RESOURCE_TYPE_END;
+   public static final int RESOURCE_TYPE_STRING = 1;
+   public static final int RESOURCE_TYPE_BINARY = 16;
+   public static final int RESOURCE_TYPE_END = 0;
    private static String EMPTY = "";
 
    private ResourceFile(byte[] filedata, int headerlength) {

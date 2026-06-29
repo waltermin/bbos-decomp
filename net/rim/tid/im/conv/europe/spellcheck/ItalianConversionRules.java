@@ -10,9 +10,9 @@ public class ItalianConversionRules implements LocaleConversionRules {
    private char[] _tmpBuff = new char[50];
    private Word _convertedWord = (Word)(new Object());
    private boolean _inRules;
-   private static final char APOSTROPHE;
-   private static final String CONTRACTION_FOLLOWS;
-   private static final String CONTRACTION_CONSONANTS;
+   private static final char APOSTROPHE = '\'';
+   private static final String CONTRACTION_FOLLOWS = "aeiouh";
+   private static final String CONTRACTION_CONSONANTS = "bcdfgjklmnprstvwyz";
    private static final ItalianConversionRules$ContractionConversion CONTRACTION = new ItalianConversionRules$ContractionConversion();
 
    public ItalianConversionRules(SpellCheckVariantsCreator creator) {

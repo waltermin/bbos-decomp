@@ -13,13 +13,13 @@ import net.rim.device.internal.system.RadioInternal;
 
 final class ManageConnectionsApp extends UiApplication {
    boolean _acceptsForeground = false;
-   protected static final long RESTORE_STATE_KEY;
-   protected static final int RESTORE_POSSIBLE_BIT;
-   protected static final int RESTORE_WIRELESS_BIT;
-   protected static final int RESTORE_WIFI_BIT;
-   protected static final int RESTORE_BLUETOOTH_BIT;
-   protected static final int BAT_TOO_LOW_PROMPT_TIME;
-   private static final int WORLD_PHONE_WAFS;
+   protected static final long RESTORE_STATE_KEY = -8312528208360996369L;
+   protected static final int RESTORE_POSSIBLE_BIT = 1;
+   protected static final int RESTORE_WIRELESS_BIT = 2;
+   protected static final int RESTORE_WIFI_BIT = 4;
+   protected static final int RESTORE_BLUETOOTH_BIT = 8;
+   protected static final int BAT_TOO_LOW_PROMPT_TIME = 8000;
+   private static final int WORLD_PHONE_WAFS = 3;
    private static final boolean CDMA_GSM_WORLD_PHONE = (RadioInfo.getSupportedWAFs() & 3) == 3;
    static final int CELL_WAFS = RadioInfo.getSupportedWAFs() & -5;
    static final int CELL_RADIOS = RadioInternal.getSupportedRadios() & -5;

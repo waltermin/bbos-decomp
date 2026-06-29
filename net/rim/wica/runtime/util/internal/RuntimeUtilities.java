@@ -6,8 +6,8 @@ import net.rim.wica.runtime.provisioning.DeploymentDescriptor$Dependency;
 import net.rim.wica.runtime.util.Util;
 
 public final class RuntimeUtilities {
-   private static final String DEFAULT_RUNTIME_VERSION;
-   private static final String DEFAULT_RUNTIME_COMPATIBILITY_VERSION;
+   private static final String DEFAULT_RUNTIME_VERSION = "4.3.0";
+   private static final String DEFAULT_RUNTIME_COMPATIBILITY_VERSION = "4.1.4";
    static Class class$net$rim$wica$runtime$util$internal$RuntimeUtilities;
 
    private RuntimeUtilities() {

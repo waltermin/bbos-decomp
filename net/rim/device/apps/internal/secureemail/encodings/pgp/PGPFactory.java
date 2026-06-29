@@ -39,8 +39,8 @@ public final class PGPFactory extends SecureEmailFactory {
    private PersistentObject _globalPGPOptionsHolder;
    private PGPOptions _globalPGPOptions;
    private OTASyncCapableSyncItem _globalPGPOptionsSyncItem;
-   private static final long ID;
-   private static final long GLOBAL_OPTIONS_ID;
+   private static final long ID = 388916581435827926L;
+   private static final long GLOBAL_OPTIONS_ID = 6440148952809610573L;
    private static final byte[] SECURE_MESSAGING_CAPABILITIES_ARRAY = new byte[]{64};
    private static PGPFactory _instance;
 

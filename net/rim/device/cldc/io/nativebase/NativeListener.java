@@ -3,7 +3,7 @@ package net.rim.device.cldc.io.nativebase;
 import net.rim.device.api.io.DatagramAddressBase;
 
 public interface NativeListener {
-   int SETUP_NATIVE_LISTENER;
+   int SETUP_NATIVE_LISTENER = 334258761;
 
    void datagramStatus(DatagramAddressBase var1, int var2);
 }

@@ -26,7 +26,7 @@ final class SignalBatteryRibbonBannerField implements BannerField, RibbonCompone
    private int _width;
    private int _height;
    private RibbonComponent$RibbonComponentChangeListener _listener;
-   private static final int SEPARATOR_WIDTH;
+   private static final int SEPARATOR_WIDTH = 3;
 
    SignalBatteryRibbonBannerField(RibbonComponent$RibbonComponentChangeListener listener) {
       this._listener = listener;

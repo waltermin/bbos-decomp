@@ -5,14 +5,14 @@ import net.rim.vm.DebugSupport;
 final class SimulatorDebugServer implements Runnable {
    private DebugHandler _handler;
    private int _port = 5555;
-   private static final boolean DEBUG;
-   private static final String DEBUG_ENV_VAR;
-   private static final String PORT_ENV_VAR;
-   private static final String ACTIVATION_ENV_VAR;
-   private static final String DEBUG_ENV_VAR_ON;
-   private static final boolean USE_DIRECT_TCP;
-   private static final int DEFAULT_TARGET_PORT;
-   private static final int DEFAULT_DEBUGGER_PORT;
+   private static final boolean DEBUG = false;
+   private static final String DEBUG_ENV_VAR = "MdsDebug";
+   private static final String PORT_ENV_VAR = "MdsDebugPort";
+   private static final String ACTIVATION_ENV_VAR = "MdsActivationUrl";
+   private static final String DEBUG_ENV_VAR_ON = "on";
+   private static final boolean USE_DIRECT_TCP = true;
+   private static final int DEFAULT_TARGET_PORT = 5555;
+   private static final int DEFAULT_DEBUGGER_PORT = 45654;
 
    SimulatorDebugServer(DebugHandler handler) {
       this._handler = handler;

@@ -15,8 +15,8 @@ public class BluetoothServerSocketConnection implements BluetoothServerConnectio
    private boolean _serviceRecordAdded;
    private BluetoothStreamConnection _connection;
    private boolean _connectionInUse;
-   private static final String PORT_NOT_OPEN;
-   private static final boolean DEBUG;
+   private static final String PORT_NOT_OPEN = "Port not open";
+   private static final boolean DEBUG = false;
 
    @Override
    public void close() {

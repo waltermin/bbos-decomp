@@ -71,8 +71,8 @@ final class TextFlowCell implements TableItem, Animation {
    private int _preferredSelectX;
    TextFlowCell$AnimationProperties _animationProperties;
    private TextFlowManager _manager;
-   private static final boolean DEBUG;
-   private static final int MIN_TEXT_LAYOUT_WIDTH;
+   private static final boolean DEBUG = false;
+   private static final int MIN_TEXT_LAYOUT_WIDTH = 20;
 
    final void setStartValues() {
       this._textStartPosition = this._manager._textFlowData.getTextLength();

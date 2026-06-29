@@ -6,8 +6,8 @@ import net.rim.device.apps.api.framework.verb.Verb;
 class CertificateServersAttachmentField$ServerVerb extends Verb {
    private int _type;
    private final CertificateServersAttachmentField this$0;
-   public static final int DISPLAY;
-   public static final int IMPORT;
+   public static final int DISPLAY = 1;
+   public static final int IMPORT = 2;
 
    public CertificateServersAttachmentField$ServerVerb(CertificateServersAttachmentField _1, int type, int ordering) {
       super(ordering);

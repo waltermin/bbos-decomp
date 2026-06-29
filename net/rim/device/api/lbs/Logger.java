@@ -8,16 +8,16 @@ import net.rim.device.api.system.RIMPersistentStore;
 public final class Logger {
    LoggingFlags _loggableFlags;
    private long _guid;
-   public static final int GENERAL;
-   public static final int MAP_SCREEN;
-   public static final int UI;
-   public static final int GPS;
-   public static final int PROTOCOL;
-   public static final int SYNC;
-   public static final int FINDER;
-   public static final int ROUTE;
-   public static final int POI;
-   private static final long GUID;
+   public static final int GENERAL = 2;
+   public static final int MAP_SCREEN = 4;
+   public static final int UI = 8;
+   public static final int GPS = 16;
+   public static final int PROTOCOL = 32;
+   public static final int SYNC = 64;
+   public static final int FINDER = 128;
+   public static final int ROUTE = 256;
+   public static final int POI = 512;
+   private static final long GUID = -6718592059891985282L;
    private static Logger INSTANCE;
 
    private Logger() {

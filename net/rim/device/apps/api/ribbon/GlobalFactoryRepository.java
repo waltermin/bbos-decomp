@@ -3,8 +3,8 @@ package net.rim.device.apps.api.ribbon;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class GlobalFactoryRepository {
-   public static final long RIBBON_COMPONENT;
-   public static final long SKIN_MANAGER;
+   public static final long RIBBON_COMPONENT = -4018062520840731194L;
+   public static final long SKIN_MANAGER = 3856995967469138522L;
 
    public static FactoryRepository getFactoryRepository(long id) {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();

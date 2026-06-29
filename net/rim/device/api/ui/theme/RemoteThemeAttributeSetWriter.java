@@ -10,9 +10,9 @@ class RemoteThemeAttributeSetWriter {
    private final Theme$Writer _themeWriter;
    private final Theme _parentTheme;
    private ThemeAttributeSet$Writer _stockWriter;
-   private static final String DEFAULT_ATTRIBUTE_SET_NAME;
-   private static final String DEFAULT_FONT_ATTRIBUTE_SET_NAME;
-   private static final String CLIENT_SET_NAME;
+   private static final String DEFAULT_ATTRIBUTE_SET_NAME = "";
+   private static final String DEFAULT_FONT_ATTRIBUTE_SET_NAME = "default-font";
+   private static final String CLIENT_SET_NAME = "client";
 
    public RemoteThemeAttributeSetWriter(Resource themeResource, ResourceFetcher resourceFetcher, Theme$Writer themeWriter, Theme parentTheme) {
       this._themeResource = themeResource;

@@ -29,12 +29,12 @@ public class DNSRequest {
    private int _cnames;
    private int _referrals;
    boolean _doSimulatorHack;
-   public static final int QUERY_FOR_IP_ADDRESS;
-   public static final int QUERY_FOR_HOSTNAME;
-   public static final int DEFAULT_SRC_PORT;
-   public static final int FLAG_APPEND_APN_TO_NAME;
-   public static final int FLAG_USE_SECONDARY_DNS;
-   public static final int DEFAULT_TIMEOUT;
+   public static final int QUERY_FOR_IP_ADDRESS = 1;
+   public static final int QUERY_FOR_HOSTNAME = 12;
+   public static final int DEFAULT_SRC_PORT = 19780;
+   public static final int FLAG_APPEND_APN_TO_NAME = 1;
+   public static final int FLAG_USE_SECONDARY_DNS = 2;
+   public static final int DEFAULT_TIMEOUT = 10000;
 
    public DNSRequest(String hostname, DNSListener listener, int apnId) {
       this(hostname, listener, apnId, getDefaultServerAddress(apnId, 1), getDefaultServerAddress(apnId, 2), 19780);

@@ -4,9 +4,9 @@ import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.CodeModuleManager;
 
 public final class BISClientInvoke {
-   public static final String WIZARD_INVOKE_ARGUMENT;
-   public static final String RIBBON_INVOKE_ARGUMENT;
-   public static final String BIS_LAUNCH_MODULE_NAME;
+   public static final String WIZARD_INVOKE_ARGUMENT = "WIZARD";
+   public static final String RIBBON_INVOKE_ARGUMENT = "RIBBON";
+   public static final String BIS_LAUNCH_MODULE_NAME = "net_rim_bis_launch";
    private static ApplicationDescriptor _wizardDescriptor;
    private static ApplicationDescriptor _ribbonDescriptor;
 

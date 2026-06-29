@@ -18,11 +18,11 @@ import net.rim.device.internal.ui.component.TicketDialog;
 public final class KeyStoreUtilitiesInternal {
    private static KeyStorePasswordManager _manager = KeyStorePasswordManager.getInstance();
    private static KeyStoreManagerHelper _helper = KeyStoreManagerHelper.getInstance();
-   public static final int KEY_MATERIAL;
-   public static final int SALT;
-   public static final int HASH;
-   public static final int PASSWORD_VERSION;
-   public static final int SECURITY_LEVEL;
+   public static final int KEY_MATERIAL = 1;
+   public static final int SALT = 2;
+   public static final int HASH = 3;
+   public static final int PASSWORD_VERSION = 4;
+   public static final int SECURITY_LEVEL = 5;
 
    public static final byte[] getCurrentKeyStorePassword(String reasonDescription, boolean alwaysDisplayDialog, boolean alwaysRefreshCachedPassword) {
       _manager.setPasswordInternal();

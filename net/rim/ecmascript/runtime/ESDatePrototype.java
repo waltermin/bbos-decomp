@@ -6,19 +6,19 @@ import net.rim.ecmascript.compiler.Tokenizer;
 import net.rim.ecmascript.util.Misc;
 
 class ESDatePrototype extends ESDate {
-   private static final long msPerSecond;
-   private static final long secondsPerMinute;
-   private static final long msPerMinute;
-   private static final long minutesPerHour;
-   private static final long msPerHour;
-   private static final long hoursPerDay;
-   private static final long msPerDay;
-   private static final long daysInRange;
-   private static final long minTime;
-   private static final long maxTime;
-   private static final int yearsInRange;
-   private static final int minYear;
-   private static final int maxYear;
+   private static final long msPerSecond = 1000L;
+   private static final long secondsPerMinute = 60L;
+   private static final long msPerMinute = 60000L;
+   private static final long minutesPerHour = 60L;
+   private static final long msPerHour = 3600000L;
+   private static final long hoursPerDay = 24L;
+   private static final long msPerDay = 86400000L;
+   private static final long daysInRange = 100000000L;
+   private static final long minTime = -8640000000000000L;
+   private static final long maxTime = 8640000000000000L;
+   private static final int yearsInRange = 273972;
+   private static final int minYear = -272002;
+   private static final int maxYear = 275942;
    private static final int[] monthDays = new int[]{
       0,
       31,
@@ -129,9 +129,9 @@ class ESDatePrototype extends ESDate {
    };
    private static final String[] dayStr = new String[]{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
    static final String[] monthStr = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-   private static final int FORMAT_DATE;
-   private static final int FORMAT_TIME;
-   private static final int FORMAT_BOTH;
+   private static final int FORMAT_DATE = 0;
+   private static final int FORMAT_TIME = 1;
+   private static final int FORMAT_BOTH = 2;
    static final String[] days = new String[]{
       "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
    };

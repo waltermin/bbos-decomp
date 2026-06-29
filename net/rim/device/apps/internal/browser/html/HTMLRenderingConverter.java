@@ -7,8 +7,8 @@ import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 
 public final class HTMLRenderingConverter extends BrowserContentProvider implements HttpProtocolConstants {
-   public static final String CONTENT_TYPE_APPLICATION_VND_RIM_HTML;
-   private static final String TEXT_PLAIN_WITH_Q;
+   public static final String CONTENT_TYPE_APPLICATION_VND_RIM_HTML = "application/vnd.rim.html";
+   private static final String TEXT_PLAIN_WITH_Q = "text/plain;q=0.3";
    private static final String[] ACCEPT_WML_ONLY = new String[]{"text/plain;q=0.3"};
    private static final String[] ACCEPT_HTML = new String[]{
       "application/vnd.rim.html", "text/html", "text/plain;q=0.3", "application/xhtml+xml", "application/vnd.wap.xhtml+xml"

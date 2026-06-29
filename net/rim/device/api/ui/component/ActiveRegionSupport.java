@@ -23,8 +23,8 @@ class ActiveRegionSupport {
    private ActiveRegionSupport$ActiveRegionFieldIf _arField;
    private int _adjustedAmount;
    private boolean _endsOnCookie;
-   private static final long COOKIES_ATTRIB_MASK;
-   private static final long COOKIES_ATTRIB_SHIFT;
+   private static final long COOKIES_ATTRIB_MASK = 65504L;
+   private static final long COOKIES_ATTRIB_SHIFT = 5L;
 
    ActiveRegionSupport(AttributedString$Iterator iterator, ActiveRegionSupport$ActiveRegionFieldIf arField) {
       this._runIterator = iterator;

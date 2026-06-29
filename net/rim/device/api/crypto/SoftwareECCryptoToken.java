@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 
 final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    private static SoftwareECCryptoToken _instance = new SoftwareECCryptoToken();
-   private static final long ID_TEST_ECDSA;
+   private static final long ID_TEST_ECDSA = -4595467760303457643L;
 
    static final SoftwareECCryptoToken getInstance() {
       return _instance;
@@ -24,7 +24,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       //
       // Bytecode:
       // 000: bipush 18
-      // 002: anewarray 37
+      // 002: anewarray 40
       // 005: dup
       // 006: bipush 0
       // 007: new net/rim/device/api/crypto/ECCryptoSystem

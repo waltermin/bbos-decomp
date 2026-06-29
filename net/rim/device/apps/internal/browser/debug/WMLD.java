@@ -14,21 +14,21 @@ public final class WMLD implements Decompiler {
    private byte[] _stringTable;
    private int _stringTableLength;
    private String _encoding;
-   private static final int WMLT_A;
-   private static final int WMLTC_ATTRIBUTES;
-   private static final int WMLTC_CONTENT;
-   private static final int WMLTC_END;
-   private static final int WMLTC_TAG_VALUE;
-   private static final int WMLC_INLINE_STRING;
-   private static final int WMLC_INLINE_STRING_END;
-   private static final int WMLG_ENTITY;
-   private static final int WMLG_EXT_I_0;
-   private static final int WMLG_EXT_I_1;
-   private static final int WMLG_EXT_I_2;
-   private static final int WMLG_EXT_T_0;
-   private static final int WMLG_EXT_T_1;
-   private static final int WMLG_EXT_T_2;
-   private static final int WMLG_STR_T;
+   private static final int WMLT_A = 28;
+   private static final int WMLTC_ATTRIBUTES = 128;
+   private static final int WMLTC_CONTENT = 64;
+   private static final int WMLTC_END = 1;
+   private static final int WMLTC_TAG_VALUE = -193;
+   private static final int WMLC_INLINE_STRING = 3;
+   private static final int WMLC_INLINE_STRING_END = 0;
+   private static final int WMLG_ENTITY = 2;
+   private static final int WMLG_EXT_I_0 = 64;
+   private static final int WMLG_EXT_I_1 = 65;
+   private static final int WMLG_EXT_I_2 = 66;
+   private static final int WMLG_EXT_T_0 = 128;
+   private static final int WMLG_EXT_T_1 = 129;
+   private static final int WMLG_EXT_T_2 = 130;
+   private static final int WMLG_STR_T = 131;
 
    // $VF: Could not inline inconsistent finally blocks
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.

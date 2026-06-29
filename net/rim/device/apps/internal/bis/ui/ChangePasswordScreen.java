@@ -20,9 +20,9 @@ public class ChangePasswordScreen extends UserSettingsScreen {
    private PasswordEditField _passwordEdit;
    private PasswordEditField _passwordConfirmEdit;
    protected Button _saveButton;
-   public static final String PARAM_USERNAME;
-   public static final String PARAM_PASSWORD;
-   public static final String PARAM_OLD_PASSWORD;
+   public static final String PARAM_USERNAME = "userName";
+   public static final String PARAM_PASSWORD = "password";
+   public static final String PARAM_OLD_PASSWORD = "oldPassword";
 
    public ChangePasswordScreen() {
       super(23);

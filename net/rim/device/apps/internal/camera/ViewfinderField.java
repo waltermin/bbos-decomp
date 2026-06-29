@@ -22,13 +22,13 @@ final class ViewfinderField extends Field implements ActiveMedia {
    private int _vfState = 0;
    private int _vfHandle;
    private static ViewfinderField instance;
-   private static final int MAX_START_ATTEMPTS;
-   private static final long START_ATTEMPTS_DELAY;
-   private static final int VF_STATE_STOPPED;
-   private static final int VF_STATE_STARTED;
-   private static final int VF_STATE_PAUSED;
-   private static final int VF_STATE_STARTING;
-   private static final int VF_STATE_ERRORED;
+   private static final int MAX_START_ATTEMPTS = 5;
+   private static final long START_ATTEMPTS_DELAY = 500L;
+   private static final int VF_STATE_STOPPED = 0;
+   private static final int VF_STATE_STARTED = 1;
+   private static final int VF_STATE_PAUSED = 2;
+   private static final int VF_STATE_STARTING = 3;
+   private static final int VF_STATE_ERRORED = 4;
 
    final boolean adjustZoomLevel(int offset) {
       offset = Math.min(this._zoomLevels.length - 1, Math.max(offset + this._zoomIndex, 0));

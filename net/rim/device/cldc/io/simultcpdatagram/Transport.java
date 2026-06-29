@@ -20,10 +20,10 @@ public final class Transport extends NativeTransport implements TCPPacketListene
    Deque tcpDgPropsPool;
    protected SimulTcpAddress cachedTcpAddress;
    protected String cachedTcpApn;
-   public static final int MAX_DGS;
-   public static final int MIN_DGS;
-   public static final int MAX_TDG_PROPS;
-   public static final int MIN_TDG_PROPS;
+   public static final int MAX_DGS = 6;
+   public static final int MIN_DGS = 2;
+   public static final int MAX_TDG_PROPS = 6;
+   public static final int MIN_TDG_PROPS = 2;
 
    public final void giveBackTcpDatagramProperties(SimulTcpDatagramProperties tdgp) {
       if (this.tcpDgPropsPool.getSize() < 6) {

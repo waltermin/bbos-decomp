@@ -20,7 +20,7 @@ final class OTASyncProgressScreen extends ActivationScreen implements SyncAgentL
    private ListField _listField;
    private ActivationApp _app;
    private long _lastUpdated = 0;
-   private static final long UPDATE_STATISTICS;
+   private static final long UPDATE_STATISTICS = 1L;
    private static StringBuffer _sb = (StringBuffer)(new Object());
 
    OTASyncProgressScreen(ActivationApp app, String statusInfo, long serviceId) {

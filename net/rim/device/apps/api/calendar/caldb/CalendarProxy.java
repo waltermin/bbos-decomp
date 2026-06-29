@@ -7,10 +7,10 @@ import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.RIMGlobalMessagePoster;
 
 public class CalendarProxy {
-   public static final long ASK_CALENDAR_TO_CLOSE;
-   public static final String SET_CLOSEABLE;
-   public static final String DEFAULT_SERVICE;
-   protected static final long ID;
+   public static final long ASK_CALENDAR_TO_CLOSE = -2923539428699811595L;
+   public static final String SET_CLOSEABLE = "closeable";
+   public static final String DEFAULT_SERVICE = "DEFAULT";
+   protected static final long ID = 3987486768607224712L;
    private static CalendarProxy _calendarProxy;
 
    public static CalendarProxy getInstance() {

@@ -4,7 +4,7 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class VADLanguageSetting {
-   protected static final long GUID;
+   protected static final long GUID = 7371110663783438069L;
 
    public String[] getSupportedLanguages() {
       throw null;

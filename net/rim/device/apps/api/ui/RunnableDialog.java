@@ -11,9 +11,9 @@ public class RunnableDialog implements Runnable {
    private int[] _values;
    private int _defaultChoice = Integer.MIN_VALUE;
    private int _result = -2;
-   public static final int ALERT_DIALOG;
-   public static final int INFORM_DIALOG;
-   public static final int ASK_DIALOG;
+   public static final int ALERT_DIALOG = 0;
+   public static final int INFORM_DIALOG = 1;
+   public static final int ASK_DIALOG = 2;
 
    public int getResult() {
       return this._result;

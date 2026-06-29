@@ -25,8 +25,8 @@ public class DirectEuropeanConv extends IConversion {
    private boolean _skipAutoCap;
    private char _lastCharUsed;
    private boolean _autocapNextKeys;
-   private static final short MAX_NUMBER_OF_CORRECTED_CHARACTERS;
-   public static final int SUBMIT_TIMEOUT;
+   private static final short MAX_NUMBER_OF_CORRECTED_CHARACTERS = 50;
+   public static final int SUBMIT_TIMEOUT = 500;
 
    public DirectEuropeanConv() {
       this._timeoutInvoker = new DirectEuropeanConv$Invoker(this);

@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import javax.microedition.io.Connection;
 
 public interface JavaCardRMIConnection extends Connection {
-   short PINENTRY_CANCELLED;
+   short PINENTRY_CANCELLED = -1;
 
    Remote getInitialReference();
 

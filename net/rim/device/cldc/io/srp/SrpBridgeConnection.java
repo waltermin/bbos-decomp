@@ -38,9 +38,9 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
    private DatagramStatusListener _listener;
    private SrpAddress _addressBase;
    private SrpAddress _receiveFilter;
-   static final int STATE_INACTIVE;
-   static final int STATE_CONNECTING;
-   static final int STATE_ACTIVE;
+   static final int STATE_INACTIVE = 0;
+   static final int STATE_CONNECTING = 1;
+   static final int STATE_ACTIVE = 2;
 
    @Override
    public final void close() {

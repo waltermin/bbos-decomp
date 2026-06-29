@@ -23,12 +23,12 @@ import net.rim.device.internal.media.StreamDataControl;
 import net.rim.device.internal.system.InternalServices;
 
 public final class Manager {
-   public static final String TONE_DEVICE_LOCATOR;
-   public static final String MIDI_DEVICE_LOCATOR;
-   private static final String PME_DEVICE_LOCATOR;
-   private static final String RECORD_DEVICE_LOCATOR;
-   private static final String NOKIA_RINGTONE_DEVICE_LOCATOR;
-   private static final String TONE_CONTENT_TYPE;
+   public static final String TONE_DEVICE_LOCATOR = "device://tone";
+   public static final String MIDI_DEVICE_LOCATOR = "device://midi";
+   private static final String PME_DEVICE_LOCATOR = "device://pme";
+   private static final String RECORD_DEVICE_LOCATOR = "capture://audio";
+   private static final String NOKIA_RINGTONE_DEVICE_LOCATOR = "device://nokia-ringtone";
+   private static final String TONE_CONTENT_TYPE = "audio/x-tone-seq";
    private static SystemTimeBase _systemTimeBase = new SystemTimeBase();
    private static Player _playTonePlayer;
 

@@ -7,14 +7,14 @@ public class MapRect {
    public int _left;
    public int _top;
    public int _right;
-   protected static final int LEFT_OF_WINDOW;
-   protected static final int RIGHT_OF_WINDOW;
-   protected static final int BELOW_WINDOW;
-   protected static final int ABOVE_WINDOW;
-   protected static final int LEFT_BELOW;
-   protected static final int LEFT_ABOVE;
-   protected static final int RIGHT_BELOW;
-   protected static final int RIGHT_ABOVE;
+   protected static final int LEFT_OF_WINDOW = 8;
+   protected static final int RIGHT_OF_WINDOW = 4;
+   protected static final int BELOW_WINDOW = 2;
+   protected static final int ABOVE_WINDOW = 1;
+   protected static final int LEFT_BELOW = 10;
+   protected static final int LEFT_ABOVE = 9;
+   protected static final int RIGHT_BELOW = 6;
+   protected static final int RIGHT_ABOVE = 5;
 
    public MapRect() {
    }

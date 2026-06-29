@@ -19,7 +19,7 @@ final class DocViewTextContentHandler {
    private boolean _paraIncomplete;
    private boolean _paragraphDeletedByTrackChange;
    private String _currentPageDomID;
-   private static final String INDENT_STRING;
+   private static final String INDENT_STRING = "   ";
 
    DocViewTextContentHandler(int fullDocBufferInitialSize, boolean trackChangesOn) {
       this._docInfo = new DocViewTextInformation(fullDocBufferInitialSize);

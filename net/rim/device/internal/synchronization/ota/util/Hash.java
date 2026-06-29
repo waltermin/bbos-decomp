@@ -4,10 +4,10 @@ import net.rim.device.api.crypto.AbstractDigest;
 import net.rim.device.api.util.Arrays;
 
 public final class Hash {
-   private static final byte BYTEHASH;
-   private static final byte SHORTHASH;
-   private static final byte INTHASH;
-   private static final byte LONGHASH;
+   private static final byte BYTEHASH = 0;
+   private static final byte SHORTHASH = 1;
+   private static final byte INTHASH = 3;
+   private static final byte LONGHASH = 7;
 
    public static final short bytesToShort(byte[] data) {
       return (short)core((AbstractDigest)(new Object()), null, data, 0, data == null ? 0 : data.length, (byte)1);

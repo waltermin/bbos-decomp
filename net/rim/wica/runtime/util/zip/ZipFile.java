@@ -5,9 +5,9 @@ import java.io.InputStream;
 public class ZipFile {
    private ZipEntry[] _entries;
    private String _name;
-   static final int LOCAL_FILE_HEADER_SIGNATURE;
-   static final int CENTRAL_FILE_HEADER_SIGNATURE;
-   static final int END_CENTRAL_DIRECTORY_SIGNATURE;
+   static final int LOCAL_FILE_HEADER_SIGNATURE = 67324752;
+   static final int CENTRAL_FILE_HEADER_SIGNATURE = 33639248;
+   static final int END_CENTRAL_DIRECTORY_SIGNATURE = 101010256;
 
    public ZipFile(String name, byte[] bytes) {
       this.init(name, bytes);

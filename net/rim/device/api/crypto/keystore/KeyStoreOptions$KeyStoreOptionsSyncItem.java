@@ -6,12 +6,12 @@ import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.DataBuffer;
 
 class KeyStoreOptions$KeyStoreOptionsSyncItem extends OTASyncCapableSyncItem {
-   private static final int PASSPHRASE_TIMEOUT;
-   private static final int ALLOW_BACKUP;
-   private static final int STALE_TIME;
-   private static final int ALLOW_UNVERIFIED_CRLS;
-   private static final int ADDRESS_INJECTOR;
-   private static final int CERTIFICATE_SERVICE_UID;
+   private static final int PASSPHRASE_TIMEOUT = 1;
+   private static final int ALLOW_BACKUP = 2;
+   private static final int STALE_TIME = 3;
+   private static final int ALLOW_UNVERIFIED_CRLS = 4;
+   private static final int ADDRESS_INJECTOR = 5;
+   private static final int CERTIFICATE_SERVICE_UID = 6;
 
    @Override
    public String getSyncName() {

@@ -5,24 +5,24 @@ import net.rim.device.api.util.LongHashtable;
 import net.rim.vm.Memory;
 
 public final class KeyUsage {
-   public static final long DIGITAL_SIGNATURE;
-   public static final long NON_REPUDIATION;
-   public static final long KEY_ENCIPHERMENT;
-   public static final long DATA_ENCIPHERMENT;
-   public static final long KEY_AGREEMENT;
-   public static final long KEY_CERT_SIGN;
-   public static final long CRL_SIGN;
-   public static final long ENCIPHER_ONLY;
-   public static final long DECIPHER_ONLY;
-   public static final long SERVER_AUTHENTICATION;
-   public static final long CLIENT_AUTHENTICATION;
-   public static final long CODE_SIGNING;
-   public static final long EMAIL_PROTECTION;
-   public static final long TIME_STAMPING;
-   public static final long EMS_CERTIFICATE;
-   public static final int NUM_KEY_USAGES;
-   private static final long ENCRYPT_KEY_USAGE;
-   private static final long SIGN_KEY_USAGE;
+   public static final long DIGITAL_SIGNATURE = 1L;
+   public static final long NON_REPUDIATION = 2L;
+   public static final long KEY_ENCIPHERMENT = 4L;
+   public static final long DATA_ENCIPHERMENT = 8L;
+   public static final long KEY_AGREEMENT = 16L;
+   public static final long KEY_CERT_SIGN = 32L;
+   public static final long CRL_SIGN = 64L;
+   public static final long ENCIPHER_ONLY = 128L;
+   public static final long DECIPHER_ONLY = 256L;
+   public static final long SERVER_AUTHENTICATION = 512L;
+   public static final long CLIENT_AUTHENTICATION = 1024L;
+   public static final long CODE_SIGNING = 2048L;
+   public static final long EMAIL_PROTECTION = 4096L;
+   public static final long TIME_STAMPING = 8192L;
+   public static final long EMS_CERTIFICATE = 16384L;
+   public static final int NUM_KEY_USAGES = 15;
+   private static final long ENCRYPT_KEY_USAGE = 20892L;
+   private static final long SIGN_KEY_USAGE = 11875L;
    private static LongHashtable _hashtable = ApplicationRegistry.getApplicationRegistry().getLongHashtable(-4426029198997145201L);
 
    private KeyUsage() {

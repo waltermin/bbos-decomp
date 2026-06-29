@@ -19,12 +19,12 @@ public final class UnreadCountComponent extends StringRibbonComponent implements
    private char _closeChar;
    private String _type;
    private int _typeEnum;
-   public static final String FACTORY_ID;
-   public static final String MISSED_CALLS;
-   public static final String VOICE_MAIL;
-   private static final int TYPE_MISSED_CALLS;
-   private static final int TYPE_VOICE_MAIL;
-   private static final int TYPE_MESSAGE_COUNT;
+   public static final String FACTORY_ID = "UnreadCount";
+   public static final String MISSED_CALLS = "missedphonecalls";
+   public static final String VOICE_MAIL = "voice";
+   private static final int TYPE_MISSED_CALLS = 1;
+   private static final int TYPE_VOICE_MAIL = 2;
+   private static final int TYPE_MESSAGE_COUNT = 3;
 
    UnreadCountComponent(IndicatorManagerImpl indicatorManagerImpl) {
       this._indicatorManagerImpl = indicatorManagerImpl;

@@ -13,7 +13,7 @@ public class SLTextDataContainer implements ISecureInputMethodBuffer {
    public byte[] _lengths;
    public int _count;
    public int _totalLength;
-   private static final int INC;
+   private static final int INC = 10;
 
    public boolean addVariant(StringBuffer aVariant) {
       sanityCheck(this);

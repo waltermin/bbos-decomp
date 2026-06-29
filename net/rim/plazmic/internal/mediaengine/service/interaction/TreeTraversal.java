@@ -1,7 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.service.interaction;
 
 public interface TreeTraversal {
-   String INTERFACE_VISUAL_TREE_TRAVERSAL;
+   String INTERFACE_VISUAL_TREE_TRAVERSAL = "VisualTreeTraversal";
 
    int getRoot();
 

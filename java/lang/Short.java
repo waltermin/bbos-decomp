@@ -2,8 +2,8 @@ package java.lang;
 
 public final class Short {
    private short value;
-   public static final short MIN_VALUE;
-   public static final short MAX_VALUE;
+   public static final short MIN_VALUE = -32768;
+   public static final short MAX_VALUE = 32767;
 
    public static final short parseShort(String s) {
       return parseShort(s, 10);

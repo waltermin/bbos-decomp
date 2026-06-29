@@ -83,17 +83,17 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
    private int _state = 100;
    private int _selectedNode;
    private Object _persistentObject;
-   private static final long PROVISIONED_BOOKMARKS_HIERARCHY_ID;
-   private static final long BOOKMARKS_TREE_STATE_STORE_ID;
-   private static final int ICON_WIDTH;
-   private static final int ICON_HEIGHT;
-   private static final int GO_TO_PRIORITY;
-   private static final int HISTORY_PRIORITY;
-   private static final int ADD_BOOKMARK_PRIORITY;
-   private static final int STARTUP;
-   private static final int STARTUP_DONE;
-   private static final int QUERY_START;
-   private static final int QUERY_DONE;
+   private static final long PROVISIONED_BOOKMARKS_HIERARCHY_ID = -7037877772142231911L;
+   private static final long BOOKMARKS_TREE_STATE_STORE_ID = -3181414277122434333L;
+   private static final int ICON_WIDTH = 16;
+   private static final int ICON_HEIGHT = 16;
+   private static final int GO_TO_PRIORITY = 10000;
+   private static final int HISTORY_PRIORITY = 10001;
+   private static final int ADD_BOOKMARK_PRIORITY = 10033;
+   private static final int STARTUP = 100;
+   private static final int STARTUP_DONE = 101;
+   private static final int QUERY_START = 102;
+   private static final int QUERY_DONE = 103;
    private static PersistentObject _store = PersistentStore.getPersistentObject(-3181414277122434333L);
 
    public final void cleanup() {

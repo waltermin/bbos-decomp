@@ -29,15 +29,15 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    private IntHashtable _inboundDatagrams;
    private Vector _inboundTimes;
    private int _timer;
-   private static final long ID;
-   private static final String STP_STR;
-   private static final int SEND_RESPONSE_TIMEOUT;
-   public static final int ERROR_NOT_ROUTABLE;
-   public static final int ERROR_FAILED;
-   public static final int TX_TIMEOUT;
-   public static final int TX_NOT_ROUTABLE;
-   public static final int RX_STATUS;
-   private static final int CONFIRMATION_TMO;
+   private static final long ID = 1679319515711487829L;
+   private static final String STP_STR = "net.rim.stp";
+   private static final int SEND_RESPONSE_TIMEOUT = 120000;
+   public static final int ERROR_NOT_ROUTABLE = 8577;
+   public static final int ERROR_FAILED = 8579;
+   public static final int TX_TIMEOUT = 1415083119;
+   public static final int TX_NOT_ROUTABLE = 1415081586;
+   public static final int RX_STATUS = 1381004148;
+   private static final int CONFIRMATION_TMO = 3;
 
    public Transport() {
       super.GUID = 1679319515711487829L;

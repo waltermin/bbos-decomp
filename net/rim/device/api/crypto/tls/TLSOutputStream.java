@@ -7,7 +7,7 @@ public final class TLSOutputStream extends OutputStream {
    private RecordProtocol _recordProtocol;
    private boolean _isClosed;
    private DataBuffer _buffer;
-   private static final int MAX_WRITE_SIZE;
+   private static final int MAX_WRITE_SIZE = 1300;
 
    public TLSOutputStream(RecordProtocol recordProtocol) {
       this._recordProtocol = recordProtocol;

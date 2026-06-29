@@ -41,19 +41,19 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
    private DefaultDetailsScreen _defViewer = new DefaultDetailsScreen(this);
    private ExceptionDetailsScreen _exViewer = new ExceptionDetailsScreen(this);
    private StringDetailsScreen _strViewer = new StringDetailsScreen(this);
-   private static final int MENU_CLOSE;
-   private static final int MENU_REFRESH;
-   private static final int MENU_VIEW_ITEM;
-   private static final int MENU_CLEAR_LOG;
-   private static final int MENU_OPTIONS;
-   private static final int MENU_COPY_DAY;
-   private static final int DISPLAY_SUMMARY;
-   private static final int DISPLAY_TIME;
-   private static final int DISPLAY_BOTH;
-   private static final long EVLV_FILTERS_GUID;
-   static final int FILTER_DISPLAY;
-   static final int FILTER_HIDE;
-   private static final int TYPE_STARTUP;
+   private static final int MENU_CLOSE = 0;
+   private static final int MENU_REFRESH = 2;
+   private static final int MENU_VIEW_ITEM = 5;
+   private static final int MENU_CLEAR_LOG = 6;
+   private static final int MENU_OPTIONS = 7;
+   private static final int MENU_COPY_DAY = 8;
+   private static final int DISPLAY_SUMMARY = 0;
+   private static final int DISPLAY_TIME = 1;
+   private static final int DISPLAY_BOTH = 255;
+   private static final long EVLV_FILTERS_GUID = -8838774854340583164L;
+   static final int FILTER_DISPLAY = 1;
+   static final int FILTER_HIDE = 0;
+   private static final int TYPE_STARTUP = -1;
 
    final void changeDisplayedEvent(int delta) {
       UiApplication app = UiApplication.getUiApplication();

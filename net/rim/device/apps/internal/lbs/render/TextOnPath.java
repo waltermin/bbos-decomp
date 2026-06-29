@@ -9,13 +9,13 @@ import net.rim.device.apps.internal.lbs.Utilities;
 public final class TextOnPath {
    static int[] _xPts = new int[4];
    static int[] _yPts = new int[4];
-   private static final boolean OLD_DRAW;
+   private static final boolean OLD_DRAW = false;
    static Bitmap _rotatedFontBitmap = Bitmap.getBitmapResource("rotatedfont.png");
    static final int _relativeAdvance = Fixed32.div(73728000, 65536000);
-   static final int _firstChar;
-   static final int _lastChar;
-   static final int _charSize;
-   static final int _charSizeHalf;
+   static final int _firstChar = 33;
+   static final int _lastChar = 122;
+   static final int _charSize = 14;
+   static final int _charSizeHalf = 7;
    static final int[] _xOffset = new int[]{
       0,
       -1,
@@ -2350,13 +2350,13 @@ public final class TextOnPath {
       504627,
       347341
    };
-   static final int _charRange;
+   static final int _charRange = 91;
    static int _rotatedHeight = _rotatedFontBitmap.getHeight();
    static int _rotatedWidth = _rotatedFontBitmap.getWidth();
    static XYPoint _point = (XYPoint)(new Object());
    static int _lastRotation;
-   private static final int PIX_ABOVE_PATH;
-   static final boolean DEBUG;
+   private static final int PIX_ABOVE_PATH = 0;
+   static final boolean DEBUG = false;
 
    static final void drawRotatedChar(Graphics graphics, int x, int y, int character, int rotation) {
       if (character >= 33 && character <= 122) {

@@ -3,14 +3,14 @@ package net.rim.device.api.ui;
 import com.sun.cldc.i18n.Helper;
 
 public class FontLogicHelper {
-   static final int MIN_HEIGHT_ARABIC_STROKE_BOLD;
-   static final int MIN_HEIGHT_ARABIC_NO_STROKE_BOLD;
-   static final int MIN_HEIGHT_ARABIC_STROKE_NORMAL;
-   static final int MIN_HEIGHT_ARABIC_NO_STROKE_NORMAL;
-   static final int MIN_HEIGHT_ASIAN_STROKE_BOLD;
-   static final int MIN_HEIGHT_ASIAN_NO_STROKE_BOLD;
-   static final int MIN_HEIGHT_ASIAN_STROKE_NORMAL;
-   static final int MIN_HEIGHT_ASIAN_NO_STROKE_NORMAL;
+   static final int MIN_HEIGHT_ARABIC_STROKE_BOLD = 15;
+   static final int MIN_HEIGHT_ARABIC_NO_STROKE_BOLD = 13;
+   static final int MIN_HEIGHT_ARABIC_STROKE_NORMAL = 12;
+   static final int MIN_HEIGHT_ARABIC_NO_STROKE_NORMAL = 10;
+   static final int MIN_HEIGHT_ASIAN_STROKE_BOLD = 19;
+   static final int MIN_HEIGHT_ASIAN_NO_STROKE_BOLD = 19;
+   static final int MIN_HEIGHT_ASIAN_STROKE_NORMAL = 15;
+   static final int MIN_HEIGHT_ASIAN_NO_STROKE_NORMAL = 15;
    private static TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
 
    public static boolean fontLegible(TextGraphics textGraphics, int locale) {

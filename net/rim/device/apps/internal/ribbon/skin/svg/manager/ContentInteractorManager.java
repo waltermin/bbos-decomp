@@ -59,12 +59,12 @@ final class ContentInteractorManager implements GlobalEventListener, SystemListe
    private ModelInteractorImpl _modelInteractor;
    UiApplication _application = (UiApplication)Application.getApplication();
    private ContentInteractorManager$GlobalUpdater _globalUpdater = new ContentInteractorManager$GlobalUpdater(this);
-   private static final String DATE_FORMAT_RESOURCE_ID;
-   static final String COUNT_TYPE_MESSAGE;
-   static final String COUNT_TYPE_SMSMMS;
-   static final String COUNT_TYPE_PHONE;
-   static final String EMAIL_APP;
-   private static final int PHONE_APP_ALTERNATE_ID;
+   private static final String DATE_FORMAT_RESOURCE_ID = "DateFormatResourceId";
+   static final String COUNT_TYPE_MESSAGE = "message";
+   static final String COUNT_TYPE_SMSMMS = "smsmms";
+   static final String COUNT_TYPE_PHONE = "missedphonecalls";
+   static final String EMAIL_APP = "email_app";
+   private static final int PHONE_APP_ALTERNATE_ID = 20;
 
    public final void launchInternal(String id) {
       if (id.startsWith("email")) {

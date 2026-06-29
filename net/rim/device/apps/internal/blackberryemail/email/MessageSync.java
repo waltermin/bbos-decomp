@@ -32,9 +32,9 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
    boolean _inSerialTransaction;
    private Hashtable _batchedAddMessages = (Hashtable)(new Object());
    private int _batchedMessageSize = 0;
-   public static final long DELETE_WITHOUT_GHOST;
-   public static final long DELETE_WITHOUT_GHOST_AND_ORPHAN;
-   private static final int SYNC_VERSION;
+   public static final long DELETE_WITHOUT_GHOST = -8494690080715024104L;
+   public static final long DELETE_WITHOUT_GHOST_AND_ORPHAN = 2817016600554138331L;
+   private static final int SYNC_VERSION = 3;
    static ContextObject _syncContextObject = (ContextObject)(new Object(19));
    private static int EMAIL_BATCH_ADD_LIMIT = 100;
 

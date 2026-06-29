@@ -11,8 +11,8 @@ final class ConvInviteBlob extends PeerDataBlob {
    private Vector _contacts;
    private Vector _contactNames;
    private String _contactsStr;
-   private static final int CONV_ID;
-   private static final int CONTACT_STR;
+   private static final int CONV_ID = 1;
+   private static final int CONTACT_STR = 2;
 
    public ConvInviteBlob() {
    }

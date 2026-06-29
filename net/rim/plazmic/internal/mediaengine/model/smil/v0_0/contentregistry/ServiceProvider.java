@@ -8,11 +8,11 @@ import javax.microedition.io.HttpConnection;
 public class ServiceProvider {
    private Hashtable _services;
    private String _drmStatus;
-   public static final String PLAYER;
-   public static final String UI_COMPONENT;
-   public static final String MODEL;
-   public static final String URI;
-   private static final int BUFFER_SIZE;
+   public static final String PLAYER = "Player";
+   public static final String UI_COMPONENT = "UI_Component";
+   public static final String MODEL = "Model";
+   public static final String URI = "Uri";
+   private static final int BUFFER_SIZE = 2048;
 
    protected ServiceProvider(int numServices) {
       this._services = (Hashtable)(new Object(numServices));

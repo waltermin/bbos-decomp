@@ -17,8 +17,8 @@ final class HRTAppDacDialog extends Dialog {
    private int _retCode;
    private String _retObject;
    private DAC _dac;
-   public static final int CANCEL;
-   public static final int OKAY;
+   public static final int CANCEL = 0;
+   public static final int OKAY = 1;
 
    HRTAppDacDialog(DAC dac, int netType, String initString) {
       super(null, null, null, 0, Bitmap.getPredefinedBitmap(0), 65536);

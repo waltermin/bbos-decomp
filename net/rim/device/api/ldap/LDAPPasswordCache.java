@@ -13,9 +13,9 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
    private PersistentObject _persist = RIMPersistentStore.getPersistentObject(-3467343715701600366L);
    private Hashtable _mapToUsernames;
    private Hashtable _mapToPasswords;
-   private static final long LOCK;
-   private static final long PERSIST;
-   private static final long ID;
+   private static final long LOCK = -650205280484353649L;
+   private static final long PERSIST = -3467343715701600366L;
+   private static final long ID = 7688841469514570471L;
 
    private LDAPPasswordCache() {
       synchronized (this._persist) {

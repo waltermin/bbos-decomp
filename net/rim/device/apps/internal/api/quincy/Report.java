@@ -8,12 +8,12 @@ public class Report {
    private String _mimeType;
    private Vector _extra;
    private long _timestamp;
-   public static final String TYPE_TEXT_PLAIN;
-   public static final String TYPE_TEXT_XML;
-   public static final String TYPE_APPLICATION_XBUGDISP;
-   public static final String TYPE_APPLICATION_ZIP;
-   public static final String TYPE_APPLICATION_XUNKNOWN;
-   public static final String TYPE_APPLICATION_UNKNOWN;
+   public static final String TYPE_TEXT_PLAIN = "text/plain";
+   public static final String TYPE_TEXT_XML = "text/xml";
+   public static final String TYPE_APPLICATION_XBUGDISP = "application/x-bugdisp";
+   public static final String TYPE_APPLICATION_ZIP = "application/zip";
+   public static final String TYPE_APPLICATION_XUNKNOWN = "application/x-unknown";
+   public static final String TYPE_APPLICATION_UNKNOWN = "application/unknown";
 
    public Report() {
       this("", "", "");

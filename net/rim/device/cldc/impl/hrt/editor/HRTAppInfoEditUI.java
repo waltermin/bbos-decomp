@@ -48,21 +48,21 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
    private ObjectChoiceField _qosDelayField;
    private ObjectChoiceField _qosPeakTPField;
    private ObjectChoiceField _qosMeanTPField;
-   public static final int HRI_MOBITEX;
-   public static final int HRI_GPRS;
-   public static final int HRI_CDMA;
-   public static final int HRI_IDEN;
-   public static final int HRI_WIFI;
-   public static final int RET_SAVE;
-   public static final int RET_CLOSE;
-   private static final int MENU_ADD_DAC;
-   private static final int MENU_EDIT_DAC;
-   private static final int MENU_REMOVE_DAC;
-   private static final int DV_OKAY;
-   private static final int DV_MISSING_DATA;
-   private static final int DV_BAD_NPC;
-   private static final int DV_BAD_ART;
-   private static final int DV_BAD_PTE;
+   public static final int HRI_MOBITEX = 0;
+   public static final int HRI_GPRS = 2;
+   public static final int HRI_CDMA = 3;
+   public static final int HRI_IDEN = 4;
+   public static final int HRI_WIFI = 5;
+   public static final int RET_SAVE = 0;
+   public static final int RET_CLOSE = 1;
+   private static final int MENU_ADD_DAC = 0;
+   private static final int MENU_EDIT_DAC = 1;
+   private static final int MENU_REMOVE_DAC = 2;
+   private static final int DV_OKAY = 0;
+   private static final int DV_MISSING_DATA = 1;
+   private static final int DV_BAD_NPC = 2;
+   private static final int DV_BAD_ART = 3;
+   private static final int DV_BAD_PTE = 4;
    private static final int[] MENU_STRING_IDS = new int[]{10, 11, 12, -805044219, 1718183726, 10, -805044223, 48, -804651007, 51, -805044141, 944130375};
    private static final int[] MENU_ORDER = new int[]{
       0, 1, 2, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643, 1867325550

@@ -27,12 +27,12 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
    private RichTextField _notesField;
    private CallSummaryInfo _callSummaryInfo;
    private Verb[] _verbCache = new Object[0];
-   private static final int NUM_SEPARATORS;
-   private static final int SEPARATOR_HEIGHT;
-   static final int MENU_EDIT_NOTES;
-   static final int MENU_ADD_NOTES;
-   static final int MENU_FORWARD;
-   static final int MENU_PARTICIPANTS;
+   private static final int NUM_SEPARATORS = 4;
+   private static final int SEPARATOR_HEIGHT = 3;
+   static final int MENU_EDIT_NOTES = 1332224;
+   static final int MENU_ADD_NOTES = 1332225;
+   static final int MENU_FORWARD = 1332226;
+   static final int MENU_PARTICIPANTS = 1332227;
 
    CallLogItemScreen(CallLogItem callLogItem) {
       super(562951027163136L);

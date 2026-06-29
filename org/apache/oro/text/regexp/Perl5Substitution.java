@@ -6,16 +6,16 @@ public class Perl5Substitution extends StringSubstitution {
    int _subOpcodesCount;
    char[] _substitutionChars;
    String _lastInterpolation;
-   public static final int INTERPOLATE_ALL;
-   public static final int INTERPOLATE_NONE;
-   private static final int __OPCODE_STORAGE_SIZE;
-   private static final int __MAX_GROUPS;
-   static final int _OPCODE_COPY;
-   static final int _OPCODE_LOWERCASE_CHAR;
-   static final int _OPCODE_UPPERCASE_CHAR;
-   static final int _OPCODE_LOWERCASE_MODE;
-   static final int _OPCODE_UPPERCASE_MODE;
-   static final int _OPCODE_ENDCASE_MODE;
+   public static final int INTERPOLATE_ALL = 0;
+   public static final int INTERPOLATE_NONE = -1;
+   private static final int __OPCODE_STORAGE_SIZE = 32;
+   private static final int __MAX_GROUPS = 65535;
+   static final int _OPCODE_COPY = -1;
+   static final int _OPCODE_LOWERCASE_CHAR = -2;
+   static final int _OPCODE_UPPERCASE_CHAR = -3;
+   static final int _OPCODE_LOWERCASE_MODE = -4;
+   static final int _OPCODE_UPPERCASE_MODE = -5;
+   static final int _OPCODE_ENDCASE_MODE = -6;
 
    private static final boolean __isInterpolationCharacter(char ch) {
       return Character.isDigit(ch) || ch == '&';

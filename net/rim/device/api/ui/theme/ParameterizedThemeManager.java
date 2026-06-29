@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
 
 public class ParameterizedThemeManager {
    private Vector _discoveredThemes = (Vector)(new Object());
-   private static final int MAX_ALTERNATE_BASE_SEARCH_SLEEP;
+   private static final int MAX_ALTERNATE_BASE_SEARCH_SLEEP = 6000;
    private static Hashtable _stockThemes;
 
    public void discoverTheme(

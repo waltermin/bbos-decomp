@@ -13,7 +13,7 @@ public final class IncomingCallConnector extends CallConnector {
    protected Object _connectionContext;
    protected boolean _callWaiting;
    protected boolean _conferenceCallInProgress;
-   protected static final long TIMEOUT;
+   protected static final long TIMEOUT = 5000L;
 
    public static final void connect(int callId, int answeringOption, Object context) {
       new IncomingCallConnector(callId, answeringOption, context).connect();

@@ -7,10 +7,10 @@ import net.rim.device.api.util.DataBuffer;
 
 public class SerialSyncAllCollectionData extends SerialSyncCollectionData {
    private SyncAllCollection _sac;
-   private static final byte COLLECTION_SID;
-   private static final byte RECORD_UID;
-   private static final byte RECORD_DATA;
-   private static final byte NULL_TERMINATOR;
+   private static final byte COLLECTION_SID = 2;
+   private static final byte RECORD_UID = 5;
+   private static final byte RECORD_DATA = 10;
+   private static final byte NULL_TERMINATOR = 0;
 
    public SerialSyncAllCollectionData(SyncAllCollection syncAllCollection) {
       super(syncAllCollection);

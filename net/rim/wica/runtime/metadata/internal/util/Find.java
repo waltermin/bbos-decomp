@@ -12,12 +12,12 @@ import net.rim.wica.runtime.util.LongVector;
 
 public final class Find {
    private WicletEx _wiclet;
-   public static final int OPERATOR_EQUAL;
-   public static final int OPERATOR_LESS_THAN;
-   public static final int OPERATOR_GREATER_THAN;
-   public static final int OPERATOR_NOT_EQUAL;
-   public static final int OPERATOR_GREATER_OR_EQUAL;
-   public static final int OPERATOR_LESS_OR_EQUAL;
+   public static final int OPERATOR_EQUAL = 1;
+   public static final int OPERATOR_LESS_THAN = 2;
+   public static final int OPERATOR_GREATER_THAN = 4;
+   public static final int OPERATOR_NOT_EQUAL = 0;
+   public static final int OPERATOR_GREATER_OR_EQUAL = 5;
+   public static final int OPERATOR_LESS_OR_EQUAL = 3;
    private static GenericComparator _comparator = new GenericComparator();
 
    public Find(WicletEx wiclet) {

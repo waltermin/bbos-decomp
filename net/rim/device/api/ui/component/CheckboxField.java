@@ -27,11 +27,11 @@ public class CheckboxField extends Field implements FieldLabelProvider {
    private int _iconHeight;
    private TextRect _text = new TextRect(this);
    private static Tag TAG = Tag.create("checkbox");
-   private static final char CHECKED;
-   private static final char UNCHECKED;
-   public static final long NO_USE_ALL_WIDTH;
-   public static final long SELECT_ON_CLICK;
-   private static final int PADDING;
+   private static final char CHECKED = '☑';
+   private static final char UNCHECKED = '☐';
+   public static final long NO_USE_ALL_WIDTH = 2147483648L;
+   public static final long SELECT_ON_CLICK = 1073741824L;
+   private static final int PADDING = 2;
    private static MenuItem _changeOptionsItem = new CheckboxField$ChangeOptionMenuItem();
 
    public boolean getChecked() {

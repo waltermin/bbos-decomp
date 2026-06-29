@@ -4,13 +4,13 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 final class ETDocumentCollection {
-   private static final byte TIMESTAMP;
-   private static final byte LATITUDE;
-   private static final byte LONGITUDE;
-   private static final byte ALTITUDE;
-   private static final byte DATA;
-   private static final byte DEVICE_STATUS;
-   private static final byte RESERVE1;
+   private static final byte TIMESTAMP = 1;
+   private static final byte LATITUDE = 2;
+   private static final byte LONGITUDE = 3;
+   private static final byte ALTITUDE = 4;
+   private static final byte DATA = 5;
+   private static final byte DEVICE_STATUS = 6;
+   private static final byte RESERVE1 = 7;
 
    private ETDocumentCollection() {
    }

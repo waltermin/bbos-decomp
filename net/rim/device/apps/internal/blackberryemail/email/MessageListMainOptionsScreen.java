@@ -28,7 +28,7 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
    private Vector _messageOptionsList;
    private short _inboxOption;
    private static Vector _additionalOptionsList;
-   private static final long GUID;
+   private static final long GUID = 2830986604998026732L;
 
    public MessageListMainOptionsScreen() {
       this.setTitle((Field)(new Object(MessageResources.getString(199), 64)));

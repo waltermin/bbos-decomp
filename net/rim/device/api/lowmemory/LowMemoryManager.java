@@ -5,8 +5,8 @@ import net.rim.vm.Memory;
 
 public class LowMemoryManager {
    private static LowMemoryManager _instance;
-   public static final long GUID_INSTANCE;
-   public static final long GUID_FLASH_LOW;
+   public static final long GUID_INSTANCE = 7979320271643693911L;
+   public static final long GUID_FLASH_LOW = 945659952435832745L;
 
    protected LowMemoryManager() {
    }

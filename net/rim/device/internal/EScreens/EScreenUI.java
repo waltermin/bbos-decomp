@@ -30,11 +30,11 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
    private Font _plainFont;
    private Font _boldFont;
    private ListField _immutables;
-   public static final int MENU_DETAILS;
-   public static final int MENU_REFRESH;
-   public static final int MENU_COPY_SCREEN;
-   public static final int MENU_ACTION;
-   private static final int MAX_DATA_LENGTH;
+   public static final int MENU_DETAILS = 1;
+   public static final int MENU_REFRESH = 2;
+   public static final int MENU_COPY_SCREEN = 3;
+   public static final int MENU_ACTION = 4;
+   private static final int MAX_DATA_LENGTH = 256;
 
    final void copyScreen() {
       int oldMode = this._model.getMode();

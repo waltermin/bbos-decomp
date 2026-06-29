@@ -15,10 +15,10 @@ public final class RichText {
    private static int NO_DATA = -1;
    static long RADIO_LOGWORTHY_REPORT_REQUEST = -2816799803471967993L;
    private static int ALIGNMENT_BITS = 7;
-   public static final byte DIR_LTR;
-   public static final byte DIR_NEUTRAL;
-   public static final byte DIR_RTL;
-   public static final String PARAG_DELIMITERS;
+   public static final byte DIR_LTR = 0;
+   public static final byte DIR_NEUTRAL = 1;
+   public static final byte DIR_RTL = 2;
+   public static final String PARAG_DELIMITERS = "\n82328233";
 
    private RichText() {
    }

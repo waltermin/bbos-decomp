@@ -9,7 +9,7 @@ import net.rim.device.api.ui.theme.Tag;
 
 public class PopupScreen extends Screen {
    private static Tag TAG = Tag.create("popup");
-   private static final int SCALE_FACTOR;
+   private static final int SCALE_FACTOR = 5;
 
    public PopupScreen(Manager delegate) {
       this(delegate, 0);

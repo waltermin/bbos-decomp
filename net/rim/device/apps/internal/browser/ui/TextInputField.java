@@ -10,9 +10,9 @@ import net.rim.device.internal.ui.container.FrameLayout;
 public class TextInputField extends FrameLayout {
    protected BasicEditField _edit;
    public static Tag BROWSER_EDIT_TAG = Tag.create("browser-edit");
-   public static final byte FLAG_PASSWORD;
-   public static final int DEFAULT_INPUT_SIZE;
-   private static final String EMAIL_FORMAT_IDENTIFIER;
+   public static final byte FLAG_PASSWORD = 1;
+   public static final int DEFAULT_INPUT_SIZE = 15;
+   private static final String EMAIL_FORMAT_IDENTIFIER = "XXX_RIM_EMAIL_INPUT";
 
    public TextInputField(BasicEditField edit, int size, boolean wrap, long style) {
       super(style);

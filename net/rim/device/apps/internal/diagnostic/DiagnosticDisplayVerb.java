@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 final class DiagnosticDisplayVerb extends Verb {
-   private static final int ORDER_VALUE;
+   private static final int ORDER_VALUE = 1048576;
 
    DiagnosticDisplayVerb() {
       super(1048576, ResourceBundle.getBundle("net.rim.device.apps.internal.diagnostic.Diagnostics"), 1);

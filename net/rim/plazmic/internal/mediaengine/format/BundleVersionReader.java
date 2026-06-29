@@ -5,10 +5,10 @@ import net.rim.plazmic.internal.mediaengine.io.FormatVersionReader;
 public class BundleVersionReader implements FormatVersionReader {
    private byte[] bundleData;
    private int bundleOffset = 0;
-   static final int SUPPORTED_MAJOR1_VERSION;
-   static final int SUPPORTED_MAJOR2_VERSION;
-   static final int SUPPORTED_MINOR1_VERSION;
-   static final int BUNDLE_START_HEADER;
+   static final int SUPPORTED_MAJOR1_VERSION = 0;
+   static final int SUPPORTED_MAJOR2_VERSION = 1;
+   static final int SUPPORTED_MINOR1_VERSION = 6;
+   static final int BUNDLE_START_HEADER = -548385470;
 
    @Override
    public synchronized String getVersion(byte[] header, int offset) {

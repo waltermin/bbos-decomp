@@ -14,8 +14,8 @@ import net.rim.device.internal.ui.MIDletApplication;
 import net.rim.vm.Process;
 
 public class PushRegistry {
-   private static final String MIDLET_NAME;
-   private static final long MAX_DELAY;
+   private static final String MIDLET_NAME = "MIDlet-Name";
+   private static final long MAX_DELAY = 108000000L;
    private static String PUSHREGISTRY_PERMISSION_TOKEN = "pushregistry";
    private static String SMS_PERMISSION_TOKEN = "sms";
 

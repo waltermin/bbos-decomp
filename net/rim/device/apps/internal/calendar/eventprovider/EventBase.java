@@ -16,10 +16,10 @@ import net.rim.vm.Array;
 
 class EventBase implements BareEvent, PersistableRIMModel {
    protected static final ResourceBundle _rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
-   protected static final char LOCATION_START_TOKEN;
-   protected static final char LOCATION_END_TOKEN;
-   protected static final char SPACE_SEPARATOR;
-   protected static final char HYPHEN_SEPARATOR;
+   protected static final char LOCATION_START_TOKEN = '(';
+   protected static final char LOCATION_END_TOKEN = ')';
+   protected static final char SPACE_SEPARATOR = ' ';
+   protected static final char HYPHEN_SEPARATOR = '-';
    protected static Object[] _sharedObjectArray = new Object[0];
    protected static String[] _timeZoneDescriptions;
    protected static DateFormat _mediumDateFormat = DateFormat.getInstance(48);

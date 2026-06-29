@@ -27,8 +27,8 @@ import net.rim.device.apps.internal.browser.stack.ModelResult;
 import net.rim.device.apps.internal.browser.store.BrowserFolders;
 
 public final class Channels implements Runnable {
-   private static final String BUNDLE_NAME;
-   private static final String BROWSER_MODULE_NAME;
+   private static final String BUNDLE_NAME = "net.rim.device.apps.internal.browser.core.Channels";
+   private static final String BROWSER_MODULE_NAME = "net_rim_bb_browser_daemon";
    private static final byte[] DEFAULT_READ_ICON_DATA = new byte[]{
       0,
       0,

@@ -6,12 +6,12 @@ final class SmbURL {
    private String _user;
    private String _password;
    private String _server;
-   static final byte PARAM_DOMAIN;
-   static final byte PARAM_USERNAME;
-   static final byte PARAM_PASSWORD;
-   static final byte PARAM_SERVER;
-   static final byte PARAM_FILE_PATH;
-   static final byte PARAM_PARAM;
+   static final byte PARAM_DOMAIN = 1;
+   static final byte PARAM_USERNAME = 2;
+   static final byte PARAM_PASSWORD = 3;
+   static final byte PARAM_SERVER = 4;
+   static final byte PARAM_FILE_PATH = 5;
+   static final byte PARAM_PARAM = 6;
 
    SmbURL(String url) {
       this.parseSmbURL(url);

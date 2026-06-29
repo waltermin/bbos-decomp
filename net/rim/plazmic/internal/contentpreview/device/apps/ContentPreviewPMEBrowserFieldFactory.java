@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.browser.pme.PMEBrowserField;
 import net.rim.device.apps.internal.browser.pme.PMEBrowserFieldFactory;
 
 public final class ContentPreviewPMEBrowserFieldFactory implements PMEBrowserFieldFactory {
-   public static final String rcsid;
+   public static final String rcsid = "$Id: //depot/projects/JavaDevice/4.3.0/JavaApplications/sdk/CDK/net/rim/plazmic/internal/contentpreview/device/apps/ContentPreviewPMEBrowserFieldFactory.java#1 $";
 
    @Override
    public final Field create(InputConnection inputConnection, InputStream in, BrowserContentBaseImpl browserContent, long fieldStyle) {

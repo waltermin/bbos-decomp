@@ -11,8 +11,8 @@ final class TcpReassembleDataNode implements TcpDataBlock {
    private int _rightEdge;
    private TcpDataBlock _next;
    private TcpDataBlock _prev;
-   private static final int TCP_DEBUG_LEVEL;
-   protected static final boolean TCP_SHOW_RTE_MESSAGES;
+   private static final int TCP_DEBUG_LEVEL = 100000;
+   protected static final boolean TCP_SHOW_RTE_MESSAGES = false;
 
    TcpReassembleDataNode(int seqNum, int length, int offset, byte[] data) {
       this._length = length;

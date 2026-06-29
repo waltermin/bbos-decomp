@@ -15,19 +15,19 @@ public class WTLSOptionStore implements Persistable {
    private int _minimumStrongECCKeySize;
    private boolean _displayServerWarnings;
    private boolean _allowExport;
-   private static final int MIN_STRONG_RSA_KEY_LENGTH_DEFAULT;
-   private static final int MIN_STRONG_DH_KEY_LENGTH_DEFAULT;
-   private static final int MIN_STRONG_ECC_KEY_LENGTH_DEFAULT;
-   public static final int IPV4_DEVICE_ADDRESS;
-   public static final int IPV4_ADDRESS;
-   public static final int GSM_DEVICE_MSISDN;
-   public static final int GSM_MSISDN;
-   public static final int CDMA_DEVICE_MDN;
-   public static final int CDMA_DEVICE_15_IMSI;
-   public static final int CDMA_IMSI;
-   public static final int CDMA_DEVICE_10_IMSI;
-   private static final long ID;
-   private static final long SYNC_ID;
+   private static final int MIN_STRONG_RSA_KEY_LENGTH_DEFAULT = 1000;
+   private static final int MIN_STRONG_DH_KEY_LENGTH_DEFAULT = 1024;
+   private static final int MIN_STRONG_ECC_KEY_LENGTH_DEFAULT = 163;
+   public static final int IPV4_DEVICE_ADDRESS = 0;
+   public static final int IPV4_ADDRESS = 1;
+   public static final int GSM_DEVICE_MSISDN = 2;
+   public static final int GSM_MSISDN = 3;
+   public static final int CDMA_DEVICE_MDN = 4;
+   public static final int CDMA_DEVICE_15_IMSI = 5;
+   public static final int CDMA_IMSI = 6;
+   public static final int CDMA_DEVICE_10_IMSI = 7;
+   private static final long ID = 8072646474259989019L;
+   private static final long SYNC_ID = 2414747479154393285L;
    private static PersistentObject _persist = RIMPersistentStore.getPersistentObject(8072646474259989019L);
 
    private WTLSOptionStore() {

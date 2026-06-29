@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.crypto.pgp.PGPUtilities;
 
 public final class PGPKeyStore extends SyncableRIMKeyStore {
-   private static final long PGP;
+   private static final long PGP = -948358821779644380L;
    private static PGPKeyStore _keyStore;
 
    private PGPKeyStore() {

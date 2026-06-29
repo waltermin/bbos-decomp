@@ -28,11 +28,11 @@ public final class ResourceProvider implements ResponseListener {
    private PersistenceService _persistenceService;
    private CommunicationService _commService;
    private UiApplication _application;
-   public static final String CONTENT_TYPE_MEDIA_PLAZMIC_B;
-   private static final String CONTENT_TYPE_MEDIA_PLAZMIC;
-   private static final String HTTP_SCHEME;
-   private static final String HTTPS_SCHEME;
-   private static final String LOCAL_SCHEME;
+   public static final String CONTENT_TYPE_MEDIA_PLAZMIC_B = "application/x-vnd.rim.pme.b";
+   private static final String CONTENT_TYPE_MEDIA_PLAZMIC = "application/x-vnd.rim.pme";
+   private static final String HTTP_SCHEME = "http://";
+   private static final String HTTPS_SCHEME = "https://";
+   private static final String LOCAL_SCHEME = "local://";
    private static final String[] ACCEPT_TYPES = new String[]{
       "image/png", "image/vnd.rim.png", "image/gif", "image/jpeg", "application/x-vnd.rim.pme", "application/x-vnd.rim.pme.b"
    };

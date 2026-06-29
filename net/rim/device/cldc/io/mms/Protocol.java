@@ -40,7 +40,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    private long _timeout;
    private Vector _messagequeue = (Vector)(new Object());
    private String _applicationID;
-   private static final long ID;
+   private static final long ID = 8757735821348010629L;
    public static String APPLICATION_ID = "application-id=";
    public static String REPLY_TO_APPLICATION_ID = "reply-to-application-id=";
    private static Hashtable _connectionTable;

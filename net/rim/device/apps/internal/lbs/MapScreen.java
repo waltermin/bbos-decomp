@@ -102,8 +102,8 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
    private int _backlightUpdaterPID = -1;
    private MapScreen$BacklightUpdater _backlightUpdater = new MapScreen$BacklightUpdater(this, null);
    private LBSMenuItem[] _menuItems = new LBSMenuItem[0];
-   static final boolean ENABLE_TRACK_UP;
-   private static final int REGION_NUM;
+   static final boolean ENABLE_TRACK_UP = true;
+   private static final int REGION_NUM = 8;
    private static final DefaultMapView[] _defaultMapView = new DefaultMapView[0];
    private static final DefaultMapView _europe = new DefaultMapView("Europe", 5090229, 1872831, 202, 295, 14);
    private static final DefaultMapView _canada = new DefaultMapView("Canada", 6354093, -11349367, 302, 302, 14);
@@ -113,9 +113,9 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
    private static final DefaultMapView _africa = new DefaultMapView("Africa", 590229, 1872831, 602, 655, 15);
    private static final DefaultMapView _southAmerica = new DefaultMapView("South Amercia", -1090229, -5872832, 702, 901, 14);
    private static final DefaultMapView _northAmerica = new DefaultMapView("North America & the Caribbean", 2090229, -7872832, 334, 376, 14);
-   private static final long UID_INITAL_MAP_VIEW_PROVIDER;
-   public static final int FULL_31;
-   public static final int REDUCED;
+   private static final long UID_INITAL_MAP_VIEW_PROVIDER = 2809568335828852197L;
+   public static final int FULL_31 = 65536;
+   public static final int REDUCED = 131072;
    private static String LATITUDE = "latitude";
    private static String LONGITUDE = "longitude";
    private static String SPEED = "speed";
@@ -124,7 +124,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
    private static final LayoutManager LAYOUT_MANAGER = new LayoutManager();
    static String TITLE_UPDATES = "Updates: ";
    static String TITLE_TILES = " Tiles: ";
-   private static final long LBS_CELL_DATA_ITEM;
+   private static final long LBS_CELL_DATA_ITEM = 6503629165413339198L;
    private static final int[] _rotationAdjustmentTable = new int[]{
       0,
       0,

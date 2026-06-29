@@ -27,7 +27,7 @@ import net.rim.device.internal.system.Security;
 import net.rim.tid.im.conv.jp.util.KanaConversionUtils;
 
 public final class AddressCardUtilities {
-   private static final long PRECANNED_SALUTATIONS;
+   private static final long PRECANNED_SALUTATIONS = -1075470392976409872L;
    private static final AddressCardUtilities$StringBufferCacheProvider _stringBufferPool = new AddressCardUtilities$StringBufferCacheProvider(null);
 
    private AddressCardUtilities() {

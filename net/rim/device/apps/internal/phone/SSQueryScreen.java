@@ -68,16 +68,16 @@ final class SSQueryScreen extends AppsMainScreen implements SSQueryListener, Lis
       16780049,
       16827829
    };
-   private static final int NUM_STATUS_FIELD_ENTRIES;
-   static final String YES;
-   static final String NO;
-   static final String PROVISIONED;
-   static final String ACTIVE;
-   static final String QUERYING;
-   static final String IDLE;
-   static final String STATUS;
-   static final int KEY_POSITION;
-   static final int STATUS_POSITION;
+   private static final int NUM_STATUS_FIELD_ENTRIES = 3;
+   static final String YES = "yes";
+   static final String NO = "no";
+   static final String PROVISIONED = "Provisioned: ";
+   static final String ACTIVE = "Active: ";
+   static final String QUERYING = "Querying...";
+   static final String IDLE = "Idle";
+   static final String STATUS = "Status: ";
+   static final int KEY_POSITION = 0;
+   static final int STATUS_POSITION = 80;
 
    public SSQueryScreen(Application app) {
       super(196608);

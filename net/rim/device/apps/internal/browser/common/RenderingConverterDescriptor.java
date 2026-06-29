@@ -12,8 +12,8 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 
 public final class RenderingConverterDescriptor implements ConverterDescriptor, AcceptValueProvider {
    private RenderingConverter _converter;
-   public static final long ACCEPT_VALUE_PROVIDERS_REGISTRY_KEY;
-   public static final String RENDERING_CONTEXT;
+   public static final long ACCEPT_VALUE_PROVIDERS_REGISTRY_KEY = 8967752585940069864L;
+   public static final String RENDERING_CONTEXT = "net.rim.device.apps.internal.rendering";
 
    public RenderingConverterDescriptor(RenderingConverter converter) {
       this._converter = converter;

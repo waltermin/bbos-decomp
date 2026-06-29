@@ -10,8 +10,8 @@ import net.rim.device.apps.internal.api.serialformats.ICalendarWriter;
 
 final class EventToVCalBuilder implements Converter {
    private VCalToEventModelBuilder _builder = new VCalToEventModelBuilder();
-   public static final String MIME_TYPE;
-   public static final String MIME_SUBTYPE;
+   public static final String MIME_TYPE = "text/calendar";
+   public static final String MIME_SUBTYPE = "calendar";
    private static String _notImplemented = "Not Implemented";
 
    @Override

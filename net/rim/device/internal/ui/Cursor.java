@@ -6,11 +6,11 @@ public final class Cursor {
    private Bitmap _bitmap;
    private int _originX;
    private int _originY;
-   public static final int PREDEFINED_CURSOR_RIGHT_POINTER;
-   public static final int PREDEFINED_CURSOR_HAND;
-   public static final int PREDEFINED_CURSOR_I_BAR;
-   public static final int PREDEFINED_CURSOR_ZOOM_IN;
-   public static final int PREDEFINED_CURSOR_ZOOM_OUT;
+   public static final int PREDEFINED_CURSOR_RIGHT_POINTER = 0;
+   public static final int PREDEFINED_CURSOR_HAND = 1;
+   public static final int PREDEFINED_CURSOR_I_BAR = 2;
+   public static final int PREDEFINED_CURSOR_ZOOM_IN = 3;
+   public static final int PREDEFINED_CURSOR_ZOOM_OUT = 4;
    private static Cursor[] PREDEFINED_CURSORS = new Cursor[]{
       new Cursor(Bitmap.getBitmapResource("net_rim_cldc", "right_pointer.gif"), 0, 2),
       new Cursor(Bitmap.getBitmapResource("net_rim_cldc", "hand_pointer.gif"), 4, 0),

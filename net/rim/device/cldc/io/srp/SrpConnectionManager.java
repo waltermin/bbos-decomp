@@ -32,9 +32,9 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
    Transport _transport;
    private byte[][][][][][] _ipAddresses;
    private SrpConnectionManager$SrpConnectionMapper _connectionMapper;
-   private static final long GUID;
-   private static final int WLAN_NETWORK;
-   private static final int VPN_NETWORK;
+   private static final long GUID = 7377066757694466844L;
+   private static final int WLAN_NETWORK = 1;
+   private static final int VPN_NETWORK = 2;
 
    final void close(int linkType, boolean remove) {
       this.close(linkType, 0, remove);

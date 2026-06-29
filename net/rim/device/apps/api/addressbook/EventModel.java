@@ -3,9 +3,9 @@ package net.rim.device.apps.api.addressbook;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 
 public interface EventModel extends PersistableRIMModel {
-   int BIRTHDAY;
-   int ANNIVERSARY;
-   long INVALID_TIME;
+   int BIRTHDAY = 82;
+   int ANNIVERSARY = 83;
+   long INVALID_TIME = -1L;
 
    long getEventDate();
 

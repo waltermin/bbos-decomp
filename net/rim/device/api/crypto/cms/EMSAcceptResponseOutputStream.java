@@ -12,8 +12,8 @@ public final class EMSAcceptResponseOutputStream extends CMSOutputStream {
    private ASN1BitSet _flags;
    private int _version;
    private String _clientId;
-   public static final int EMS_7_0;
-   public static final int EMS_7_1;
+   public static final int EMS_7_0 = 0;
+   public static final int EMS_7_1 = 1;
 
    public EMSAcceptResponseOutputStream(CMSSignedDataOutputStream output, String[] names, X509Certificate[] certificates) {
       this(output, names, certificates, null, null, 0, null);

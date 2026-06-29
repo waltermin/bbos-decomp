@@ -11,12 +11,12 @@ final class PhoneState {
    int _incomingId;
    int _connectingId;
    private final byte[] _stateMap = new byte[]{0, 6, 1, -1, 3, 7, 5, -1, 2, -1, 4, -1, 8, -1, 8, -1};
-   public static final int ACTIVE_CONFERENCE;
-   public static final int HELD_CONFERENCE;
-   private static final byte ACTIVE_BIT;
-   private static final byte HELD_BIT;
-   private static final byte INCOMING_BIT;
-   private static final byte CONNECTING_BIT;
+   public static final int ACTIVE_CONFERENCE = 2;
+   public static final int HELD_CONFERENCE = 4;
+   private static final byte ACTIVE_BIT = 3;
+   private static final byte HELD_BIT = 2;
+   private static final byte INCOMING_BIT = 1;
+   private static final byte CONNECTING_BIT = 0;
 
    public PhoneState() {
       this.reset();

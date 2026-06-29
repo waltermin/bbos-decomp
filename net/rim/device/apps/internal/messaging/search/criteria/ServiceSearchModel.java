@@ -15,7 +15,7 @@ import net.rim.device.apps.internal.messaging.search.resources.SearchResources;
 
 public final class ServiceSearchModel implements PersistableRIMModel, SearchCriterion, FieldProvider, ConversionProvider {
    int[] _values = new int[]{-1, -1, 426115328, 1778450541, 1948795843, -1016463104, -1670884541, -1016463104};
-   private static final int ALL_SERVICES_UID_HASH;
+   private static final int ALL_SERVICES_UID_HASH = -1;
 
    public final void setService(int userId, int uidHash) {
       this._values[0] = userId;

@@ -22,11 +22,11 @@ public final class PacketLogger {
    public boolean _lowLoggingEnabled;
    public boolean _highLoggingEnabled;
    private StringBuffer _tempSB = (StringBuffer)(new Object());
-   private static final long SINGLETON_REGISTRATION_KEY;
-   private static final long PACKET_LOG;
-   private static final int ARRAY_SIZE_INCREMENT;
-   public static final int SENT_PACKETS;
-   public static final int RECV_PACKETS;
+   private static final long SINGLETON_REGISTRATION_KEY = 900432232726625421L;
+   private static final long PACKET_LOG = 1638247208346682407L;
+   private static final int ARRAY_SIZE_INCREMENT = 10;
+   public static final int SENT_PACKETS = 1;
+   public static final int RECV_PACKETS = 2;
    private static PacketLogger _instance;
 
    private PacketLogger() {

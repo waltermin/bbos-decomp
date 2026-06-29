@@ -9,18 +9,18 @@ import net.rim.wica.versioning.ServerFeatureVersion;
 import net.rim.wica.versioning.ServerVersions;
 
 public class REVersionUtils {
-   public static final String DISCOVERY_VERSION_MIN;
-   public static final String DISCOVERY_VERSION_MAX;
-   public static final String PROVISIONING_VERSION_MIN;
-   public static final String PROVISIONING_VERSION_MAX;
-   public static final String CONTROL_CENTER_VERSION_MIN;
-   public static final String CONTROL_CENTER_VERSION_MAX;
-   public static final int SYSTEM_MSG_VERSION_MIN;
-   public static final int SYSTEM_MSG_VERSION_MAX;
-   public static final int TRANSPORT_VERSION_MIN;
-   public static final int TRANSPORT_VERSION_MAX;
-   public static final int SECURITY_VERSION_MIN;
-   public static final int SECURITY_VERSION_MAX;
+   public static final String DISCOVERY_VERSION_MIN = "1.1.0";
+   public static final String DISCOVERY_VERSION_MAX = "1.2.0";
+   public static final String PROVISIONING_VERSION_MIN = "1.1.0";
+   public static final String PROVISIONING_VERSION_MAX = "1.1.0";
+   public static final String CONTROL_CENTER_VERSION_MIN = "1.1.0";
+   public static final String CONTROL_CENTER_VERSION_MAX = "1.1.0";
+   public static final int SYSTEM_MSG_VERSION_MIN = 1;
+   public static final int SYSTEM_MSG_VERSION_MAX = 4;
+   public static final int TRANSPORT_VERSION_MIN = 1;
+   public static final int TRANSPORT_VERSION_MAX = 2;
+   public static final int SECURITY_VERSION_MIN = 1;
+   public static final int SECURITY_VERSION_MAX = 2;
 
    public static String getVersion(VersionContext versionContext, String version) {
       return (String)versionContext.get(version);

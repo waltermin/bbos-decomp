@@ -5,9 +5,9 @@ public class HistoryEvent extends Event {
    private boolean _programmatic;
    private String _url;
    private int _type;
-   public static final int TYPE_NAVIGATION;
-   public static final int TYPE_ADD_URL;
-   public static final int TYPE_REMOVE_URL;
+   public static final int TYPE_NAVIGATION = 0;
+   public static final int TYPE_ADD_URL = 1;
+   public static final int TYPE_REMOVE_URL = 2;
 
    public HistoryEvent(Object src, int index, boolean programmatic, int type) {
       super(10005, src);

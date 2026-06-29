@@ -6,8 +6,8 @@ public class Heap {
    protected Array _heap;
    protected int _end;
    protected int _size;
-   private static final int START_SIZE;
-   private static final int SIZE_INCREMENT;
+   private static final int START_SIZE = 10;
+   private static final int SIZE_INCREMENT = 10;
 
    public Heap(Array h) {
       this._heap = h;

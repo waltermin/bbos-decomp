@@ -24,9 +24,9 @@ final class PhoneOptions$PersistedPhoneOptions implements Persistable {
    int _ringtoneLight;
    int _TTYMode;
    IntHashtable _lineDescriptions;
-   private static final int NUM_FORWARDING_NUMBER_TYPES;
-   private static final int DEFAULT_CALL_VOLUME;
-   private static final int DEFAULT_ENHANCE_CALL_AUDIO;
+   private static final int NUM_FORWARDING_NUMBER_TYPES = 4;
+   private static final int DEFAULT_CALL_VOLUME = 0;
+   private static final int DEFAULT_ENHANCE_CALL_AUDIO = 0;
 
    PhoneOptions$PersistedPhoneOptions() {
       this.reset();

@@ -24,9 +24,9 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
    private PersistentObject _persistentObject;
    private ETSyncObject[] _etSyncObject;
    private int _deviceStatus = 0;
-   public static final double PRECISION_DIVISOR;
-   static final long GUID;
-   static final int USER_ENABLED_FLAG;
+   public static final double PRECISION_DIVISOR = 100000.0;
+   static final long GUID = -7906856316062553631L;
+   static final int USER_ENABLED_FLAG = 1;
    private static ETCollection _instance;
 
    final void commit() {

@@ -9,11 +9,11 @@ final class SessionImpl$SessionListenerRunnable extends ApplicationStartupRunnab
    private int _event;
    private Message _message;
    private SessionImpl _session;
-   public static final int EVENT_MESSAGE_SENT;
-   public static final int EVENT_MESSAGE_QUEUED;
-   public static final int EVENT_MESSAGE_RECEIVED;
-   public static final int EVENT_MESSAGE_DELIVERED;
-   public static final int EVENT_SESSION_CLOSED;
+   public static final int EVENT_MESSAGE_SENT = 1;
+   public static final int EVENT_MESSAGE_QUEUED = 2;
+   public static final int EVENT_MESSAGE_RECEIVED = 3;
+   public static final int EVENT_MESSAGE_DELIVERED = 4;
+   public static final int EVENT_SESSION_CLOSED = 5;
 
    public SessionImpl$SessionListenerRunnable(SessionListener listener, ApplicationDescriptor application) {
       super(application);

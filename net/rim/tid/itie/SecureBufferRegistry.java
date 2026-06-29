@@ -10,10 +10,10 @@ class SecureBufferRegistry implements MemoryCleanerListener {
    private WeakReference[] _buffer = new WeakReference[20];
    private int _firstNullCell = 0;
    private int _lastEmptyIndex = -1;
-   private static final int DEFAULT_INC;
-   private static final int MAX_RETRACE_COUNT;
-   private static final int MAX_BUFFER_SIZE;
-   private static final int GC_TRIGGER;
+   private static final int DEFAULT_INC = 20;
+   private static final int MAX_RETRACE_COUNT = 80;
+   private static final int MAX_BUFFER_SIZE = 400;
+   private static final int GC_TRIGGER = 250;
 
    SecureBufferRegistry() {
       MemoryCleanerManager.getInstance().addListener(this, true, false);

@@ -29,7 +29,7 @@ public final class SrpUtils implements SrpConstants {
    private String[] _services;
    private Object[] _listeners;
    private int _uidScopingValue;
-   private static final long GUID;
+   private static final long GUID = -1191621262841803214L;
    private static SrpUtils _instance;
 
    public static final SrpUtils getInstance() {

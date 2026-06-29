@@ -2,11 +2,11 @@ package java.util;
 
 public class Random {
    private long seed;
-   private static final long multiplier;
-   private static final long addend;
-   private static final long mask;
-   private static final int BITS_PER_BYTE;
-   private static final int BYTES_PER_INT;
+   private static final long multiplier = 25214903917L;
+   private static final long addend = 11L;
+   private static final long mask = 281474976710655L;
+   private static final int BITS_PER_BYTE = 8;
+   private static final int BYTES_PER_INT = 4;
 
    public Random() {
       this(System.currentTimeMillis());

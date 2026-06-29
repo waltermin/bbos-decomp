@@ -9,17 +9,17 @@ class NativeLayer implements Runnable {
    protected LstpUtil _lstpUtil;
    protected Object _receiveLock = new Object();
    protected int _dataAvailable;
-   protected static final byte HELLO;
-   protected static final byte HELLO_ACK;
-   protected static final byte DATA;
-   protected static final byte DATA_MORE;
-   protected static final byte ACK;
-   protected static final byte NACK;
-   protected static final byte VERSION;
-   protected static final int RX_AVAILABLE;
-   protected static final int RX_NONE;
-   protected static final int RX_ERROR;
-   protected static final int RX_TIMED_OUT;
+   protected static final byte HELLO = 58;
+   protected static final byte HELLO_ACK = 57;
+   protected static final byte DATA = 64;
+   protected static final byte DATA_MORE = 96;
+   protected static final byte ACK = 6;
+   protected static final byte NACK = 21;
+   protected static final byte VERSION = 15;
+   protected static final int RX_AVAILABLE = 1;
+   protected static final int RX_NONE = 0;
+   protected static final int RX_ERROR = -1;
+   protected static final int RX_TIMED_OUT = -2;
 
    protected NativeLayer(Transport transport) {
       this._transport = transport;

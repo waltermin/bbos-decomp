@@ -11,11 +11,11 @@ import net.rim.device.internal.system.InternalServices;
 public class UiSettings {
    private boolean _listenersActive = true;
    private RegistryListener[] _listeners = new RegistryListener[0];
-   private static final long GUID;
-   public static final long LED_COVERAGE_INDICATOR_GUID;
-   public static final long OFF_PROFILE_ENABLED_GUID;
-   public static final char CURRENCY_KEY_NONE;
-   private static final int SCREEN_CONTRAST_DEFAULT;
+   private static final long GUID = 4752875821328611217L;
+   public static final long LED_COVERAGE_INDICATOR_GUID = 6270993390899536868L;
+   public static final long OFF_PROFILE_ENABLED_GUID = 6869208671291562587L;
+   public static final char CURRENCY_KEY_NONE = '\u0000';
+   private static final int SCREEN_CONTRAST_DEFAULT = 50;
    private static UiSettings _instance;
 
    private UiSettings() {

@@ -23,8 +23,8 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
    private FieldProvider[] _fieldProviders;
    private Field[] _fields;
    private static final ResourceBundle _rb = ResourceBundle.getBundle(5710659227867441061L, "net.rim.device.internal.resource.crypto.SSL");
-   private static final int PROXY_INDEX;
-   private static final int DEVICE_INDEX;
+   private static final int PROXY_INDEX = 0;
+   private static final int DEVICE_INDEX = 1;
 
    public TLSOptionsItem() {
       super(_rb.getFamily(), 32, 5294015899860238835L);

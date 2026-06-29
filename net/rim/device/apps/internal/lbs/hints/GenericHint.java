@@ -15,9 +15,9 @@ public final class GenericHint implements Runnable {
    private boolean _showHint = false;
    private int _hintPID = -1;
    private MapField _parent;
-   private static final int BACKGROUND;
-   private static final int OUTLINE;
-   private static final int PADDING_WIDTH;
+   private static final int BACKGROUND = 16776960;
+   private static final int OUTLINE = 15577897;
+   private static final int PADDING_WIDTH = 6;
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

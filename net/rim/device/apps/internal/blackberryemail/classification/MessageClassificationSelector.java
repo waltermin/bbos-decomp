@@ -11,9 +11,9 @@ import net.rim.device.apps.internal.blackberryemail.properties.MessageProperties
 import net.rim.device.internal.system.ITPolicyInternal;
 
 public class MessageClassificationSelector {
-   private static final long ID;
+   private static final long ID = 1495286560450551762L;
    private static MessageClassificationSelector _instance;
-   private static final int NUM_LINES_IN_BODY_PREFIX;
+   private static final int NUM_LINES_IN_BODY_PREFIX = 3;
 
    private MessageClassificationSelector() {
    }

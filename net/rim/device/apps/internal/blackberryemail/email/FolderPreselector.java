@@ -14,9 +14,9 @@ public final class FolderPreselector implements Persistable {
    private long _hierarchyLUID;
    private IntToLongMRU _subjectCache;
    private IntToLongMRU _nameCache;
-   private static final long KEY;
-   private static final int SUBJECT_CACHE_SIZE;
-   private static final int NAME_CACHE_SIZE;
+   private static final long KEY = -2903705266711841653L;
+   private static final int SUBJECT_CACHE_SIZE = 1024;
+   private static final int NAME_CACHE_SIZE = 1024;
    private static FolderPreselector[] _preselectors;
 
    private FolderPreselector(EmailHierarchy hierarchy) {

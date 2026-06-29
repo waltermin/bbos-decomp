@@ -13,8 +13,8 @@ public final class NotificationMessageQueue {
    private Vector _messages = (Vector)(new Object());
    private int _next = 0;
    private boolean _dormant;
-   private static final long NOTIFICATION_MESSAGE_QUEUE;
-   static final long TIME_OUT;
+   private static final long NOTIFICATION_MESSAGE_QUEUE = -8276972507418970457L;
+   static final long TIME_OUT = 2000L;
    private static NotificationMessageQueue _pool;
 
    static final NotificationMessageQueue getInstance() {

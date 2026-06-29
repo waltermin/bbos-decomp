@@ -4,7 +4,7 @@ final class SequenceProviderImpl$IncomingSequence {
    private int _windowStart;
    private long _window;
    private int _index;
-   private static final int WINDOW_SIZE;
+   private static final int WINDOW_SIZE = 64;
 
    SequenceProviderImpl$IncomingSequence(int index, int windowStart, long window) {
       this._index = index;

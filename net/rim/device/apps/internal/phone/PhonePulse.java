@@ -7,7 +7,7 @@ import net.rim.vm.Memory;
 
 final class PhonePulse implements Runnable {
    private int _maxInvokeCount = 900;
-   private static final long PHONE_PULSE_GUID;
+   private static final long PHONE_PULSE_GUID = 7374499159191503780L;
 
    public static final void begin() {
       System.out.println("pulse on");

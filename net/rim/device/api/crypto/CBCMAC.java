@@ -9,7 +9,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
    private byte[] _cbcBuffer;
    private int _cbcOffset;
    private int _blockLength;
-   private static final long ID_TEST_CBCMAC;
+   private static final long ID_TEST_CBCMAC = 7820450527937782517L;
 
    public CBCMAC(BlockEncryptorEngine encryptorEngine) {
       this(encryptorEngine, null);

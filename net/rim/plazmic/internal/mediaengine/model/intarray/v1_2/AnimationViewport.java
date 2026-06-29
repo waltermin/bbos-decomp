@@ -59,17 +59,17 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
       0, 0, 0, 0, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643, 1867325550, 1852795252, 1685343264, 46
    };
    private boolean _viewboxInitialized = false;
-   private static final int MIN_ZOOM_AMOUNT;
-   private static final int MAX_ZOOM_AMOUNT;
-   private static final int DEFAULT_ZOOM_FACTOR;
-   private static final int DIRTY_ZOOM;
-   private static final int DIRTY_ZOOM_ORIGIN_X;
-   private static final int DIRTY_ZOOM_ORIGIN_Y;
-   private static final int DIRTY_ALIGN_X;
-   private static final int DIRTY_ALIGN_Y;
-   private static final int DIRTY_PAN_X;
-   private static final int DIRTY_PAN_Y;
-   private static final int DIRTY_ALL;
+   private static final int MIN_ZOOM_AMOUNT = 16;
+   private static final int MAX_ZOOM_AMOUNT = 3276800;
+   private static final int DEFAULT_ZOOM_FACTOR = 65536;
+   private static final int DIRTY_ZOOM = 1;
+   private static final int DIRTY_ZOOM_ORIGIN_X = 2;
+   private static final int DIRTY_ZOOM_ORIGIN_Y = 4;
+   private static final int DIRTY_ALIGN_X = 8;
+   private static final int DIRTY_ALIGN_Y = 16;
+   private static final int DIRTY_PAN_X = 32;
+   private static final int DIRTY_PAN_Y = 64;
+   private static final int DIRTY_ALL = 128;
 
    public final void resetContextData() {
       if (this._baseContext != null) {

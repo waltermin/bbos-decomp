@@ -10,11 +10,11 @@ import net.rim.device.internal.ui.SystemIcon;
 public class CertificateListField extends ListField implements ListFieldCallback {
    private int _checkboxWidth;
    private int _checkboxHeight;
-   public static final int CHECK_STATE_NONE;
-   public static final int CHECK_STATE_UNCHECKED;
-   public static final int CHECK_STATE_CHECKED;
-   public static final int CHECK_STATE_SPACE;
-   private static final int SPACER_WIDTH;
+   public static final int CHECK_STATE_NONE = -1;
+   public static final int CHECK_STATE_UNCHECKED = 0;
+   public static final int CHECK_STATE_CHECKED = 1;
+   public static final int CHECK_STATE_SPACE = 2;
+   private static final int SPACER_WIDTH = 3;
 
    protected String getText(int _1) {
       throw null;

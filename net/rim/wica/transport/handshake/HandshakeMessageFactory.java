@@ -6,8 +6,8 @@ public class HandshakeMessageFactory {
    private SecurityProvider _sp;
    private int _minSupportedVersion;
    private int _maxSupportedVersion;
-   private static final int _minImplementedVersion;
-   private static final int _maxImplementedVersion;
+   private static final int _minImplementedVersion = 2;
+   private static final int _maxImplementedVersion = 2;
 
    public HandshakeMessageFactory(SecurityProvider sp, int minSupportedVersion, int maxSupportedVersion) {
       this._sp = sp;

@@ -37,10 +37,10 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
    protected String _cachedTcpApn;
    private Deque _dgPool;
    private Deque _tcpDgPropsPool;
-   public static final int MAX_DGS;
-   public static final int MIN_DGS;
-   public static final int MAX_TDG_PROPS;
-   public static final int MIN_TDG_PROPS;
+   public static final int MAX_DGS = 6;
+   public static final int MIN_DGS = 2;
+   public static final int MAX_TDG_PROPS = 6;
+   public static final int MIN_TDG_PROPS = 2;
 
    public final Datagram newDatagram(byte[] buffer, int offset, int length, DatagramAddressBase address) {
       return new TcpDatagramBase(buffer, offset, length, address);

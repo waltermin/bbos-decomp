@@ -5,7 +5,7 @@ import net.rim.device.api.system.Branding;
 import net.rim.device.api.util.Persistable;
 
 public final class CdmaHRI extends HostRoutingInfo implements Persistable {
-   private static final String CDMA_DEFAULT_APN;
+   private static final String CDMA_DEFAULT_APN = "";
 
    public CdmaHRI() {
       super._dac = new IPv4UdpDAC(16, 20);

@@ -19,10 +19,10 @@ public final class UpdateNowRunnable implements FieldChangeRunnable {
    private boolean _launchApplication;
    private boolean _rebootRequired;
    private boolean _rebootNow;
-   private static final int LATER;
-   private static final int REBOOT;
-   private static final int OK;
-   private static final int RUN;
+   private static final int LATER = 0;
+   private static final int REBOOT = 1;
+   private static final int OK = 0;
+   private static final int RUN = 1;
 
    public UpdateNowRunnable(boolean mandatoryUpdate, String[] downloadUrls, byte[][][] digests, int size) {
       this._mandatoryUpdate = mandatoryUpdate;

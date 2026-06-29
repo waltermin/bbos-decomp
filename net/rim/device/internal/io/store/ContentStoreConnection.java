@@ -33,7 +33,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    private static String SLASH = "/";
    private static String SLASH_SLASH_LOCALHOST_SLASH = "//localhost/";
    private static String SLASH_SLASH_SLASH = "///";
-   private static final int MAX_PATH;
+   private static final int MAX_PATH = 256;
    static Class class$net$rim$device$internal$io$store$ContentStoreConnection;
 
    @Override

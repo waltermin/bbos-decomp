@@ -20,8 +20,8 @@ import net.rim.device.apps.internal.bis.session.ClientSessionState;
 public final class OWAAdvancedEditScreen extends UserSettingsScreen {
    private BasicEditField _owaURLEdit;
    private EmailAddressEditField _emailAccountEdit;
-   public static final String PARAM_SERVER;
-   public static final String PARAM_SSL;
+   public static final String PARAM_SERVER = "server";
+   public static final String PARAM_SSL = "ssl";
 
    public OWAAdvancedEditScreen() {
       super(31);

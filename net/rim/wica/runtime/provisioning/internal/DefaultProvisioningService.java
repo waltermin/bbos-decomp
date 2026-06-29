@@ -30,10 +30,10 @@ public class DefaultProvisioningService implements ProvisioningService, Servicea
    private MessageConsumer _provWicletMessageConsumer;
    private UniqueCodeGenerator _uniqueCodeGenerator;
    private DefaultProvisioningService$ProvisioningTask STOP_THREAD_TASK = new DefaultProvisioningService$ProvisioningTask(this);
-   private static final int MEMORY_CONSTANT_FACTOR;
+   private static final int MEMORY_CONSTANT_FACTOR = 3;
    private static String CANCEL_PROVISIONING_MSG_NAME = "requestCancelProvisioning";
    private static String PLAINTEXT_WICLET_XML_FILENAME = "wiclet.xml";
-   private static final String PROV_SVC_URL;
+   private static final String PROV_SVC_URL = "local://ProvisioningService";
    private static String PROVISIONING_STATUS_UPDATE_MSG_NAME = "statusUpdateEvent";
    private static String START_PROVISIONING_MSG_NAME = "requestStartProvisioning";
    static Class class$net$rim$wica$runtime$event$EventService;

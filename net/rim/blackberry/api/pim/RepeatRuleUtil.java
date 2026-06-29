@@ -6,7 +6,7 @@ import net.rim.device.apps.api.framework.model.Recur$Modifier;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 
 class RepeatRuleUtil {
-   private static final int RECUR_ANY_DAY;
+   private static final int RECUR_ANY_DAY = 7;
 
    static int[] getMonthArray(int months) {
       months >>= 17;

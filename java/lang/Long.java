@@ -2,8 +2,8 @@ package java.lang;
 
 public final class Long {
    private long value;
-   public static final long MIN_VALUE;
-   public static final long MAX_VALUE;
+   public static final long MIN_VALUE = MIN_VALUE;
+   public static final long MAX_VALUE = MAX_VALUE;
 
    public static final String toString(long i, int radix) {
       byte[] buf = new byte[10];

@@ -7,8 +7,8 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.vm.Memory;
 
 public final class URIEncoder {
-   private static final String UTF_8;
-   private static final String ISO_8859_1;
+   private static final String UTF_8 = "utf-8";
+   private static final String ISO_8859_1 = "iso-8859-1";
 
    public static final String encodeBlanks(String str) {
       int length = str.length();

@@ -3,20 +3,20 @@ package net.rim.device.apps.internal.vad;
 import net.rim.device.api.system.EventLogger;
 
 public final class VADEventLog {
-   public static final long GUID;
+   public static final long GUID = 19574030040793832L;
    private static String EVENT_LOGGER_TITLE = "net.rim.vad";
-   private static final boolean LOG_TO_BUGDISP;
-   public static final int ENGINE_INIT;
-   public static final int ENGINE_START;
-   public static final int ENGINE_STOP;
-   public static final int ENGINE_EVENT;
-   public static final int ENGINE_EXIT;
-   public static final int ENGINE_DONE;
-   public static final int ADDRESS_BOOK_REBUILD;
-   public static final int ADDRESS_BOOK_TOO_LARGE;
-   public static final int ADDRESS_BOOK_REBUILT;
-   public static final int LANGUAGE_CHANGE;
-   public static final int EVENT_QUEUED;
+   private static final boolean LOG_TO_BUGDISP = true;
+   public static final int ENGINE_INIT = 1229867348;
+   public static final int ENGINE_START = 1398035028;
+   public static final int ENGINE_STOP = 1398034256;
+   public static final int ENGINE_EVENT = 1163284052;
+   public static final int ENGINE_EXIT = 1163413844;
+   public static final int ENGINE_DONE = 1146048069;
+   public static final int ADDRESS_BOOK_REBUILD = 1094992978;
+   public static final int ADDRESS_BOOK_TOO_LARGE = 1094863175;
+   public static final int ADDRESS_BOOK_REBUILT = 1094863956;
+   public static final int LANGUAGE_CHANGE = 1279348295;
+   public static final int EVENT_QUEUED = 1163284821;
 
    static final void init() {
       EventLogger.register(19574030040793832L, EVENT_LOGGER_TITLE, 2);

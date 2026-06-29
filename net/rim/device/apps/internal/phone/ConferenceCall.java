@@ -26,8 +26,8 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
    private Vector _initialMembers = null;
    private Vector _members;
    private boolean _held;
-   public static final int MIN_MEMBER_COUNT;
-   public static final int MAX_MEMBER_COUNT;
+   public static final int MIN_MEMBER_COUNT = 2;
+   public static final int MAX_MEMBER_COUNT = 5;
    private static ContextObject _callerIDContext = (ContextObject)(new Object());
 
    final void disconnect() {

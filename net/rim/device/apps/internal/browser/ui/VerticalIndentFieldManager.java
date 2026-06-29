@@ -6,11 +6,11 @@ import net.rim.device.api.ui.container.VerticalFieldManager;
 
 public class VerticalIndentFieldManager extends VerticalFieldManager {
    private boolean _largeTablesOn = true;
-   private static final long INCREMENTAL_LAYOUT_REQ_STYLES;
-   private static final int MAX_HEIGHT;
-   private static final int INDENT_SCROLLBAR;
-   private static final int INDENT_PIXEL_WIDTH;
-   private static final boolean INDENT_ENABLED;
+   private static final long INCREMENTAL_LAYOUT_REQ_STYLES = 3458764513820540928L;
+   private static final int MAX_HEIGHT = 1073741823;
+   private static final int INDENT_SCROLLBAR = 5;
+   private static final int INDENT_PIXEL_WIDTH = 6;
+   private static final boolean INDENT_ENABLED = false;
 
    public VerticalIndentFieldManager() {
       this(0);

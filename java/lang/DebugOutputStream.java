@@ -5,7 +5,7 @@ import java.io.OutputStream;
 final class DebugOutputStream extends OutputStream {
    private byte[] _c = new byte[129];
    private int _size;
-   private static final int BUFF_SIZE;
+   private static final int BUFF_SIZE = 128;
 
    @Override
    public final synchronized void write(int c) {

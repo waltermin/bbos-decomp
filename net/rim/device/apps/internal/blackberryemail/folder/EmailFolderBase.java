@@ -6,10 +6,10 @@ import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.internal.blackberryemail.ServiceRecordProvider;
 
 public interface EmailFolderBase extends Folder, SyncObject, ServiceRecordProvider, Persistable {
-   int LOCAL_FOLDER;
-   int NO_MESSAGES_ALLOWED;
-   int REDIRECTION_SUPPORTED;
-   int REDIRECTION_STATUS;
+   int LOCAL_FOLDER = 1;
+   int NO_MESSAGES_ALLOWED = 2;
+   int REDIRECTION_SUPPORTED = 4;
+   int REDIRECTION_STATUS = 8;
 
    int getFolderId();
 

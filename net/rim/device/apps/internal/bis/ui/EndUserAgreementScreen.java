@@ -22,8 +22,8 @@ public final class EndUserAgreementScreen extends BasicScreen {
    private Button _closeButton;
    private Button _agreeButton;
    private Event _agreeEvent;
-   private static final String PARAM_AGREEMENT;
-   private static final boolean AGREE_ENABLED_DEFAULT;
+   private static final String PARAM_AGREEMENT = "agreed";
+   private static final boolean AGREE_ENABLED_DEFAULT = false;
 
    @Override
    public final void refresh(Hashtable screenParams) {

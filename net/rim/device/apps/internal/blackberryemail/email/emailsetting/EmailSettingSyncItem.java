@@ -11,15 +11,15 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.IntHashtable;
 
 public final class EmailSettingSyncItem extends SyncItem {
-   public static final int AUTO_SIGNATURE;
-   public static final int EMAIL_REDIRECTION;
-   public static final int SAVE_IN_SENT_ITEMS;
-   public static final int FILTER_DEFAULT_ACTION;
-   private static final int NUMBER_OF_EMAIL_SIGNATURE_ITEMS;
+   public static final int AUTO_SIGNATURE = 1;
+   public static final int EMAIL_REDIRECTION = 2;
+   public static final int SAVE_IN_SENT_ITEMS = 3;
+   public static final int FILTER_DEFAULT_ACTION = 4;
+   private static final int NUMBER_OF_EMAIL_SIGNATURE_ITEMS = 1;
    private static PersistentObject _persistentObject;
    private static IntHashtable _optionsTable;
    private static long EMAIL_SETTING_SYNC_ITEM = -6482084252764382337L;
-   private static final long EMAIL_SETTING_PERSISTENT_OBJECT_KEY;
+   private static final long EMAIL_SETTING_PERSISTENT_OBJECT_KEY = 5873493118923882263L;
    private static EmailSettingSyncItem _instance;
 
    public static final synchronized void registerSyncItem() {

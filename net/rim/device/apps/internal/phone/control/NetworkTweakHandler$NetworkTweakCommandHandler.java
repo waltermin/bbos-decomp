@@ -8,7 +8,7 @@ import net.rim.device.internal.callcontrol.CallCommandHandler;
 class NetworkTweakHandler$NetworkTweakCommandHandler extends CallCommandHandler {
    private NetworkTweakHandler$MyRadioStatusListener _myRadioStatusListener;
    private final NetworkTweakHandler this$0;
-   private static final int NOT_MPTY;
+   private static final int NOT_MPTY = -32769;
 
    public NetworkTweakHandler$NetworkTweakCommandHandler(NetworkTweakHandler _1) {
       super(150);

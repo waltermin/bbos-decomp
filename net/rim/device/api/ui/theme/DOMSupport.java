@@ -5,8 +5,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 class DOMSupport {
-   private static final String FALSE;
-   private static final String TRUE;
+   private static final String FALSE = "false";
+   private static final String TRUE = "true";
 
    private DOMSupport() {
    }

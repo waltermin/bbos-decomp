@@ -15,12 +15,12 @@ import net.rim.vm.Persistable;
 
 public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentModel implements Persistable {
    private String _fileName;
-   public static final String CERTIFICATE_EXTENSION_CER;
-   public static final String CERTIFICATE_EXTENSION_CERT;
-   public static final String CERTIFICATE_EXTENSION_CRT;
-   public static final String CERTIFICATE_EXTENSION_DER;
-   public static final String ENTRUST_KEY_EXTENSION;
-   public static final String STRING_BASE64;
+   public static final String CERTIFICATE_EXTENSION_CER = ".cer";
+   public static final String CERTIFICATE_EXTENSION_CERT = ".cert";
+   public static final String CERTIFICATE_EXTENSION_CRT = ".crt";
+   public static final String CERTIFICATE_EXTENSION_DER = ".der";
+   public static final String ENTRUST_KEY_EXTENSION = ".key";
+   public static final String STRING_BASE64 = "base64";
    private static final byte[] ENTRUST_ENCRYPTION_CERT = "EncryptionCertificate=".getBytes();
    private static final byte[] ENTRUST_SIGNING_CERT = "SigningCertificate=".getBytes();
    private static final byte[] ENTRUST_CA_CERT = "CaCertificate=".getBytes();
@@ -87,7 +87,7 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
       // 013: aconst_null
       // 014: astore 2
       // 015: bipush 0
-      // 016: anewarray 252
+      // 016: anewarray 270
       // 019: astore 3
       // 01a: aload 1
       // 01b: invokevirtual net/rim/device/api/io/LineReader.readLine ()[B

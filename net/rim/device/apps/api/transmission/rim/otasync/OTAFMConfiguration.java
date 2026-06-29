@@ -28,16 +28,16 @@ public final class OTAFMConfiguration implements Persistable {
    private int _userConflicts;
    private boolean _ackReceived;
    private boolean _folderListRequired;
-   private static final byte SERIAL_SYNC_SB_FIELD_TYPE;
-   private static final long DISABLED_OTAFM_CONFIG_GUID;
-   private static final boolean SEPARATE_CONFIGURATION_OF_SERVICES;
-   public static final int CONFLICT_DEVICE_WINS;
-   public static final int CONFLICT_DESKTOP_WINS;
-   private static final int DELETE_ON_ID;
-   private static final int WIRELESS_DELETES_ID;
-   private static final int WIRELESS_FILING_ID;
-   private static final int CONFLICTS_ID;
-   private static final int WIRELESS_ENABLED_ID;
+   private static final byte SERIAL_SYNC_SB_FIELD_TYPE = 81;
+   private static final long DISABLED_OTAFM_CONFIG_GUID = 1318377347043828279L;
+   private static final boolean SEPARATE_CONFIGURATION_OF_SERVICES = false;
+   public static final int CONFLICT_DEVICE_WINS = 0;
+   public static final int CONFLICT_DESKTOP_WINS = 1;
+   private static final int DELETE_ON_ID = 0;
+   private static final int WIRELESS_DELETES_ID = 1;
+   private static final int WIRELESS_FILING_ID = 2;
+   private static final int CONFLICTS_ID = 3;
+   private static final int WIRELESS_ENABLED_ID = 4;
 
    public OTAFMConfiguration() {
       this._userConflicts = 1;

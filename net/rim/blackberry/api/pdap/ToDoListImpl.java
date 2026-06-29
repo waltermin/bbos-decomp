@@ -21,7 +21,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    private TaskCollection _collection;
    private static ResourceBundle _resources = ResourceBundle.getBundle(6683049446475877841L, "net.rim.blackberry.api.pim.resource.PIMRes");
    private static Hashtable _actualListeners;
-   private static final long APP_REGISTRY_KEY;
+   private static final long APP_REGISTRY_KEY = -6969096308581534025L;
    private static String LIST_CLOSED_MESSAGE;
    private static String READONLY_MESSAGE;
    private static String WRITEONLY_MESSAGE;

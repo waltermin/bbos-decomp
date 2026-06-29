@@ -7,7 +7,7 @@ class AbstractCallCommandHandler extends Phone {
    private int _order;
    private boolean _registered;
    private AbstractCallCommandHandler _next;
-   private static final long HANDLERS_GUID;
+   private static final long HANDLERS_GUID = -6648725956671550232L;
    private static AbstractCallCommandHandler _first;
 
    protected AbstractCallCommandHandler(int order) {

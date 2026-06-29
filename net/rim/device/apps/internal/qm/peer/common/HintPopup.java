@@ -24,7 +24,7 @@ public final class HintPopup extends PopupScreen implements Runnable, UserInputE
    private int _invokePopupId = -1;
    private HintPollingThread$HintProvider _hintProvider;
    private static Tag TAG = Tag.create("inplace");
-   private static final int DEFAULT_HINT_DURATION;
+   private static final int DEFAULT_HINT_DURATION = 2750;
 
    private HintPopup(HintPollingThread$HintProvider hintProvider, Object hint, int duration, Manager manager, long style) {
       super(manager, style);

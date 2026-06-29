@@ -10,7 +10,7 @@ public final class PhoneCallInitialData {
    public CallerIDInfo _callerIDInfo;
    public int _lineId;
    public Object _context;
-   public static final long GUID;
+   public static final long GUID = -702275867225586088L;
 
    public PhoneCallInitialData(int callId, byte type, int flags, CallerIDInfo callerIDInfo, Object context) {
       this(callId, type, flags, callerIDInfo, context, PhoneUtilities.getCurrentLineId(callId));

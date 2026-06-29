@@ -20,14 +20,14 @@ public class OptionsRegistry implements OptionsProvider, OptionsProviderChangeSo
    private Object[] _listeners;
    private OptionsProviderChangeListener _syncListener;
    private final LongHashtable _parameterDefinitions = new LongHashtable();
-   private static final int TAG;
-   private static final int TYPE_STRING;
-   private static final int TYPE_INTEGER;
-   private static final int TYPE_LONG;
-   private static final int TYPE_BYTE_ARRAY;
-   private static final int TYPE_DOUBLE;
-   private static final int TYPE_BOOLEAN;
-   private static final int TYPE_CHAR;
+   private static final int TAG = 1;
+   private static final int TYPE_STRING = 0;
+   private static final int TYPE_INTEGER = 2;
+   private static final int TYPE_LONG = 3;
+   private static final int TYPE_BYTE_ARRAY = 4;
+   private static final int TYPE_DOUBLE = 5;
+   private static final int TYPE_BOOLEAN = 6;
+   private static final int TYPE_CHAR = 7;
 
    public void addOptionsRegistryChangeListener(OptionsRegistry$Listener listener) {
       this._listeners = ListenerUtilities.addListener(this._listeners, listener);

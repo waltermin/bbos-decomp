@@ -7,7 +7,7 @@ import net.rim.plazmic.internal.contentpreview.message.MessageFormatException;
 import net.rim.plazmic.internal.contentpreview.playback.PlaybackCommandHandler;
 
 public final class PlaybackCommandMessageReader extends AbstractMessageReader {
-   public static final String rcsid;
+   public static final String rcsid = "$Id:$";
 
    public static final void parse(InputStream is, PlaybackCommandHandler handler) {
       DataInput di = (DataInput)(new Object(is));

@@ -18,10 +18,10 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class ActivePhoneScreenHeader extends Manager {
    private PhoneReceiverBitmapField _handsetBmp = new PhoneReceiverBitmapField();
-   public static final int DEFAULT_CALL_STATUS_FONT_SIZE;
-   private static final int TX_RX_ARROWS_BUFFER;
-   private static final int PHONE_BITMAP;
-   private static final int CALL_TIMER;
+   public static final int DEFAULT_CALL_STATUS_FONT_SIZE = 12;
+   private static final int TX_RX_ARROWS_BUFFER = 2;
+   private static final int PHONE_BITMAP = 0;
+   private static final int CALL_TIMER = 1;
    private static final boolean _highResColourScreen = PhoneUtilities.isHighResColourScreen();
 
    public ActivePhoneScreenHeader(LiveCall call, Screen screen) {

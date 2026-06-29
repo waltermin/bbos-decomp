@@ -12,10 +12,10 @@ import net.rim.vm.Array;
 public final class VCal implements VerbProvider, PaintProvider {
    private Object _vcalObject;
    private VCal$OpenVcal _verb;
-   public static final String MIME_TYPE_VCALENDAR;
-   public static final String MIME_TYPE_ICALENDAR;
-   public static final String MIME_SUBTYPE_ICALENDAR;
-   public static final String MIME_SUBTYPE_VCALENDAR;
+   public static final String MIME_TYPE_VCALENDAR = "text/x-vcalendar";
+   public static final String MIME_TYPE_ICALENDAR = "text/calendar";
+   public static final String MIME_SUBTYPE_ICALENDAR = "calendar";
+   public static final String MIME_SUBTYPE_VCALENDAR = "x-vcalendar";
 
    public static final void register() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();

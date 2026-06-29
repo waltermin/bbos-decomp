@@ -36,8 +36,8 @@ public final class ExplorerOptionsListItem
    private ObjectChoiceField _autoBacklighting;
    private ExplorerOptions _options = ExplorerOptions.getOptions();
    private static final int MIN_NUMBER_OF_COLUMNS = ExplorerOptions.MIN_NUMBER_OF_COLUMNS;
-   private static final int MIN_SLIDESHOW_TIME;
-   private static final int MAX_SLIDESHOW_TIME;
+   private static final int MIN_SLIDESHOW_TIME = 1;
+   private static final int MAX_SLIDESHOW_TIME = 15;
 
    public ExplorerOptionsListItem() {
       super(ExplorerResources.getString(88));

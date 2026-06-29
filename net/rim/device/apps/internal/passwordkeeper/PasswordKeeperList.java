@@ -14,7 +14,7 @@ public final class PasswordKeeperList implements List, ListFieldCallback, Keywor
    private PasswordKeeperVector _list;
    private PasswordKeeperComparator _comparator;
    private PersistentObject _persist = RIMPersistentStore.getPersistentObject(5233466584661269113L);
-   private static final long LIST;
+   private static final long LIST = 5233466584661269113L;
 
    public PasswordKeeperList() {
       if (this._persist.getContents() == null) {

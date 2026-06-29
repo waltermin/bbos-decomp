@@ -18,7 +18,7 @@ public class IntSortedReadableList implements ChainableCollection, LoadableColle
    private int _numElements;
    private CollectionListenerManager _collectionNotifier = new CollectionListenerManager();
    private IntKeyProviderAdaptor _keyProvider;
-   private static final int GROW_SIZE;
+   private static final int GROW_SIZE = 20;
 
    @Override
    public void loadFrom(Object collection) {

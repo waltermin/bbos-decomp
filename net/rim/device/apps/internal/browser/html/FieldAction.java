@@ -6,13 +6,13 @@ import net.rim.device.api.ui.Field;
 final class FieldAction implements Runnable {
    private HTMLInput _input;
    private int _action;
-   static final int ACTION_CLICK;
-   static final int ACTION_FOCUS;
-   static final int ACTION_SELECT;
-   static final int ACTION_ON_FOCUS;
-   static final int ACTION_ON_CHANGE;
-   static final int ACTION_ON_CLICK;
-   static final int ACTION_ON_BLUR;
+   static final int ACTION_CLICK = 0;
+   static final int ACTION_FOCUS = 1;
+   static final int ACTION_SELECT = 2;
+   static final int ACTION_ON_FOCUS = 3;
+   static final int ACTION_ON_CHANGE = 4;
+   static final int ACTION_ON_CLICK = 5;
+   static final int ACTION_ON_BLUR = 6;
 
    FieldAction(HTMLInput input, int action) {
       this._input = input;

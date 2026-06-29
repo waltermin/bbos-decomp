@@ -7,7 +7,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 
 final class CryptoSmartCardCache implements ReaderStatusListener {
    private Hashtable _hashtable = (Hashtable)(new Object());
-   private static final long ID;
+   private static final long ID = 2914118616967182961L;
    private static CryptoSmartCardCache _instance;
 
    private CryptoSmartCardCache() {
